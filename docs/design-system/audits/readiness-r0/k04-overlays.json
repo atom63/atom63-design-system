@@ -1,0 +1,1763 @@
+{
+  "scope": "k04-overlays",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "layer-3 batch-4 reviewer",
+  "verifiedBy": null,
+  "notes": "Taste criteria (K3) are provisional until YZ sees the contact sheet; most overlay baselines show only closed triggers, so K3 is capped at 2 for lack of evidence. Sweep logs: all check:* passed; craft passed with 5 baseline violations, none in this batch except the kbd-in-tooltip mode branch (kbd's). Forced colors: no @media (forced-colors) rule exists in the system (system-wide, not filed per subject). Older audit docs were not relied on; base-ui-issue-drafts.md was used only for the aria-modal gap. No tests or builds were run.",
+  "subjects": [
+    {
+      "subject": "dialog",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/dialog/dialog.tsx:224-236 DialogPanel defaults scrollFade=true and stamps data-scroll-fade, but no CSS anywhere targets .a63-Dialog-panel[data-scroll-fade] (grep scroll-fade in *.css hits only scroll-area.css:40), so the prop is dead. DialogPopup portals via DialogPortal {...portalProps} (dialog.tsx:133) and never reads usePortalContainer, unlike Popover/Tooltip/Sheet/Toaster; the Themes story has to pass portalProps={{container}} by hand (dialog.stories.tsx:46). Otherwise props match dialogContract (sizes, mobilePlacements, footerVariants) and render/mergeProps compose correctly (dialog.tsx:160-170)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Pattern test binds dialogContract to the Playground story (apps/storybook/a11y/patterns.test.ts:56-60) and walks open/Tab-wrap/Shift-Tab-wrap/Escape-returns-focus (packages/ui-foundation/src/a11y/dialog.ts:7-45); aria-modal workaround for the Base UI gap (dialog.tsx:131-137, base-ui-issue-drafts.md #5) tested at dialog.test.tsx:82-98; reduced motion at dialog.css:216-221. Gaps: no forced-colors rule anywhere in the system, and axe on stories never sees the open popup because no Dialog story sets defaultOpen (grep -c defaultOpen dialog.stories.tsx = 0)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Cannot be judged: every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-dialog-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-sizes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-endpoints-chromium-linux.png. Recipe reads overlay tokens (dialog.css:46-62) but --a63-overlay-radius is defined nowhere (grep -rn -e '--a63-overlay-radius:' packages/styles/src is empty), so every overlay falls back to a different radius."
+        },
+        {
+          "criterion": "K4",
+          "score": 1,
+          "evidence": "every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-dialog-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-sizes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-bare-footer-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-endpoints-chromium-linux.png. The open, starting/ending and focus-visible states in dialogContract.states are never captured; the close button has hover and focus-visible but no :active rule (dialog.css:106-138)."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "The close button is hand-rolled (dialog.tsx:144-152) at max(control-height-sm x density, control-min-size) (dialog.css:42-45, 113-114): control-height-sm = space-unit x 7 (28px) and control-min-size on touch = 2rem (atom63 token --a63-control-min-size), so a coarse pointer gets a 32px target with no hit-area pseudo-element, unlike Button which delivers the 44px floor (button.css:634-637) and which SheetPopup uses (sheet.tsx:157-161)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical properties throughout (padding-inline, inset-inline-end at dialog.css:107, border-end-*-radius); header reserves inline-end space for the close button (dialog.css:144-146); title wraps with typography-xl line-height. No RTL or long-title story to confirm."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Designed: mobilePlacement bottom sticks the popup to the bottom edge with safe-area insets below 640px (dialog.css:83-104), viewport pads by safe areas (dialog.css:31-36). Not captured: grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component dialog returns import, contract axes/defaults, slots, states, APG link, iOS mapping and six examples; atom63 example dialog Playground returns runnable source. Two of three guidance bullets are the family boilerplate ('When the family opens a surface…') shared by every overlay."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "dialog.test.tsx covers parts, close button, closeProps, footer variant and aria-modal for modal/trap-focus/non-modal (lines 35-98); keyboard pattern test in apps/storybook/a11y/patterns.test.ts:56-60; SSR via apps/storybook/ssr/ssr.test.tsx (renderToString of every story). Untested: mobilePlacement and size data attributes; open-state baselines missing (see K4)."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Mapped to native sheet(isPresented:) / presentationDetents (packages/ui-foundation/src/conformance/cross-renderer-contracts.generated.ts:51-80), forms inside use AtomFormPresentation; but examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/sheet.{light,dark,large-type}.png show only the 'Open project sheet' button, never the presented sheet."
+        }
+      ]
+    },
+    {
+      "subject": "alert-dialog",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "AlertDialogPopup types size/variant and AlertDialogFooter types variant inline (alert-dialog.tsx:84-85,125) instead of importing AlertDialogVariant/AlertDialogSize/AlertDialogFooterVariant from @atom63/ui-foundation, so contract and props can drift; the contract still lists the deprecated size axis and the consistency baseline flags 'synonym alert-dialog.sizes default -> md' and 'status-set alert-dialog.variants destructive -> error' (contract-consistency-baseline.json:10-11); ignores PortalContainerProvider (see dialog finding). Action/Cancel compose Button via render (alert-dialog.tsx:181-207)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Pattern test binds alertDialogContract to the Playground story (patterns.test.ts:63-67); aria-modal always set (alert-dialog.tsx:89-95); reduced motion at alert-dialog.css end. Same axe gap as Dialog: no story sets defaultOpen (grep -c defaultOpen alert-dialog.stories.tsx = 0). The file comment claims Escape does not close (alert-dialog.tsx:11-12) while the bound pattern requires escape-closes (a11y/dialog.ts:37-44)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Cannot be judged: every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-alertdialog-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-alertdialog-variants-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-alertdialog-playground-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 1,
+          "evidence": "every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-alertdialog-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-alertdialog-confirm-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-alertdialog-variants-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-alertdialog-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-alertdialog-endpoints-chromium-linux.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Action and Cancel are Buttons (size md) through render (alert-dialog.tsx:181-207), so they inherit the 44px coarse-pointer hit area; full-width footer buttons below 640px (alert-dialog.css:150-154). Media chip is a fixed 2.5rem (alert-dialog.css:165-170), decorative."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Title uses line-height: 1 (alert-dialog.css:191), so a two-line or CJK title has lines touching and ascenders clipped against the header gap; other parts use logical properties (text-align start at >=640px, margin-inline). No long-title story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Bottom-stick on phone with safe-area padding designed (alert-dialog.css:118-137); grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "atom63 component alert-dialog returns import, contract, APG link, iOS mapping and Confirm/Variants examples; guidance first bullet is specific, the other two are family boilerplate."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Only three unit tests: trigger slot, parts, Action/Cancel as Buttons (alert-dialog.test.tsx:37-55). variant, size, footer variant, bottomStickOnMobile and the always-on aria-modal are untested; keyboard covered by the pattern test only."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Mapped to native alert(_:isPresented:actions:message:) (cross-renderer-contracts.generated.ts:84-110); examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/confirmationDialog.{light,dark,large-type}.png show only the 'Delete project' button and 'No decision', never the presented alert."
+        }
+      ]
+    },
+    {
+      "subject": "drawer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "DrawerTrigger and DrawerClose take both asChild and render (drawer.tsx:17-22,55-73,108-140), the only overlay with two composition APIs (every sibling uses render only); DrawerContent stamps data-slot drawer-content-inner (drawer.tsx:188) which is not in drawerContract.slots; no PortalContainerProvider support (see dialog finding). direction/footer variant use contract types (drawer.tsx:4)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "drawerContract has no accessibility binding (drawer-contract.ts has no accessibility field, unlike dialog/alert-dialog), so no pattern test runs; drawer.test.tsx:15-60 has no Escape, focus-trap or focus-return test; DrawerPrimitive.Popup (drawer.tsx:177) gets no aria-modal although the same Base UI gap was worked around for Dialog (base-ui-issue-drafts.md #5). Reduced motion handled (drawer.css:261-274)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Only apps/storybook/visual/__screenshots__/ui-react-drawer-persistent-sheet-chromium-linux.png shows an open drawer (modern/light only); directions/themes/playground are closed. In that capture the header is centred at 1280px although drawer.css:216-219 asks for text-align: start at >=768px: the rule loses to the higher-specificity side selector at drawer.css:211-214."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Open captured only for the non-modal persistent sheet; the modal open state, dragging and snapped (drawerContract.states) are not captured: every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-drawer-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-drawer-directions-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-drawer-themes-chromium-linux.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Spacing reads space tokens (drawer.css:199-259); no close button by default; side drawers clamp to min(100% - 3rem, 24rem) (drawer.css:154-167). The grab handle is a fixed 2.5rem x 0.25rem decorative bar (drawer.css:186-195), not a target."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "Broken in RTL: direction left/right is physical (drawerContract.directions; flagged 'physical-value drawer.directions' in contract-consistency-baseline.json:2-3) but placement uses logical justify-content: flex-start/flex-end (drawer.css:72-81), while the closed transform (drawer.css:159,168), safe-area padding and swipeDirection (drawer.tsx:74-95) stay physical. Under dir=rtl a direction=\"left\" drawer docks on the right edge yet animates and swipes from the left. check:craft passes it because physical properties scoped to data-side are allowed (scripts/design-system/lib/craft-rules.test.mjs:103-110)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Bottom drawer reserves a 6rem gutter and pads safe areas (drawer.css:36-48,129-140); swipe-to-dismiss from Base UI. grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "atom63 component drawer returns import, contract, guidance and Playground/PersistentSheet/Directions examples; no accessibility pattern line because the contract has none (see K2); boilerplate bullets."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Three tests: content when open, nothing when closed, modal={false} pass-through (drawer.test.tsx:15-60). Swipe dismissal, snap points, direction mapping to swipeDirection and Escape are untested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart; atom63 component drawer prints no 'Web and iOS' section and the cross-renderer contracts have no drawer entry."
+        }
+      ]
+    },
+    {
+      "subject": "sheet",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Sheet keeps module-level mutable state and toggles a body attribute data-sheet-open (sheet.tsx:37-42) that nothing in packages/ or apps/ reads (grep data-sheet-open hits only sheet.tsx and its test); SheetPanel always wraps its element in ScrollArea (sheet.tsx:269) so className/render land on the inner div and the scroll root is not reachable; z-index fallbacks are 40/50 (sheet.css:16,32) where Dialog/AlertDialog/Drawer use 500/600. Side, variant and footer variant use contract types."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "SheetPopup renders the raw Base UI Dialog.Popup (sheet.tsx:162) without the aria-modal workaround Dialog applies (dialog.tsx:131-137; base-ui-issue-drafts.md #5), sheetContract has no accessibility binding, and sheet.test.tsx:8-98 has no keyboard, focus-trap or focus-return test. Close is a labelled Button (sheet.tsx:157-161); reduced motion handled (sheet.css end)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Cannot be judged: every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-sheet-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-sides-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-inset-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-bare-footer-chromium-linux.png. Sheet title/description use typography-lg/base (sheet.css title/description) where Dialog and Drawer use xl/sm."
+        },
+        {
+          "criterion": "K4",
+          "score": 1,
+          "evidence": "every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-sheet-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-sides-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-inset-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-bare-footer-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-sheet-endpoints-chromium-linux.png; grep -c defaultOpen sheet.stories.tsx = 0."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Close is Button size icon variant ghost (sheet.tsx:157-161), inheriting the coarse-pointer hit area; spacing reads space tokens."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "Broken in RTL, same mechanism as Drawer: side left/right placement uses logical justify-content (sheet.css:44-51) while translate (sheet.css:112,123) and safe-area padding-left/right (sheet.css:107,118) are physical; under dir=rtl side=\"left\" docks right and slides in from the left with its safe-area inset on the wrong edge. Flagged as 'physical-value sheet.sides' in contract-consistency-baseline.json:4-5."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Bottom/top sheets pad safe areas (sheet.css:37-43, 91-100); grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "atom63 component sheet returns import, contract, guidance that distinguishes Sheet from Drawer, and Sides/Inset/BareFooter examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Six tests: default side, side reflection, PortalContainerProvider, explicit container precedence, controlled body state cleanup, closeProps (sheet.test.tsx:8-98). Keyboard behaviour untested (see K2)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart of its own; the web Dialog maps to native sheet(isPresented:) and is scored there."
+        }
+      ]
+    },
+    {
+      "subject": "popover",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "PopoverAnchor is a plain div with a data-slot (popover.tsx:100-106) that is never passed to the Positioner's anchor, and PopoverContent exposes no anchor prop (popover.tsx:60-65) although TooltipPopup does (tooltip.tsx:22-24); the test only checks the slot renders (popover.test.tsx:53). Root/Trigger/Close spread props; portalContainer falls back to the provider (popover.tsx:76-77)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "popoverContract has no accessibility binding (popover-contract.ts), so no pattern test; popover.test.tsx:32-80 has no Escape, outside-press or focus-return test. Base UI supplies dialog semantics; reduced motion handled (popover.css end)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-popover-themes-chromium-linux.png opens one popover per theme row, but the rows are 56px tall so the eight popups stack on top of each other and only terminal/dark is fully visible; seven themes' popup bodies and buttons are hidden."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Open state captured only in the overlapping Themes story; apps/storybook/visual/__screenshots__/ui-react-popover-sides-chromium-linux.png and playground do not hold all sides open; starting/ending not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Fixed 18rem width clamped to --available-width, padding space-2_5, control font size (popover.css:18-31); no size axis in the contract."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Positioning by Base UI flips with collisions; text uses start alignment by default; side-aware entrance offsets (popover.css:44-66) are tied to physical data-side, which Base UI already resolves per direction."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "max-width: var(--available-width) keeps it on screen (popover.css:22) but there is no safe-area clamp (HoverCard and Tooltip have one, hover-card.css:19-27) and grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "atom63 component popover returns import, contract, guidance distinguishing Popover from Dialog, examples; no APG line because the contract has none."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Five tests: trigger slot, open parts, anchor/close slots, default side, PortalContainerProvider (popover.test.tsx:32-80); SSR via ssr.test.tsx."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (atom63 component popover has no 'Web and iOS' section)."
+        }
+      ]
+    },
+    {
+      "subject": "hover-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "HoverCard and PreviewCard both wrap Base UI PreviewCard (hover-card.tsx:3, preview-card.tsx:3) with diverging recipes (hover-card.css: md radius fallback, max-height + overflow, safe-area clamp; preview-card.css: lg fallback, flex column, text-wrap balance), and preview-card/index.ts re-exports HoverCard/HoverCardContent/HoverCardTrigger aliases under the same names as this component. Props otherwise spread correctly."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "No accessibility binding in hoverCardContract and no keyboard/focus test (hover-card.test.tsx:9-45 checks render, default side and portal only). Guidance says essential information must stay outside the card. Reduced motion handled (hover-card.css end)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Cannot be judged: every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-hovercard-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-hovercard-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-hovercard-endpoints-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 1,
+          "evidence": "every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-hovercard-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-hovercard-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-hovercard-endpoints-chromium-linux.png; grep -c defaultOpen hover-card.stories.tsx = 0."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Width 16rem clamped to available width and safe areas, max-height 72% of the viewport with overflow (hover-card.css:19-31)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Overflow scrolls (hover-card.css:30-31); no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "touch-action: manipulation on the trigger (hover-card.css:15-17); hover cards do not open on touch and there is no phone story: grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "atom63 component hover-card returns import, contract, a specific first guidance bullet and Playground/Themes examples; it does not say how HoverCard differs from PreviewCard."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Three tests, none of which open the card by interaction (hover-card.test.tsx:9-45)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart."
+        }
+      ]
+    },
+    {
+      "subject": "preview-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Duplicate of HoverCard on the same primitive, plus colliding HoverCard* aliases in preview-card/index.ts:1-8 (finding filed here)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "No accessibility binding in previewCardContract; preview-card.test.tsx has a single render test (line 7); reduced motion handled (preview-card.css end)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-previewcard-themes-chromium-linux.png opens all eight but they overlap; only terminal/dark is fully visible. Retro and terminal keep the rounded lg radius (see dialog K3 radius finding)."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Open state captured only in the overlapping Themes story; playground/endpoints baselines are closed."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "16rem width clamped to --available-width (preview-card.css:21-22)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "text-wrap: balance (preview-card.css:30); no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "atom63 component preview-card returns import, contract, a specific first bullet and examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "One unit test (preview-card.test.tsx:7); side/align defaults and portal fallback untested, unlike hover-card.test.tsx."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart."
+        }
+      ]
+    },
+    {
+      "subject": "tooltip",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Exposes Provider, Root, createHandle, Trigger (render), Popup with anchor/side/align/sideOffset/portalProps (tooltip.tsx:9-69); props match tooltipContract sides/alignments/defaults; detached triggers with payloads tested (tooltip.test.tsx:128)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Opens on keyboard focus and closes with Escape (tooltip.test.tsx:44-55), opens on hover (31-42); reduced motion (tooltip.css end). tooltipContract has no APG binding; no forced-colors rule (system-wide)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. In apps/storybook/visual/__screenshots__/ui-react-tooltip-themes-chromium-linux.png only terminal/dark shows its tooltip; the other seven combinations are closed."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Open captured in Themes (one row), SharedTooltip and AnchorAndPortal; apps/storybook/visual/__screenshots__/ui-react-tooltip-sides-chromium-linux.png shows four closed triggers; the 'instant' state is not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "max-width min(18rem, available, safe-area clamp) (tooltip.css:30-40); padding from space tokens (tooltip.css:85-92)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "overflow-wrap: anywhere and text-wrap: balance (tooltip.css:58-59,95); text-align: start. Contract sides are physical (contract-consistency-baseline.json:8-9)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Tooltips do not open on touch; guidance says no essential content; grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "atom63 component tooltip returns import (Provider, Tooltip, Trigger, Content), contract, specific first bullet and four examples incl. SharedTooltip."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Eight behaviour tests incl. hover, focus/Escape, render polymorphism, default side, portal props and provider fallback, detached triggers (tooltip.test.tsx:26-140)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart."
+        }
+      ]
+    },
+    {
+      "subject": "toaster",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 1,
+          "evidence": "The default variant points Sonner at --popover, --border and --popover-foreground (toaster.tsx:30-35). These exist only in @atom63/styles/compat/shadcn (packages/styles/src/compat/shadcn.css:23-34), which @atom63/styles does not import (packages/styles/src/index.css:6-17) and @atom63/ui-react/styles.css does not import (packages/ui-react/src/styles/index.css:1-4), the setup the README gives (packages/ui-react/README.md:33). Storybook imports compat (apps/storybook/.storybook/storybook.css:7), the starter too, so it is masked. In a README install the inline --normal-bg etc. resolve to the guaranteed-invalid value, overriding Sonner's own palette: a transparent, borderless default toast. Also contract slots toast-icon/toast-message are never stamped (only slots[0] at toaster.tsx:74)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Conformance verifies the toast is announced without moving focus (packages/ui-react/src/conformance/renderer-conformance.test.tsx:301-311); Sonner provides the live region and honours reduced motion; icons are decorative."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Only the inverse pill is visible in any baseline (apps/storybook/visual/__screenshots__/ui-react-toaster-inverse-chromium-linux.png); the default card and tones have never been captured, and there is no Themes story."
+        },
+        {
+          "criterion": "K4",
+          "score": 1,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-toaster-playground-chromium-linux.png and ui-react-toaster-dark-chromium-linux.png show only the four tone buttons, no toast: the default variant and the info/success/warning/error/loading tones (toasterContract.tones) are never captured; only the inverse loading pill is."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inverse geometry from space and type tokens (toaster.tsx:46-51); Sonner sizes the default at --width 356px."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "The inverse pill maps Sonner's physical data-x-position left/right to logical margin-inline (toaster.css:21-27), which flips under dir=rtl and pushes a 'left' toast to the right; no RTL or long-message story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Sonner handles mobile width, but the host sets no safe-area offset (toaster.tsx:66-102 passes no offset/mobileOffset) and grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "atom63 component toaster has a specific first bullet, but bullets two and three are generic utility boilerplate ('Keep the utility’s semantic purpose explicit…'), and nothing tells a builder that the default variant needs the compat CSS (see K1)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Three unit tests (toaster.test.tsx:9-50) plus conformance; SSR renders the host inline when document is undefined but the client renders a portal (toaster.tsx:104-108), a hydration mismatch the SSR test cannot see because it only calls renderToString (apps/storybook/ssr/ssr.test.tsx:24-33)."
+        },
+        {
+          "criterion": "K10",
+          "score": 1,
+          "evidence": "AtomToast (packages/ui-ios/Sources/Atom63UI/AtomToast.swift) has the variant axis but no tones (web toasterTones has six), no duration, dismissal or action (fixed 3 s at line 55), a capsule for 'standard' where the web default is a card, and a literal shadow(radius: 8, y: 4) (line 119); no test in packages/ui-ios/Tests references AtomToast; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toast.{light,dark,large-type}.png show only the three buttons, no toast. Conformance maps states only (cross-renderer-contracts.generated.ts:942-980)."
+        }
+      ]
+    },
+    {
+      "subject": "portal-container",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "API matches portalContainerContract targets (element, shadow-root, null, undefined) (portal-container.tsx:14-35), but the provider's promise is not kept system-wide: Dialog, AlertDialog and Drawer never read it (grep -rln usePortalContainer), and Toaster turns a pending null into document.body (toaster.tsx:108) while Base UI-backed consumers pass null through."
+        },
+        {
+          "criterion": "K2",
+          "score": null,
+          "evidence": "n/a: no rendered UI and no focus management (guidance says so)."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: no chrome; portalContainerVisualArchetypes is empty."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "unprovided/pending/resolved covered by tests (portal-container.test.tsx:17-46) and the NoContainer story (apps/storybook/visual/__screenshots__/ui-react-portalcontainer-no-container-chromium-linux.png)."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: no sizing."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: no layout."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: no layout."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "atom63 component portal-container lists Dialog as a related component and the source comment names dialogs (portal-container.tsx:7), but Dialog ignores the provider, so the docs promise behaviour a builder will not get; it does not list which overlays honour it."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Nine tests incl. shadow roots, nesting, value updates and portal creation (portal-container.test.tsx:17-140); per-consumer provider tests exist for Sheet, Popover, HoverCard, Tooltip, Toaster."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: web-only DOM concept."
+        }
+      ]
+    },
+    {
+      "subject": "AtomToast (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "AtomToast(message:systemImage:variant:) and .atomToast(_:) (AtomToast.swift:12-35): no tone, duration, dismiss or action parameters; the 3 s timer is hard-coded (line 55)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Announces via AtomAccessibility.announce (AtomToast.swift:101-103,121-123), hides the symbol (91), honours reduce motion through motionPreference (73-75). Auto-dismiss gives VoiceOver users no way to keep it."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Uses .regularMaterial and theme colours (AtomToast.swift:106-119) but a literal shadow(radius: 8, y: 4) (line 119); never captured (see K4)."
+        },
+        {
+          "criterion": "K4",
+          "score": 1,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toast.light.png, toast.dark.png and toast.large-type.png show only the 'Show success/warning/inverse toast' buttons; visible, dismissing and reduced-motion (toaster requiredStates) are never captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Dynamic Type via .font(.subheadline) (AtomToast.swift:93,108); padding from AtomTokens.Space (50-51,96-97,111-112)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "HStack and Label order by layout direction, so the inverse symbol-after-message mirrors in RTL; padding is .horizontal (AtomToast.swift:50,88-92)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "overlay(alignment: .top) stays inside the safe area (AtomToast.swift:47-52)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Listed in packages/ui-ios/README.md:53, docs/coverage.md:17, docs/building-blocks.md:26; usage snippet in examples/ios-demo/Atom63Demo/CatalogRegistry.swift:451."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test references AtomToast (grep -rn -i toast packages/ui-ios/Tests: no hits); the snapshot test exists but captures no toast."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: this is the counterpart; parity is scored on toaster K10."
+        }
+      ]
+    },
+    {
+      "subject": "AtomFormPresentation (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Environment enum standalone/grouped/sheet with .atomFormPresentation(_:) (AtomFormPresentation.swift:3-17). The .sheet case behaves exactly like .grouped in every consumer (AtomFormField.swift:61-105: case .grouped, .sheet)."
+        },
+        {
+          "criterion": "K2",
+          "score": null,
+          "evidence": "n/a: no UI of its own; accessibility lives in AtomFormField."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: no chrome of its own."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: no states; it switches field chrome."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: sizing belongs to AtomFormField."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "packages/ui-ios/docs/building-blocks.md:87-101 explains ownership with a code sample; docs/production-adoption.md:42."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "The only test asserts allCases (packages/ui-ios/Tests/Atom63UITests/Atom63TokenTests.swift:90); the demo never uses .sheet (grep atomFormPresentation examples/ios-demo: only .grouped at SettingsView.swift:77, FormCoverageView.swift:180), so no snapshot covers it."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Counterpart of forms inside web Dialog/Sheet; the web has no matching presentation axis, and the iOS sheet snapshot never presents the form (see dialog K10)."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k04-overlays-1",
+      "subject": "dialog",
+      "criterion": "K4",
+      "severity": "P1",
+      "summary": "No baseline captures an open Dialog: all five dialog baselines show the closed trigger, so sizes, footers, themes and mobile placement are unreviewed and unguarded.",
+      "evidence": "every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-dialog-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-sizes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-bare-footer-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-themes-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-dialog-endpoints-chromium-linux.png",
+      "fix": "Open the popup in the visual stories (defaultOpen, one popup per capture or a stacked portal container per theme) and re-baseline.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "I viewed dialog-sizes, dialog-themes and dialog-playground. They show only trigger buttons (sm/default/lg, and 'Rename project' per theme). No baseline in __screenshots__ shows an open Dialog. The inform-dialog-* baselines belong to a different component."
+      }
+    },
+    {
+      "id": "k04-overlays-2",
+      "subject": "alert-dialog",
+      "criterion": "K4",
+      "severity": "P1",
+      "summary": "No baseline captures an open AlertDialog: open state, the five variants and the Action/Cancel footer are unguarded.",
+      "evidence": "every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-alertdialog-confirm-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-alertdialog-variants-chromium-linux.png",
+      "fix": "Open the popup in visual stories and re-baseline.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "alertdialog-variants shows only five trigger buttons (default/destructive/info/success/warning), and alertdialog-confirm shows only the 'Publish' button. No open AlertDialog is captured."
+      }
+    },
+    {
+      "id": "k04-overlays-3",
+      "subject": "drawer",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "Side drawers break in RTL: justify-content is logical but translate, safe-area padding and swipe direction are physical, so direction=left docks right and slides in from the wrong edge.",
+      "evidence": "packages/ui-react/src/components/drawer/drawer.css:72-81,154-168; drawer.tsx:74-95; contract-consistency-baseline.json:2-3",
+      "fix": "Use physical placement for physical sides (justify-self/inset-inline by data-side with dir-independent left/right) or move the axis to start/end and mirror translate/swipe; add an RTL story.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "drawer.css uses logical justify-content flex-start/flex-end for left/right, but physical padding-left/right safe-area, transform-origin left/right and translate3d(±100%). drawer.tsx maps direction left/right straight to swipeDirection left/right. Nothing in drawer/ handles rtl or dir. In RTL, left docks at the inline start (the right edge) while the transform and swipe stay physical. K6 is in the bar; the baseline entries only ratchet the physical naming and are not a documented RTL exemption."
+      }
+    },
+    {
+      "id": "k04-overlays-4",
+      "subject": "sheet",
+      "criterion": "K4",
+      "severity": "P1",
+      "summary": "No baseline captures an open Sheet: four sides, the inset variant and both footers are unguarded.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-sheet-sides-chromium-linux.png, ui-react-sheet-inset-chromium-linux.png (closed)",
+      "fix": "Open the sheet in visual stories and re-baseline.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "sheet-sides shows only the right/left/top/bottom trigger buttons. No open sheet is captured, so the sides, the inset variant and both footers are unguarded."
+      }
+    },
+    {
+      "id": "k04-overlays-5",
+      "subject": "sheet",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "Side sheets break in RTL: logical justify-content with physical translate and safe-area padding puts side=left on the right edge entering from the left.",
+      "evidence": "packages/ui-react/src/components/sheet/sheet.css:44-51,104-124; contract-consistency-baseline.json:4-5",
+      "fix": "Same fix as Drawer; add an RTL story.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "In sheet.css, the left/right viewports are flex with logical justify-content, while the popups use physical padding-left/right safe-area and translate -2rem/2rem. There is no rtl handling, so the same RTL mismatch as Drawer applies."
+      }
+    },
+    {
+      "id": "k04-overlays-6",
+      "subject": "hover-card",
+      "criterion": "K4",
+      "severity": "P1",
+      "summary": "No baseline captures an open HoverCard; every capture is the '@atom63' link alone.",
+      "evidence": "every baseline of this component shows only the closed trigger: apps/storybook/visual/__screenshots__/ui-react-hovercard-playground-chromium-linux.png, apps/storybook/visual/__screenshots__/ui-react-hovercard-themes-chromium-linux.png",
+      "fix": "Open the card in visual stories.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "hovercard-playground shows only the '@atom63' link. No open HoverCard content appears in any hovercard baseline."
+      }
+    },
+    {
+      "id": "k04-overlays-7",
+      "subject": "toaster",
+      "criterion": "K1",
+      "severity": "P1",
+      "summary": "The default Toaster variant reads shadcn compat variables that the documented @atom63/ui-react/styles.css install does not define, so its toast renders without background or border outside Storybook and the starter.",
+      "evidence": "packages/ui-react/src/components/toaster/toaster.tsx:30-35; packages/styles/src/compat/shadcn.css:23-34; packages/styles/src/index.css:6-17; packages/ui-react/src/styles/index.css:1-4; packages/ui-react/README.md:33; apps/storybook/.storybook/storybook.css:7",
+      "fix": "Point the default variant at --a63-surface-overlay, --a63-border-subtle, --a63-text-primary and the overlay radius, and add a test that renders it without compat CSS.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced from source. toaster.tsx sets --normal-bg: var(--popover), --normal-border: var(--border) and --border-radius: var(--radius) for the default variant. --popover is defined only in packages/styles/src/compat/shadcn.css. @atom63/ui-react/styles.css (src/styles/index.css) imports @atom63/styles, whose index.css does not import compat. The README says no second CSS import is needed, and only storybook.css adds compat/shadcn. The custom properties therefore become guaranteed-invalid on the host, overriding Sonner's defaults, and the background and border resolve to nothing."
+      }
+    },
+    {
+      "id": "k04-overlays-8",
+      "subject": "toaster",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No baseline shows a default-variant toast or any tone; playground and dark captures contain only buttons.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-toaster-playground-chromium-linux.png, ui-react-toaster-dark-chromium-linux.png",
+      "fix": "Fire the toasts in the story (play function or a held toast) before capture.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "The claim is partly false. ui-react-toaster-scoped-dark-region-chromium-linux.png captures a default-variant toast.success('Dark region saved') inside a dark region (the story renders <Toaster position='bottom-center'/> with no variant). The playground and dark captures do show only buttons, so light mode and the error/info/warning tones are uncaptured. That is a coverage gap, not a total absence."
+      }
+    },
+    {
+      "id": "k04-overlays-9",
+      "subject": "toaster",
+      "criterion": "K10",
+      "severity": "P1",
+      "summary": "iOS parity for Toaster is unverified and incomplete: AtomToast has no tones, duration or dismissal, a different anatomy from the web card, and its snapshots never show a toast.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToast.swift:7-29,55,106-124; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toast.light.png; grep -rn -i toast packages/ui-ios/Tests (no hits)",
+      "fix": "Add a tone axis mapped to toasterTones, align the standard anatomy (or record the adaptation in the conformance contract), and snapshot a presented toast.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "AtomToast.swift has only message, systemImage and variant. There is no tone axis (the icon is free-form), the 3-second duration is hard-coded (line 55), and there is no dismiss or action API. The standard variant is a material capsule, unlike the web overlay card. grep finds no toast in packages/ui-ios/Tests. The demo snapshot toast.light.png shows only the three 'Show ... toast' buttons. Parity is unverified."
+      }
+    },
+    {
+      "id": "k04-overlays-10",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K4",
+      "severity": "P1",
+      "summary": "No iOS snapshot shows a toast in any variant, mode or text size.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toast.light.png, toast.dark.png, toast.large-type.png",
+      "fix": "Present a toast in the showcase captured by CatalogSnapshotTests.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "toast.light.png shows only the 'Show success/warning/inverse toast' buttons, and there are only three toast snapshots (light, dark, large-type), all of the trigger screen. No iOS snapshot shows a rendered toast. This overlaps with k04-overlays-9."
+      }
+    },
+    {
+      "id": "k04-overlays-11",
+      "subject": "dialog",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "DialogPanel's scrollFade prop (default true) does nothing: no recipe styles data-scroll-fade on the panel.",
+      "evidence": "packages/ui-react/src/components/dialog/dialog.tsx:224-236; grep -rn scroll-fade --include='*.css' packages/ui-react/src returns only scroll-area/scroll-area.css:40",
+      "fix": "Wrap the panel in ScrollArea scrollFade as SheetPanel does (sheet.tsx:269), or drop the prop.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-12",
+      "subject": "dialog",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Dialog, AlertDialog and Drawer ignore PortalContainerProvider, so inside a nested theme region they portal to body and lose the region's tokens, while Popover, Tooltip, HoverCard, PreviewCard, Sheet, Select and Toaster honour it.",
+      "evidence": "grep -rln usePortalContainer packages/ui-react/src lists no dialog/alert-dialog/drawer file; dialog.stories.tsx:46 works around it with portalProps={{ container: portalContainerRef }}; portal-container.tsx:7 says dialogs should use it",
+      "fix": "Default DialogPortal/AlertDialogPortal/DrawerPortal container to usePortalContainer() as SheetPortal does (sheet.tsx:72-80), with a test per component.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-13",
+      "subject": "dialog",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The overlay radius hook --a63-overlay-radius does not exist, so each overlay uses its own fallback: dialog/alert-dialog/drawer 2xl, popover/preview-card lg, hover-card/tooltip md, sheet inset a hard --radius-2xl; themes cannot set one overlay corner.",
+      "evidence": "grep -rn -e '--a63-overlay-radius:' packages/styles/src returns nothing; dialog.css:55, popover.css:26, preview-card.css:23, hover-card.css:36, tooltip.css:50, sheet.css inset rule",
+      "fix": "Define --a63-overlay-radius in the overlay contract (per theme), or replace the dead var() with the chosen radius token; decide whether popovers and modals share it.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k04-overlays-14",
+      "subject": "dialog",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Dialog's close button is a bare element at 28-32px on coarse pointers, below the 44px target that Button's hit area provides.",
+      "evidence": "packages/ui-react/src/components/dialog/dialog.css:42-45,106-114; atom63 token --a63-control-min-size (touch 2rem); button.css:634-637; sheet.tsx:157-161 uses Button",
+      "fix": "Render the close as Button size icon-sm variant ghost via render, as SheetPopup does.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-15",
+      "subject": "dialog",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "Dialog's phone behaviour (bottom placement, safe-area padding, full-width footer buttons) has no phone story or baseline.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add a phone-width story per overlay with an open surface, captured in the visual run.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-16",
+      "subject": "dialog",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "The iOS sheet snapshots never present the sheet, so the counterpart's anatomy, dark mode and Dynamic Type are unverified.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/sheet.light.png (trigger only)",
+      "fix": "Snapshot the presented state (isPresented = true in the showcase used by CatalogSnapshotTests).",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-17",
+      "subject": "alert-dialog",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AlertDialog's variant, size and footer-variant props are hand-typed unions, not the contract types, and the contract keeps a deprecated size axis plus 'destructive' where the system says 'error'.",
+      "evidence": "packages/ui-react/src/components/alert-dialog/alert-dialog.tsx:84-85,125; docs/design-system/audits/contract-consistency-baseline.json:10-11",
+      "fix": "Import the foundation types; resolve destructive vs error and drop or rename the deprecated size axis in alert-dialog.json.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-18",
+      "subject": "alert-dialog",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "AlertDialog's five tinted variants (media chip accent) have never been seen in any theme.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-alertdialog-variants-chromium-linux.png (five closed triggers)",
+      "fix": "Capture each variant open per theme for the contact sheet.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-19",
+      "subject": "alert-dialog",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "AlertDialogTitle sets line-height: 1, so wrapped or CJK titles collide; Dialog and Drawer titles use the xl line-height token.",
+      "evidence": "packages/ui-react/src/components/alert-dialog/alert-dialog.css:188-193 vs dialog.css (title uses --typography-xl-line-height)",
+      "fix": "Use var(--typography-xl-line-height) and add a long-title story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-20",
+      "subject": "alert-dialog",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "AlertDialog's phone bottom-stick layout has no phone story or baseline.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add a phone-width open story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-21",
+      "subject": "alert-dialog",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "AlertDialog has no test for its variant/size/footer axes or for aria-modal, which Dialog does test.",
+      "evidence": "packages/ui-react/src/components/alert-dialog/alert-dialog.test.tsx:37-55; dialog.test.tsx:82-98 for comparison",
+      "fix": "Add axis and aria-modal assertions.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-22",
+      "subject": "alert-dialog",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "The iOS confirmation dialog snapshots never present the alert.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/confirmationDialog.light.png",
+      "fix": "Snapshot the presented alert.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-23",
+      "subject": "drawer",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Drawer is the one overlay that accepts both asChild and render on Trigger and Close, and it emits a drawer-content-inner slot the contract does not list.",
+      "evidence": "packages/ui-react/src/components/drawer/drawer.tsx:17-22,55-73,108-140,188; packages/ui-foundation/src/components/drawer/drawer-contract.ts slots",
+      "fix": "Keep render only (deprecate asChild with a codemod note) and add or rename the inner slot in drawer.json.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-24",
+      "subject": "drawer",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Drawer has no APG binding, no keyboard tests and no aria-modal on the modal popup.",
+      "evidence": "packages/ui-foundation/src/components/drawer/drawer-contract.ts (no accessibility); packages/ui-react/src/components/drawer/drawer.test.tsx:15-60; drawer.tsx:177; docs/design-system/audits/base-ui-issue-drafts.md section 5",
+      "fix": "Bind accessibility: dialog-modal for modal drawers, add aria-modal when modal, and add Drawer to apps/storybook/a11y/patterns.test.ts.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-25",
+      "subject": "drawer",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The drawer header's 'start-align at >=768px' rule is dead: .a63-Drawer-content[data-side=bottom|top] .a63-Drawer-header outranks it, so wide bottom drawers centre the title over start-aligned body text.",
+      "evidence": "packages/ui-react/src/components/drawer/drawer.css:211-219; apps/storybook/visual/__screenshots__/ui-react-drawer-persistent-sheet-chromium-linux.png ('Choose a ride' centred, body start-aligned)",
+      "fix": "Raise the media rule to the same selector, or decide the drawer header is always centred and delete the rule.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-26",
+      "subject": "drawer",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Modal Drawer open, dragging and snapped states are never captured; directions show only triggers.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-drawer-directions-chromium-linux.png",
+      "fix": "Capture each direction open, and a snapped state.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-27",
+      "subject": "drawer",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "Drawer, the phone-first overlay, has no phone-width story or baseline.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add a phone story with an open bottom drawer and snap points.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-28",
+      "subject": "drawer",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Drawer's swipe direction mapping, snap points and dismissal are untested.",
+      "evidence": "packages/ui-react/src/components/drawer/drawer.test.tsx:15-60; drawer.tsx:74-95",
+      "fix": "Add tests for swipeDirectionForDirection and Escape/close.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-29",
+      "subject": "sheet",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Sheet writes an unused global body attribute from module-level state, and its z-index fallbacks (40/50) disagree with every other modal (500/600).",
+      "evidence": "packages/ui-react/src/components/sheet/sheet.tsx:37-42; sheet.css:16,32; dialog.css:5,30",
+      "fix": "Remove the body-state counter (or document and test a consumer), and align the fallbacks.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-30",
+      "subject": "sheet",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Sheet is a modal dialog without aria-modal, an APG binding or keyboard tests, although it is built on the same Base UI Dialog that needed the workaround.",
+      "evidence": "packages/ui-react/src/components/sheet/sheet.tsx:162 vs dialog.tsx:131-137; packages/ui-foundation/src/components/sheet/sheet-contract.ts (no accessibility)",
+      "fix": "Reuse Dialog's modal context and aria-modal, bind dialog-modal in sheet.json, add Sheet to patterns.test.ts.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-31",
+      "subject": "sheet",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Sheet's title and description use a different type step (lg/base) from Dialog and Drawer (xl/sm), so the three modal families do not read as one system.",
+      "evidence": "packages/ui-react/src/components/sheet/sheet.css (.a63-Sheet-title, .a63-Sheet-description); dialog.css (.a63-Dialog-title, .a63-Dialog-description)",
+      "fix": "Pick one modal title/description step for the family.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k04-overlays-32",
+      "subject": "sheet",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "Sheet has no phone story or baseline.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add a phone-width open story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-33",
+      "subject": "popover",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "PopoverAnchor does nothing: it is a styled div never wired to the Positioner, so a consumer who uses it gets the trigger-anchored position anyway.",
+      "evidence": "packages/ui-react/src/components/popover/popover.tsx:60-65,100-106; tooltip.tsx:22-24; popover.test.tsx:53",
+      "fix": "Add an anchor prop to PopoverContent and make PopoverAnchor register itself (ref + context), or remove the part and the contract slot.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-34",
+      "subject": "popover",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Popover has no APG binding and no keyboard tests (Escape, focus return).",
+      "evidence": "packages/ui-foundation/src/components/popover/popover-contract.ts; packages/ui-react/src/components/popover/popover.test.tsx:32-80",
+      "fix": "Bind the non-modal dialog pattern and add Popover to patterns.test.ts.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-35",
+      "subject": "popover",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The popover, preview-card and tooltip Themes stories overlap their open popups, so seven of eight theme/mode combinations cannot be judged from the baselines.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-popover-themes-chromium-linux.png, ui-react-previewcard-themes-chromium-linux.png, ui-react-tooltip-themes-chromium-linux.png",
+      "fix": "Give each theme row enough height (or one capture per theme) so every popup is fully visible.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-36",
+      "subject": "popover",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Popover sides are not captured open.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-popover-sides-chromium-linux.png",
+      "fix": "Capture each side open.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-37",
+      "subject": "popover",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "Popover lacks the safe-area width clamp HoverCard and Tooltip use, and has no phone story.",
+      "evidence": "packages/ui-react/src/components/popover/popover.css:22 vs hover-card.css:19-27",
+      "fix": "Share the clamp across popover-family recipes; add a phone story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-38",
+      "subject": "preview-card",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "HoverCard and PreviewCard are two implementations of the same Base UI primitive with different recipes, and preview-card/index.ts exports HoverCard* aliases that collide with the real HoverCard names.",
+      "evidence": "packages/ui-react/src/components/hover-card/hover-card.tsx:3; preview-card/preview-card.tsx:3,96-101; preview-card/index.ts:1-8; hover-card.css:19-37 vs preview-card.css:13-33",
+      "fix": "Keep one implementation and make the other a documented alias of it (or a variant), and delete the colliding re-exports.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-39",
+      "subject": "hover-card",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "HoverCard has no test that keyboard focus opens it or that it is reachable without hover.",
+      "evidence": "packages/ui-react/src/components/hover-card/hover-card.test.tsx:9-45",
+      "fix": "Add focus-open and Escape tests like tooltip.test.tsx:44-55.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-40",
+      "subject": "hover-card",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "HoverCard's popup has never been seen in any theme (see K4).",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-hovercard-themes-chromium-linux.png",
+      "fix": "Capture it open per theme.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-41",
+      "subject": "hover-card",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "HoverCard's touch behaviour is undocumented in a story; there is no phone capture.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add a phone story showing the trigger's fallback.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-42",
+      "subject": "hover-card",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "HoverCard's open-on-hover/focus delay is untested.",
+      "evidence": "packages/ui-react/src/components/hover-card/hover-card.test.tsx:9-45",
+      "fix": "Add an interaction test.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-43",
+      "subject": "preview-card",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "PreviewCard has no keyboard or focus test.",
+      "evidence": "packages/ui-react/src/components/preview-card/preview-card.test.tsx:7",
+      "fix": "Add focus-open and Escape tests.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-44",
+      "subject": "preview-card",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "PreviewCard's open state is only captured in the overlapping Themes story.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-previewcard-playground-chromium-linux.png",
+      "fix": "Open the playground capture.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-45",
+      "subject": "preview-card",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No phone story.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add one.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-46",
+      "subject": "preview-card",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "PreviewCard has a single render test.",
+      "evidence": "packages/ui-react/src/components/preview-card/preview-card.test.tsx:7",
+      "fix": "Add side/offset and portal tests.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-47",
+      "subject": "tooltip",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Tooltip sides and seven of eight themes are not captured open.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-tooltip-sides-chromium-linux.png, ui-react-tooltip-themes-chromium-linux.png",
+      "fix": "Hold each side and each theme open in the visual story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-48",
+      "subject": "tooltip",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No phone story shows what touch users get instead of the tooltip.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add one.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-49",
+      "subject": "toaster",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "toasterContract lists toast-icon and toast-message slots that the component never stamps.",
+      "evidence": "packages/ui-foundation/src/components/toaster/toaster-contract.ts slots; packages/ui-react/src/components/toaster/toaster.tsx:74",
+      "fix": "Stamp them via toastOptions.classNames/attributes or drop them from toaster.json.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-50",
+      "subject": "toaster",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Toaster has no Themes story, so the 4 x 2 contact sheet cannot include it.",
+      "evidence": "ls apps/storybook/visual/__screenshots__ | grep toaster (dark, inverse, playground, scoped-dark-region only)",
+      "fix": "Add a Themes story with a held-open default and inverse toast.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-51",
+      "subject": "toaster",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Inverse toasts align to the wrong side in RTL: physical data-x-position is translated into logical margin-inline.",
+      "evidence": "packages/ui-react/src/components/toaster/toaster.css:21-27",
+      "fix": "Use physical margins for the physical position, or map Sonner's dir; add an RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-52",
+      "subject": "toaster",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "Toasts are not offset by safe-area insets on phones (no offset/mobileOffset), and there is no phone story.",
+      "evidence": "packages/ui-react/src/components/toaster/toaster.tsx:66-102",
+      "fix": "Pass offsets from --a63-safe-area-*; add a phone story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-53",
+      "subject": "toaster",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Toaster docs carry generic utility bullets and do not state the CSS the default variant depends on.",
+      "evidence": "pnpm -s atom63 component toaster",
+      "fix": "Replace the boilerplate; after the K1 fix no CSS note is needed.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-54",
+      "subject": "toaster",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Toaster renders inline on the server and as a portal on the client, so hydrated apps get a mismatch; the SSR test does not hydrate.",
+      "evidence": "packages/ui-react/src/components/toaster/toaster.tsx:104-108; apps/storybook/ssr/ssr.test.tsx:24-33",
+      "fix": "Render nothing until mounted (useEffect flag) or always portal after mount; add a hydrateRoot test.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-55",
+      "subject": "portal-container",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "PortalContainerProvider is honoured by only some overlays, and Toaster treats the pending (null) state as 'use body'.",
+      "evidence": "grep -rln usePortalContainer packages/ui-react/src; packages/ui-react/src/components/toaster/toaster.tsx:108; portal-container.tsx:7",
+      "fix": "Wire the three modal overlays (see dialog K1) and make Toaster wait while the container is null.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-56",
+      "subject": "portal-container",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The docs present PortalContainerProvider as covering dialogs, which it does not.",
+      "evidence": "pnpm -s atom63 component portal-container (Related: Dialog); packages/ui-react/src/components/portal-container/portal-container.tsx:7",
+      "fix": "List the overlays that honour it, or fix the gap first (K1).",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-57",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AtomToast's API has no tone, duration or dismissal parameters.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToast.swift:12-35,55",
+      "fix": "Add tone and duration (default 3 s) parameters and a tap-to-dismiss.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-58",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "AtomToast's shadow is a literal, not an Atom shadow token.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToast.swift:119",
+      "fix": "Use the overlay shadow token.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-59",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "AtomToast has no unit test (timer, replacement by id, variant).",
+      "evidence": "grep -rn -i toast packages/ui-ios/Tests",
+      "fix": "Add tests for the timer guard (AtomToast.swift:62) and variants.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-60",
+      "subject": "AtomFormPresentation (iOS)",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "The .sheet presentation has no test or snapshot.",
+      "evidence": "packages/ui-ios/Tests/Atom63UITests/Atom63TokenTests.swift:90; examples/ios-demo/Atom63Demo/FormCoverageView.swift:180",
+      "fix": "Snapshot a form inside the presented sheet showcase.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-61",
+      "subject": "AtomFormPresentation (iOS)",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "Form-in-sheet parity is unverified: the presented sheet with AtomFormPresentation(.sheet) is never captured.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/sheet.light.png",
+      "fix": "Covered by the dialog K10 fix.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-62",
+      "subject": "hover-card",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "HoverCard duplicates PreviewCard on the same Base UI primitive with a different recipe (merge filed under preview-card K1).",
+      "evidence": "packages/ui-react/src/components/hover-card/hover-card.css:19-37 vs preview-card/preview-card.css:13-33",
+      "fix": "Merge as described in the preview-card K1 finding.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-63",
+      "subject": "preview-card",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "PreviewCard's Themes baseline overlaps the eight popups, so seven combinations cannot be judged (see popover K3).",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-previewcard-themes-chromium-linux.png",
+      "fix": "Give each theme row room for its popup.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-64",
+      "subject": "tooltip",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Tooltip's Themes baseline opens only the terminal/dark tooltip, so seven combinations cannot be judged.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-tooltip-themes-chromium-linux.png",
+      "fix": "Hold every row's tooltip open with room between rows.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-65",
+      "subject": "dialog",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "Axe runs on Dialog stories only in the closed state: no story opens the popup, so the open dialog DOM is never axe-audited.",
+      "evidence": "grep -c defaultOpen packages/ui-react/src/components/dialog/dialog.stories.tsx = 0; ui-react-dialog-playground-chromium-linux.png shows only the trigger",
+      "fix": "Add an Open story (defaultOpen) per modal overlay so axe and the visual run cover the surface.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-66",
+      "subject": "dialog",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "No RTL or long/CJK title story for Dialog; logical CSS is unverified in a capture.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add an RTL + long-title story to the visual run.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-67",
+      "subject": "dialog",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Overlay guidance is boilerplate: the same two bullets ('When the family opens a surface…', 'Check portal placement…') appear on every overlay's CLI page instead of component-specific advice.",
+      "evidence": "pnpm -s atom63 component {dialog,alert-dialog,drawer,sheet,popover,hover-card,preview-card,tooltip,portal-container}",
+      "fix": "Replace the shared bullets with one concrete rule each (e.g. Dialog: put long content in DialogPanel; Sheet vs Drawer choice).",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-68",
+      "subject": "dialog",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "mobilePlacement/size/bottomStickOnMobile mapping has no unit test.",
+      "evidence": "packages/ui-react/src/components/dialog/dialog.test.tsx:35-98 (no data-mobile-placement or data-size assertion)",
+      "fix": "Add one test asserting the data attributes for each axis value.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-69",
+      "subject": "alert-dialog",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "AlertDialog stories never open, so axe never audits the alertdialog role, title and description wiring; the source comment also contradicts the Escape behaviour the pattern test requires.",
+      "evidence": "grep -c defaultOpen packages/ui-react/src/components/alert-dialog/alert-dialog.stories.tsx = 0; alert-dialog.tsx:11-12 vs packages/ui-foundation/src/a11y/dialog.ts:37-44",
+      "fix": "Add an open story; correct the comment.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-70",
+      "subject": "alert-dialog",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "AlertDialogMedia and its icon use fixed rem sizes (2.5rem chip, 1.5rem icon) instead of control or icon size tokens, so density does not scale them.",
+      "evidence": "packages/ui-react/src/components/alert-dialog/alert-dialog.css:165-182",
+      "fix": "Size the chip from --a63-control-height-* and the icon from --a63-control-icon-size-*.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-71",
+      "subject": "alert-dialog",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Boilerplate guidance (see dialog K8).",
+      "evidence": "pnpm -s atom63 component alert-dialog",
+      "fix": "Write AlertDialog-specific guidance (when to use destructive variant, Action wording).",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-72",
+      "subject": "drawer",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Drawer's grab handle is purely visual: it is not a focusable or larger drag target, so the swipe affordance relies on hitting the whole popup.",
+      "evidence": "packages/ui-react/src/components/drawer/drawer.css:186-195",
+      "fix": "Decide whether the handle should expose a 44px drag zone; otherwise document that the whole popup is the drag target.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-73",
+      "subject": "drawer",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Boilerplate guidance; the CLI page cannot state an APG pattern because the contract has none.",
+      "evidence": "pnpm -s atom63 component drawer",
+      "fix": "Fix with the K2 binding and drawer-specific guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-74",
+      "subject": "sheet",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Sheet pads with space-6 while Dialog and Drawer use space-5, with no density rationale.",
+      "evidence": "packages/ui-react/src/components/sheet/sheet.css (.a63-Sheet-header/.a63-Sheet-panel padding space-6) vs dialog.css:140-143",
+      "fix": "Align padding across modal families or document why sheets are roomier.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-75",
+      "subject": "sheet",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Two of three guidance bullets are family boilerplate.",
+      "evidence": "pnpm -s atom63 component sheet",
+      "fix": "Write Sheet-specific guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-76",
+      "subject": "sheet",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "Sheet's variant (inset) and footer variants have no test.",
+      "evidence": "packages/ui-react/src/components/sheet/sheet.test.tsx:8-98",
+      "fix": "Add data-variant assertions.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-77",
+      "subject": "popover",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Popover's width is a fixed 18rem with no contract axis, so wider content needs a className override.",
+      "evidence": "packages/ui-react/src/components/popover/popover.css:21-22",
+      "fix": "Decide whether a size axis is wanted; otherwise document the override.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k04-overlays-78",
+      "subject": "popover",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "No RTL or long-content story for Popover.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add one RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-79",
+      "subject": "popover",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Boilerplate guidance and no APG pattern line.",
+      "evidence": "pnpm -s atom63 component popover",
+      "fix": "Fix with K2 and specific guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-80",
+      "subject": "popover",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "No test for open/close interaction (click trigger, Escape).",
+      "evidence": "packages/ui-react/src/components/popover/popover.test.tsx:32-80",
+      "fix": "Add an interaction test.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-81",
+      "subject": "hover-card",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Fixed 16rem width with no axis.",
+      "evidence": "packages/ui-react/src/components/hover-card/hover-card.css:19",
+      "fix": "Document the override.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-82",
+      "subject": "hover-card",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "No RTL or long-content story.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add one.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-83",
+      "subject": "hover-card",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "The docs do not say when to use HoverCard vs PreviewCard (same primitive).",
+      "evidence": "pnpm -s atom63 component hover-card; pnpm -s atom63 component preview-card",
+      "fix": "State the difference or merge (see preview-card K1).",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k04-overlays-84",
+      "subject": "preview-card",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "PreviewCard lacks HoverCard's safe-area and max-height clamps, so tall previews can overflow the viewport.",
+      "evidence": "packages/ui-react/src/components/preview-card/preview-card.css:21-22 vs hover-card.css:19-31",
+      "fix": "Resolve with the merge in K1.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-85",
+      "subject": "preview-card",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "No RTL or long-content story.",
+      "evidence": "grep -n 'phone|viewport|rtl|dir=' over the 10 overlay *.stories.tsx files returns nothing, and no overlay baseline under apps/storybook/visual/__screenshots__/ is a phone or RTL capture",
+      "fix": "Add one.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-86",
+      "subject": "preview-card",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Boilerplate guidance bullets.",
+      "evidence": "pnpm -s atom63 component preview-card",
+      "fix": "Write specific guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-87",
+      "subject": "tooltip",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "TooltipTrigger adds no recipe class, so it cannot be styled by slot class like the other overlay triggers (they add a63-*-trigger).",
+      "evidence": "packages/ui-react/src/components/tooltip/tooltip.tsx:18-21 vs popover.tsx:52-58",
+      "fix": "Add a63-Tooltip-trigger for parity.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-88",
+      "subject": "tooltip",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "tooltipContract has no accessibility binding, so the APG tooltip pattern is not in the pattern test run.",
+      "evidence": "packages/ui-foundation/src/components/tooltip/tooltip-contract.ts",
+      "fix": "Bind the tooltip pattern.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-89",
+      "subject": "tooltip",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Tooltip line-height is a literal 1.35 rather than a typography token.",
+      "evidence": "packages/ui-react/src/components/tooltip/tooltip.css:56",
+      "fix": "Use the sm line-height token.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-90",
+      "subject": "tooltip",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "tooltipContract sides are physical left/right (baseline debt); Base UI also accepts inline-start/inline-end.",
+      "evidence": "docs/design-system/audits/contract-consistency-baseline.json:8-9",
+      "fix": "Decide whether to add logical sides.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k04-overlays-91",
+      "subject": "tooltip",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Boilerplate guidance bullets.",
+      "evidence": "pnpm -s atom63 component tooltip",
+      "fix": "Write specific guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-92",
+      "subject": "tooltip",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "The handle crossfade (data-previous/data-current) has no test.",
+      "evidence": "packages/ui-react/src/components/tooltip/tooltip.css:98-122",
+      "fix": "Add a test or a visual capture.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-93",
+      "subject": "toaster",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "Toasts dismiss on a timer with no documented way to pause or reach them by keyboard (Sonner's hotkey is not mentioned), which matters for WCAG 2.2.1 timing.",
+      "evidence": "pnpm -s atom63 component toaster (guidance has no keyboard or timing note)",
+      "fix": "Document the hotkey and recommend duration for actionable toasts.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-94",
+      "subject": "toaster",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Icons are sized with Tailwind utility classes (size-4, mt-0.5, !items-start) rather than recipe tokens, so the toaster depends on utilities.css being loaded.",
+      "evidence": "packages/ui-react/src/components/toaster/toaster.tsx:76-80,90-93",
+      "fix": "Move the sizing into toaster.css with icon-size tokens.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-95",
+      "subject": "portal-container",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "The pending (null) state has no story.",
+      "evidence": "packages/ui-react/src/components/portal-container/portal-container.stories.tsx",
+      "fix": "Add a pending story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-96",
+      "subject": "portal-container",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "No test asserts that every overlay honours the provider; the gap in K1 went unnoticed.",
+      "evidence": "grep -l 'PortalContainerProvider' packages/ui-react/src/components/*/*.test.tsx (no dialog, alert-dialog, drawer)",
+      "fix": "Add one table-driven test across overlays.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-97",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "AtomToast cannot be paused or dismissed by VoiceOver users.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToast.swift:53-64",
+      "fix": "Add an accessibility action to dismiss, and extend duration when VoiceOver is running.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-98",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "No large-type capture of a presented toast to show it wraps.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toast.large-type.png (buttons only)",
+      "fix": "Covered by the K4 fix.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-99",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "No long-message or RTL snapshot.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/",
+      "fix": "Add one.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-100",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K7",
+      "severity": "P3",
+      "summary": "Top placement only; the web supports any position.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToast.swift:47",
+      "fix": "Decide whether a bottom placement is needed.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k04-overlays-101",
+      "subject": "AtomToast (iOS)",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "No doc explains the standard vs inverse choice on iOS.",
+      "evidence": "packages/ui-ios/docs/building-blocks.md:26",
+      "fix": "Add two lines.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-102",
+      "subject": "AtomFormPresentation (iOS)",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "AtomFormPresentation.sheet is indistinguishable from .grouped everywhere it is read.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomFormField.swift:76",
+      "fix": "Either give .sheet its own treatment or document it as an alias.",
+      "kind": "fix"
+    },
+    {
+      "id": "k04-overlays-103",
+      "subject": "AtomFormPresentation (iOS)",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Docs tell builders to use .sheet in modal sheets without saying it currently equals .grouped.",
+      "evidence": "packages/ui-ios/docs/building-blocks.md:100",
+      "fix": "Say so or differentiate.",
+      "kind": "fix"
+    }
+  ]
+}

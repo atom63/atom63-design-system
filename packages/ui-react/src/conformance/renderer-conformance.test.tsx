@@ -526,6 +526,7 @@ function SegmentedControlConformanceExample({
 
   return (
     <SegmentedControl
+      aria-label="Project view"
       items={[
         { label: 'List', value: 'list' },
         { label: 'Grid', value: 'grid' },
@@ -959,13 +960,14 @@ describe('React renderer conformance', () => {
     const onValueChange = vi.fn()
     render(<SegmentedControlConformanceExample onValueChange={onValueChange} />)
 
-    expect(screen.getByRole('tab', { name: 'List' })).toHaveAttribute('aria-selected', 'true')
-    await user.click(screen.getByRole('tab', { name: 'Grid' }))
+    expect(screen.getByRole('radiogroup', { name: 'Project view' })).toBeInTheDocument()
+    expect(screen.getByRole('radio', { name: 'List' })).toBeChecked()
+    await user.click(screen.getByRole('radio', { name: 'Grid' }))
     expect(onValueChange).toHaveBeenCalledOnce()
     expect(onValueChange).toHaveBeenCalledWith('grid')
-    expect(screen.getByRole('tab', { name: 'Grid' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('radio', { name: 'Grid' })).toBeChecked()
 
-    await user.click(screen.getByRole('tab', { name: 'Timeline' }))
+    await user.click(screen.getByRole('radio', { name: 'Timeline' }))
     expect(onValueChange).toHaveBeenCalledOnce()
   })
 

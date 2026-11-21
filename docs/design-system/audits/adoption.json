@@ -1,0 +1,1156 @@
+{
+  "generatedAt": "2026-11-21T19:42:32.823Z",
+  "adopter": {
+    "name": "atom63-vite-measure",
+    "branch": "main",
+    "commit": "04158d9b96a4d2da28083c14b68078ab160bec86"
+  },
+  "systemPackages": [
+    "@atom63/styles",
+    "@atom63/ui-foundation",
+    "@atom63/ui-react",
+    "@atom63/mdx",
+    "@atom63/inform",
+    "@atom63/agent",
+    "@atom63/widgets",
+    "@atom63/cli"
+  ],
+  "runtime": true,
+  "apps": {
+    "ascii-loader": {
+      "listed": [
+        "@atom63/styles"
+      ],
+      "static": {
+        "tsxFiles": 11,
+        "tsxFilesImportingSystem": 0,
+        "tsxFilesImportingAtom63": 4,
+        "tsxFilesByPackage": {},
+        "systemComponentUses": 0,
+        "distinctSystemComponents": 0,
+        "topSystemComponents": [],
+        "handwritten": {
+          "button": 3,
+          "input": 4,
+          "select": 1,
+          "textarea": 0,
+          "dialog": 0,
+          "a[onClick]": 0,
+          "[role=button]": 0
+        },
+        "handwrittenTotal": 8,
+        "otherUiLibraries": {},
+        "shadcnCopyFiles": [],
+        "literalColors": {
+          "paletteUtilities": 0,
+          "literalColors": 0,
+          "localTokenDefinitions": 0
+        },
+        "topLiteralColorFiles": []
+      },
+      "runtime": {
+        "skipped": "no key routes chosen for this app"
+      }
+    },
+    "atom63.io": {
+      "listed": [
+        "@atom63/styles",
+        "@atom63/ui-react",
+        "@atom63/mdx",
+        "@atom63/inform",
+        "@atom63/agent",
+        "@atom63/widgets"
+      ],
+      "static": {
+        "tsxFiles": 241,
+        "tsxFilesImportingSystem": 118,
+        "tsxFilesImportingAtom63": 133,
+        "tsxFilesByPackage": {
+          "@atom63/mdx": 15,
+          "@atom63/ui-react": 84,
+          "@atom63/agent": 2,
+          "@atom63/widgets": 26,
+          "@atom63/inform": 1
+        },
+        "systemComponentUses": 376,
+        "distinctSystemComponents": 126,
+        "topSystemComponents": [
+          {
+            "name": "Button",
+            "count": 47
+          },
+          {
+            "name": "Skeleton",
+            "count": 18
+          },
+          {
+            "name": "Badge",
+            "count": 14
+          },
+          {
+            "name": "MediaCaption",
+            "count": 14
+          },
+          {
+            "name": "Label",
+            "count": 13
+          },
+          {
+            "name": "WidgetViewport",
+            "count": 12
+          },
+          {
+            "name": "Image",
+            "count": 11
+          },
+          {
+            "name": "Separator",
+            "count": 11
+          },
+          {
+            "name": "Tooltip",
+            "count": 11
+          },
+          {
+            "name": "TooltipContent",
+            "count": 11
+          },
+          {
+            "name": "TooltipTrigger",
+            "count": 11
+          },
+          {
+            "name": "Kbd",
+            "count": 10
+          },
+          {
+            "name": "DropdownMenuItem",
+            "count": 8
+          },
+          {
+            "name": "Input",
+            "count": 7
+          },
+          {
+            "name": "Switch",
+            "count": 7
+          },
+          {
+            "name": "WidgetGrid",
+            "count": 7
+          },
+          {
+            "name": "Card",
+            "count": 5
+          },
+          {
+            "name": "DropdownMenu",
+            "count": 5
+          },
+          {
+            "name": "DropdownMenuContent",
+            "count": 5
+          },
+          {
+            "name": "DropdownMenuTrigger",
+            "count": 5
+          }
+        ],
+        "handwritten": {
+          "button": 24,
+          "input": 1,
+          "select": 1,
+          "textarea": 0,
+          "dialog": 0,
+          "a[onClick]": 0,
+          "[role=button]": 0
+        },
+        "handwrittenTotal": 26,
+        "otherUiLibraries": {
+          "@base-ui/react/drawer": 1,
+          "@base-ui/react/tabs": 1,
+          "components/ui/sheet": 1,
+          "components/ui/sonner": 1,
+          "sonner": 7
+        },
+        "shadcnCopyFiles": [
+          "src/components/ui/sheet.tsx",
+          "src/components/ui/sonner.tsx"
+        ],
+        "literalColors": {
+          "paletteUtilities": 151,
+          "literalColors": 134,
+          "localTokenDefinitions": 10
+        },
+        "topLiteralColorFiles": [
+          {
+            "file": "src/lib/resources/category-constants.ts",
+            "count": 88
+          },
+          {
+            "file": "src/components/common/custom/compare/custom-handles.tsx",
+            "count": 35
+          },
+          {
+            "file": "src/components/apps/ascii-player/themes.ts",
+            "count": 25
+          },
+          {
+            "file": "src/components/common/custom/rich-button.tsx",
+            "count": 24
+          },
+          {
+            "file": "src/components/apps/ascii-player/index.tsx",
+            "count": 13
+          },
+          {
+            "file": "src/components/common/custom/animated-border.tsx",
+            "count": 10
+          },
+          {
+            "file": "src/components/common/custom/metallic-button/metallic-button.tsx",
+            "count": 8
+          },
+          {
+            "file": "src/styles/base/inset.css",
+            "count": 8
+          },
+          {
+            "file": "src/components/bottom-bar/bottom-action-bar.tsx",
+            "count": 7
+          },
+          {
+            "file": "src/pages/ds-lab-page.tsx",
+            "count": 7
+          }
+        ]
+      },
+      "runtime": {
+        "ambiguousSlots": [
+          "button",
+          "button-group",
+          "button-group-separator",
+          "card",
+          "card-action",
+          "card-content",
+          "card-description",
+          "card-footer",
+          "card-header",
+          "card-label",
+          "card-media-overlay",
+          "card-media-overlay-bottom",
+          "card-media-overlay-icon-button",
+          "card-media-overlay-image",
+          "card-media-overlay-scrim",
+          "card-media-overlay-top-right",
+          "card-tags",
+          "card-title",
+          "dialog-backdrop",
+          "dialog-viewport",
+          "drawer-overlay",
+          "drawer-viewport",
+          "kbd",
+          "kbd-group",
+          "label",
+          "media-lightbox",
+          "media-lightbox-close",
+          "scroll-area-viewport",
+          "separator",
+          "sheet",
+          "spinner",
+          "switch",
+          "switch-thumb",
+          "tab-indicator",
+          "tabs",
+          "tabs-list",
+          "tabs-tab",
+          "tooltip-popup",
+          "tooltip-positioner",
+          "tooltip-trigger",
+          "tooltip-viewport"
+        ],
+        "build": {
+          "dir": "dist",
+          "builtAt": "2026-11-21T19:40:48.492Z"
+        },
+        "interactive": {
+          "total": 530,
+          "system": 518,
+          "systemSelf": 354
+        },
+        "landmarks": {
+          "total": 50,
+          "system": 44,
+          "systemSelf": 0
+        },
+        "pages": [
+          {
+            "route": "/",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 92,
+              "system": 90,
+              "systemSelf": 38,
+              "handwrittenSamples": [
+                "button \"ATOM63\"",
+                "button \"Home\""
+              ]
+            },
+            "landmarks": {
+              "total": 9,
+              "system": 8,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/writing",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 29,
+              "system": 27,
+              "systemSelf": 6,
+              "handwrittenSamples": [
+                "button \"ATOM63\"",
+                "button \"Writing\""
+              ]
+            },
+            "landmarks": {
+              "total": 8,
+              "system": 7,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/projects",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 144,
+              "system": 142,
+              "systemSelf": 133,
+              "handwrittenSamples": [
+                "button \"ATOM63\"",
+                "button \"Scroll down\""
+              ]
+            },
+            "landmarks": {
+              "total": 8,
+              "system": 7,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 92,
+              "system": 90,
+              "systemSelf": 38,
+              "handwrittenSamples": [
+                "button \"ATOM63\"",
+                "button \"Home\""
+              ]
+            },
+            "landmarks": {
+              "total": 9,
+              "system": 8,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/writing",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 29,
+              "system": 27,
+              "systemSelf": 6,
+              "handwrittenSamples": [
+                "button \"ATOM63\"",
+                "button \"Writing\""
+              ]
+            },
+            "landmarks": {
+              "total": 8,
+              "system": 7,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/projects",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 144,
+              "system": 142,
+              "systemSelf": 133,
+              "handwrittenSamples": [
+                "button \"ATOM63\"",
+                "button \"Scroll down\""
+              ]
+            },
+            "landmarks": {
+              "total": 8,
+              "system": 7,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "section \"Notifications alt+T\""
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "learn": {
+      "listed": [
+        "@atom63/styles",
+        "@atom63/ui-foundation",
+        "@atom63/ui-react",
+        "@atom63/mdx"
+      ],
+      "static": {
+        "tsxFiles": 43,
+        "tsxFilesImportingSystem": 21,
+        "tsxFilesImportingAtom63": 21,
+        "tsxFilesByPackage": {
+          "@atom63/ui-react": 19,
+          "@atom63/mdx": 3
+        },
+        "systemComponentUses": 64,
+        "distinctSystemComponents": 25,
+        "topSystemComponents": [
+          {
+            "name": "Button",
+            "count": 10
+          },
+          {
+            "name": "Container",
+            "count": 10
+          },
+          {
+            "name": "Page",
+            "count": 7
+          },
+          {
+            "name": "ReaderLayout",
+            "count": 7
+          },
+          {
+            "name": "Section",
+            "count": 7
+          },
+          {
+            "name": "PageTableOfContents",
+            "count": 2
+          },
+          {
+            "name": "ScrollArea",
+            "count": 2
+          },
+          {
+            "name": "SidebarNavSubLinkItem",
+            "count": 2
+          },
+          {
+            "name": "AppearanceMenu",
+            "count": 1
+          },
+          {
+            "name": "ArticleMDXContentProvider",
+            "count": 1
+          },
+          {
+            "name": "Badge",
+            "count": 1
+          },
+          {
+            "name": "Field",
+            "count": 1
+          },
+          {
+            "name": "FieldError",
+            "count": 1
+          },
+          {
+            "name": "FieldLabel",
+            "count": 1
+          },
+          {
+            "name": "Input",
+            "count": 1
+          },
+          {
+            "name": "MdxPageSkeleton",
+            "count": 1
+          },
+          {
+            "name": "PageMeta",
+            "count": 1
+          },
+          {
+            "name": "Sidebar",
+            "count": 1
+          },
+          {
+            "name": "SidebarContent",
+            "count": 1
+          },
+          {
+            "name": "SidebarFooter",
+            "count": 1
+          }
+        ],
+        "handwritten": {
+          "button": 0,
+          "input": 0,
+          "select": 0,
+          "textarea": 0,
+          "dialog": 0,
+          "a[onClick]": 1,
+          "[role=button]": 0
+        },
+        "handwrittenTotal": 1,
+        "otherUiLibraries": {},
+        "shadcnCopyFiles": [],
+        "literalColors": {
+          "paletteUtilities": 0,
+          "literalColors": 0,
+          "localTokenDefinitions": 0
+        },
+        "topLiteralColorFiles": []
+      },
+      "runtime": {
+        "ambiguousSlots": [
+          "scroll-area-viewport",
+          "sidebar-content"
+        ],
+        "build": {
+          "dir": "dist",
+          "builtAt": "2026-11-21T19:41:09.628Z"
+        },
+        "interactive": {
+          "total": 12,
+          "system": 12,
+          "systemSelf": 12
+        },
+        "landmarks": {
+          "total": 18,
+          "system": 0,
+          "systemSelf": 0
+        },
+        "pages": [
+          {
+            "route": "/",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/resources",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/skills",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/resources",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/skills",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "os63": {
+      "listed": [
+        "@atom63/styles",
+        "@atom63/ui-react",
+        "@atom63/mdx",
+        "@atom63/agent",
+        "@atom63/widgets"
+      ],
+      "static": {
+        "tsxFiles": 71,
+        "tsxFilesImportingSystem": 24,
+        "tsxFilesImportingAtom63": 52,
+        "tsxFilesByPackage": {
+          "@atom63/ui-react": 23,
+          "@atom63/widgets": 1,
+          "@atom63/mdx": 1
+        },
+        "systemComponentUses": 138,
+        "distinctSystemComponents": 35,
+        "topSystemComponents": [
+          {
+            "name": "Button",
+            "count": 41
+          },
+          {
+            "name": "DropdownMenuRadioItem",
+            "count": 8
+          },
+          {
+            "name": "DropdownMenu",
+            "count": 6
+          },
+          {
+            "name": "DropdownMenuContent",
+            "count": 6
+          },
+          {
+            "name": "DropdownMenuRadioGroup",
+            "count": 6
+          },
+          {
+            "name": "DropdownMenuTrigger",
+            "count": 6
+          },
+          {
+            "name": "Tooltip",
+            "count": 6
+          },
+          {
+            "name": "TooltipContent",
+            "count": 6
+          },
+          {
+            "name": "TooltipTrigger",
+            "count": 6
+          },
+          {
+            "name": "Skeleton",
+            "count": 5
+          },
+          {
+            "name": "InputOTPSlot",
+            "count": 4
+          },
+          {
+            "name": "ContextMenuItem",
+            "count": 3
+          },
+          {
+            "name": "Kbd",
+            "count": 3
+          },
+          {
+            "name": "Separator",
+            "count": 3
+          },
+          {
+            "name": "TabsContent",
+            "count": 3
+          },
+          {
+            "name": "TabsTrigger",
+            "count": 3
+          },
+          {
+            "name": "ContextMenu",
+            "count": 2
+          },
+          {
+            "name": "ContextMenuCheckboxItem",
+            "count": 2
+          },
+          {
+            "name": "ContextMenuContent",
+            "count": 2
+          },
+          {
+            "name": "ContextMenuTrigger",
+            "count": 2
+          }
+        ],
+        "handwritten": {
+          "button": 17,
+          "input": 1,
+          "select": 0,
+          "textarea": 0,
+          "dialog": 0,
+          "a[onClick]": 0,
+          "[role=button]": 0
+        },
+        "handwrittenTotal": 18,
+        "otherUiLibraries": {
+          "sonner": 7
+        },
+        "shadcnCopyFiles": [],
+        "literalColors": {
+          "paletteUtilities": 9,
+          "literalColors": 11,
+          "localTokenDefinitions": 10
+        },
+        "topLiteralColorFiles": [
+          {
+            "file": "src/styles/base/inset.css",
+            "count": 8
+          },
+          {
+            "file": "src/os/apps/settings/appearance/wallpaper/wallpaper-selector.tsx",
+            "count": 5
+          },
+          {
+            "file": "src/os/apps/finder/components/finder-item.tsx",
+            "count": 3
+          },
+          {
+            "file": "vite.config.ts",
+            "count": 2
+          },
+          {
+            "file": "src/os/apps/resume/resume-app.tsx",
+            "count": 1
+          },
+          {
+            "file": "src/styles/index.css",
+            "count": 1
+          }
+        ]
+      },
+      "runtime": {
+        "ambiguousSlots": [
+          "button",
+          "button-group",
+          "button-group-separator",
+          "context-menu-content",
+          "context-menu-item",
+          "context-menu-separator",
+          "kbd",
+          "kbd-group",
+          "label",
+          "scroll-area-viewport",
+          "separator",
+          "sheet",
+          "spinner",
+          "switch",
+          "switch-thumb",
+          "tab-indicator",
+          "tooltip-popup",
+          "tooltip-positioner",
+          "tooltip-trigger",
+          "tooltip-viewport"
+        ],
+        "build": {
+          "dir": "dist",
+          "builtAt": "2026-11-21T19:41:03.625Z"
+        },
+        "interactive": {
+          "total": 350,
+          "system": 290,
+          "systemSelf": 142
+        },
+        "landmarks": {
+          "total": 14,
+          "system": 2,
+          "systemSelf": 0
+        },
+        "pages": [
+          {
+            "route": "/",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 47,
+              "system": 43,
+              "systemSelf": 22,
+              "handwrittenSamples": [
+                "button \"Open quick settings\"",
+                "button \"Open notification center\"",
+                "button \"Open Apps\"",
+                "button \"Task View\""
+              ]
+            },
+            "landmarks": {
+              "total": 2,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "header \"Sat, Nov 2111:43 AM\"",
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/finder",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 83,
+              "system": 72,
+              "systemSelf": 35,
+              "handwrittenSamples": [
+                "button \"Open quick settings\"",
+                "button \"Open notification center\"",
+                "div[role=dialog] \"Finder\"",
+                "div[role=button] \"Finder\"",
+                "button \"Close\"",
+                "button \"Minimize\"",
+                "button \"Maximize\"",
+                "button \"Home\""
+              ]
+            },
+            "landmarks": {
+              "total": 2,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "header \"FinderFileEditViewGoSat, Nov 2\"",
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/notes",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 88,
+              "system": 72,
+              "systemSelf": 35,
+              "handwrittenSamples": [
+                "button \"Open quick settings\"",
+                "button \"Open notification center\"",
+                "div[role=dialog] \"Finder\"",
+                "div[role=button] \"Finder\"",
+                "button \"Close\"",
+                "button \"Minimize\"",
+                "button \"Maximize\"",
+                "button \"Home\""
+              ]
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 1,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "header \"NotesSat, Nov 2111:43 AM\"",
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 19,
+              "system": 15,
+              "systemSelf": 8,
+              "handwrittenSamples": [
+                "button \"Open quick settings\"",
+                "button \"Open notification center\"",
+                "button \"Open Apps\"",
+                "button \"Task View\""
+              ]
+            },
+            "landmarks": {
+              "total": 2,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "header \"Sat, Nov 2111:43 AM\"",
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/finder",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 54,
+              "system": 44,
+              "systemSelf": 21,
+              "handwrittenSamples": [
+                "button \"Open quick settings\"",
+                "button \"Open notification center\"",
+                "div[role=dialog] \"Finder\"",
+                "div[role=button] \"Finder\"",
+                "button \"Close\"",
+                "button \"Minimize\"",
+                "button \"Maximize\"",
+                "button \"Home\""
+              ]
+            },
+            "landmarks": {
+              "total": 2,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "header \"FinderFileEditViewGoSat, Nov 2\"",
+                "section \"Notifications alt+T\""
+              ]
+            }
+          },
+          {
+            "route": "/notes",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 59,
+              "system": 44,
+              "systemSelf": 21,
+              "handwrittenSamples": [
+                "button \"Open quick settings\"",
+                "button \"Open notification center\"",
+                "div[role=dialog] \"Finder\"",
+                "div[role=button] \"Finder\"",
+                "button \"Close\"",
+                "button \"Minimize\"",
+                "button \"Maximize\"",
+                "button \"Home\""
+              ]
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 1,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "header \"NotesSat, Nov 2111:43 AM\"",
+                "section \"Notifications alt+T\""
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "storybook": {
+      "listed": [
+        "@atom63/styles",
+        "@atom63/ui-foundation",
+        "@atom63/ui-react",
+        "@atom63/mdx",
+        "@atom63/agent",
+        "@atom63/widgets"
+      ],
+      "static": {
+        "tsxFiles": 39,
+        "tsxFilesImportingSystem": 34,
+        "tsxFilesImportingAtom63": 38,
+        "tsxFilesByPackage": {
+          "@atom63/mdx": 2,
+          "@atom63/ui-react": 10,
+          "@atom63/widgets": 25,
+          "@atom63/agent": 2
+        },
+        "systemComponentUses": 56,
+        "distinctSystemComponents": 14,
+        "topSystemComponents": [
+          {
+            "name": "Button",
+            "count": 23
+          },
+          {
+            "name": "ButtonGroup",
+            "count": 5
+          },
+          {
+            "name": "WidgetSurface",
+            "count": 5
+          },
+          {
+            "name": "WidgetCard",
+            "count": 3
+          },
+          {
+            "name": "WidgetCardContent",
+            "count": 3
+          },
+          {
+            "name": "WidgetCardHeader",
+            "count": 3
+          },
+          {
+            "name": "WidgetCardTitle",
+            "count": 3
+          },
+          {
+            "name": "DropdownMenu",
+            "count": 2
+          },
+          {
+            "name": "DropdownMenuContent",
+            "count": 2
+          },
+          {
+            "name": "DropdownMenuItem",
+            "count": 2
+          },
+          {
+            "name": "DropdownMenuTrigger",
+            "count": 2
+          },
+          {
+            "name": "WidgetContentFallback",
+            "count": 1
+          },
+          {
+            "name": "WidgetHostLoadingShell",
+            "count": 1
+          },
+          {
+            "name": "WidgetLinkProvider",
+            "count": 1
+          }
+        ],
+        "handwritten": {
+          "button": 2,
+          "input": 0,
+          "select": 0,
+          "textarea": 0,
+          "dialog": 0,
+          "a[onClick]": 0,
+          "[role=button]": 0
+        },
+        "handwrittenTotal": 2,
+        "otherUiLibraries": {},
+        "shadcnCopyFiles": [],
+        "literalColors": {
+          "paletteUtilities": 1,
+          "literalColors": 54,
+          "localTokenDefinitions": 0
+        },
+        "topLiteralColorFiles": [
+          {
+            "file": "stories/os63/widget-visual-audit.stories.tsx",
+            "count": 54
+          },
+          {
+            "file": "stories/os63/weather.stories.tsx",
+            "count": 1
+          }
+        ]
+      },
+      "runtime": {
+        "skipped": "no key routes chosen for this app"
+      }
+    }
+  },
+  "systemSlotCount": 611
+}

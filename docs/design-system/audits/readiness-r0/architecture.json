@@ -1,0 +1,720 @@
+{
+  "scope": "architecture",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "layer-5 reviewer (architecture and packages)",
+  "notes": "Sweep logs: summary.tsv still shows exit codes from before the build (build 254, api-report 1, package-correctness 1, starter 1); the logs themselves end in pass ('API reports are current.', 'Published packages resolve correctly.'). P0/P1 findings need verifiedBy from a second reviewer.",
+  "subjects": [
+    {
+      "subject": "@atom63/styles",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "package.json has no @atom63 deps; src imports none (grep 'from @atom63/' in packages/styles/src = 0). Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "CSS-only; no CSS size budget anywhere. Registry smoke consumer using 4 components ships dist/assets/index-*.css 505.75 kB / 74.22 kB gzip (scratchpad/sweep/ds-registry-smoke.log); starter CSS 526.23 kB / 71.13 kB gzip (scratchpad/sweep/starter.log). See architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 3,
+          "evidence": "64 export keys audited in docs/design-system/audits/package-surface.json; tokens queryable via `atom63 token`; CSS surface has no API-report equivalent (polish)."
+        },
+        {
+          "criterion": "A4",
+          "score": 4,
+          "evidence": "Only dep tw-animate-css 1.4.0 pinned per docs/design-system/dependency-version-policy.json runtimeDependencyPolicy; check:dependency-version-policy passes and runs in CI (.github/workflows/ci.yml:73-74)."
+        },
+        {
+          "criterion": "A5",
+          "score": 2,
+          "evidence": "Covered by pack and registry smoke (scratchpad/sweep/ds-registry-smoke.log: styles@beta -> 0.1.0-beta.8) and stable preflight; but npm dist-tags 2026-11-18: latest lags beta on all 8 published packages (e.g. ui-react latest 0.2.0-beta.9 vs beta 0.2.0-beta.12); see architecture-1"
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/ui-foundation",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "No @atom63 runtime deps, src imports none; ui-react imports it 144 times, never the reverse. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand. scratchpad cycles.mjs (Tarjan SCC over non-test relative runtime imports): 0 cycles in ui-react(249 files), ui-foundation(173), mdx(119), widgets(35), inform(30), agent(9)"
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "Single entry dist/index.js = 30.3 kB gzip (measured), sideEffects:false, but no budget of its own; only ui-react has one (scripts/design-system/check-ui-react-bundle-size.mjs:109). See architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "API report exists (packages/ui-foundation/api/ui-foundation.api.md: 959 @public, 1444 '(undocumented)'), check:api-report current; but no export tier inventory (ui-react-export-inventory.json covers ui-react only). See architecture-10."
+        },
+        {
+          "criterion": "A4",
+          "score": 4,
+          "evidence": "Zero runtime/peer deps (dependency-version-policy.json); policy check in CI."
+        },
+        {
+          "criterion": "A5",
+          "score": 2,
+          "evidence": "In pack+registry smoke (ui-foundation@beta -> 0.2.0-beta.5) and stable preflight; npm dist-tags 2026-11-18: latest lags beta on all 8 published packages (e.g. ui-react latest 0.2.0-beta.9 vs beta 0.2.0-beta.12); see architecture-1"
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/ui-react",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "deps @atom63/styles, @atom63/ui-foundation only; self-imports of '@atom63/ui-react' are only in stories/tests; 0 runtime cycles. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "97.7 kB gzip vs 98 kB budget, 0.3 kB headroom (scratchpad/sweep/ui-react-size.log); budget raised 14 times 64->98 kB (scripts/design-system/check-ui-react-bundle-size.mjs:8-108) and is a sum of all entries, not per-entry or per-import cost; root imports react-hook-form (dist/index.js); 87 src files start with 'use client' but 0 dist .js files keep it (build.log:98 'use client ... was ignored'). See architecture-5, architecture-7, architecture-8."
+        },
+        {
+          "criterion": "A3",
+          "score": 1,
+          "evidence": "api reports for 7 entries current (scratchpad/sweep/api-report.log), but tiers disagree: 69/76 contracts maturity 'stable' (packages/cli/generated/agent-index.json; e.g. packages/ui-foundation/contracts/components/dialog.json:4) and `atom63 component dialog` prints 'Status: Stable', while docs/design-system/audits/ui-react-stable-action-matrix.json gives components/dialog, select, tooltip... (30 families) priority P0 'move-to-preview-or-approve'/'Do not promise stable'; 31 preview-experimental-candidate symbols still exported from root (ui-react-export-inventory.json). API report has 0 tier tags. See architecture-4."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "check:dependency-version-policy passes, but react-hook-form is a required (no peerDependenciesMeta) peer (packages/ui-react/package.json:177) imported by the root entry, so every consumer must install and evaluate it. See architecture-7."
+        },
+        {
+          "criterion": "A5",
+          "score": 2,
+          "evidence": "In pack and registry smoke (ui-react@beta -> 0.2.0-beta.12) and stable preflight; npm dist-tags 2026-11-18: latest lags beta on all 8 published packages (e.g. ui-react latest 0.2.0-beta.9 vs beta 0.2.0-beta.12); see architecture-1; no git tag for 0.2.0-beta.12 (remote has up to @atom63/ui-react@0.2.0-beta.11)."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on @atom63/styles + @atom63/ui-react; imports only public entries ('@atom63/ui-react', '/layout', '/media'); 0 runtime cycles. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "dist 43.0 kB gzip over 20 js files (measured), no budget (only ui-react has one). See architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 1,
+          "evidence": "14 exports in package-surface.json, but no API report (scripts/design-system/api-report.mjs:23-33 lists only ui-foundation and ui-react despite its header 'every entry point of the published TypeScript packages') and no tier inventory. See architecture-2."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "ui-react is a regular dependency 'workspace:*' (packages/mdx/package.json:101), published as an exact pin (npm view @atom63/mdx@latest dependencies -> '@atom63/ui-react':'0.2.0-beta.9'), so any version skew installs a second ui-react copy. See architecture-9."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "Published, but in neither pack smoke nor registry smoke (scripts/design-system/smoke-registry-ui-react.mjs:20-25 lists styles, ui-foundation, ui-react, cli) nor stable preflight (audit-stable-release-preflight.mjs:10). npm dist-tags 2026-11-18: latest lags beta on all 8 published packages (e.g. ui-react latest 0.2.0-beta.9 vs beta 0.2.0-beta.12); see architecture-1. See architecture-3."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/inform",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on @atom63/ui-react; imports only public entries ('@atom63/ui-react', '/layout', '/media'); 0 runtime cycles. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "dist 8.7 kB gzip over 5 js files (measured), no budget (only ui-react has one). See architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 1,
+          "evidence": "4 exports in package-surface.json, but no API report (scripts/design-system/api-report.mjs:23-33 lists only ui-foundation and ui-react despite its header 'every entry point of the published TypeScript packages') and no tier inventory. See architecture-2."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "ui-react is a regular dependency 'workspace:*' (packages/inform/package.json:64), published as an exact pin (npm view @atom63/inform@latest dependencies -> '@atom63/ui-react':'0.2.0-beta.9'), so any version skew installs a second ui-react copy. See architecture-9."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "Published, but in neither pack smoke nor registry smoke (scripts/design-system/smoke-registry-ui-react.mjs:20-25 lists styles, ui-foundation, ui-react, cli) nor stable preflight (audit-stable-release-preflight.mjs:10). npm dist-tags 2026-11-18: latest lags beta on all 8 published packages (e.g. ui-react latest 0.2.0-beta.9 vs beta 0.2.0-beta.12); see architecture-1. See architecture-3."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on @atom63/ui-react; imports only public entries ('@atom63/ui-react', '/layout', '/media'); 0 runtime cycles. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "dist 12.4 kB gzip over 6 js files (measured), no budget (only ui-react has one). See architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 1,
+          "evidence": "5 exports in package-surface.json, but no API report (scripts/design-system/api-report.mjs:23-33 lists only ui-foundation and ui-react despite its header 'every entry point of the published TypeScript packages') and no tier inventory. See architecture-2."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "ui-react is a regular dependency 'workspace:*' (packages/widgets/package.json:68), published as an exact pin (npm view @atom63/widgets@latest dependencies -> '@atom63/ui-react':'0.2.0-beta.9'), so any version skew installs a second ui-react copy. See architecture-9."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "Published, but in neither pack smoke nor registry smoke (scripts/design-system/smoke-registry-ui-react.mjs:20-25 lists styles, ui-foundation, ui-react, cli) nor stable preflight (audit-stable-release-preflight.mjs:10). npm dist-tags 2026-11-18: latest lags beta on all 8 published packages (e.g. ui-react latest 0.2.0-beta.9 vs beta 0.2.0-beta.12); see architecture-1. See architecture-3."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/agent",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "No @atom63 runtime deps; 0 cycles in 9 files. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "dist 4.8 kB gzip (measured), sideEffects:false, no budget. See architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 1,
+          "evidence": "2 exports ('.', './react'), no API report, no tier inventory (api-report.mjs:23-33). See architecture-2."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "zustand ^5.1.0 compatible-range-ok, react optional peer (peerDependenciesMeta) per dependency-version-policy.json."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "No pack/registry smoke, not in stable preflight; packages/agent/README.md:7 tells users `pnpm add @atom63/agent`, which resolves latest 0.3.0-beta.0, not 0.3.0-beta.1. See architecture-1, architecture-3."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/cli",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "No @atom63 deps; '@atom63/ui-react' appears only as generated import strings (packages/cli/src/templates.mjs:173). Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: Node CLI shipped as source (.mjs), not bundled for browsers"
+        },
+        {
+          "criterion": "A3",
+          "score": 3,
+          "evidence": "Surface is the command and MCP tool set, covered by CLI tests and check:agent-index; library exports ('.': ./src/core.mjs) carry no types, so attw skips them (check-package-correctness.mjs:33-36). See architecture-14."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "@modelcontextprotocol/server 2.4.0 pinned exact, zod compatible range, per dependency-version-policy.json."
+        },
+        {
+          "criterion": "A5",
+          "score": 2,
+          "evidence": "In pack and registry smoke (cli@beta -> 0.1.0-beta.1); latest still 0.1.0-beta.0 (npm view @atom63/cli dist-tags). See architecture-1."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/ui-ios (Atom63UI Swift package)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "No package dependencies (packages/ui-ios/Package.swift targets only Atom63UI); tokens/contracts generated one way from styles/ui-foundation and checked (check:swift-tokens, ci.yml 'Check generated iOS contracts and tokens')."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: native Swift package, no JS bundle"
+        },
+        {
+          "criterion": "A3",
+          "score": 3,
+          "evidence": "packages/ui-ios/api/public-api.json (symbol graph) with check:api in CI ('Check iOS public API'); no tier labels per symbol (polish)."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "Zero third-party dependencies; outside dependency-version-policy scope, which is acceptable with none."
+        },
+        {
+          "criterion": "A5",
+          "score": 2,
+          "evidence": "private:true, version 0.1.0 with 8 pending ios-* minor changesets (.changeset/ios-*.md); root Package.swift:3-5 is a 'distribution manifest for remote SwiftPM consumers' but the repo has no SemVer tags SwiftPM can resolve (git ls-remote --tags: only @atom63/<pkg>@<ver> tags); README says to add a local package dependency. See architecture-12."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/templates (private)",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on ui-foundation, ui-react (+ agent dev); 0 upward imports. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: private, not published"
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a: private, no public API"
+        },
+        {
+          "criterion": "A4",
+          "score": null,
+          "evidence": "n/a: private, outside the published dependency policy"
+        },
+        {
+          "criterion": "A5",
+          "score": null,
+          "evidence": "n/a: private, not released"
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/create (private)",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends only on @atom63/cli (src imports '@atom63/cli' once). Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: private, not published"
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a: private, no public API"
+        },
+        {
+          "criterion": "A4",
+          "score": null,
+          "evidence": "n/a: private, outside the published dependency policy"
+        },
+        {
+          "criterion": "A5",
+          "score": null,
+          "evidence": "n/a: private, not released"
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/brand (private)",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "No @atom63 deps; imports only itself. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: private, not published"
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a: private, no public API"
+        },
+        {
+          "criterion": "A4",
+          "score": null,
+          "evidence": "n/a: private, outside the published dependency policy"
+        },
+        {
+          "criterion": "A5",
+          "score": null,
+          "evidence": "n/a: private, not released"
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/figma (private)",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "No @atom63 runtime deps. Not enforced: check:package-correctness is publint+attw only (scripts/design-system/check-package-correctness.mjs:1-8); direction verified by hand."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: private, not published"
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a: private, no public API"
+        },
+        {
+          "criterion": "A4",
+          "score": null,
+          "evidence": "n/a: private, outside the published dependency policy"
+        },
+        {
+          "criterion": "A5",
+          "score": null,
+          "evidence": "n/a: private, not released"
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "Release pipeline (.github/workflows/release-beta.yml, scripts/design-system/publish-beta.mjs, .changeset)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A4",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "Changesets pre mode beta (.changeset/pre.json), OIDC trusted publishing with provenance (release-beta.yml:197-241), CI gate before publish (release-beta.yml:173-189). But 'Publish beta' failed on 5 consecutive runs 2026-11-18 (gh run 44206565829, 44221661319, 44221720585, 44231752616, 44371320697) at the latest dist-tag move: 'E403 ... This trusted publisher cannot manage dist-tags. Ask a package maintainer to enable Allow npm dist-tag' (publish-beta.mjs:104-111). Consequences: latest lags beta on all 8 packages, so README.md:15-17 ('npm install @atom63/ui-react installs it too') is false; record-evidence (tags + registry evidence, release-beta.yml:246-330) was skipped, so no git tags for current versions; a manual dispatch to repair it exits 1 when nothing is unpublished (release-beta.yml:78-81, run 44376792409). See architecture-1."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is scored once on the 'CI (.github/workflows/ci.yml)' subject"
+        }
+      ]
+    },
+    {
+      "subject": "CI (.github/workflows/ci.yml, visual.yml, ios-snapshots.yml)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A4",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "A5",
+          "score": null,
+          "evidence": "n/a: scored on the release pipeline subject"
+        },
+        {
+          "criterion": "A6",
+          "score": 2,
+          "evidence": "gh run list --workflow ci.yml --limit 200 (2026-10-27..11-18): main 29 success / 5 cancelled / 1 failure; wall time 15.6-44.4 min on main (iOS job ~19 min is the critical path, run 44198595467). Known flake 1, WebKit sign-in 'Wrong Password' story (packages/templates/src/pages/sign-in-page/sign-in-page.stories.tsx:38), is live: failed main run 40566990028 (10-27) and PR run 44203452194 (11-17). Known flake 2, lightbox focus: not observed in 200 runs. Non-hermetic jobs: packed smoke installs with --no-frozen-lockfile online fallback (scripts/design-system/smoke-packed-ui-react.mjs:399-411) and failed 8 runs from upstream type breaks (run 44156374624: framer-motion TS2320); registry smoke hits live npm and failed 4 runs. Dependabot PRs: 3 success / 26 failure of 40 (8 of them 'Check dependency version policy' needing a regenerated audit). See architecture-11."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "architecture-1",
+      "subject": "Release pipeline (.github/workflows/release-beta.yml, scripts/design-system/publish-beta.mjs, .changeset)",
+      "criterion": "A5",
+      "severity": "P2",
+      "summary": "Every beta publish since 2026-11-18 fails at the 'latest' dist-tag step, so npm 'latest' lags 'beta' on all 8 packages, release tags and registry evidence are never recorded, and README's promise that a plain install gets the beta is false.",
+      "evidence": "gh run view 44371320697 --log-failed: 'npm error 403 ... PUT .../@atom63%2fstyles/dist-tags/latest - This trusted publisher cannot manage dist-tags. Ask a package maintainer to enable Allow npm dist-tag.' Publish job failed in runs 44206565829, 44221661319, 44221720585, 44231752616, 44371320697; record-evidence skipped in all. npm view dist-tags: styles latest 0.1.0-beta.5/beta 0.1.0-beta.8, ui-foundation 0.1.1-beta.2/0.2.0-beta.5, ui-react 0.2.0-beta.9/0.2.0-beta.12, mdx 0.4.0-beta.0/0.4.0-beta.3, inform 0.2.0-beta.0/0.2.0-beta.3, agent 0.3.0-beta.0/0.3.0-beta.1, widgets 0.1.0-beta.0/0.1.0-beta.3, cli 0.1.0-beta.0/0.1.0-beta.1. README.md:15-17 says latest follows beta; packages/agent/README.md:7, packages/inform/README.md:6, packages/widgets/README.md:7, packages/ui-foundation/README.md:23 install without @beta. Remote git tags stop at @atom63/ui-react@0.2.0-beta.11. Manual dispatch 44376792409 exits at release-beta.yml:78-81 because nothing is unpublished. docs/design-system/release-automation.md:42 documents the needed setting.",
+      "fix": "Enable 'Allow npm dist-tag' on each of the 8 trusted publishers (maintainer action on npmjs.com), then let a dispatch run move latest: allow workflow_dispatch to run the dist-tag loop when nothing is unpublished (release-beta.yml:78-81), and make publish-beta.mjs report a dist-tag failure separately so record-evidence still tags the published versions.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "Reproduced. The gh log for run 44371320697 shows E403 'This trusted publisher cannot manage dist-tags' on PUT .../@atom63%2fstyles/dist-tags/latest. npm view shows latest behind beta (styles 0.1.0-beta.5 vs beta.8, ui-react beta.9 vs beta.12, mdx beta.0 vs beta.3, cli beta.0 vs beta.1). README.md:15-17 promises that latest follows beta. Runs 44371320697, 44231752616 and 44221720585 failed, and dispatch 44376792409 failed too. The later push runs pass only because nothing is left to publish. release-automation.md documents the 'Allow npm dist-tag' setting but nobody has applied it, so the promise is broken. Root cause fixed 2026-11-18: all 8 trusted publishers now allow dist-tags; release-beta runs 44387150352 and 44408576633 succeeded. latest still lags beta until the next real publish. Downgraded by Claude."
+      }
+    },
+    {
+      "id": "architecture-2",
+      "subject": "@atom63/mdx, @atom63/inform, @atom63/agent, @atom63/widgets",
+      "criterion": "A3",
+      "severity": "P1",
+      "summary": "Four published TypeScript packages have no API report and no tier inventory, so their public type changes are invisible in review and nothing says which exports are stable.",
+      "evidence": "scripts/design-system/api-report.mjs:2-3 claims 'every entry point of the published TypeScript packages' but its map (api-report.mjs:23-33) holds only ui-foundation and ui-react; no packages/{mdx,inform,agent,widgets}/api/ folder exists (find -name '*.api.md' -> ui-react x7, ui-foundation x1). They expose 14, 4, 2 and 5 export keys (docs/design-system/audits/package-surface.json). Tier inventory exists only for ui-react (docs/design-system/audits/ui-react-export-inventory.json).",
+      "fix": "Add each package's typed entries to the api-report.mjs map (mdx 9 typed entries, inform 3, agent 2, widgets 4), commit the reports, and extend the export-inventory audit (or a per-package tier field) to these packages.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "api-report.mjs:2-3 says it covers 'every entry point of the published TypeScript packages', but the map at lines 23-33 holds only ui-foundation and ui-react. The only api folders are ui-foundation, ui-react and ui-ios. published-packages.mjs lists mdx, inform, agent and widgets as published, and none of them has a report. I found no documented exemption."
+      }
+    },
+    {
+      "id": "architecture-3",
+      "subject": "@atom63/mdx, @atom63/inform, @atom63/agent, @atom63/widgets",
+      "criterion": "A5",
+      "severity": "P1",
+      "summary": "Four published packages are never installed by any consumer smoke test, from tarball or from the registry, and the stable preflight covers only 3 of the 8 published packages.",
+      "evidence": "scripts/design-system/smoke-registry-ui-react.mjs:20-25 requests styles, ui-foundation, ui-react, cli only; pack smoke tarballs are the same four (scratchpad/sweep/ds-pack-smoke.log 'Tarballs: @atom63/styles ..., @atom63/ui-foundation ..., @atom63/ui-react ..., @atom63/cli ...'); scripts/design-system/audit-stable-release-preflight.mjs:10 packageDirs = styles, ui-foundation, ui-react; docs/design-system/audits/stable-release-preflight.json lists 3 packages. publishedPackageDirs (scripts/design-system/published-packages.mjs) lists 8.",
+      "fix": "Add mdx, inform, agent and widgets to the pack and registry smoke consumers (import one export from every entry and its styles.css, typecheck and vite build), and drive the stable preflight from publishedPackageDirs instead of a hard-coded list of 3.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "smoke-registry-ui-react.mjs:20-25 installs only styles, ui-foundation, ui-react and cli. smoke-packed-ui-react.mjs:15-22 covers the same four. audit-stable-release-preflight.mjs:10 packageDirs lists 3 packages, while published-packages.mjs lists 8. These are the only smoke and pack scripts, and no other script installs mdx, inform, agent or widgets as a consumer would."
+      }
+    },
+    {
+      "id": "architecture-4",
+      "subject": "@atom63/ui-react",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "Stability tiers contradict each other: contracts and the CLI call 69 of 76 components 'stable' while the package's own stable action matrix says 30 families, including Dialog, Select and Tooltip, must not promise stable compatibility, and 31 preview-tier symbols still ship from the root entry.",
+      "evidence": "packages/ui-foundation/contracts/components/dialog.json:4, select.json:4, tooltip.json:4: \"maturity\": \"stable\"; `pnpm -s atom63 component dialog` -> '**Status:** Stable'; agent-index.json maturity counts {stable: 69, preview: 7}. docs/design-system/audits/ui-react-stable-action-matrix.json summary.sourcePriorityCounts P0: 30, e.g. components/dialog recommendedAction 'move-to-preview-or-approve', stableDecision 'Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.' ui-react-export-inventory.json: 31 root exports tagged preview-experimental-candidate (DialogPrimitive, DialogCreateHandle, TooltipPrimitive, InputPrimitive, cardLinkClassName, ...) and tierPolicy.stableBlockers unmet. packages/ui-react/api/ui-react.api.md has 0 @beta/@alpha/@experimental tags (every symbol '// @public').",
+      "fix": "Pick one source of truth: derive contract maturity from the export tier (a family is 'stable' only when no export is preview-experimental or monitor-high-risk without evidence), move the 31 preview symbols to ./preview or approve them in the decision register, and emit the tier as a TSDoc release tag so the API report shows it. Cross-check with layer 2 criterion C5.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "Partly true. dialog/select/tooltip contracts do say maturity 'stable', and ui-react.api.md has 0 @beta/@alpha/@experimental tags. But the claim that Dialog itself 'must not promise stable compatibility' is overstated. The matrix flags only 2 of the Dialog family's 19 exports (DialogPrimitive, DialogCreateHandle), and 17 are beta-supported-core. Its promotionDecision is also a documented choice: 'keep-beta-root-unchanged-preview-only', status 'preview-only-pending-root-removal-before-stable'. So the component maturity labels and the stable-blocker list for low-level aliases do not truly contradict each other. What remains is a gap in labeling and in tier tags: preview aliases ship from the root with no tags. That gap blocks a stable release, not the beta's 'ready'."
+      }
+    },
+    {
+      "id": "architecture-5",
+      "subject": "@atom63/ui-react",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "The bundle budget is a ratchet with 0.3 kB headroom that has been raised 14 times, and it sums every entry instead of measuring what a consumer pays per import, so it never proves tree-shaking.",
+      "evidence": "scratchpad/sweep/ui-react-size.log: '97.7 kB gzip / 98 kB budget'; scripts/design-system/check-ui-react-bundle-size.mjs:8-108 records raises 64 -> 72 -> 74 -> 76 -> 82 -> 84 -> 86 -> 87 -> 88 -> 91 -> 92 -> 93 -> 94 -> 95 -> 96 -> 97 -> 98 kB; :109 'const gzipBudgetBytes = 98 * 1024' over all dist .js files. Registry consumer importing only Card, Badge, Input, Button builds 344.84 kB / 107.52 kB gzip JS (scratchpad/sweep/ds-registry-smoke.log), i.e. ~50 kB gzip beyond React 19 for four components.",
+      "fix": "Add per-entry budgets plus an import-cost check (bundle a fixture that imports one component, e.g. Button, from the root and assert its gzip size), and keep a fixed headroom rule instead of raising the cap when a change lands.",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-6",
+      "subject": "@atom63/styles, @atom63/ui-foundation, @atom63/mdx, @atom63/inform, @atom63/agent, @atom63/widgets",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "Only ui-react JS has a size budget; no other published package and no CSS output has one.",
+      "evidence": "check:ui-react-size is the only size check (package.json:39). Measured dist gzip: ui-foundation 30.3 kB (1 file), mdx 43.0 kB, widgets 12.4 kB, inform 8.7 kB, agent 4.8 kB. Consumer CSS from @atom63/styles + @atom63/ui-react/styles.css (which @imports every recipe, packages/ui-react/src/styles/index.css:1-4): 505.75 kB / 74.22 kB gzip for a 4-component app (scratchpad/sweep/ds-registry-smoke.log).",
+      "fix": "Generalise check-ui-react-bundle-size.mjs to read a budget per published package and add a gzip budget for the shipped CSS (styles index + ui-react styles.css).",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-7",
+      "subject": "@atom63/ui-react",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "The ui-react root entry imports react-hook-form, a required peer, so every consumer must install it and evaluates it on any root import, even without Form.",
+      "evidence": "grep \"from 'react-hook-form'\" packages/ui-react/dist -> dist/index.js; packages/ui-react/package.json:177 peer 'react-hook-form': '^7.81.0' with no peerDependenciesMeta; scripts/design-system/check-ui-react-root-deps.mjs:23 guards only react-day-picker, the same problem that moved Calendar to ./calendar.",
+      "fix": "Move Form to a ./form subpath (like ./calendar), mark react-hook-form optional in peerDependenciesMeta, and add it to subpathOnlyDependencies in check-ui-react-root-deps.mjs.",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-8",
+      "subject": "@atom63/ui-react",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "The build strips every 'use client' directive: 87 ui-react source files and 7 mdx files declare it, and no built .js file keeps it, so React Server Component consumers get no client boundary.",
+      "evidence": "grep -rl 'use client' packages/ui-react/src | wc -l -> 87 (e.g. packages/ui-react/src/provider.tsx:1, components/tabs/tabs.tsx:1); grep -rl 'use client' packages/ui-react/dist packages/mdx/dist | grep .js -> 0; scratchpad/sweep/build.log:98 'Module level directives cause errors when bundled, \"use client\" in \"dist/media/media-lightbox/parts/index.js\" was ignored.'; tsup.config: treeshake true, no banner.",
+      "fix": "Either preserve directives (tsup banner {js: \"'use client'\"} per client entry, or an esbuild plugin that keeps per-file directives) and add a dist check that each entry starts with it, or delete the source directives and document that RSC is unsupported.",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-9",
+      "subject": "@atom63/mdx, @atom63/inform, @atom63/widgets",
+      "criterion": "A4",
+      "severity": "P2",
+      "summary": "mdx, inform and widgets depend on @atom63/ui-react as an exact-pinned regular dependency, so any version skew installs a second copy of ui-react with its own React contexts.",
+      "evidence": "packages/mdx/package.json:101, packages/inform/package.json:64, packages/widgets/package.json:68: \"@atom63/ui-react\": \"workspace:*\"; published as exact pins: npm view @atom63/widgets@latest dependencies -> '@atom63/ui-react':'0.2.0-beta.9', @beta -> '0.2.0-beta.12'. With latest stale (finding 1), `pnpm add @atom63/widgets @atom63/ui-react@beta` resolves two copies; UIEnvironmentContext (packages/ui-react/src/provider.tsx:20) then does not reach the nested copy. dependency-version-policy.json allows workspace deps during beta only as 'exact-published-before-stable', and has no rule against duplication.",
+      "fix": "Make @atom63/ui-react (and @atom63/styles for mdx) a peerDependency with a caret beta range in mdx, inform and widgets, keep it as a devDependency, and add a dependency-policy rule that internal UI packages are peers.",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-10",
+      "subject": "@atom63/ui-foundation",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "ui-foundation has an API report but no tier inventory, and 1444 of its reported declarations are undocumented.",
+      "evidence": "packages/ui-foundation/api/ui-foundation.api.md: 959 '// @public', 1444 '(undocumented)'; tier inventory only for ui-react (docs/design-system/audits/ui-react-export-inventory.json).",
+      "fix": "Extend the export inventory to ui-foundation's exports and document the contract objects consumers import directly (e.g. buttonContract used by the registry smoke).",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-11",
+      "subject": "CI (.github/workflows/ci.yml, visual.yml, ios-snapshots.yml)",
+      "criterion": "A6",
+      "severity": "P2",
+      "summary": "CI still carries a live known flake and two non-hermetic jobs: the WebKit sign-in story fails intermittently, the packed and registry smoke tests break on upstream releases and live npm state, and 26 of 40 Dependabot CI runs fail.",
+      "evidence": "gh run view 40566990028 (main, 2026-10-27) and 44203452194 (PR, 2026-11-17): 'FAIL cross-browser (webkit) ../../packages/templates/src/pages/sign-in-page/sign-in-page.stories.tsx > Wrong Password'; story at sign-in-page.stories.tsx:38; no retries configured anywhere (git grep retries). Lightbox focus flake: not seen in the last 200 CI runs. Packed smoke 'pnpm install --no-frozen-lockfile' online fallback (scripts/design-system/smoke-packed-ui-react.mjs:399-411) failed 8 runs, e.g. 44156374624 'framer-motion ... error TS2320'. Registry smoke failed 4 runs (e.g. 44218177744 'registry-only consumer smoke failed' after a clean build); release-beta.yml:243-245 says a publish makes the evidence stale and 'fails every later CI run until someone regenerates it'. Dependabot branches: 3 success / 26 failure / 10 cancelled of 40; 8 fail at 'Check dependency version policy'.",
+      "fix": "Fix the WebKit sign-in story's race (await the error state, not a timer) or quarantine it with a tracked issue; give the smoke consumers a committed lockfile so upstream releases cannot break PRs; run the live-registry smoke only on main/schedule rather than on every PR; have Dependabot PRs regenerate dependency-version-policy.json (a workflow step or a release:version-style script).",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-12",
+      "subject": "@atom63/ui-ios (Atom63UI Swift package)",
+      "criterion": "A5",
+      "severity": "P2",
+      "summary": "ui-ios has a root manifest for remote SwiftPM consumers but no release path: it is private, stuck at 0.1.0 with 8 pending minor changesets, and the repo has no SemVer tags SwiftPM can resolve.",
+      "evidence": "Package.swift:3-5 'Distribution manifest for remote SwiftPM consumers'; packages/ui-ios/package.json private:true, version 0.1.0; .changeset/ios-*.md (8 files, '@atom63/ui-ios': minor); git ls-remote --tags origin shows only @atom63/<pkg>@<version> tags; packages/ui-ios/README.md:9 'Add a local Swift package dependency pointing at packages/ui-ios'.",
+      "fix": "YZ decides whether Atom63UI is a released product. If yes: tag SemVer releases (e.g. ui-ios-v0.2.0 is not resolvable; SwiftPM needs plain 0.2.0 tags or a separate repo) from the Version Packages flow and add a remote-resolution smoke. If no: drop the remote-consumer claim from Package.swift and stop versioning it with changesets.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "architecture-13",
+      "subject": "All packages",
+      "criterion": "A1",
+      "severity": "P3",
+      "summary": "Dependency direction and cycles hold today but no check enforces them; check:package-correctness, named in the bar, only runs publint and attw.",
+      "evidence": "scripts/design-system/check-package-correctness.mjs:1-8 (publint + attw on packed tarballs). Manual graph: styles, ui-foundation, agent, cli -> none; ui-react -> styles, ui-foundation; mdx -> styles, ui-react; inform, widgets -> ui-react; templates -> ui-foundation, ui-react; create -> cli. scratchpad cycles.mjs (Tarjan SCC over non-test relative runtime imports): 0 cycles in ui-react(249 files), ui-foundation(173), mdx(119), widgets(35), inform(30), agent(9).",
+      "fix": "Add a check (dependency-cruiser rules or a small script over package.json + source imports) that fails on upward imports (e.g. ui-foundation importing ui-react), deep imports past exports, and runtime cycles.",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-14",
+      "subject": "@atom63/cli",
+      "criterion": "A3",
+      "severity": "P3",
+      "summary": "@atom63/cli exports a library entry with no type declarations, so attw skips it and TypeScript consumers of '@atom63/cli' get implicit any.",
+      "evidence": "packages/cli/package.json exports {'.': './src/core.mjs', './agents-md': './src/agents-md.mjs'} with no 'types'; check-package-correctness.mjs:33-36 only checks exports that declare types; no sideEffects field.",
+      "fix": "Ship .d.ts (JSDoc + tsc --emitDeclarationOnly) for the two library exports, or drop them from exports if only the bin is public.",
+      "kind": "fix"
+    },
+    {
+      "id": "architecture-15",
+      "subject": "@atom63/ui-react",
+      "criterion": "A3",
+      "severity": "P3",
+      "summary": "The ui-react API reports tolerate four ae-forgotten-export warnings: public signatures reference types consumers cannot import.",
+      "evidence": "packages/ui-react/api/ui-react.api.md:673 UseCarouselParameters, :1376 feedbackIcons; ui-react.theme.api.md:57 Button; ui-react.media-lightbox.api.md:104 DestinationLink.",
+      "fix": "Export those types from their entries (or inline them), and make api-report.mjs --check fail on ae-forgotten-export.",
+      "kind": "fix"
+    }
+  ]
+}

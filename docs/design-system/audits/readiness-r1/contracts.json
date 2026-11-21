@@ -1,0 +1,2642 @@
+{
+  "scope": "Layer 2 contracts (C1-C5): packages/ui-foundation/contracts/components/*.json, generated contracts, cross-renderer contracts. Web and React only; iOS judged only as far as the contract JSON.",
+  "reviewedAt": "2026-11-19",
+  "round": 1,
+  "subjects": [
+    {
+      "subject": "all-contracts",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "Schema requires only component/maturity/contract/lists (component-intent.schema.json oneOf required); slots and states present on most, but states miss drawn states in 13 contracts (r1-contracts-4), 6 axes lack defaults (r1-contracts-5), 32 contracts lack intent text (r1-contracts-18)."
+        },
+        {
+          "criterion": "C2",
+          "score": 1,
+          "evidence": "check:contract-consistency passes on a 39-entry baseline (contract-consistency-baseline.json); consumer-visible size split default/md across 8 sized contracts (r1-contracts-1); lint misses near-synonyms (r1-contracts-6); states hold axis values (r1-contracts-7)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "17/31 cross-renderer contracts with web axes have no intent mapping; partial mappings on the rest; intentProblems returns [] without intent (component-contracts.mjs:234-235) (r1-contracts-2). Generated registries are current: `node scripts/generate-cross-renderer-contracts.mjs --check` rc=0."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "`node scripts/generate-component-contracts.mjs --check` rc=0 and cross-renderer --check rc=0, run in CI (.github/workflows/ci.yml:94,108); sweep-r1/agent-index.log \"Agent index is current.\"; 76/77 contracts have a generated *-contract.ts, React .tsx, *.stories.tsx, *.test.tsx and a catalog docs entry (file sweep); exceptions: menu (r1-contracts-9); stale doc (r1-contracts-17)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "69/77 stable with no ready scorecard and no check tying maturity to readiness (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "accordion",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/accordion.json: states, slots, defaults present (states=[\"closed\",\"open\",\"focusVisible\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: value-case | accordion.states | focusVisible (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/accordion.json: web axes iconVariants with SwiftUI renderer \"DisclosureGroup\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated accordion-contract.ts, packages/ui-react/src/components/accordion/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component accordion` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/accordion.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "alert-dialog",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/alert-dialog.json states [\"closed\",\"open\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: status-set | alert-dialog.variants | destructive -> error; synonym | alert-dialog.sizes | default -> md (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/alert-dialog.json: web axes variants, footerVariants, sizes with SwiftUI renderer \"alert(_:isPresented:actions:message:)\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated alert-dialog-contract.ts, packages/ui-react/src/components/alert-dialog/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component alert-dialog` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/alert-dialog.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "alert",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/alert.json: no states list (r1-contracts-20)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/alert.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/alert.json: intent maps iOS props [tone] of web axes [variants]. Remaining axes are web-only or decorative; generator validates the mapped props (component-contracts.mjs:229-290)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated alert-contract.ts, packages/ui-react/src/components/alert/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component alert` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/alert.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "amount",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/amount.json: states, slots, defaults present (states=[\"rest\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/amount.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated amount-contract.ts, packages/ui-react/src/components/amount/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component amount` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/amount.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "animated-check",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/animated-check.json: states, slots, defaults present (states=[\"mounting\",\"drawn\",\"reduced-motion\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/animated-check.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated animated-check-contract.ts, packages/ui-react/src/components/animated-check/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component animated-check` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/animated-check.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "app-view",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/app-view.json: no states list (non-interactive/structural; acceptable). "
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/app-view.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated app-view-contract.ts, packages/ui-react/src/components/app-view/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component app-view` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/app-view.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "autocomplete",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/autocomplete.json states [\"closed\",\"open\",\"highlighted\",\"hover\",\"disabled\",\"empty\",\"loading\",\"invalid\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | autocomplete.sizes | default -> md (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated autocomplete-contract.ts, packages/ui-react/src/components/autocomplete/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component autocomplete` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/autocomplete.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "avatar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/avatar.json: states, slots, defaults present (states=[\"loading\",\"loaded\",\"fallback\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | avatar.sizes | default -> md (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/avatar.json: intent maps iOS props [ring] of web axes [sizes, shapes, compositions, rings]. Unmapped web axes remain (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated avatar-contract.ts, packages/ui-react/src/components/avatar/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component avatar` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/avatar.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "badge",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/badge.json: states, slots, defaults present (states=[\"resting\",\"interactive\",\"disabled\",\"focus-visible\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | badge.states | resting -> rest (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/badge.json: intent maps iOS props [tone] of web axes [solidVariants, semanticVariants, paletteVariants, variants, sizes]. Remaining axes are web-only or decorative; generator validates the mapped props (component-contracts.mjs:229-290)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated badge-contract.ts, packages/ui-react/src/components/badge/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component badge` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/badge.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "breadcrumb",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/breadcrumb.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus\",\"current\"]). Axis without default (r1-contracts-5)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | breadcrumb.states | focus -> focus-visible (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated breadcrumb-contract.ts, packages/ui-react/src/components/breadcrumb/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component breadcrumb` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/breadcrumb.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "button-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/button-group.json: states, slots, defaults present (states=[\"rest\",\"focus-within\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | button-group.sizes | default -> md (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-8."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "Contract, generated packages/ui-foundation/src/components/button-group/button-group-contract.ts, React tsx/story/test, authored apps/docs/src/pages/component-button-group.mdx and `atom63 component button-group` all exist; check:contracts + check:agent-index guard them (ci.yml:94; sweep-r1/agent-index.log)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/button-group.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/button.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"pressed\",\"focusVisible\",\"disabled\",\"loading\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "button.json states \"focusVisible\" (baseline value-case) kept via intent.stateAliases; tone word overloaded (r1-contracts-12)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/button.json: intent maps iOS props [variant, size, shape] of web axes [variants, sizes, shapes, tones]. (r1-contracts-11)"
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "Contract, generated packages/ui-foundation/src/components/button/button-contract.ts, React tsx/story/test, authored apps/docs/src/pages/component-button.mdx and `atom63 component button` all exist; check:contracts + check:agent-index guard them (ci.yml:94; sweep-r1/agent-index.log)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/button.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "calendar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/calendar.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus-visible\",\"today\",\"selected\",\"range-start\",\"range-middle\",\"range-end\",\"outside\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/calendar.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/calendar.json: web axes selectionModes with SwiftUI renderer \"DatePicker\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated calendar-contract.ts, packages/ui-react/src/components/calendar/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component calendar` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/calendar.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/card.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus-visible\",\"interactive\",\"cursor-active\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/card.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-7."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/card.json: intent maps iOS props [variant] of web axes [variants, paddings, contentPaddings, lineClamps]. Unmapped web axes remain (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated card-contract.ts, packages/ui-react/src/components/card/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component card` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/card.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "carousel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/carousel.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus-visible\",\"disabled\",\"cursor-active\",\"can-scroll\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/carousel.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/carousel.json: intent maps iOS props [shape, tone] of web axes [orientations, dotShapes, dotTones]. Remaining axes are web-only or decorative; generator validates the mapped props (component-contracts.mjs:229-290)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated carousel-contract.ts, packages/ui-react/src/components/carousel/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component carousel` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/carousel.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "chat-composer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-composer.json: states, slots, defaults present (states=[\"rest\",\"focus-visible\",\"disabled\",\"streaming\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/chat-composer.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated chat-composer-contract.ts, packages/ui-react/src/components/chat-composer/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component chat-composer` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-composer.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "chat-message",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-message.json: states, slots, defaults present (states=[\"rest\",\"streaming\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-message.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated chat-message-contract.ts, packages/ui-react/src/components/chat-message/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component chat-message` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-message.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "chat-steps",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-steps.json: states, slots, defaults present (states=[\"closed\",\"open\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-steps.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated chat-steps-contract.ts, packages/ui-react/src/components/chat-steps/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component chat-steps` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-steps.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "chat-typing-indicator",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-typing-indicator.json: states, slots, defaults present (states=[\"rest\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-typing-indicator.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated chat-typing-indicator-contract.ts, packages/ui-react/src/components/chat-typing-indicator/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component chat-typing-indicator` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/chat-typing-indicator.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "checkbox",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/checkbox.json states [\"unchecked\",\"checked\",\"indeterminate\",\"disabled\",\"invalid\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/checkbox.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated checkbox-contract.ts, packages/ui-react/src/components/checkbox/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component checkbox` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/checkbox.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "collapsible",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/collapsible.json: states, slots, defaults present (states=[\"closed\",\"open\",\"starting\",\"ending\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/collapsible.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated collapsible-contract.ts, packages/ui-react/src/components/collapsible/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component collapsible` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/collapsible.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "command",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/command.json states [\"closed\",\"open\",\"empty\",\"highlighted\",\"disabled\",\"focus-visible\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/command.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated command-contract.ts, packages/ui-react/src/components/command/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component command` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/command.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "connected-panel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/connected-panel.json: states, slots, defaults present (states=[\"closed\",\"open\",\"hover\",\"focus-visible\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/connected-panel.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated connected-panel-contract.ts, packages/ui-react/src/components/connected-panel/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component connected-panel` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/connected-panel.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "context-menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/context-menu.json: states, slots, defaults present (states=[\"closed\",\"open\",\"highlighted\",\"disabled\",\"checked\",\"unchecked\",\"submenu-open\",\"destructive\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/context-menu.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-7."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated context-menu-contract.ts, packages/ui-react/src/components/context-menu/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component context-menu` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/context-menu.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "copy-button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/copy-button.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"pressed\",\"focus-visible\",\"copied\"]). Axis without default (r1-contracts-5)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/copy-button.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated copy-button-contract.ts, packages/ui-react/src/components/copy-button/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component copy-button` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/copy-button.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "destination-link",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/destination-link.json states [\"rest\",\"focus-visible\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/destination-link.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/destination-link.json: web axes kinds with SwiftUI renderer \"NavigationLink / Link\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated destination-link-contract.ts, packages/ui-react/src/components/destination-link/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component destination-link` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/destination-link.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "dialog",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/dialog.json: states, slots, defaults present (states=[\"closed\",\"open\",\"starting\",\"ending\",\"focus-visible\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | dialog.sizes | default -> md (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/dialog.json: web axes sizes, mobilePlacements, footerVariants with SwiftUI renderer \"sheet(isPresented:) / presentationDetents(_:)\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated dialog-contract.ts, packages/ui-react/src/components/dialog/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component dialog` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/dialog.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "drawer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/drawer.json states [\"closed\",\"open\",\"dragging\",\"snapped\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: physical-value | drawer.directions | left; physical-value | drawer.directions | right (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated drawer-contract.ts, packages/ui-react/src/components/drawer/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component drawer` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/drawer.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "dropdown-menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/dropdown-menu.json: states, slots, defaults present (states=[\"closed\",\"open\",\"highlighted\",\"disabled\",\"checked\",\"unchecked\",\"submenu-open\",\"destructive\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/dropdown-menu.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-7."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/dropdown-menu.json: web axes itemVariants with SwiftUI renderer \"Menu\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "Contract, generated packages/ui-foundation/src/components/dropdown-menu/dropdown-menu-contract.ts, React tsx/story/test, authored apps/docs/src/pages/component-dropdown-menu.mdx and `atom63 component dropdown-menu` all exist; check:contracts + check:agent-index guard them (ci.yml:94; sweep-r1/agent-index.log)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/dropdown-menu.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "empty",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/empty.json: states, slots, defaults present (states=[\"empty\",\"error\",\"collapsed\",\"expanded\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/empty.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/empty.json: web axes mediaVariants with SwiftUI renderer \"AtomContentStateView\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated empty-contract.ts, packages/ui-react/src/components/empty/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component empty` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/empty.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "feedback-state",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/feedback-state.json: states, slots, defaults present (states=[\"idle\",\"busy\",\"actionable\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | feedback-state.states | idle -> rest (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-19."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated feedback-state-contract.ts, packages/ui-react/src/components/feedback-state/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component feedback-state` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/feedback-state.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "field",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/field.json: states, slots, defaults present (states=[\"default\",\"invalid\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | field.states | default -> rest (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/field.json: web axes orientations, legendVariants with SwiftUI renderer \"AtomFormField\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated field-contract.ts, packages/ui-react/src/components/field/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component field` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/field.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "form",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/form.json: states, slots, defaults present (states=[\"default\",\"invalid\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | form.states | default -> rest (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated form-contract.ts, packages/ui-react/src/components/form/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component form` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/form.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "frame",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/frame.json: states, slots, defaults present (states=[\"default\",\"border-off\",\"border-subtle\",\"border-strong\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | frame.states | default -> rest (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-7."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated frame-contract.ts, packages/ui-react/src/components/frame/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component frame` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/frame.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "hover-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/hover-card.json: states, slots, defaults present (states=[\"closed\",\"open\",\"starting\",\"ending\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/hover-card.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated hover-card-contract.ts, packages/ui-react/src/components/hover-card/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component hover-card` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/hover-card.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "input-otp",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/input-otp.json: states, slots, defaults present (states=[\"rest\",\"active\",\"disabled\",\"invalid\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | input-otp.states | active -> current (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated input-otp-contract.ts, packages/ui-react/src/components/input-otp/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component input-otp` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/input-otp.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "input",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/input.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus\",\"disabled\",\"invalid\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | input.states | focus -> focus-visible (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/input.json: intent maps iOS props [variant] of web axes [sizes, variants]. (r1-contracts-13)"
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "Contract, generated packages/ui-foundation/src/components/input/input-contract.ts, React tsx/story/test, authored apps/docs/src/pages/component-input.mdx and `atom63 component input` all exist; check:contracts + check:agent-index guard them (ci.yml:94; sweep-r1/agent-index.log)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/input.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "item",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/item.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus\",\"selected\",\"current\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | item.sizes | default -> md; synonym | item.states | focus -> focus-visible (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/item.json: intent maps iOS props [surface] of web axes [variants, sizes, tones, mediaVariants, groupVariants, groupSurfaces]. Unmapped web axes remain (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated item-contract.ts, packages/ui-react/src/components/item/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component item` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/item.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "kbd",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/kbd.json: states, slots, defaults present (states=[\"rest\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/kbd.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated kbd-contract.ts, packages/ui-react/src/components/kbd/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component kbd` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/kbd.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "label",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/label.json: states, slots, defaults present (states=[\"rest\",\"disabled\",\"invalid\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/label.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated label-contract.ts, packages/ui-react/src/components/label/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component label` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/label.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "load-more-trigger",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/load-more-trigger.json states [\"idle\",\"loading\",\"failed\",\"exhausted\",\"hidden\",\"custom\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | load-more-trigger.states | idle -> rest (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/load-more-trigger.json: web axes variants with SwiftUI renderer \"AtomLoadMoreView\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated load-more-trigger-contract.ts, packages/ui-react/src/components/load-more-trigger/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component load-more-trigger` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/load-more-trigger.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "marquee",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/marquee.json: states, slots, defaults present (states=[\"running\",\"paused\",\"hover-paused\",\"reduced-motion\"]). Axis without default (r1-contracts-5)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/marquee.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated marquee-contract.ts, packages/ui-react/src/components/marquee/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component marquee` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/marquee.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/menu.json: tones axis has no React prop; states omit starting/ending drawn at menu.css:46 (r1-contracts-4, r1-contracts-9)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/menu.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-10."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 2,
+          "evidence": "No component, test or docs page; CLI not_found (r1-contracts-9)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "menu.json:4 stable but not a component (r1-contracts-9, r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "menubar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/menubar.json states [\"closed\",\"open\",\"highlighted\",\"disabled\",\"selected\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/menubar.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated menubar-contract.ts, packages/ui-react/src/components/menubar/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component menubar` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/menubar.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "message",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/message.json: states, slots, defaults present (states=[\"rest\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/message.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/message.json: intent maps iOS props [direction, position, status] of web axes [directions, positions, deliveryStates]. Remaining axes are web-only or decorative; generator validates the mapped props (component-contracts.mjs:229-290)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated message-contract.ts, packages/ui-react/src/components/message/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component message` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/message.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "navigation-menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/navigation-menu.json states [\"closed\",\"open\",\"active\",\"disabled\",\"starting\",\"ending\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | navigation-menu.states | active -> current (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated navigation-menu-contract.ts, packages/ui-react/src/components/navigation-menu/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component navigation-menu` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/navigation-menu.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "pagination",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/pagination.json: states, slots, defaults present (states=[\"rest\",\"current\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/pagination.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated pagination-contract.ts, packages/ui-react/src/components/pagination/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component pagination` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/pagination.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "panel-setting-button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/panel-setting-button.json: states, slots, defaults present (states=[\"off\",\"on\",\"disabled\",\"focus-visible\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/panel-setting-button.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated panel-setting-button-contract.ts, packages/ui-react/src/components/panel-setting-button/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component panel-setting-button` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/panel-setting-button.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "popover",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/popover.json: states, slots, defaults present (states=[\"closed\",\"open\",\"starting\",\"ending\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/popover.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated popover-contract.ts, packages/ui-react/src/components/popover/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component popover` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/popover.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "portal-container",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/portal-container.json: no slots (renders no own DOM; acceptable)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/portal-container.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated portal-container-contract.ts, packages/ui-react/src/components/portal-container/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component portal-container` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/portal-container.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "preview-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/preview-card.json: states, slots, defaults present (states=[\"closed\",\"open\",\"starting\",\"ending\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/preview-card.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated preview-card-contract.ts, packages/ui-react/src/components/preview-card/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component preview-card` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/preview-card.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "progress",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/progress.json: states, slots, defaults present (states=[\"indeterminate\",\"progressing\",\"complete\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/progress.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/progress.json: intent maps iOS props [tone] of web axes [tones]. Remaining axes are web-only or decorative; generator validates the mapped props (component-contracts.mjs:229-290)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated progress-contract.ts, packages/ui-react/src/components/progress/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component progress` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/progress.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "progressive-blur",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/progressive-blur.json: states, slots, defaults present (states=[\"rest\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/progressive-blur.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated progressive-blur-contract.ts, packages/ui-react/src/components/progressive-blur/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component progressive-blur` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/progressive-blur.json: maturity \"preview\", honest while layer-3 scorecard is pending."
+        }
+      ]
+    },
+    {
+      "subject": "radio",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/radio.json states [\"unchecked\",\"checked\",\"focus-visible\",\"disabled\",\"invalid\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/radio.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/radio.json: web axes sizes, indicators with SwiftUI renderer \"Picker(.inline) in a Form / AtomSelectionRow group\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated radio-contract.ts, packages/ui-react/src/components/radio/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component radio` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/radio.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "rating",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/rating.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus-visible\",\"checked\",\"disabled\",\"read-only\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/rating.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated rating-contract.ts, packages/ui-react/src/components/rating/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component rating` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/rating.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "resizable",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/resizable.json: states, slots, defaults present (states=[\"idle\",\"hover\",\"focus-visible\",\"dragging\",\"disabled\"]). Axis without default (r1-contracts-5)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | resizable.states | idle -> rest (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated resizable-contract.ts, packages/ui-react/src/components/resizable/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component resizable` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/resizable.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "scroll-area",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/scroll-area.json: states, slots, defaults present (states=[\"idle\",\"hovering\",\"scrolling\",\"focus-visible\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | scroll-area.states | hovering -> hover; synonym | scroll-area.states | idle -> rest (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated scroll-area-contract.ts, packages/ui-react/src/components/scroll-area/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component scroll-area` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/scroll-area.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "scrollable-list",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/scrollable-list.json: states, slots, defaults present (states=[\"idle\",\"can-scroll-start\",\"can-scroll-end\",\"dragging\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | scrollable-list.states | idle -> rest (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated scrollable-list-contract.ts, packages/ui-react/src/components/scrollable-list/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component scrollable-list` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/scrollable-list.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "search-field",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/search-field.json: states, slots, defaults present (states=[\"empty\",\"query\",\"focus\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | search-field.states | focus -> focus-visible (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/search-field.json: no web axes; crossRenderer block present (requiredStates [\"empty\",\"query\",\"focus\",\"disabled\"]), cross-renderer --check rc=0."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated search-field-contract.ts, packages/ui-react/src/components/search-field/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component search-field` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/search-field.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "segmented-control",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/segmented-control.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"selected\",\"disabled\",\"focus-visible\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/segmented-control.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/segmented-control.json: web axes sizes, variants, tones with SwiftUI renderer \"Picker(.segmented)\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "Contract, generated packages/ui-foundation/src/components/segmented-control/segmented-control-contract.ts, React tsx/story/test, authored apps/docs/src/pages/component-segmented-control.mdx and `atom63 component segmented-control` all exist; check:contracts + check:agent-index guard them (ci.yml:94; sweep-r1/agent-index.log)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/segmented-control.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "select",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/select.json states [\"closed\",\"open\",\"placeholder\",\"focus-visible\",\"disabled\",\"highlighted-item\",\"selected-item\",\"disabled-item\",\"invalid\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/select.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/select.json: web axes sizes with SwiftUI renderer \"Picker\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated select-contract.ts, packages/ui-react/src/components/select/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component select` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/select.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "separator",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/separator.json: no states list (non-interactive/structural; acceptable). "
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/separator.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated separator-contract.ts, packages/ui-react/src/components/separator/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component separator` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/separator.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "sheet",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/sheet.json: states, slots, defaults present (states=[\"closed\",\"open\",\"starting\",\"ending\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: physical-value | sheet.sides | left; physical-value | sheet.sides | right (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated sheet-contract.ts, packages/ui-react/src/components/sheet/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component sheet` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/sheet.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "sidebar-nav-tree",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar-nav-tree.json: no slots list, uses `parts` (r1-contracts-16)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | sidebar-nav-tree.states | active -> current (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated sidebar-nav-tree-contract.ts, packages/ui-react/src/components/sidebar-nav-tree/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component sidebar-nav-tree` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar-nav-tree.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "sidebar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar.json states [\"expanded\",\"collapsed\"] omit states the recipe draws (r1-contracts-4)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: physical-value | sidebar.sides | left; physical-value | sidebar.sides | right (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated sidebar-contract.ts, packages/ui-react/src/components/sidebar/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component sidebar` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "skeleton",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/skeleton.json: states, slots, defaults present (states=[\"loading\",\"reduced-motion\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/skeleton.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/skeleton.json: no web axes; crossRenderer block present (requiredStates [\"loading\",\"reduced-motion\"]), cross-renderer --check rc=0."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated skeleton-contract.ts, packages/ui-react/src/components/skeleton/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component skeleton` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/skeleton.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "slider",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/slider.json: states, slots, defaults present (states=[\"rest\",\"focus-visible\",\"dragging\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/slider.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/slider.json: web axes orientations, modes, tones with SwiftUI renderer \"Slider\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated slider-contract.ts, packages/ui-react/src/components/slider/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component slider` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/slider.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "spinner",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/spinner.json: states, slots, defaults present (states=[\"loading\",\"reduced-motion\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/spinner.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated spinner-contract.ts, packages/ui-react/src/components/spinner/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component spinner` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/spinner.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "switch",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/switch.json: states, slots, defaults present (states=[\"off\",\"on\",\"hover\",\"pressed\",\"focus-visible\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/switch.json: no consistency-baseline entries; values follow the canonical names. See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/switch.json: web axes sizes with SwiftUI renderer \"AtomToggle\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated switch-contract.ts, packages/ui-react/src/components/switch/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component switch` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/switch.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "table",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/table.json: states, slots, defaults present (states=[\"rest\",\"row-hover\",\"row-selected\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | table.sizes | default -> md (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated table-contract.ts, packages/ui-react/src/components/table/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component table` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/table.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "tabs",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/tabs.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"selected\",\"focus-visible\",\"disabled\"]). Axis without default (r1-contracts-5)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | tabs.sizes | default -> md (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/tabs.json: web axes variants, sizes, orientations with SwiftUI renderer \"Picker(.segmented) / AtomTabRow\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "Contract, generated packages/ui-foundation/src/components/tabs/tabs-contract.ts, React tsx/story/test, authored apps/docs/src/pages/component-tabs.mdx and `atom63 component tabs` all exist; check:contracts + check:agent-index guard them (ci.yml:94; sweep-r1/agent-index.log)."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/tabs.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "text-ticker",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/text-ticker.json: states, slots, defaults present (states=[\"fits\",\"overflowing\",\"hover\",\"focus-within\",\"autoplay\",\"reduced-motion\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/text-ticker.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated text-ticker-contract.ts, packages/ui-react/src/components/text-ticker/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component text-ticker` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/text-ticker.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "textarea",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/textarea.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus\",\"disabled\",\"invalid\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | textarea.states | focus -> focus-visible (contract-consistency-baseline.json; r1-contracts-1)."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/textarea.json: web axes sizes with SwiftUI renderer \"AtomTextEditor\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated textarea-contract.ts, packages/ui-react/src/components/textarea/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component textarea` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/textarea.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "toaster",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/toaster.json: states, slots, defaults present (states=[\"visible\",\"dismissing\",\"reduced-motion\"]). Axis without default (r1-contracts-5)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/toaster.json: no consistency-baseline entries; values follow the canonical names."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/toaster.json: intent maps iOS props [variant] of web axes [variants, tones]. (r1-contracts-14)"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated toaster-contract.ts, packages/ui-react/src/components/toaster/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component toaster` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/toaster.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "toggle-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/toggle-group.json: states, slots, defaults present (states=[\"rest\",\"hover\",\"focus\",\"selected\",\"disabled\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | toggle-group.states | focus -> focus-visible (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/toggle-group.json: intent maps iOS props [orientation] of web axes [variants, orientations, selectionModes]. (r1-contracts-15)"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated toggle-group-contract.ts, packages/ui-react/src/components/toggle-group/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component toggle-group` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/toggle-group.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "toggle",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/toggle.json: states, slots, defaults present (states=[\"off\",\"on\",\"rest\",\"hover\",\"pressed\",\"disabled\",\"focus\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: synonym | toggle.states | focus -> focus-visible (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-7."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/toggle.json: web axes sizes, tones with SwiftUI renderer \"AtomChip\" but no intent mapping (r1-contracts-2)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated toggle-contract.ts, packages/ui-react/src/components/toggle/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component toggle` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/toggle.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    },
+    {
+      "subject": "tooltip",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/tooltip.json: states, slots, defaults present (states=[\"closed\",\"open\",\"starting\",\"ending\",\"instant\"])."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Baselined drift: physical-value | tooltip.sides | left; physical-value | tooltip.sides | right (contract-consistency-baseline.json; r1-contracts-1). See r1-contracts-6."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: not in contracts/cross-renderer.json, no iOS counterpart"
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Contract, generated tooltip-contract.ts, packages/ui-react/src/components/tooltip/ tsx+stories+test, catalog docs entry (component-catalog.ts) and `atom63 component tooltip` resolve; docs page is generated, not authored."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "packages/ui-foundation/contracts/components/tooltip.json: maturity \"stable\" without a ready scorecard (r1-contracts-3)."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r1-contracts-1",
+      "subject": "all-contracts",
+      "criterion": "C2",
+      "severity": "P1",
+      "summary": "One concept still has several names across contracts: 39 known drift entries remain in the baseline (8 sizes `default` instead of `md`, 19 state synonyms, 8 physical left/right, 2 camelCase `focusVisible`, 1 `destructive` vs `error`), and a consumer hits them directly: `size=\"md\"` type-checks on Button, Input, Select, Textarea and Segmented Control but not on Tabs, Dialog, Alert Dialog, Avatar, Item, Table, Autocomplete or Button Group.",
+      "evidence": "docs/design-system/audits/contract-consistency-baseline.json (39 keys, e.g. \"synonym | tabs.sizes | default -> md\", \"synonym | button-group.sizes | default -> md\", \"physical-value | sheet.sides | left\"); packages/ui-foundation/contracts/components/tabs.json:8 sizes [\"xs\",\"sm\",\"default\",\"lg\"] vs button.json sizes [...\"md\"...]; `pnpm -s atom63 component tabs` prints \"| `sizes` | `xs`, `sm`, `default`, `lg` | `default` |\". check:contract-consistency passes only because these are baselined (sweep-r1/contract-consistency.log: \"Contract consistency OK (77 contracts)\").",
+      "fix": "Rename to the canonical values the lint already names (sizes default->md, states focus/idle/resting/default/active/hovering -> focus-visible/rest/current/hover, left/right -> start/end, focusVisible -> focus-visible, alert-dialog destructive -> error), keeping the old values as deprecated aliases (as button.json intent.stateAliases does) until a breaking release, then shrink the baseline with `pnpm check:contract-consistency --write`.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced: docs/design-system/audits/contract-consistency-baseline.json holds exactly 39 keys (8 `default -> md` sizes, 19 state synonyms, 8 physical left/right, 2 `focusVisible`, 1 `destructive -> error`). Size lists in packages/ui-foundation/contracts/components: button/input/select/textarea/segmented-control use `md`; tabs, dialog, alert-dialog, avatar, item, table, autocomplete and button-group use `default`. packages/ui-react/src/components/tabs/tabs.tsx:26 takes `size?: TabsSize` with `size = tabsContract.defaultSize`, so `size=\"md\"` does not type-check there. `pnpm -s atom63 component tabs` prints sizes `xs, sm, default, lg`. The lint passes only because these entries are baselined. Consumers see this directly, so it blocks C2."
+      }
+    },
+    {
+      "id": "r1-contracts-2",
+      "subject": "all-contracts",
+      "criterion": "C3",
+      "severity": "P1",
+      "summary": "17 of the 31 contracts with a SwiftUI renderer have web axes but no `intent` block, so none of their axes are mapped to iOS (dialog, alert-dialog, field, textarea, switch, select, toggle, segmented-control, radio, slider, dropdown-menu, accordion, calendar, tabs, empty, load-more-trigger, destination-link); the 12 that do have one mostly map a single axis. Nothing fails on it: intentProblems returns [] when there is no intent.",
+      "evidence": "packages/ui-foundation/contracts/cross-renderer.json (31 components); node survey of contracts/components/*.json: intent present on button, input, toggle-group, card, badge, avatar, alert, progress, toaster, item, carousel, message only; scripts/design-system/lib/component-contracts.mjs:234-235 \"const intent = source.doc.intent / if (!intent) return []\"; e.g. tabs.json has variants/sizes/orientations and crossRenderer.swiftUIRenderer \"Picker(.segmented) / AtomTabRow\" with no mapping; toggle.json sizes+tones -> \"AtomChip\" unmapped; avatar intent maps only `ring` (sizes, shapes unmapped); item intent maps only `surface`. docs/design-system/cross-renderer-contracts.md:46 still says only Button, Badge and Input have intent.",
+      "fix": "Require an `intent` block for every component in cross-renderer.json and, in intentProblems, require every web axis list (variants, sizes, tones, orientations, ...) to be either mapped on both platforms or declared a web extension with a reason; then author the missing mappings, starting with the 17 that have none.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced: cross-renderer.json lists 31 components. `intent` appears only on alert, avatar, badge, button, card, carousel, input, item, message, progress, toaster and toggle-group (12), and toggle, select, tabs etc. have `intent: null`. component-contracts.mjs:235 has `if (!intent) return []`. avatar maps only `ring` and item only `surface`. cross-renderer-contracts.md:46 still says 'Button, Badge and Input also declare an intent block'. This is the round-0 contracts-3 gap, only partly closed."
+      }
+    },
+    {
+      "id": "r1-contracts-3",
+      "subject": "all-contracts",
+      "criterion": "C5",
+      "severity": "P2",
+      "summary": "69 of 77 contracts are `maturity: \"stable\"`, but the bar defines stable as \"only when the component's scorecard is ready\", no component scorecard is ready yet (taste criterion K3 stands only after YZ sees the contact sheets), and nothing checks maturity against a scorecard. Several stable contracts carry known debt: menu has no component, select has runtime focus-visible debt, kbd/card/input-otp have token-role debt.",
+      "evidence": "node count over contracts/components/*.json: stable 69, preview 8 (amount, app-view, chat-composer, chat-message, chat-steps, chat-typing-indicator, message, progressive-blur); proposal-ds-review-bar.md:44 \"C5 ... Checked by: —\"; docs/design-system/audits/runtime-craft-baseline.json (ui-react-select--grouped/--scrollable focus-visible); craft-baseline.json token-role entries for card.css, input-otp.css, kbd.css; packages/ui-foundation/contracts/components/menu.json:4 \"stable\" with no React component.",
+      "fix": "Decide what `stable` means now. Recommended: keep the schema enum but add a check that a contract may be `stable` only when its readiness scorecard (docs/design-system/audits/readiness-*/) marks it ready or YZ has recorded an exception; until then demote components with open P0/P1 findings to `preview`.",
+      "kind": "yz-decision",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "The counts hold: 69 stable and 8 preview. The bar (proposal-ds-review-bar.md:44) gives C5 no automated check ('—'), and menu.json is stable while packages/ui-react/src/components/menu contains only menu.css and menu.stories.tsx (shared menu styling, no exported component). The severity is inflated, though. No component scorecard can be ready before YZ's contact-sheet review, so whether to demote 69 contracts now or relabel once scorecards land is a sequencing decision for YZ. It does not make any contract wrong for a consumer, and the known debt cited (select focus-visible, token roles) is tracked in baselines. It stays a yz-decision with a missing cross-check, so P2, not a P1 blocker on its own."
+      }
+    },
+    {
+      "id": "r1-contracts-4",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Listed states miss states the recipe really draws, so stories, docs and iOS required states are built from an incomplete list: overlay transition states, keyboard focus and hover are styled but not in the contract.",
+      "evidence": "alert-dialog.json states [\"closed\",\"open\"] vs alert-dialog.css:23,72 [data-starting-style]/[data-ending-style] (dialog.json lists starting/ending); drawer.json [\"closed\",\"open\",\"dragging\",\"snapped\"] vs drawer.css:20,176 starting-style and :119 :focus-visible; select.json (no starting/ending) vs select.css:149; command.json vs command.css:20; menu.json vs menu.css:46; autocomplete.json (no focus-visible/starting) vs autocomplete.css:61,190; checkbox.json [\"unchecked\",\"checked\",\"indeterminate\",\"disabled\",\"invalid\"] vs checkbox.css:95 :hover and :100 :focus-visible; radio.json (no hover) vs radio.css:97; menubar.json (no hover/focus-visible) vs menubar.css:59,66; navigation-menu.css:78 :focus-visible not in states; load-more-trigger.css:98 :focus-visible; destination-link.css:15 :hover; sidebar.json states [\"expanded\",\"collapsed\"] vs sidebar.css:452 menu-button :hover and :365,400 :focus-visible.",
+      "fix": "Add the missing states to each list (focus-visible, hover, starting, ending, as drawn), then let the visual QA matrix and stories pick them up. Consider a check that greps each recipe for data-starting-style/:focus-visible/:hover on the root or trigger and fails when the contract omits the state.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-5",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Six axes have no default, so the CLI and docs print \"—\" and a builder cannot tell what an omitted prop does.",
+      "evidence": "tabs.json lists orientations but contract has no defaultOrientation (`pnpm -s atom63 component tabs` line 85: \"| `orientations` | `horizontal`, `vertical` | — |\"); marquee.json orientations, resizable.json variants, toaster.json tones, copy-button.json variants, breadcrumb.json compositions likewise have no default<Axis> in \"contract\".",
+      "fix": "Add defaultOrientation (tabs, marquee), defaultVariant (resizable, copy-button), defaultTone (toaster), defaultComposition (breadcrumb) matching the React defaults; add a schema/generator rule that every axis list has a default unless marked derived.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-6",
+      "subject": "all-contracts",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "The consistency lint misses near-synonyms and whole list families: it matches list names exactly (`sizes`, `states`), skips parts, and has no rule for several concepts that already diverge.",
+      "evidence": "scripts/design-system/lib/contract-consistency.mjs:28-38 SYNONYMS keyed by exact list name, :49 reads only top-level `lists` (input.json parts.group ignored); misses: sidebar.json menuButtonSizes [\"default\",\"sm\",\"lg\"] next to menuSubButtonSizes [\"sm\",\"md\"] in the same contract; connected-panel.json and input group `aligns` vs tooltip.json `alignments`; drawer.json `directions` (top/bottom/left/right) vs sheet.json/sidebar.json/tooltip.json `sides` for the same edge concept, while message.json `directions` means incoming/outgoing; selected item named `on` (toggle, switch, panel-setting-button), `selected` (toggle-group, tabs, segmented-control, menu), `checked` (checkbox, radio, rating); emphasis tone `accent` (item, table, toggle, slider, progress, segmented-control, sidebar, sidebar-nav-tree) vs `primary` (menu.json tones); quiet tone `muted` (button) vs `subtle` (toggle); neutral tone `neutral` vs `default` (toaster); chat-composer.json statuses `idle` (the rest synonym) unchecked.",
+      "fix": "Extend the lint: apply size/state synonyms to every list whose key ends in Sizes/States/statuses and to parts; add canonical names for alignments (`align`), edge (`side`), selected state, and tone (`accent`, `muted`, `neutral`); baseline the new findings and pay them down with r1-contracts-1.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-7",
+      "subject": "all-contracts",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Some state lists hold axis values, so one concept is both a variant and a state.",
+      "evidence": "card.json states include \"interactive\" while card variants include \"interactive\"; dropdown-menu.json and context-menu.json states include \"destructive\", which is the itemVariants value; frame.json states [\"default\",\"border-off\",\"border-subtle\",\"border-strong\"] duplicate the borders axis [\"off\",\"subtle\",\"strong\"]; toggle.json states [\"off\",\"on\",\"rest\",...] mix a selection pair with a rest state.",
+      "fix": "Keep states for interaction/data states only: drop interactive/destructive/border-* from the state lists (they are axis values already) and drop `rest` from toggle (off is its rest).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-8",
+      "subject": "button-group",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Button Group sizes use `default` for the middle step while the Button it groups uses `md`, so `<ButtonGroup size=\"md\">` is a type error and, from JS, matches no height rule.",
+      "evidence": "button-group.json sizes [\"xs\",\"sm\",\"default\",\"lg\",\"xl\",\"icon-xs\",...] vs button.json sizes [\"xs\",\"sm\",\"md\",\"lg\",\"xl\",\"tile\",...]; packages/ui-react/src/components/button-group/button-group.css:278 `.a63-ButtonGroup[data-size='default']`; lint comment contract-consistency.mjs:12 \"a group's sizes must match the control it groups\"; baseline \"synonym | button-group.sizes | default -> md\".",
+      "fix": "Rename to `md` in the contract and the recipe, accept `default` as a deprecated alias for one release.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-9",
+      "subject": "menu",
+      "criterion": "C4",
+      "severity": "P2",
+      "summary": "menu.json is a recipe shared by DropdownMenu, ContextMenu, Menubar and Select, but it is filed as a stable component: no React component, no test, no docs page, and the CLI cannot find it; its `tones` axis (primary) is not exposed by any React prop.",
+      "evidence": "`pnpm -s atom63 component menu` -> \"No component \\\"menu\\\". (component.not_found)\"; packages/ui-react/src/components/menu/ holds only menu.css and menu.stories.tsx; menu absent from apps/docs/src/lib/component-catalog.ts; menu.json:4 \"maturity\": \"stable\", :5 tones [\"neutral\",\"primary\"] used only as [data-tone='primary'] in menu.css:105; no tone prop in dropdown-menu/context-menu/menubar .tsx (grep \"tone\" empty). check:agent-index passes, so no check ties contracts to the index.",
+      "fix": "Move it to contracts/shared/menu.json (lists only, like shared/selection.json) or mark it internal, and either expose `tone` on the menu-family components or drop the axis; add a check that every components/*.json contract is resolvable by `atom63 component`.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-10",
+      "subject": "menu",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Menu calls its emphasis tone `primary`; every other tone list in the system calls it `accent`.",
+      "evidence": "menu.json tones [\"neutral\",\"primary\"]; item.json, table.json, toggle.json, segmented-control.json, sidebar-nav-tree.json, sidebar.json menuButtonTones: [\"neutral\",\"accent\"]; slider.json and progress.json [\"accent\",\"neutral\"].",
+      "fix": "Rename menu tone `primary` to `accent` in the contract and menu.css/select.css selectors.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-11",
+      "subject": "button",
+      "criterion": "C3",
+      "severity": "P2",
+      "summary": "Button's web `tone` prop (neutral/muted) is not in the intent mapping, the intent axis value `muted` is reachable from no prop on either platform, and the iOS size map names a Swift type the generator does not check.",
+      "evidence": "button.json lists.tones [\"neutral\",\"muted\"] and packages/ui-react/src/components/button/button.tsx:26 `tone?: ButtonTone`; button.json intent.platforms.web.props has only variant/size/shape; intent.axes.tone includes \"muted\" but no map entry targets it; iOS size uses \"swiftType\": \"AtomControlSize\" while swiftEnumProblems only checks `swiftEnum` (scripts/design-system/lib/component-contracts.mjs:319 `if (!spec.swiftEnum) continue`).",
+      "fix": "Add `tone` to web (and iOS) intent props with neutral->neutral, muted->muted; switch iOS size to `swiftEnum` or extend the check to `swiftType` enums.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-12",
+      "subject": "button",
+      "criterion": "C2",
+      "severity": "P3",
+      "summary": "The word `tone` means two things on Button: the `tone` prop (neutral/muted, a quiet modifier) and the intent axis `tone` (neutral/muted/primary/destructive), which the `variant` prop carries.",
+      "evidence": "button.json lists.tones [\"neutral\",\"muted\"] vs intent.axes.tone [\"neutral\",\"muted\",\"primary\",\"destructive\"]; intent.platforms.web.props.variant.map \"destructive\": {\"tone\":\"destructive\"}.",
+      "fix": "Document the split in the contract description, or rename the web prop when the next breaking release lands.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-13",
+      "subject": "input",
+      "criterion": "C3",
+      "severity": "P2",
+      "summary": "Input declares intent sizes sm/md/lg with web heights but has no iOS size mapping, so the iOS size axis is unmapped.",
+      "evidence": "input.json intent.sizes {sm,md,lg}; intent.platforms.web.props has size+variant, intent.platforms.ios.props has only variant.",
+      "fix": "Add an iOS size map (or declare the iOS text field single-size in platformAdaptations and as an explicit extension).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-14",
+      "subject": "toaster",
+      "criterion": "C3",
+      "severity": "P2",
+      "summary": "Toaster's main axis, tones (info/success/warning/error/loading), is not mapped to iOS, has no default, and mixes a state (`loading`) and `default` (elsewhere `neutral`) into a tone list.",
+      "evidence": "toaster.json lists.tones [\"default\",\"info\",\"success\",\"warning\",\"error\",\"loading\"], no defaultTone in contract; intent maps only `variant`; toaster.json states already model progress (\"visible\",\"dismissing\").",
+      "fix": "Map tones on both platforms, add defaultTone, rename default->neutral, and model loading as a state or a separate kind.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-15",
+      "subject": "toggle-group",
+      "criterion": "C3",
+      "severity": "P2",
+      "summary": "Toggle Group's intent maps only orientation; its variants (segmented, pills, ghost) and selection modes are unmapped although the SwiftUI renderer splits on variant.",
+      "evidence": "toggle-group.json intent.axes {orientation}; crossRenderer.swiftUIRenderer \"Picker(.segmented) / AtomGhostToggleGroup\"; lists.variants [\"segmented\",\"pills\",\"ghost\"], selectionModes [\"single\",\"multiple\"]. Schema offers crossRenderer.variantRenderers (\"The SwiftUI renderer for each value of the component's variants list\") and no contract uses it.",
+      "fix": "Add variant and selectionMode to intent (or fill crossRenderer.variantRenderers for all three variants).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-16",
+      "subject": "sidebar-nav-tree",
+      "criterion": "C1",
+      "severity": "P3",
+      "summary": "Sidebar Nav Tree has no `slots` list; it uses a list named `parts`, which collides with the schema's top-level `parts` (sub-component contracts), and has no description.",
+      "evidence": "sidebar-nav-tree.json lists {states,tones,parts,visualArchetypes}; component-intent.schema.json `parts` = \"Sub-components with their own lists and contract\".",
+      "fix": "Rename the list to `slots` with data-slot names.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-17",
+      "subject": "all-contracts",
+      "criterion": "C4",
+      "severity": "P3",
+      "summary": "cross-renderer-contracts.md is stale about intent coverage.",
+      "evidence": "docs/design-system/cross-renderer-contracts.md:46 \"Button, Badge and Input also declare an `intent` block\" (last changed 2026-10-26); 12 contracts declare one now.",
+      "fix": "Update the paragraph, or generate the list.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-18",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P3",
+      "summary": "32 contracts have no intent text of their own (no description, intent or crossRenderer.intent); their purpose lives only in the docs catalog, and only 10 contracts bind an accessibility pattern.",
+      "evidence": "node survey: no description/intent/crossRenderer in amount, animated-check, autocomplete, breadcrumb, checkbox, collapsible, command, context-menu, copy-button, drawer, form, hover-card, input-otp, kbd, label, marquee, menu, menubar, navigation-menu, pagination, panel-setting-button, popover, portal-container, preview-card, resizable, scroll-area, scrollable-list, sheet, sidebar-nav-tree, spinner, text-ticker, tooltip; `contract.accessibility` only on accordion, alert-dialog, checkbox, dialog, dropdown-menu, radio, select, switch, tabs (+ none for menu-family, slider, tooltip, toggle-group); packages/ui-foundation/src/a11y/types.ts:37-46 lists 9 patterns.",
+      "fix": "Add a one-line description to each contract (generated from the catalog summary if preferred); track missing APG bindings under layer 3 K2.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-19",
+      "subject": "feedback-state",
+      "criterion": "C2",
+      "severity": "P3",
+      "summary": "Feedback State calls its placement contexts `sizes` (inline, panel, page, widget) and its rest state `idle`.",
+      "evidence": "feedback-state.json sizes [\"inline\",\"panel\",\"page\",\"widget\"], states [\"idle\",\"busy\",\"actionable\"]; baseline \"synonym | feedback-state.states | idle -> rest\".",
+      "fix": "Rename the list to `contexts` (or `placements`) and idle -> rest.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-contracts-20",
+      "subject": "alert",
+      "criterion": "C1",
+      "severity": "P3",
+      "summary": "Alert has no states list at all (its cross-renderer contract reads states from variants).",
+      "evidence": "alert.json lists {variants,slots,visualArchetypes}; crossRenderer.foundationAxis \"variants\".",
+      "fix": "Add states [\"rest\"] (and dismissing, if the action closes it) so the contract shape matches the others.",
+      "kind": "fix"
+    }
+  ]
+}

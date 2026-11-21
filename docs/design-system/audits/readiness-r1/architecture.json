@@ -1,0 +1,453 @@
+{
+  "scope": "Layer 5: architecture and packages (A1-A6), web and React only",
+  "reviewedAt": "2026-11-19",
+  "round": 1,
+  "subjects": [
+    {
+      "subject": "@atom63/styles",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). styles has no runtime @atom63 deps (package.json deps: tw-animate-css only)."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "CSS-only package, sideEffects [\"*.css\"] (packages/styles/package.json). No CSS size budget exists anywhere (grep budget in scripts/design-system: only check-ui-react-bundle-size.mjs). Registry smoke consumer ships dist/assets/index-*.css 545.43 kB / 79.81 kB gzip (sweep-r1/ds-registry-smoke.log). See r1-architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "64 export keys inventoried in docs/design-system/audits/package-surface.json, but styles has no entry in docs/design-system/package-export-tiers.json (exportTiers null), so 63 CSS/JSON subpaths carry no tier; only ./z-layers has an API report (scripts/design-system/api-report.mjs:31). See r1-architecture-7."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "dependency-version-policy.json runtimeDependencyPolicy: tw-animate-css 'pin-or-reviewed-minor-before-stable', manifest pins 1.4.0; check:dependency-version-policy passes (sweep-r1/dependency-version-policy.log)."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "Changesets + OIDC provenance publish work (styles@0.1.0-beta.8 published 2026-11-18T00:38Z), but npm latest is 0.1.0-beta.5 vs beta 0.1.0-beta.8. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "@atom63/ui-foundation",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). ui-foundation has zero dependencies."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "sideEffects:false, single ESM entry dist/index.js, no runtime deps (packages/ui-foundation/package.json). No size budget, but nothing to bloat; ui-react root pulls it within the 99.4 kB measured budget."
+        },
+        {
+          "criterion": "A3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/api/ui-foundation.api.md has 0 ae-forgotten-export warnings; contracts carry maturity (changeset: catalog/agent index fail on a component without contract maturity). No package-level tier in package-export-tiers.json (P3, folded into r1-architecture-7)."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "No dependencies, no peers; listed in coordinatedPackages of docs/design-system/dependency-version-policy.json; check passes."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "latest 0.1.1-beta.2 vs beta 0.2.0-beta.5 -- latest is a different minor line. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "@atom63/ui-react",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). ui-react src imports @atom63/ui-foundation (146 sites) and nothing downstream."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "check:ui-react-size: 'UI React bundle-size check passed: 99.4 kB gzip / 100 kB budget' (sweep-r1/ui-react-size.log) -- 0.6 kB headroom. Budget (scripts/design-system/check-ui-react-bundle-size.mjs:80) is the gzip SUM of every dist .js file, not a per-entry or 'import { Button }' cost; it has been raised 13 times (64 -> 100 kB, comments lines 8-79), last 98 -> 100 after CI run 44489359587 failed at 98.1 kB on 2026-11-19. Root-deps check guards only react-day-picker (check-ui-react-root-deps.mjs:25); measured root graph (dist/index.js, 7 files) statically imports react-hook-form, embla, input-otp, sonner, react-resizable-panels. See r1-architecture-5."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "Reports for all 7 typed entries are current (check:api-report). Inventory: 637 root exports tiered (ui-react-stable-action-matrix.json summary). But 31 preview-experimental-candidate symbols (DialogPrimitive, TooltipPrimitive, ATOM63_MOTION_EASE..., conformance) still ship from the root; `pnpm -s atom63 api DialogPrimitive` lists `import { DialogPrimitive } from '@atom63/ui-react'` first and shows no tier. Unnameable public types: UseCarouselParameters, feedbackIcons (ui-react.api.md), ExcludeRef (ui-react.media.api.md). See r1-architecture-8."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "react peer ^19.1.0 consistent. dependency-version-policy.json says input-otp is 'pin-via-root-override-through-beta', but the override lives in the repo root package.json pnpm.overrides (input-otp 1.4.2) and does not reach consumers: published ui-react declares input-otp ^1.4.2. react-hook-form is a required peer (no peerDependenciesMeta) yet the root entry imports it statically (grep -l react-hook-form packages/ui-react/dist/*.js -> dist/index.js). See r1-architecture-9."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "latest 0.2.0-beta.9 (2026-09-24) vs beta 0.2.0-beta.12 (2026-11-18). README.md:15-17 promises 'a plain npm install @atom63/ui-react installs it too'. Git tag @atom63/ui-react@0.2.0-beta.12 missing (git ls-remote --tags: latest tag beta.11). r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "@atom63/mdx",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). mdx -> ui-react (20 import sites) and styles; nothing imports mdx."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "Root entry keeps heavy deps lazy: measured dist/index.js graph (11 files) reaches shiki, beautiful-mermaid, react-compare-slider only via dynamic import(). But mdx has 12 runtime deps and no size budget or tree-shake check of any kind. See r1-architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 1,
+          "evidence": "docs/design-system/package-export-tiers.json and packages/mdx/README.md:17-26 tier 13 of 14 mdx entries 'stable', defined as 'breaking changes need a major version' -- while mdx is 0.4.0-beta.3, stable-release-preflight.json has stablePromotionApproved:false, and mdx 0.3.2 removed mdxTypography.docsBody/docsLead/docsListItem in a patch (packages/mdx/CHANGELOG.md:105). 20 public types are unnameable (not exported from any entry): MdxComponentsMap, ComparisonContextValue, MdxParagraph/Code/Anchor/Image, CompareItem, StepsStep, TimelineItem, ScrollStageStep, VideoCaptionPolicy, CodeBlockVariant... (packages/mdx/api/mdx*.api.md ae-forgotten-export). See r1-architecture-3."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "@atom63/ui-react is a regular dependency, published as exact 0.2.0-beta.12 (npm view @atom63/mdx@beta dependencies), not a peer; a consumer on another ui-react version gets a second copy and split React contexts. See r1-architecture-4."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "latest 0.4.0-beta.0 vs beta 0.4.0-beta.3; mdx@latest pins ui-react 0.2.0-beta.9. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "@atom63/inform",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). inform -> ui-react only (4 sites)."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "Measured dist/index.js graph: 2 files, no external imports; sideEffects [\"*.css\",\"**/*.css\"]. No budget (P3, r1-architecture-6)."
+        },
+        {
+          "criterion": "A3",
+          "score": 3,
+          "evidence": "3 entries reported and current; tiered 'beta' in package-export-tiers.json, which matches its 0.2.0-beta version; its 8 forgotten-export warnings all name types exported by another public entry."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "ui-react is a regular dependency pinned exact 0.2.0-beta.12 (npm view @atom63/inform@beta). packages/inform/README.md:6 says `pnpm add @atom63/inform @atom63/ui-react` (no tag). See r1-architecture-4."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "latest 0.2.0-beta.0 vs beta 0.2.0-beta.3. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "@atom63/agent",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). agent has no @atom63 deps (zustand only)."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "sideEffects:false, 2 ESM entries, one dep (zustand). No budget (P3, r1-architecture-6)."
+        },
+        {
+          "criterion": "A3",
+          "score": 3,
+          "evidence": "agent.api.md and agent.react.api.md current; tier 'beta' matches version; the 2 forgotten exports (AgentRuntime, AgentRuntimeStatus) are exported from the root entry."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "peer react ^19.1.0, zustand ^5.1.0 'compatible-range-ok' per dependency-version-policy.json; check passes."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "latest 0.3.0-beta.0 vs beta 0.3.0-beta.1; packages/agent/README.md:7 installs without a tag. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "@atom63/widgets",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). widgets -> ui-react only (6 sites)."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "Measured dist/index.js graph: 2 files, externals ui-react, motion, react. No budget (P3, r1-architecture-6)."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "Reports current and tiered 'beta', but 14 public types are unnameable: WidgetCardProps, WidgetCardHeaderProps, WidgetCardTitleProps, WidgetBlockProps, WidgetShellProps... (widgets.primitives.api.md, 10), WidgetImageProps, Style (widgets.api.md), WidgetHostMotionPhase, WidgetHostTitleMotion (widgets.runtime.api.md). See r1-architecture-8."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "ui-react regular dependency pinned exact 0.2.0-beta.12; packages/widgets/README.md:7 `pnpm add @atom63/widgets @atom63/ui-react` (no tag) resolves latest: widgets 0.1.0-beta.0 + ui-react 0.2.0-beta.9. See r1-architecture-4."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "latest 0.1.0-beta.0 vs beta 0.1.0-beta.3. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "@atom63/cli",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1). cli has no @atom63 runtime deps; @atom63/create (private) depends on it."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: Node CLI and MCP server, not bundled into consumer apps"
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "exports '.' -> ./src/core.mjs (16 named exports), './agents-md', './agent-index.json' (packages/cli/package.json) have no types, no API report (api-report.mjs has no cli entry; it only checks exports that declare types, line 84-93) and no tier in package-export-tiers.json; README documents only the binary. See r1-architecture-7."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "@modelcontextprotocol/server pinned 2.4.0 ('pin-exact-through-beta'), zod ^4.6.7; check passes."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "latest 0.1.0-beta.0 vs beta 0.1.0-beta.1. First CI publish of cli@0.1.0-beta.1 failed ENEEDAUTH (run 44221720585, job 134538283059); it went out 2026-11-18T18:38Z with provenance. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-wide; scored on the 'workspace: release pipeline and CI' subject"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "workspace: release pipeline and CI",
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Source imports (grep -rhoE \"from '@atom63/...\" packages/<p>/src): styles and ui-foundation import no @atom63 package; ui-react -> ui-foundation only (styles is CSS); mdx, inform, widgets -> ui-react; agent, cli none. One-way, no cycles. No check enforces it: scripts/design-system/check-package-correctness.mjs:24-49 runs only publint + attw (see r1-architecture-1)."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "Only @atom63/ui-react has a JS budget, and it is a ratchet at 99.4/100 kB that measures the sum of all dist files. No budget for CSS, mdx, inform, agent, widgets. r1-architecture-5, r1-architecture-6."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "check:api-report, check:package-surface, check:ui-react-stable-actions pass (sweep-r1). ae-forgotten-export is logLevel none (api-report.mjs:137), so 37 unnameable public types across mdx (20), widgets (14), ui-react (3) never fail CI; mdx tiers claim 'stable'. r1-architecture-3, r1-architecture-8."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "check:dependency-version-policy passes but asserts the policy file's shape plus a few pins (audit-dependency-version-policy.mjs asserts lines 25-110); it does not catch the root-override claim for input-otp or the exact-pinned non-peer ui-react in mdx/inform/widgets. r1-architecture-4, r1-architecture-9."
+        },
+        {
+          "criterion": "A5",
+          "score": 1,
+          "evidence": "Release beta run 44371320697 (2026-11-18 workflow_dispatch) failed: 'npm error 403 ... This trusted publisher cannot manage dist-tags' on `npm dist-tag add @atom63/styles@0.1.0-beta.8 latest' (scripts/design-system/publish-beta.mjs:104-112). Every package's latest is stale (npm view @atom63/<pkg> dist-tags (2026-11-19): styles latest 0.1.0-beta.5 / beta 0.1.0-beta.8; ui-foundation 0.1.1-beta.2 / 0.2.0-beta.5; ui-react 0.2.0-beta.9 / 0.2.0-beta.12; mdx 0.4.0-beta.0 / 0.4.0-beta.3; inform 0.2.0-beta.0 / 0.2.0-beta.3; agent 0.3.0-beta.0 / 0.3.0-beta.1; widgets 0.1.0-beta.0 / 0.1.0-beta.3; cli 0.1.0-beta.0 / 0.1.0-beta.1). Because publish fails, record-evidence (git tags, registry evidence) never ran: no @atom63/*@*-beta.12-era tags; registry-consumer-smoke.json was regenerated by hand in #296. check:stable-release-preflight is not run in CI (grep .github/workflows) and covers 3 of 8 packages without reading the registry back; check:ds-registry-smoke installs only @beta. r1-architecture-2."
+        },
+        {
+          "criterion": "A6",
+          "score": 2,
+          "evidence": "Last 200 CI runs (2026-11-03..11-20): 93 success, 63 cancelled, 42 failure; main push 28/1 failed. Web critical path on main: verify 5-10 min, storybook 5-6, cross-browser 4-6 (runs 44663176130, 44660581656, 44512420300). Known webkit sign-in flake still live: run 44203452194 job 134463220865 'cross-browser (webkit) sign-in-page.stories.tsx > Wrong Password' 1 failed / 1727 (play uses findByText default 1s timeout, packages/templates/src/pages/sign-in-page/sign-in-page.stories.tsx:43); run 44480011569 cross-browser died with VITEST_BROWSER_CONNECTION_CLOSED (2026-11-19). Lightbox focus test is padded with a 4000 ms waitFor (packages/ui-react/src/media/media-lightbox/media-lightbox.test.tsx:709-714) and did not fail in the window. No retry policy or flake register exists (grep flak/retry in .github, apps/storybook: none). Dependabot Updates run 44589190187 failed. r1-architecture-10."
+        }
+      ],
+      "ready": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "r1-architecture-1",
+      "subject": "workspace: release pipeline and CI",
+      "criterion": "A1",
+      "severity": "P3",
+      "summary": "Dependency direction and acyclicity hold today but nothing checks them: the check the bar names (check:package-correctness) only runs publint and attw.",
+      "evidence": "scripts/design-system/check-package-correctness.mjs:24-49; source import grep shows styles/ui-foundation <- ui-react <- mdx/inform/widgets, no cycles.",
+      "fix": "Add a small graph check (manifest deps + src imports of @atom63/*) that fails on an upward edge or a cycle, and wire it into check:package-correctness.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-2",
+      "subject": "workspace: release pipeline and CI",
+      "criterion": "A5",
+      "severity": "P1",
+      "summary": "npm `latest` is stale on all 8 published packages (ui-react latest 0.2.0-beta.9 from 2026-09-24 vs beta 0.2.0-beta.12) because the trusted publisher cannot move dist-tags; the publish job fails after publishing, so tags and registry evidence are skipped too, and README.md tells consumers a plain install gets the beta.",
+      "evidence": "Release beta run 44371320697: 'npm error 403 403 Forbidden - PUT .../@atom63%2fstyles/dist-tags/latest - This trusted publisher cannot manage dist-tags'. npm view @atom63/<pkg> dist-tags (2026-11-19): styles latest 0.1.0-beta.5 / beta 0.1.0-beta.8; ui-foundation 0.1.1-beta.2 / 0.2.0-beta.5; ui-react 0.2.0-beta.9 / 0.2.0-beta.12; mdx 0.4.0-beta.0 / 0.4.0-beta.3; inform 0.2.0-beta.0 / 0.2.0-beta.3; agent 0.3.0-beta.0 / 0.3.0-beta.1; widgets 0.1.0-beta.0 / 0.1.0-beta.3; cli 0.1.0-beta.0 / 0.1.0-beta.1. README.md:15-17 claims latest follows beta; release-automation.md:42 says 'Allow npm dist-tag' must be enabled. No git tag for ui-react@0.2.0-beta.12 (git ls-remote --tags). Untagged installs documented in packages/inform/README.md:6, packages/widgets/README.md:7, packages/agent/README.md:7, packages/ui-foundation/README.md:23.",
+      "fix": "Enable 'Allow npm dist-tag' on each package's trusted publisher (YZ/maintainer on npmjs.com), rerun the dist-tag step (or `npm dist-tag add <pkg>@<beta> latest` once), then add a CI/registry-smoke assertion that latest == beta for every published package and run check:stable-release-preflight in CI over all 8 packages.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. `npm view` shows `latest` behind `beta` on all 8 packages, exactly as stated (for example ui-react latest 0.2.0-beta.9, beta 0.2.0-beta.12). The failed-job log of run 44371320697 shows `PUT .../@atom63%2fstyles/dist-tags/latest` returning 403 with \"This trusted publisher cannot manage dist-tags\". In that run Publish beta = failure and Record registry smoke evidence = skipped. `git ls-remote --tags origin` has no ui-react@0.2.0-beta.12, styles@0.1.0-beta.8 or mdx@0.4.0-beta.3 tag (ui-react stops at beta.11). README.md:15-17 still says a plain install gets the beta, and stable-release-policy.json sets latest.followsBetaBeforeStable:true. packages/{agent,ui-foundation,widgets,inform}/README.md tell readers to use an untagged `pnpm add`, which installs the stale `latest`. The fix is to enable 'Allow npm dist-tag' in npm settings (release-automation.md:42), but until then the A5 dist-tag and registry evidence is broken and the docs are wrong. P1 holds. Note: the later Release beta runs (2026-11-19/20) succeed only because nothing new was published."
+      }
+    },
+    {
+      "id": "r1-architecture-3",
+      "subject": "@atom63/mdx",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "@atom63/mdx labels 13 of 14 entries 'stable' (a major-version compatibility promise) while it is 0.4.0-beta.3, stable promotion is not approved, and it has broken exports in a patch before; 20 of its public types cannot be imported by name.",
+      "evidence": "docs/design-system/package-export-tiers.json (@atom63/mdx: '.','./blocks','./article','./editor','./runtime','./lightbox' ... 'stable'); packages/mdx/README.md:17-26; tierDefinitions.stable 'breaking changes need a major version'; docs/design-system/audits/stable-release-preflight.json stablePromotionApproved:false; packages/mdx/CHANGELOG.md:105 (0.3.2 removed mdxTypography.docsBody/docsLead/docsListItem); ae-forgotten-export in packages/mdx/api/mdx.api.md (MdxComponentsMap, ComparisonContextValue, MdxParagraph, MdxCode, MdxAnchor, MdxImage), mdx.blocks.api.md (CompareItem, StepsStep, TimelineItem, ScrollStageStep, VideoCaptionPolicy, CodeBlockVariant, MediaSpacing, TableOfContentsVariant, MdxPageSkeletonVariant, aspectRatioClasses, fitClasses), mdx.primitives.api.md (MdxFrameHeading, spacingClasses).",
+      "fix": "Retier the mdx entries 'beta' (primitives stays experimental) in package-export-tiers.json and the README until the stable promotion is approved; export or inline the 20 unnameable types; make the package-surface check reject 'stable' on a prerelease version.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "Real but overstated. package-export-tiers.json gives @atom63/mdx 13 stable entries and 1 experimental, while stable-release-preflight.json has stablePromotionApproved:false and the package is 0.4.0-beta.3. The tier file was only added on 2026-11-19 (fb39cb08) and copies the existing README Stability table, so no break has happened under the tier promise yet. The top-level README beta banner also says APIs can change before stable. The 'broken exports in a patch' point is real but misdated: the mdxTypography.docsBody/docsLead/docsListItem removal sits under 0.3.1 in the CHANGELOG, not 0.3.2. The ae-forgotten-export claim holds roughly: 19 distinct symbols are referenced in the mdx API reports but exported from no entry (CodeBlockVariant, CompareItem, ComparisonContextValue, MdxComponentsMap, StepsStep, TimelineItem, VideoCaptionPolicy, TableOfContentsVariant, ScrollStageStep, MediaSpacing, MdxPageSkeletonVariant, plus value symbols such as MdxAnchor and aspectRatioClasses). That is an ergonomics gap, not something that breaks consumers. The tier labelling is inconsistent and should become 'beta' to meet 'tiered honestly' in A3, but it is a one-line fix that consumers can work around, not a ready blocker."
+      }
+    },
+    {
+      "id": "r1-architecture-4",
+      "subject": "@atom63/mdx, @atom63/inform, @atom63/widgets",
+      "criterion": "A4",
+      "severity": "P2",
+      "summary": "mdx, inform and widgets take @atom63/ui-react as a regular dependency pinned to an exact version, so a consumer whose ui-react differs gets a second ui-react copy (split theme/UIProvider contexts, duplicate CSS); with the stale latest tags the documented untagged installs already mix versions.",
+      "evidence": "npm view @atom63/{mdx,inform,widgets}@beta dependencies -> '@atom63/ui-react': '0.2.0-beta.12'; @atom63/{mdx,inform,widgets}@latest pin 0.2.0-beta.9. docs/design-system/dependency-version-policy.json workspaceDependencyPolicy publishedPackagesMustUseExactPublishedVersionsBeforeStable. Quickstart installs ui-react@beta (docs/design-system/quickstart.md:12) while packages/widgets/README.md:7 installs `@atom63/widgets @atom63/ui-react` untagged.",
+      "fix": "Make @atom63/ui-react (and @atom63/styles in mdx) a peer dependency of mdx, inform and widgets with a workspace:^ range (kept as a devDependency for the build), and extend check:dependency-version-policy to require it.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-5",
+      "subject": "@atom63/ui-react",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "The ui-react budget is a ratchet with 0.6 kB headroom that measures the summed gzip of every dist file, so it neither reflects a consumer's real cost nor stops growth (raised 13 times, 64 -> 100 kB); tree-shaking is only checked for react-day-picker.",
+      "evidence": "sweep-r1/ui-react-size.log '99.4 kB gzip / 100 kB budget'; scripts/design-system/check-ui-react-bundle-size.mjs:8-80 (history of raises); CI run 44489359587 failed at 98.1 kB on 2026-11-19 and the budget moved to 100 in #291; check-ui-react-root-deps.mjs:25 guards only react-day-picker; root graph statically imports react-hook-form, embla-carousel-react, input-otp, sonner, react-resizable-panels.",
+      "fix": "Add per-entry budgets measured by bundling representative consumer imports (e.g. `import { Button }`, `import { Dialog }`, root `*`, ./media) with esbuild/rollup and a headroom floor, and extend the root-deps list to embla, input-otp, sonner, react-resizable-panels and react-hook-form (or move Form/Carousel/InputOTP/Resizable to subpaths).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-6",
+      "subject": "@atom63/styles, @atom63/mdx, @atom63/inform, @atom63/agent, @atom63/widgets",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "No size budget or tree-shake check exists for CSS or for any package other than ui-react; the registry smoke consumer already ships 79.8 kB gzip of CSS and mdx has 12 runtime deps.",
+      "evidence": "grep budget in scripts/design-system -> only check-ui-react-bundle-size.mjs; sweep-r1/ds-registry-smoke.log 'dist/assets/index-*.css 545.43 kB | gzip: 79.81 kB'; packages/mdx/package.json dependencies (12).",
+      "fix": "Extend the size check to the packed smoke consumer output: a CSS budget for @atom63/styles + ui-react styles.css, and JS budgets for the mdx, inform, agent and widgets entries.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-7",
+      "subject": "@atom63/styles, @atom63/cli",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "Two published packages are untiered and partly unreported: @atom63/styles' 63 CSS/JSON subpaths have no tier, and @atom63/cli exports an untyped, unreported programmatic API ('.' -> src/core.mjs, 16 exports; './agents-md').",
+      "evidence": "docs/design-system/audits/package-surface.json exportTiers null for styles, ui-foundation, cli; docs/design-system/package-export-tiers.json lists only mdx, inform, agent, widgets; packages/cli/package.json exports; scripts/design-system/api-report.mjs:84-93 skips exports without types.",
+      "fix": "Add styles, ui-foundation and cli to package-export-tiers.json (cli '.' and './agents-md' as experimental or internal), and either type the cli programmatic entries or stop exporting them.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-8",
+      "subject": "@atom63/ui-react, @atom63/widgets",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "31 preview-tier symbols still ship from the ui-react root and the CLI shows the root import first with no tier; 17 public types in widgets (14) and ui-react (3) cannot be imported by name, and API Extractor's forgotten-export warning never fails CI.",
+      "evidence": "docs/design-system/audits/ui-react-stable-action-matrix.json summary sourceTierCounts preview-experimental-candidate 31 (DialogPrimitive, TooltipPrimitive, SheetPrimitive, ATOM63_MOTION_EASE..., getReactRendererConformance); `pnpm -s atom63 api DialogPrimitive` -> 'import { DialogPrimitive } from '@atom63/ui-react'' then '/preview', no tier; widgets.primitives.api.md (WidgetCardProps, WidgetCardHeaderProps, WidgetBlockProps, WidgetShellProps...), widgets.api.md (WidgetImageProps, Style), widgets.runtime.api.md (WidgetHostMotionPhase, WidgetHostTitleMotion), ui-react.api.md (UseCarouselParameters, feedbackIcons), ui-react.media.api.md (ExcludeRef); scripts/design-system/api-report.mjs:137 'ae-forgotten-export' logLevel none.",
+      "fix": "Have `atom63 api` print the tier and list the /preview import first for preview symbols; export the missing prop types; make check:api-report fail on a forgotten export whose symbol no public entry exports (allowlist the rest).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-9",
+      "subject": "@atom63/ui-react",
+      "criterion": "A4",
+      "severity": "P2",
+      "summary": "The dependency policy claims protections consumers do not get: input-otp is 'pinned via root override' but publishes as ^1.4.2, and react-hook-form is a required peer that every root import loads even for apps without forms.",
+      "evidence": "docs/design-system/dependency-version-policy.json runtimeDependencyPolicy['@atom63/ui-react']['input-otp'] 'pin-via-root-override-through-beta'; root package.json pnpm.overrides input-otp 1.4.2 (repo-only); packages/ui-react/package.json dependencies input-otp ^1.4.2; peerDependencies react-hook-form ^7.81.0 with no peerDependenciesMeta; react-hook-form imported by packages/ui-react/dist/index.js.",
+      "fix": "Pin input-otp exactly in packages/ui-react/package.json (or change the policy text), and either mark react-hook-form optional and move Form to a subpath (like ./calendar) or document that it is required.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-10",
+      "subject": "workspace: release pipeline and CI",
+      "criterion": "A6",
+      "severity": "P2",
+      "summary": "The webkit sign-in flake is still live and cross-browser runs also die on browser disconnects; there is no retry policy or flake register, so a flake blocks ci-status and the release preflight that waits on it.",
+      "evidence": "Run 44203452194 job 134463220865: 'FAIL cross-browser (webkit) packages/templates/src/pages/sign-in-page/sign-in-page.stories.tsx > Wrong Password' (1 failed | 1727 passed); story waits with findByText default timeout (sign-in-page.stories.tsx:43). Run 44480011569 job 135409704834: VITEST_BROWSER_CONNECTION_CLOSED. .github/workflows/release-beta.yml preflight requires ci-status success. No 'flak'/'retry' in .github or apps/storybook.",
+      "fix": "Give the Wrong Password play an explicit findByText timeout (or wait for the form's submitting state to clear), add `retry: 1` to the cross-browser Vitest project only, and keep a short flake list in docs with each test's run evidence.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-architecture-11",
+      "subject": "workspace: release pipeline and CI",
+      "criterion": "A5",
+      "severity": "P3",
+      "summary": "Release automation leaves gaps after a failed publish: git tags for the 2026-11-18 versions were never pushed and registry-consumer-smoke.json had to be regenerated by hand, because record-evidence needs the publish job to succeed.",
+      "evidence": "git ls-remote --tags origin: newest ui-react tag @atom63/ui-react@0.2.0-beta.11; release-beta.yml record-evidence `needs: publish`; registry-consumer-smoke.json last changed in #296 by hand (git log).",
+      "fix": "Split the latest dist-tag move into its own job after record-evidence (or make it non-fatal with a loud annotation), so tags and evidence are recorded whenever the versions reached npm.",
+      "kind": "fix"
+    }
+  ]
+}

@@ -109,7 +109,7 @@
 }
 
 .a63-Radio[aria-invalid='true'] {
-  border-color: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+  border-color: var(--a63-border-danger);
 }
 
 /* ── Sizes (md is the base rule above) ─────────────────────────────────── */

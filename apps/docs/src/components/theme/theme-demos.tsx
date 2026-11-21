@@ -12,6 +12,12 @@ export function SegmentedControlDemo({ tone = 'neutral' }: { tone?: 'accent' | '
   const [value, setValue] = useState('dark')
 
   return (
-    <SegmentedControl items={APPEARANCE_ITEMS} onValueChange={setValue} tone={tone} value={value} />
+    <SegmentedControl
+      aria-label="Appearance"
+      items={APPEARANCE_ITEMS}
+      onValueChange={setValue}
+      tone={tone}
+      value={value}
+    />
   )
 }
