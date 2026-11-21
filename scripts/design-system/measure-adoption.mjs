@@ -46,9 +46,7 @@ const RUNTIME = {
       }
     },
   },
-  learn: {
-    skip: 'its dist/ build (2026-09) renders a password gate that the current source no longer has',
-  },
+  learn: { routes: ['/', '/resources', '/skills'] },
 }
 const VIEWPORTS = [
   { name: 'desktop', width: 1440, height: 900 },

@@ -1,9 +1,9 @@
 {
-  "generatedAt": "2026-11-21T19:33:57.808Z",
+  "generatedAt": "2026-11-21T19:42:32.823Z",
   "adopter": {
-    "name": "atom63-vite",
-    "branch": "feat/windows-shell-case-study-components",
-    "commit": "6682b74e93543b2a720a3e0f45079f75d517fdf8"
+    "name": "atom63-vite-measure",
+    "branch": "main",
+    "commit": "04158d9b96a4d2da28083c14b68078ab160bec86"
   },
   "systemPackages": [
     "@atom63/styles",
@@ -62,49 +62,37 @@
         "@atom63/widgets"
       ],
       "static": {
-        "tsxFiles": 247,
-        "tsxFilesImportingSystem": 121,
-        "tsxFilesImportingAtom63": 136,
+        "tsxFiles": 241,
+        "tsxFilesImportingSystem": 118,
+        "tsxFilesImportingAtom63": 133,
         "tsxFilesByPackage": {
-          "@atom63/mdx": 18,
+          "@atom63/mdx": 15,
           "@atom63/ui-react": 84,
           "@atom63/agent": 2,
           "@atom63/widgets": 26,
           "@atom63/inform": 1
         },
-        "systemComponentUses": 386,
+        "systemComponentUses": 376,
         "distinctSystemComponents": 126,
         "topSystemComponents": [
           {
             "name": "Button",
-            "count": 49
+            "count": 47
           },
           {
             "name": "Skeleton",
             "count": 18
           },
           {
-            "name": "MediaCaption",
-            "count": 17
-          },
-          {
             "name": "Badge",
             "count": 14
           },
           {
+            "name": "MediaCaption",
+            "count": 14
+          },
+          {
             "name": "Label",
-            "count": 13
-          },
-          {
-            "name": "Tooltip",
-            "count": 13
-          },
-          {
-            "name": "TooltipContent",
-            "count": 13
-          },
-          {
-            "name": "TooltipTrigger",
             "count": 13
           },
           {
@@ -120,11 +108,23 @@
             "count": 11
           },
           {
-            "name": "DropdownMenuItem",
-            "count": 8
+            "name": "Tooltip",
+            "count": 11
+          },
+          {
+            "name": "TooltipContent",
+            "count": 11
+          },
+          {
+            "name": "TooltipTrigger",
+            "count": 11
           },
           {
             "name": "Kbd",
+            "count": 10
+          },
+          {
+            "name": "DropdownMenuItem",
             "count": 8
           },
           {
@@ -157,7 +157,7 @@
           }
         ],
         "handwritten": {
-          "button": 31,
+          "button": 24,
           "input": 1,
           "select": 1,
           "textarea": 0,
@@ -165,9 +165,8 @@
           "a[onClick]": 0,
           "[role=button]": 0
         },
-        "handwrittenTotal": 33,
+        "handwrittenTotal": 26,
         "otherUiLibraries": {
-          "@base-ui/react/dialog": 1,
           "@base-ui/react/drawer": 1,
           "@base-ui/react/tabs": 1,
           "components/ui/sheet": 1,
@@ -179,7 +178,7 @@
           "src/components/ui/sonner.tsx"
         ],
         "literalColors": {
-          "paletteUtilities": 160,
+          "paletteUtilities": 151,
           "literalColors": 134,
           "localTokenDefinitions": 10
         },
@@ -272,7 +271,7 @@
         ],
         "build": {
           "dir": "dist",
-          "builtAt": "2026-11-18T21:57:42.185Z"
+          "builtAt": "2026-11-21T19:40:48.492Z"
         },
         "interactive": {
           "total": 530,
@@ -290,9 +289,9 @@
             "viewport": "desktop",
             "width": 1440,
             "interactive": {
-              "total": 93,
-              "system": 91,
-              "systemSelf": 39,
+              "total": 92,
+              "system": 90,
+              "systemSelf": 38,
               "handwrittenSamples": [
                 "button \"ATOM63\"",
                 "button \"Home\""
@@ -312,9 +311,9 @@
             "viewport": "desktop",
             "width": 1440,
             "interactive": {
-              "total": 30,
-              "system": 28,
-              "systemSelf": 7,
+              "total": 29,
+              "system": 27,
+              "systemSelf": 6,
               "handwrittenSamples": [
                 "button \"ATOM63\"",
                 "button \"Writing\""
@@ -334,9 +333,9 @@
             "viewport": "desktop",
             "width": 1440,
             "interactive": {
-              "total": 142,
-              "system": 140,
-              "systemSelf": 131,
+              "total": 144,
+              "system": 142,
+              "systemSelf": 133,
               "handwrittenSamples": [
                 "button \"ATOM63\"",
                 "button \"Scroll down\""
@@ -356,9 +355,9 @@
             "viewport": "phone",
             "width": 390,
             "interactive": {
-              "total": 93,
-              "system": 91,
-              "systemSelf": 39,
+              "total": 92,
+              "system": 90,
+              "systemSelf": 38,
               "handwrittenSamples": [
                 "button \"ATOM63\"",
                 "button \"Home\""
@@ -378,9 +377,9 @@
             "viewport": "phone",
             "width": 390,
             "interactive": {
-              "total": 30,
-              "system": 28,
-              "systemSelf": 7,
+              "total": 29,
+              "system": 27,
+              "systemSelf": 6,
               "handwrittenSamples": [
                 "button \"ATOM63\"",
                 "button \"Writing\""
@@ -400,9 +399,9 @@
             "viewport": "phone",
             "width": 390,
             "interactive": {
-              "total": 142,
-              "system": 140,
-              "systemSelf": 131,
+              "total": 144,
+              "system": 142,
+              "systemSelf": 133,
               "handwrittenSamples": [
                 "button \"ATOM63\"",
                 "button \"Scroll down\""
@@ -539,7 +538,152 @@
         "topLiteralColorFiles": []
       },
       "runtime": {
-        "skipped": "its dist/ build (2026-09) renders a password gate that the current source no longer has"
+        "ambiguousSlots": [
+          "scroll-area-viewport",
+          "sidebar-content"
+        ],
+        "build": {
+          "dir": "dist",
+          "builtAt": "2026-11-21T19:41:09.628Z"
+        },
+        "interactive": {
+          "total": 12,
+          "system": 12,
+          "systemSelf": 12
+        },
+        "landmarks": {
+          "total": 18,
+          "system": 0,
+          "systemSelf": 0
+        },
+        "pages": [
+          {
+            "route": "/",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/resources",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/skills",
+            "viewport": "desktop",
+            "width": 1440,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/resources",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          },
+          {
+            "route": "/skills",
+            "viewport": "phone",
+            "width": 390,
+            "interactive": {
+              "total": 2,
+              "system": 2,
+              "systemSelf": 2,
+              "handwrittenSamples": []
+            },
+            "landmarks": {
+              "total": 3,
+              "system": 0,
+              "systemSelf": 0,
+              "handwrittenSamples": [
+                "main \"This site is still being built\"",
+                "section \"This site is still being built\"",
+                "form \"PasswordEnter\""
+              ]
+            }
+          }
+        ]
       }
     },
     "os63": {
@@ -714,7 +858,7 @@
         ],
         "build": {
           "dir": "dist",
-          "builtAt": "2026-10-27T17:04:39.791Z"
+          "builtAt": "2026-11-21T19:41:03.625Z"
         },
         "interactive": {
           "total": 350,
@@ -747,7 +891,7 @@
               "system": 0,
               "systemSelf": 0,
               "handwrittenSamples": [
-                "header \"Sat, Nov 2111:34 AM\"",
+                "header \"Sat, Nov 2111:43 AM\"",
                 "section \"Notifications alt+T\""
               ]
             }
@@ -805,7 +949,7 @@
               "system": 1,
               "systemSelf": 0,
               "handwrittenSamples": [
-                "header \"NotesSat, Nov 2111:34 AM\"",
+                "header \"NotesSat, Nov 2111:43 AM\"",
                 "section \"Notifications alt+T\""
               ]
             }
@@ -830,7 +974,7 @@
               "system": 0,
               "systemSelf": 0,
               "handwrittenSamples": [
-                "header \"Sat, Nov 2111:34 AM\"",
+                "header \"Sat, Nov 2111:43 AM\"",
                 "section \"Notifications alt+T\""
               ]
             }
@@ -888,7 +1032,7 @@
               "system": 1,
               "systemSelf": 0,
               "handwrittenSamples": [
-                "header \"NotesSat, Nov 2111:34 AM\"",
+                "header \"NotesSat, Nov 2111:43 AM\"",
                 "section \"Notifications alt+T\""
               ]
             }
