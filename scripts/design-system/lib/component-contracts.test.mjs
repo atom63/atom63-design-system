@@ -5,6 +5,7 @@ import { describe, it } from 'node:test'
 import { fileURLToPath } from 'node:url'
 
 import {
+  aliasProblems,
   contractFields,
   intentProblems,
   listInfo,
@@ -14,6 +15,8 @@ import {
   resolveRef,
   resolvedComponent,
   sections,
+  swiftEnumProblems,
+  swiftEnumRawValues,
 } from './component-contracts.mjs'
 import { schemaProblems } from './component-contract-schema.mjs'
 
@@ -124,6 +127,40 @@ describe('resolved components', () => {
     assert.deepEqual(resolved.slots, ['root'])
     assert.equal(resolved.source, 'packages/ui-foundation/contracts/components/button.json')
     assert.equal(resolved.maturity, 'stable')
+  })
+
+  it('carries deprecated aliases on the axis and the states', () => {
+    const tabs = source('tabs', {
+      component: 'tabs',
+      maturity: 'stable',
+      lists: {
+        sizes: { values: ['sm', 'md'], deprecatedAliases: { default: 'md' } },
+        states: {
+          values: ['rest', 'focus-visible'],
+          deprecatedAliases: { focus: 'focus-visible' },
+        },
+      },
+      contract: {
+        defaultSize: 'md',
+        sizes: { $ref: '#/lists/sizes' },
+        states: { $ref: '#/lists/states' },
+      },
+    })
+    const resolved = resolvedComponent(new Map([[tabs.id, tabs]]), tabs)
+    assert.deepEqual(resolved.axes, [
+      { name: 'sizes', values: ['sm', 'md'], deprecatedAliases: { default: 'md' }, default: 'md' },
+    ])
+    assert.deepEqual(resolved.stateAliases, { focus: 'focus-visible' })
+    assert.equal(listInfo(sections(tabs)[0], 'sizes').aliasesName, 'tabsSizeAliases')
+    assert.deepEqual(aliasProblems(tabs), [])
+  })
+
+  it('reports an alias that is still a value or names no value', () => {
+    const tabs = source('tabs', {
+      component: 'tabs',
+      lists: { sizes: { values: ['sm', 'md'], deprecatedAliases: { sm: 'md', default: 'lg' } } },
+    })
+    assert.equal(aliasProblems(tabs).length, 2)
   })
 })
 
@@ -302,6 +339,53 @@ describe('schema', () => {
   it('rejects an unknown field', () => {
     assert.deepEqual(problems({ ...valid, colour: 'red' }), [
       'components/probe/: must NOT have additional properties (colour)',
+    ])
+  })
+})
+
+describe('hand-written Swift enums', () => {
+  const swift = [
+    'public enum AtomProbeVariant: String, CaseIterable, Sendable {',
+    '  /// The standard one.',
+    '  case standard = "default"',
+    '  case `filled`',
+    '  var label: String {',
+    '    switch self {',
+    '    case .standard: "Default"',
+    '    case .filled: "Filled"',
+    '    }',
+    '  }',
+    '}',
+  ].join('\n')
+
+  it('reads raw values, or case names without one, and skips switch cases', () => {
+    assert.deepEqual(swiftEnumRawValues(swift, 'AtomProbeVariant'), ['default', 'filled'])
+    assert.equal(swiftEnumRawValues(swift, 'AtomMissing'), null)
+  })
+
+  const probe = map =>
+    new Map([
+      [
+        'components/probe',
+        source('probe', {
+          intent: {
+            platforms: {
+              ios: { props: { variant: { swiftEnum: 'AtomProbeVariant', map, extensions: {} } } },
+            },
+          },
+        }),
+      ],
+    ])
+
+  it('passes when the enum has exactly the mapped values', () => {
+    const map = { default: { variant: 'default' }, filled: { variant: 'filled' } }
+    assert.deepEqual(swiftEnumProblems(probe(map), swift), [])
+  })
+
+  it('fails when the enum and the map differ', () => {
+    const map = { default: { variant: 'default' }, raised: { variant: 'raised' } }
+    assert.deepEqual(swiftEnumProblems(probe(map), swift), [
+      'components/probe intent: ios variant: AtomProbeVariant has default, filled; the contract maps default, raised',
     ])
   })
 })

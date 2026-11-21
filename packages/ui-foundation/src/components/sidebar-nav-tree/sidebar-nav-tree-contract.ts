@@ -6,7 +6,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 export const sidebarNavTreeStates = [
   'rest',
   'hover',
-  'active',
+  'current',
   'expanded',
   'collapsed',
   'focus-visible',
@@ -30,6 +30,15 @@ export type SidebarNavTreeState = (typeof sidebarNavTreeStates)[number]
 export type SidebarNavTreeTone = (typeof sidebarNavTreeTones)[number]
 export type SidebarNavTreePart = (typeof sidebarNavTreeParts)[number]
 export type SidebarNavTreeVisualArchetype = (typeof sidebarNavTreeVisualArchetypes)[number]
+
+/** Earlier names of SidebarNavTreeState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const sidebarNavTreeStateAliases = { active: 'current' } as const satisfies Record<
+  string,
+  SidebarNavTreeState
+>
+
+/** @deprecated An earlier name of a value of SidebarNavTreeState; use the value sidebarNavTreeStateAliases maps it to. */
+export type SidebarNavTreeStateAlias = keyof typeof sidebarNavTreeStateAliases
 
 export interface SidebarNavTreeContract {
   parts: readonly SidebarNavTreePart[]

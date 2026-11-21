@@ -4,6 +4,7 @@ export {
   scrollAreaOptions,
   scrollAreaOrientations,
   scrollAreaSlots,
+  scrollAreaStateAliases,
   scrollAreaStates,
   scrollAreaVisualArchetypes,
 } from './scroll-area-contract'
@@ -13,5 +14,6 @@ export type {
   ScrollAreaOrientation,
   ScrollAreaSlot,
   ScrollAreaState,
+  ScrollAreaStateAlias,
   ScrollAreaVisualArchetype,
 } from './scroll-area-contract'

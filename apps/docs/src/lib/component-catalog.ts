@@ -151,7 +151,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
         rest: 'Resting appearance.',
         hover: 'Pointer over an enabled button.',
         pressed: 'While pressed, or held with data-pressed.',
-        focusVisible: 'Keyboard focus only; drawn as an outline.',
+        'focus-visible': 'Keyboard focus only; drawn as an outline.',
         disabled:
           'A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label.',
         loading: 'Label keeps its width; the spinner overlays it.',
@@ -191,7 +191,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['scrollable-list', 'scroll-area', 'button'],
     summary: 'Carousel coordinates an Embla viewport, slides, controls, and shared carousel state.',
     usage:
-      'Use stable slide labels and keep essential content reachable without relying on drag alone.',
+      'Use stable slide labels and keep essential content reachable without relying on drag alone. For a full-screen photo viewer use `MediaLightbox` from `@atom63/ui-react/media`; do not put a Carousel inside a fixed overlay, which has no scroll lock and no `touch-action` and lets the page drift vertically under a swipe.',
     usageExports: [
       'Carousel',
       'CarouselContent',
@@ -399,7 +399,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Marquee loops arbitrary content horizontally or vertically with pause and direction controls.',
     usage:
-      'Use it only for non-essential repeated content and preserve the reduced-motion behavior.',
+      'Use it only for non-essential repeated content and preserve the reduced-motion behavior. It pauses on hover and focus and renders a pause toggle (WCAG 2.2.2); if you pass `paused`, the toggle is not rendered and you provide the control.',
     usageExports: ['Marquee'],
   },
   menubar: {
@@ -727,6 +727,13 @@ function component(slug: string, category: string): ComponentCatalogItem {
   if (!definition) {
     throw new Error(`Missing component catalog definition: ${slug}`)
   }
+  // Every catalog component has a contract that declares its maturity; none defaults to stable.
+  const status = getComponentMaturity(slug)
+  if (!status) {
+    throw new Error(
+      `${slug} has no contract maturity: add packages/ui-foundation/contracts/components/${slug}.json`
+    )
+  }
 
   return {
     ...definition,
@@ -738,8 +745,7 @@ function component(slug: string, category: string): ComponentCatalogItem {
         ? 'standard'
         : 'compact',
     slug,
-    // From the contract's maturity; a component with no contract (Progressive Blur) is stable.
-    status: getComponentMaturity(slug) ?? 'stable',
+    status,
     storyExport: storyExportOverrides[slug] ?? 'Playground',
   }
 }

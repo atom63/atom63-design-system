@@ -42,12 +42,42 @@
 }
 
 /*
+ * Icon buttons the caller puts in the toolbar slot match the built-in ones
+ * beside them (`size-11`). Button's largest icon step is 40px, and a 4px
+ * smaller circle in the same row reads as a mistake rather than a choice.
+ */
+[data-slot='media-lightbox-toolbar'] .a63-Button:is([data-size^='icon']) {
+  --button-height: 2.75rem;
+}
+
+/*
+ * An overlay Button in the toolbar takes the same glass as the built-in
+ * controls beside it (`.a63-media-lightbox-on-media`): Button's own overlay is
+ * a lighter, more translucent fill, which read as a different control in the
+ * same row.
+ */
+[data-slot='media-lightbox-toolbar']
+  .a63-Button:is([data-variant='overlay'], [data-variant='glass']) {
+  --button-background: var(--a63-lightbox-on-media-surface);
+  --button-border-color: var(--a63-lightbox-on-media-border);
+  --button-foreground: var(--a63-lightbox-on-media-fg);
+  --button-shadow: var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow);
+  --button-state-hover-background: var(--a63-lightbox-on-media-surface-hover);
+  --button-state-hover-border-color: var(--a63-lightbox-on-media-border);
+
+  background-image: var(--a63-overlay-gloss), var(--a63-overlay-texture-image);
+  background-blend-mode: normal, var(--a63-overlay-texture-blend);
+  backdrop-filter: var(--a63-overlay-backdrop);
+}
+
+/*
  * Nothing blurred sits over the track while it moves. A `backdrop-filter`
  * has to re-sample the photo moving beneath it on every frame, and a blur over
  * the moving photo is what made paging judder before. The controls keep their
  * opaque-enough backplate, so they stay legible for the moment the blur is off.
  */
-[data-slot='media-lightbox'][data-paging] .a63-media-lightbox-on-media {
+[data-slot='media-lightbox'][data-paging] .a63-media-lightbox-on-media,
+[data-slot='media-lightbox'][data-paging] [data-slot='media-lightbox-toolbar'] .a63-Button {
   backdrop-filter: none;
 }
 

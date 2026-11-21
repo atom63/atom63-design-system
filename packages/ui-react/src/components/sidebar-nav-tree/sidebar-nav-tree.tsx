@@ -275,6 +275,8 @@ function SidebarNavCollapsibleItem({
           <CollapsibleTrigger
             render={
               <SidebarMenuButton
+                // A section without a page is a toggle, not the current page.
+                aria-current={undefined}
                 className={cn('a63-SidebarNavTree-item', 'a63-SidebarNavTree-row-trigger')}
                 isActive={isActive}
                 size="sm"

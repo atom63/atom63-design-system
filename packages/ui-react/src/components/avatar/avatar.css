@@ -136,11 +136,11 @@
 .a63-Avatar:is([data-size='xs'], [data-size='sm']) .a63-Avatar-badge > svg {
   display: none;
 }
-.a63-Avatar[data-size='default'] .a63-Avatar-badge {
+.a63-Avatar[data-size='md'] .a63-Avatar-badge {
   width: var(--a63-space-2_5);
   height: var(--a63-space-2_5);
 }
-.a63-Avatar[data-size='default'] .a63-Avatar-badge > svg {
+.a63-Avatar[data-size='md'] .a63-Avatar-badge > svg {
   width: var(--a63-space-2);
   height: var(--a63-space-2);
 }

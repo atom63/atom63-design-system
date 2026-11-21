@@ -697,7 +697,7 @@
                   "$root": {
                     "$type": "color",
                     "$value": "{color.info.600}",
-                    "$description": "Status (danger's status role is served by --a63-action-danger). The base is\nthe accent used for tinted callouts (bg = mix toward transparent, text/border\n= the accent); -foreground is the text/icon color ON a SOLID status fill.\nStep 600 on light surfaces and 500 on dark ones (the .dark block), so icons\ndrawn in the accent reach WCAG's 3:1 for graphics in both modes."
+                    "$description": "Status (info, success, warning and danger). The base is\nthe accent used for tinted callouts (bg = mix toward transparent, text/border\n= the accent); -foreground is the text/icon color ON a SOLID status fill.\nStep 600 on light surfaces and 500 on dark ones (the .dark block), so icons\ndrawn in the accent reach WCAG's 3:1 for graphics in both modes."
                   },
                   "foreground": {
                     "$type": "color",
@@ -772,6 +772,34 @@
                     "foreground": {
                       "$type": "color",
                       "$value": "{color.warning.800}"
+                    }
+                  }
+                },
+                "danger": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.danger.600}",
+                    "$description": "The danger status accent: error icons, borders and tints (Alert, form and\nsync errors). --a63-action-danger stays the fill for danger buttons and does\nnot change with the mode; this one moves to step 500 on dark surfaces so it\nreaches 3:1 there. Error text uses --a63-text-danger."
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.status.danger}",
+                    "$description": "Text and icons on a solid fill of this status. Same auto-contrast step as\nthe primary foreground: near-black on bright fills, near-white on dark ones.",
+                    "$extensions": {
+                      "io.atom63.derive": "oklch(from {a63.status.danger} clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h)"
+                    }
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.danger}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.danger} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.danger.700}"
                     }
                   }
                 }
@@ -1285,6 +1313,25 @@
                     "foreground": {
                       "$type": "color",
                       "$value": "{color.warning.400}"
+                    }
+                  }
+                },
+                "danger": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.danger.500}"
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.danger}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.danger} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.danger.400}"
                     }
                   }
                 }

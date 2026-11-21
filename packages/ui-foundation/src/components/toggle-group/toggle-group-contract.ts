@@ -11,7 +11,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 export const toggleGroupVariants = ['segmented', 'pills', 'ghost'] as const
 export const toggleGroupOrientations = ['horizontal', 'vertical'] as const
 export const toggleGroupSelectionModes = ['single', 'multiple'] as const
-export const toggleGroupStates = ['rest', 'hover', 'focus', 'selected', 'disabled'] as const
+export const toggleGroupStates = ['rest', 'hover', 'focus-visible', 'selected', 'disabled'] as const
 export const toggleGroupSlots = [
   'toggle-group',
   'toggle-group-item',
@@ -44,6 +44,15 @@ export type ToggleGroupState = (typeof toggleGroupStates)[number]
 export type ToggleGroupSlot = (typeof toggleGroupSlots)[number]
 export type ToggleGroupTokenSlot = (typeof toggleGroupTokenSlots)[number]
 export type ToggleGroupVisualArchetype = (typeof toggleGroupVisualArchetypes)[number]
+
+/** Earlier names of ToggleGroupState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const toggleGroupStateAliases = { focus: 'focus-visible' } as const satisfies Record<
+  string,
+  ToggleGroupState
+>
+
+/** @deprecated An earlier name of a value of ToggleGroupState; use the value toggleGroupStateAliases maps it to. */
+export type ToggleGroupStateAlias = keyof typeof toggleGroupStateAliases
 
 export interface ToggleGroupContract {
   defaultVariant: ToggleGroupVariant

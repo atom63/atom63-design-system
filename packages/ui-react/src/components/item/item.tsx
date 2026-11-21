@@ -5,6 +5,7 @@ import {
   type ItemGroupVariant,
   type ItemMediaVariant,
   type ItemSize,
+  type ItemSizeAlias,
   type ItemTone,
   type ItemVariant,
   itemContract,
@@ -64,7 +65,8 @@ export function ItemSeparator({ className, ...props }: ItemSeparatorProps): Reac
 
 export type ItemProps = useRender.ComponentProps<'div'> & {
   variant?: ItemVariant
-  size?: ItemSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: ItemSize | ItemSizeAlias
   /**
    * How a selected or current row (`aria-current`, `data-selected`) is coloured.
    * `neutral` (the default) is a muted fill with primary text; `accent` is a light
@@ -76,11 +78,12 @@ export type ItemProps = useRender.ComponentProps<'div'> & {
 export function Item({
   className,
   variant = itemContract.defaultVariant,
-  size = itemContract.defaultSize,
+  size: sizeProp = itemContract.defaultSize,
   tone = itemContract.defaultTone,
   render,
   ...props
 }: ItemProps): React.ReactElement {
+  const size = sizeProp === 'default' ? 'md' : sizeProp
   return useRender({
     defaultTagName: 'div',
     props: mergeProps<'div'>(

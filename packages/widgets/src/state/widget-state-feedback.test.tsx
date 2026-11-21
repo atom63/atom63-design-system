@@ -41,6 +41,32 @@ describe('WidgetStateFeedback', () => {
     })
   })
 
+  it('takes every error-state string from labels, so a host can translate them', async () => {
+    render(
+      <WidgetSurface size="small">
+        <WidgetStateFeedback
+          copy={{ description: 'Zeitüberschreitung', title: 'Laden fehlgeschlagen' }}
+          labels={{
+            copyDetails: 'Details kopieren',
+            detailsDescription: 'Technische Angaben für eine Fehlermeldung.',
+            detailsTitle: 'Fehlerdetails',
+            retry: 'Erneut versuchen',
+            viewDetails: 'Fehlerdetails anzeigen',
+          }}
+          onRetry={() => {}}
+          state="error"
+        />
+      </WidgetSurface>
+    )
+
+    expect(screen.getByRole('button', { name: 'Erneut versuchen' })).toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'Fehlerdetails anzeigen' }))
+    expect(await screen.findByText('Fehlerdetails')).toBeInTheDocument()
+    expect(screen.getByText('Technische Angaben für eine Fehlermeldung.')).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Details kopieren' })).toBeInTheDocument()
+    expect(screen.queryByText(/Try again|Error details|Copy details/)).not.toBeInTheDocument()
+  })
+
   it.each(['loading', 'empty'] as const)('announces the %s state as a status', state => {
     render(
       <WidgetSurface size="small">

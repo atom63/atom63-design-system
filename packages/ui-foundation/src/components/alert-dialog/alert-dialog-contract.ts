@@ -4,9 +4,9 @@
 import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const alertDialogVariants = ['default', 'destructive', 'info', 'success', 'warning'] as const
+export const alertDialogVariants = ['default', 'error', 'info', 'success', 'warning'] as const
 export const alertDialogFooterVariants = ['default', 'bare'] as const
-export const alertDialogSizes = ['default', 'sm'] as const
+export const alertDialogSizes = ['md', 'sm'] as const
 export const alertDialogStates = ['closed', 'open'] as const
 export const alertDialogSlots = [
   'alert-dialog-portal',
@@ -37,6 +37,24 @@ export type AlertDialogState = (typeof alertDialogStates)[number]
 export type AlertDialogSlot = (typeof alertDialogSlots)[number]
 export type AlertDialogVisualArchetype = (typeof alertDialogVisualArchetypes)[number]
 
+/** Earlier names of AlertDialogVariant values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const alertDialogVariantAliases = { destructive: 'error' } as const satisfies Record<
+  string,
+  AlertDialogVariant
+>
+
+/** @deprecated An earlier name of a value of AlertDialogVariant; use the value alertDialogVariantAliases maps it to. */
+export type AlertDialogVariantAlias = keyof typeof alertDialogVariantAliases
+
+/** Earlier names of AlertDialogSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const alertDialogSizeAliases = { default: 'md' } as const satisfies Record<
+  string,
+  AlertDialogSize
+>
+
+/** @deprecated An earlier name of a value of AlertDialogSize; use the value alertDialogSizeAliases maps it to. */
+export type AlertDialogSizeAlias = keyof typeof alertDialogSizeAliases
+
 export interface AlertDialogContract {
   /** The WAI-ARIA APG pattern the component implements. */
   accessibility: A11yPatternBinding
@@ -54,7 +72,7 @@ export interface AlertDialogContract {
 export const alertDialogContract = {
   accessibility: { pattern: 'alertdialog' },
   defaultFooterVariant: 'default',
-  defaultSize: 'default',
+  defaultSize: 'md',
   defaultVariant: 'default',
   footerVariants: alertDialogFooterVariants,
   sizes: alertDialogSizes,

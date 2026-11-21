@@ -3,7 +3,12 @@
   "component": "autocomplete",
   "maturity": "stable",
   "lists": {
-    "sizes": ["sm", "default", "lg"],
+    "sizes": {
+      "values": ["sm", "md", "lg"],
+      "deprecatedAliases": {
+        "default": "md"
+      }
+    },
     "slots": [
       "autocomplete-input-group",
       "autocomplete-start-addon",
@@ -25,11 +30,11 @@
       "autocomplete-status",
       "autocomplete-collection"
     ],
-    "states": ["closed", "open", "highlighted", "disabled", "empty", "loading"],
+    "states": ["closed", "open", "highlighted", "hover", "disabled", "empty", "loading", "invalid"],
     "visualArchetypes": ["field", "trigger", "overlay", "menu"]
   },
   "contract": {
-    "defaultSize": "default",
+    "defaultSize": "md",
     "sizes": {
       "$ref": "#/lists/sizes"
     },

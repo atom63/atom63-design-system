@@ -40,6 +40,63 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a form field is, independent of any platform: how its label and control are laid out, how a fieldset legend is drawn, and its chrome. iOS has no orientation or legend axis (native Form layout reflows for Dynamic Type); the web Field has no variant, which only AtomFormField takes so far.",
+    "axes": {
+      "orientation": ["vertical", "horizontal", "responsive"],
+      "legend": ["legend", "label"],
+      "variant": ["default", "filled"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "orientation": {
+            "list": "orientations",
+            "map": {
+              "vertical": {
+                "orientation": "vertical"
+              },
+              "horizontal": {
+                "orientation": "horizontal"
+              },
+              "responsive": {
+                "orientation": "responsive"
+              }
+            },
+            "extensions": {}
+          },
+          "legendVariant": {
+            "list": "legendVariants",
+            "map": {
+              "legend": {
+                "legend": "legend"
+              },
+              "label": {
+                "legend": "label"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "variant": {
+            "swiftEnum": "AtomFieldVariant",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "filled": {
+                "variant": "filled"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "formField",

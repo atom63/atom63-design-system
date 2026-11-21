@@ -106,6 +106,11 @@ export const Inline: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): focus stays in the
+   input, so the highlighted option, the one Enter runs, takes the system
+   selection colours. */
+export const ForcedColors: Story = { render: Inline.render }
+
 /* The input's slots: a caller's icon in place of the search glyph, and a
    shortcut hint after the field, as in a filter menu. */
 export const InputSlots: Story = {

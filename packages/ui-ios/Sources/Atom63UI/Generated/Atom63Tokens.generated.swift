@@ -53,6 +53,8 @@ public enum AtomTokens {
         public static let textSecondary = AtomDynamicColor(light: AtomColorComponents(red: 0.392157, green: 0.392157, blue: 0.392157, opacity: 1), dark: AtomColorComponents(red: 0.705882, green: 0.705882, blue: 0.705882, opacity: 1))
         /// --a63-text-accent
         public static let textAccent = AtomDynamicColor(light: AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1), dark: AtomColorComponents(red: 0.462745, green: 0.74902, blue: 1, opacity: 1))
+        /// --a63-text-danger
+        public static let textDanger = AtomDynamicColor(light: AtomColorComponents(red: 0.733333, green: 0.113725, blue: 0.133333, opacity: 1), dark: AtomColorComponents(red: 1, green: 0.556863, blue: 0.513726, opacity: 1))
         /// --a63-border-subtle
         public static let borderSubtle = AtomDynamicColor(light: AtomColorComponents(red: 0.909804, green: 0.909804, blue: 0.909804, opacity: 1), dark: AtomColorComponents(red: 0.227451, green: 0.227451, blue: 0.227451, opacity: 1))
         /// --a63-border-control
@@ -85,6 +87,8 @@ public enum AtomTokens {
         public static let statusSuccess = AtomDynamicColor(light: AtomColorComponents(red: 0, green: 0.576471, blue: 0.345098, opacity: 1), dark: AtomColorComponents(red: 0.12549, green: 0.737255, blue: 0.482353, opacity: 1))
         /// --a63-status-warning
         public static let statusWarning = AtomDynamicColor(light: AtomColorComponents(red: 0.760784, green: 0.458824, blue: 0, opacity: 1), dark: AtomColorComponents(red: 0.952941, green: 0.623529, blue: 0, opacity: 1))
+        /// --a63-status-danger
+        public static let statusDanger = AtomDynamicColor(light: AtomColorComponents(red: 0.733333, green: 0.113725, blue: 0.133333, opacity: 1), dark: AtomColorComponents(red: 0.905882, green: 0.262745, blue: 0.25098, opacity: 1))
         /// --a63-focus-ring
         public static let focusRing = AtomDynamicColor(light: AtomColorComponents(red: 0.019608, green: 0.364706, blue: 0.823529, opacity: 1), dark: AtomColorComponents(red: 0.462745, green: 0.74902, blue: 1, opacity: 1))
         /// --a63-scrim

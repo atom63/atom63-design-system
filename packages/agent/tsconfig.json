@@ -2,7 +2,9 @@
   "extends": "@atom63/tsconfig/react-package.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "dist"
+    "outDir": "dist",
+    // Node-based tests read files with node:fs; TypeScript 6 no longer loads @types/node by default.
+    "types": ["node"]
   },
   "include": ["src"]
 }

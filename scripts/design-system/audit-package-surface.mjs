@@ -2,6 +2,9 @@ import { readJson, relativeToRoot, fromRoot, writeAuditJson } from './audit-util
 import { publishedPackageDirs } from './published-packages.mjs'
 
 const packageDirectories = publishedPackageDirs
+const tiersPath = 'docs/design-system/package-export-tiers.json'
+const tierInventory = await readJson(fromRoot(tiersPath))
+const tierProblems = []
 
 function selectQualityScripts(scripts = {}) {
   return Object.fromEntries(
@@ -17,6 +20,19 @@ for (const directory of packageDirectories) {
   const manifestPath = fromRoot(directory, 'package.json')
   const manifest = await readJson(manifestPath)
   const exportsMap = manifest.exports ?? null
+  const tiers = tierInventory.packages[manifest.name] ?? null
+  if (tiers) {
+    const keys = Object.keys(exportsMap ?? {})
+    for (const key of keys) {
+      if (!tierInventory.tierDefinitions[tiers[key]]) {
+        tierProblems.push(`${manifest.name} export ${key} has no known tier in ${tiersPath}`)
+      }
+    }
+    for (const key of Object.keys(tiers)) {
+      if (!keys.includes(key))
+        tierProblems.push(`${tiersPath} tiers ${manifest.name} ${key}, which it does not export`)
+    }
+  }
 
   packages.push({
     directory,
@@ -35,12 +51,18 @@ for (const directory of packageDirectories) {
     qualityScripts: selectQualityScripts(manifest.scripts),
     publishConfig: manifest.publishConfig ?? null,
     publishAccess: manifest.publishConfig?.access ?? null,
+    exportTiers: tiers,
   })
+}
+
+if (tierProblems.length > 0) {
+  console.error(tierProblems.join('\n'))
+  process.exit(1)
 }
 
 const audit = {
   schemaVersion: 1,
-  inputs: packageDirectories.map(directory => `${directory}/package.json`),
+  inputs: [...packageDirectories.map(directory => `${directory}/package.json`), tiersPath],
   summary: {
     packageCount: packages.length,
     publishableCount: packages.filter(item => !item.private).length,

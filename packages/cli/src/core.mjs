@@ -123,7 +123,7 @@ function synonymBoost(query, slug) {
   let best = 0
   for (const term of words(query)) {
     const rank = (synonyms[term] ?? []).indexOf(slug)
-    if (rank !== -1) best = Math.max(best, 30 - rank * 8)
+    if (rank !== -1) best = Math.max(best, 40 - rank * 8)
   }
   return best
 }
@@ -169,11 +169,42 @@ function synonymTokens(query) {
 
 /* ── Commands ────────────────────────────────────────────────────────────── */
 
-export const searchKinds = ['component', 'template', 'token', 'doc', 'example']
+export const searchKinds = ['component', 'template', 'token', 'doc', 'example', 'api']
+
+const firstSentence = text => /^.*?\.(?=\s|$)/.exec(text)?.[0] ?? text
+
+/** The last segment of an entry point: `@atom63/ui-react/media/lightbox` → `lightbox`. */
+const entryTail = module => module.split('/').at(-1)
 
 /**
- * One ranked list across components, templates, tokens, docs pages and story
- * examples.
+ * Every public API name an agent can look up: the Swift types of Atom63UI and
+ * the values each published JavaScript entry point exports.
+ */
+function apiSymbols(index) {
+  const covered = new Set(index.components.flatMap(component => component.exports.values))
+  return [
+    ...index.api.ios.types.map(type => ({
+      name: type.name,
+      summary: firstSentence(type.summary) || `${type.declaration} (${index.api.ios.module})`,
+      // Swift types do not compete with the web component of the same name.
+      inSearch: true,
+    })),
+    ...index.api.web.flatMap(entry =>
+      entry.values.map(name => ({
+        name,
+        summary: `import { ${name} } from '${entry.module}'`,
+        // A catalog component's own exports are found through the component.
+        inSearch: !covered.has(name),
+      }))
+    ),
+  ]
+}
+
+/**
+ * One ranked list across components, templates, tokens, docs pages, story
+ * examples and public API names (Swift types and entry point exports).
+ * An API name joins on a name match only, and below components and docs
+ * unless it matches exactly or kind is `api`.
  * Tokens only join when the query looks like one (`--…`), kind is `token`, a
  * topic names them, or a query term names them through a synonym ("gradient"),
  * so a thousand variables cannot bury the components.
@@ -274,6 +305,51 @@ export function search(index, query, { kind, limit = 10 } = {}) {
           })
         }
       }
+    }
+  }
+
+  if (wants('api')) {
+    const entries = [
+      {
+        module: index.api.ios.module,
+        names: [index.api.ios.module, 'ios', 'swiftui', 'swift'],
+        summary: `the SwiftUI package: ${index.api.ios.types.length} public types`,
+      },
+      ...index.api.web.map(entry => ({
+        module: entry.module,
+        names: [entry.module, entryTail(entry.module)],
+        summary: `entry point: ${entry.values.length} exports, docs ${entry.docs}`,
+      })),
+    ]
+    for (const entry of entries) {
+      const total = score(query, terms, { names: entry.names })
+      if (total >= 50) {
+        results.push({
+          kind: 'api',
+          id: entry.module,
+          label: entry.module,
+          summary: entry.summary,
+          score: total * 0.9,
+          next: `atom63 api ${entry.module}`,
+        })
+      }
+    }
+    const listed = new Set()
+    for (const symbol of apiSymbols(index)) {
+      if (!symbol.inSearch || listed.has(symbol.name)) continue
+      const value = score(query, terms, { names: [symbol.name] })
+      // Outside `--kind api`, a name must start with the query: hundreds of
+      // contract constants contain short words such as "ios" or "tab".
+      if (value < (kind === 'api' ? 50 : 70)) continue
+      listed.add(symbol.name)
+      results.push({
+        kind: 'api',
+        id: symbol.name,
+        label: symbol.name,
+        summary: symbol.summary,
+        score: value >= 100 || kind === 'api' ? value : value * 0.4,
+        next: `atom63 api ${symbol.name}`,
+      })
     }
   }
 
@@ -478,6 +554,89 @@ export function token(index, query) {
     throw new AtomError('token.not_found', `No token matches "${query}".`)
   }
   return { type: 'token.results', data }
+}
+
+/**
+ * A public API name or an entry point. A Swift type comes back with its
+ * declaration, doc comment, members and the component it renders; a
+ * JavaScript export with the entry points that export it, their import lines
+ * and docs pages. An entry point (`@atom63/ui-react/media`, `Atom63UI`) comes
+ * back with everything it exports.
+ */
+export function api(index, name) {
+  if (!name?.trim()) throw new AtomError('api.not_found', 'Pass an API name or an entry point.')
+  const wanted = name.trim()
+  const { ios, web } = index.api
+  if (wanted === ios.module || /^(ios|swiftui)$/i.test(wanted)) {
+    return {
+      type: 'api.entry',
+      data: {
+        module: ios.module,
+        platform: 'ios',
+        docs: ios.docs,
+        import: `import ${ios.module}`,
+        symbols: ios.types.map(type => ({
+          name: type.name,
+          kind: type.kind,
+          summary: type.summary,
+        })),
+      },
+    }
+  }
+  const entry = web.find(candidate => candidate.module === wanted)
+  if (entry) {
+    return {
+      type: 'api.entry',
+      data: {
+        module: entry.module,
+        platform: 'web',
+        docs: entry.docs,
+        import: `import { … } from '${entry.module}'`,
+        symbols: entry.values.map(value => ({ name: value, kind: 'value', summary: '' })),
+      },
+    }
+  }
+
+  const same = candidate => candidate.toLowerCase() === wanted.toLowerCase()
+  const exact = candidate => candidate === wanted
+  const pick = list => (list.some(exact) ? list.filter(exact) : list.filter(same))
+  const swiftName = pick(ios.types.map(type => type.name))[0]
+  const webName = pick([...new Set(web.flatMap(candidate => candidate.values))])[0]
+  if (!swiftName && !webName) {
+    throw new AtomError(
+      'api.not_found',
+      `No public API "${wanted}".`,
+      closest(wanted, [ios.module, ...apiSymbols(index).map(symbol => symbol.name)])
+    )
+  }
+  const componentOf = new Map(
+    index.components.flatMap(component =>
+      component.exports.values.map(value => [value, component.slug])
+    )
+  )
+  const swift = ios.types.find(type => type.name === swiftName)
+  return {
+    type: 'api.detail',
+    data: {
+      name: swiftName ?? webName,
+      ios: swift ? { ...swift, module: ios.module, docs: ios.docs } : null,
+      web: webName
+        ? web
+            .filter(candidate => candidate.values.includes(webName))
+            .map(candidate => ({
+              module: candidate.module,
+              import: `import { ${webName} } from '${candidate.module}'`,
+              docs: candidate.docs,
+              // What the docs page says about this export: purpose, example and props.
+              reference: candidate.sections?.[webName] ?? null,
+              // Only ui-react's catalog components; @atom63/mdx has its own `Tabs`.
+              component: candidate.module.startsWith('@atom63/ui-react')
+                ? (componentOf.get(webName) ?? null)
+                : null,
+            }))
+        : [],
+    },
+  }
 }
 
 /** A docs page's Markdown by slug. */

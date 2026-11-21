@@ -43,6 +43,10 @@ export const States: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): the active tile takes
+   the system selection colours. */
+export const ForcedColors: Story = { render: States.render }
+
 export const Themes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>

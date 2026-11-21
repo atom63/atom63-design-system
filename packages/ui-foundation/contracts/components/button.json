@@ -33,7 +33,12 @@
     ],
     "shapes": ["default", "round"],
     "tones": ["neutral", "muted"],
-    "states": ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"],
+    "states": {
+      "values": ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"],
+      "deprecatedAliases": {
+        "focusVisible": "focus-visible"
+      }
+    },
     "slots": ["root", "label", "icon", "spinner", "indicator"],
     "tokenSlots": [
       "button.background",
@@ -83,7 +88,8 @@
     "axes": {
       "tone": ["neutral", "muted", "primary", "destructive"],
       "emphasis": ["solid", "soft", "outline", "ghost", "raised"],
-      "content": ["label", "icon-only"]
+      "content": ["label", "icon-only"],
+      "shape": ["default", "round"]
     },
     "sizes": {
       "sm": {
@@ -224,6 +230,18 @@
                 "description": "An icon-only button at the xl step."
               }
             }
+          },
+          "shape": {
+            "list": "shapes",
+            "map": {
+              "default": {
+                "shape": "default"
+              },
+              "round": {
+                "shape": "round"
+              }
+            },
+            "extensions": {}
           }
         }
       },
@@ -290,12 +308,21 @@
               }
             },
             "extensions": {}
+          },
+          "shape": {
+            "swiftEnum": "AtomButtonShape",
+            "map": {
+              "default": {
+                "shape": "default"
+              },
+              "round": {
+                "shape": "round"
+              }
+            },
+            "extensions": {}
           }
         }
       }
-    },
-    "stateAliases": {
-      "focusVisible": "focus-visible"
     }
   },
   "crossRenderer": {

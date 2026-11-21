@@ -4,7 +4,7 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size
-// (default/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off
+// (md/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off
 // data-variant / data-size, and styles a row with aria-current or data-selected as current or
 // selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers,
 // the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card
@@ -13,7 +13,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // primary text, accent is the opt-in primary wash with accent text.
 
 export const itemVariants = ['default', 'outline', 'muted'] as const
-export const itemSizes = ['default', 'sm', 'xs'] as const
+export const itemSizes = ['md', 'sm', 'xs'] as const
 export const itemTones = ['neutral', 'accent'] as const
 export const itemMediaVariants = ['default', 'icon', 'image'] as const
 export const itemGroupVariants = ['default', 'inset'] as const
@@ -30,7 +30,7 @@ export const itemSlots = [
   'item-footer',
   'item-separator',
 ] as const
-export const itemStates = ['rest', 'hover', 'focus', 'selected', 'current'] as const
+export const itemStates = ['rest', 'hover', 'focus-visible', 'selected', 'current'] as const
 export const itemVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 
 export type ItemVariant = (typeof itemVariants)[number]
@@ -42,6 +42,21 @@ export type ItemGroupSurface = (typeof itemGroupSurfaces)[number]
 export type ItemSlot = (typeof itemSlots)[number]
 export type ItemState = (typeof itemStates)[number]
 export type ItemVisualArchetype = (typeof itemVisualArchetypes)[number]
+
+/** Earlier names of ItemSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const itemSizeAliases = { default: 'md' } as const satisfies Record<string, ItemSize>
+
+/** @deprecated An earlier name of a value of ItemSize; use the value itemSizeAliases maps it to. */
+export type ItemSizeAlias = keyof typeof itemSizeAliases
+
+/** Earlier names of ItemState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const itemStateAliases = { focus: 'focus-visible' } as const satisfies Record<
+  string,
+  ItemState
+>
+
+/** @deprecated An earlier name of a value of ItemState; use the value itemStateAliases maps it to. */
+export type ItemStateAlias = keyof typeof itemStateAliases
 
 export interface ItemContract {
   defaultVariant: ItemVariant
@@ -63,7 +78,7 @@ export interface ItemContract {
 
 export const itemContract = {
   defaultVariant: 'default',
-  defaultSize: 'default',
+  defaultSize: 'md',
   defaultMediaVariant: 'default',
   defaultGroupVariant: 'default',
   defaultGroupSurface: 'card',

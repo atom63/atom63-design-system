@@ -96,9 +96,18 @@ function lightboxIconButtonClassName(tone: 'glass' | 'ghost' | 'capsule' = 'glas
  * auto-hide fades (the outer layer's own combined opacity) have to live on a
  * separate element or they never land at all.
  */
-function PresetFloatingChrome({ chrome }: { chrome: ChromeAutoHide }): ReactElement {
-  const { transition } = useLightboxConfig()
+function PresetFloatingChrome({
+  chrome,
+  toolbar,
+}: {
+  chrome: ChromeAutoHide
+  toolbar: MediaLightboxProps['toolbar']
+}): ReactElement {
+  const { items, transition } = useLightboxConfig()
+  const { index } = useLightboxState()
   const { rootRef } = useLightboxRefs()
+  const item = items[index]
+  const toolbarContent = item && toolbar ? toolbar(item, index) : null
   const viewTransition = transition === 'view-transition'
   // Hidden chrome stays in the tab order — a keyboard user reveals it with
   // the same `keydown` this component's own controls would receive — so only
@@ -137,6 +146,20 @@ function PresetFloatingChrome({ chrome }: { chrome: ChromeAutoHide }): ReactElem
         <div
           className={cn('absolute top-4 right-4 flex items-center gap-1.5', pointerEventsClassName)}
         >
+          {/*
+            The caller's controls lead the cluster, so the built-in ones keep
+            their places from item to item. `data-a63-no-drag` keeps a press
+            here out of every gesture, whatever element the caller renders.
+          */}
+          {toolbarContent != null ? (
+            <div
+              className="flex items-center gap-1.5"
+              data-a63-no-drag=""
+              data-slot="media-lightbox-toolbar"
+            >
+              {toolbarContent}
+            </div>
+          ) : null}
           <Lightbox.AppearanceToggle className={lightboxIconButtonClassName('glass')} />
           <Lightbox.Destination className={lightboxIconButtonClassName('glass')} />
           {/* Zoom's pair shares one capsule — see the divider below. */}
@@ -207,9 +230,11 @@ function PresetFloatingChrome({ chrome }: { chrome: ChromeAutoHide }): ReactElem
  * while the chrome is up.
  */
 function Dock({
+  actions,
   chrome,
   thumbnails,
 }: {
+  actions: MediaLightboxProps['actions']
   chrome: ChromeAutoHide
   thumbnails: boolean
 }): ReactElement {
@@ -226,6 +251,7 @@ function Dock({
   const isAboveSm = useMinWidth(SM_BREAKPOINT_PX)
   const showThumbnails = thumbnails && itemCount > 1 && isAboveSm
   const pointerEventsClassName = chrome.visible ? 'pointer-events-auto' : 'pointer-events-none'
+  const actionsContent = item && actions ? actions(item, index) : null
 
   return (
     <div
@@ -314,6 +340,21 @@ function Dock({
                 />
               ) : null}
             </div>
+
+            {/*
+              The caller's actions sit between the caption they act on and
+              the strip, in reach of a thumb. A row that is too wide for a
+              phone scrolls sideways rather than wrapping onto the photo.
+            */}
+            {actionsContent != null ? (
+              <div
+                className="flex max-w-full items-center justify-start gap-2 overflow-x-auto sm:justify-center"
+                data-a63-no-drag=""
+                data-slot="media-lightbox-actions"
+              >
+                {actionsContent}
+              </div>
+            ) : null}
 
             {showThumbnails ? (
               <Lightbox.Thumbnails className="max-w-full min-w-0 justify-start sm:justify-center">
@@ -416,6 +457,7 @@ function revealFor(chrome: ChromeAutoHide) {
  * the responsive reveal of the side chevrons — lives here.
  */
 export function MediaLightbox({
+  actions,
   appearance,
   className,
   index,
@@ -429,6 +471,7 @@ export function MediaLightbox({
   origin,
   preload,
   thumbnails,
+  toolbar,
   transition = 'flip',
 }: MediaLightboxProps): ReactElement | null {
   // All chrome — the dock and the floating controls alike — hides and shows
@@ -497,9 +540,9 @@ export function MediaLightbox({
                 </Lightbox.Slide>
               )}
             </Lightbox.Slides>
-            <PresetFloatingChrome chrome={chrome} />
+            <PresetFloatingChrome chrome={chrome} toolbar={toolbar} />
           </Lightbox.Viewport>
-          <Dock chrome={chrome} thumbnails={Boolean(thumbnails)} />
+          <Dock actions={actions} chrome={chrome} thumbnails={Boolean(thumbnails)} />
         </Lightbox.Content>
       </Lightbox.Portal>
     </Lightbox.Root>

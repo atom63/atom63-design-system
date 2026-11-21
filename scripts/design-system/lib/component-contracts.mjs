@@ -92,17 +92,47 @@ export function listInfo(section, key) {
         ? 'flatten'
         : 'values'
   const objects = kind === 'values' && entry.values.some(value => typeof value === 'object')
+  const typeName =
+    kind === 'map' || objects || entry.typed === false
+      ? null
+      : (entry.typeName ?? `${pascal(section.prefix)}${pascal(singular(key))}`)
   return {
     section,
     key,
     entry,
     kind,
     exportName: entry.exportName ?? `${section.prefix}${pascal(key)}`,
-    typeName:
-      kind === 'map' || objects || entry.typed === false
-        ? null
-        : (entry.typeName ?? `${pascal(section.prefix)}${pascal(singular(key))}`),
+    typeName,
+    aliasesName:
+      typeName && entry.deprecatedAliases
+        ? `${section.prefix}${pascal(singular(key))}Aliases`
+        : null,
   }
+}
+
+/**
+ * What is wrong with a source's deprecated aliases: each must be a name the
+ * list no longer has, and map to a value it does have.
+ */
+export function aliasProblems(source) {
+  const problems = []
+  for (const section of sections(source)) {
+    for (const key of Object.keys(section.lists)) {
+      const info = listInfo(section, key)
+      const aliases = info.entry.deprecatedAliases
+      if (!aliases) continue
+      if (!info.aliasesName) problems.push(`${source.id}: ${key} has aliases but no union type`)
+      const values = listValues(info) ?? []
+      for (const [alias, target] of Object.entries(aliases)) {
+        if (values.includes(alias) || !values.includes(target)) {
+          problems.push(
+            `${source.id}: ${key} alias "${alias}" must not be a value and must name one ("${target}")`
+          )
+        }
+      }
+    }
+  }
+  return problems
 }
 
 /** The values of a list, with concat and flatten resolved; a map has none. */
@@ -190,9 +220,11 @@ export function resolvedComponent(sources, source) {
   const fields = contractFields(sources, main)
   const values = info => (listValues(info) ?? []).map(describeValue)
   const listOf = field => fields.find(item => item.field === field)?.list
+  const aliases = info =>
+    info?.entry.deprecatedAliases ? { deprecatedAliases: info.entry.deprecatedAliases } : {}
   const axes = fields
     .filter(item => item.list && item.list.kind !== 'map' && !NON_AXIS_FIELDS.has(item.field))
-    .map(item => ({ name: item.field, values: values(item.list) }))
+    .map(item => ({ name: item.field, values: values(item.list), ...aliases(item.list) }))
   for (const item of fields) {
     const axis = /^default([A-Z]\w*)$/.exec(item.field)?.[1]
     if (!axis || item.accessibility) continue
@@ -203,6 +235,7 @@ export function resolvedComponent(sources, source) {
       axes.push({
         name,
         values: item.defaultOf ? values(item.defaultOf) : [],
+        ...aliases(item.defaultOf),
         default: describeValue(item.value),
       })
     }
@@ -217,6 +250,9 @@ export function resolvedComponent(sources, source) {
     axes,
     slots: named('slots'),
     states: named('states'),
+    ...(listOf('states')?.entry.deprecatedAliases
+      ? { stateAliases: listOf('states').entry.deprecatedAliases }
+      : {}),
     tokenSlots: named('tokenSlots'),
     visualArchetypes: named('visualArchetypes'),
     ...(contract.accessibility ? { accessibility: contract.accessibility } : {}),
@@ -289,6 +325,49 @@ export function intentProblems(sources, source) {
     const states = main.lists.states ? listValues(listInfo(main, 'states')) : []
     if (!states.includes(alias)) problems.push(`${where}: state alias "${alias}" is not a state`)
     if (alias === canonical) problems.push(`${where}: state alias "${alias}" names itself`)
+  }
+  return problems
+}
+
+/**
+ * The raw values of `enum <name>` in Swift source, in order (a case's name
+ * when it has no raw value), or null when the enum is not there.
+ */
+export function swiftEnumRawValues(swiftSource, name) {
+  const body = swiftSource.match(new RegExp(`\\benum ${name}\\b[^{]*\\{([\\s\\S]*?)\\n\\}`))?.[1]
+  if (body === undefined) return null
+  return [...body.matchAll(/^\s*case\s+`?(\w+)`?(?:\s*=\s*"([^"]*)")?\s*$/gm)].map(
+    ([, name, raw]) => raw ?? name
+  )
+}
+
+/**
+ * Where an iOS prop names a hand-written Swift enum (`swiftEnum`), its raw
+ * values must be exactly the keys of the prop's map and extensions, so the
+ * contract cannot drift from the SwiftUI renderer. `swiftSource` is every
+ * Swift file of Atom63UI, concatenated.
+ */
+export function swiftEnumProblems(sources, swiftSource) {
+  const problems = []
+  for (const source of sources.values()) {
+    const props = source.doc.intent?.platforms?.ios?.props ?? {}
+    for (const [prop, spec] of Object.entries(props)) {
+      if (!spec.swiftEnum) continue
+      const where = `${source.id} intent: ios ${prop}`
+      const actual = swiftEnumRawValues(swiftSource, spec.swiftEnum)
+      if (!actual) {
+        problems.push(`${where}: Swift enum ${spec.swiftEnum} is not in Atom63UI`)
+        continue
+      }
+      const expected = [...Object.keys(spec.map), ...Object.keys(spec.extensions)]
+      const missing = actual.filter(value => !expected.includes(value))
+      const extra = expected.filter(value => !actual.includes(value))
+      if (missing.length || extra.length) {
+        problems.push(
+          `${where}: ${spec.swiftEnum} has ${actual.join(', ')}; the contract maps ${expected.join(', ')}`
+        )
+      }
+    }
   }
   return problems
 }

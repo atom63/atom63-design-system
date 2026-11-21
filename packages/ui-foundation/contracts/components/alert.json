@@ -20,6 +20,62 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What an alert says, independent of any platform: its status tone. The neutral default is a web extension; AtomNotice always carries a status.",
+    "axes": {
+      "tone": ["info", "success", "warning", "error"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "error": {
+                "tone": "error"
+              },
+              "info": {
+                "tone": "info"
+              },
+              "success": {
+                "tone": "success"
+              },
+              "warning": {
+                "tone": "warning"
+              }
+            },
+            "extensions": {
+              "default": {
+                "description": "A neutral alert with no status. Web-only."
+              }
+            }
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "tone": {
+            "swiftEnum": "AtomNoticeTone",
+            "map": {
+              "info": {
+                "tone": "info"
+              },
+              "success": {
+                "tone": "success"
+              },
+              "warning": {
+                "tone": "warning"
+              },
+              "error": {
+                "tone": "error"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "variants",
     "catalogItem": "notice",

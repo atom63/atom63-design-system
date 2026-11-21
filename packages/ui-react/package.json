@@ -1,6 +1,6 @@
 {
   "name": "@atom63/ui-react",
-  "version": "0.2.0-beta.12",
+  "version": "0.2.0-beta.13",
   "description": "React components, layout primitives, media, and theme controls for the Atom63 design system",
   "license": "MIT",
   "repository": {
@@ -85,6 +85,7 @@
     "./recipes/connected-panel.css": "./src/components/connected-panel/connected-panel.css",
     "./recipes/context-menu.css": "./src/components/menu/menu.css",
     "./recipes/copy-button.css": "./src/components/copy-button/copy-button.css",
+    "./recipes/destination-link.css": "./src/components/destination-link/destination-link.css",
     "./recipes/dialog.css": "./src/components/dialog/dialog.css",
     "./recipes/drawer.css": "./src/components/drawer/drawer.css",
     "./recipes/dropdown-menu.css": "./src/components/menu/menu.css",
@@ -165,7 +166,7 @@
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
     "lucide-react": "^1.70.0",
-    "motion": "^13.1.1",
+    "motion": "^14.14.0",
     "react-day-picker": "^10.0.2",
     "react-resizable-panels": "^4.21.0",
     "sonner": "^2.0.7",
@@ -198,7 +199,7 @@
     "react-dom": "^19.3.1",
     "react-hook-form": "^7.91.0",
     "tailwindcss": "catalog:",
-    "tsup": "^8.3.5",
+    "tsup": "^9.0.0",
     "typescript": "catalog:",
     "typescript-eslint": "8.72.2",
     "vitest": "catalog:"

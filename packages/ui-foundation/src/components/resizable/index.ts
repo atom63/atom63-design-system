@@ -3,6 +3,7 @@ export {
   resizableContract,
   resizableOrientations,
   resizableSlots,
+  resizableStateAliases,
   resizableStates,
   resizableVariants,
   resizableVisualArchetypes,
@@ -12,6 +13,7 @@ export type {
   ResizableOrientation,
   ResizableSlot,
   ResizableState,
+  ResizableStateAlias,
   ResizableVariant,
   ResizableVisualArchetype,
 } from './resizable-contract'

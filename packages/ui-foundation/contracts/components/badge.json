@@ -69,7 +69,12 @@
       "neutral"
     ],
     "slots": ["badge", "badge-dot"],
-    "states": ["resting", "interactive", "disabled", "focus-visible"],
+    "states": {
+      "values": ["rest", "interactive", "disabled", "focus-visible"],
+      "deprecatedAliases": {
+        "resting": "rest"
+      }
+    },
     "visualArchetypes": ["marker"]
   },
   "contract": {
@@ -266,9 +271,6 @@
           }
         }
       }
-    },
-    "stateAliases": {
-      "resting": "rest"
     }
   },
   "crossRenderer": {

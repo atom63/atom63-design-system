@@ -28,15 +28,24 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-type DemoProps = Pick<ComponentProps<typeof NavigationMenu>, 'align' | 'portalContainer'> & {
+type DemoProps = Pick<
+  ComponentProps<typeof NavigationMenu>,
+  'align' | 'defaultValue' | 'portalContainer'
+> & {
   width?: number
 }
 
-function Demo({ align, portalContainer, width = 240 }: DemoProps) {
+function Demo({ align, defaultValue, portalContainer, width = 240 }: DemoProps) {
   return (
-    <NavigationMenu align={align} portalContainer={portalContainer}>
+    // The open panel is a second <nav>, so the bar is named to keep both landmarks distinct.
+    <NavigationMenu
+      align={align}
+      aria-label="Main"
+      defaultValue={defaultValue}
+      portalContainer={portalContainer}
+    >
       <NavigationMenuList>
-        <NavigationMenuItem>
+        <NavigationMenuItem value="products">
           <NavigationMenuTrigger>Products</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div style={{ display: 'grid', gap: 4, width }}>
@@ -46,7 +55,7 @@ function Demo({ align, portalContainer, width = 240 }: DemoProps) {
             </div>
           </NavigationMenuContent>
         </NavigationMenuItem>
-        <NavigationMenuItem>
+        <NavigationMenuItem value="company">
           <NavigationMenuTrigger>Company</NavigationMenuTrigger>
           <NavigationMenuContent>
             <div style={{ display: 'grid', gap: 4, width }}>
@@ -64,10 +73,59 @@ export const Playground: Story = {
   render: () => <Demo />,
 }
 
+// The Products panel starts open, so the visual baselines capture the shared
+// popup, its viewport and the links inside it, not only the closed trigger bar.
+// While the panel is open, Base UI brackets it with aria-hidden focus-guard
+// spans that hand focus straight on to the next real target; axe's
+// aria-hidden-focus rule skips only those guards, and still runs on the rest.
+export const Open: Story = {
+  parameters: {
+    a11y: {
+      config: {
+        rules: [
+          {
+            id: 'aria-hidden-focus',
+            selector: '[aria-hidden="true"]:not([data-base-ui-focus-guard])',
+          },
+        ],
+      },
+    },
+  },
+  render: () => <Demo defaultValue="products" />,
+}
+
 // The Root forwards `align` to the shared Positioner, so the popup can anchor
 // to the trigger's end edge (useful for right-aligned nav bars).
 export const AlignEnd: Story = {
   render: () => <Demo align="end" />,
+}
+
+/* The current page is the link with `active`: a heavier label, apart from the
+   hover fill. Captured with forced colors on (Windows High Contrast), the
+   current link takes the system selection colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>Products</NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <div style={{ display: 'grid', gap: 4, width: 240 }}>
+              <NavigationMenuLink href="#a">Analytics</NavigationMenuLink>
+            </div>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink active href="#overview">
+            Overview
+          </NavigationMenuLink>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <NavigationMenuLink href="#pricing">Pricing</NavigationMenuLink>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
+  ),
 }
 
 // The trigger bar is the always-visible surface; the shared content panel is

@@ -1,0 +1,7 @@
+{
+  "synonym | field.states | default -> rest": 1,
+  "synonym | input.states | focus -> focus-visible": 1,
+  "synonym | load-more-trigger.states | idle -> rest": 1,
+  "synonym | search-field.states | focus -> focus-visible": 1,
+  "synonym | textarea.states | focus -> focus-visible": 1
+}

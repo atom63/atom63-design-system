@@ -1,6 +1,6 @@
 {
   "name": "@atom63/inform",
-  "version": "0.2.0-beta.3",
+  "version": "0.2.0-beta.4",
   "description": "The Atom63 inform pattern: one message model, one arbiter, and the banner, dialog, corner flyout and spotlight surfaces",
   "license": "MIT",
   "repository": {
@@ -84,7 +84,7 @@
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "storybook": "^10.6.6",
-    "tsup": "^8.3.5",
+    "tsup": "^9.0.0",
     "typescript": "catalog:",
     "vitest": "catalog:",
     "vitest-axe": "^0.1.0"

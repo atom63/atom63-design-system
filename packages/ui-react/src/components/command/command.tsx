@@ -5,6 +5,7 @@ import { Dialog as CommandDialogPrimitive } from '@base-ui/react/dialog'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 import { ScrollArea } from '../scroll-area/scroll-area'
 
 /*
@@ -26,7 +27,18 @@ import { ScrollArea } from '../scroll-area/scroll-area'
 // ── Dialog shell ─────────────────────────────────────────────────────────
 export const CommandDialog = CommandDialogPrimitive.Root
 
-export const CommandDialogPortal = CommandDialogPrimitive.Portal
+export function CommandDialogPortal(
+  props: CommandDialogPrimitive.Portal.Props
+): React.ReactElement {
+  const { container, ...portalProps } = props
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <CommandDialogPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      {...portalProps}
+    />
+  )
+}
 
 // Handle factory for programmatically opening the ⌘K dialog (faithful port of prod).
 export const CommandCreateHandle = CommandDialogPrimitive.createHandle

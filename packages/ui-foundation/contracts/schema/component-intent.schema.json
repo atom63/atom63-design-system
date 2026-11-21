@@ -158,6 +158,13 @@
         "typed": {
           "description": "false exports the list without a union type.",
           "const": false
+        },
+        "deprecatedAliases": {
+          "description": "Earlier names of values, each mapped to the value that replaced it. Generated as <prefix><Singular key>Aliases and a deprecated <Type>Alias type; the React components still accept them until a breaking release.",
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
         }
       },
       "additionalProperties": false
@@ -498,6 +505,11 @@
                         },
                         "additionalProperties": false
                       }
+                    },
+                    "swiftEnum": {
+                      "description": "A Swift enum written by hand in Atom63UI that this prop maps. The contract check reads its raw values from the Swift source and fails unless they are exactly the keys of map and extensions.",
+                      "type": "string",
+                      "pattern": "^Atom[A-Za-z]+$"
                     },
                     "swiftType": {
                       "description": "The Swift enum generated from this prop.",

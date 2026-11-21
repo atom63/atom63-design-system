@@ -20,15 +20,36 @@ describe('FeedbackState', () => {
     expect(el).toHaveAttribute('data-size', 'page')
   })
 
-  it('announces loading and error states', () => {
+  it('keeps one live region mounted and announces every state', () => {
     const { container, rerender } = render(<FeedbackState state="loading" />)
-    const state = container.querySelector('[data-slot="feedback-state"]')
-    expect(state).toHaveAttribute('role', 'status')
-    expect(state).toHaveAttribute('aria-busy', 'true')
+    const region = container.querySelector('[data-slot="feedback-state"]')
+    // A busy region's announcements are suppressed, so loading is not busy.
+    expect(region).toHaveAttribute('role', 'status')
+    expect(region).toHaveAttribute('aria-live', 'polite')
+    expect(region).not.toHaveAttribute('aria-busy')
+
+    for (const state of ['empty', 'not-found', 'no-results', 'offline', 'stale'] as const) {
+      rerender(<FeedbackState state={state} />)
+      expect(container.querySelector('[data-slot="feedback-state"]')).toBe(region)
+      expect(region).toHaveAttribute('role', 'status')
+      expect(region).toHaveAttribute('aria-live', 'polite')
+    }
 
     rerender(<FeedbackState state="error" />)
-    expect(state).toHaveAttribute('role', 'alert')
-    expect(state).toHaveAttribute('aria-live', 'assertive')
+    expect(container.querySelector('[data-slot="feedback-state"]')).toBe(region)
+    expect(region).toHaveAttribute('role', 'alert')
+    expect(region).toHaveAttribute('aria-live', 'assertive')
+  })
+
+  it('renders the title as a heading, level 3 unless set', () => {
+    const { getByRole, rerender } = render(<FeedbackState state="not-found" />)
+    expect(getByRole('heading', { level: 3, name: 'Nothing found' })).toHaveAttribute(
+      'data-slot',
+      'feedback-state-title'
+    )
+
+    rerender(<FeedbackState level={2} state="not-found" />)
+    expect(getByRole('heading', { level: 2, name: 'Nothing found' })).toBeInTheDocument()
   })
 
   it('falls back to the state config title + description', () => {

@@ -130,6 +130,11 @@
           "path": "templates/pages/dashboard-page/dashboard-page.tsx",
           "type": "registry:page",
           "target": "@components/atom63/pages/dashboard-page/dashboard-page.tsx"
+        },
+        {
+          "path": "templates/pages/list-page/list-page-data.ts",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/list-page/list-page-data.ts"
         }
       ]
     },

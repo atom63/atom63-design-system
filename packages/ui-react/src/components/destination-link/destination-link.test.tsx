@@ -14,6 +14,16 @@ function RouterLink({ children, href, ...props }: ComponentProps<'a'>) {
 }
 
 describe('DestinationLink', () => {
+  it('carries the link recipe class and merges a consumer class', () => {
+    render(
+      <DestinationLink className="extra" href="/projects" kind="internal">
+        Projects
+      </DestinationLink>
+    )
+    const link = screen.getByRole('link', { name: 'Projects' })
+    expect(link).toHaveClass('a63-DestinationLink', 'extra')
+  })
+
   it('renders internal destinations through the supplied router link', () => {
     render(
       <DestinationLink

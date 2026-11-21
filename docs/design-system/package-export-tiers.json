@@ -1,0 +1,43 @@
+{
+  "$comment": "Support tier of every export of the published packages that have no inventory of their own (@atom63/ui-react has ui-react-support-policy.json). check:package-surface copies the tiers into audits/package-surface.json and fails when an export has no tier or a tier names no export. mdx tiers repeat the Stability table in packages/mdx/README.md.",
+  "tierDefinitions": {
+    "stable": "The package says it keeps this entry compatible; breaking changes need a major version and migration notes.",
+    "beta": "Importable and supported on the beta dist-tag; the API can still change in a minor version, with a changeset that says how.",
+    "experimental": "Importable, with no compatibility promise; it can change or go away in any release."
+  },
+  "packages": {
+    "@atom63/mdx": {
+      ".": "stable",
+      "./blocks": "stable",
+      "./blocks/credits-block": "stable",
+      "./blocks/media-caption": "stable",
+      "./article": "stable",
+      "./editor": "stable",
+      "./lightbox": "stable",
+      "./runtime": "stable",
+      "./primitives": "experimental",
+      "./styles/index.css": "stable",
+      "./styles/a63.css": "stable",
+      "./styles/shadcn.css": "stable",
+      "./styles/mdx-blocks.css": "stable",
+      "./styles/consumer.css": "stable"
+    },
+    "@atom63/inform": {
+      ".": "beta",
+      "./react": "beta",
+      "./surfaces": "beta",
+      "./styles.css": "beta"
+    },
+    "@atom63/agent": {
+      ".": "beta",
+      "./react": "beta"
+    },
+    "@atom63/widgets": {
+      ".": "beta",
+      "./primitives": "beta",
+      "./state": "beta",
+      "./runtime": "beta",
+      "./styles.css": "beta"
+    }
+  }
+}

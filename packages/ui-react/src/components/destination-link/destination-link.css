@@ -1,0 +1,28 @@
+/*
+ * DestinationLink recipe: an inline text link, drawn like the system's other
+ * links (field and empty descriptions, Button `link`): primary text with an
+ * underline, accent text on hover, and an outline focus ring. The indicator
+ * keeps a small gap before it and is not underlined.
+ */
+
+.a63-DestinationLink {
+  border-radius: var(--radius-sm);
+  color: var(--a63-text-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.a63-DestinationLink:hover {
+  color: var(--a63-text-accent);
+}
+
+.a63-DestinationLink:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: 2px;
+}
+
+.a63-DestinationLink [data-slot='destination-indicator'] {
+  margin-inline-start: var(--a63-space-1);
+  vertical-align: -0.125em;
+}

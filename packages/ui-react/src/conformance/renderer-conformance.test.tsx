@@ -61,7 +61,430 @@ import { Textarea } from '../components/textarea'
 import { Toaster } from '../components/toaster'
 import { Toggle } from '../components/toggle'
 import { ToggleGroup, ToggleGroupItem } from '../components/toggle-group'
-import { reactRendererConformance } from './renderer-conformance'
+import {
+  getReactRendererConformance,
+  type ReactRendererConformanceEvidence,
+  reactRendererConformance,
+} from './renderer-conformance'
+
+// The evidence this file verifies, kept by hand: a contract that adds a required state or outcome
+// fails here until a test below covers it and the entry is updated. The published
+// `reactRendererConformance` is derived from the contracts and must equal this list.
+const verifiedEvidence = [
+  {
+    contractId: 'button',
+    implementedStates: ['rest', 'pressed', 'disabled', 'loading'],
+    verifiedSharedOutcomes: [
+      'action-fires-once',
+      'loading-blocks-repeat-activation',
+      'disabled-prevents-activation',
+    ],
+    verifiedAccessibilityOutcomes: ['exposes-label', 'announces-loading', 'disabled-while-loading'],
+    verifiesMotionRecipe: true,
+  },
+  {
+    contractId: 'alert',
+    implementedStates: ['info', 'success', 'warning', 'error'],
+    verifiedSharedOutcomes: [
+      'tone-is-not-conveyed-by-color-alone',
+      'message-remains-readable',
+      'action-does-not-obscure-status',
+    ],
+    verifiedAccessibilityOutcomes: ['announces-semantic-tone', 'text-does-not-rely-on-color'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'dialog',
+    implementedStates: ['closed', 'open', 'focus-visible'],
+    verifiedSharedOutcomes: [
+      'opening-presents-a-modal-context',
+      'background-interaction-is-blocked-while-open',
+      'dismissal-returns-to-the-originating-context',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-modal-title',
+      'keeps-assistive-focus-in-the-modal-context',
+      'restores-access-to-the-originating-control',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'alert-dialog',
+    implementedStates: ['closed', 'open'],
+    verifiedSharedOutcomes: [
+      'consequential-action-requires-explicit-confirmation',
+      'cancel-dismisses-without-performing-the-action',
+      'confirmation-performs-the-action-once-and-dismisses',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-alert-dialog-title',
+      'exposes-consequence-description',
+      'identifies-cancel-and-confirm-actions',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'field',
+    implementedStates: ['default', 'invalid', 'disabled'],
+    verifiedSharedOutcomes: [
+      'label-identifies-control',
+      'description-explains-input',
+      'invalid-state-exposes-error',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'associates-label',
+      'associates-description',
+      'announces-error',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'destination-link',
+    implementedStates: ['rest', 'focus-visible'],
+    verifiedSharedOutcomes: [
+      'internal-destination-preserves-application-navigation',
+      'external-destination-uses-platform-external-navigation',
+      'destination-kind-remains-distinguishable',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-link-label',
+      'announces-external-destination-behavior',
+      'preserves-native-link-semantics',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'input',
+    implementedStates: ['rest', 'focus', 'disabled', 'invalid'],
+    verifiedSharedOutcomes: [
+      'value-remains-editable-when-enabled',
+      'focus-is-visible',
+      'invalid-state-is-announced',
+    ],
+    verifiedAccessibilityOutcomes: ['exposes-label', 'exposes-value', 'announces-invalid'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'textarea',
+    implementedStates: ['rest', 'focus', 'disabled', 'invalid'],
+    verifiedSharedOutcomes: [
+      'multi-line-value-remains-editable',
+      'focus-is-visible',
+      'invalid-state-is-announced',
+    ],
+    verifiedAccessibilityOutcomes: ['exposes-label', 'exposes-value', 'announces-invalid'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'switch',
+    implementedStates: ['off', 'on', 'disabled'],
+    verifiedSharedOutcomes: [
+      'value-is-boolean',
+      'activation-toggles-value',
+      'disabled-prevents-change',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-label',
+      'exposes-boolean-value',
+      'preserves-native-control-role',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'select',
+    implementedStates: ['closed', 'open', 'disabled', 'selected-item', 'disabled-item'],
+    verifiedSharedOutcomes: [
+      'current-selection-remains-visible',
+      'activation-reveals-available-options',
+      'choosing-an-option-updates-the-value-once',
+      'disabled-controls-and-options-prevent-selection',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-label',
+      'exposes-selected-value',
+      'preserves-single-selection-semantics',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'segmented-control',
+    implementedStates: ['rest', 'selected', 'disabled'],
+    verifiedSharedOutcomes: [
+      'one-segment-is-selected-at-a-time',
+      'activation-updates-the-selection-once',
+      'disabled-segment-prevents-selection',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-each-segment-label',
+      'exposes-selected-state',
+      'preserves-single-selection-semantics',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'radio',
+    implementedStates: ['unchecked', 'checked', 'disabled'],
+    verifiedSharedOutcomes: [
+      'exactly-one-option-may-be-selected',
+      'activation-moves-selection-to-the-chosen-option',
+      'disabled-option-prevents-selection',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-group-label',
+      'exposes-option-labels-and-selected-state',
+      'preserves-single-selection-semantics',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'slider',
+    implementedStates: ['rest', 'dragging', 'disabled'],
+    verifiedSharedOutcomes: [
+      'value-remains-within-the-declared-range',
+      'interaction-updates-value-using-the-declared-step',
+      'disabled-control-prevents-value-change',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-label',
+      'exposes-current-value-and-range',
+      'supports-adjustable-actions',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'dropdown-menu',
+    implementedStates: ['closed', 'open', 'disabled', 'checked', 'destructive'],
+    verifiedSharedOutcomes: [
+      'enabled-action-executes-once-and-dismisses-the-menu',
+      'disabled-action-does-not-execute',
+      'checked-choice-exposes-its-current-state',
+      'destructive-action-retains-destructive-intent',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'trigger-exposes-menu-availability',
+      'items-expose-label-role-and-disabled-state',
+      'checked-items-expose-selected-or-checked-state',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'accordion',
+    implementedStates: ['closed', 'open', 'disabled'],
+    verifiedSharedOutcomes: [
+      'activation-toggles-associated-content-visibility',
+      'expanded-state-matches-content-visibility',
+      'disabled-trigger-prevents-disclosure-change',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'trigger-exposes-expanded-state',
+      'trigger-is-associated-with-disclosed-content',
+      'disabled-trigger-exposes-disabled-state',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'calendar',
+    implementedStates: ['rest', 'selected', 'disabled'],
+    verifiedSharedOutcomes: [
+      'selection-updates-to-an-allowed-date',
+      'disabled-date-prevents-selection',
+      'selected-date-remains-visible',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-control-label',
+      'dates-expose-complete-date-names',
+      'selected-date-exposes-selected-state',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'search-field',
+    implementedStates: ['empty', 'query', 'focus', 'disabled'],
+    verifiedSharedOutcomes: [
+      'editing-updates-the-query',
+      'clear-empties-the-query-and-preserves-input-context',
+      'submit-commits-the-current-query-once',
+      'disabled-search-prevents-editing-and-clear',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-search-input-role-and-label',
+      'clear-action-has-an-accessible-label',
+      'disabled-state-is-exposed',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'tabs',
+    implementedStates: ['rest', 'selected'],
+    verifiedSharedOutcomes: [
+      'one-tab-is-selected-at-a-time',
+      'selection-reveals-the-associated-content',
+      'selected-tab-remains-visually-distinguishable',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-tab-labels',
+      'exposes-selected-state',
+      'associates-selection-with-visible-content',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'load-more-trigger',
+    implementedStates: ['idle', 'loading', 'failed', 'exhausted'],
+    verifiedSharedOutcomes: [
+      'loading-is-announced',
+      'failure-provides-retry',
+      'exhaustion-is-announced',
+      'existing-items-remain-stable-while-appending',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'announces-loading',
+      'exposes-retry-action',
+      'announces-exhausted',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'skeleton',
+    implementedStates: ['loading', 'reduced-motion'],
+    verifiedSharedOutcomes: [
+      'placeholder-is-hidden-from-assistive-technology',
+      'interaction-is-blocked-while-loading',
+      'reduced-motion-result-is-static',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'hidden-from-accessibility-tree',
+      'blocks-interaction-while-active',
+    ],
+    verifiesMotionRecipe: true,
+  },
+  {
+    contractId: 'toggle',
+    implementedStates: ['off', 'on', 'disabled'],
+    verifiedSharedOutcomes: [
+      'selected-state-is-visible',
+      'activation-toggles-selection',
+      'disabled-prevents-change',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-label',
+      'announces-selected-state',
+      'preserves-button-role',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'toggle-group',
+    implementedStates: ['rest', 'selected', 'disabled'],
+    verifiedSharedOutcomes: [
+      'selection-state-is-visible',
+      'disabled-options-cannot-change-selection',
+    ],
+    verifiedAccessibilityOutcomes: ['exposes-selection', 'exposes-disabled-state'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'card',
+    implementedStates: ['rest', 'interactive', 'focus-visible'],
+    verifiedSharedOutcomes: [
+      'content-order-is-preserved',
+      'static-card-does-not-imply-action',
+      'interactive-card-has-one-primary-action',
+    ],
+    verifiedAccessibilityOutcomes: ['preserves-content-order', 'does-not-imply-action-when-static'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'badge',
+    implementedStates: ['neutral', 'accent', 'success', 'warning', 'error'],
+    verifiedSharedOutcomes: [
+      'label-remains-readable-without-color',
+      'semantic-tone-retains-meaning',
+    ],
+    verifiedAccessibilityOutcomes: ['text-does-not-rely-on-color'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'avatar',
+    implementedStates: ['loading', 'loaded', 'fallback'],
+    verifiedSharedOutcomes: [
+      'accessible-name-is-preserved',
+      'fallback-preserves-identity',
+      'loading-does-not-expose-empty-image',
+    ],
+    verifiedAccessibilityOutcomes: ['exposes-accessible-name', 'fallback-preserves-identity'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'empty',
+    implementedStates: ['empty', 'error'],
+    verifiedSharedOutcomes: [
+      'heading-explains-state',
+      'supporting-copy-provides-context',
+      'recovery-action-remains-available',
+    ],
+    verifiedAccessibilityOutcomes: [
+      'exposes-heading',
+      'exposes-recovery-action',
+      'preserves-reading-order',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'progress',
+    implementedStates: ['indeterminate', 'progressing', 'complete'],
+    verifiedSharedOutcomes: [
+      'label-identifies-operation',
+      'determinate-value-is-exposed',
+      'completion-is-distinguishable',
+    ],
+    verifiedAccessibilityOutcomes: ['exposes-label', 'announces-progress-value'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'toaster',
+    implementedStates: ['visible', 'dismissing', 'reduced-motion'],
+    verifiedSharedOutcomes: [
+      'message-is-announced',
+      'focus-is-not-trapped',
+      'dismissal-respects-motion-preference',
+    ],
+    verifiedAccessibilityOutcomes: ['announces-message', 'does-not-trap-focus'],
+    verifiesMotionRecipe: true,
+  },
+  {
+    contractId: 'item',
+    implementedStates: ['rest'],
+    verifiedSharedOutcomes: ['rows-keep-reading-order', 'dividers-are-decorative'],
+    verifiedAccessibilityOutcomes: [
+      'preserves-row-order',
+      'hides-dividers-from-assistive-technology',
+    ],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'carousel',
+    implementedStates: ['rest'],
+    verifiedSharedOutcomes: [
+      'one-dot-per-slide',
+      'current-slide-is-marked',
+      'choosing-a-dot-shows-its-slide',
+    ],
+    verifiedAccessibilityOutcomes: ['names-the-indicator', 'exposes-the-current-position'],
+    verifiesMotionRecipe: false,
+  },
+  {
+    contractId: 'message',
+    implementedStates: ['rest'],
+    verifiedSharedOutcomes: [
+      'direction-sets-side-and-fill',
+      'runs-join-at-shared-corners',
+      'status-is-named',
+    ],
+    verifiedAccessibilityOutcomes: ['names-the-sender', 'names-the-delivery-status'],
+    verifiesMotionRecipe: false,
+  },
+] as const satisfies readonly ReactRendererConformanceEvidence[]
 
 // embla-carousel measures layout jsdom does not have, so the carousel's API is a stub with three
 // snap points; `selected` and `emit` stand in for a scroll.
@@ -137,22 +560,26 @@ function CalendarConformanceExample({ onSelect }: { onSelect: (date: Date | unde
 
 describe('React renderer conformance', () => {
   it('has executable evidence for every canonical contract', () => {
-    expect(reactRendererConformance.map(evidence => evidence.contractId).sort()).toEqual(
+    expect(verifiedEvidence.map(evidence => evidence.contractId).sort()).toEqual(
       crossRendererContracts.map(contract => contract.id).sort()
     )
   })
 
-  it.each(reactRendererConformance)(
-    'covers the complete $contractId contract evidence',
-    evidence => {
-      const contract = getCrossRendererContract(evidence.contractId)
-
-      expect(evidence.implementedStates).toEqual(contract.requiredStates)
-      expect(evidence.verifiedSharedOutcomes).toEqual(contract.sharedOutcomes)
-      expect(evidence.verifiedAccessibilityOutcomes).toEqual(contract.accessibilityOutcomes)
-      expect(evidence.verifiesMotionRecipe).toBe('motion' in contract && Boolean(contract.motion))
+  it('publishes the verified evidence', () => {
+    for (const evidence of verifiedEvidence) {
+      expect(getReactRendererConformance(evidence.contractId)).toEqual(evidence)
     }
-  )
+    expect(reactRendererConformance).toHaveLength(verifiedEvidence.length)
+  })
+
+  it.each(verifiedEvidence)('covers the complete $contractId contract evidence', evidence => {
+    const contract = getCrossRendererContract(evidence.contractId)
+
+    expect(evidence.implementedStates).toEqual(contract.requiredStates)
+    expect(evidence.verifiedSharedOutcomes).toEqual(contract.sharedOutcomes)
+    expect(evidence.verifiedAccessibilityOutcomes).toEqual(contract.accessibilityOutcomes)
+    expect(evidence.verifiesMotionRecipe).toBe('motion' in contract && Boolean(contract.motion))
+  })
 
   it('verifies button activation, disabled, loading, and accessible label outcomes', () => {
     const onPress = vi.fn()
@@ -315,7 +742,7 @@ describe('React renderer conformance', () => {
     expect(currentAction).toHaveFocus()
   })
 
-  it('verifies every alert tone keeps text and alert semantics', () => {
+  it('verifies every alert tone keeps text and live-region semantics', () => {
     for (const tone of getCrossRendererContract('alert').requiredStates) {
       const { unmount } = render(
         <Alert variant={tone}>
@@ -324,7 +751,9 @@ describe('React renderer conformance', () => {
         </Alert>
       )
 
-      expect(screen.getByRole('alert')).toHaveAttribute('data-variant', tone)
+      // Error and warning interrupt; info and success are polite.
+      const role = tone === 'error' || tone === 'warning' ? 'alert' : 'status'
+      expect(screen.getByRole(role)).toHaveAttribute('data-variant', tone)
       expect(screen.getByText('Status copy')).toBeVisible()
       unmount()
     }

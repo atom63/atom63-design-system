@@ -1,9 +1,11 @@
 'use client'
 
+import type { AutocompleteSize, AutocompleteSizeAlias } from '@atom63/ui-foundation'
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 import { ScrollArea } from '../scroll-area/scroll-area'
 
 /*
@@ -56,15 +58,22 @@ export interface AutocompleteInputProps extends Omit<AutocompletePrimitive.Input
   showTrigger?: boolean
   showClear?: boolean
   startAddon?: React.ReactNode
-  size?: 'sm' | 'default' | 'lg' | number
+  /** A contract size, or a number for the native character width. `'default'` is a deprecated
+   *  alias of `'md'`. */
+  size?: AutocompleteSize | AutocompleteSizeAlias | number
+  /** Draws the danger edge and sets `aria-invalid`, as `Input`'s `invalid` does.
+   *  `aria-invalid` on its own draws the same state. */
+  invalid?: boolean
   ref?: React.Ref<HTMLInputElement>
   triggerProps?: AutocompletePrimitive.Trigger.Props
   clearProps?: AutocompletePrimitive.Clear.Props
 }
 
 export function AutocompleteInput({
+  'aria-invalid': ariaInvalid,
   className,
   clearProps,
+  invalid = false,
   showClear = false,
   showTrigger = false,
   size,
@@ -72,18 +81,21 @@ export function AutocompleteInput({
   triggerProps,
   ...props
 }: AutocompleteInputProps): React.ReactElement {
-  const sizeValue = size ?? 'default'
+  const sizeValue = size === undefined || size === 'default' ? 'md' : size
   const dataSize = typeof sizeValue === 'number' ? undefined : sizeValue
   // Numeric size maps to the native <input size> attribute for character-width
   // sizing (matches prod's <Input nativeInput size={number}>); string sizes drive
   // the recipe via data-size instead.
   const nativeSize = typeof sizeValue === 'number' ? sizeValue : undefined
+  const isInvalid = invalid || ariaInvalid === true || ariaInvalid === 'true'
+  const invalidProps = isInvalid ? { 'data-invalid': '' } : null
 
   return (
     <AutocompletePrimitive.InputGroup
       className="a63-Autocomplete-input-group"
       data-size={dataSize}
       data-slot="autocomplete-input-group"
+      {...invalidProps}
     >
       {startAddon ? (
         <div
@@ -95,10 +107,12 @@ export function AutocompleteInput({
         </div>
       ) : null}
       <AutocompletePrimitive.Input
+        aria-invalid={isInvalid ? true : ariaInvalid}
         className={cn('a63-Autocomplete-input', className)}
         data-has-start-addon={startAddon ? '' : undefined}
         data-slot="autocomplete-input"
         size={nativeSize}
+        {...invalidProps}
         {...props}
       />
       {showTrigger ? (
@@ -146,8 +160,12 @@ export function AutocompletePopup({
   sideOffset = 4,
   ...props
 }: AutocompletePopupProps): React.ReactElement {
+  const contextPortalContainer = usePortalContainer()
   return (
-    <AutocompletePrimitive.Portal {...portalProps}>
+    <AutocompletePrimitive.Portal
+      {...portalProps}
+      container={portalProps?.container ?? contextPortalContainer}
+    >
       <AutocompletePrimitive.Positioner
         align={align}
         alignOffset={alignOffset}
@@ -191,10 +209,14 @@ export function AutocompleteSeparator({
   className,
   ...props
 }: AutocompletePrimitive.Separator.Props): React.ReactElement {
+  // A listbox may own only options and groups, so a separator role inside the
+  // popup fails axe (aria-required-children). The rule is drawn for sight only.
   return (
     <AutocompletePrimitive.Separator
+      aria-orientation={undefined}
       className={cn('a63-Menu-separator', 'a63-Autocomplete-separator', className)}
       data-slot="autocomplete-separator"
+      role="none"
       {...props}
     />
   )

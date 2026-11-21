@@ -53,6 +53,25 @@ export const Failed: Story = {
   args: { onRetry: () => {}, state: 'failed' },
 }
 
+/* On a touch screen the Retry text keeps its size, and its hit area grows to the
+   44px touch target (--a63-control-min-target) around it. */
+export const FailedTouch: Story = {
+  play: ({ canvasElement }) => {
+    const retry = canvasElement.querySelector<HTMLElement>('[data-slot="load-more-trigger-action"]')
+    if (!retry) throw new Error('Expected a Retry action')
+    const hitArea = getComputedStyle(retry, '::before')
+    const [width, height] = [parseFloat(hitArea.width), parseFloat(hitArea.height)]
+    if (!(width >= 44 && height >= 44)) {
+      throw new Error(`Retry hit area is ${width}×${height}px, expected at least 44×44`)
+    }
+  },
+  render: () => (
+    <UIProvider input="touch">
+      <LoadMoreTrigger onRetry={() => {}} state="failed" />
+    </UIProvider>
+  ),
+}
+
 /* Custom children take over the row entirely (e.g. a manual "Load more" button). */
 export const CustomChildren: Story = {
   render: () => (

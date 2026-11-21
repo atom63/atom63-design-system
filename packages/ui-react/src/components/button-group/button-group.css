@@ -275,7 +275,7 @@
   );
 }
 
-.a63-ButtonGroup[data-size='default'],
+.a63-ButtonGroup[data-size='md'],
 .a63-ButtonGroup[data-size='icon'] {
   --button-group-height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),

@@ -23,7 +23,7 @@ export const frameSlots = [
   'frame-panel-description',
   'frame-panel-footer',
 ] as const
-export const frameStates = ['default', 'border-off', 'border-subtle', 'border-strong'] as const
+export const frameStates = ['rest', 'border-off', 'border-subtle', 'border-strong'] as const
 export const frameVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 
 export type FrameVariant = (typeof frameVariants)[number]
@@ -33,6 +33,12 @@ export type FrameBorder = (typeof frameBorders)[number]
 export type FrameSlot = (typeof frameSlots)[number]
 export type FrameState = (typeof frameStates)[number]
 export type FrameVisualArchetype = (typeof frameVisualArchetypes)[number]
+
+/** Earlier names of FrameState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const frameStateAliases = { default: 'rest' } as const satisfies Record<string, FrameState>
+
+/** @deprecated An earlier name of a value of FrameState; use the value frameStateAliases maps it to. */
+export type FrameStateAlias = keyof typeof frameStateAliases
 
 /** Preset → {tray, panel} surface pair. Mirrors prod FRAME_PRESETS. */
 export const framePresets = {

@@ -1,0 +1,34 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "progressive-blur",
+  "maturity": "preview",
+  "description": "Stacked backdrop-filter layers, each masked to its own band, so a blur ramps across an edge instead of switching on. It is decorative (aria-hidden) and takes no pointer events. Preview until its stable evidence is recorded.",
+  "lists": {
+    "positions": {
+      "description": "Where the blur sits: along the bottom edge, along the top edge, or across the whole box (`both`, which fades in at the top and out at the bottom and ignores the height).",
+      "values": ["bottom", "top", "both"]
+    },
+    "slots": ["progressive-blur"],
+    "states": ["rest"],
+    "visualArchetypes": {
+      "values": [],
+      "typed": false
+    }
+  },
+  "contract": {
+    "defaultPosition": "bottom",
+    "defaultHeight": "30%",
+    "positions": {
+      "$ref": "#/lists/positions"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

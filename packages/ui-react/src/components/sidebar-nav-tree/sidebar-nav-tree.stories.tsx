@@ -224,7 +224,7 @@ export const LinkProps: Story = {
 function CompactTree() {
   const [open, setOpen] = useState(true)
   return (
-    <SidebarProvider>
+    <SidebarProvider style={{ minHeight: 0 }}>
       <Sidebar collapsible="none">
         <SidebarContent>
           <SidebarNavGroup label="Docs">
@@ -271,6 +271,7 @@ export const Themes: Story = {
         (['light', 'dark'] as const).map(mode => (
           <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>
             <div
+              data-testid="theme-row"
               style={{
                 alignItems: 'flex-start',
                 background: 'var(--a63-surface-panel)',
@@ -293,6 +294,17 @@ export const Themes: Story = {
       )}
     </div>
   ),
+  // Each theme x mode row stays compact, so all eight fit in the capture.
+  play: ({ canvasElement }) => {
+    const rows = canvasElement.querySelectorAll('[data-testid="theme-row"]')
+    if (rows.length !== themes.length * 2) {
+      throw new Error(`Expected ${themes.length * 2} theme rows, got ${rows.length}`)
+    }
+    for (const row of rows) {
+      const { height } = row.getBoundingClientRect()
+      if (height >= 400) throw new Error(`Expected a compact theme row, got ${height}px`)
+    }
+  },
 }
 
 export const Endpoints: Story = {

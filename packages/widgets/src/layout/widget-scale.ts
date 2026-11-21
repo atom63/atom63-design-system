@@ -78,8 +78,9 @@ const WIDGET_CONTROL_MIN_TARGET_PX = 24
  * one button would claim a quarter of a 188px cell on any phone.
  *
  * Widgets reach the enhanced 44px target the other way, by expanding the hit
- * area past the visible control with `--widget-interaction-target`, so the
- * geometry can stay proportional at the documented 24px floor. Expressed
+ * area past the visible control with `--widget-interaction-target` (the
+ * coarse-pointer rule in widget-layout.css), so the geometry can stay
+ * proportional at the documented 24px floor. Expressed
  * against the host's presentation scale where there is one, so the floor is 24
  * PHYSICAL px rather than 24 pre-transform px.
  */

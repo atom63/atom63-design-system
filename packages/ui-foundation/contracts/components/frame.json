@@ -19,7 +19,12 @@
       "frame-panel-description",
       "frame-panel-footer"
     ],
-    "states": ["default", "border-off", "border-subtle", "border-strong"],
+    "states": {
+      "values": ["rest", "border-off", "border-subtle", "border-strong"],
+      "deprecatedAliases": {
+        "default": "rest"
+      }
+    },
     "visualArchetypes": ["surface"],
     "presets": {
       "description": "Preset → {tray, panel} surface pair. Mirrors prod FRAME_PRESETS.",

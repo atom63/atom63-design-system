@@ -28,6 +28,46 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a toast surface is, independent of any platform: the standard surface or the inverse one. The status tones are web extensions of the toast content.",
+    "axes": {
+      "variant": ["default", "inverse"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "inverse": {
+                "variant": "inverse"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "variant": {
+            "swiftEnum": "AtomToastVariant",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "inverse": {
+                "variant": "inverse"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "toast",

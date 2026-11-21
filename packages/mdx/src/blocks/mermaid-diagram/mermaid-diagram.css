@@ -42,7 +42,7 @@
   }
 
   .mdx-mermaid-error-text {
-    color: var(--a63-action-danger);
+    color: var(--a63-text-danger);
   }
 
   .mdx-mermaid-error-pre {

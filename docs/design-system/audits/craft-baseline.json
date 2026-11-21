@@ -1,5 +1,11 @@
 {
   "mode-branch | packages/mdx/src/blocks/code-block/code-block.tsx | dark:[&_.shiki_span]:text-[var(--shiki-dark)]": 2,
   "mode-branch | packages/mdx/src/blocks/code-block/code-block.tsx | dark:[&_.shiki]:text-[var(--shiki-dark)]": 2,
-  "mode-branch | packages/ui-react/src/components/kbd/kbd.css | :is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd": 1
+  "mode-branch | packages/ui-react/src/components/kbd/kbd.css | :is(.dark, [data-a63-mode='dark']) [data-slot='tooltip-popup'] .a63-Kbd": 1,
+  "token-role | packages/mdx/src/blocks/timeline/timeline.css | background-color: var(--a63-text-primary)": 1,
+  "token-role | packages/ui-react/src/components/card/card.css | background-color: var(--a63-text-primary)": 1,
+  "token-role | packages/ui-react/src/components/card/card.css | color: var(--a63-surface-page)": 1,
+  "token-role | packages/ui-react/src/components/input-otp/input-otp.css | background-color: var(--a63-text-primary)": 1,
+  "token-role | packages/ui-react/src/components/kbd/kbd.css | color: var(--a63-surface-page)": 1,
+  "token-role | packages/ui-react/src/components/slider/slider.css | background-color: var(--a63-text-primary)": 1
 }

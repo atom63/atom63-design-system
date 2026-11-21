@@ -73,6 +73,7 @@ export {
   avatarContract,
   avatarRings,
   avatarShapes,
+  avatarSizeAliases,
   avatarSizes,
   avatarSlots,
   avatarStates,
@@ -84,6 +85,7 @@ export type {
   AvatarRing,
   AvatarShape,
   AvatarSize,
+  AvatarSizeAlias,
   AvatarSlot,
   AvatarState,
   AvatarVisualArchetype,
@@ -92,6 +94,7 @@ export {
   breadcrumbCompositions,
   breadcrumbContract,
   breadcrumbSlots,
+  breadcrumbStateAliases,
   breadcrumbStates,
   breadcrumbVisualArchetypes,
 } from './components/breadcrumb'
@@ -100,6 +103,7 @@ export type {
   BreadcrumbContract,
   BreadcrumbSlot,
   BreadcrumbState,
+  BreadcrumbStateAlias,
   BreadcrumbVisualArchetype,
 } from './components/breadcrumb'
 export {
@@ -118,6 +122,7 @@ export {
   accordionContract,
   accordionIconVariants,
   accordionSlots,
+  accordionStateAliases,
   accordionStates,
   accordionVisualArchetypes,
 } from './components/accordion'
@@ -126,10 +131,12 @@ export type {
   AccordionIconVariant,
   AccordionSlot,
   AccordionState,
+  AccordionStateAlias,
   AccordionVisualArchetype,
 } from './components/accordion'
 export {
   autocompleteContract,
+  autocompleteSizeAliases,
   autocompleteSizes,
   autocompleteSlots,
   autocompleteStates,
@@ -138,6 +145,7 @@ export {
 export type {
   AutocompleteContract,
   AutocompleteSize,
+  AutocompleteSizeAlias,
   AutocompleteSlot,
   AutocompleteState,
   AutocompleteVisualArchetype,
@@ -157,9 +165,11 @@ export type {
 export {
   alertDialogContract,
   alertDialogFooterVariants,
+  alertDialogSizeAliases,
   alertDialogSizes,
   alertDialogSlots,
   alertDialogStates,
+  alertDialogVariantAliases,
   alertDialogVariants,
   alertDialogVisualArchetypes,
 } from './components/alert-dialog'
@@ -167,9 +177,11 @@ export type {
   AlertDialogContract,
   AlertDialogFooterVariant,
   AlertDialogSize,
+  AlertDialogSizeAlias,
   AlertDialogSlot,
   AlertDialogState,
   AlertDialogVariant,
+  AlertDialogVariantAlias,
   AlertDialogVisualArchetype,
 } from './components/alert-dialog'
 export {
@@ -212,6 +224,7 @@ export {
   badgeSizes,
   badgeSlots,
   badgeSolidVariants,
+  badgeStateAliases,
   badgeStates,
   badgeVariants,
   badgeVisualArchetypes,
@@ -222,12 +235,14 @@ export type {
   BadgeSize,
   BadgeSlot,
   BadgeState,
+  BadgeStateAlias,
   BadgeVariant,
   BadgeVisualArchetype,
 } from './components/badge/badge-contract'
 export {
   buttonGroupContract,
   buttonGroupOrientations,
+  buttonGroupSizeAliases,
   buttonGroupSizes,
   buttonGroupSlots,
   buttonGroupStates,
@@ -237,6 +252,7 @@ export type {
   ButtonGroupContract,
   ButtonGroupOrientation,
   ButtonGroupSize,
+  ButtonGroupSizeAlias,
   ButtonGroupSlot,
   ButtonGroupState,
   ButtonGroupVisualArchetype,
@@ -246,6 +262,7 @@ export {
   buttonShapes,
   buttonSizes,
   buttonSlots,
+  buttonStateAliases,
   buttonStates,
   buttonTokenSlots,
   buttonTones,
@@ -258,6 +275,7 @@ export type {
   ButtonSize,
   ButtonSlot,
   ButtonState,
+  ButtonStateAlias,
   ButtonTokenSlot,
   ButtonTone,
   ButtonVariant,
@@ -448,6 +466,7 @@ export {
   dialogContract,
   dialogFooterVariants,
   dialogMobilePlacements,
+  dialogSizeAliases,
   dialogSizes,
   dialogSlots,
   dialogStates,
@@ -458,6 +477,7 @@ export type {
   DialogFooterVariant,
   DialogMobilePlacement,
   DialogSize,
+  DialogSizeAlias,
   DialogSlot,
   DialogState,
   DialogVisualArchetype,
@@ -525,6 +545,7 @@ export {
   feedbackStateKinds,
   feedbackStateSizes,
   feedbackStateSlots,
+  feedbackStateStateAliases,
   feedbackStateStates,
   feedbackStateVisualArchetypes,
 } from './components/feedback-state/feedback-state-contract'
@@ -536,8 +557,20 @@ export {
   fieldStates,
   fieldVisualArchetypes,
 } from './components/field'
-export { formContract, formSlots, formStates, formVisualArchetypes } from './components/form'
-export type { FormContract, FormSlot, FormState, FormVisualArchetype } from './components/form'
+export {
+  formContract,
+  formSlots,
+  formStateAliases,
+  formStates,
+  formVisualArchetypes,
+} from './components/form'
+export type {
+  FormContract,
+  FormSlot,
+  FormState,
+  FormStateAlias,
+  FormVisualArchetype,
+} from './components/form'
 export {
   hoverCardContract,
   hoverCardSlots,
@@ -564,6 +597,7 @@ export type {
   FeedbackStateSize,
   FeedbackStateSlot,
   FeedbackStateState,
+  FeedbackStateStateAlias,
   FeedbackStateVisualArchetype,
 } from './components/feedback-state/feedback-state-contract'
 export {
@@ -572,6 +606,7 @@ export {
   framePanelSurfaces,
   framePresets,
   frameSlots,
+  frameStateAliases,
   frameStates,
   frameTrays,
   frameVariants,
@@ -584,6 +619,7 @@ export type {
   FramePanelSurface,
   FrameSlot,
   FrameState,
+  FrameStateAlias,
   FrameTray,
   FrameVariant,
   FrameVisualArchetype,
@@ -617,6 +653,7 @@ export type {
 export {
   inputOTPContract,
   inputOTPSlots,
+  inputOTPStateAliases,
   inputOTPStates,
   inputOTPVisualArchetypes,
 } from './components/input-otp/input-otp-contract'
@@ -624,6 +661,7 @@ export type {
   InputOTPContract,
   InputOTPSlot,
   InputOTPState,
+  InputOTPStateAlias,
   InputOTPVisualArchetype,
 } from './components/input-otp/input-otp-contract'
 export {
@@ -631,8 +669,10 @@ export {
   itemGroupSurfaces,
   itemGroupVariants,
   itemMediaVariants,
+  itemSizeAliases,
   itemSizes,
   itemSlots,
+  itemStateAliases,
   itemStates,
   itemTones,
   itemVariants,
@@ -644,8 +684,10 @@ export type {
   ItemGroupVariant,
   ItemMediaVariant,
   ItemSize,
+  ItemSizeAlias,
   ItemSlot,
   ItemState,
+  ItemStateAlias,
   ItemTone,
   ItemVariant,
   ItemVisualArchetype,
@@ -752,6 +794,7 @@ export type {
 export {
   navigationMenuContract,
   navigationMenuSlots,
+  navigationMenuStateAliases,
   navigationMenuStates,
   navigationMenuVisualArchetypes,
 } from './components/navigation-menu/navigation-menu-contract'
@@ -759,6 +802,7 @@ export type {
   NavigationMenuContract,
   NavigationMenuSlot,
   NavigationMenuState,
+  NavigationMenuStateAlias,
   NavigationMenuVisualArchetype,
 } from './components/navigation-menu/navigation-menu-contract'
 export {
@@ -835,6 +879,19 @@ export type {
   ProgressVisualArchetype,
 } from './components/progress/progress-contract'
 export {
+  progressiveBlurContract,
+  progressiveBlurPositions,
+  progressiveBlurSlots,
+  progressiveBlurStates,
+  progressiveBlurVisualArchetypes,
+} from './components/progressive-blur/progressive-blur-contract'
+export type {
+  ProgressiveBlurContract,
+  ProgressiveBlurPosition,
+  ProgressiveBlurSlot,
+  ProgressiveBlurState,
+} from './components/progressive-blur/progressive-blur-contract'
+export {
   radioContract,
   radioIndicators,
   radioSizes,
@@ -854,6 +911,7 @@ export {
   resizableContract,
   resizableOrientations,
   resizableSlots,
+  resizableStateAliases,
   resizableStates,
   resizableVariants,
   resizableVisualArchetypes,
@@ -863,6 +921,7 @@ export type {
   ResizableOrientation,
   ResizableSlot,
   ResizableState,
+  ResizableStateAlias,
   ResizableVariant,
   ResizableVisualArchetype,
 } from './components/resizable'
@@ -871,6 +930,7 @@ export {
   scrollAreaOptions,
   scrollAreaOrientations,
   scrollAreaSlots,
+  scrollAreaStateAliases,
   scrollAreaStates,
   scrollAreaVisualArchetypes,
 } from './components/scroll-area'
@@ -880,6 +940,7 @@ export type {
   ScrollAreaOrientation,
   ScrollAreaSlot,
   ScrollAreaState,
+  ScrollAreaStateAlias,
   ScrollAreaVisualArchetype,
 } from './components/scroll-area'
 export {
@@ -887,6 +948,7 @@ export {
   scrollableListLayouts,
   scrollableListOptions,
   scrollableListSlots,
+  scrollableListStateAliases,
   scrollableListStates,
   scrollableListVisualArchetypes,
 } from './components/scrollable-list'
@@ -896,6 +958,7 @@ export type {
   ScrollableListOption,
   ScrollableListSlot,
   ScrollableListState,
+  ScrollableListStateAlias,
   ScrollableListVisualArchetype,
 } from './components/scrollable-list'
 export {
@@ -1008,6 +1071,7 @@ export {
 export {
   sidebarNavTreeContract,
   sidebarNavTreeParts,
+  sidebarNavTreeStateAliases,
   sidebarNavTreeStates,
   sidebarNavTreeTones,
   sidebarNavTreeVisualArchetypes,
@@ -1058,6 +1122,7 @@ export type {
   SidebarNavTreeContract,
   SidebarNavTreePart,
   SidebarNavTreeState,
+  SidebarNavTreeStateAlias,
   SidebarNavTreeTone,
   SidebarNavTreeVisualArchetype,
 } from './components/sidebar-nav-tree'
@@ -1085,6 +1150,7 @@ export {
 } from './components/switch/switch-contract'
 export {
   tableContract,
+  tableSizeAliases,
   tableSizes,
   tableSlots,
   tableStates,
@@ -1096,6 +1162,7 @@ export {
 export type {
   TableContract,
   TableSize,
+  TableSizeAlias,
   TableSlot,
   TableState,
   TableStickyEdge,
@@ -1113,6 +1180,7 @@ export type {
 export {
   tabsContract,
   tabsOrientations,
+  tabsSizeAliases,
   tabsSizes,
   tabsSlots,
   tabsStates,
@@ -1153,6 +1221,7 @@ export type {
   TabsContract,
   TabsOrientation,
   TabsSize,
+  TabsSizeAlias,
   TabsSlot,
   TabsState,
   TabsVariant,
@@ -1163,6 +1232,7 @@ export {
   toggleGroupOrientations,
   toggleGroupSelectionModes,
   toggleGroupSlots,
+  toggleGroupStateAliases,
   toggleGroupStates,
   toggleGroupTokenSlots,
   toggleGroupVariants,
@@ -1174,6 +1244,7 @@ export type {
   ToggleGroupSelectionMode,
   ToggleGroupSlot,
   ToggleGroupState,
+  ToggleGroupStateAlias,
   ToggleGroupTokenSlot,
   ToggleGroupVariant,
   ToggleGroupVisualArchetype,
@@ -1182,6 +1253,7 @@ export {
   toggleContract,
   toggleSizes,
   toggleSlots,
+  toggleStateAliases,
   toggleStates,
   toggleTokenSlots,
   toggleTones,
@@ -1192,6 +1264,7 @@ export type {
   ToggleSize,
   ToggleSlot,
   ToggleState,
+  ToggleStateAlias,
   ToggleTokenSlot,
   ToggleTone,
   ToggleVisualArchetype,

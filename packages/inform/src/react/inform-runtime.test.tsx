@@ -105,6 +105,35 @@ describe('inform runtime', () => {
     expect(await screen.findByText('Locale is en.')).toBeInTheDocument()
   })
 
+  it('keeps a dialog whose dismiss policy is none open through Escape', async () => {
+    const standing = defineInformRegistry([
+      {
+        id: 'standing',
+        surface: 'dialog',
+        severity: 'warning',
+        priority: 0,
+        dismiss: 'none',
+        content: { title: 'Maintenance', body: 'The service is read-only today.' },
+      },
+    ])
+
+    render(
+      <InformProvider
+        context={context}
+        dismissals={createMemoryDismissalStore()}
+        registry={standing}
+      >
+        <InformOutlet />
+      </InformProvider>
+    )
+
+    await screen.findByRole('dialog')
+    await userEvent.keyboard('{Escape}')
+
+    await new Promise(resolve => setTimeout(resolve, 50))
+    expect(screen.getByRole('dialog')).toHaveTextContent('The service is read-only today.')
+  })
+
   it('throws a useful error when used outside a provider', () => {
     expect(() => render(<InformOutlet />)).toThrow(/InformProvider/)
   })

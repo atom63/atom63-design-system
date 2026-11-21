@@ -80,6 +80,18 @@ These imports match the packed-package smoke path and the package root exports.
 import { Calendar } from '@atom63/ui-react/calendar'
 ```
 
+Media components have their own entry point too. `MediaLightbox` is the
+full-screen photo and video viewer: it grows out of the clicked thumbnail,
+pages by swipe, keys and an optional thumbnail strip, zooms, and locks page
+scroll while open. `actions` and `toolbar` take the caller's own buttons per
+item.
+
+```tsx
+import { MediaLightbox, useMediaLightbox } from '@atom63/ui-react/media'
+```
+
+Use it, not a `Carousel` inside a fixed overlay, for a full-screen viewer.
+
 ## Theming
 
 `Atom63Theme` sets `data-a63-mode`, `data-a63-theme`, and the matching `light`

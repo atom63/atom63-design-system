@@ -7,6 +7,7 @@ export {
   badgeSizes,
   badgeSlots,
   badgeSolidVariants,
+  badgeStateAliases,
   badgeStates,
   badgeVariants,
   badgeVisualArchetypes,
@@ -17,6 +18,7 @@ export type {
   BadgeSize,
   BadgeSlot,
   BadgeState,
+  BadgeStateAlias,
   BadgeVariant,
   BadgeVisualArchetype,
 } from './badge-contract'

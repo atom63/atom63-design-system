@@ -16,7 +16,7 @@ import type { CSSProperties } from 'react'
 const meta = {
   title: 'UI React/Avatar',
   component: Avatar,
-  args: { size: 'default' },
+  args: { size: 'md' },
   argTypes: { size: { control: 'inline-radio', options: avatarSizes } },
 } satisfies Meta<typeof Avatar>
 
@@ -45,7 +45,7 @@ export const Sizes: Story = {
         <AvatarImage src={SRC} alt="Ada" />
         <AvatarFallback>AL</AvatarFallback>
       </Avatar>
-      <Avatar size="default">
+      <Avatar size="md">
         <AvatarImage src={SRC} alt="Ada" />
         <AvatarFallback>AL</AvatarFallback>
       </Avatar>

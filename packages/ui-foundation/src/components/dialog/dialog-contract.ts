@@ -4,7 +4,7 @@
 import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const dialogSizes = ['sm', 'default', 'lg'] as const
+export const dialogSizes = ['sm', 'md', 'lg'] as const
 export const dialogMobilePlacements = ['bottom', 'center'] as const
 export const dialogFooterVariants = ['default', 'bare'] as const
 export const dialogStates = ['closed', 'open', 'starting', 'ending', 'focus-visible'] as const
@@ -36,6 +36,12 @@ export type DialogState = (typeof dialogStates)[number]
 export type DialogSlot = (typeof dialogSlots)[number]
 export type DialogVisualArchetype = (typeof dialogVisualArchetypes)[number]
 
+/** Earlier names of DialogSize values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const dialogSizeAliases = { default: 'md' } as const satisfies Record<string, DialogSize>
+
+/** @deprecated An earlier name of a value of DialogSize; use the value dialogSizeAliases maps it to. */
+export type DialogSizeAlias = keyof typeof dialogSizeAliases
+
 export interface DialogContract {
   /** The WAI-ARIA APG pattern the component implements. */
   accessibility: A11yPatternBinding
@@ -54,7 +60,7 @@ export const dialogContract = {
   accessibility: { pattern: 'dialog-modal' },
   defaultFooterVariant: 'default',
   defaultMobilePlacement: 'bottom',
-  defaultSize: 'default',
+  defaultSize: 'md',
   footerVariants: dialogFooterVariants,
   mobilePlacements: dialogMobilePlacements,
   sizes: dialogSizes,

@@ -47,7 +47,7 @@ const STATE_OF: Record<string, string> = {
   ':hover': 'hover',
   ':active': 'pressed',
   '[data-pressed]': 'pressed',
-  ':focus-visible': 'focusVisible',
+  ':focus-visible': 'focus-visible',
   ':disabled': 'disabled',
   '[data-disabled]': 'disabled',
   '[data-loading]': 'loading',

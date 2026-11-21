@@ -4,7 +4,12 @@
   "maturity": "stable",
   "lists": {
     "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
-    "states": ["default", "invalid"],
+    "states": {
+      "values": ["rest", "invalid"],
+      "deprecatedAliases": {
+        "default": "rest"
+      }
+    },
     "visualArchetypes": ["field"]
   },
   "contract": {

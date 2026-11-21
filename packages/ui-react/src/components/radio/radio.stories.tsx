@@ -119,6 +119,10 @@ export const States: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): a checked radio takes
+   the system selection colours. */
+export const ForcedColors: Story = { render: States.render }
+
 export const Sizes: Story = {
   render: () => (
     <RadioGroup defaultValue="a" style={{ flexDirection: 'row', gap: 16 }}>

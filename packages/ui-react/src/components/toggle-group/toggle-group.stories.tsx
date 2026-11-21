@@ -232,6 +232,18 @@ export const Ghost: Story = {
   },
 }
 
+/* Captured with forced colors on (Windows High Contrast): the pressed cell of
+   every variant takes the system selection colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16, justifyItems: 'start' }}>
+      <Demo tone="neutral" />
+      <PillsDemo tone="neutral" />
+      <GhostDemo tone="neutral" />
+    </div>
+  ),
+}
+
 export const Vertical: Story = { render: () => <Demo orientation="vertical" /> }
 
 export const Disabled: Story = {

@@ -111,6 +111,22 @@
   color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
 }
 
+/* Keyboard focus: an inset ring on top of the highlight, which alone is too
+   faint to mark focus (WCAG 1.4.11). Menu and Select items take DOM focus, so
+   a pointer hover keeps only the fill. Autocomplete keeps focus in its input
+   and marks the option Enter picks with data-highlighted, so that option
+   always carries the ring. Inset: the popup clips an outer ring. */
+.a63-Menu-item:focus-visible,
+.a63-Autocomplete-item[data-highlighted] {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+}
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-item:focus-visible,
+.a63-Menu-popup[data-tone='primary'] .a63-Autocomplete-item[data-highlighted] {
+  outline-color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
+}
+
 .a63-Menu-item[data-disabled] {
   pointer-events: none;
   opacity: var(--a63-menu-disabled-opacity);
@@ -184,7 +200,6 @@
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: 1;
-  opacity: 0.75;
 }
 
 .a63-Menu-label[data-inset] {
@@ -213,5 +228,25 @@
 @media (prefers-reduced-motion: reduce) {
   .a63-Menu-popup {
     transition: none;
+  }
+}
+
+/* Forced colors drop the highlight fill, gloss and shadow, and every row sets
+   `outline: none`, so the focused row takes the system selection colours. Each
+   selector matches the specificity of the tone or variant rule it overrides. */
+@media (forced-colors: active) {
+  .a63-Menu-item[data-highlighted],
+  .a63-Menu-item[data-variant][data-highlighted],
+  .a63-Menu-popup[data-tone] .a63-Menu-item[data-highlighted],
+  .a63-Menu-sub-trigger[data-popup-open],
+  .a63-Menu-popup[data-tone] .a63-Menu-sub-trigger[data-popup-open] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .a63-Menu-item[data-highlighted] :is(svg, .a63-Menu-shortcut, .a63-Menu-item-indicator),
+  .a63-Menu-popup[data-tone] .a63-Menu-item[data-highlighted] :is(svg, .a63-Menu-shortcut),
+  .a63-Menu-sub-trigger[data-popup-open] :is(svg, .a63-Menu-sub-icon),
+  .a63-Menu-popup[data-tone] .a63-Menu-sub-trigger[data-popup-open] :is(svg, .a63-Menu-sub-icon) {
+    color: HighlightText;
   }
 }

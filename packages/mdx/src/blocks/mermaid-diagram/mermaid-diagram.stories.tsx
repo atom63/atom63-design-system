@@ -3,6 +3,7 @@ import { MermaidDiagram } from '@atom63/mdx/blocks'
 import '@atom63/ui-react/styles.css'
 import '@atom63/mdx/styles/index.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { expect, waitFor } from 'storybook/test'
 
 const flowchart = `graph TD
   A[User visits page] --> B{Authenticated?}
@@ -108,4 +109,18 @@ export const Overview: Story = {
       <MermaidDiagram chart={stateDiagram} title="State diagram" />
     </>
   ),
+}
+
+/* A chart Mermaid cannot parse shows the error message in the danger text color,
+   checked here in dark mode. */
+export const InvalidChartDark: Story = {
+  name: 'Invalid chart (dark)',
+  render: () => <MermaidDiagram chart="this is not a mermaid chart" title="Broken chart" />,
+  globals: { mode: 'dark' },
+  play: async ({ canvasElement }) => {
+    await waitFor(
+      () => expect(canvasElement.querySelector('.mdx-mermaid-error-text')).not.toBeNull(),
+      { timeout: 10_000 }
+    )
+  },
 }

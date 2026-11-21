@@ -17,6 +17,7 @@ import { fileURLToPath } from 'node:url'
 
 import { createServer, defaultServerConditions } from 'vite'
 
+import { publishedPackageDirs } from '../../../scripts/design-system/published-packages.mjs'
 import {
   importSpecifiers,
   parseTemplateMetadata,
@@ -26,6 +27,40 @@ const packageRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '
 const root = path.resolve(packageRoot, '../..')
 const indexPath = path.join(packageRoot, 'generated/agent-index.json')
 const read = relative => readFileSync(path.join(root, relative), 'utf8')
+
+/**
+ * The docs page for each published JavaScript entry point. The build fails on
+ * an entry that is missing here, so a new entry point cannot ship without a
+ * page an agent can read.
+ */
+const entryDocs = {
+  '@atom63/ui-foundation': 'component-contract',
+  '@atom63/ui-react': 'component-overview',
+  '@atom63/ui-react/calendar': 'component-overview',
+  '@atom63/ui-react/layout': 'pattern-layout',
+  '@atom63/ui-react/media': 'pattern-media',
+  '@atom63/ui-react/media/lightbox': 'pattern-media',
+  '@atom63/ui-react/preview': 'architecture-preview-exports',
+  '@atom63/ui-react/theme': 'architecture-appearance-ui',
+  '@atom63/mdx': 'pattern-mdx',
+  '@atom63/mdx/blocks': 'pattern-mdx-blocks',
+  '@atom63/mdx/blocks/credits-block': 'pattern-mdx-blocks',
+  '@atom63/mdx/blocks/media-caption': 'pattern-mdx-blocks',
+  '@atom63/mdx/article': 'pattern-mdx',
+  '@atom63/mdx/editor': 'pattern-mdx',
+  '@atom63/mdx/lightbox': 'pattern-mdx',
+  '@atom63/mdx/runtime': 'pattern-mdx',
+  '@atom63/mdx/primitives': 'pattern-mdx',
+  '@atom63/inform': 'pattern-inform',
+  '@atom63/inform/react': 'pattern-inform',
+  '@atom63/inform/surfaces': 'pattern-inform',
+  '@atom63/agent': 'pattern-agent',
+  '@atom63/agent/react': 'pattern-agent',
+  '@atom63/widgets': 'pattern-widgets',
+  '@atom63/widgets/primitives': 'pattern-widgets',
+  '@atom63/widgets/state': 'pattern-widgets',
+  '@atom63/widgets/runtime': 'pattern-widgets',
+}
 
 const conditions = ['@atom63/source', ...defaultServerConditions]
 const server = await createServer({
@@ -53,6 +88,20 @@ try {
     read('packages/ui-react/src/layout/index.ts'),
   ].join('\n')
   const pagesDir = path.join(root, 'apps/docs/src/pages')
+
+  // Every exported or catalogued component has a contract: the index never publishes `contract: null`.
+  const exportedSlugs = [...uiReactIndexSource.matchAll(/from '\.\.?\/components\/([a-z0-9-]+)'/g)]
+  const withoutContract = [
+    ...new Set([
+      ...exportedSlugs.map(match => match[1]),
+      ...catalog.componentCatalogItems.map(item => item.slug),
+    ]),
+  ].filter(slug => !contracts.getComponentContractDoc(slug))
+  if (withoutContract.length > 0) {
+    throw new Error(
+      `No contract for ${withoutContract.join(', ')}. Add packages/ui-foundation/contracts/components/<name>.json and run \`pnpm --filter @atom63/ui-foundation generate:contracts\`.`
+    )
+  }
 
   const components = catalog.componentCatalogItems.map(item => {
     const doc = componentDocs.getComponentDoc(item.slug)
@@ -95,9 +144,46 @@ try {
     })
   }
 
+  // The SwiftUI package's README is its guide; `atom63 docs ios` reads it.
+  docs.push({
+    area: 'ios',
+    label: 'Atom63UI (SwiftUI)',
+    markdown: read('packages/ui-ios/README.md').trim(),
+    route: 'packages/ui-ios/README.md',
+    slug: 'ios',
+  })
+
+  const web = []
+  for (const dir of publishedPackageDirs) {
+    const manifest = JSON.parse(read(`${dir}/package.json`))
+    for (const [subpath, target] of Object.entries(manifest.exports ?? {})) {
+      // JavaScript entries name their source; CSS and JSON entries are files.
+      const source = typeof target === 'object' ? target['@atom63/source'] : null
+      if (!source) continue
+      const module = manifest.name + subpath.slice(1)
+      const page = entryDocs[module]
+      if (!page || !docs.some(doc => doc.slug === page)) {
+        throw new Error(
+          `${module} has no docs page: add one and map it in entryDocs (packages/cli/scripts/build-index.mjs).`
+        )
+      }
+      const exported = await load(path.posix.join(dir, source))
+      const values = Object.keys(exported).sort()
+      const markdown = docs.find(doc => doc.slug === page).markdown
+      const sections = Object.fromEntries(
+        values.flatMap(value => {
+          const section = docsSection(markdown, value)
+          return section ? [[value, section]] : []
+        })
+      )
+      web.push({ module, docs: page, values, sections })
+    }
+  }
+
   index = {
     schemaVersion: 1,
     generatedBy: 'packages/cli/scripts/build-index.mjs',
+    api: { ios: iosApi(components), web },
     components,
     docs: docs.sort((left, right) => left.slug.localeCompare(right.slug)),
     templates: templates(components),
@@ -105,6 +191,29 @@ try {
   }
 } finally {
   await server.close()
+}
+
+/**
+ * The section of a docs page headed with an export's name (`### KeyIdea`), up
+ * to the next heading at its level or above, so `atom63 api KeyIdea` can print
+ * what the page says about it.
+ */
+function docsSection(markdown, name) {
+  const lines = markdown.split('\n')
+  const start = lines.findIndex(line => line === `## ${name}` || line === `### ${name}`)
+  if (start < 0) return null
+  const level = lines[start].indexOf(' ')
+  let fenced = false
+  let end = start + 1
+  for (; end < lines.length; end++) {
+    if (/^(`{3,}|~{3,})/.test(lines[end])) fenced = !fenced
+    const heading = !fenced && /^(#{1,6}) /.exec(lines[end])
+    if (heading && heading[1].length <= level) break
+  }
+  return lines
+    .slice(start + 1, end)
+    .join('\n')
+    .trim()
 }
 
 /** Story export names in declaration order: `export const Sizes: Story = …`. */
@@ -155,6 +264,23 @@ function templates(components) {
           path: `${dir}/${id}/${name}`,
           source: readFileSync(path.join(folder, name), 'utf8'),
         }))
+      // A relative import outside the folder that is not a block (a block is
+      // copied as its own entry) is copied with the template: for example the
+      // dashboard's sample rows from pages/list-page/list-page-data.ts.
+      for (let position = 0; position < files.length; position++) {
+        for (const specifier of importSpecifiers(files[position].source)) {
+          if (!specifier.startsWith('.')) continue
+          const target = path.posix.join(path.posix.dirname(files[position].path), specifier)
+          if (target.startsWith('blocks/') || target.startsWith(`${dir}/${id}/`)) continue
+          const file = ['.ts', '.tsx']
+            .map(extension => target + extension)
+            .find(candidate => existsSync(path.join(srcDir, candidate)))
+          if (!file)
+            throw new Error(`${files[position].path} imports ${specifier}, which does not exist`)
+          if (files.some(known => known.path === file)) continue
+          files.push({ path: file, source: readFileSync(path.join(srcDir, file), 'utf8') })
+        }
+      }
       const main = files.find(file => file.path.endsWith(`/${id}.tsx`))
       const metadata = parseTemplateMetadata(main.source)
       const sources = files.map(file => file.source)
@@ -189,6 +315,72 @@ function templates(components) {
     }
   }
   return entries
+}
+
+/** The `///` comment directly above a Swift declaration, as one line. */
+function swiftDocComment(source, name) {
+  const lines = source.split('\n')
+  const at = lines.findIndex(line =>
+    new RegExp(
+      `^\\s*public\\s+(?:final\\s+)?(?:struct|enum|class|protocol|typealias)\\s+${name}\\b`
+    ).test(line)
+  )
+  const comment = []
+  for (let line = at - 1; line >= 0; line--) {
+    const text = lines[line].trim()
+    if (text.startsWith('@')) continue
+    if (!text.startsWith('///')) break
+    comment.unshift(text.replace(/^\/\/\/ ?/, ''))
+  }
+  return comment.join(' ').replace(/\s+/g, ' ').trim()
+}
+
+/**
+ * The public SwiftUI API: every top-level type in the Atom63UI public API
+ * manifest (packages/ui-ios/api/public-api.json, which `check:public-api`
+ * keeps equal to the built module), with its doc comment, its members and the
+ * component whose contract it renders.
+ */
+function iosApi(components) {
+  const manifest = JSON.parse(read('packages/ui-ios/api/public-api.json'))
+  const rendererOf = new Map(
+    components.flatMap(component => {
+      const renderer = component.contract?.crossRenderer?.swiftUIRenderer
+      return renderer ? [[renderer, component.slug]] : []
+    })
+  )
+  const sourceDir = 'packages/ui-ios/Sources/Atom63UI'
+  const sourcePath = file =>
+    [`${sourceDir}/${file}`, `${sourceDir}/Generated/${file}`].find(candidate =>
+      existsSync(path.join(root, candidate))
+    )
+  const types = manifest.symbols
+    .filter(
+      symbol =>
+        !symbol.path.includes('.') &&
+        /^swift\.(struct|enum|class|protocol|typealias)$/.test(symbol.kind)
+    )
+    .sort((left, right) => left.path.localeCompare(right.path))
+    .map(symbol => {
+      const file = sourcePath(symbol.source)
+      if (!file) throw new Error(`${symbol.path}: no source file ${symbol.source} in ${sourceDir}`)
+      return {
+        name: symbol.path,
+        kind: symbol.kind.slice('swift.'.length),
+        declaration: symbol.declaration,
+        source: file,
+        summary: swiftDocComment(read(file), symbol.path),
+        component: rendererOf.get(symbol.path) ?? null,
+        members: manifest.symbols
+          .filter(member => member.path.startsWith(`${symbol.path}.`))
+          .map(member => ({
+            name: member.path.slice(symbol.path.length + 1),
+            kind: member.kind.slice('swift.'.length),
+            declaration: member.declaration,
+          })),
+      }
+    })
+  return { module: manifest.module, docs: 'ios', types }
 }
 
 /** Swift color, gradient and display role names keyed by the CSS variable they are generated from. */
@@ -254,6 +446,6 @@ if (process.argv.includes('--check')) {
 } else {
   writeFileSync(indexPath, output)
   process.stdout.write(
-    `Wrote ${path.relative(root, indexPath)}: ${index.components.length} components, ${index.docs.length} docs pages, ${index.templates.length} templates, ${index.tokens.length} tokens.\n`
+    `Wrote ${path.relative(root, indexPath)}: ${index.components.length} components, ${index.docs.length} docs pages, ${index.templates.length} templates, ${index.api.ios.types.length} Swift types, ${index.api.web.length} entry points, ${index.tokens.length} tokens.\n`
   )
 }

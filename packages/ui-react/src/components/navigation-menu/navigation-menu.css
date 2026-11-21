@@ -220,20 +220,38 @@
     color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
-.a63-NavigationMenu-link:focus-visible,
-.a63-NavigationMenu-link[data-active] {
-  background: var(--a63-surface-muted);
-}
 @media (hover: hover) {
   .a63-NavigationMenu-link:hover {
     background: var(--a63-surface-muted);
   }
 }
 
+/* Inset, as on the trigger: the content panel clips an outer ring. */
+.a63-NavigationMenu-link:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+}
+
+/* The current page: a heavier label, so it reads apart from the hover fill. */
+.a63-NavigationMenu-link[data-active] {
+  font-weight: 600;
+}
+
 .a63-NavigationMenu-link svg {
   flex-shrink: 0;
   width: 1rem;
   height: 1rem;
+}
+
+/* Forced colors (Windows High Contrast): the open trigger and the current link
+   take the system selection colours; focus keeps its outline. */
+@media (forced-colors: active) {
+  .a63-NavigationMenu-trigger[data-popup-open],
+  .a63-NavigationMenu-link[data-active] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
 }
 
 /* ── Indicator (arrow) ─────────────────────────────────────────────────── */

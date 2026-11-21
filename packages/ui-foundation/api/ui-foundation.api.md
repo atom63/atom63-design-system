@@ -202,7 +202,7 @@ export const accordionContract: {
     defaultIconVariant: "chevron";
     iconVariants: readonly ["chevron", "plus-minus"];
     slots: readonly ["accordion", "accordion-item", "accordion-trigger", "accordion-indicator", "accordion-content", "accordion-content-inner"];
-    states: readonly ["closed", "open", "focusVisible", "disabled"];
+    states: readonly ["closed", "open", "focus-visible", "disabled"];
     visualArchetypes: readonly ["surface", "trigger"];
 };
 
@@ -224,8 +224,16 @@ export const accordionSlots: readonly ["accordion", "accordion-item", "accordion
 // @public (undocumented)
 export type AccordionState = (typeof accordionStates)[number];
 
+// @public @deprecated (undocumented)
+export type AccordionStateAlias = keyof typeof accordionStateAliases;
+
+// @public
+export const accordionStateAliases: {
+    readonly focusVisible: "focus-visible";
+};
+
 // @public (undocumented)
-export const accordionStates: readonly ["closed", "open", "focusVisible", "disabled"];
+export const accordionStates: readonly ["closed", "open", "focus-visible", "disabled"];
 
 // @public (undocumented)
 export type AccordionVisualArchetype = (typeof accordionVisualArchetypes)[number];
@@ -282,13 +290,13 @@ export const alertDialogContract: {
         pattern: "alertdialog";
     };
     defaultFooterVariant: "default";
-    defaultSize: "default";
+    defaultSize: "md";
     defaultVariant: "default";
     footerVariants: readonly ["default", "bare"];
-    sizes: readonly ["default", "sm"];
+    sizes: readonly ["md", "sm"];
     slots: readonly ["alert-dialog-portal", "alert-dialog-trigger", "alert-dialog-backdrop", "alert-dialog-viewport", "alert-dialog-popup", "alert-dialog-header", "alert-dialog-footer", "alert-dialog-media", "alert-dialog-title", "alert-dialog-description", "alert-dialog-close", "alert-dialog-action", "alert-dialog-cancel"];
     states: readonly ["closed", "open"];
-    variants: readonly ["default", "destructive", "info", "success", "warning"];
+    variants: readonly ["default", "error", "info", "success", "warning"];
     visualArchetypes: readonly ["overlay", "surface", "trigger", "action"];
 };
 
@@ -304,8 +312,16 @@ export const alertDialogPattern: A11yPatternContract;
 // @public (undocumented)
 export type AlertDialogSize = (typeof alertDialogSizes)[number];
 
+// @public @deprecated (undocumented)
+export type AlertDialogSizeAlias = keyof typeof alertDialogSizeAliases;
+
+// @public
+export const alertDialogSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const alertDialogSizes: readonly ["default", "sm"];
+export const alertDialogSizes: readonly ["md", "sm"];
 
 // @public (undocumented)
 export type AlertDialogSlot = (typeof alertDialogSlots)[number];
@@ -322,8 +338,16 @@ export const alertDialogStates: readonly ["closed", "open"];
 // @public (undocumented)
 export type AlertDialogVariant = (typeof alertDialogVariants)[number];
 
+// @public @deprecated (undocumented)
+export type AlertDialogVariantAlias = keyof typeof alertDialogVariantAliases;
+
+// @public
+export const alertDialogVariantAliases: {
+    readonly destructive: "error";
+};
+
 // @public (undocumented)
-export const alertDialogVariants: readonly ["default", "destructive", "info", "success", "warning"];
+export const alertDialogVariants: readonly ["default", "error", "info", "success", "warning"];
 
 // @public (undocumented)
 export type AlertDialogVisualArchetype = (typeof alertDialogVisualArchetypes)[number];
@@ -533,18 +557,26 @@ export interface AutocompleteContract {
 
 // @public (undocumented)
 export const autocompleteContract: {
-    defaultSize: "default";
-    sizes: readonly ["sm", "default", "lg"];
+    defaultSize: "md";
+    sizes: readonly ["sm", "md", "lg"];
     slots: readonly ["autocomplete-input-group", "autocomplete-start-addon", "autocomplete-input", "autocomplete-trigger", "autocomplete-icon", "autocomplete-clear", "autocomplete-positioner", "autocomplete-surface", "autocomplete-popup", "autocomplete-list", "autocomplete-item", "autocomplete-separator", "autocomplete-group", "autocomplete-group-label", "autocomplete-empty", "autocomplete-row", "autocomplete-value", "autocomplete-status", "autocomplete-collection"];
-    states: readonly ["closed", "open", "highlighted", "disabled", "empty", "loading"];
+    states: readonly ["closed", "open", "highlighted", "hover", "disabled", "empty", "loading", "invalid"];
     visualArchetypes: readonly ["field", "trigger", "overlay", "menu"];
 };
 
 // @public (undocumented)
 export type AutocompleteSize = (typeof autocompleteSizes)[number];
 
+// @public @deprecated (undocumented)
+export type AutocompleteSizeAlias = keyof typeof autocompleteSizeAliases;
+
+// @public
+export const autocompleteSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const autocompleteSizes: readonly ["sm", "default", "lg"];
+export const autocompleteSizes: readonly ["sm", "md", "lg"];
 
 // @public (undocumented)
 export type AutocompleteSlot = (typeof autocompleteSlots)[number];
@@ -556,7 +588,7 @@ export const autocompleteSlots: readonly ["autocomplete-input-group", "autocompl
 export type AutocompleteState = (typeof autocompleteStates)[number];
 
 // @public (undocumented)
-export const autocompleteStates: readonly ["closed", "open", "highlighted", "disabled", "empty", "loading"];
+export const autocompleteStates: readonly ["closed", "open", "highlighted", "hover", "disabled", "empty", "loading", "invalid"];
 
 // @public (undocumented)
 export type AutocompleteVisualArchetype = (typeof autocompleteVisualArchetypes)[number];
@@ -595,11 +627,11 @@ export interface AvatarContract {
 // @public (undocumented)
 export const avatarContract: {
     defaultShape: "circle";
-    defaultSize: "default";
+    defaultSize: "md";
     compositions: readonly ["standalone", "badge", "group"];
     rings: readonly ["unseen", "seen"];
     shapes: readonly ["circle", "square"];
-    sizes: readonly ["xs", "sm", "default", "lg"];
+    sizes: readonly ["xs", "sm", "md", "lg"];
     slots: readonly ["avatar", "avatar-image", "avatar-fallback", "avatar-badge", "avatar-group", "avatar-group-count"];
     states: readonly ["loading", "loaded", "fallback"];
     visualArchetypes: readonly ["marker"];
@@ -620,8 +652,16 @@ export const avatarShapes: readonly ["circle", "square"];
 // @public (undocumented)
 export type AvatarSize = (typeof avatarSizes)[number];
 
+// @public @deprecated (undocumented)
+export type AvatarSizeAlias = keyof typeof avatarSizeAliases;
+
+// @public
+export const avatarSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const avatarSizes: readonly ["xs", "sm", "default", "lg"];
+export const avatarSizes: readonly ["xs", "sm", "md", "lg"];
 
 // @public (undocumented)
 export type AvatarSlot = (typeof avatarSlots)[number];
@@ -685,7 +725,7 @@ export const badgeContract: {
     sizes: readonly ["sm", "md", "lg"];
     dotColors: readonly ["red", "orange", "amber", "yellow", "lime", "green", "emerald", "teal", "cyan", "sky", "blue", "indigo", "violet", "purple", "fuchsia", "pink", "rose", "neutral"];
     slots: readonly ["badge", "badge-dot"];
-    states: readonly ["resting", "interactive", "disabled", "focus-visible"];
+    states: readonly ["rest", "interactive", "disabled", "focus-visible"];
     visualArchetypes: readonly ["marker"];
 };
 
@@ -719,8 +759,16 @@ export const badgeSolidVariants: readonly ["default", "primary", "secondary", "d
 // @public (undocumented)
 export type BadgeState = (typeof badgeStates)[number];
 
+// @public @deprecated (undocumented)
+export type BadgeStateAlias = keyof typeof badgeStateAliases;
+
+// @public
+export const badgeStateAliases: {
+    readonly resting: "rest";
+};
+
 // @public (undocumented)
-export const badgeStates: readonly ["resting", "interactive", "disabled", "focus-visible"];
+export const badgeStates: readonly ["rest", "interactive", "disabled", "focus-visible"];
 
 // @public (undocumented)
 export type BadgeVariant = (typeof badgeVariants)[number];
@@ -762,7 +810,7 @@ export interface BreadcrumbContract {
 export const breadcrumbContract: {
     compositions: readonly ["full", "collapsed", "custom-separator"];
     slots: readonly ["breadcrumb", "breadcrumb-list", "breadcrumb-item", "breadcrumb-link", "breadcrumb-page", "breadcrumb-separator", "breadcrumb-ellipsis"];
-    states: readonly ["rest", "hover", "focus", "current"];
+    states: readonly ["rest", "hover", "focus-visible", "current"];
     visualArchetypes: readonly [];
 };
 
@@ -775,8 +823,16 @@ export const breadcrumbSlots: readonly ["breadcrumb", "breadcrumb-list", "breadc
 // @public (undocumented)
 export type BreadcrumbState = (typeof breadcrumbStates)[number];
 
+// @public @deprecated (undocumented)
+export type BreadcrumbStateAlias = keyof typeof breadcrumbStateAliases;
+
+// @public
+export const breadcrumbStateAliases: {
+    readonly focus: "focus-visible";
+};
+
 // @public (undocumented)
-export const breadcrumbStates: readonly ["rest", "hover", "focus", "current"];
+export const breadcrumbStates: readonly ["rest", "hover", "focus-visible", "current"];
 
 // @public (undocumented)
 export type BreadcrumbVisualArchetype = (typeof breadcrumbVisualArchetypes)[number];
@@ -818,7 +874,7 @@ export const buttonContract: {
     defaultVariant: "default";
     shapes: readonly ["default", "round"];
     slots: readonly ["root", "label", "icon", "spinner", "indicator"];
-    states: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
+    states: readonly ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
     tones: readonly ["neutral", "muted"];
     variants: readonly ["default", "primary", "secondary", "raised", "destructive", "destructive-outline", "outline", "dashed", "ghost", "link", "overlay", "glass"];
@@ -846,9 +902,9 @@ export interface ButtonGroupContract {
 // @public (undocumented)
 export const buttonGroupContract: {
     defaultOrientation: "horizontal";
-    defaultSize: "default";
+    defaultSize: "md";
     orientations: readonly ["horizontal", "vertical"];
-    sizes: readonly ["xs", "sm", "default", "lg", "xl", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
+    sizes: readonly ["xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
     slots: readonly ["button-group", "button-group-text", "button-group-separator"];
     states: readonly ["rest", "focus-within"];
     visualArchetypes: readonly ["action", "segment"];
@@ -863,8 +919,16 @@ export const buttonGroupOrientations: readonly ["horizontal", "vertical"];
 // @public (undocumented)
 export type ButtonGroupSize = (typeof buttonGroupSizes)[number];
 
+// @public @deprecated (undocumented)
+export type ButtonGroupSizeAlias = keyof typeof buttonGroupSizeAliases;
+
+// @public
+export const buttonGroupSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const buttonGroupSizes: readonly ["xs", "sm", "default", "lg", "xl", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
+export const buttonGroupSizes: readonly ["xs", "sm", "md", "lg", "xl", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
 
 // @public (undocumented)
 export type ButtonGroupSlot = (typeof buttonGroupSlots)[number];
@@ -905,8 +969,16 @@ export const buttonSlots: readonly ["root", "label", "icon", "spinner", "indicat
 // @public (undocumented)
 export type ButtonState = (typeof buttonStates)[number];
 
+// @public @deprecated (undocumented)
+export type ButtonStateAlias = keyof typeof buttonStateAliases;
+
+// @public
+export const buttonStateAliases: {
+    readonly focusVisible: "focus-visible";
+};
+
 // @public (undocumented)
-export const buttonStates: readonly ["rest", "hover", "pressed", "focusVisible", "disabled", "loading"];
+export const buttonStates: readonly ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"];
 
 // @public (undocumented)
 export type ButtonTokenSlot = (typeof buttonTokenSlots)[number];
@@ -1579,7 +1651,7 @@ export const copyButtonContract: {
         readonly icon: "icon-xl";
         readonly label: "xl";
     }];
-    sizes: ("xs" | "sm" | "lg" | "md" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+    sizes: ("icon-lg" | "icon-sm" | "icon-xl" | "icon-xs" | "icon" | "lg" | "md" | "sm" | "xl" | "xs")[];
     slots: readonly ["button", "button-label", "copy-button-swap", "copy-button-item", "animated-check"];
     states: readonly ["rest", "hover", "pressed", "focus-visible", "copied"];
     variants: readonly ["ghost", "outline", "secondary"];
@@ -1608,7 +1680,7 @@ export const copyButtonSizePairs: readonly [{
 }];
 
 // @public (undocumented)
-export const copyButtonSizes: ("xs" | "sm" | "lg" | "md" | "xl" | "icon-xs" | "icon-sm" | "icon" | "icon-lg" | "icon-xl")[];
+export const copyButtonSizes: ("icon-lg" | "icon-sm" | "icon-xl" | "icon-xs" | "icon" | "lg" | "md" | "sm" | "xl" | "xs")[];
 
 // @public (undocumented)
 export type CopyButtonSlot = (typeof copyButtonSlots)[number];
@@ -2328,10 +2400,10 @@ export const dialogContract: {
     };
     defaultFooterVariant: "default";
     defaultMobilePlacement: "bottom";
-    defaultSize: "default";
+    defaultSize: "md";
     footerVariants: readonly ["default", "bare"];
     mobilePlacements: readonly ["bottom", "center"];
-    sizes: readonly ["sm", "default", "lg"];
+    sizes: readonly ["sm", "md", "lg"];
     slots: readonly ["dialog-portal", "dialog-trigger", "dialog-backdrop", "dialog-viewport", "dialog-popup", "dialog-close", "dialog-close-button", "dialog-header", "dialog-title", "dialog-description", "dialog-panel", "dialog-footer"];
     states: readonly ["closed", "open", "starting", "ending", "focus-visible"];
     visualArchetypes: readonly ["overlay", "surface", "trigger", "action"];
@@ -2355,8 +2427,16 @@ export const dialogModalPattern: A11yPatternContract;
 // @public (undocumented)
 export type DialogSize = (typeof dialogSizes)[number];
 
+// @public @deprecated (undocumented)
+export type DialogSizeAlias = keyof typeof dialogSizeAliases;
+
+// @public
+export const dialogSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const dialogSizes: readonly ["sm", "default", "lg"];
+export const dialogSizes: readonly ["sm", "md", "lg"];
 
 // @public (undocumented)
 export type DialogSlot = (typeof dialogSlots)[number];
@@ -2561,7 +2641,7 @@ export const feedbackStateContract: {
     kinds: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     sizes: readonly ["inline", "panel", "page", "widget"];
     slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
-    states: readonly ["idle", "busy", "actionable"];
+    states: readonly ["rest", "busy", "actionable"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -2586,8 +2666,16 @@ export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-hea
 // @public (undocumented)
 export type FeedbackStateState = (typeof feedbackStateStates)[number];
 
+// @public @deprecated (undocumented)
+export type FeedbackStateStateAlias = keyof typeof feedbackStateStateAliases;
+
+// @public
+export const feedbackStateStateAliases: {
+    readonly idle: "rest";
+};
+
 // @public (undocumented)
-export const feedbackStateStates: readonly ["idle", "busy", "actionable"];
+export const feedbackStateStates: readonly ["rest", "busy", "actionable"];
 
 // @public (undocumented)
 export type FeedbackStateVisualArchetype = (typeof feedbackStateVisualArchetypes)[number];
@@ -2673,7 +2761,7 @@ export interface FormContract {
 // @public (undocumented)
 export const formContract: {
     slots: readonly ["form-item", "form-label", "form-control", "form-description", "form-message"];
-    states: readonly ["default", "invalid"];
+    states: readonly ["rest", "invalid"];
     visualArchetypes: readonly ["field"];
 };
 
@@ -2686,8 +2774,16 @@ export const formSlots: readonly ["form-item", "form-label", "form-control", "fo
 // @public (undocumented)
 export type FormState = (typeof formStates)[number];
 
+// @public @deprecated (undocumented)
+export type FormStateAlias = keyof typeof formStateAliases;
+
+// @public
+export const formStateAliases: {
+    readonly default: "rest";
+};
+
 // @public (undocumented)
-export const formStates: readonly ["default", "invalid"];
+export const formStates: readonly ["rest", "invalid"];
 
 // @public (undocumented)
 export type FormVisualArchetype = (typeof formVisualArchetypes)[number];
@@ -2734,7 +2830,7 @@ export const frameContract: {
     panelSurfaces: readonly ["background", "card", "muted"];
     borders: readonly ["off", "subtle", "strong"];
     slots: readonly ["frame", "frame-panel", "frame-panel-header", "frame-panel-title", "frame-panel-description", "frame-panel-footer"];
-    states: readonly ["default", "border-off", "border-subtle", "border-strong"];
+    states: readonly ["rest", "border-off", "border-subtle", "border-strong"];
     visualArchetypes: readonly ["surface"];
     presets: {
         'muted-background': {
@@ -2775,8 +2871,16 @@ export const frameSlots: readonly ["frame", "frame-panel", "frame-panel-header",
 // @public (undocumented)
 export type FrameState = (typeof frameStates)[number];
 
+// @public @deprecated (undocumented)
+export type FrameStateAlias = keyof typeof frameStateAliases;
+
+// @public
+export const frameStateAliases: {
+    readonly default: "rest";
+};
+
 // @public (undocumented)
-export const frameStates: readonly ["default", "border-off", "border-subtle", "border-strong"];
+export const frameStates: readonly ["rest", "border-off", "border-subtle", "border-strong"];
 
 // @public (undocumented)
 export type FrameTray = (typeof frameTrays)[number];
@@ -2926,7 +3030,7 @@ export interface InputOTPContract {
 // @public (undocumented)
 export const inputOTPContract: {
     slots: readonly ["input-otp", "input-otp-group", "input-otp-slot", "input-otp-separator"];
-    states: readonly ["rest", "active", "disabled", "invalid"];
+    states: readonly ["rest", "current", "disabled", "invalid"];
     visualArchetypes: readonly ["field"];
 };
 
@@ -2939,8 +3043,16 @@ export const inputOTPSlots: readonly ["input-otp", "input-otp-group", "input-otp
 // @public (undocumented)
 export type InputOTPState = (typeof inputOTPStates)[number];
 
+// @public @deprecated (undocumented)
+export type InputOTPStateAlias = keyof typeof inputOTPStateAliases;
+
+// @public
+export const inputOTPStateAliases: {
+    readonly active: "current";
+};
+
 // @public (undocumented)
-export const inputOTPStates: readonly ["rest", "active", "disabled", "invalid"];
+export const inputOTPStates: readonly ["rest", "current", "disabled", "invalid"];
 
 // @public (undocumented)
 export type InputOTPVisualArchetype = (typeof inputOTPVisualArchetypes)[number];
@@ -3024,16 +3136,16 @@ export interface ItemContract {
 // @public (undocumented)
 export const itemContract: {
     defaultVariant: "default";
-    defaultSize: "default";
+    defaultSize: "md";
     defaultMediaVariant: "default";
     defaultGroupVariant: "default";
     defaultGroupSurface: "card";
     defaultTone: "neutral";
     variants: readonly ["default", "outline", "muted"];
-    sizes: readonly ["default", "sm", "xs"];
+    sizes: readonly ["md", "sm", "xs"];
     mediaVariants: readonly ["default", "icon", "image"];
     slots: readonly ["item-group", "item", "item-media", "item-content", "item-title", "item-description", "item-actions", "item-header", "item-footer", "item-separator"];
-    states: readonly ["rest", "hover", "focus", "selected", "current"];
+    states: readonly ["rest", "hover", "focus-visible", "selected", "current"];
     visualArchetypes: readonly ["surface"];
     groupVariants: readonly ["default", "inset"];
     groupSurfaces: readonly ["card", "muted"];
@@ -3061,8 +3173,16 @@ export const itemMediaVariants: readonly ["default", "icon", "image"];
 // @public (undocumented)
 export type ItemSize = (typeof itemSizes)[number];
 
+// @public @deprecated (undocumented)
+export type ItemSizeAlias = keyof typeof itemSizeAliases;
+
+// @public
+export const itemSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const itemSizes: readonly ["default", "sm", "xs"];
+export const itemSizes: readonly ["md", "sm", "xs"];
 
 // @public (undocumented)
 export type ItemSlot = (typeof itemSlots)[number];
@@ -3073,8 +3193,16 @@ export const itemSlots: readonly ["item-group", "item", "item-media", "item-cont
 // @public (undocumented)
 export type ItemState = (typeof itemStates)[number];
 
+// @public @deprecated (undocumented)
+export type ItemStateAlias = keyof typeof itemStateAliases;
+
+// @public
+export const itemStateAliases: {
+    readonly focus: "focus-visible";
+};
+
 // @public (undocumented)
-export const itemStates: readonly ["rest", "hover", "focus", "selected", "current"];
+export const itemStates: readonly ["rest", "hover", "focus-visible", "selected", "current"];
 
 // @public (undocumented)
 export type ItemTone = (typeof itemTones)[number];
@@ -3454,7 +3582,7 @@ export interface NavigationMenuContract {
 // @public (undocumented)
 export const navigationMenuContract: {
     slots: readonly ["navigation-menu", "navigation-menu-list", "navigation-menu-item", "navigation-menu-trigger", "navigation-menu-content", "navigation-menu-portal", "navigation-menu-positioner", "navigation-menu-popup", "navigation-menu-viewport", "navigation-menu-link", "navigation-menu-indicator"];
-    states: readonly ["closed", "open", "active", "disabled", "starting", "ending"];
+    states: readonly ["closed", "open", "current", "disabled", "starting", "ending"];
     visualArchetypes: readonly ["trigger", "overlay", "surface"];
 };
 
@@ -3467,8 +3595,16 @@ export const navigationMenuSlots: readonly ["navigation-menu", "navigation-menu-
 // @public (undocumented)
 export type NavigationMenuState = (typeof navigationMenuStates)[number];
 
+// @public @deprecated (undocumented)
+export type NavigationMenuStateAlias = keyof typeof navigationMenuStateAliases;
+
+// @public
+export const navigationMenuStateAliases: {
+    readonly active: "current";
+};
+
 // @public (undocumented)
-export const navigationMenuStates: readonly ["closed", "open", "active", "disabled", "starting", "ending"];
+export const navigationMenuStates: readonly ["closed", "open", "current", "disabled", "starting", "ending"];
 
 // @public (undocumented)
 export type NavigationMenuVisualArchetype = (typeof navigationMenuVisualArchetypes)[number];
@@ -3966,6 +4102,53 @@ export const progressContract: {
 };
 
 // @public (undocumented)
+export interface ProgressiveBlurContract {
+    // (undocumented)
+    defaultHeight: string;
+    // (undocumented)
+    defaultPosition: ProgressiveBlurPosition;
+    // (undocumented)
+    positions: readonly ProgressiveBlurPosition[];
+    // (undocumented)
+    slots: readonly ProgressiveBlurSlot[];
+    // (undocumented)
+    states: readonly ProgressiveBlurState[];
+    // (undocumented)
+    visualArchetypes: readonly VisualArchetypeId[];
+}
+
+// @public (undocumented)
+export const progressiveBlurContract: {
+    defaultPosition: "bottom";
+    defaultHeight: string;
+    positions: readonly ["bottom", "top", "both"];
+    slots: readonly ["progressive-blur"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly [];
+};
+
+// @public (undocumented)
+export type ProgressiveBlurPosition = (typeof progressiveBlurPositions)[number];
+
+// @public (undocumented)
+export const progressiveBlurPositions: readonly ["bottom", "top", "both"];
+
+// @public (undocumented)
+export type ProgressiveBlurSlot = (typeof progressiveBlurSlots)[number];
+
+// @public (undocumented)
+export const progressiveBlurSlots: readonly ["progressive-blur"];
+
+// @public (undocumented)
+export type ProgressiveBlurState = (typeof progressiveBlurStates)[number];
+
+// @public (undocumented)
+export const progressiveBlurStates: readonly ["rest"];
+
+// @public (undocumented)
+export const progressiveBlurVisualArchetypes: readonly [];
+
+// @public (undocumented)
 export type ProgressSlot = (typeof progressSlots)[number];
 
 // @public (undocumented)
@@ -4129,7 +4312,7 @@ export const resizableContract: {
     defaultOrientation: "horizontal";
     orientations: readonly ["horizontal", "vertical"];
     variants: readonly ["line", "grip"];
-    states: readonly ["idle", "hover", "focus-visible", "dragging", "disabled"];
+    states: readonly ["rest", "hover", "focus-visible", "dragging", "disabled"];
     slots: readonly ["resizable-panel-group", "resizable-panel", "resizable-handle", "resizable-handle-grip"];
     visualArchetypes: readonly [];
 };
@@ -4149,8 +4332,16 @@ export const resizableSlots: readonly ["resizable-panel-group", "resizable-panel
 // @public (undocumented)
 export type ResizableState = (typeof resizableStates)[number];
 
+// @public @deprecated (undocumented)
+export type ResizableStateAlias = keyof typeof resizableStateAliases;
+
+// @public
+export const resizableStateAliases: {
+    readonly idle: "rest";
+};
+
 // @public (undocumented)
-export const resizableStates: readonly ["idle", "hover", "focus-visible", "dragging", "disabled"];
+export const resizableStates: readonly ["rest", "hover", "focus-visible", "dragging", "disabled"];
 
 // @public (undocumented)
 export type ResizableVariant = (typeof resizableVariants)[number];
@@ -4197,7 +4388,7 @@ export const scrollableListContract: {
     defaultLayout: "scroll";
     layouts: readonly ["scroll", "wrap"];
     options: readonly ["mask", "chevrons", "draggable", "column-aligned"];
-    states: readonly ["idle", "can-scroll-start", "can-scroll-end", "dragging", "disabled"];
+    states: readonly ["rest", "can-scroll-start", "can-scroll-end", "dragging", "disabled"];
     slots: readonly ["scrollable-list", "scrollable-list-frame", "scrollable-list-content", "scrollable-list-control"];
     visualArchetypes: readonly ["action", "range"];
 };
@@ -4223,8 +4414,16 @@ export const scrollableListSlots: readonly ["scrollable-list", "scrollable-list-
 // @public (undocumented)
 export type ScrollableListState = (typeof scrollableListStates)[number];
 
+// @public @deprecated (undocumented)
+export type ScrollableListStateAlias = keyof typeof scrollableListStateAliases;
+
+// @public
+export const scrollableListStateAliases: {
+    readonly idle: "rest";
+};
+
 // @public (undocumented)
-export const scrollableListStates: readonly ["idle", "can-scroll-start", "can-scroll-end", "dragging", "disabled"];
+export const scrollableListStates: readonly ["rest", "can-scroll-start", "can-scroll-end", "dragging", "disabled"];
 
 // @public (undocumented)
 export type ScrollableListVisualArchetype = (typeof scrollableListVisualArchetypes)[number];
@@ -4253,7 +4452,7 @@ export const scrollAreaContract: {
     defaultOrientation: "both";
     orientations: readonly ["vertical", "horizontal", "both"];
     options: readonly ["scroll-fade", "scrollbar-gutter", "show-on-hover"];
-    states: readonly ["idle", "hovering", "scrolling", "focus-visible"];
+    states: readonly ["rest", "hover", "scrolling", "focus-visible"];
     slots: readonly ["scroll-area", "scroll-area-viewport", "scroll-area-scrollbar", "scroll-area-thumb", "scroll-area-corner"];
     visualArchetypes: readonly ["range"];
 };
@@ -4279,8 +4478,17 @@ export const scrollAreaSlots: readonly ["scroll-area", "scroll-area-viewport", "
 // @public (undocumented)
 export type ScrollAreaState = (typeof scrollAreaStates)[number];
 
+// @public @deprecated (undocumented)
+export type ScrollAreaStateAlias = keyof typeof scrollAreaStateAliases;
+
+// @public
+export const scrollAreaStateAliases: {
+    readonly hovering: "hover";
+    readonly idle: "rest";
+};
+
 // @public (undocumented)
-export const scrollAreaStates: readonly ["idle", "hovering", "scrolling", "focus-visible"];
+export const scrollAreaStates: readonly ["rest", "hover", "scrolling", "focus-visible"];
 
 // @public (undocumented)
 export type ScrollAreaVisualArchetype = (typeof scrollAreaVisualArchetypes)[number];
@@ -4429,7 +4637,7 @@ export const selectContract: {
     defaultSize: "md";
     sizes: readonly ["sm", "md", "lg"];
     slots: readonly ["select-trigger", "select-value", "select-icon", "select-positioner", "select-popup", "select-surface", "select-list", "select-scroll-up-arrow", "select-scroll-down-arrow", "select-item", "select-item-indicator", "select-item-text", "select-group", "select-group-label", "select-separator"];
-    states: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item"];
+    states: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item", "invalid"];
     tokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.height", "field.paddingInline", "field.fontSize", "field.iconSize", "field.gap"];
     visualArchetypes: readonly ["field", "trigger", "overlay", "menu"];
 };
@@ -4456,7 +4664,7 @@ export const selectSlots: readonly ["select-trigger", "select-value", "select-ic
 export type SelectState = (typeof selectStates)[number];
 
 // @public (undocumented)
-export const selectStates: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item"];
+export const selectStates: readonly ["closed", "open", "placeholder", "focus-visible", "disabled", "highlighted-item", "selected-item", "disabled-item", "invalid"];
 
 // @public (undocumented)
 export type SelectTokenSlot = (typeof selectTokenSlots)[number];
@@ -4710,7 +4918,7 @@ export interface SidebarNavTreeContract {
 export const sidebarNavTreeContract: {
     parts: readonly ["group", "group-trigger", "link-item", "collapsible-item", "toggle", "sub-list", "sub-link-item"];
     defaultTone: "neutral";
-    states: readonly ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"];
+    states: readonly ["rest", "hover", "current", "expanded", "collapsed", "focus-visible"];
     visualArchetypes: readonly ["action", "trigger"];
     tones: readonly ["neutral", "accent"];
 };
@@ -4724,8 +4932,16 @@ export const sidebarNavTreeParts: readonly ["group", "group-trigger", "link-item
 // @public (undocumented)
 export type SidebarNavTreeState = (typeof sidebarNavTreeStates)[number];
 
+// @public @deprecated (undocumented)
+export type SidebarNavTreeStateAlias = keyof typeof sidebarNavTreeStateAliases;
+
+// @public
+export const sidebarNavTreeStateAliases: {
+    readonly active: "current";
+};
+
 // @public (undocumented)
-export const sidebarNavTreeStates: readonly ["rest", "hover", "active", "expanded", "collapsed", "focus-visible"];
+export const sidebarNavTreeStates: readonly ["rest", "hover", "current", "expanded", "collapsed", "focus-visible"];
 
 // @public (undocumented)
 export type SidebarNavTreeTone = (typeof sidebarNavTreeTones)[number];
@@ -4997,10 +5213,10 @@ export interface TableContract {
 // @public (undocumented)
 export const tableContract: {
     defaultVariant: "default";
-    defaultSize: "default";
+    defaultSize: "md";
     defaultTone: "neutral";
     variants: readonly ["default", "plain"];
-    sizes: readonly ["default", "sm"];
+    sizes: readonly ["md", "sm"];
     stickyEdges: readonly ["start", "end"];
     states: readonly ["rest", "row-hover", "row-selected"];
     slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
@@ -5011,8 +5227,16 @@ export const tableContract: {
 // @public (undocumented)
 export type TableSize = (typeof tableSizes)[number];
 
+// @public @deprecated (undocumented)
+export type TableSizeAlias = keyof typeof tableSizeAliases;
+
+// @public
+export const tableSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const tableSizes: readonly ["default", "sm"];
+export const tableSizes: readonly ["md", "sm"];
 
 // @public (undocumented)
 export type TableSlot = (typeof tableSlots)[number];
@@ -5080,9 +5304,9 @@ export const tabsContract: {
         };
     };
     defaultVariant: "default";
-    defaultSize: "default";
+    defaultSize: "md";
     variants: readonly ["default", "underline", "attached"];
-    sizes: readonly ["xs", "sm", "default", "lg"];
+    sizes: readonly ["xs", "sm", "md", "lg"];
     slots: readonly ["tabs", "tabs-list", "tabs-tab", "tab-indicator", "tabs-content"];
     orientations: readonly ["horizontal", "vertical"];
     states: readonly ["rest", "hover", "selected", "focus-visible", "disabled"];
@@ -5101,8 +5325,16 @@ export const tabsPattern: A11yPatternContract;
 // @public (undocumented)
 export type TabsSize = (typeof tabsSizes)[number];
 
+// @public @deprecated (undocumented)
+export type TabsSizeAlias = keyof typeof tabsSizeAliases;
+
+// @public
+export const tabsSizeAliases: {
+    readonly default: "md";
+};
+
 // @public (undocumented)
-export const tabsSizes: readonly ["xs", "sm", "default", "lg"];
+export const tabsSizes: readonly ["xs", "sm", "md", "lg"];
 
 // @public (undocumented)
 export type TabsSlot = (typeof tabsSlots)[number];
@@ -5319,7 +5551,7 @@ export const toggleContract: {
     defaultTone: "neutral";
     sizes: readonly ["sm", "md", "lg"];
     slots: readonly ["toggle", "toggle-content"];
-    states: readonly ["off", "on", "rest", "hover", "pressed", "disabled", "focus"];
+    states: readonly ["off", "on", "rest", "hover", "pressed", "disabled", "focus-visible"];
     tokenSlots: readonly ["toggle.background", "toggle.foreground", "toggle.hoverBackground", "toggle.onBackground", "toggle.onForeground", "toggle.primaryBackground", "toggle.primaryForeground", "toggle.borderWidth", "toggle.radius", "toggle.gloss", "toggle.shadow", "toggle.shadowActive", "toggle.textShadow"];
     tones: readonly ["neutral", "accent", "subtle"];
     visualArchetypes: readonly ["toggle"];
@@ -5358,7 +5590,7 @@ export const toggleGroupContract: {
     orientations: readonly ["horizontal", "vertical"];
     selectionModes: readonly ["single", "multiple"];
     slots: readonly ["toggle-group", "toggle-group-item", "toggle-group-separator"];
-    states: readonly ["rest", "hover", "focus", "selected", "disabled"];
+    states: readonly ["rest", "hover", "focus-visible", "selected", "disabled"];
     tokenSlots: readonly ["segment.gap", "segment.radius", "segment.background", "segment.gloss", "segment.trackBorder", "segment.seam", "segment.selectedBackground", "segment.selectedForeground", "segment.selectedGloss", "segment.selectedShadow", "segment.primaryBackground", "segment.primaryForeground", "segment.primaryShadow"];
     visualArchetypes: readonly ["toggle", "segment"];
 };
@@ -5384,8 +5616,16 @@ export const toggleGroupSlots: readonly ["toggle-group", "toggle-group-item", "t
 // @public (undocumented)
 export type ToggleGroupState = (typeof toggleGroupStates)[number];
 
+// @public @deprecated (undocumented)
+export type ToggleGroupStateAlias = keyof typeof toggleGroupStateAliases;
+
+// @public
+export const toggleGroupStateAliases: {
+    readonly focus: "focus-visible";
+};
+
 // @public (undocumented)
-export const toggleGroupStates: readonly ["rest", "hover", "focus", "selected", "disabled"];
+export const toggleGroupStates: readonly ["rest", "hover", "focus-visible", "selected", "disabled"];
 
 // @public (undocumented)
 export type ToggleGroupTokenSlot = (typeof toggleGroupTokenSlots)[number];
@@ -5420,8 +5660,16 @@ export const toggleSlots: readonly ["toggle", "toggle-content"];
 // @public (undocumented)
 export type ToggleState = (typeof toggleStates)[number];
 
+// @public @deprecated (undocumented)
+export type ToggleStateAlias = keyof typeof toggleStateAliases;
+
+// @public
+export const toggleStateAliases: {
+    readonly focus: "focus-visible";
+};
+
 // @public (undocumented)
-export const toggleStates: readonly ["off", "on", "rest", "hover", "pressed", "disabled", "focus"];
+export const toggleStates: readonly ["off", "on", "rest", "hover", "pressed", "disabled", "focus-visible"];
 
 // @public (undocumented)
 export type ToggleTokenSlot = (typeof toggleTokenSlots)[number];

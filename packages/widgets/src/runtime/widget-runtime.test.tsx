@@ -51,6 +51,19 @@ describe('widget runtime loading UI', () => {
     expect(document.querySelector('[data-slot="widget-card"]')).toBeTruthy()
     expect(screen.getByText('Widget failed to load')).toBeInTheDocument()
     expect(screen.getByText('Chunk failed')).toBeInTheDocument()
+    // The same verb as the widget error state, and overridable like it.
+    expect(screen.getByRole('button', { name: 'Try again' })).toBeInTheDocument()
+  })
+
+  it('takes its retry label from the host', () => {
+    render(
+      <WidgetHostErrorFallback
+        onRetry={() => undefined}
+        retryLabel="Erneut versuchen"
+        size="large"
+      />
+    )
+    expect(screen.getByRole('button', { name: 'Erneut versuchen' })).toBeInTheDocument()
   })
 
   it('crossfades widget titles without remounting the header row', () => {

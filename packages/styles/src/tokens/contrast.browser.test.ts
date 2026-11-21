@@ -21,6 +21,16 @@ const textPairs = [
   { fg: '--a63-text-primary', bg: '--a63-surface-panel', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-page', min: AA_TEXT },
   { fg: '--a63-text-accent', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-text-danger', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-text-danger', bg: '--a63-surface-panel', min: AA_TEXT },
+  // Status text (Alert action labels, tinted badges) uses the -subtle-foreground
+  // step, not the 3:1 status accent.
+  { fg: '--a63-status-info-subtle-foreground', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-status-info-subtle-foreground', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-status-success-subtle-foreground', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-status-success-subtle-foreground', bg: '--a63-surface-panel', min: AA_TEXT },
+  { fg: '--a63-status-warning-subtle-foreground', bg: '--a63-surface-page', min: AA_TEXT },
+  { fg: '--a63-status-warning-subtle-foreground', bg: '--a63-surface-panel', min: AA_TEXT },
 ] as const
 
 const actionPairs = [
@@ -28,6 +38,11 @@ const actionPairs = [
   { fg: '--a63-action-primary-foreground', bg: '--a63-action-primary', min: AA_TEXT },
   { fg: '--a63-action-neutral-foreground', bg: '--a63-action-neutral', min: AA_UI },
   { fg: '--a63-action-danger-foreground', bg: '--a63-action-danger', min: AA_UI },
+  // A pressed toggle carries its state in its fill (WCAG 1.4.11), so the fill
+  // reaches 3:1 against the page and the panel, and its label stays legible.
+  { fg: '--a63-toggle-on-background', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-toggle-on-background', bg: '--a63-surface-panel', min: AA_UI },
+  { fg: '--a63-toggle-on-foreground', bg: '--a63-toggle-on-background', min: AA_TEXT },
   // WCAG exempts disabled controls from 4.5:1, but the muted label stays legible.
   { fg: '--a63-action-disabled-foreground', bg: '--a63-action-disabled-background', min: 2.5 },
 ] as const
@@ -38,6 +53,7 @@ const statusPairs = [
   { fg: '--a63-status-info', bg: '--a63-surface-page', min: AA_UI },
   { fg: '--a63-status-success', bg: '--a63-surface-page', min: AA_UI },
   { fg: '--a63-status-warning', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-status-danger', bg: '--a63-surface-page', min: AA_UI },
 ] as const
 
 const pairs = [...textPairs, ...actionPairs, ...statusPairs] as const
@@ -102,14 +118,18 @@ function contrastRatio(fg: Rgb, bg: Rgb): number {
   return (lighter + 0.05) / (darker + 0.05)
 }
 
-function resolvePaintedColor(cssVar: string, as: 'color' | 'background'): string {
+function resolvePaintedColor(
+  cssVar: string,
+  as: 'color' | 'background',
+  parent: HTMLElement = document.body
+): string {
   const probe = document.createElement('div')
   if (as === 'color') {
     probe.style.color = `var(${cssVar})`
   } else {
     probe.style.backgroundColor = `var(${cssVar})`
   }
-  document.body.appendChild(probe)
+  parent.appendChild(probe)
   const style = getComputedStyle(probe)
   const value = as === 'color' ? style.color : style.backgroundColor
   probe.remove()
@@ -148,6 +168,36 @@ describe('core semantic contrast (WCAG AA)', () => {
           if (ratio < min) {
             failures.push(
               `${theme}/${mode} ${fg} on ${bg}: ${ratio.toFixed(2)}:1 < ${min}:1 (fg=${fgCss}, bg=${bgCss})`
+            )
+          }
+        }
+      }
+    }
+
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+
+  /* A custom property resolves its var() reads on the element that declares it,
+     and descendants inherit the result. A UIProvider sets theme and mode on a
+     nested element, so a token declared only on :root would keep the root's
+     mode there. Resolve every pair inside such a scope, under a light root. */
+  it('holds the same pairs inside a nested theme and mode scope', () => {
+    const failures: string[] = []
+
+    for (const theme of themes) {
+      for (const mode of modes) {
+        const scope = document.createElement('div')
+        scope.setAttribute('data-a63-theme', theme)
+        scope.setAttribute('data-a63-mode', mode)
+        document.body.replaceChildren(scope)
+
+        for (const { fg, bg, min } of pairs) {
+          const fgCss = resolvePaintedColor(fg, 'color', scope)
+          const bgCss = resolvePaintedColor(bg, 'background', scope)
+          const ratio = contrastRatio(parseCssColor(fgCss), parseCssColor(bgCss))
+          if (ratio < min) {
+            failures.push(
+              `${theme}/${mode} (nested) ${fg} on ${bg}: ${ratio.toFixed(2)}:1 < ${min}:1`
             )
           }
         }

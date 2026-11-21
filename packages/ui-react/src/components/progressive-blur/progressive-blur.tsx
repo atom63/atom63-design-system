@@ -1,6 +1,8 @@
+import { type ProgressiveBlurPosition, progressiveBlurContract } from '@atom63/ui-foundation'
+
 import { cn } from '../../lib/cn'
 
-export type ProgressiveBlurPosition = 'both' | 'bottom' | 'top'
+export type { ProgressiveBlurPosition }
 
 export interface ProgressiveBlurProps {
   /** Blur radii in px, weakest first. Each gets an equal band of the height. */
@@ -39,8 +41,8 @@ function buildMask(position: ProgressiveBlurPosition, from: number, to: number):
  */
 export function ProgressiveBlur({
   className,
-  height = '30%',
-  position = 'bottom',
+  height = progressiveBlurContract.defaultHeight,
+  position = progressiveBlurContract.defaultPosition,
   blurLevels = [0.5, 1, 2, 4, 8, 16, 32, 64],
 }: ProgressiveBlurProps) {
   const count = blurLevels.length

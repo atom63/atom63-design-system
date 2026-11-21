@@ -4,7 +4,7 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const breadcrumbCompositions = ['full', 'collapsed', 'custom-separator'] as const
-export const breadcrumbStates = ['rest', 'hover', 'focus', 'current'] as const
+export const breadcrumbStates = ['rest', 'hover', 'focus-visible', 'current'] as const
 export const breadcrumbSlots = [
   'breadcrumb',
   'breadcrumb-list',
@@ -20,6 +20,15 @@ export type BreadcrumbComposition = (typeof breadcrumbCompositions)[number]
 export type BreadcrumbState = (typeof breadcrumbStates)[number]
 export type BreadcrumbSlot = (typeof breadcrumbSlots)[number]
 export type BreadcrumbVisualArchetype = (typeof breadcrumbVisualArchetypes)[number]
+
+/** Earlier names of BreadcrumbState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const breadcrumbStateAliases = { focus: 'focus-visible' } as const satisfies Record<
+  string,
+  BreadcrumbState
+>
+
+/** @deprecated An earlier name of a value of BreadcrumbState; use the value breadcrumbStateAliases maps it to. */
+export type BreadcrumbStateAlias = keyof typeof breadcrumbStateAliases
 
 export interface BreadcrumbContract {
   compositions: readonly BreadcrumbComposition[]

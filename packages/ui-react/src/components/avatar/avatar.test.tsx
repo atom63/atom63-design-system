@@ -16,12 +16,17 @@ describe('Avatar', () => {
     const el = container.querySelector('.a63-Avatar')
     expect(el).not.toBeNull()
     expect(el).toHaveAttribute('data-slot', 'avatar')
-    expect(el).toHaveAttribute('data-size', 'default')
+    expect(el).toHaveAttribute('data-size', 'md')
   })
 
   it('forwards the size prop to data-size', () => {
     const { container } = render(<Avatar size="lg" />)
     expect(container.querySelector('.a63-Avatar')).toHaveAttribute('data-size', 'lg')
+  })
+
+  it('accepts the deprecated size name default as md', () => {
+    const { container } = render(<Avatar size="default" />)
+    expect(container.querySelector('.a63-Avatar')).toHaveAttribute('data-size', 'md')
   })
 
   it('renders a fallback (image src is unresolved in jsdom)', () => {

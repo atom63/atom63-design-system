@@ -39,3 +39,6 @@ export const ChineseArticleNote: Story = {
       '真正有用的系统会把可变的视觉判断转化为稳定的材料、语义流程和产品约束。这样人和 AI 都能在同一套边界里做决定。',
   },
 }
+
+/* The eyebrow is accent text; dark mode checks it keeps 4.5:1 on the dark page. */
+export const Dark: Story = { ...Default, globals: { mode: 'dark' } }
