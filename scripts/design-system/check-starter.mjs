@@ -2,7 +2,8 @@
  * Proves the project starter works: for every kind, generate an app, install
  * it against freshly packed design system tarballs, typecheck and build it,
  * hold its source to the craft rules, and open every route of an app kind
- * (lib/route-check.mjs). With --shadcn it also adds a shadcn
+ * (lib/route-check.mjs), again with every optional module on for a kind
+ * that has them. With --shadcn it also adds a shadcn
  * component to the first kind's app (the Tailwind + shadcn path the starter
  * promises), then installs the list page template from the Atom63 shadcn
  * registry, served locally, and typechecks and builds again.
@@ -32,10 +33,32 @@ const packages = {
   '@atom63/ui-foundation': 'packages/ui-foundation',
   '@atom63/ui-react': 'packages/ui-react',
   '@atom63/mdx': 'packages/mdx',
+  '@atom63/agent': 'packages/agent',
+  '@atom63/widgets': 'packages/widgets',
 }
 /* Routes each kind's route check opens; keep them in step with its router. */
 const kindRoutes = {
   app: ['/', '/invoices', '/settings', '/welcome', '/sign-in'],
+  portfolio: [
+    '/',
+    '/projects',
+    '/projects/night-trip-planner',
+    '/writing',
+    '/writing/designing-for-interruptions',
+    '/timeline',
+    '/resume',
+  ],
+}
+/*
+ * Kinds with optional modules: the config file and the routes the modules
+ * add. The check builds the app again with every module on and opens those
+ * routes too, so a module that is off by default cannot rot.
+ */
+const kindModules = {
+  portfolio: {
+    config: 'src/portfolio.config.ts',
+    routes: ['/slides', '/slides/planning-backwards'],
+  },
 }
 const withShadcn = process.argv.includes('--shadcn')
 const keep = process.argv.includes('--keep')
@@ -117,7 +140,9 @@ try {
     const overrides = Object.fromEntries(
       Object.keys(packages).map(name => [name, tarballFor(name)])
     )
-    for (const name of Object.keys(packages)) manifest.dependencies[name] = overrides[name]
+    for (const name of Object.keys(packages)) {
+      if (manifest.dependencies[name]) manifest.dependencies[name] = overrides[name]
+    }
     writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`)
     writeFileSync(path.join(app, 'pnpm-workspace.yaml'), pnpmOverridesYaml(overrides))
 
@@ -147,6 +172,29 @@ try {
         throw new Error(`The ${kind} starter fails its route check:\n  ${problems.join('\n  ')}`)
       }
       process.stdout.write(`The ${kind} starter passes its route check (${summary}).\n`)
+    }
+
+    if (kindModules[kind]) {
+      const { config, routes } = kindModules[kind]
+      const configPath = path.join(app, config)
+      const source = readFileSync(configPath, 'utf8')
+      const allOn = source.replace(/^(\s+\w+): false,$/gm, '$1: true,')
+      if (allOn === source) throw new Error(`${config} has no module switched off to turn on`)
+      writeFileSync(configPath, allOn)
+      run('pnpm', ['build'], app)
+      const { problems, summary } = await checkRoutes({
+        appDir: app,
+        routes: [...kindRoutes[kind], ...routes],
+      })
+      if (problems.length > 0) {
+        throw new Error(
+          `The ${kind} starter fails its route check with every module on:\n  ${problems.join('\n  ')}`
+        )
+      }
+      process.stdout.write(
+        `The ${kind} starter passes its route check with every module on (${summary}).\n`
+      )
+      writeFileSync(configPath, source)
     }
 
     if (withShadcn && kind === checkedKinds[0]) {

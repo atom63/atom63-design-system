@@ -24,6 +24,7 @@ const kindLayers = {
   site: ['base', 'content', 'site'],
   docs: ['base', 'content', 'docs'],
   app: ['base', 'app'],
+  portfolio: ['base', 'content', 'portfolio'],
 }
 
 /**
@@ -33,15 +34,18 @@ const kindLayers = {
  */
 const kindTemplates = {
   app: ['dashboard-page', 'list-page', 'settings-page', 'onboarding-page', 'sign-in-page'],
+  portfolio: ['chat-panel'],
 }
 
 export const kinds = Object.keys(kindLayers)
 
 const atom63Packages = {
+  '@atom63/agent': 'packages/agent',
   '@atom63/mdx': 'packages/mdx',
   '@atom63/styles': 'packages/styles',
   '@atom63/ui-foundation': 'packages/ui-foundation',
   '@atom63/ui-react': 'packages/ui-react',
+  '@atom63/widgets': 'packages/widgets',
 }
 
 /**
@@ -86,6 +90,10 @@ const layerPackages = {
       'remark-gfm',
       'remark-mdx-frontmatter',
     ],
+  },
+  portfolio: {
+    dependencies: ['@atom63/agent', '@atom63/widgets'],
+    devDependencies: [],
   },
 }
 
