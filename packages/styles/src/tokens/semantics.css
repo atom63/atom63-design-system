@@ -183,6 +183,11 @@
     var(--surface-light-10) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-500) var(--a63-surface-tint)
   );
+  /* The border of an invalid form control (aria-invalid or data-invalid). WCAG 1.4.11 needs
+     3:1 against the page, the panel and the field fill: step 600 at 62% reaches about 3.1:1
+     on light surfaces. Mixed toward transparent so the red keeps its hue. A focused
+     invalid control draws its border and ring in --a63-status-danger. */
+  --a63-border-danger: color-mix(in oklch, var(--color-danger-600) 62%, transparent);
   /* Outline controls (the outline Button and the button-group ConnectedPanel): the fill at rest. Dark mode tints it from the control border instead of the panel. */
   --a63-control-outline-background: var(--a63-surface-panel);
   /* Outline controls: the fill on hover and press. */
@@ -212,6 +217,7 @@
      so a theme can recolor text without turning the default button into a fill. */
   --a63-action-neutral: var(--surface-light-12);
   --a63-action-neutral-foreground: var(--surface-light-2);
+  /* The fill of a danger action (a destructive Button), under a white label. It keeps step 600 in both modes, which is about 2.8:1 on dark surfaces, so it is never text, an icon or an edge: those use --a63-text-danger, --a63-status-danger and --a63-border-danger. */
   --a63-action-danger: var(--color-danger-600);
   --a63-action-danger-hover: color-mix(in oklch, var(--a63-action-danger) 90%, transparent);
   --a63-action-danger-foreground: white;
@@ -301,6 +307,8 @@
   --a63-selected-accent-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
   /* Text and icons of an accent-selected item. */
   --a63-selected-accent-foreground: var(--a63-text-accent);
+  --a63-if-light: initial;
+  --a63-if-dark: ;
 }
 
 :is(.dark, [data-a63-mode='dark']) {
@@ -377,6 +385,8 @@
     var(--surface-dark-9) calc(100% - var(--a63-surface-tint)),
     var(--a63-brand-500) var(--a63-surface-tint)
   );
+  /* Step 500, opaque, on dark surfaces: about 4.2:1 on the panel (step 600 at 62% was about 1.7:1). */
+  --a63-border-danger: var(--color-danger-500);
   --a63-control-outline-background: color-mix(in oklab, var(--a63-border-control) 32%, transparent);
   --a63-control-outline-hover-background: color-mix(
     in oklab,
@@ -440,6 +450,323 @@
   --a63-category-zinc-subtle-foreground: var(--color-zinc-400);
   --a63-category-neutral-subtle-foreground: var(--color-neutral-400);
   --a63-category-stone-subtle-foreground: var(--color-stone-400);
+  --a63-selected-background: var(--a63-surface-muted);
+  --a63-selected-foreground: var(--a63-text-primary);
+  --a63-selected-accent-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);
+  --a63-selected-accent-foreground: var(--a63-text-accent);
+  --a63-if-light: ;
+  --a63-if-dark: initial;
+}
+
+[data-a63-brand],
+[data-a63-surface] {
+  /* The mode roles again, on scopes that change what they read, keyed to the nearest mode scope. */
+  --a63-surface-page: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-2) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-100) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-1) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-950) var(--a63-surface-tint)
+      )
+    );
+  --a63-surface-panel: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-1) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-50) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-2) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-900) var(--a63-surface-tint)
+      )
+    );
+  --a63-surface-overlay: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-1) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-50) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-4) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-800) var(--a63-surface-tint)
+      )
+    );
+  --a63-surface-muted: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-3) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-200) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-3) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-800) var(--a63-surface-tint)
+      )
+    );
+  --a63-surface-control: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-1) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-50) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-1) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-950) var(--a63-surface-tint)
+      )
+    );
+  --a63-surface-control-hover: var(
+      --a63-if-light,
+      color-mix(
+        in srgb,
+        color-mix(
+          in oklab,
+          var(--surface-light-4) calc(100% - var(--a63-surface-tint)),
+          var(--a63-brand-300) var(--a63-surface-tint)
+        ),
+        transparent 20%
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in srgb,
+        color-mix(
+          in oklab,
+          var(--surface-dark-6) calc(100% - var(--a63-surface-tint)),
+          var(--a63-brand-600) var(--a63-surface-tint)
+        ),
+        transparent 20%
+      )
+    );
+  --a63-surface-sidebar: var(--a63-if-light, var(--a63-surface-muted))
+    var(--a63-if-dark, var(--a63-surface-page));
+  --a63-surface-recessed: var(--a63-if-light, var(--a63-surface-muted))
+    var(--a63-if-dark, var(--a63-surface-page));
+  --a63-gradient-brand-fade: linear-gradient(
+    to bottom,
+    var(--a63-brand-800),
+    var(--a63-brand-700) var(--a63-gradient-brand-fade-dark-zone),
+    var(--a63-surface-page)
+  );
+  --a63-text-primary: var(--a63-if-light, var(--surface-light-12))
+    var(--a63-if-dark, var(--surface-dark-12));
+  --a63-text-secondary: var(--a63-if-light, var(--surface-light-11))
+    var(--a63-if-dark, var(--surface-dark-11));
+  --a63-text-tertiary: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10))
+    )
+    var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)));
+  --a63-text-accent: var(--a63-if-light, var(--a63-brand-text))
+    var(--a63-if-dark, var(--a63-brand-400));
+  --a63-text-danger: var(--a63-if-light, var(--color-danger-600))
+    var(--a63-if-dark, var(--color-danger-400));
+  --a63-border-subtle: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-4) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-300) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-6) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-600) var(--a63-surface-tint)
+      )
+    );
+  --a63-border-control: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-5) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-400) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-7) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-500) var(--a63-surface-tint)
+      )
+    );
+  --a63-border-input: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-10) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-500) var(--a63-surface-tint)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-9) calc(100% - var(--a63-surface-tint)),
+        var(--a63-brand-500) var(--a63-surface-tint)
+      )
+    );
+  --a63-border-danger: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--color-danger-600) 62%, transparent)
+    )
+    var(--a63-if-dark, var(--color-danger-500));
+  --a63-control-outline-background: var(--a63-if-light, var(--a63-surface-panel))
+    var(--a63-if-dark, color-mix(in oklab, var(--a63-border-control) 32%, transparent));
+  --a63-control-outline-hover-background: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--a63-surface-control-hover) 50%, transparent)
+    )
+    var(--a63-if-dark, color-mix(in oklab, var(--a63-border-control) 64%, transparent));
+  --a63-control-outline-hover-border: var(--a63-if-light, var(--a63-border-subtle))
+    var(--a63-if-dark, var(--a63-border-control));
+  --a63-alert-background: var(--a63-if-light, transparent)
+    var(--a63-if-dark, color-mix(in oklab, var(--a63-surface-control) 32%, transparent));
+  --a63-choice-card-checked-border: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-primary) 30%, transparent)
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 20%, transparent));
+  --a63-choice-card-checked-background: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-primary) 5%, transparent)
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 10%, transparent));
+  --a63-focus-ring: var(--a63-if-light, var(--a63-brand-600))
+    var(--a63-if-dark, var(--a63-brand-400));
+  --a63-action-neutral: var(--a63-if-light, var(--surface-light-12))
+    var(--a63-if-dark, var(--surface-dark-12));
+  --a63-action-neutral-foreground: var(--a63-if-light, var(--surface-light-2))
+    var(--a63-if-dark, var(--surface-dark-1));
+  --a63-action-danger: var(--color-danger-600);
+  --a63-action-danger-hover: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-danger) 90%, transparent)
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-danger) 82%, white 8%));
+  --a63-action-danger-foreground: white;
+  --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
+  --a63-action-danger-subtle-foreground: var(--a63-if-light, var(--color-danger-700))
+    var(--a63-if-dark, var(--color-danger-400));
+  --a63-action-disabled-background: var(--a63-surface-muted);
+  --a63-action-disabled-foreground: var(--a63-if-light, var(--surface-light-9))
+    var(--a63-if-dark, var(--surface-dark-9));
+  --a63-action-disabled-border: var(--a63-border-subtle);
+  --a63-status-info: var(--a63-if-light, var(--color-info-600))
+    var(--a63-if-dark, var(--color-info-500));
+  --a63-status-info-foreground: oklch(
+    from var(--a63-status-info) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
+  --a63-status-info-subtle: color-mix(in oklab, var(--a63-status-info) 14%, transparent);
+  --a63-status-info-subtle-foreground: var(--a63-if-light, var(--color-info-700))
+    var(--a63-if-dark, var(--color-info-400));
+  --a63-status-success: var(--a63-if-light, var(--color-success-600))
+    var(--a63-if-dark, var(--color-success-500));
+  --a63-status-success-foreground: oklch(
+    from var(--a63-status-success) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
+  --a63-status-success-subtle: color-mix(in oklab, var(--a63-status-success) 14%, transparent);
+  --a63-status-success-subtle-foreground: var(--a63-if-light, var(--color-success-700))
+    var(--a63-if-dark, var(--color-success-400));
+  --a63-status-warning: var(--a63-if-light, var(--color-warning-600))
+    var(--a63-if-dark, var(--color-warning-500));
+  --a63-status-warning-foreground: oklch(
+    from var(--a63-status-warning) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
+  --a63-status-warning-subtle: color-mix(in oklab, var(--a63-status-warning) 14%, transparent);
+  --a63-status-warning-subtle-foreground: var(--a63-if-light, var(--color-warning-800))
+    var(--a63-if-dark, var(--color-warning-400));
+  --a63-status-danger: var(--a63-if-light, var(--color-danger-600))
+    var(--a63-if-dark, var(--color-danger-500));
+  --a63-status-danger-foreground: oklch(
+    from var(--a63-status-danger) clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h
+  );
+  --a63-status-danger-subtle: color-mix(in oklab, var(--a63-status-danger) 14%, transparent);
+  --a63-status-danger-subtle-foreground: var(--a63-if-light, var(--color-danger-700))
+    var(--a63-if-dark, var(--color-danger-400));
+  --a63-chart-1: var(--a63-action-primary);
+  --a63-chart-2: var(--a63-if-light, var(--color-teal-500))
+    var(--a63-if-dark, var(--color-teal-400));
+  --a63-chart-3: var(--a63-if-light, var(--color-amber-500))
+    var(--a63-if-dark, var(--color-amber-400));
+  --a63-chart-4: var(--a63-if-light, var(--color-violet-500))
+    var(--a63-if-dark, var(--color-violet-400));
+  --a63-chart-5: var(--a63-if-light, var(--color-rose-500))
+    var(--a63-if-dark, var(--color-rose-400));
+  --a63-category-red-subtle-foreground: var(--a63-if-light, var(--color-red-700))
+    var(--a63-if-dark, var(--color-red-400));
+  --a63-category-orange-subtle-foreground: var(--a63-if-light, var(--color-orange-800))
+    var(--a63-if-dark, var(--color-orange-400));
+  --a63-category-amber-subtle-foreground: var(--a63-if-light, var(--color-warning-800))
+    var(--a63-if-dark, var(--color-warning-400));
+  --a63-category-yellow-subtle-foreground: var(--a63-if-light, var(--color-yellow-800))
+    var(--a63-if-dark, var(--color-yellow-400));
+  --a63-category-lime-subtle-foreground: var(--a63-if-light, var(--color-lime-800))
+    var(--a63-if-dark, var(--color-lime-400));
+  --a63-category-green-subtle-foreground: var(--a63-if-light, var(--color-green-800))
+    var(--a63-if-dark, var(--color-green-400));
+  --a63-category-emerald-subtle-foreground: var(--a63-if-light, var(--color-emerald-800))
+    var(--a63-if-dark, var(--color-emerald-400));
+  --a63-category-teal-subtle-foreground: var(--a63-if-light, var(--color-teal-800))
+    var(--a63-if-dark, var(--color-teal-400));
+  --a63-category-cyan-subtle-foreground: var(--a63-if-light, var(--color-cyan-800))
+    var(--a63-if-dark, var(--color-cyan-400));
+  --a63-category-sky-subtle-foreground: var(--a63-if-light, var(--color-sky-700))
+    var(--a63-if-dark, var(--color-sky-400));
+  --a63-category-blue-subtle-foreground: var(--a63-if-light, var(--color-blue-700))
+    var(--a63-if-dark, var(--color-blue-400));
+  --a63-category-indigo-subtle-foreground: var(--a63-if-light, var(--color-indigo-700))
+    var(--a63-if-dark, var(--color-indigo-400));
+  --a63-category-violet-subtle-foreground: var(--a63-if-light, var(--color-violet-700))
+    var(--a63-if-dark, var(--color-violet-400));
+  --a63-category-purple-subtle-foreground: var(--a63-if-light, var(--color-purple-700))
+    var(--a63-if-dark, var(--color-purple-400));
+  --a63-category-fuchsia-subtle-foreground: var(--a63-if-light, var(--color-fuchsia-700))
+    var(--a63-if-dark, var(--color-fuchsia-400));
+  --a63-category-pink-subtle-foreground: var(--a63-if-light, var(--color-pink-700))
+    var(--a63-if-dark, var(--color-pink-400));
+  --a63-category-rose-subtle-foreground: var(--a63-if-light, var(--color-rose-700))
+    var(--a63-if-dark, var(--color-rose-400));
+  --a63-category-slate-subtle-foreground: var(--a63-if-light, var(--color-slate-700))
+    var(--a63-if-dark, var(--color-slate-400));
+  --a63-category-gray-subtle-foreground: var(--a63-if-light, var(--color-gray-700))
+    var(--a63-if-dark, var(--color-gray-400));
+  --a63-category-zinc-subtle-foreground: var(--a63-if-light, var(--color-zinc-700))
+    var(--a63-if-dark, var(--color-zinc-400));
+  --a63-category-neutral-subtle-foreground: var(--a63-if-light, var(--color-neutral-700))
+    var(--a63-if-dark, var(--color-neutral-400));
+  --a63-category-stone-subtle-foreground: var(--a63-if-light, var(--color-stone-700))
+    var(--a63-if-dark, var(--color-stone-400));
   --a63-selected-background: var(--a63-surface-muted);
   --a63-selected-foreground: var(--a63-text-primary);
   --a63-selected-accent-background: color-mix(in oklch, var(--a63-action-primary) 12%, transparent);

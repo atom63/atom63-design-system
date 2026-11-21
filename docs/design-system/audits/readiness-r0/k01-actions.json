@@ -1,0 +1,1098 @@
+{
+  "scope": "k01-actions",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "layer-3 batch-1 reviewer",
+  "verifiedBy": null,
+  "notes": "Taste criteria (K3) are provisional until YZ sees the contact sheet. Pixel measurements made with a stdlib PNG decoder at <review-scratch>/k01/px.py (WCAG relative luminance). Sweep logs: all check:* passed; craft check passed with 5 baseline violations, 2 of them kbd. Older audit docs were not relied on.",
+  "subjects": [
+    {
+      "subject": "button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button/button.tsx:103-104 always stamps disabled and type ?? 'button' on the rendered element, including render={<a>} (used by packages/ui-react/src/components/pagination/pagination.tsx:60-65), so links get type=\"button\" and a disabled attribute that does not block navigation; contract variants still carry the compat alias 'glass' (atom63 component button). Otherwise props match contract, render merges props via mergeProps (button.tsx:109-113), React 19 ref arrives in props."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button/button.tsx:56,103 sets native disabled while loading, so a focused button drops keyboard focus to <body> the moment loading starts (conformance asserts toBeDisabled at packages/ui-react/src/conformance/renderer-conformance.test.tsx:178); reduced motion handled at button.css:713-724; focus ring is an outline (button.css:190-192); axe runs at error level on all stories (apps/storybook/.storybook/preview.tsx:153); grep -rn forced-colors packages/ui-react/src packages/styles/src returns only a comment at packages/ui-react/src/components/button/button.css:189; no @media (forced-colors) rule exists in the system."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-button-themes-chromium-linux.png shows 4 themes x 2 modes with the archetype visibly different per theme (aqua gloss, retro bevel, terminal glow); no craft-baseline entry for button."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-button-states-chromium-linux.png captures rest, loading, disabled, disabled primary, pressed, with icon; no baseline captures hover or focus-visible for any button variant (no pseudo-state story: grep pseudo|focusVisible in component stories finds only textarea)."
+        },
+        {
+          "criterion": "K5",
+          "score": 4,
+          "evidence": "check:control-alignment passed (sweep/control-alignment.log: '3 rungs x 8 axis combinations'); hit-area pseudo at button.css:131-136 gives 44px on coarse pointers without changing box height; heights use max(..., --button-content-floor) so text scaling grows the box (button.css:640-700)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Logical properties only (check:craft physical-properties passes, sweep/craft.log). But button.css:107 white-space: nowrap with no text-overflow on .a63-Button-label (button.css:262-274), so a long or German/CJK label overflows its container instead of truncating or wrapping; no RTL, long-string or CJK story exists for button (grep rtl|long in button.stories.tsx finds only the tile caption at :497)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "States story renders an ios/touch environment column (apps/storybook/visual/__screenshots__/ui-react-button-states-chromium-linux.png); coarse-pointer target floor via ::before (button.css:131-136). No phone-width story, acceptable for an atomic control."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Hand-written docs page apps/docs/src/pages/component-button.mdx and rich CLI answer (pnpm -s atom63 component <slug> output saved during review): when to use, variants, sizes, decisions, 19 examples. Gap: the CLI 'Variants, sizes and states' table lists sizes xs..xl only, while the contract lists 11 sizes including tile and icon-*."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button/button.test.tsx has 12 tests (variants, loading, indicator, data-slot mirroring) plus activation/disabled/loading outcomes in renderer-conformance.test.tsx:157-178; SSR smoke for every story (apps/storybook/ssr/ssr.test.tsx); 18 baselines. Untested: render={<a>} output and type default."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "AtomButton exists with Dynamic Type, dark, VoiceOver loading value (packages/ui-ios/Sources/Atom63UI/AtomButton.swift: .accessibilityValue(isLoading ? loadingAccessibilityLabel : \"\")) and snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/button.{light,dark,large-type}.png. Axes do not line up by name: iOS tone = neutral|muted|primary|destructive and emphasis = solid|soft|outline|ghost|raised (packages/ui-ios/Sources/Atom63UI/Generated/AtomComponentIntent.generated.swift:18-32), web tone = neutral|muted and variant carries primary/destructive; iOS sizes compact|regular|large|icon vs 11 web sizes; web overlay/dashed/link/destructive-outline have no iOS emphasis."
+        }
+      ]
+    },
+    {
+      "subject": "button-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Size axis uses 'default' where Button uses 'md' (contract-consistency-baseline.json: 'synonym | button-group.sizes | default -> md'); ButtonGroupSeparator hard-defaults orientation='vertical' (packages/ui-react/src/components/button-group/button-group.tsx:68) so a vertical group draws a vertical hairline unless the caller overrides, unlike ToggleGroupSeparator which derives it (toggle-group.tsx:98-99); useButtonGroupContext/ButtonGroupProvider are public exports (packages/ui-react/src/index.ts:83) but no component reads the context (grep finds no consumer)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "role=\"group\" on the root (button-group.tsx:38); docs tell builders to add aria-label (CLI answer 'When to use'); members keep native button semantics; axe on every story."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-buttongroup-themes-chromium-linux.png shows welded segments per theme; segment tokens shared with ToggleGroup."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states only rest and focus-within (atom63 component button-group); docs describe a selected/pressed member fill (--a63-segment-selected-background) but no story or baseline captures a selected member, hover or focus-visible inside the group."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Members floor at min-target for lg/xl (button-group.css:294,305); sizes are contract values; only the default/md synonym is off-grammar (scored under K1)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical radius/border properties; horizontal group scrolls instead of overflowing (button-group.css:19-25 max-width:100%, overflow-x:auto). No RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "overflow-x:auto keeps a long group inside the phone width (button-group.css:25)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Hand-written apps/docs/src/pages/component-button-group.mdx; CLI answer has usage, ownership table, key tokens, design decision and 9 examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.test.tsx has 5 tests (attributes, text, separator, render prop, context); nothing tests separator orientation in a vertical group (the bug above) or keyboard focus order; 9 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart in the contract (no crossRenderer block in button-group.json)."
+        }
+      ]
+    },
+    {
+      "subject": "toggle",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/toggle/toggle.tsx wraps Base UI Toggle, spreads props (:34), controlled (pressed/onPressedChange) and uncontrolled (defaultPressed) both work (toggle.test.tsx:17-41); size and tone match the contract."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Pressed state is carried only by background-color (toggle.css:137-149) or, for tone=subtle, by text colour alone (toggle.css:151-153: 'shows its state in the accent color alone'). grep -rn forced-colors packages/ui-react/src packages/styles/src returns only a comment at packages/ui-react/src/components/button/button.css:189; no @media (forced-colors) rule exists in the system, so in forced-colors mode backgrounds and colours are replaced and the pressed state disappears. aria-pressed is exposed (renderer-conformance.test.tsx:186-188)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-toggle-themes-chromium-linux.png: accent tone reads in every theme, but the neutral 'On' toggle is indistinguishable from 'Off' in modern/light, aqua/light and aqua/dark (see K4 measurement)."
+        },
+        {
+          "criterion": "K4",
+          "score": 0,
+          "evidence": "Measured from baselines with a PNG decoder (scratchpad/k01/px.py): neutral pressed vs unpressed fill contrast = 1.00:1 in modern/light, aqua/light and aqua/dark, 1.22:1 modern/dark, 1.11:1 retro/light (apps/storybook/visual/__screenshots__/ui-react-toggle-themes-chromium-linux.png points (124,y) vs (260,y)); apps/storybook/visual/__screenshots__/ui-react-toggle-states-chromium-linux.png pressed (252,252,252) vs page (249,249,249) = 1.03:1. Foreground is text-primary in both states (toggle.css:20,29-31), so the default Toggle in the default theme shows no pressed state at all. Cause: --toggle-on-background falls back to --a63-segment-selected-background = surface-overlay (modern) / surface-panel (aqua), a surface meant to sit on a muted track, not on the page (atom63 token --a63-segment-selected-background)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "sm/md/lg match contract; hit-area ::before at toggle.css:97-103 gives 44px on coarse pointers; heights use the content floor. Toggle has no xs/xl while Button has five steps, so a Toggle cannot match an xs or xl Button row."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "toggle.css:69 white-space:nowrap and .a63-Toggle-content overflow:hidden (toggle.css:90) clip a long label with no ellipsis; no long-string or RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Coarse-pointer hit area (toggle.css:97-103); no phone story, acceptable for an atomic control."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "CLI answer (pnpm -s atom63 component <slug> output saved during review) is generated boilerplate: 'Pair controls with persistent labels and explain errors beside the affected field' does not apply to a toggle, and there is no code example. toggle.mdx:20 documents tones as neutral and accent only, missing 'subtle' from the contract."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "5 unit tests + conformance (renderer-conformance.test.tsx:181-198) and 9 baselines, but the baselines captured the invisible pressed state without anything failing: there is no check that pressed and rest differ visibly."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "Contract maps web Toggle to AtomChip with platform-adaptive parity (atom63 component toggle); snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/chip.{light,dark,large-type}.png exist. AtomChip itself is reviewed in batch 10."
+        }
+      ]
+    },
+    {
+      "subject": "toggle-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "ToggleGroup and ToggleGroupItem accept size and tone (packages/ui-react/src/components/toggle-group/toggle-group.tsx:28-33) and stories exercise them (Sizes, Tones), but toggle-group.json lists no sizes or tones axis, so the CLI contract table omits them and agents following rule 3 cannot know they exist."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Base UI ToggleGroup gives roving focus, but no APG pattern binding or keyboard test covers it (apps/storybook/a11y/patterns.test.ts binds only 9 components; toggle-group.json has no accessibility block). Selected segment is conveyed by fill and shadow (toggle-group.css:39-51), which forced-colors mode removes (grep -rn forced-colors packages/ui-react/src packages/styles/src returns only a comment at packages/ui-react/src/components/button/button.css:189; no @media (forced-colors) rule exists in the system). tone=subtle in the segmented variant has no group rule, so the selected cell differs by text colour only (toggle.css:151-153 applies)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-togglegroup-themes-chromium-linux.png, -pills-, -ghost- show distinct segmented/pills/ghost recipes per theme."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Neutral segmented selected vs unselected fill contrast measured 1.04-1.17:1 across all 8 theme/mode cells (apps/storybook/visual/__screenshots__/ui-react-togglegroup-themes-chromium-linux.png, points (126,y) vs (178,y)); the label also changes from secondary to primary text, so it is readable but weak. Hover on an unselected segment sets the same background as rest (toggle-group.css:34-37). No focus-visible baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Items inherit Toggle sizes and hit area; pills wrap (toggle-group.css:94-98)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Logical radii (toggle-group.css:59-87); labels inherit Toggle nowrap/clip; no RTL story to prove first/last radii flip."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "The segmented variant neither wraps nor scrolls (toggle-group.css:7-13 inline-flex, no overflow), so a 4-5 item bar overflows a 390px viewport; ButtonGroup solves the same case with overflow-x:auto (button-group.css:25). No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "CLI answer has a useful variants table, but the guidance bullets are generic ('explain errors beside the affected field'), no code example, and sizes/tones are absent from the contract table (K1)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "7 unit tests (single, multiple, separator orientation, variant, size/tone propagation) + conformance (renderer-conformance.test.tsx:201-221) + 13 baselines; keyboard untested (K2)."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Segmented maps to native Picker(.segmented); ghost maps to AtomGhostToggleGroup. AtomGhostToggleGroup has no tone axis (web ghost has accent), uses surfaceMuted for the selected fill (packages/ui-ios/Sources/Atom63UI/AtomGhostToggleGroup.swift:98) where web uses --a63-selected-background (toggle-group.css:147-150), and takes no group accessibility label. Snapshot examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toggleGroup.light.png shows selected fill and disabled item."
+        }
+      ]
+    },
+    {
+      "subject": "copy-button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:83-95 spreads {...props} first and then sets aria-label and title, so a caller's aria-label or title is silently discarded. Contract axes have no defaults for sizes/variants and 'sizes' mixes icon and label steps (atom63 component copy-button shows '—' defaults) although the code defaults variant='ghost' and size icon-sm/sm (copy-button.tsx:60,65)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Icon-only state change is announced only by swapping aria-label ('Copy' -> 'Copied to clipboard', copy-button.tsx:84) plus a sonner toast; without a mounted Toaster there is no live announcement (the CLI guidance admits this). Reduced motion handled (copy-button.tsx:108-111, copy-button.css:18-33)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-copybutton-themes-chromium-linux.png: ghost/outline/secondary icon and labelled forms read in all 8 cells."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "The copied state (the component's reason to exist) has no story and no baseline (stories: Playground, WithLabel, Sizes, Variants, Themes, Endpoints, ContractMetadata); the failure state has no visual at all, only toast.error."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sizes are paired Button sizes and inherit Button hit area (copy-button.tsx:65)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Hard-coded English the caller cannot override: 'Copied!' (copy-button.tsx:146), 'Failed to copy to clipboard' (:77). The default success toast is built as `${label} copied to clipboard` (:73), so with the default label 'Copy' it reads 'Copy copied to clipboard'."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inherits Button coarse-pointer target; hover scale gated to (hover:hover) and (pointer:fine) (copy-button.css:29)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "No hand-written docs page; CLI guidance is partly generic ('Make loading, disabled, and destructive behavior explicit'), no code example, contract table without defaults."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "8 unit tests, but none covers the clipboard failure path (toast.error) or the default success message text; no copied-state baseline."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart in copy-button.json."
+        }
+      ]
+    },
+    {
+      "subject": "destination-link",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx: render honoured for internal, forced native anchor for external with rel/target (:40-53). DestinationIndicator accepts only className and kind (:76-82), no prop spread."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "External links get '(opens in new tab)' in the name (:28-36). But the component ships no recipe: no class, no focus-visible style, no underline or link colour (apps/storybook/visual/__screenshots__/ui-react-destination-link-external-chromium-linux.png renders plain body-coloured text), so inline in prose it is distinguishable from text by nothing but the icon (WCAG 1.4.1 risk) and focus relies on the UA ring."
+        },
+        {
+          "criterion": "K3",
+          "score": 1,
+          "evidence": "Provisional. No CSS file exists in packages/ui-react/src/components/destination-link/; the baselines (internal, external, dark) show an unstyled anchor with the indicator glyph touching the label (no gap). No Themes story ('which has no Themes matrix', destination-link.stories.tsx:38-39), so the archetype is not expressed in any theme."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states rest and focus-visible; neither hover nor focus-visible is designed or captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inline link; no contract sizes; inline links are exempt from the 44px target."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "'(opens in new tab)' is hard-coded English (destination-link.tsx:28,32) with no override; the directional ExternalLink glyph is not mirrored in RTL."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline anchor behaves natively on touch."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "No hand-written docs page; CLI guidance is generic boilerplate for 2 of 3 bullets and has no code example."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "4 unit tests cover semantics; only 3 baselines, no theme matrix."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "iOS maps to NavigationLink/Link; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/destinationLink.light.png shows bare arrow glyphs (→, ↗) that the web indicator explicitly rejects (destination-link.tsx:63-74 doc comment), and the internal row renders greyed as if disabled."
+        }
+      ]
+    },
+    {
+      "subject": "panel-setting-button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.tsx:42 passes data-slot to Button, which mirrors it to data-trigger-slot (button.tsx:99-101), so the contract slot 'panel-setting-button' never appears as data-slot (the test queries data-trigger-slot, panel-setting-button.test.tsx:12). State is a controlled-only boolean 'active' with no onChange/defaultActive, named differently from Toggle's pressed. The contract has no axes. The header comment (:12-16) says the DS Button has no 'tile' size, but it now does, so the tile layout is duplicated in panel-setting-button.css:23-32."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "aria-pressed exposed (panel-setting-button.tsx:39), but the on state is a primary tint of background and border only (panel-setting-button.css:58-70); grep -rn forced-colors packages/ui-react/src packages/styles/src returns only a comment at packages/ui-react/src/components/button/button.css:189; no @media (forced-colors) rule exists in the system, so in forced colors on and off tiles look identical."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-panelsettingbutton-themes-chromium-linux.png: active tile reads clearly in all 8 cells."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "States story covers off, on and disabled (apps/storybook/visual/__screenshots__/ui-react-panelsettingbutton-states-chromium-linux.png); hover and focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "min-height: 4.5rem is a literal (panel-setting-button.css:26) that does not follow density; padding uses space tokens."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Label inherits Button white-space:nowrap (button.css:107), so a long label overflows the tile; no long-string story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Tile is well above 44px."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "No hand-written docs page; CLI guidance carries irrelevant boilerplate ('explain errors beside the affected field'), no code example, empty contract axes."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "3 unit tests (render, active, inactive); no click or disabled behaviour test."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart in panel-setting-button.json."
+        }
+      ]
+    },
+    {
+      "subject": "kbd",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/kbd/kbd.tsx:19-20 renders KbdGroup as a <div>, so the common inline use ('Press <KbdGroup>...</KbdGroup> to open') inside a <p> is invalid HTML and triggers a React hydration error under SSR; Kbd itself spreads props onto <kbd>."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Presentational <kbd> with pointer-events:none (kbd.css:29). No guidance or prop for naming symbol keys: '⌘' is read by screen readers as 'place of interest sign'."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Visuals fine in apps/storybook/visual/__screenshots__/ui-react-kbd-themes-chromium-linux.png, but craft-baseline.json carries two kbd violations: a mode-branch at kbd.css:63 (AGENTS.md rule 13) and token-role 'color: var(--a63-surface-page)' at kbd.css:54 (a surface token used as text colour)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Only state is rest; tooltip-inverted variant captured in apps/storybook/visual/__screenshots__/ui-react-kbd-in-context-chromium-linux.png context."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "sm/md match contract; heights are fixed rem (kbd.css:13,33) that scale with text but not density; non-interactive."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "nowrap keycap is correct for key names; logical padding."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Non-interactive; no guidance to hide shortcuts on touch-only devices."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "CLI guidance has an irrelevant bullet ('For animated or transient members, preserve reduced-motion behavior') and no code example."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "3 unit tests for a presentational component, 7 baselines, SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart in kbd.json."
+        }
+      ]
+    },
+    {
+      "subject": "AtomButton (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomButton.swift: tone/emphasis/size/shape API plus deprecated variant init; axis names collide with web (iOS tone includes primary/destructive, web tone is neutral|muted) — see button K10."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Native Button; loading sets accessibilityValue and .updatesFrequently, spinner hidden from VoiceOver; increased-contrast thickens the outline; reduce-motion respected."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/button.light.png shows variants, sizes, loading and disabled; pressed via scaleEffect."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Rendered height per size, 44pt hit region via .frame(minHeight: minTouchTarget) + contentShape; density steps size down; Dynamic Type via system fonts and lineLimit(2)."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K8",
+          "score": null,
+          "evidence": "n/a: documented through the web contract's Web and iOS section"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "AtomButtonShapeTests, AtomButtonPaletteTests, AtomVariantParityTests, AtomRendererConformanceTests in packages/ui-ios/Tests/Atom63UITests; snapshots light/dark/large-type."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "See button K10: naming of tone/emphasis vs web variant/tone, and 4 iOS sizes vs 11 web sizes. Icon size comment ('Matches the web recipe, which keeps icon sizes floored by --a63-control-min-target') contradicts web button.css:630-638, which removed that floor; iOS icon renders at 44pt, web icon at 32px."
+        }
+      ]
+    },
+    {
+      "subject": "AtomIconButton (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomIconButton.swift:10-16 takes the deprecated AtomButtonVariant instead of tone/emphasis and has no shape or size parameter, so the round play button and icon-sm/icon-xs rows from web rule 6 cannot be built with it."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "accessibilityLabel(title) is set; the loading label is hard-coded English 'Loading' (AtomIconButton.swift:30) with no parameter, unlike AtomButton."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/iconButton.large-type.png shows solid, outline, ghost and loading."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inherits AtomButtonStyle 44pt floor; dynamicTypeSize capped at accessibility2 (:35)."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K8",
+          "score": null,
+          "evidence": "n/a: documented through the web contract"
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test references AtomIconButton (grep in packages/ui-ios/Tests finds none); snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Web icon buttons expose 5 icon sizes and shape=round; iOS exposes one size and no shape."
+        }
+      ]
+    },
+    {
+      "subject": "AtomToggle (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToggle.swift is a .switch-style labelled row, the counterpart of web Switch, not of web Toggle (toggle.json maps web Toggle to AtomChip). The shared name 'Toggle' means a pressed button on web and a switch on iOS."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Native Toggle; accessibilityRepresentation keeps one element with the description as hint at accessibility sizes (AtomToggle.swift:38-43)."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toggle.light.png shows on and off."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "minHeight 44 outside list sections (:56); Dynamic Type relayout at accessibility sizes (:28-37)."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K8",
+          "score": null,
+          "evidence": "n/a: documented through the web Switch contract"
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test references AtomToggle; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a for this batch: its web counterpart is Switch (batch 2)."
+        }
+      ]
+    },
+    {
+      "subject": "AtomGhostToggleGroup (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomGhostToggleGroup.swift: selection is per-item isSelected + action (:44-52) with no group-level binding for single or multiple selection, no tone, no accessibility label on the group."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Items are native Buttons with the .isSelected trait (:55-59); group is .contain."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/toggleGroup.light.png shows selected, unselected and disabled."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "minHeight minTouchTarget (:84)."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: scored on the web counterpart"
+        },
+        {
+          "criterion": "K8",
+          "score": null,
+          "evidence": "n/a: documented through the web contract"
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test references AtomGhostToggleGroup; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "See toggle-group K10: selected fill token and missing tone differ from web ghost."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k01-actions-1",
+      "subject": "toggle",
+      "criterion": "K4",
+      "severity": "P0",
+      "summary": "A pressed Toggle with the default neutral tone looks exactly like an unpressed one in modern light, aqua light and aqua dark (fill contrast 1.00:1, same text colour), and below 1.25:1 in every other theme.",
+      "evidence": "Pixel measurement of apps/storybook/visual/__screenshots__/ui-react-toggle-themes-chromium-linux.png (points 124,y vs 260,y) and ui-react-toggle-states-chromium-linux.png (1.03:1); packages/ui-react/src/components/toggle/toggle.css:25-31,137-141 fall back to --a63-segment-selected-background (surface-overlay in modern, surface-panel in aqua).",
+      "fix": "Give standalone Toggle its own pressed fill token (e.g. --a63-selected-background or surface-muted/control-active) that differs from the page by at least 3:1 non-text contrast or add a second cue (weight or border), set per theme; add a check that the pressed and rest baselines differ.",
+      "kind": "fix",
+      "reviewedSeverity": "P0",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "The themes snapshot shows the neutral 'On' toggle with no visible fill and the same text weight and colour as 'Off' in modern/light, aqua/light and aqua/dark. Only modern/dark, retro and terminal show a faint pill. toggle.css:137-141 paints only --toggle-on-background/foreground. Those fall back to --a63-segment-selected-background, which is surface-overlay in modern.css:32 and surface-panel in aqua.css:93, and the foreground is text-primary, the same as at rest. neutral is the contract's defaultTone, so the default pressed state is invisible: P0 under 'wrong'."
+      }
+    },
+    {
+      "id": "k01-actions-2",
+      "subject": "toggle",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "Toggle's pressed state is conveyed by background colour (neutral/accent) or by text colour alone (subtle), and the system has no forced-colors rules, so the state disappears in Windows High Contrast.",
+      "evidence": "packages/ui-react/src/components/toggle/toggle.css:137-153; grep -rn forced-colors packages/ui-react/src packages/styles/src returns only a comment at packages/ui-react/src/components/button/button.css:189; no @media (forced-colors) rule exists in the system.",
+      "fix": "Add @media (forced-colors: active) rules for [data-pressed] (e.g. background: Highlight; color: HighlightText, or a visible border/underline), and give tone=subtle a non-colour cue.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Pressed neutral and accent Toggles change only background-color and color, and subtle changes only color (toggle.css:137-153). A grep of packages and apps finds no @media (forced-colors) rule anywhere. The only hits are comments, changelogs, a CLI rule string and a figma test fixture. In forced colors, author backgrounds and colours are overridden, so pressed and unpressed look the same. aria-pressed still conveys the state to assistive tech, so this is a visual-mode gap (P1), not P0."
+      }
+    },
+    {
+      "id": "k01-actions-3",
+      "subject": "toggle-group",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "The selected segment loses all visual distinction in forced-colors mode, and toggle-group's roving keyboard focus is not covered by any APG binding or keyboard test.",
+      "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.css:39-51 (fill and shadow only); apps/storybook/a11y/patterns.test.ts binds 9 components, none of them toggle-group; packages/ui-foundation/contracts/components/toggle-group.json has no accessibility block.",
+      "fix": "Add forced-colors rules for [data-pressed] segments and bind toggle-group to an APG pattern (toolbar-style roving tabindex) in the contract so patterns.test.ts plays arrow keys against its stories.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "toggle-group.css:39-51 marks the selected cell with fill, gloss and shadow only, all of which forced colors drop. The system has no forced-colors rules. patterns.test.ts imports stories for accordion, alert-dialog, checkbox, dialog, dropdown-menu, radio, select, switch and tabs, but not toggle-group. toggle-group.test.tsx (109 lines) has no Arrow, keyboard or focus tests. The toggle-group contract has accessibilityOutcomes but no accessibility pattern binding."
+      }
+    },
+    {
+      "id": "k01-actions-4",
+      "subject": "panel-setting-button",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "An active PanelSettingButton differs from an inactive one only by background and border tint, so in forced-colors mode on and off tiles look identical.",
+      "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.css:58-70; grep -rn forced-colors packages/ui-react/src packages/styles/src returns only a comment at packages/ui-react/src/components/button/button.css:189; no @media (forced-colors) rule exists in the system.",
+      "fix": "Add a forced-colors rule for [data-active] (Highlight border or background) or a non-colour on-state cue such as a check glyph.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "panel-setting-button.css:58-70 makes [data-active] differ only by color-mix tints of action-primary on background, border and foreground. In forced colors, all three become system colours, and the border becomes the same colour as on an inactive tile. No forced-colors rule exists anywhere in the system, so on and off tiles look identical in High Contrast."
+      }
+    },
+    {
+      "id": "k01-actions-5",
+      "subject": "destination-link",
+      "criterion": "K3",
+      "severity": "P1",
+      "summary": "DestinationLink ships no recipe: no class, no link colour or underline, no focus-visible style, no gap before the indicator and no Themes story, so it renders as plain body text in every theme.",
+      "evidence": "No CSS file in packages/ui-react/src/components/destination-link/; apps/storybook/visual/__screenshots__/ui-react-destination-link-external-chromium-linux.png; destination-link.stories.tsx:38-39 'which has no Themes matrix'.",
+      "fix": "Add a .a63-DestinationLink recipe using --a63-text-link (or the link Button tokens), underline in prose, outline focus-visible, logical gap for the indicator, and a Themes story with baselines.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "The destination-link directory holds only tsx, test, stories and index files, with no recipe CSS. The component sets no class on the anchor, only data attributes. The external snapshot shows 'View source' as plain body-coloured text with no underline, and the indicator butts against it with no gap. The stories file comments that the component 'has no Themes matrix'. The contract lists focus-visible as a required state, but the system defines no focus style for it (the only :focus-visible in styles/src is os/windows.css). The component doc calls it 'router-neutral link semantics', which partly explains the bare markup, but a stable contract with visualArchetypes 'action' and a required focus-visible state still ships no visual treatment. P1 stands."
+      }
+    },
+    {
+      "id": "k01-actions-6",
+      "subject": "button",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Button stamps type=\"button\" and a native disabled attribute on whatever element render supplies, so Button-as-link (Pagination) gets an invalid type on <a> and a disabled that does not block navigation.",
+      "evidence": "packages/ui-react/src/components/button/button.tsx:103-104; packages/ui-react/src/components/pagination/pagination.tsx:60-65.",
+      "fix": "Only set type and disabled when the rendered element is a button (Base UI nativeButton pattern); for non-button render, set aria-disabled and drop href handling while disabled.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-7",
+      "subject": "button",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Starting loading sets native disabled, which drops keyboard focus from the button to the page body.",
+      "evidence": "packages/ui-react/src/components/button/button.tsx:56,103; renderer-conformance.test.tsx:178 asserts toBeDisabled while loading.",
+      "fix": "Keep the button focusable while loading (aria-disabled + click guard, Base UI focusableWhenDisabled) and update the conformance expectation.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-8",
+      "subject": "button",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No baseline in this batch captures hover or focus-visible for any component.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-button-states-chromium-linux.png; grep pseudo|focusVisible in component stories finds only textarea.",
+      "fix": "Add a forced-state story (storybook pseudo-states or data attributes) for hover and focus-visible on Button, Toggle, ToggleGroup, ButtonGroup, CopyButton, PanelSettingButton and DestinationLink.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-9",
+      "subject": "button",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Button labels never wrap or truncate (white-space: nowrap, no text-overflow), and no long, CJK or RTL story exists for any action component.",
+      "evidence": "packages/ui-react/src/components/button/button.css:107,262-274; no rtl/long story in button, toggle, toggle-group, button-group stories.",
+      "fix": "Add ellipsis truncation on .a63-Button-label when the button is width-constrained, and add an RTL + long-label + CJK story to each action component.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-10",
+      "subject": "button",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "Button axes do not line up by name across platforms: iOS tone means neutral|muted|primary|destructive while web tone means neutral|muted, and iOS has 4 sizes against 11 on web.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/Generated/AtomComponentIntent.generated.swift:18-32,76-81; atom63 component button contract table.",
+      "fix": "Decide whether iOS should mirror web names (variant + tone) or web adopt tone/emphasis; then document the mapping table in the contract's Web and iOS section.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k01-actions-11",
+      "subject": "button-group",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "ButtonGroupSeparator always defaults to vertical, so a vertical ButtonGroup draws a vertical hairline unless the caller overrides it; and the group's size axis says 'default' where Button says 'md'.",
+      "evidence": "packages/ui-react/src/components/button-group/button-group.tsx:68; contract-consistency-baseline.json 'synonym | button-group.sizes | default -> md'.",
+      "fix": "Read the group orientation from context (as ToggleGroupSeparator does at toggle-group.tsx:98-99) and rename the size value to md with a deprecation alias.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-12",
+      "subject": "button-group",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Docs describe a selected/pressed member fill, but the contract lists only rest and focus-within and no story captures a selected member.",
+      "evidence": "atom63 component button-group (Key tokens: --a63-segment-selected-background); contract states rest, focus-within.",
+      "fix": "Add 'selected' (and hover/focus-visible) to the contract states and a story with an aria-pressed member.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-13",
+      "subject": "button-group",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "No test covers the separator in a vertical group or focus order across members.",
+      "evidence": "packages/ui-react/src/components/button-group/button-group.test.tsx (5 tests).",
+      "fix": "Add tests for vertical separator orientation and Tab order.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-14",
+      "subject": "toggle",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "tone=\"subtle\" shows the pressed state by text colour alone, in Toggle and in the segmented ToggleGroup (which has no subtle rule).",
+      "evidence": "packages/ui-react/src/components/toggle/toggle.css:151-153; toggle-group.css:39-51 has neutral and accent rules only.",
+      "fix": "Add a non-colour cue for subtle pressed (e.g. dot or weight) or a measured 3:1 state contrast, and a segmented subtle rule.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k01-actions-15",
+      "subject": "toggle",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Toggle labels are nowrap and clipped by overflow:hidden with no ellipsis.",
+      "evidence": "packages/ui-react/src/components/toggle/toggle.css:69,90.",
+      "fix": "Add text-overflow: ellipsis on the content span and a long-label story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-16",
+      "subject": "toggle",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The Toggle CLI answer is generated boilerplate with irrelevant guidance and no example, and toggle.mdx lists two tones while the contract has three.",
+      "evidence": "pnpm -s atom63 component <slug> output saved during review ('explain errors beside the affected field'); packages/ui-react/src/components/toggle/toggle.mdx:20.",
+      "fix": "Write real usage guidance and an example into the toggle docs source, and list neutral, accent and subtle.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-17",
+      "subject": "toggle",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Nothing fails when the pressed state is invisible: baselines simply recorded it.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-toggle-themes-chromium-linux.png captured the P0 state.",
+      "fix": "Add a contrast assertion for pressed vs rest (role check or a story-level test) for Toggle, ToggleGroup and PanelSettingButton.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-18",
+      "subject": "toggle-group",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "ToggleGroup takes size and tone props, but its contract declares neither axis, so the CLI and agents cannot see them.",
+      "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.tsx:28-33; packages/ui-foundation/contracts/components/toggle-group.json lists variants, orientations, selectionModes only.",
+      "fix": "Add sizes and tones (referencing the toggle lists) to toggle-group.json and regenerate.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-19",
+      "subject": "toggle-group",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "A neutral selected segment differs from its neighbours by only 1.04-1.17:1 fill contrast in every theme, and hover on an unselected segment does not change its fill.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-togglegroup-themes-chromium-linux.png measured at (126,y) vs (178,y); toggle-group.css:34-37.",
+      "fix": "Decide whether the segmented convention (thumb + label colour) is enough or raise the selected fill contrast; give hover a distinct fill.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k01-actions-20",
+      "subject": "toggle-group",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "The segmented variant neither wraps nor scrolls, so a long bar overflows a phone viewport.",
+      "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.css:7-13 vs button-group.css:19-25.",
+      "fix": "Add max-width:100% and overflow-x:auto to the segmented track, as ButtonGroup does, and a phone story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-21",
+      "subject": "toggle-group",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "AtomGhostToggleGroup uses surfaceMuted for the selected fill where web ghost uses --a63-selected-background, and has no tone or group label.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomGhostToggleGroup.swift:96-99; packages/ui-react/src/components/toggle-group/toggle-group.css:147-153.",
+      "fix": "Use the selected-background token on iOS, add a tone parameter and an accessibility label parameter.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-22",
+      "subject": "copy-button",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "CopyButton discards a caller's aria-label and title because it spreads props before setting its own.",
+      "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:83-95.",
+      "fix": "Spread props last for aria-label/title or derive them from props first (props['aria-label'] ?? ...).",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-23",
+      "subject": "copy-button",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "With default props the success toast reads 'Copy copied to clipboard', and 'Copied!' and the failure message are hard-coded English with no override.",
+      "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:55,73,77,146.",
+      "fix": "Default successMessage to 'Copied to clipboard'; add copiedText and errorMessage props.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-24",
+      "subject": "copy-button",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The copied state and the failure state have no story or baseline.",
+      "evidence": "Story list from atom63 component copy-button.",
+      "fix": "Add a Copied story that renders CopyButtonFeedback copied and a baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-25",
+      "subject": "copy-button",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "For icon-only use the copied outcome is announced only by an aria-label swap and a toast; without a Toaster nothing is announced.",
+      "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:73,84.",
+      "fix": "Render a visually hidden role=status region inside CopyButton for the outcome, independent of the Toaster.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-26",
+      "subject": "destination-link",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "'(opens in new tab)' is hard-coded English, and the external glyph is not mirrored in RTL.",
+      "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx:28,32,83.",
+      "fix": "Add a newTabLabel prop and mirror the indicator under [dir=rtl].",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-27",
+      "subject": "destination-link",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "iOS destination links use bare arrow glyphs the web component explicitly rejected, and the internal snapshot renders greyed as if disabled.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/destinationLink.light.png; packages/ui-react/src/components/destination-link/destination-link.tsx:63-74.",
+      "fix": "Use the same open-in-new and eye symbols on iOS and render the snapshot inside a NavigationStack so the internal link is enabled.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-28",
+      "subject": "panel-setting-button",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "PanelSettingButton never renders its contract slot as data-slot, is controlled-only through a boolean named 'active', and duplicates the tile layout Button now provides as size=\"tile\".",
+      "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.tsx:12-16,23,42; button.tsx:99-101; panel-setting-button.test.tsx:12.",
+      "fix": "Build on Toggle (pressed/defaultPressed/onPressedChange) or Button size=\"tile\", keep data-slot=\"panel-setting-button\" on the root, and deprecate active.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-29",
+      "subject": "panel-setting-button",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The tile's min-height is a literal 4.5rem that ignores density.",
+      "evidence": "panel-setting-button.css:26.",
+      "fix": "Derive it from control height tokens times --a63-density-scale.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-30",
+      "subject": "panel-setting-button",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "A long tile label overflows because it inherits Button nowrap.",
+      "evidence": "button.css:107; panel-setting-button.css:46-49.",
+      "fix": "Set white-space: normal and line clamp on .a63-PanelSettingButton-label.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-31",
+      "subject": "kbd",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "KbdGroup renders a <div>, which is invalid inside a paragraph and causes a hydration error when used inline in text.",
+      "evidence": "packages/ui-react/src/components/kbd/kbd.tsx:19-20.",
+      "fix": "Render KbdGroup as a <kbd> or <span> (shadcn uses <kbd>).",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-32",
+      "subject": "kbd",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "kbd.css branches on dark mode and uses a surface token as text colour; both sit in the craft baseline.",
+      "evidence": "craft-baseline.json entries 'mode-branch | ...kbd.css' and 'token-role | ...kbd.css | color: var(--a63-surface-page)'; kbd.css:50-66.",
+      "fix": "Add a tooltip-scoped keycap token pair (on-overlay fill and foreground) per mode in the token source and drop the mode selector.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-33",
+      "subject": "kbd",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Symbol keycaps such as ⌘ have no accessible name guidance and are read as 'place of interest sign'.",
+      "evidence": "packages/ui-react/src/components/kbd/kbd.tsx; CLI answer has no naming guidance.",
+      "fix": "Document and support aria-label/title on symbol keys (e.g. <Kbd aria-label=\"Command\">⌘</Kbd>) with a story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-34",
+      "subject": "toggle",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Generated CLI guidance for toggle-group, copy-button, destination-link, panel-setting-button and kbd contains boilerplate that does not apply (form errors, reduced-motion members, destructive behaviour) and no runnable example.",
+      "evidence": "pnpm -s atom63 component <slug> output saved during review for each slug.",
+      "fix": "Write component-specific guidance and one example per component in the docs source the CLI reads.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-35",
+      "subject": "AtomIconButton (iOS)",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AtomIconButton still takes the deprecated variant and has no shape or size, so round and small icon buttons cannot be built with it.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomIconButton.swift:10-36.",
+      "fix": "Add tone/emphasis, shape and size parameters, deprecate variant, and make the loading label a parameter.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-36",
+      "subject": "AtomToggle (iOS)",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AtomToggle is a switch, while web Toggle is a pressed button mapped to AtomChip; the same name means two different controls.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToggle.swift:52 (.toggleStyle(.switch)); toggle.json crossRenderer swiftUIRenderer AtomChip.",
+      "fix": "Decide whether to rename AtomToggle to AtomSwitch (with a deprecated alias) or document the mismatch in both contracts.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k01-actions-37",
+      "subject": "AtomButton (iOS)",
+      "criterion": "K10",
+      "severity": "P3",
+      "summary": "AtomButton's icon-size comment claims parity with a web min-target floor that the web recipe removed; iOS icon buttons render at 44pt, web at 32px.",
+      "evidence": "AtomButton.swift minimumHeight .icon comment vs button.css:630-638.",
+      "fix": "Align the comment and decide which platform's icon height is canonical.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-38",
+      "subject": "destination-link",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "DestinationIndicator accepts only className and kind and does not spread other props.",
+      "evidence": "destination-link.tsx:76-82.",
+      "fix": "Accept and spread span props.",
+      "kind": "fix"
+    },
+    {
+      "id": "k01-actions-39",
+      "subject": "button",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "The CLI's Button size table omits tile and the icon-* sizes that the contract lists.",
+      "evidence": "atom63 component button: table rows xs..xl only.",
+      "fix": "Add the missing rows to the docs source.",
+      "kind": "fix"
+    }
+  ]
+}
