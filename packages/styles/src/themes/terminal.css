@@ -183,3 +183,107 @@
   --a63-toggle-on-background: var(--a63-text-primary);
   --a63-toggle-on-foreground: var(--a63-surface-page);
 }
+
+[data-a63-theme='terminal']:is([data-a63-brand], [data-a63-surface]),
+[data-a63-theme='terminal'] :is([data-a63-brand], [data-a63-surface]) {
+  /* The mode roles again, on scopes that change what they read, keyed to the nearest mode scope. */
+  --a63-text-primary: var(--a63-if-light, color-mix(in oklch, var(--a63-action-primary) 70%, black))
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 62%, white));
+  --a63-text-secondary: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-primary) 52%, black)
+    )
+    var(--a63-if-dark, color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11)));
+  --a63-text-tertiary: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-primary) 80%, black)
+    )
+    var(--a63-if-dark, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)));
+  --a63-border-control: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--a63-action-primary) 26%,
+        color-mix(in oklab, var(--surface-light-5) 60%, white)
+      )
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 42%, transparent));
+  --a63-border-input: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--a63-action-primary) 70%, var(--surface-light-10))
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-text-accent) 60%, transparent));
+  --a63-border-subtle: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--a63-action-primary) 16%,
+        color-mix(in oklab, var(--surface-light-6) 50%, white)
+      )
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 22%, transparent));
+  --a63-surface-page: var(--a63-if-light, color-mix(in oklab, var(--surface-light-1) 60%, white))
+    var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-1) 92%, var(--a63-action-primary)));
+  --a63-surface-panel: var(--a63-if-light, color-mix(in oklab, var(--surface-light-2) 60%, white))
+    var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-2) 92%, var(--a63-action-primary)));
+  --a63-field-background: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--surface-light-2) 86%, var(--a63-action-primary))
+    )
+    var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-1) 90%, var(--a63-action-primary)));
+  --a63-action-neutral: var(--a63-if-light, color-mix(in oklab, var(--surface-light-3) 60%, white))
+    var(
+      --a63-if-dark,
+      color-mix(in oklab, var(--surface-dark-3) 86%, var(--a63-action-primary) 14%)
+    );
+  --a63-action-neutral-foreground: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--a63-action-primary) 80%, var(--surface-light-12))
+    )
+    var(--a63-if-dark, var(--a63-text-accent));
+  --a63-weather-background-color: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-primary) 34%, white 66%)
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 22%, black 78%));
+  --a63-weather-background-image: var(
+      --a63-if-light,
+      linear-gradient(color-mix(in oklch, var(--a63-action-primary) 18%, transparent), transparent),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--a63-action-primary) 48%, white 52%),
+        color-mix(in oklch, var(--a63-action-primary) 36%, white 64%)
+      )
+    )
+    var(
+      --a63-if-dark,
+      linear-gradient(color-mix(in oklch, var(--a63-action-primary) 12%, transparent), transparent),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--a63-action-primary) 30%, black 70%),
+        color-mix(in oklch, var(--a63-action-primary) 16%, black 84%)
+      )
+    );
+  --a63-weather-foreground: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--a63-action-primary) 82%, var(--surface-light-12))
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 26%, white 74%));
+  --a63-weather-muted-foreground: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--a63-action-primary) 58%, var(--surface-light-10))
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-text-accent) 54%, white 46%));
+  --a63-weather-divider-color: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-primary) 38%, transparent)
+    )
+    var(--a63-if-dark, color-mix(in oklch, var(--a63-action-primary) 36%, transparent));
+  --a63-weather-text-shadow: var(
+      --a63-if-light,
+      0 0 10px color-mix(in oklch, var(--a63-action-primary) 22%, transparent)
+    )
+    var(--a63-if-dark, 0 0 8px color-mix(in oklch, var(--a63-action-primary) 38%, transparent));
+  --a63-toggle-on-background: var(--a63-text-primary);
+  --a63-toggle-on-foreground: var(--a63-surface-page);
+}
