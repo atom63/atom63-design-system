@@ -3,7 +3,7 @@
  * Faithful to prod @atom63/ui field.tsx (flex column stacks, orientation
  * variants, invalid-state recolor, muted description, destructive error) but
  * spaced/colored with --a63-* semantic tokens. No new tokens: muted text →
- * --a63-text-secondary, destructive → --a63-action-danger, container-query
+ * --a63-text-secondary, destructive → --a63-text-danger, container-query
  * responsive orientation keyed off .a63-FieldGroup as the @container.
  */
 

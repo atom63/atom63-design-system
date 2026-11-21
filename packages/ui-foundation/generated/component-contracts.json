@@ -292,6 +292,26 @@
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },
+    "art-plate": {
+      "source": "packages/ui-foundation/contracts/components/art-plate.json",
+      "exportName": "artPlateContract",
+      "maturity": "preview",
+      "description": "A full-bleed picture that owns its crop: a responsive image (art-directed phone source, focal point per breakpoint) behind a content region placed in the picture's calm area. For a landing hero, a section band or a portfolio cover; not for inline figures (use Image) or cards (use Card media). Parallax is CSS scroll-driven, transform only, and off under reduced motion. Preview until its stable evidence is recorded.",
+      "axes": [
+        { "name": "sizes", "values": ["viewport", "band", "card"], "default": "viewport" },
+        {
+          "name": "safeAreas",
+          "values": ["top", "bottom", "center", "start", "end"],
+          "default": "top"
+        },
+        { "name": "tones", "values": ["page", "media"], "default": "page" },
+        { "name": "veils", "values": ["none", "soft", "strong"], "default": "none" }
+      ],
+      "slots": ["art-plate", "art-plate-image", "art-plate-content"],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
     "autocomplete": {
       "source": "packages/ui-foundation/contracts/components/autocomplete.json",
       "exportName": "autocompleteContract",

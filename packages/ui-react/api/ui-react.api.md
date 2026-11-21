@@ -14,6 +14,10 @@ import { AlertVariant } from '@atom63/ui-foundation';
 import { AmountFraction } from '@atom63/ui-foundation';
 import { AmountSize } from '@atom63/ui-foundation';
 import { AnimatedCheckVariant } from '@atom63/ui-foundation';
+import { ArtPlateSafeArea } from '@atom63/ui-foundation';
+import { ArtPlateSize } from '@atom63/ui-foundation';
+import { ArtPlateTone } from '@atom63/ui-foundation';
+import { ArtPlateVeil } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { AutocompleteSize } from '@atom63/ui-foundation';
 import { AutocompleteSizeAlias } from '@atom63/ui-foundation';
@@ -297,6 +301,35 @@ export interface AnimatedCheckProps extends Omit<React$1.ComponentProps<'svg'>, 
     animate?: boolean;
     variant?: AnimatedCheckVariant;
 }
+
+// @public
+export function ArtPlate(input: ArtPlateProps): React$1.ReactElement;
+
+// @public
+export interface ArtPlateFocus {
+    // (undocumented)
+    x: number;
+    // (undocumented)
+    y: number;
+}
+
+// @public (undocumented)
+export type ArtPlateProps = Omit<React$1.ComponentProps<'div'>, 'children'> & {
+    alt: string;
+    children?: React$1.ReactNode;
+    focus?: ArtPlateFocus;
+    focusMobile?: ArtPlateFocus;
+    parallax?: boolean;
+    priority?: boolean;
+    safeArea?: ArtPlateSafeArea;
+    size?: ArtPlateSize;
+    sizes?: string;
+    src: string;
+    srcSet?: string;
+    srcMobile?: string;
+    tone?: ArtPlateTone;
+    veil?: ArtPlateVeil;
+};
 
 // @public (undocumented)
 export const ATOM63_FLYOUT_TRANSITION: {

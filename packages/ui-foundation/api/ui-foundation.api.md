@@ -542,6 +542,89 @@ export type AppViewVisualArchetype = (typeof appViewVisualArchetypes)[number];
 export const appViewVisualArchetypes: readonly ["surface"];
 
 // @public (undocumented)
+export interface ArtPlateContract {
+    // (undocumented)
+    defaultSafeArea: ArtPlateSafeArea;
+    // (undocumented)
+    defaultSize: ArtPlateSize;
+    // (undocumented)
+    defaultTone: ArtPlateTone;
+    // (undocumented)
+    defaultVeil: ArtPlateVeil;
+    // (undocumented)
+    safeAreas: readonly ArtPlateSafeArea[];
+    // (undocumented)
+    sizes: readonly ArtPlateSize[];
+    // (undocumented)
+    slots: readonly ArtPlateSlot[];
+    // (undocumented)
+    states: readonly ArtPlateState[];
+    // (undocumented)
+    tones: readonly ArtPlateTone[];
+    // (undocumented)
+    veils: readonly ArtPlateVeil[];
+    // (undocumented)
+    visualArchetypes: readonly ArtPlateVisualArchetype[];
+}
+
+// @public (undocumented)
+export const artPlateContract: {
+    defaultSize: "viewport";
+    defaultSafeArea: "top";
+    defaultTone: "page";
+    defaultVeil: "none";
+    sizes: readonly ["viewport", "band", "card"];
+    safeAreas: readonly ["top", "bottom", "center", "start", "end"];
+    tones: readonly ["page", "media"];
+    veils: readonly ["none", "soft", "strong"];
+    slots: readonly ["art-plate", "art-plate-image", "art-plate-content"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type ArtPlateSafeArea = (typeof artPlateSafeAreas)[number];
+
+// @public (undocumented)
+export const artPlateSafeAreas: readonly ["top", "bottom", "center", "start", "end"];
+
+// @public (undocumented)
+export type ArtPlateSize = (typeof artPlateSizes)[number];
+
+// @public (undocumented)
+export const artPlateSizes: readonly ["viewport", "band", "card"];
+
+// @public (undocumented)
+export type ArtPlateSlot = (typeof artPlateSlots)[number];
+
+// @public (undocumented)
+export const artPlateSlots: readonly ["art-plate", "art-plate-image", "art-plate-content"];
+
+// @public (undocumented)
+export type ArtPlateState = (typeof artPlateStates)[number];
+
+// @public (undocumented)
+export const artPlateStates: readonly ["rest"];
+
+// @public (undocumented)
+export type ArtPlateTone = (typeof artPlateTones)[number];
+
+// @public (undocumented)
+export const artPlateTones: readonly ["page", "media"];
+
+// @public (undocumented)
+export type ArtPlateVeil = (typeof artPlateVeils)[number];
+
+// @public (undocumented)
+export const artPlateVeils: readonly ["none", "soft", "strong"];
+
+// @public (undocumented)
+export type ArtPlateVisualArchetype = (typeof artPlateVisualArchetypes)[number];
+
+// @public (undocumented)
+export const artPlateVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
 export interface AutocompleteContract {
     // (undocumented)
     defaultSize: AutocompleteSize;
@@ -5880,7 +5963,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate"];
         readonly contracts: readonly ["surface"];
     };
 };

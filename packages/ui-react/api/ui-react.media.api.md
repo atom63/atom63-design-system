@@ -11,7 +11,7 @@ import { ReactNode } from 'react';
 import { VideoHTMLAttributes } from 'react';
 
 // @public (undocumented)
-export type AspectRatio = 'auto' | '1/1' | '4/3' | '3/4' | '16/9' | '9/16' | '2/3' | '3/2' | '5/4' | '21/9' | '9/21';
+export type AspectRatio = 'auto' | 'fill' | '1/1' | '4/3' | '3/4' | '16/9' | '9/16' | '2/3' | '3/2' | '5/4' | '21/9' | '9/21';
 
 // @public (undocumented)
 export const clearImageAnimationCache: () => void;
@@ -57,10 +57,23 @@ export interface ImageProps extends React.HTMLAttributes<HTMLDivElement> {
     rootMargin?: string;
     // (undocumented)
     showSkeleton?: boolean;
+    sizes?: string;
     // (undocumented)
     skeletonClassName?: string;
+    sources?: ImageSource[];
     // (undocumented)
     src?: string;
+    srcSet?: string;
+}
+
+// @public
+export interface ImageSource {
+    media?: string;
+    // (undocumented)
+    sizes?: string;
+    // (undocumented)
+    srcSet: string;
+    type?: string;
 }
 
 // @public
@@ -355,7 +368,7 @@ export interface VideoThumbnailProps {
 
 // Warnings were encountered during analysis:
 //
-// dist/media/index.d.ts:59:5 - (ae-forgotten-export) The symbol "ExcludeRef" needs to be exported by the entry point index.d.ts
+// dist/media/index.d.ts:80:5 - (ae-forgotten-export) The symbol "ExcludeRef" needs to be exported by the entry point index.d.ts
 
 // (No @packageDocumentation comment for this package)
 

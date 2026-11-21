@@ -29,7 +29,28 @@ export const clearImageAnimationCache = () => animatedImagesCache.clear()
 
 // Supported aspect ratios for the Image component
 export type AspectRatio =
-  'auto' | '1/1' | '4/3' | '3/4' | '16/9' | '9/16' | '2/3' | '3/2' | '5/4' | '21/9' | '9/21'
+  | 'auto'
+  | 'fill'
+  | '1/1'
+  | '4/3'
+  | '3/4'
+  | '16/9'
+  | '9/16'
+  | '2/3'
+  | '3/2'
+  | '5/4'
+  | '21/9'
+  | '9/21'
+
+/** One art-directed `<source>` of a responsive image. */
+export interface ImageSource {
+  /** Media query that selects this source, such as `(max-width: 767px)`. */
+  media?: string
+  sizes?: string
+  srcSet: string
+  /** MIME type, such as `image/avif`. */
+  type?: string
+}
 
 export interface ImageProps extends React.HTMLAttributes<HTMLDivElement> {
   alt?: string
@@ -49,10 +70,30 @@ export interface ImageProps extends React.HTMLAttributes<HTMLDivElement> {
   rootMargin?: string
   showSkeleton?: boolean
   skeletonClassName?: string
+  /**
+   * Layout width of the image for the browser to pick a `srcSet` candidate,
+   * such as `100vw`. Used with `srcSet` or `sources`.
+   */
+  sizes?: string
+  /**
+   * Art-directed sources, tried in order before `src`. Passing `sources` or
+   * `srcSet` renders a native `<picture>`/`<img>` with native lazy loading.
+   */
+  sources?: ImageSource[]
   src?: string
+  /** Width candidates for `src`, such as `plate-960.webp 960w, plate-1920.webp 1920w`. */
+  srcSet?: string
 }
 
-export const Image = ({
+export const Image = ({ sizes, sources, srcSet, ...props }: ImageProps) =>
+  props.src && (srcSet || sources?.length) ? (
+    <ResponsiveImage {...props} sizes={sizes} sources={sources} src={props.src} srcSet={srcSet} />
+  ) : (
+    <LoadedImage {...props} />
+  )
+
+/** The JS-preloaded path: one `src`, revealed once it has decoded. */
+const LoadedImage = ({
   src,
   alt,
   className,
@@ -72,7 +113,7 @@ export const Image = ({
   decoding = 'async',
   fetchPriority = 'auto',
   ...props
-}: ImageProps) => {
+}: Omit<ImageProps, 'sizes' | 'sources' | 'srcSet'>) => {
   const [isLoading, setIsLoading] = useState(true)
   const [hasError, setHasError] = useState(false)
   const [imageSrc, setImageSrc] = useState<string | null>(null)
@@ -175,6 +216,9 @@ export const Image = ({
           return 'aspect-[4/3]'
         }
         return '' // No aspect ratio constraint - use natural dimensions
+      }
+      case 'fill': {
+        return ''
       }
       case '1/1': {
         return 'aspect-square'
@@ -385,6 +429,99 @@ const ImageDisplay = memo(ImageDisplayComponent, (prevProps, nextProps) => {
     prevProps.reducedMotion === nextProps.reducedMotion
   )
 })
+
+type ResponsiveImageProps = ImageProps & { src: string }
+
+/**
+ * The native path for `srcSet` and `sources`: a `<picture>` the browser
+ * resolves itself, so the right candidate loads, and the image can be the
+ * page's LCP element. `lazy` maps to `loading="lazy"`.
+ */
+const ResponsiveImage = ({
+  src,
+  srcSet,
+  sizes,
+  sources,
+  alt,
+  aspectRatio = '16/9',
+  className,
+  containerClassName,
+  imageClassName,
+  lazy = true,
+  priority,
+  forceNoLazy,
+  fallbackText: _fallbackText,
+  rootMargin: _rootMargin,
+  decoding = 'async',
+  fetchPriority = 'auto',
+  errorText = 'Failed to load image',
+  showSkeleton = true,
+  skeletonClassName,
+  onLoad,
+  onError,
+  style,
+  ...props
+}: ResponsiveImageProps) => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [hasError, setHasError] = useState(false)
+  const natural = aspectRatio === 'auto'
+  const ratioStyle =
+    natural || aspectRatio === 'fill' ? undefined : { aspectRatio: aspectRatio.replace('/', ' / ') }
+
+  return (
+    <div
+      className={cn('relative', !natural && 'overflow-hidden', className, containerClassName)}
+      style={{ ...ratioStyle, ...style }}
+      {...props}
+    >
+      {isLoading && showSkeleton && !hasError && (
+        <Skeleton className={cn('absolute inset-0 h-full w-full', skeletonClassName)} />
+      )}
+      {hasError ? (
+        <div className="absolute inset-0 flex items-center justify-center bg-muted p-8">
+          <span className="text-sm text-muted-foreground">{errorText}</span>
+        </div>
+      ) : (
+        <picture>
+          {sources?.map(source => (
+            <source
+              key={`${source.media ?? ''}|${source.type ?? ''}|${source.srcSet}`}
+              media={source.media}
+              sizes={source.sizes}
+              srcSet={source.srcSet}
+              type={source.type}
+            />
+          ))}
+          <img
+            alt={alt ?? ''}
+            className={cn(
+              natural ? 'h-auto w-full' : 'absolute inset-0 h-full w-full object-cover',
+              imageClassName
+            )}
+            decoding={decoding}
+            fetchPriority={fetchPriority}
+            loading={lazy && !priority && !forceNoLazy ? 'lazy' : 'eager'}
+            onError={() => {
+              setIsLoading(false)
+              if (onError) {
+                onError()
+                return
+              }
+              setHasError(true)
+            }}
+            onLoad={() => {
+              setIsLoading(false)
+              onLoad?.()
+            }}
+            sizes={sizes}
+            src={src}
+            srcSet={srcSet}
+          />
+        </picture>
+      )}
+    </div>
+  )
+}
 
 // Export a default version for easier imports
 export default Image

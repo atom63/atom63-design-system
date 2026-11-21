@@ -87,6 +87,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
       'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen. A window takes chrome="flush" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region. For a multi-pane app, add rail (an icon column before the panel), aside (a thread or details pane after the main region, from lg up) and topBarSpan="main" (the top bar starts after the panel, which runs full height).',
     usageExports: ['AppView'],
   },
+  'art-plate': {
+    relatedSlugs: ['card', 'frame', 'progressive-blur'],
+    summary:
+      'Art Plate shows a full-bleed picture that owns its crop and keeps a safe area for headline and product UI.',
+    usage:
+      'Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.',
+    usageExports: ['ArtPlate'],
+  },
   autocomplete: {
     relatedSlugs: ['input', 'command', 'select'],
     summary: 'Autocomplete combines text entry with a filtered, keyboard-navigable collection.',
@@ -829,6 +837,7 @@ export const componentCatalogGroups = [
       'alert',
       'amount',
       'app-view',
+      'art-plate',
       'avatar',
       'badge',
       'card',

@@ -11,6 +11,7 @@ Runnable adopter example: [`examples/vite-basic`](../../examples/vite-basic).
 Current direction and progress: [roadmap.md](./roadmap.md) (phases A–E, done),
 [roadmap-next.md](./roadmap-next.md) (next phase, draft) and
 [token-single-source.md](./token-single-source.md) (DTCG as the only token source).
+Key decisions and their trade-offs: [architecture decision records](./adr/README.md).
 
 ## What this system is
 

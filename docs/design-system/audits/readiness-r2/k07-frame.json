@@ -1,0 +1,457 @@
+{
+  "scope": "layer3-batch7-app-frame-and-data",
+  "reviewedAt": "2026-11-20",
+  "round": 2,
+  "subjects": [
+    {
+      "subject": "app-view",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 3, "evidence": "packages/ui-react/src/components/app-view/app-view.tsx:11-35 props layout/chrome/topBarSpan match appViewContract axes (pnpm -s atom63 component app-view: layouts window|phone, chromes inset|flush, topBarSpans window|main); defaults read from appViewContract (:96,:98,:109); rest props and ref spread on root (:147). Not a composition part, so no render/asChild needed." },
+        { "criterion": "K2", "score": 2, "evidence": "app-view.tsx:91-104 default landmark names are product-specific: panelLabel='Library', bottomBarLabel='Player', railLabel='Navigation', asideLabel='Details'. Any non-music app that omits them ships an aside landmark named 'Library' and a region named 'Player'. Rail, panel and aside always get tabIndex=0 (:124,:130,:153,:159) even when they do not scroll. Focus ring is an inset outline (app-view.css:87-93)." },
+        { "criterion": "K3", "score": 3, "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-appview-rail-panel-and-aside-chromium-linux.png: clean flush three-column frame, sidebar surface for rail/panel, hairline splits; templates-pages-app-view-themes-chromium-linux.png covers 4 themes x 2 modes." },
+        { "criterion": "K4", "score": 3, "evidence": "Structural frame; the applicable states are its region combinations, each with a baseline: ui-react-appview-{flush,phone-with-docked-bar,phone-with-overlay,phone-with-tab-bar,with-rail,with-aside,top-bar-over-main,rail-panel-and-aside}-chromium-linux.png. Focus-visible on scroll regions is not captured." },
+        { "criterion": "K5", "score": 3, "evidence": "No size axis. Density is delegated to UIProvider density=\"compact\" (app-view.tsx:86-87); layout='phone' stamps data-a63-form-factor='phone' (:139) which raises controls to 44px (control-height tokens, atom63 token --a63-control-height-lg phone row). Widths are caller-set lengths (:115-119)." },
+        { "criterion": "K6", "score": 3, "evidence": "app-view.css uses logical properties throughout (inset-inline-end :~99, border-inline-end/start, padding-inline); rail/panel/main/aside are in DOM reading order so they mirror. No RightToLeft story or baseline to prove it." },
+        { "criterion": "K7", "score": 4, "evidence": "Phone layout with three phone baselines (ui-react-appview-phone-with-*), templates-pages-app-view-edge-to-edge-phone baseline, and a test that pins one owner per safe-area inset (app-view.test.tsx:50 'gives the bottom inset to the tab bar, else the docked bar, else the main region'); app-view.css:10-16 inset variables." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component app-view: import line, specific guidance (phone, flush, panelWidth, rail, aside, topBarSpan), contract table, 9 examples. Docs do not warn that the default region names are 'Library'/'Player'." },
+        { "criterion": "K9", "score": 3, "evidence": "app-view.test.tsx: 11 behaviour tests (regions, insets, widths, span, phone omissions); 9 visual baselines; SSR via apps/storybook/ssr/ssr.test.tsx renders every story." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    },
+    {
+      "subject": "sidebar",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 2, "evidence": "sidebar.tsx:260 on mobile spreads the Sidebar's div props onto <Sheet> (a non-DOM root), so className, id, aria-*, style and ref are dropped on phones while the desktop path puts them on the container (:297-304) and collapsible='none' on the static div (:250). Contract axis 'sides' is physical left|right (contracts/components/sidebar.json:7) while Sheet/others use inline-start/inline-end (sidebar.tsx:607). Controlled/uncontrolled open works (:139-166, test :168)." },
+        { "criterion": "K2", "score": 2, "evidence": "Active item is drawn only by background (sidebar.css:466-470, sub button :716) and the file has no @media (forced-colors: active) rule (grep -c forced-colors sidebar.css = 0), unlike the 11 recipes pinned in src/styles/recipes.test.ts:394-413; aria-current is set (test :307). Collapsed offcanvas is inert (sidebar.tsx:301, test :277). Mobile Sheet title/description hardcoded English 'Sidebar' / 'Displays the mobile sidebar.' (:276-277), not overridable." },
+        { "criterion": "K3", "score": 3, "evidence": "Provisional. ui-react-sidebar-themes-chromium-linux.png: calm muted rail, active plate legible in all 8 cells; archetype expression is modest (retro bevelled input, terminal mono/blue)." },
+        { "criterion": "K4", "score": 3, "evidence": "Baselines: collapsible, icon-rail, menu-button-tones (active neutral/accent), variants, dark-sidebar, endpoints; skeleton part exists. Hover/focus-visible not captured." },
+        { "criterion": "K5", "score": 3, "evidence": "Menu buttons size via max(control-height * density, --a63-control-min-size) (sidebar.css:447-450, 497-513); menu/group actions are --a63-control-min-target wide (:384, :565), 2.75rem on touch (atom63 token --a63-control-min-target)." },
+        { "criterion": "K6", "score": 1, "evidence": "No RTL handling in sidebar.css or sidebar.tsx (grep 'rtl|dir(' returns nothing). Desktop collapsible sidebar positions its fixed container physically (sidebar.css:166-176 left:0 / right:0) while the in-flow gap element (sidebar.tsx:296) lands at inline-start inside the flex wrapper (sidebar.css:36-40). Under dir=rtl with the default side='left' the gap reserves space on the right and the fixed panel sits on the left, over the main content; the inset variant's margin-inline-start:0 (:285-293) assumes the sidebar is at inline-start. The only RTL story uses collapsible='none' (sidebar.stories.tsx:210), which skips the fixed container, so ui-react-sidebar-right-to-left-chromium-linux.png does not exercise the default path." },
+        { "criterion": "K7", "score": 3, "evidence": "Below md it renders a Sheet (sidebar.tsx:259-281); ui-react-sidebar-dark-sidebar-phone-chromium-linux.png at 390px; test 'portals the mobile sheet into PortalContainerProvider' (sidebar.test.tsx:182)." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component sidebar: specific guidance (provider, md breakpoint, dark sidebar via UIProvider, asChild rule), 24 exports, contract table, 12 examples. Nothing on RTL (what side to pass)." },
+        { "criterion": "K9", "score": 3, "evidence": "sidebar.test.tsx: 15 tests (shortcut incl. editable targets, cookie only when uncontrolled, render/asChild, inert collapse, aria-current, mobile portal); 12 baselines; SSR smoke. No test of the desktop layout under dir=rtl." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    },
+    {
+      "subject": "sidebar-nav-tree",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 2, "evidence": "sidebar-nav-tree.tsx:77-86, 128-152, 213-228, 285-293, 319-322: every part has a closed props interface (className only), so id, data-*, aria-* and ref cannot be passed. SidebarNavCollapsibleItem requires open and onOpenChange (:224-225) and passes them straight to Collapsible (:246), so there is no uncontrolled mode (SidebarNavGroup has one, :106-110). render/child link composition does merge props and ref (test :75)." },
+        { "criterion": "K2", "score": 3, "evidence": "Group fold is a native button with aria-expanded via CollapsibleTrigger (:117-125); section toggle is not aria-current (:265-266, test :236). The link-row toggle's name flips 'Expand X'/'Collapse X' (:254) on top of aria-expanded, so state is announced twice; current item inherits Sidebar's colour-only active plate with no forced-colors rule." },
+        { "criterion": "K3", "score": 3, "evidence": "Provisional. ui-react-sidebarnavtree-themes-chromium-linux.png and -tones-: consistent rows, chevrons and indents across themes." },
+        { "criterion": "K4", "score": 3, "evidence": "Baselines: collapsible-groups (expanded/collapsed), tones (current neutral/accent), section-without-link, link-props. Hover and focus-visible not captured." },
+        { "criterion": "K5", "score": 3, "evidence": "Rows use SidebarMenuButton/SubButton size='sm' (:197, :269, :300), which floor at --a63-control-min-size; toggles inherit the Sidebar menu-action min-target." },
+        { "criterion": "K6", "score": 2, "evidence": "Toggle name is hardcoded English `${open ? 'Collapse' : 'Expand'} ${label}` (sidebar-nav-tree.tsx:254) with no label prop, so a localized nav reads English. Every string label is wrapped in TextTicker variant='marquee' (:37-41, :176-180, :277-279), which inherits TextTicker's RTL scroll defect (see text-ticker K6). No RTL story among the 8 stories." },
+        { "criterion": "K7", "score": 2, "evidence": "No phone story (grep viewport|phone|mobile in sidebar-nav-tree.stories.tsx = 0). Long labels are truncated and revealed only by the hover/focus TextTicker (text-ticker.css:61-82), so a touch user can never read a truncated label." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component sidebar-nav-tree: specific guidance on href/icon/render and the ref rule, contract, 8 examples." },
+        { "criterion": "K9", "score": 3, "evidence": "sidebar-nav-tree.test.tsx: 11 tests (render link, child link, fold, controlled group, trigger-only section, aria-current); 8 baselines; SSR smoke." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    },
+    {
+      "subject": "table",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 3, "evidence": "table.tsx:21-51 size/tone/variant match the contract (sizes md|sm with deprecated alias default->md mapped at :43; tones; variants) and sticky start|end on Head/Cell (:77-105). Props and ref spread on each native element. The scroll container (:41-47) takes no props: no way to name it or give it a ref." },
+        { "criterion": "K2", "score": 2, "evidence": "Selected row is drawn only by background (table.css:96-99, frame :248-253) with no forced-colors rule, so row selection disappears in Windows High Contrast. The overflow-x container (table.css:27) is not focusable (table.tsx:41-47 no tabIndex/role/label), so a wide table cannot be scrolled from the keyboard in browsers that do not auto-focus scrollers. Semantic table/thead/th preserved." },
+        { "criterion": "K3", "score": 3, "evidence": "Provisional. ui-react-table-themes-chromium-linux.png: framed card, quiet header, legible selected tint in 8 cells. The Amount column is start-aligned with proportional figures; Table has no numeric-column treatment." },
+        { "criterion": "K4", "score": 3, "evidence": "Selected captured (themes, tones baselines), sticky (sticky-columns), dense with actions; hover not captured; no empty state in the component (templates-blocks-data-table-section-no-results-chromium-linux.png covers it at block level)." },
+        { "criterion": "K5", "score": 2, "evidence": "md size uses literal lengths that ignore density: head height 2.5rem (table.css:59), padding-inline 0.625rem (:60), cell padding 0.625rem (:75). Only size='sm' reads --a63-row-padding-block-xs (:115), so UIProvider density='compact' leaves a default table unchanged." },
+        { "criterion": "K6", "score": 3, "evidence": "text-align:start (:61), sticky via inset-inline-start/end (:166-189), frame radii logical (:268-279). All cells are white-space:nowrap (:65, :78) with no wrap/truncate option, so long or CJK strings only scroll." },
+        { "criterion": "K7", "score": 3, "evidence": "Phone form-factor rule keeps row controls in flow (table.css:124-148); templates-blocks-data-table-section-phone-chromium-linux.png at phone width. No phone story on the component itself." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component table: specific dense-table guidance (size='sm', 33px rows, icon-xs menus), contract, 11 examples." },
+        { "criterion": "K9", "score": 3, "evidence": "table.test.tsx: 5 tests (tone, slots, className merge, size/variant defaults, sticky); 11 baselines; SSR smoke." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    },
+    {
+      "subject": "calendar",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 2, "evidence": "calendar.tsx:115-123 builds mergedClassNames only from the keys in defaultClassNames; classNames is destructured out of props (:86) so any other DayPicker key the caller passes (root, selected, disabled, week, weekdays, month_grid, range_*) is silently dropped. mode defaults to the contract's single (:89); DayPicker props otherwise pass through." },
+        { "criterion": "K2", "score": 2, "evidence": "Day names include the full date (calendar.tsx:65-70, test :90) and weekday aria-label fix (:77-82). But selected and range days are drawn only by background (calendar.css:204-214) with no forced-colors rule (grep = 0), so the selection is invisible in forced colors. The day focus ring is the focus colour at 50% alpha (calendar.css:243-244), weaker than every other control ring and likely under 3:1 against the selected fill." },
+        { "criterion": "K3", "score": 3, "evidence": "Provisional. ui-react-calendar-themes-chromium-linux.png: tidy grid and brand selected fill; modern, aqua and retro cells are visually identical (only terminal changes font/colour), so the declared archetypes (surface, action, choice) barely show per theme." },
+        { "criterion": "K4", "score": 3, "evidence": "Baselines: selected+today (themes), range start/middle/end (ui-react-calendar-range-chromium-linux.png), dropdown caption, multiple months, outside days. Disabled has a test (calendar.test.tsx:59) but no baseline named for it; hover/focus not captured." },
+        { "criterion": "K5", "score": 2, "evidence": "--cell-size = max(--a63-control-height-lg * density, --a63-control-min-size) (calendar.css:11-14). control-height-lg = space-unit*9 = 36px outside the phone form factor and control-min-size is 2rem on touch (atom63 token output), so on a coarse-pointer tablet the day buttons are 36px with no hit-area extension, under the bar's 44px." },
+        { "criterion": "K6", "score": 2, "evidence": "formatMonthDropdown uses toLocaleString('default', ...) (calendar.tsx:155), ignoring the locale prop; day labels append English 'Today, ' / ', selected' (:67-68). Chevrons mirror only via a [dir='rtl'] ancestor (calendar.css:106-108) while react-day-picker swaps arrow keys and around-layout chevrons only from its own dir prop (react-day-picker 10.0.2 DayPicker.js:178-182, 270, 297), so dir on <html> alone leaves arrow keys reversed and navLayout='around' with dir='rtl' double-flips. No RTL story." },
+        { "criterion": "K7", "score": 2, "evidence": "No phone story among 7 calendar stories (grep viewport|phone = 0); combined with K5 the touch size is unverified at 390px." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component calendar: import from @atom63/ui-react/calendar, contract, states, examples. Guidance is generic form boilerplate ('Pair controls with persistent labels...') with nothing on popover/date-field composition or locale." },
+        { "criterion": "K9", "score": 3, "evidence": "calendar.test.tsx: 9 tests (slot, classNames merge for a known key, selection, disabled, outside days, day names, weekday labels); 7 baselines; SSR smoke. No range-mode or keyboard test." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    },
+    {
+      "subject": "carousel",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 2, "evidence": "carousel.tsx:248-250 ref={containerRef} precedes {...props}, so a caller ref replaces the internal ref and the direction read (:90-93) and cursor geometry (:165-166) stop working. CarouselPrevious/Next put onClick={scrollPrev/Next} and disabled before {...props} (:361-364, :384-387), so a caller onClick (analytics) replaces navigation. dotShapes/dotTones/orientation map to the contract." },
+        { "criterion": "K2", "score": 2, "evidence": "Arrow keys are handled in the capture phase on the whole region and preventDefault'd (carousel.tsx:129-143, 244): ArrowLeft/Right inside an input in a slide no longer move the caret, and a vertical carousel uses Left/Right instead of Up/Down. Dots draw only a ::before background (carousel.css:192-208) with no forced-colors rule, so all dots vanish in forced colors. Region/slide roledescriptions and named dots are present; slides have no default 'n of m' name." },
+        { "criterion": "K3", "score": 3, "evidence": "Provisional. ui-react-carousel-themes-chromium-linux.png: overlay-surface nav pills read per theme (retro bevel, terminal ring, aqua gloss)." },
+        { "criterion": "K4", "score": 3, "evidence": "Baselines: with-dots, dot-shapes, dot-tones, cursor-indicator, endpoints (disabled nav), multi-per-view, right-to-left. Hover/focus not captured." },
+        { "criterion": "K5", "score": 2, "evidence": "Round dots are 1.5rem wide at every pointer (carousel.css:170-172, 181-185); on touch the target is 24x44px, under the bar's 44px. Nav buttons are max(2.5rem, min-target) = 44px on touch (:13)." },
+        { "criterion": "K6", "score": 3, "evidence": "Direction read from computed style (carousel.tsx:87-93), arrow keys and cursor halves swap (:132-140, :171), icons mirror (carousel.css:96-98); tests 'swaps the arrow keys and the cursor halves' (carousel.test.tsx:266); ui-react-carousel-right-to-left-chromium-linux.png. Hardcoded English 'Previous slide'/'Next slide'/'Slides' (carousel.tsx:367, 390, 434) overridable only via aria-label." },
+        { "criterion": "K7", "score": 2, "evidence": "With cursorIndicator the root onClick (carousel.tsx:243) runs handleCursorClick (:201-215) for every click that bubbles from inside, with no target check: tapping a link or button in a slide, a CarouselDots dot, or the Prev/Next button also scrolls prev/next by pointer half (double or wrong navigation). The test clicks only the root (carousel.test.tsx:190). No phone story." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component carousel: guidance incl. MediaLightbox redirect, contract, examples." },
+        { "criterion": "K9", "score": 3, "evidence": "carousel.test.tsx: 13 tests (region, disabled sync, vertical, keyboard, cursor incl. drag suppression, RTL, dots); 10 baselines; SSR smoke." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    },
+    {
+      "subject": "marquee",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 2, "evidence": "marquee.tsx:26 `vertical?: boolean` stands in for the contract's orientations axis (horizontal|vertical, marquee-contract.ts:6), which also has no default; `reverse` is another boolean for direction. MarqueeProps uses ComponentPropsWithoutRef<'div'> (:12), the only ui-react component that does (1 of 56 files), so TypeScript rejects a ref even though React 19 would forward it through {...props}." },
+        { "criterion": "K2", "score": 3, "evidence": "WCAG 2.2.2: pauses on hover/focus (marquee.css:54-57) and renders an aria-pressed pause toggle (marquee.tsx:86-97); duplicate tracks aria-hidden+inert (:73, :81); under reduced motion it stops and becomes a focusable named group (:57-60, marquee.css:90-100); tests :72-155. Default group name 'Scrolling content' is English (:59)." },
+        { "criterion": "K3", "score": 3, "evidence": "Provisional. ui-react-marquee-themes-chromium-linux.png: chips carry each theme's archetype (retro bevel, aqua gloss, terminal mono)." },
+        { "criterion": "K4", "score": 2, "evidence": "Visual tests run with reducedMotion: 'reduce' (apps/storybook/vitest.config.ts:109), which hides the toggle (marquee.css:97-99). ui-react-marquee-pause-toggle-chromium-linux.png shows the strip with no toggle, so the running and paused-toggle states, and how the toggle overlaps moving content, are never captured." },
+        { "criterion": "K5", "score": 3, "evidence": "Toggle is Button size='icon-sm' (marquee.tsx:92), inheriting Button's coarse-pointer target; gap defaults to the contract token (--a63-space-4)." },
+        { "criterion": "K6", "score": 3, "evidence": "--marquee-dir flips the loop under :dir(rtl) (marquee.css:13-28, 77); toggle uses inset-inline-end (:64); ui-react-marquee-right-to-left-chromium-linux.png." },
+        { "criterion": "K7", "score": 3, "evidence": "overflow:hidden strip with no width assumptions (marquee.css:10-22); no phone story." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component marquee: guidance states the pause behaviour and the paused hand-off; orientations default shows '—'." },
+        { "criterion": "K9", "score": 3, "evidence": "marquee.test.tsx: 12 tests incl. toggle, controlled paused, reduced motion; 9 baselines (see K4 gap); SSR smoke. useReducedMotion decides markup at render (marquee.tsx:57-60, 86), so server and reduced-motion client markup differ (hydration mismatch), untested." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    },
+    {
+      "subject": "text-ticker",
+      "ready": false,
+      "scores": [
+        { "criterion": "K1", "score": 2, "evidence": "text-ticker.tsx:111 ref={containerRef} precedes {...props} (:117), so in marquee mode a caller ref replaces the measuring ref and overflow is never detected (marquee never runs). marqueeSpeed is a duration in seconds (:122), so a larger 'speed' is slower. Deprecated animationType still accepted (:18)." },
+        { "criterion": "K2", "score": 1, "evidence": "autoPlay runs the marquee continuously while the text overflows (text-ticker.tsx:107, text-ticker.css:101-107) and hover/focus keep it moving; there is no pause control or pause-on-hover. Moving content that starts automatically, lasts over 5 s and sits beside other content fails WCAG 2.2.2 (Pause, Stop, Hide, level A) for every non-reduced-motion user. Marquee solved the same problem with a toggle (marquee.tsx:86-97); the docs only say 'avoid autoplay for essential reading' (atom63 component text-ticker)." },
+        { "criterion": "K3", "score": 2, "evidence": "ui-react-textticker-themes-chromium-linux.png: in all 8 cells the first glyph ('N' of 'Now playing') is faded out. The edge mask applies whenever [data-overflowing][data-autoplay] (text-ticker.css:26-37), and the reduced-motion block (:118-139) restores the static copy but keeps the mask, so the resting truncated line loses its first letter." },
+        { "criterion": "K4", "score": 3, "evidence": "Baselines: fits-in-container, static-truncate, auto-play, themes. Because visual tests run with reduced motion (apps/storybook/vitest.config.ts:109), the active hover/focus marquee state is never captured." },
+        { "criterion": "K5", "score": null, "evidence": "n/a: inline text utility with no size axis; it inherits font size and line height." },
+        { "criterion": "K6", "score": 2, "evidence": "The loop always translates left: translateX(calc(-50% - gap/2)) (text-ticker.css:109-116) with no direction variable (contrast marquee.css:13-28). In dir=rtl the track starts at the inline-start (right) edge and moving left scrolls it away from the reading direction, leaving the right side blank. No RTL story. SidebarNavTree wraps every label in it (sidebar-nav-tree.tsx:37-41)." },
+        { "criterion": "K7", "score": 2, "evidence": "Overflow is revealed only on :hover or :focus-within (text-ticker.css:61-82); plain text has no focus, so on touch a truncated label can never be read unless autoPlay is on." },
+        { "criterion": "K8", "score": 3, "evidence": "pnpm -s atom63 component text-ticker: variants, states, examples; guidance is mostly generic utility boilerplate." },
+        { "criterion": "K9", "score": 2, "evidence": "text-ticker.test.tsx: 5 tests, all render/props (:7-51); nothing covers overflow measurement, the ResizeObserver path, autoPlay, reduced motion or the ref collision." },
+        { "criterion": "K10", "score": null, "evidence": "n/a: iOS backlog" }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r2-k07-frame-1",
+      "subject": "sidebar",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "The default desktop Sidebar (side='left', collapsible offcanvas/icon) breaks under dir=rtl: the width-reserving gap lands on the right while the fixed panel stays on the physical left, over the content; the RTL story skips this path.",
+      "evidence": "sidebar.css:166-186 (left:0 / right:0, border-right/left by data-side), sidebar.css:36-40 + sidebar.tsx:296 (in-flow gap first in a flex row), sidebar.css:285-293 (inset margin-inline-start:0 assumes inline-start sidebar); grep 'rtl|dir(' in sidebar.css/tsx: no matches; sidebar.stories.tsx:210 RightToLeft uses collapsible='none'.",
+      "fix": "Make the side axis logical (inline-start/inline-end, keeping left/right as deprecated aliases) and position the container with inset-inline-start/end and border-inline-end/start; add a RightToLeft story with the default collapsible sidebar and a baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-2",
+      "subject": "text-ticker",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "autoPlay scrolls overflowing text forever with no way to pause or stop it, failing WCAG 2.2.2 (level A).",
+      "evidence": "text-ticker.tsx:23 autoPlay prop, :107 isAutoPlaying; text-ticker.css:101-107 animation infinite on [data-autoplay] and also on :hover/:focus-within; no pause control; marquee.tsx:86-97 shows the system's pattern for the same rule.",
+      "fix": "Pause the autoplaying marquee on hover and focus-within, and stop it after one or a few loops (or render a pause toggle like Marquee); add a test for the paused state.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-3",
+      "subject": "text-ticker",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "With autoPlay under reduced motion the resting truncated line keeps the edge mask, so its first glyph is faded out.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-textticker-themes-chromium-linux.png (the 'N' of 'Now playing' faded in all 8 cells); text-ticker.css:26-37 mask on [data-overflowing][data-autoplay]; reduced-motion block :118-139 does not clear it.",
+      "fix": "In the reduced-motion block set mask-image: none on the autoplay selector (and only apply the mask while the track animates).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-4",
+      "subject": "text-ticker",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The marquee loop always moves left, so in right-to-left text it scrolls the wrong way and leaves a blank edge.",
+      "evidence": "text-ticker.css:109-116 keyframes translateX(calc(-50% - gap/2)) with no direction variable; compare marquee.css:13-28 --marquee-dir; no RTL story in text-ticker.stories.tsx.",
+      "fix": "Add a --text-ticker-dir set to -1 under :dir(rtl) and multiply the translate by it, as Marquee does; add a RightToLeft story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-5",
+      "subject": "text-ticker",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "A caller ref replaces the internal measuring ref in marquee mode, so overflow is never detected.",
+      "evidence": "text-ticker.tsx:111 ref={containerRef} followed by {...props} at :117 (React 19 passes ref in props).",
+      "fix": "Destructure ref and merge it with containerRef (a callback that sets both).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-6",
+      "subject": "text-ticker",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "No test covers the component's actual behaviour: overflow measurement, autoPlay, reduced motion or the resize path.",
+      "evidence": "text-ticker.test.tsx:7-51, five render/prop tests only.",
+      "fix": "Add tests that stub scrollWidth/clientWidth to drive data-overflowing, autoPlay gating, and ResizeObserver re-measurement.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-7",
+      "subject": "text-ticker",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "Truncated text is revealed only on hover or focus-within, so touch users can never read it (this also hits every SidebarNavTree label).",
+      "evidence": "text-ticker.css:61-82 activation selectors; sidebar-nav-tree.tsx:37-41, 176-180, 277-279 wrap labels in TextTicker.",
+      "fix": "Reveal on tap/press for coarse pointers or expose the full text (e.g. title or a tooltip trigger) and document it.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-8",
+      "subject": "sidebar",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "On phones the Sidebar spreads its div props onto the Sheet root, so className, id, aria-*, style and ref are dropped there but applied on desktop.",
+      "evidence": "sidebar.tsx:260 <Sheet ... {...props}> vs :297-304 container and :250 static div.",
+      "fix": "Forward className/style/ref/DOM props to SheetContent on the mobile path; keep only Sheet root props on <Sheet>.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-9",
+      "subject": "sidebar",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The active menu button and sub-button are marked only by a background fill, which disappears in forced colors.",
+      "evidence": "sidebar.css:466-480, 716-725; grep -c forced-colors sidebar.css = 0; the forced-colors recipe test list (src/styles/recipes.test.ts:399-413) omits sidebar, table, calendar and carousel.",
+      "fix": "Add an @media (forced-colors: active) rule painting active items in Highlight/HighlightText and add sidebar to the recipes test list.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-10",
+      "subject": "calendar",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Selected and range days are drawn only by background, so the selection is invisible in forced colors.",
+      "evidence": "calendar.css:204-214; grep -c forced-colors calendar.css = 0.",
+      "fix": "Add a forced-colors rule (Highlight/HighlightText on selected, a border on range-middle) and add calendar to recipes.test.ts 'state that survives forced colors'.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-11",
+      "subject": "calendar",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The day focus ring is the focus colour at 50% alpha, weaker than every other control's ring and likely below 3:1 on the selected fill.",
+      "evidence": "calendar.css:241-245 color-mix(in oklch, var(--a63-focus-ring) 50%, transparent); nav buttons use the full ring at :95-98.",
+      "fix": "Use the standard ring (var(--a63-control-focus-ring-color, var(--a63-focus-ring))) with an offset so it reads on the selected fill.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-12",
+      "subject": "calendar",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Calendar silently drops every caller classNames key it does not style itself (root, selected, disabled, week, month_grid and others).",
+      "evidence": "calendar.tsx:86 destructures classNames out of props; :115-123 copies only keys of defaultClassNames.",
+      "fix": "Start from {...classNames} and cn() the default class into each known key.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-13",
+      "subject": "calendar",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Day buttons are 36px on a coarse-pointer device outside the phone form factor, below the 44px target.",
+      "evidence": "calendar.css:11-14 --cell-size = max(control-height-lg, control-min-size); atom63 token --a63-control-height-lg = space-unit*9 (36px) and --a63-control-min-size touch = 2rem.",
+      "fix": "Floor --cell-size at --a63-control-min-target (2.75rem on touch) and add a touch/phone story with a baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-14",
+      "subject": "calendar",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Localization and direction are only partly wired: the month dropdown ignores the locale prop, day labels append English words, and RTL depends on both an ancestor dir attribute and DayPicker's own dir prop.",
+      "evidence": "calendar.tsx:155 toLocaleString('default', ...); :67-68 'Today, ' and ', selected'; calendar.css:106-108 [dir='rtl'] chevron flip vs react-day-picker 10.0.2 DayPicker.js:178-182 and 270/297 (keys and around-nav chevrons follow props.dir only).",
+      "fix": "Format with options.locale?.code, take the today/selected words from the caller's labels, read direction from context or computed style and pass it as dir, and add an RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-15",
+      "subject": "calendar",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No phone or touch story exists, so calendar behaviour at 390px and on coarse pointers is never captured.",
+      "evidence": "calendar.stories.tsx exports Playground, Range, DropdownCaption, MultipleMonths, Themes, Endpoints, ContractMetadata only.",
+      "fix": "Add a Phone story (390px baseline) inside layout='phone' or a Popover.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-16",
+      "subject": "carousel",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "With cursorIndicator, any click inside the carousel (a link in a slide, a dot, the Prev/Next button) also navigates by pointer half, causing double or wrong scrolls.",
+      "evidence": "carousel.tsx:243 root onClick=handleCursorClick, :201-215 no event.target check; test carousel.test.tsx:190 clicks only the root.",
+      "fix": "Ignore clicks whose target is inside an interactive element (closest('a,button,input,[role=button]')) or listen on the viewport only; add a test clicking a dot and a slide button.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-17",
+      "subject": "carousel",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Caller props override internal wiring: a ref on Carousel replaces the direction/cursor ref, and onClick or disabled on CarouselPrevious/Next replaces navigation.",
+      "evidence": "carousel.tsx:248-250 ref before {...props}; :361-364 and :384-387 onClick/disabled before {...props}.",
+      "fix": "Merge refs; compose onClick (call the caller's, then scroll unless defaultPrevented) as SidebarTrigger does (sidebar.tsx:316-319).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-18",
+      "subject": "carousel",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Arrow keys are captured for the whole region (breaking caret movement in inputs inside slides) and a vertical carousel uses Left/Right instead of Up/Down; dots vanish in forced colors.",
+      "evidence": "carousel.tsx:129-143 + :244 onKeyDownCapture with preventDefault; carousel.css:192-208 dot drawn only as ::before background, no forced-colors rule.",
+      "fix": "Handle keys in bubble phase and skip editable targets; map ArrowUp/Down for vertical; add a forced-colors rule (CanvasText rest, Highlight current).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-19",
+      "subject": "carousel",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Round dots keep a 24px-wide target on touch, below 44px.",
+      "evidence": "carousel.css:170-172 --carousel-dot-pitch: 1.5rem for shape='dot' regardless of pointer; :181-185 width = pitch.",
+      "fix": "Use max(1.5rem, var(--a63-control-min-target)) or a coarse-pointer override for the pitch.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-20",
+      "subject": "marquee",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Orientation is a boolean `vertical` instead of the contract's orientation axis, and the props type omits ref (the only component typed with ComponentPropsWithoutRef).",
+      "evidence": "marquee.tsx:12, :26; marquee-contract.ts:6 orientations horizontal|vertical with no default; grep ComponentPropsWithoutRef in ui-react components: 1 file.",
+      "fix": "Add orientation?: MarqueeOrientation (default 'horizontal' in the contract) and deprecate vertical; type props as ComponentProps<'div'>.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-21",
+      "subject": "marquee",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The pause toggle and running state are never captured, because visual tests run with reduced motion, which hides the toggle.",
+      "evidence": "apps/storybook/vitest.config.ts:109 reducedMotion 'reduce'; marquee.css:97-99; ui-react-marquee-pause-toggle-chromium-linux.png shows no toggle.",
+      "fix": "Give the PauseToggle story reducedMotion 'no-preference' with the animation paused (paused state is deterministic) so the toggle over content is baselined.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-22",
+      "subject": "sidebar-nav-tree",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Parts take no DOM props or ref, and SidebarNavCollapsibleItem has no uncontrolled mode (open and onOpenChange are required).",
+      "evidence": "sidebar-nav-tree.tsx:77-86, 128-152, 213-228, 285-293, 319-322 closed interfaces; :224-225 required open/onOpenChange.",
+      "fix": "Extend each props type with the wrapped element's props and spread them; add defaultOpen to SidebarNavCollapsibleItem.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-23",
+      "subject": "sidebar-nav-tree",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The section toggle's name is hardcoded English ('Expand X' / 'Collapse X') with no prop to localize it, and there is no RTL story.",
+      "evidence": "sidebar-nav-tree.tsx:254; sidebar-nav-tree.stories.tsx has no RightToLeft export.",
+      "fix": "Use a static, caller-provided toggle label (e.g. toggleLabel, defaulting to the section label) and rely on aria-expanded for state; add an RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-24",
+      "subject": "sidebar-nav-tree",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No phone story, and long labels rely on the hover/focus ticker, so truncated labels are unreadable on touch.",
+      "evidence": "grep viewport|phone|mobile in sidebar-nav-tree.stories.tsx = 0; text-ticker.css:61-82.",
+      "fix": "Add a DarkSidebarPhone-style story with long labels; resolve with r2-k07-frame-7.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-25",
+      "subject": "table",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Selected rows disappear in forced colors, and the horizontal scroll container is not keyboard-focusable or nameable.",
+      "evidence": "table.css:96-99, 248-253 (fill only, no forced-colors rule); table.tsx:41-47 container takes no props, no tabIndex.",
+      "fix": "Add a forced-colors rule for [data-state='selected']; accept containerProps (or tabIndex/aria-label when it overflows) on the scroll container.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-26",
+      "subject": "table",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The default md table ignores density: head height and cell padding are literal rem values.",
+      "evidence": "table.css:59 height 2.5rem, :60 padding-inline 0.625rem, :75 padding 0.625rem; only size='sm' reads --a63-row-padding-block-xs (:115).",
+      "fix": "Express md head height and cell padding with row/space tokens (--a63-row-padding-block-*, --a63-space-*) so compact density tightens them.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-27",
+      "subject": "app-view",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Default landmark names are music-app specific ('Library' for the panel, 'Player' for the docked bar), so other products ship wrong accessible names silently.",
+      "evidence": "app-view.tsx:94 bottomBarLabel='Player', :101 panelLabel='Library'.",
+      "fix": "Use neutral defaults (e.g. 'Sidebar', 'Toolbar') or require the label when the region is passed; mention it in the docs guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-28",
+      "subject": "text-ticker",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "marqueeSpeed is a loop duration in seconds, so a higher 'speed' is slower.",
+      "evidence": "text-ticker.tsx:41, :122 '--a63-text-ticker-duration': `${marqueeSpeed}s`.",
+      "fix": "Rename to marqueeDuration (keep marqueeSpeed as a deprecated alias) and document the unit.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-29",
+      "subject": "calendar",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "The modern, aqua and retro calendars are visually identical; the declared archetypes do not show per theme.",
+      "evidence": "ui-react-calendar-themes-chromium-linux.png (only terminal differs).",
+      "fix": "Decide whether day cells and nav buttons should take the theme's control material (retro bevel, aqua gloss) like Button.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k07-frame-30",
+      "subject": "table",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Numeric columns have no end alignment or tabular figures, so the Amount column in every baseline reads ragged.",
+      "evidence": "ui-react-table-themes-chromium-linux.png; table.css has no numeric treatment.",
+      "fix": "Add a documented numeric cell treatment (text-align:end, font-variant-numeric:tabular-nums), e.g. a data-numeric attribute.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-31",
+      "subject": "sidebar-nav-tree",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "The link-row toggle changes its name with its state while also exposing aria-expanded, so state is announced twice.",
+      "evidence": "sidebar-nav-tree.tsx:253-258.",
+      "fix": "Keep a static name and let aria-expanded carry the state (folds into r2-k07-frame-23).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k07-frame-32",
+      "subject": "marquee",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "useReducedMotion decides the markup during render (toggle, role, tabIndex), so server and reduced-motion client markup differ on hydration.",
+      "evidence": "marquee.tsx:57-60, :86; apps/storybook/ssr/ssr.test.tsx only checks that renderToString succeeds.",
+      "fix": "Render the toggle and let CSS hide it under reduced motion (already done at marquee.css:97-99), and set the scroll-region attributes after mount.",
+      "kind": "fix"
+    }
+  ]
+}

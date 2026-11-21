@@ -31,6 +31,8 @@ export { Amount } from './components/amount'
 export type { AmountProps } from './components/amount'
 export { AnimatedCheck } from './components/animated-check'
 export type { AnimatedCheckProps } from './components/animated-check'
+export { ArtPlate } from './components/art-plate'
+export type { ArtPlateFocus, ArtPlateProps } from './components/art-plate'
 export {
   Autocomplete,
   AutocompleteClear,
