@@ -15,6 +15,7 @@ import { useState } from 'react'
 
     return (
       <SegmentedControl
+        aria-label="Appearance"
         items={[
           { label: 'Light', value: 'light' },
           { label: 'Dark', value: 'dark' },
@@ -38,15 +39,15 @@ Click between segments to watch the backplate travel. `tone="accent"` is the sec
 
 Use Segmented Control for a small set of peer choices with one active value. In constrained containers, the default track stays on one line and scrolls horizontally while each item preserves its minimum target width. Set `fullWidth` when the track should fill its container and divide space equally; labels may then truncate. Use Tabs when the choices switch content panels.
 
-Each item label names its tab, but the current component API does not expose a name for the containing tab list. Treat group naming as an implementation gap rather than claiming a fully labeled pattern.
+Segmented Control is a radio group: the root has `role="radiogroup"` and each segment is a `radio` named by its label. Name the group with `aria-label`, or with `aria-labelledby` pointing at a visible label. Tab moves focus to the selected segment, and the arrow keys move between segments and select as they go, as in the [APG Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/). It has no tab panels; when the choices switch content panels, use Tabs.
 
 ## Contract shape
 
-Segmented Control is built on tab-like behavior. The component owns selection, indicator positioning, and item anatomy. The theme owns the track and selected material through `--a63-segment-*`.
+Segmented Control is built on Base UI's radio group. The component owns selection, indicator positioning, and item anatomy. The theme owns the track and selected material through `--a63-segment-*`.
 
 | Concern | Owner |
 |---------|-------|
-| Active value and keyboard behavior | Component / Base UI tabs behavior. |
+| Active value and keyboard behavior | Component / Base UI radio group behavior. |
 | Track geometry and item sizing | Segmented Control recipe. |
 | Material treatment | Segment contract tokens. |
 | Brand emphasis | `tone="accent"` mapping to `--a63-segment-primary-*`. |

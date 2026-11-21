@@ -2253,7 +2253,8 @@ export interface SegmentedControlItem {
 }
 
 // @public (undocumented)
-export interface SegmentedControlProps extends Omit<Tabs_2.Root.Props, 'children' | 'className' | 'defaultValue' | 'onValueChange' | 'orientation' | 'value'> {
+export interface SegmentedControlProps extends Omit<RadioGroup_2.Props<string>, 'children' | 'className' | 'defaultValue' | 'onValueChange' | 'value'> {
+    'aria-label'?: string;
     animateBackplate?: boolean;
     // (undocumented)
     className?: string;
