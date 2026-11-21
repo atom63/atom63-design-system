@@ -1,9 +1,9 @@
 /*
  * SegmentedControl recipe — a single-select segmented track with a sliding
- * indicator (Base UI Tabs). Segment archetype fills/treatment via --a63-segment-*;
+ * indicator (a Base UI radio group). Segment archetype fills/treatment via --a63-segment-*;
  * the recessed well also reads --a63-track-shadow when a theme leaves the segment
  * track shadow unset. Indicator = raised selected plate (or brand accent for
- * tone=accent) that slides via Base UI's --active-tab-* vars.
+ * tone=accent) that slides via the --segment-indicator-* vars the component measures.
  *
  * Light-mode contrast: track falls back to --a63-surface-muted (recessed), pill to
  * --a63-surface-overlay (raised). Do NOT use --a63-surface-control for the track —
@@ -97,7 +97,7 @@
   }
 }
 
-.a63-SegmentedControl-item[data-active] {
+.a63-SegmentedControl-item[data-checked] {
   color: var(--a63-segment-selected-foreground, var(--a63-text-primary));
 }
 
@@ -124,7 +124,7 @@
 }
 
 /* Full-width: the track fills its container and segments share the width equally.
-   Base UI still measures the active tab, so the sliding pill sizes correctly. */
+   The component still measures the selected segment, so the sliding pill sizes correctly. */
 .a63-SegmentedControl[data-full] {
   display: flex;
 }
@@ -167,8 +167,8 @@
   left: 0;
   z-index: 0;
   box-sizing: border-box;
-  width: var(--active-tab-width);
-  height: var(--active-tab-height);
+  width: var(--segment-indicator-width);
+  height: var(--segment-indicator-height);
   border-radius: var(--segment-active-radius);
   /* Raised selected plate. Overlay (not panel) is the cross-mode fallback: in
      light it sits above muted; in dark it is lighter than muted. Themes override
@@ -178,7 +178,7 @@
   /* Indicator is a raised CONTROL cell, not a pressed-in Toggle cell — keep the
      control shadow even when themes set --a63-segment-selected-shadow to inset. */
   box-shadow: var(--a63-control-shadow);
-  transform: translateX(var(--active-tab-left)) translateY(-50%);
+  transform: translateX(var(--segment-indicator-left)) translateY(-50%);
   transition:
     transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     width var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
@@ -195,11 +195,11 @@
   box-shadow: var(--a63-control-shadow);
 }
 
-.a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-active] {
+.a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-checked] {
   color: var(--a63-segment-primary-foreground, var(--a63-action-primary-foreground));
 }
 /* The inset ring would vanish into the accent pill; it takes the label colour. */
-.a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-active]:focus-visible {
+.a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-checked]:focus-visible {
   outline-color: var(--a63-segment-primary-foreground, var(--a63-action-primary-foreground));
 }
 
@@ -242,8 +242,8 @@
   .a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-indicator {
     background-color: Highlight;
   }
-  .a63-SegmentedControl-item[data-active],
-  .a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-active] {
+  .a63-SegmentedControl-item[data-checked],
+  .a63-SegmentedControl[data-tone='accent'] .a63-SegmentedControl-item[data-checked] {
     color: HighlightText;
   }
 }

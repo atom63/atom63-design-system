@@ -140,9 +140,9 @@
   /* Mix danger toward TRANSPARENT, not the neutral border: an oklch mix between
      danger (red) and the blue-ish neutral swings through magenta on the shortest
      hue path. Mixing with transparent keeps the red hue and just softens it. */
-  --field-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
-  --field-focus-border: var(--a63-action-danger);
-  --field-focus-ring: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+  --field-border: var(--a63-border-danger);
+  --field-focus-border: var(--a63-status-danger);
+  --field-focus-ring: var(--a63-status-danger);
 }
 
 .a63-Input[data-disabled],

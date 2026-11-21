@@ -66,9 +66,9 @@
 /* Invalid: the same danger edge as .a63-Input[data-invalid] (input.css). */
 .a63-Autocomplete-input[data-invalid],
 .a63-Autocomplete-input[aria-invalid='true'] {
-  --autocomplete-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
-  --autocomplete-focus-border: var(--a63-action-danger);
-  --autocomplete-focus-ring: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+  --autocomplete-border: var(--a63-border-danger);
+  --autocomplete-focus-border: var(--a63-status-danger);
+  --autocomplete-focus-ring: var(--a63-status-danger);
 }
 
 .a63-Autocomplete-input[data-has-start-addon] {

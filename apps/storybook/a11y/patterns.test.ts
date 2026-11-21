@@ -32,6 +32,7 @@ import * as checkboxStories from '../../../packages/ui-react/src/components/chec
 import * as dialogStories from '../../../packages/ui-react/src/components/dialog/dialog.stories'
 import * as dropdownMenuStories from '../../../packages/ui-react/src/components/dropdown-menu/dropdown-menu.stories'
 import * as radioStories from '../../../packages/ui-react/src/components/radio/radio.stories'
+import * as segmentedControlStories from '../../../packages/ui-react/src/components/segmented-control/segmented-control.stories'
 import * as selectStories from '../../../packages/ui-react/src/components/select/select.stories'
 import * as switchStories from '../../../packages/ui-react/src/components/switch/switch.stories'
 import * as tabsStories from '../../../packages/ui-react/src/components/tabs/tabs.stories'
@@ -51,6 +52,12 @@ interface Binding {
   exportName: string
   /** The stories that exercise the pattern, with the names that pick their parts. */
   stories: { module: StoryModule; name: string; names?: Record<string, string> }[]
+  /**
+   * Played on the web only, with the binding written here instead of in the
+   * component contract: a contract binding also asks the iOS demo to check the
+   * pattern on the SwiftUI renderer, which has no such check yet.
+   */
+  webOnly?: true
 }
 
 const bindings: Binding[] = [
@@ -101,6 +108,12 @@ const bindings: Binding[] = [
     contract: radioContract,
     stories: [{ module: radioStories, name: 'Playground' }],
   },
+  {
+    exportName: 'segmentedControlContract',
+    contract: { accessibility: { pattern: 'radio' } },
+    stories: [{ module: segmentedControlStories, name: 'Playground' }],
+    webOnly: true,
+  },
 ]
 
 describe('pattern bindings', () => {
@@ -109,7 +122,12 @@ describe('pattern bindings', () => {
       .filter(([name, value]) => name.endsWith('Contract') && hasBinding(value))
       .map(([name]) => name)
       .sort()
-    expect(bindings.map(binding => binding.exportName).sort()).toEqual(declared)
+    expect(
+      bindings
+        .filter(binding => !binding.webOnly)
+        .map(binding => binding.exportName)
+        .sort()
+    ).toEqual(declared)
   })
 
   for (const { exportName, contract } of bindings) {

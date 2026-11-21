@@ -41,3 +41,10 @@
   --a63-toggle-on-background: var(--a63-action-neutral);
   --a63-toggle-on-foreground: var(--a63-action-neutral-foreground);
 }
+
+[data-a63-brand],
+[data-a63-surface] {
+  /* The mode roles again, on scopes that change what they read, keyed to the nearest mode scope. */
+  --a63-toggle-on-background: var(--a63-action-neutral);
+  --a63-toggle-on-foreground: var(--a63-action-neutral-foreground);
+}

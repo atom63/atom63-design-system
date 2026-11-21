@@ -32,6 +32,7 @@ const LONG_ITEMS = [
 
 function Demo({
   animateBackplate,
+  initialValue = 'list',
   items = ITEMS,
   size,
   tabClassName,
@@ -39,16 +40,18 @@ function Demo({
   variant,
 }: {
   animateBackplate?: boolean
+  initialValue?: string
   items?: typeof ITEMS
   size?: (typeof segmentedControlSizes)[number]
   tabClassName?: string
   tone?: (typeof segmentedControlTones)[number]
   variant?: (typeof segmentedControlVariants)[number]
 }) {
-  const [value, setValue] = useState('list')
+  const [value, setValue] = useState(initialValue)
   return (
     <SegmentedControl
       animateBackplate={animateBackplate}
+      aria-label="View"
       items={items}
       onValueChange={setValue}
       size={size}
@@ -84,9 +87,18 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/* A radio group named "View": Tab enters at the selected segment and the arrow
+   keys move and select. The APG radio pattern test plays this story, which
+   starts on the second segment. */
 export const Playground: Story = {
   render: ({ animateBackplate, size, tone, variant }) => (
-    <Demo animateBackplate={animateBackplate} size={size} tone={tone} variant={variant} />
+    <Demo
+      animateBackplate={animateBackplate}
+      initialValue="grid"
+      size={size}
+      tone={tone}
+      variant={variant}
+    />
   ),
 }
 

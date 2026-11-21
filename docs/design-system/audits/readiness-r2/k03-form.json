@@ -1,0 +1,879 @@
+{
+  "scope": "Layer 3 (K1-K10), batch 3 text and form: input, textarea, input-otp, search-field, autocomplete, select, field, form, label, amount (web/React only; K10 n/a: iOS backlog)",
+  "reviewedAt": "2026-11-20",
+  "round": 2,
+  "subjects": [
+    {
+      "subject": "input",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/input/input.tsx:9-37,49-93: size sm/md/lg (+numeric native size, a contract extensionProp), variant default/filled/plain match input.json lists; ref reaches the inner input via InputPrimitive props (React 19), aria-invalid and invalid both drive data-invalid (62). Polish: unstyled/shadow/nativeInput booleans are chrome modifiers next to the variant axis (declared as extensionProps, input.json); state name 'focus' is a baselined synonym of focus-visible (contract-consistency-baseline.json)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Native input via Base UI; focus ring is an outline on :focus-within (input.css:132-136), filled/plain draw on :focus-visible (216-225); reduced motion drops the transition (350-354); axe runs on every story (sweep all green). Gap: no forced-colors rule in input.css, so the invalid state (border colour only, 138-146) disappears in forced colours; error text is the author's job."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-input-themes-chromium-linux.png: archetype reads per theme (aqua well, retro bevel, terminal tint). Terminal light: --a63-text-tertiary = color-mix(action-primary 80%, black) vs --a63-text-primary = color-mix(action-primary 70%, black) (`atom63 token --a63-text-tertiary`), so placeholder reads as a typed value: apps/storybook/visual/__screenshots__/ui-react-input-themes-chromium-linux.png terminal/light 'Search…' vs 'focused-look', apps/storybook/visual/__screenshots__/ui-react-field-themes-chromium-linux.png terminal/light."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Captured: placeholder, filled, invalid, disabled, sizes, variants (apps/storybook/visual/__screenshots__/ui-react-input-states-chromium-linux.png, -variants, -sizes). No story captures focus-visible or hover (no play functions in the batch's stories; visual/commands.ts parks the pointer so nothing hovers). Autofill: docs promise it is a designed state (apps/docs/src/pages/component-input.mdx:75) but no :autofill/-webkit-autofill rule exists anywhere in packages/styles or ui-react (grep autofill: 0 CSS hits), so the UA autofill fill paints a square rectangle inside the rounded field."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Only contract sizes; compact story captured (apps/storybook/visual/__screenshots__/ui-react-input-states-chromium-linux.png extension/compact); type floor 16px under 40rem (environment.css:79-83). packages/styles/src/contracts/environment.css:128-139 sets --a63-control-min-size 2rem (32px) on pointer:coarse and --a63-control-min-target 2.75rem, but no field recipe reads min-target (grep min-target in input/textarea/input-otp/autocomplete/select css: 0 hits; button.css:130-137 uses a ::before target). input.json:107-110 declares web minHitTarget.touch 44. Only designLanguage=ios / form-factor=phone raise md to 44px (environment.css:165-170, 201-244; apps/storybook/visual/__screenshots__/ui-react-select-endpoints-chromium-linux.png iOS touch row)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Recipe uses logical properties only (check:craft physical-properties passes, craft.log); field min-width:0 + flex keeps long values scrolling inside. No RTL or CJK story; placeholders clip without ellipsis (see autocomplete themes terminal 'Search fru')."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "inline-size:100% (input.css:48); --a63-editable-font-size-min 1rem at max-width 40rem stops iOS focus zoom (environment.css:79-83). No phone-width story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 component input` (141 lines): when-to-use, decisions, 3 tsx examples, contract table; docs page apps/docs/src/pages/component-input.mdx; Playground story. The autofill decision it states is not implemented (see K4)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/input/input.test.tsx: 13 behaviour tests (variants, invalid/aria-invalid sync, nativeInput, group focus delegation, textarea composition); baselines input-states/sizes/variants/themes/numeric-size; ssr smoke renders every story (apps/storybook/ssr/ssr.test.tsx)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "textarea",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/textarea/textarea.tsx:8-64: size/invalid/shadow/unstyled/textareaClassName; aria-invalid synced (43,56); ref via ComponentProps<'textarea'>. Polish: no variant axis while Input/InputGroup (incl. InputGroupTextarea) have filled/plain; 'focus' state synonym baselined (contract-consistency-baseline.json); line-height:1.4 literal (textarea.css:60)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Native <textarea>; ring on :focus-within as outline (textarea.css:76-79); reduced motion (114-118). No forced-colors rule (invalid is border colour only, 81-85)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-textarea-themes-chromium-linux.png shares Input's material per theme. Same terminal-light placeholder≈value token issue as Input (text-tertiary vs text-primary)."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Captured: sizes+invalid+disabled+flat (apps/storybook/visual/__screenshots__/ui-react-textarea-sizes-and-states-chromium-linux.png), auto-sizing, unstyled, disabled. No story captures focus-visible or hover (no play functions in the batch's stories; visual/commands.ts parks the pointer so nothing hovers)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Contract sizes only; min-height = control height + space-5/6 (textarea.css:25,104,111) gives >=48px at sm, above 44 on touch; compact endpoint captured (apps/storybook/visual/__screenshots__/ui-react-textarea-endpoints-chromium-linux.png)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical padding only; field-sizing:content wraps long and CJK text by default (textarea.css:50). No RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "width:100%, editable font floor (environment.css:79-83), touch endpoint story textarea.stories.tsx:161-163."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component textarea` (80 lines) + `atom63 example textarea`; guidance is generic boilerplate ('Validate focus visibility, disabled state, invalid state, and touch input together' is a reviewer note, not builder guidance)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/textarea/textarea.test.tsx: 5 tests (wrapper, disabled, unstyled, size/invalid/shadow, class split); 7 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "input-otp",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/input-otp/input-otp.tsx:12-75 passes OTPInput props through (ref included); parts spread props. Polish: contract state is 'current' (deprecated alias active→current, input-otp.json) but the slot still emits data-active (49); no invalid prop (Input/Select/Autocomplete have one); no exported prop types (`atom63 component input-otp`: 'Types: None'); no 'use client' directive while every sibling file has one (line 1)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Single real input (input-otp lib) labelled by aria-label; active slot ring is an outline (input-otp.css:74-79); caret animation off under reduced motion (131-138). Forced colours: the fake caret is a background-color div (101-106, also in craft-baseline.json token-role entry) and disappears; no APG pattern binding."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-inputotp-themes-chromium-linux.png: fused pill per theme, retro bevel and terminal tint read clearly."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Captured: value, separator, disabled, invalid (apps/storybook/visual/__screenshots__/ui-react-inputotp-*.png). The 'current' slot (contract state) is never captured: no story focuses the field. Disabled uses opacity 0.5 (input-otp.css:19) vs 0.56 for Input/Select/Textarea."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Slot = max(control-height-md, min-size) (input-otp.css:40-44): 32px tall on pointer:coarse web; no min-target. packages/styles/src/contracts/environment.css:128-139 sets --a63-control-min-size 2rem (32px) on pointer:coarse and --a63-control-min-target 2.75rem, but no field recipe reads min-target (grep min-target in input/textarea/input-otp/autocomplete/select css: 0 hits; button.css:130-137 uses a ::before target). input.json:107-110 declares web minHitTarget.touch 44. Only designLanguage=ios / form-factor=phone raise md to 44px (environment.css:165-170, 201-244; apps/storybook/visual/__screenshots__/ui-react-select-endpoints-chromium-linux.png iOS touch row)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": ".a63-InputOTP is a plain flex row (input-otp.css:11-15) with no direction:ltr, and neither the wrapper nor the input-otp lib sets dir (grep of input-otp@1.4.2 dist: no direction rule). In an RTL document slot 0 renders rightmost, so a typed code 1234 reads 4321 left to right. No RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "6 slots × 32px fit 320px; one-time-code input hints tested (input-otp.test.tsx:148)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component input-otp` (52 lines) + example; generic guidance boilerplate."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/input-otp/input-otp.test.tsx: 9 tests incl. paste, deletion, timers; 7 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "search-field",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/search-field/search-field.tsx:19-147: controlled/uncontrolled value (84-98), ref merged (73-83), variant from contract. But contract slot 'search-field-input' (search-field.json slots; generated agent-index.json:6882) is never rendered: the field carries data-slot='input' from Input (input.tsx:69) and SearchField passes no override (113-123). Also accepts size sm/md/lg though search-field.json lists no sizes; clear label API is clearLabel here but clearProps['aria-label'] on Autocomplete."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Native type=search, clear button named by clearLabel (126-128) returns focus to the input (132); disabled removes clear (124). Inherits InputGroup focus/forced-colour behaviour."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Only modern light/dark captured (apps/storybook/visual/__screenshots__/ui-react-searchfield-playground, -dark, -filled, -filled-dark, -plain); no Themes story, so aqua/retro/terminal are unseen for this subject. Terminal-light placeholder issue inherited from Input."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract requiredStates empty/query/focus/disabled (search-field.json crossRenderer). Baselines show empty and disabled only: no story sets a value, so the 'query' state with the clear button is never captured; focus never captured; no invalid capture though invalid is a prop."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Group height from the field ramp (input.css:38-42); clear button is a Button xs with a 44px ::before target (button.css:130-137) but the field itself is 32px on coarse web. packages/styles/src/contracts/environment.css:128-139 sets --a63-control-min-size 2rem (32px) on pointer:coarse and --a63-control-min-target 2.75rem, but no field recipe reads min-target (grep min-target in input/textarea/input-otp/autocomplete/select css: 0 hits; button.css:130-137 uses a ::before target). input.json:107-110 declares web minHitTarget.touch 44. Only designLanguage=ios / form-factor=phone raise md to 44px (environment.css:165-170, 201-244; apps/storybook/visual/__screenshots__/ui-react-select-endpoints-chromium-linux.png iOS touch row)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical addon order (input.css:280-315); search icon is non-directional. No RTL/long story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Width 100% group, editable font floor; no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component search-field` (79 lines) + `atom63 example search-field`; lists the phantom search-field-input slot; generic guidance."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/search-field/search-field.test.tsx: 8 behaviour tests (query, clear+focus, Enter submit, disabled, variant, end addon, ref, size/invalid); 7 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "autocomplete",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/autocomplete/autocomplete.tsx:27-352: Root re-export, sizes sm/md/lg + deprecated 'default' alias (84), invalid/aria-invalid (90), parts spread props. showTrigger/showClear booleans toggle optional parts; startAddon is forced aria-hidden (101-103) so an interactive start addon would be hidden from AT."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Base UI combobox semantics; separator role=none for listbox validity (214-220); trigger/clear are tabIndex -1 in Base UI 1.6 (ComboboxTrigger.mjs:153, ComboboxClear.mjs:88), so their outline:none (autocomplete.css:144) is safe. Gap: autocomplete has no APG pattern binding (apps/storybook/a11y/__snapshots__/patterns.test.ts.snap lists only accordion, alert-dialog, checkbox, dialog, dropdown-menu, radio, select, switch, tabs) and autocomplete.test.tsx has no Arrow/Enter/Escape test, so the keyboard map is unverified."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. The input does not use the shared field chrome: autocomplete.css:22-48 reads --a63-border-input / --a63-surface-control / --a63-control-radius directly and ignores --a63-field-background/-border/-radius/-focus-border (input.css:21-29, select.css:10-18). Terminal overrides --a63-field-background (themes/terminal.css:114,164), so in apps/storybook/visual/__screenshots__/ui-react-autocomplete-themes-chromium-linux.png terminal/light the autocomplete is white while Input/Select are tinted (apps/storybook/visual/__screenshots__/ui-react-input-themes-chromium-linux.png). Focus border is full action-primary (24) vs Input's 62% mix; disabled opacity 0.64 (17) vs 0.56."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Captured: empty, loading, disabled, invalid, sizes, menu anatomy, themes (apps/storybook/visual/__screenshots__/ui-react-autocomplete-*.png). Focus-visible of the input not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Input 32px on coarse web (autocomplete.css:32-36); adornments 28-32px (130-137) with no min-target. packages/styles/src/contracts/environment.css:128-139 sets --a63-control-min-size 2rem (32px) on pointer:coarse and --a63-control-min-target 2.75rem, but no field recipe reads min-target (grep min-target in input/textarea/input-otp/autocomplete/select css: 0 hits; button.css:130-137 uses a ::before target). input.json:107-110 declares web minHitTarget.touch 44. Only designLanguage=ios / form-factor=phone raise md to 44px (environment.css:165-170, 201-244; apps/storybook/visual/__screenshots__/ui-react-select-endpoints-chromium-linux.png iOS touch row)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "inset-inline-start/end and padding-inline-start for addons (autocomplete.css:74-81,106-123)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Popup bounded by --available-width/height (autocomplete.css:174-183) but no phone-width story with the popup open, so on-screen-keyboard overlap and safe-area placement are unverified."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component autocomplete` (57 lines) + example; generic guidance."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/autocomplete/autocomplete.test.tsx: 6 tests (slots, open popup, filtering+empty, clear+status, invalid, separator); 11 baselines; SSR smoke. Keyboard untested (see K2)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "select",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/select/select.tsx:11-184: sizes from contract, invalid/aria-invalid (35-43), parts spread props; SelectContent alias and selectTriggerDefaultClassName export."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Pattern binding 'Select-Only Combobox' with snapshot (patterns.test.ts.snap:53-57), but select.json contract.accessibility.knownGaps lists 5 APG deviations a keyboard user hits: DOM focus moves to options (no aria-activedescendant), Home/End do not open, Alt+Up does not select, Tab closes without selecting (Base UI 1.6.0; docs/design-system/audits/base-ui-issue-drafts.md). Honestly documented; still a gap."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Trigger uses the full field token set (select.css:10-18) and matches Input per theme (apps/storybook/visual/__screenshots__/ui-react-select-themes-chromium-linux.png). Placeholder uses --a63-text-tertiary (select.css:118-120) so it inherits the terminal-light placeholder≈value issue."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Captured: placeholder/value, open+selected+highlighted with focus ring (apps/storybook/visual/__screenshots__/ui-react-select-grouped-chromium-linux.png), scroll arrows, disabled, invalid, sizes. Not captured: disabled-item, trigger focus-visible."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Trigger 32px on coarse web (select.css:22-26); no min-target, yet select.mdx:25 claims it 'resolves ... minimum target'. packages/styles/src/contracts/environment.css:128-139 sets --a63-control-min-size 2rem (32px) on pointer:coarse and --a63-control-min-target 2.75rem, but no field recipe reads min-target (grep min-target in input/textarea/input-otp/autocomplete/select css: 0 hits; button.css:130-137 uses a ::before target). input.json:107-110 declares web minHitTarget.touch 44. Only designLanguage=ios / form-factor=phone raise md to 44px (environment.css:165-170, 201-244; apps/storybook/visual/__screenshots__/ui-react-select-endpoints-chromium-linux.png iOS touch row)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Value ellipsis (select.css:110-116), text-align:start; vertical chevrons need no mirroring."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "alignItemWithTrigger defaults true (select.tsx:79) with no phone story of the open popup; safe-area placement unverified."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Storybook select.mdx with anatomy and tokens, `atom63 component select` (89 lines), example. select.mdx:25 overstates the minimum target."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/select/select.test.tsx: 8 tests + APG pattern tests (patterns.test.ts) + 9 baselines + SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "field",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/field/field.tsx:50-146: Field takes only orientation. The contract states invalid and disabled (field.json lists.states; crossRenderer requiredStates default/invalid/disabled) have no typed prop: the recipe keys on untyped string attributes data-invalid='true' / data-disabled='true' (field.css:75,153,191) that stories pass by hand (field.stories.tsx:44,56). Field does set aria-invalid on the control when a FieldError renders (field.tsx:115-119), but Input's red chrome comes only from its React invalid prop (input.tsx:62,79), so a Field with an error announces invalid while the field and label stay neutral unless the author sets three signals. 'default' state is a baselined synonym of rest."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Description and error ids linked to the control's aria-describedby with consumer ids preserved (field.tsx:107-133, tested field.test.tsx:112,138); FieldError role=alert (250)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-field-themes-chromium-linux.png: label, field, error recolour coherently in all 8 cells."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Captured: invalid, multiple errors, orientations, legend variants, separator (apps/storybook/visual/__screenshots__/ui-react-field-*.png). The contract-required 'disabled' state has no story or baseline (tested only in field.test.tsx:92)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Spacing from --a63-space tokens; density reaches it through space-unit; touch endpoint captured (apps/storybook/visual/__screenshots__/ui-react-field-endpoints-chromium-linux.png)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical sizes; responsive orientation via @container field-group (field.css:106-131)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Responsive orientation stacks below 28rem container width (field.css:116)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`atom63 component field` (79 lines) gives no example of the invalid wiring; a builder reading it cannot learn that data-invalid='true' on Field plus invalid on the control plus FieldError are all needed (see K1)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/field/field.test.tsx: 12 tests; 9 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "form",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/form/form.tsx:23-167: react-hook-form wrappers; FormControl merges id/aria-* through useRender (104-121). Polish: no exported prop types ('Types: None' in `atom63 component form`)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "FormLabel htmlFor → control id; FormControl sets aria-invalid/aria-describedby (113-115). Polish: aria-describedby always names formDescriptionId even when no FormDescription renders (dangling IDREF); FormMessage pairs role=alert with aria-live=polite (146-150), contradictory politeness."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-form-themes-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "rest and invalid (the contract's two states) captured: apps/storybook/visual/__screenshots__/ui-react-form-playground and -with-error."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Gap from --a63-space-2 (form.css:8-11); touch endpoint captured (apps/storybook/visual/__screenshots__/ui-react-form-endpoints-chromium-linux.png)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical properties (form.css); text wraps."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Grid stack, no fixed widths in the recipe."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "The canonical example (`pnpm -s atom63 example form`, form.stories.tsx:52) puts aria-label=\"Example text field\" on the Input inside FormControl, overriding the visible FormLabel 'Email' as the accessible name (WCAG 2.5.3 label-in-name). Agents copy this example verbatim."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/form/form.test.tsx: only 2 tests (45,72). Untested: FormMessage with children and no error, description-less describedby, FormField outside FormItem error path."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "label",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/label/label.tsx:7-15: native <label>, all props and ref spread."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Native label semantics; dims with a disabled peer or group (label.css:20-32)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-label-themes-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "rest, disabled, invalid captured: apps/storybook/visual/__screenshots__/ui-react-label-disabled-group, -invalid-field, -with-control. Polish: .a63-Label:has(~ :disabled) (label.css:22) dims the label when any later sibling is disabled, not only its control."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "font-size --a63-control-font-size-md follows the type and density axes; touch endpoint captured (apps/storybook/visual/__screenshots__/ui-react-label-endpoints-chromium-linux.png)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "flex + gap only, no physical properties; long labels wrap."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "No width constraints; iOS touch endpoint story (label.stories.tsx:82)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component label` (51 lines) + example; 'Connect htmlFor to the control id' guidance."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/label/label.test.tsx: 3 tests (slot, htmlFor, className) for a 1-line component; 7 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "amount",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/amount/amount.tsx:6-87: size md/lg and fraction raised/baseline from contract. Polish: strong boolean is a weight axis absent from amount.json lists."
+        },
+        {
+          "criterion": "K2",
+          "score": 4,
+          "evidence": "Drawn parts aria-hidden, one visually-hidden label (amount.tsx:73-84); kept by amount.test.tsx:55 'reads as one label'."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-amount-themes-chromium-linux.png: colour follows each theme; rows are unlabelled and terminal does not switch to its mono face, so the archetype is weakly expressed."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Single contract state 'rest'; sizes, fractions, locales captured (apps/storybook/visual/__screenshots__/ui-react-amount-sizes, -fractions, -locales)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Display type roles (amount.css:12-15,26-31) follow type scale and phone form factor."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Locale-driven parts, ar-EG dir=rtl case in amount.stories.tsx:48 and the -locales baseline."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "PhoneBalance story inside data-a63-form-factor=phone (apps/storybook/visual/__screenshots__/ui-react-amount-phone-balance-chromium-linux.png)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component amount` (55 lines) with when-to-use guidance (hero number vs plain tabular text)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "amount.tsx:62 formats with Intl.NumberFormat(locale) where locale defaults to the runtime's: on a server-rendered page the server locale and the browser locale differ, giving a hydration text mismatch. Every story and test passes locale explicitly (amount.stories.tsx:13, amount.test.tsx:13-44) and the SSR project only renders to string (ssr.test.tsx:29-31), so the default path is untested. 8 behaviour tests otherwise."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r2-k03-form-1",
+      "subject": "search-field",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Contract slot search-field-input is never rendered; the input carries data-slot='input'.",
+      "evidence": "packages/ui-react/src/components/search-field/search-field.tsx:113-123; input.tsx:69; search-field.json lists.slots; agent-index.json:6882",
+      "fix": "Pass data-slot='search-field-input' to InputGroupInput (Input already lets props override fieldProps) and add a slot test.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-2",
+      "subject": "field",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Field's invalid and disabled states have no typed prop; invalid needs data-invalid='true' on Field, invalid on the control and a FieldError, and a FieldError alone flips aria-invalid without the red chrome.",
+      "evidence": "packages/ui-react/src/components/field/field.tsx:50-52,115-119; field.css:75,153,191; field.stories.tsx:44-46; input.tsx:62,79",
+      "fix": "Add invalid/disabled props to Field that set data-invalid/data-disabled and share them through FieldContext, and let Input/Textarea/SelectTrigger/AutocompleteInput read that context (or style .a63-Input:has([aria-invalid='true'])).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-3",
+      "subject": "field",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Docs give no way to learn the three-signal invalid wiring.",
+      "evidence": "`pnpm -s atom63 component field` (no invalid example); field.stories.tsx:41-52",
+      "fix": "Document the invalid pattern in the guidance with a runnable example (or remove the need via the K1 fix).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-4",
+      "subject": "input, textarea, input-otp, search-field, autocomplete, select",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Field controls stay 32px on coarse pointers with the web design language; none expands to the 44px target input.json declares.",
+      "evidence": "packages/styles/src/contracts/environment.css:128-139 sets --a63-control-min-size 2rem (32px) on pointer:coarse and --a63-control-min-target 2.75rem, but no field recipe reads min-target (grep min-target in input/textarea/input-otp/autocomplete/select css: 0 hits; button.css:130-137 uses a ::before target). input.json:107-110 declares web minHitTarget.touch 44. Only designLanguage=ios / form-factor=phone raise md to 44px (environment.css:165-170, 201-244; apps/storybook/visual/__screenshots__/ui-react-select-endpoints-chromium-linux.png iOS touch row).",
+      "fix": "Floor field height with --a63-control-min-target on coarse pointers (fields cannot use a ::before tap target the way Button does, since the box itself is the target), or document a 32px touch exception in the contract and ask YZ.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-5",
+      "subject": "input, textarea, search-field, input-otp, autocomplete",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Focus-visible (and for input-otp the contract's 'current' slot) is captured in no baseline.",
+      "evidence": "No story captures focus-visible or hover (no play functions in the batch's stories; visual/commands.ts parks the pointer so nothing hovers). Baselines listed under each subject's K4.",
+      "fix": "Add a focused-state story per field (play function focusing the control) to the visual baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-6",
+      "subject": "input",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Autofill is promised as a designed state but no autofill rule exists.",
+      "evidence": "apps/docs/src/pages/component-input.mdx:75; grep autofill over packages/styles/src and packages/ui-react/src CSS: 0 hits",
+      "fix": "Add :autofill / :-webkit-autofill styling on .a63-Input-field (inset box-shadow in --field-background, -webkit-text-fill-color text-primary) and a baseline, or delete the claim.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-7",
+      "subject": "input, textarea, search-field, autocomplete, select",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "In terminal light the placeholder colour is almost the value colour, so an empty field reads as filled.",
+      "evidence": "Terminal light: --a63-text-tertiary = color-mix(action-primary 80%, black) vs --a63-text-primary = color-mix(action-primary 70%, black) (`atom63 token --a63-text-tertiary`), so placeholder reads as a typed value: apps/storybook/visual/__screenshots__/ui-react-input-themes-chromium-linux.png terminal/light 'Search…' vs 'focused-look', apps/storybook/visual/__screenshots__/ui-react-field-themes-chromium-linux.png terminal/light.",
+      "fix": "Raise the contrast gap between terminal --a63-text-tertiary and --a63-text-primary in light mode (Layer 1 token) while keeping placeholder >=4.5:1; confirm on the contact sheet.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k03-form-8",
+      "subject": "autocomplete",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "AutocompleteInput bypasses the shared field tokens, so it diverges from Input and Select under themes that override --a63-field-*.",
+      "evidence": "packages/ui-react/src/components/autocomplete/autocomplete.css:22-48 vs input.css:21-29 and select.css:10-18; themes/terminal.css:114,164; apps/storybook/visual/__screenshots__/ui-react-autocomplete-themes-chromium-linux.png vs ui-react-input-themes-chromium-linux.png terminal/light",
+      "fix": "Resolve --autocomplete-* from --a63-field-background/-border/-radius/-focus-border/-focus-ring like select.css does, and align disabled opacity (0.56).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-9",
+      "subject": "autocomplete",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "No APG combobox pattern binding and no keyboard test for Autocomplete.",
+      "evidence": "apps/storybook/a11y/__snapshots__/patterns.test.ts.snap (no autocomplete entry); autocomplete.test.tsx (no Arrow/Enter/Escape)",
+      "fix": "Bind autocompleteContract to the APG Combobox (list autocomplete) pattern in a11y/patterns.test.ts and add an ArrowDown/Enter/Escape test.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-10",
+      "subject": "select",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Base UI Select 1.6.0 deviates from APG select-only combobox in five documented ways (focus model, Home/End, Alt+Up, Tab).",
+      "evidence": "select.json contract.accessibility.knownGaps; docs/design-system/audits/base-ui-issue-drafts.md",
+      "fix": "File the drafted upstream issues and patch what can be patched locally (Tab selecting the highlighted option, Home/End opening) in SelectTrigger/SelectPopup key handlers; keep the knownGaps list in sync.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-11",
+      "subject": "select, autocomplete",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No phone-width story with the popup open, so keyboard overlap and safe-area placement of the listbox are unverified.",
+      "evidence": "select.stories.tsx and autocomplete.stories.tsx: no viewport/phone story; select.tsx:79 alignItemWithTrigger=true",
+      "fix": "Add phone (390px) stories with the popup open, including an autocomplete with the on-screen keyboard area simulated, to the visual baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-12",
+      "subject": "search-field",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The contract-required 'query' state (value plus clear button) and invalid are never captured.",
+      "evidence": "search-field.json crossRenderer.requiredStates; search-field.stories.tsx (no defaultValue anywhere)",
+      "fix": "Add a Query story with defaultValue and an Invalid story to the baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-13",
+      "subject": "search-field",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "No Themes story, so aqua/retro/terminal are never captured for SearchField.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-searchfield-* (modern only)",
+      "fix": "Add a 4×2 Themes story like input.stories.tsx:320.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-14",
+      "subject": "input-otp",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "OTP slots mirror in RTL documents, so a typed code reads reversed.",
+      "evidence": "packages/ui-react/src/components/input-otp/input-otp.css:11-15 (no direction); input-otp@1.4.2 dist sets no direction",
+      "fix": "Set direction: ltr (or dir='ltr') on .a63-InputOTP, as codes are LTR, and add an RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-15",
+      "subject": "input-otp",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "OTP slots are 32px squares on coarse web pointers.",
+      "evidence": "packages/ui-react/src/components/input-otp/input-otp.css:40-49",
+      "fix": "Covered by the field touch-target fix; slot size should floor at --a63-control-min-target on coarse pointers.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-16",
+      "subject": "form",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The canonical Form example overrides the visible label with aria-label, teaching a label-in-name failure.",
+      "evidence": "packages/ui-react/src/components/form/form.stories.tsx:52; `pnpm -s atom63 example form`",
+      "fix": "Remove aria-label from the Input inside FormControl in every Form story (FormLabel already names it).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-17",
+      "subject": "form",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Form has two behaviour tests; message-without-error, missing description and context-error paths are untested.",
+      "evidence": "packages/ui-react/src/components/form/form.test.tsx:45,72",
+      "fix": "Add tests for FormMessage children with no error, aria-describedby without FormDescription, and useFormField outside FormField/FormItem.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-18",
+      "subject": "form",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "FormControl's aria-describedby names a description id even when no FormDescription renders, and FormMessage combines role=alert with aria-live=polite.",
+      "evidence": "packages/ui-react/src/components/form/form.tsx:113,146-150",
+      "fix": "Only include ids of parts that render (register like Field does) and drop aria-live (role=alert implies assertive) or use role=status.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-19",
+      "subject": "amount",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Amount without locale formats with the runtime locale, so server and browser output differ and hydration mismatches; the default path is untested.",
+      "evidence": "packages/ui-react/src/components/amount/amount.tsx:62; amount.stories.tsx:13; apps/storybook/ssr/ssr.test.tsx:29-31",
+      "fix": "Make locale required, or default to a fixed locale from UIProvider, and add a hydration test with differing locales.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-20",
+      "subject": "field",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The contract-required disabled state of Field is not captured in any story.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-field-* (no disabled); field.test.tsx:92",
+      "fix": "Add a Disabled story to the baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-21",
+      "subject": "input, textarea, input-otp",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "No forced-colors rules: the invalid state (border colour only) and the OTP fake caret (background-color) vanish in forced colours.",
+      "evidence": "input.css:138-146; textarea.css:81-85; input-otp.css:101-106; craft-baseline.json token-role input-otp entry; 13 other recipes have forced-colors blocks",
+      "fix": "Add @media (forced-colors: active) rules: a thicker or dashed border for [data-invalid] and background: CanvasText for the caret.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-22",
+      "subject": "input-otp",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Slot emits data-active while the contract state is 'current'; no invalid prop and no exported prop types.",
+      "evidence": "packages/ui-react/src/components/input-otp/input-otp.tsx:49; input-otp.json deprecatedAliases active→current",
+      "fix": "Emit data-current (keep data-active one release), add invalid like Input, export InputOTPProps/InputOTPSlotProps.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-23",
+      "subject": "input, textarea, search-field, field",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "States named 'focus' and 'default' are baselined synonyms of focus-visible and rest.",
+      "evidence": "docs/design-system/audits/contract-consistency-baseline.json",
+      "fix": "Rename the contract states and drop the baseline entries.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-24",
+      "subject": "input",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "unstyled and shadow are boolean chrome modifiers beside the variant axis.",
+      "evidence": "packages/ui-react/src/components/input/input.tsx:18-31; input.json extensionProps",
+      "fix": "Consider a chrome value (e.g. variant 'none') for unstyled and folding shadow into the variants; low priority.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k03-form-25",
+      "subject": "select",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "select.mdx claims the trigger resolves a minimum target from the control ramp; select.css never reads one.",
+      "evidence": "packages/ui-react/src/components/select/select.mdx:25; select.css:9-58",
+      "fix": "Correct the doc or implement the target (see the K5 finding).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-26",
+      "subject": "textarea",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Textarea has no variant axis although Input and InputGroupTextarea expose default/filled/plain.",
+      "evidence": "packages/ui-react/src/components/textarea/textarea.tsx:8-23; textarea.json lists",
+      "fix": "Decide whether textarea takes the field variants; if yes add them to textarea.json and the recipe.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k03-form-27",
+      "subject": "autocomplete",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "startAddon is always aria-hidden and the clear name API differs from SearchField's clearLabel.",
+      "evidence": "packages/ui-react/src/components/autocomplete/autocomplete.tsx:101-103,130-134; search-field.tsx:57",
+      "fix": "Only hide decorative addons (or document that startAddon must be decorative); align on one clear-label API.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-28",
+      "subject": "amount",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "strong is a weight axis not listed in the amount contract.",
+      "evidence": "packages/ui-react/src/components/amount/amount.tsx:16; amount.json lists",
+      "fix": "Add a weights list to amount.json or document strong as an extension prop.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-29",
+      "subject": "amount",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Themes baseline rows are unlabelled and terminal keeps the proportional face.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-amount-themes-chromium-linux.png",
+      "fix": "Label the rows; decide whether terminal draws amounts in its mono face.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k03-form-30",
+      "subject": "label",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "Label dims when any later sibling is disabled, not only its own control.",
+      "evidence": "packages/ui-react/src/components/label/label.css:22",
+      "fix": "Scope the :has() to the associated control (e.g. :has(+ :disabled)) or rely on group data-disabled only.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k03-form-31",
+      "subject": "input, textarea, input-otp, search-field, autocomplete, select, field, form, label",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Generated docs carry a reviewer checklist line as builder guidance.",
+      "evidence": "`atom63 component <slug>` Guidance: 'Validate focus visibility, disabled state, invalid state, and touch input together.'",
+      "fix": "Replace with per-component usage guidance or drop the line.",
+      "kind": "fix"
+    }
+  ]
+}

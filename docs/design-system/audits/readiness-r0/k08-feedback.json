@@ -1,0 +1,1190 @@
+{
+  "scope": "k08-feedback",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "layer-3 batch-8 reviewer",
+  "verifiedBy": null,
+  "notes": "Taste (K3) provisional until YZ sees the contact sheet. Pixel measurement with the stdlib PNG decoder at <review-scratch>/k01/px.py. All check:* passed in the sweep; check:craft passed with baselined token-role entries for alert.css. P1s need verifiedBy before they count; the alert RTL and load-more live-region P1s are read from code, not rendered or screen-read. Older audit docs were not relied on. No subject in this batch is ready.",
+  "subjects": [
+    {
+      "subject": "alert",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/alert/alert.tsx:8-30 plain div parts spread props and className; variant typed from alertContract, defaults to contract default. Static surface, no render/asChild needed."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/alert/alert.tsx:26 hard-codes role=\"alert\" on every variant including the neutral default, so a persistent callout inserted after load is announced assertively; the contract's iOS adaptation says 'avoids assertive announcements for persistent notices' and the catalog usage calls it 'persistent inline feedback' (apps/docs/src/lib/component-catalog.ts alert entry). No @media (forced-colors) rule in the recipe."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-alert-themes-chromium-linux.png: 4 themes x 2 modes, aqua gloss and retro bevel visible, terminal font swap. craft-baseline.json carries 2 token-role entries for alert.css (color: var(--a63-action-danger) at alert.css:140,143) because no --a63-status-error token exists (atom63 token status-error lists info/success/warning only)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-alert-variants, -with-action, -action-variants, -endpoints baselines capture all five variants and the action slot; action buttons are DS Buttons with alert-tinted state tokens (alert.css:109-121)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Action children are DS Buttons (inherit their coarse-pointer target); spacing from --a63-space-* (alert.css:11-16) except --alert-padding-inline: 0.875rem literal (alert.css:17)."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "packages/ui-react/src/components/alert/alert.css:51-53 reserves room with padding-inline-end, but alert.css:101-104 pins .a63-Alert-action with physical right: var(--alert-action-inset). In dir=rtl the reserve moves to the left while the action stays on the right, on top of the title and description. check:craft physical-properties passed (sweep/craft.log) because it only scans margins, padding, borders, radii and text-align, not inset left/right. No RTL, long-title or CJK story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone or touch story: grep -il 'phone|viewport|mobile' over the 8 batch story files returns nothing. The fixed action reserve (alert.css:12, 72px) with two actions at phone width is untested."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/alert/alert.test.tsx (3 tests) plus packages/ui-react/src/conformance/renderer-conformance.test.tsx:318-331 (every tone keeps text and alert role); 7 alert baselines; SSR via apps/storybook/ssr/ssr.test.tsx story glob."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "AtomNotice: see its subject. Four required tones, tone-prefixed VoiceOver label, 44pt action, notice light/dark/large-type snapshots."
+        }
+      ]
+    },
+    {
+      "subject": "badge",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/badge/badge.tsx:46-50 useRender + mergeProps so render={<a/>} merges class, data attrs and ref; dot is boolean|hue (badge.tsx:13), not a variant stand-in. Contract lists both 'destructive' and 'error' (badge.json solidVariants/semanticVariants), two names for one meaning."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Dot is aria-hidden (badge.tsx:35); interactive badges keep native button/a semantics; focus ring is an outline on :focus-visible (badge.css:282-285). No forced-colors rule (system-wide)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-badge-themes-chromium-linux.png: retro bevel and aqua gloss on the chip, terminal mono; all variants legible in dark."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Contract states resting/interactive/disabled/focus-visible: disabled styles at badge.css:47-48, hover at badge.css:262-269, apps/storybook/visual/__screenshots__/ui-react-badge-interactive-chromium-linux.png captures the interactive form."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sizes sm/md/lg only (badge.css:10,120,125); interactive badges expand their hit area to --a63-control-min-target with an ::after (badge.css:272-280), but badge.css:257 also adds an outer margin of (min-target - height)/2, so an interactive badge takes up to 12px more space per side than a static one."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "No long-string, CJK or truncation story among the 9 badge baselines; height is fixed (badge.css:19 height: var(--badge-height)) so a wrapped label overflows. No evidence of truncation behaviour."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline marker with no layout of its own; coarse-pointer target handled in CSS (badge.css:255-280). No phone or touch story: grep -il 'phone|viewport|mobile' over the 8 batch story files returns nothing."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/badge/badge.mdx is the only hand-written doc in the batch, but it is stale: it says palette variants are 'the full Tailwind hue scale ... backed by the foundation --color-* tokens', while badge.css:250-253 reads --a63-category-* tokens. pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/badge/badge.test.tsx (4 tests incl. render polymorphism and dot hue) + conformance variant loop (renderer-conformance.test.tsx:251); 9 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "AtomBadge (packages/ui-ios/Sources/Atom63UI/AtomBadge.swift:13) takes only title + tone (6 tones); no sizes, no dot, no outline. Contract parity is 'strict' and only palette variants are declared web-only (badge.json crossRenderer.platformAdaptations)."
+        }
+      ]
+    },
+    {
+      "subject": "avatar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.tsx:30-46 wraps Base UI Avatar.Root, spreads props after data attrs; sizes/shape/ring typed from avatarContract."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "AvatarBadge (packages/ui-react/src/components/avatar/avatar.tsx:75-80) is a bare span with no label API, so an online/status dot is colour-only to assistive tech (iOS requires accessibilityLabel: AtomAvatar.swift AtomAvatarBadge.dot(accessibilityLabel:)); AvatarGroupCount '+N' (avatar.tsx:89-100) has no label; the ring state (unseen/seen) is not exposed."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-avatar-themes-chromium-linux.png and -story-rings, -shapes-and-ring baselines."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "loading/loaded/fallback: apps/storybook/visual/__screenshots__/ui-react-avatar-fallback, -icon-fallback, -large-circle, -with-badge, -group baselines; a loading (pre-load) frame is not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Contract sizes xs/sm/default/lg mapped to space tokens (avatar.css:175-202)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.css:117-120 pins .a63-Avatar-badge with physical right: 0 (comment 'pinned to the bottom-right'), so the status dot does not mirror in RTL; missed by check:craft physical-properties."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: non-interactive marker with a fixed contract size; no overlay or layout behaviour."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Contract platform adaptation (packages/ui-foundation/contracts/components/avatar.json:64) says 'The square shape and the ring are web-only for now', but AtomAvatar has ring (AtomAvatar.swift:40,48) and a ring test (packages/ui-ios/Tests/Atom63UITests/AtomMessageTests.swift:48-51); the CLI answer repeats the stale line. pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.test.tsx (7 tests) + conformance (renderer-conformance.test.tsx:259); 12 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "AtomAvatar.swift:47 takes size: CGFloat = 44 (any number) instead of the contract's xs/sm/default/lg, and always clips to .circle (AtomAvatar.swift:84), no square; contract parity 'strict'."
+        }
+      ]
+    },
+    {
+      "subject": "empty",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/empty/empty.tsx:83-90 EmptyErrorDetail keeps expanded in local useState with no expanded/defaultExpanded/onExpandedChange, so it cannot be controlled; its toggle labels are hard-coded (empty.tsx:108)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "EmptyTitle is role=heading aria-level=3 (empty.tsx:54-57, overridable since props spread after); the details toggle carries aria-expanded and aria-controls (empty.tsx:98-100)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-empty-themes-chromium-linux.png: dashed frame per theme, aqua dark gradient, retro dashed bevel."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states empty/error/collapsed/expanded; apps/storybook/visual/__screenshots__/ui-react-empty-error-state-chromium-linux.png shows the collapsed error only. No story opens the detail (grep play/userEvent in empty.stories.tsx: none), so 'expanded' (error box + copy button) has no baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Toggle is Button size sm, copy is CopyButton icon-sm (empty.tsx:104,116), both inheriting the Button target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "'Show details' / 'Hide details' are hard-coded English with no prop (empty.tsx:108); the copy button is pinned with physical right: 0.375rem (empty.css:142-145), so it sits over the start of the error text in RTL."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone or touch story: grep -il 'phone|viewport|mobile' over the 8 batch story files returns nothing."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/empty/empty.test.tsx (3 tests incl. expand/collapse and copy) + conformance (renderer-conformance.test.tsx:270-278); 6 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "AtomContentStateView: see its subject. Error recovery is drawn as a destructive button."
+        }
+      ]
+    },
+    {
+      "subject": "feedback-state",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.tsx:49-60 and 155-166: the props are a closed list (className only), so id, aria-labelledby, data-* and ref cannot reach the root; not composable with render/asChild."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Title is a plain div (feedback-state.tsx:189-191) while Empty exposes a heading (empty.tsx:54-57), so screen-reader users cannot jump to the state by heading; the error state sets both role=alert and aria-live=assertive (feedback-state.tsx:175,180), announcing the whole block including action labels."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-feedbackstate-themes-chromium-linux.png: tinted media tile per theme, terminal mono retry."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "All 7 kinds and 4 sizes captured: apps/storybook/visual/__screenshots__/ui-react-feedbackstate-states, -sizes, -no-results, -with-actions baselines; loading spinner stops under reduced motion (feedback-state.css:99-101)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sizes inline/panel/page/widget only (feedback-state.css:35-50); actions are Button size sm."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Every default title/description is English-only (feedback-state.tsx:62-97) and the no-results text builds an English sentence around the query (feedback-state.tsx:120) with no template prop; only replacing the whole description works."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "size='page' forces min-height: 100dvh with a literal 4rem block padding (feedback-state.css:43-46), so inside a sheet or panel on a phone it overflows its host. No phone or touch story: grep -il 'phone|viewport|mobile' over the 8 batch story files returns nothing."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.test.tsx (12 tests incl. live roles, icons, actions); 8 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: packages/ui-foundation/contracts/components/feedback-state.json has no crossRenderer block; AtomContentStateView is mapped to empty."
+        }
+      ]
+    },
+    {
+      "subject": "skeleton",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/skeleton/skeleton.tsx:7-15 div with props spread (ref arrives in props under React 19)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "aria-hidden=\"true\" (skeleton.tsx:10); shimmer stops under prefers-reduced-motion (skeleton.css:38-42)."
+        },
+        {
+          "criterion": "K3",
+          "score": 1,
+          "evidence": "Inside a dark-scoped UIProvider the skeleton stays light: pixel measurement of apps/storybook/visual/__screenshots__/ui-react-skeleton-themes-chromium-linux.png gives bar (130,92) rgb(240,240,240) on panel (520,92) rgb(25,25,25), 15.43:1, identical to the light rows (240,240,240 on 252,252,252, 1.11:1), in all four themes. Cause: packages/styles/src/contracts/skeleton.css:10-17 declares --a63-skeleton-base: var(--a63-surface-muted) only on :root, so it resolves once at the root and inherits the light value; the dark block only overrides the highlight. badge.css contract re-declares on [data-a63-mode] scopes (packages/styles/src/contracts/badge.css:9,52) and is correct. The defect is committed as the visual baseline."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states loading and reduced-motion; no story or baseline for reduced-motion (skeleton stories: Playground, CardPlaceholder, Themes, Endpoints, ContractMetadata)."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: the consumer sizes it; radius from --radius-md (skeleton.css:10), no target."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/skeleton/skeleton.css:29-36 sweeps translateX(-100%) to translateX(100%), left to right in every direction; the contract motion says direction 'leading-to-trailing' (skeleton.json crossRenderer.motion) and AtomSkeleton mirrors it (AtomSkeleton.swift:55-58)."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: no layout or interaction of its own."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/skeleton/skeleton.test.tsx has 2 tests (slot/class and recipe text); the dark-mode defect above was accepted into ui-react-skeleton-themes baseline, so the baselines did not guard the key state."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "AtomSkeleton: see its subject. RTL-aware shimmer, reduce motion, hidden from VoiceOver, conformance test verifiesMotionRecipe (packages/ui-ios/Tests/Atom63UITests/AtomRendererConformanceTests.swift:48-50)."
+        }
+      ]
+    },
+    {
+      "subject": "load-more-trigger",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.tsx:14-27 closed prop list (no id, aria-*, data-*, style); ref forwarded via forwardRef (line 35). Two ways to set state (state vs hasMore/isLoading, line 53) without documented precedence beyond code."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.tsx:74-86: role=status and aria-live=polite are added only when the state leaves idle, in the same render that changes the text, and the hidden->loading path mounts a fresh live region (line 55-57 returns null while hidden). A live region must exist before its content changes, so 'Loading more' and 'All items loaded' are frequently not announced; the contract requires accessibilityOutcomes announces-loading and announces-exhausted. Tests only assert the role exists after render (load-more-trigger.test.tsx:24-35). Not verified with a screen reader in this run."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-loadmoretrigger-themes-chromium-linux.png: quiet row, terminal mono; tone icons per state in -states baseline."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "idle, loading, failed, exhausted, custom and the three variants captured: apps/storybook/visual/__screenshots__/ui-react-loadmoretrigger-states, -failed, -exhausted, -variants, -custom-children baselines; retry has a focus-visible outline (load-more-trigger.css:93-97)."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "The Retry action is a raw button with padding: 0 and no hit-area expansion (load-more-trigger.css:84-91); in apps/storybook/visual/__screenshots__/ui-react-loadmoretrigger-states-chromium-linux.png it is about 36x14 px, far below the 44 px coarse-pointer target. Focus outline uses literal 2px (line 95) instead of --a63-control-focus-ring-width."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Every message and the retry label are props with defaults (load-more-trigger.tsx:17-24,40-47); content centred, no physical insets."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone or touch story: grep -il 'phone|viewport|mobile' over the 8 batch story files returns nothing. The 14 px Retry target is the main touch failure."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others). Guidance says 'attach fetching to the forwarded ref' but the answer shows no IntersectionObserver wiring."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.test.tsx (8 tests incl. ref forwarding and retry); 9 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Contract parity 'strict', but AtomLoadMoreView idle is a 'Load more' button while web idle is passive text 'Scroll down to load more'; failed is a full AtomNotice card on iOS vs an inline line on web; iOS has none of the three variants and no message overrides (packages/ui-ios/Sources/Atom63UI/AtomLoadMoreView.swift:20-54)."
+        }
+      ]
+    },
+    {
+      "subject": "animated-check",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/animated-check/animated-check.tsx:34-55 variant from contract; deprecated boolean animate kept as an alias (lines 43-44, 53-54); native SVG props spread."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "aria-hidden (line 58) after the spread so it stays decorative; reduced motion shows the drawn check at once (lines 26-31); catalog usage says pair it with visible status text."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Only apps/storybook/visual/__screenshots__/ui-react-animatedcheck-playground, -static-sizes and -dark baselines exist, no 4-theme sheet. The draw duration is a literal 300ms ease-out inside a TS string (animated-check.tsx:17), not a --a63-motion-* token, which check:craft cannot see."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states mounting, drawn, reduced-motion: no baseline of the reduced-motion state and none of the mid-draw frame."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sized 1em (animated-check.tsx:10-11) so it follows text size."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "A check mark is not directional and needs no mirroring; no text."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: decorative inline glyph."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/animated-check/animated-check.test.tsx (5 tests incl. deprecated alias); 3 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no crossRenderer in packages/ui-foundation/contracts/components/animated-check.json and no iOS counterpart."
+        }
+      ]
+    },
+    {
+      "subject": "AtomNotice (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomNotice.swift:21-33 title, message, tone, optional action; tones match contract requiredStates (Tests/Atom63UITests/AtomRendererConformanceTests.swift:42-43)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Icon hidden (line 42), title label prefixed with the tone (line 48), children contained (line 78); no assertive announcement, matching the contract adaptation."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/notice.light.png / notice.dark.png / notice.large-type.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Four tones; increased-contrast stroke (lines 72-73)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Dynamic Type text, icon capped at accessibility2 (line 39), action min 44x44 (line 64); notice.large-type.png reflows."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "HStack/leading alignment mirror natively; strings are caller-supplied."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: native phone renderer."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "iOS reference is only the CLI 'Web and iOS' section and the demo catalog (examples/ios-demo/Atom63Demo/CatalogRegistry.swift); no DocC or docs page."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Snapshots light/dark/large-type + conformance test."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "Matches Alert's four semantic tones; web 'default' neutral variant has no iOS tone, which the contract allows (requiredStates info/success/warning/error)."
+        }
+      ]
+    },
+    {
+      "subject": "AtomBadge (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomBadge.swift:13 init(_ title:, tone:) only; no size or dot axis although the contract has sizes sm/md/lg and dotColors."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Plain Text; the tone is not exposed to VoiceOver (no accessibilityLabel/Value), so 'Warning' vs a neutral chip with the same word differ by colour only; contract sharedOutcome semantic-tone-retains-meaning."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/badge.dark.png: tinted capsules legible on dark."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "All six tones rendered in badge snapshots."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": ".caption scales with Dynamic Type (line 20); badge.large-type.png."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No directional content."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: native phone renderer."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "iOS reference is only the CLI 'Web and iOS' section and the demo catalog (examples/ios-demo/Atom63Demo/CatalogRegistry.swift); no DocC or docs page. The demo snapshot still labels the error chip 'Danger', the deprecated name (Generated/AtomComponentIntent.generated.swift:13-14)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Snapshots light/dark/large-type."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "See badge K10: no sizes, dot or outline on iOS."
+        }
+      ]
+    },
+    {
+      "subject": "AtomAvatar (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAvatar.swift:44-57 size: CGFloat = 44 accepts any number; no shape parameter."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "accessibilityLabel(name) and badge read as value (lines 94-95); ring and badge views hidden."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/avatar.light.png / avatar.dark.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "AsyncImage phases empty (redacted fallback), success, failure (lines 63-76)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Count badge caps Dynamic Type at xxLarge (line 160); initials scale with the frame (line 120)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Badge uses .topTrailing/.bottomTrailing (line 115), which mirror."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: native phone renderer."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "iOS reference is only the CLI 'Web and iOS' section and the demo catalog (examples/ios-demo/Atom63Demo/CatalogRegistry.swift); no DocC or docs page. Contract text calls the ring web-only although iOS has it."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Ring and badge unit tests (Tests/Atom63UITests/AtomMessageTests.swift:48-51, AtomListPatternTests.swift:26-30) + snapshots."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "See avatar K10: free size, no square."
+        }
+      ]
+    },
+    {
+      "subject": "AtomSkeleton (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSkeleton.swift:74-77 .atomSkeleton(_:) modifier plus AtomSkeletonRow."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "accessibilityHidden(true) and allowsHitTesting(false) while active (lines 20-21), matching the contract outcomes."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/skeleton.light.png / skeleton.dark.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Reduce motion honoured via system value and atomMotionPreference (lines 7-8, 33, 44-46)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "AtomSkeletonRow image placeholder is a literal 40x40 frame (line 90) that does not follow Dynamic Type while the text lines do."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Shimmer reverses in RTL (lines 55-58)."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: native phone renderer."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "iOS reference is only the CLI 'Web and iOS' section and the demo catalog (examples/ios-demo/Atom63Demo/CatalogRegistry.swift); no DocC or docs page."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Conformance verifiesMotionRecipe (AtomRendererConformanceTests.swift:48-50) + snapshots light/dark/large-type."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "Same base/highlight semantics and motion token as web; iOS is the more correct renderer (RTL, dark)."
+        }
+      ]
+    },
+    {
+      "subject": "AtomContentStateView (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomContentStateView.swift:3-6,19-33 tones neutral/error only; with tone .error the recovery action is forced to AtomButton tone .destructive (line 43)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Built on ContentUnavailableView (line 36), which exposes title, description and actions natively."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/contentState.light.png: in the error state the title turns red (Label foregroundStyle, line 38) and 'Try again' is a solid red destructive button, so a recovery reads as a dangerous action."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "empty and error captured in contentState light/dark/large-type."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Native Dynamic Type; large-type snapshot."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Native layout mirrors."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: native phone renderer."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "iOS reference is only the CLI 'Web and iOS' section and the demo catalog (examples/ios-demo/Atom63Demo/CatalogRegistry.swift); no DocC or docs page."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Snapshots light/dark/large-type."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Web Empty/FeedbackState draw retry as outline (feedback-state.tsx:139,145) and keep the title neutral; iOS diverges in emphasis and semantics."
+        }
+      ]
+    },
+    {
+      "subject": "AtomLoadMoreView (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomLoadMoreView.swift:10-16 intent + loadMore only; no message, retry-label or variant parameters."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Loading is combined with value 'In progress' and .updatesFrequently (lines 33-34, 59-61) but no AccessibilityNotification is posted, so a VoiceOver user who is not focused on the row hears nothing when loading starts or ends; exhausted has a tone-prefixed label (line 53)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/pagination.light.png / pagination.dark.png (catalog item 'pagination' renders AtomLoadMoreView, CatalogRegistry.swift:354)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "idle, loadingMore, failed, exhausted (lines 20-54)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "minHeight 44 (line 57); pagination.large-type.png."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "'Load more' and 'Loading more' are LocalizedStringKey literals looked up in the app bundle, but 'Couldn’t load more', 'Check the connection and try again.' and 'Retry' go through AtomNotice's String init (line 36-42; AtomNotice.swift:22) and cannot be localized."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: native phone renderer."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "iOS reference is only the CLI 'Web and iOS' section and the demo catalog (examples/ios-demo/Atom63Demo/CatalogRegistry.swift); no DocC or docs page."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "pagination snapshots; repository tests drive paginationIntent (examples/ios-demo/Atom63DemoTests/ProjectRepositoryTests.swift:21,74,260-262)."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "See load-more-trigger K10."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k08-feedback-1",
+      "subject": "skeleton",
+      "criterion": "K3",
+      "severity": "P1",
+      "summary": "Skeleton renders as a light-grey bar (rgb 240,240,240) inside any dark-scoped UIProvider, in all four themes, because --a63-skeleton-base resolves once on :root; the defect is committed as the visual baseline.",
+      "evidence": "Pixel measurement of apps/storybook/visual/__screenshots__/ui-react-skeleton-themes-chromium-linux.png: dark rows bar (130,92)=(240,240,240) vs panel (520,92)=(25,25,25), 15.43:1; light rows 1.11:1. packages/styles/src/contracts/skeleton.css:10-17 sets --a63-skeleton-base only on :root; packages/styles/src/contracts/badge.css:9,52 shows the working pattern (re-declared on [data-a63-mode] scopes).",
+      "fix": "Emit the skeleton contract on the same mode/theme scopes as badge (fix skeleton.resolver.json and regenerate with pnpm --filter @atom63/styles generate:tokens), re-record the skeleton baselines, and add a guard (contract tokens that reference semantic tokens must be re-declared on every [data-a63-mode]/[data-a63-theme] scope) so other contracts cannot repeat it.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "I reproduced this from the source and the baseline. skeleton.css:10-13 sets --a63-skeleton-base: var(--a63-surface-muted) only on :root. The dark block at :15-17 re-declares only the highlight, so a nested dark scope inherits the base already resolved at :root to the light surface-muted. The recipe at ui-react skeleton/skeleton.css:11 reads --a63-skeleton-base directly. In ui-react-skeleton-themes-chromium-linux.png every dark row in all four themes shows near-white bars on a dark panel. badge.css re-declares its tokens on dark scopes, so the fix pattern exists and was not applied. A clearly wrong render that is committed as the baseline meets P1."
+      }
+    },
+    {
+      "id": "k08-feedback-2",
+      "subject": "alert",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "In right-to-left layouts the Alert action sits on top of the title and description: the space is reserved with padding-inline-end but the action is pinned with physical right.",
+      "evidence": "packages/ui-react/src/components/alert/alert.css:51-53 (padding-inline-end reserve) vs alert.css:101-104 (position:absolute; right: var(--alert-action-inset)). check:craft physical-properties passed (sweep/craft.log) because it does not scan inset left/right. No RTL story; inferred from CSS, not rendered.",
+      "fix": "Use inset-inline-end for .a63-Alert-action; add an RTL story with an action to the alert baselines; extend check:craft physical-properties to flag left/right insets (also catches avatar.css:119 and empty.css:144).",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "alert.css:52-53 reserves space for the action with padding-inline-end, which falls on the left in right-to-left layouts. alert.css:101-104 pins .a63-Alert-action with physical top/right: var(--alert-action-inset), and the file has no inset-inline-end or dir override. In right-to-left the action therefore stays on the physical right, over where the title and description start, while the reserved gap sits on the left. The overlap follows directly from the CSS, though I did not render it. It breaks the system's own logical-properties rule (AGENTS.md rule 10) and right-to-left mirroring for Alert, so P1 stands."
+      }
+    },
+    {
+      "id": "k08-feedback-3",
+      "subject": "load-more-trigger",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "LoadMoreTrigger creates its live region in the same render that changes its text (and mounts a new one from hidden), so 'Loading more' and 'All items loaded' are often not announced, breaking the contract's announces-loading and announces-exhausted outcomes.",
+      "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.tsx:55-57 (null while hidden), 74-86 (role=status/aria-live only when state != idle); load-more-trigger.test.tsx:24-35 only checks the role after render. Not verified with a screen reader in this run.",
+      "fix": "Render a persistent visually-hidden role=status region in every non-hidden state (including idle) and write the message into it on state change; keep it mounted across hidden by rendering the empty region; add a test that the same live-region node persists from idle to loading to exhausted.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "The cited code is there. load-more-trigger.tsx:55-57 returns null while hidden. Lines 74-86 add role=status and aria-live only when the state is not idle, in the same render that swaps the message text. Going from idle to loading, the live-region attributes appear at the same moment as the new text, and many screen readers miss that change. Going from hidden to loading or exhausted mounts a fresh region with its content already inside, which is the well-known pattern that often goes unannounced. Also, with the hasMore/isLoading API alone the component goes hidden when hasMore is false, so the exhausted message renders only through an explicit state prop. The contract lists announces-loading and announces-exhausted as accessibility outcomes (load-more-trigger.json:47-52), and the test only checks the role after render. I did not test it with a screen reader. The pattern is a known failure and it blocks the contract's own accessibility outcomes, so P1 holds."
+      }
+    },
+    {
+      "id": "k08-feedback-4",
+      "subject": "alert",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Every Alert, including the neutral default, is role=\"alert\", so a persistent inline notice is announced assertively when inserted; the contract's iOS side and the docs usage both describe it as persistent.",
+      "evidence": "packages/ui-react/src/components/alert/alert.tsx:26; alert.json crossRenderer.platformAdaptations.swiftUI 'avoids assertive announcements for persistent notices'; catalog usage 'persistent inline feedback'.",
+      "fix": "Default to role=\"status\" (or no live role) for default/info/success and keep role=\"alert\" for error/warning, overridable by prop; update the conformance test at renderer-conformance.test.tsx:318-331.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-5",
+      "subject": "alert",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Alert error tone takes text and icon colour from --a63-action-danger because the status set has no error token; two token-role baseline entries record it.",
+      "evidence": "docs/design-system/audits/craft-baseline.json 'token-role | packages/ui-react/src/components/alert/alert.css | color: var(--a63-action-danger)': 2; alert.css:132-144; atom63 token status-error lists only info/success/warning status tokens.",
+      "fix": "Add --a63-status-error (+ -foreground, -subtle) to the semantic layer, alias action-danger to it where appropriate, switch alert.css error rules to it, and drop the baseline entries.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-6",
+      "subject": "feedback-state",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "FeedbackState accepts a closed prop list, so consumers cannot pass id, aria-labelledby, data-* attributes or a ref to its root.",
+      "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.tsx:49-60,155-166.",
+      "fix": "Extend FeedbackStateProps from React.ComponentProps<'div'> (minus title) and spread the rest onto the root.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-7",
+      "subject": "feedback-state",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "FeedbackState's title is a plain div, unlike Empty's heading, so the state cannot be found by heading navigation; the error state doubles role=alert and aria-live=assertive.",
+      "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.tsx:175,180,189-191 vs packages/ui-react/src/components/empty/empty.tsx:54-57.",
+      "fix": "Render the title as role=heading with a configurable level (default 3), and drop the redundant aria-live when role=alert is set.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-8",
+      "subject": "feedback-state",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "FeedbackState's built-in titles, descriptions and the no-results sentence are English-only and the query sentence has no template prop.",
+      "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.tsx:62-97,120.",
+      "fix": "Accept a messages/labels prop (or a formatter for no-results) so products can localize defaults without replacing the whole description.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-9",
+      "subject": "feedback-state",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "size='page' forces min-height:100dvh and a literal 4rem padding, so inside a sheet, panel or widget on a phone it overflows its host.",
+      "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.css:43-46.",
+      "fix": "Use min-block-size:100% (or a page-height token) and a space token; document that 'page' expects a full-height host.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-10",
+      "subject": "load-more-trigger",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The Retry action is a 14px-tall text button with no hit-area expansion, far under the 44px coarse-pointer target.",
+      "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.css:84-91 (padding:0, no ::after target); apps/storybook/visual/__screenshots__/ui-react-loadmoretrigger-states-chromium-linux.png Retry at ~36x14 px.",
+      "fix": "Render Retry as the DS Button (variant link or ghost, size sm) or add the same min-target ::after used by badge.css:272-280; use --a63-control-focus-ring-width for the outline.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-11",
+      "subject": "load-more-trigger",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "LoadMoreTrigger accepts a closed prop list (no id, aria-*, data-*, style) on its sentinel.",
+      "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.tsx:14-27.",
+      "fix": "Extend from React.ComponentProps<'div'> and spread the rest onto the sentinel.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-12",
+      "subject": "load-more-trigger",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "Load-more parity is declared 'strict' but iOS and web differ in the idle affordance (button vs passive text), failure form (card vs inline line), variants and string overrides.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomLoadMoreView.swift:20-54 vs packages/ui-react/src/components/load-more-trigger/load-more-trigger.tsx:40-47,116-133; load-more-trigger.json parity 'strict'.",
+      "fix": "Either align the renderers (message/label parameters on iOS, an explicit load-more button option on web) or declare parity 'platform-adaptive' with the differences listed in platformAdaptations.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k08-feedback-13",
+      "subject": "skeleton",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The web shimmer always sweeps left to right, while the contract says leading-to-trailing and iOS mirrors it in RTL.",
+      "evidence": "packages/ui-react/src/components/skeleton/skeleton.css:29-36; skeleton.json crossRenderer.motion.direction; packages/ui-ios/Sources/Atom63UI/AtomSkeleton.swift:55-58.",
+      "fix": "Add :dir(rtl) (or [dir='rtl']) keyframes that run translateX(100%) to translateX(-100%).",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-14",
+      "subject": "skeleton",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Skeleton has two shallow tests and its theme baseline accepted the dark-mode defect; no reduced-motion baseline exists.",
+      "evidence": "packages/ui-react/src/components/skeleton/skeleton.test.tsx (2 tests); apps/storybook/visual/__screenshots__/ui-react-skeleton-themes-chromium-linux.png; no reduced-motion story.",
+      "fix": "After the K3 fix, add a reduced-motion story/baseline and a test that dark scope changes the computed --a63-skeleton-base.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-15",
+      "subject": "avatar",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Web AvatarBadge has no way to name the status it shows, and AvatarGroupCount '+N' has no label, so status and overflow count are colour- or symbol-only for assistive tech.",
+      "evidence": "packages/ui-react/src/components/avatar/avatar.tsx:75-100; iOS requires a label: AtomAvatarBadge.dot(accessibilityLabel:) (Tests/Atom63UITests/AtomListPatternTests.swift:26-30).",
+      "fix": "Give AvatarBadge a required label (rendered visually hidden) and AvatarGroupCount an aria-label ('3 more'); add axe-visible stories.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-16",
+      "subject": "avatar",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The avatar status badge is pinned with physical right:0 and does not mirror in RTL; check:craft does not catch it.",
+      "evidence": "packages/ui-react/src/components/avatar/avatar.css:117-120.",
+      "fix": "Use inset-inline-end:0 (and inset-block-end) and add the rule to check:craft physical-properties.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-17",
+      "subject": "avatar",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The avatar contract and CLI answer say the ring is web-only, but AtomAvatar ships a ring with tests.",
+      "evidence": "packages/ui-foundation/contracts/components/avatar.json:64; packages/ui-ios/Sources/Atom63UI/AtomAvatar.swift:40,48; packages/ui-ios/Tests/Atom63UITests/AtomMessageTests.swift:48-51.",
+      "fix": "Change the adaptation to 'The square shape is web-only for now', regenerate contracts and the agent index.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-18",
+      "subject": "avatar",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "AtomAvatar takes any CGFloat size and only a circle, while the contract has four sizes and two shapes with strict parity.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAvatar.swift:44-57,84.",
+      "fix": "Add an AtomAvatarSize enum generated from the contract (keeping a CGFloat escape hatch if needed) and a shape parameter, or record both as platform adaptations.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-19",
+      "subject": "badge",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "AtomBadge has no size or dot axis and its tone is not exposed to VoiceOver, while badge parity is 'strict'.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomBadge.swift:13-27; badge.json crossRenderer parity 'strict', only palette declared web-only.",
+      "fix": "Add size (sm/md/lg) and dot to AtomBadge, expose the semantic tone via accessibilityValue, or declare the gaps as platform adaptations.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-20",
+      "subject": "badge",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "badge.mdx says the palette is the Tailwind hue scale backed by --color-* tokens, but the recipe uses --a63-category-* tokens.",
+      "evidence": "packages/ui-react/src/components/badge/badge.mdx (Contract section) vs packages/ui-react/src/components/badge/badge.css:250-253; badge.json description repeats '--color-* primitives'.",
+      "fix": "Rewrite the palette sentences in badge.mdx and badge.json to name --a63-category-{hue} tokens; regenerate.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-21",
+      "subject": "badge",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "No badge story covers long, CJK or overflowing labels, and the fixed height means a wrapped label overflows the chip.",
+      "evidence": "packages/ui-react/src/components/badge/badge.css:19; badge baselines (9) contain only short English labels.",
+      "fix": "Add white-space:nowrap with max-inline-size + text-overflow:ellipsis (or document wrapping), and a long/CJK story to the baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-22",
+      "subject": "empty",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "EmptyErrorDetail cannot be controlled and its toggle labels cannot be changed.",
+      "evidence": "packages/ui-react/src/components/empty/empty.tsx:83-110.",
+      "fix": "Add expanded/defaultExpanded/onExpandedChange and showLabel/hideLabel props (or a labels object).",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-23",
+      "subject": "empty",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The expanded error detail (error box and copy button) has no story or baseline.",
+      "evidence": "packages/ui-react/src/components/empty/empty.stories.tsx (no play/userEvent); apps/storybook/visual/__screenshots__/ui-react-empty-error-state-chromium-linux.png shows collapsed only.",
+      "fix": "Add an ErrorExpanded story (defaultExpanded once K1 lands) to the visual baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-24",
+      "subject": "empty",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Empty's error copy button is pinned with physical right and overlaps the start of the error text in RTL; toggle labels are English-only.",
+      "evidence": "packages/ui-react/src/components/empty/empty.css:142-145; empty.tsx:108.",
+      "fix": "Use inset-inline-end; expose the labels (see the K1 finding).",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-25",
+      "subject": "AtomContentStateView (iOS)",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "In the error state AtomContentStateView turns the title red and draws the retry as a solid destructive button, so a recovery reads as a dangerous action and differs from web's outline retry.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomContentStateView.swift:38,43; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/contentState.light.png; web packages/ui-react/src/components/feedback-state/feedback-state.tsx:139,145.",
+      "fix": "Tint only the symbol for error, keep the title primary, and use a neutral or primary button for retry; reserve destructive for destructive actions.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-26",
+      "subject": "AtomLoadMoreView (iOS)",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "AtomLoadMoreView's failure title, message and Retry label pass through AtomNotice's String init and cannot be localized; no parameter overrides any message.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomLoadMoreView.swift:36-42; packages/ui-ios/Sources/Atom63UI/AtomNotice.swift:22.",
+      "fix": "Take LocalizedStringResource (or message parameters with defaults) for every string and pass them through.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-27",
+      "subject": "AtomLoadMoreView (iOS)",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "AtomLoadMoreView posts no accessibility announcement when loading starts, fails or finishes, so VoiceOver users not focused on the row miss the change.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomLoadMoreView.swift:33-34,59-61.",
+      "fix": "Post AccessibilityNotification.Announcement on intent changes (onChange(of: intent)).",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-28",
+      "subject": "animated-check",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "AnimatedCheck has no 4-theme baseline and its 300ms draw duration is a literal hidden in a TS string that check:craft cannot scan.",
+      "evidence": "packages/ui-react/src/components/animated-check/animated-check.tsx:6-32 (line 17); baselines limited to -playground, -static-sizes, -dark.",
+      "fix": "Read the duration from a --a63-motion-* token (move the CSS into animated-check.css so check:craft sees it) and add a Themes story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-29",
+      "subject": "animated-check",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No baseline captures AnimatedCheck's reduced-motion state.",
+      "evidence": "packages/ui-react/src/components/animated-check/animated-check.stories.tsx (Playground, StaticSizes, Dark).",
+      "fix": "Add a reduced-motion story (prefers-reduced-motion emulation) to the baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-30",
+      "subject": "alert",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Batch-wide: no hand-written docs page and a CLI answer that gives only an import line and boilerplate guidance; a builder cannot learn slot composition or when to choose Alert vs FeedbackState vs Empty from the docs.",
+      "evidence": "pnpm -s atom63 component <slug> returns summary, one usage line, two boilerplate guidance bullets ('Keep product data and fetching outside...'), an import line and the contract; no runnable snippet (atom63 example <slug> returns the Playground story). Docs page is generated from apps/docs/src/lib/component-catalog.ts; no hand-written apps/docs/src/pages/component-<slug>.mdx exists (ls apps/docs/src/pages | grep component- lists 8 others). Applies to alert, avatar, empty, feedback-state, skeleton, load-more-trigger, animated-check (badge has a stale Storybook mdx).",
+      "fix": "Write usage guidance and a runnable composition snippet per component in component-catalog.ts (including a 'which state component' decision table for Alert/Empty/FeedbackState/LoadMoreTrigger); regenerate the agent index.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-31",
+      "subject": "feedback-state",
+      "criterion": "K10",
+      "severity": "P3",
+      "summary": "FeedbackState has no crossRenderer contract although iOS offers AtomContentStateView and sync/offline states, so its 7 kinds have no declared iOS mapping.",
+      "evidence": "packages/ui-foundation/contracts/components/feedback-state.json (no crossRenderer).",
+      "fix": "Add a crossRenderer block mapping kinds to AtomContentStateView (empty/error/not-found/no-results) and AtomSyncStatusView (offline/stale), parity platform-adaptive.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k08-feedback-32",
+      "subject": "badge",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Badge offers both 'destructive' and 'error' (and a 'glass' alias) for overlapping meanings; the consistency lint only flags this for alert-dialog.",
+      "evidence": "badge.json solidVariants/semanticVariants; docs/design-system/audits/contract-consistency-baseline.json has 'status-set | alert-dialog.variants | destructive -> error' but nothing for badge.",
+      "fix": "Deprecate 'destructive' in favour of 'error' for Badge and extend the status-set rule to all variant lists.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-33",
+      "subject": "badge",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Interactive badges add an outer margin of (min-target - height)/2 on top of the ::after hit area, so a clickable badge takes up to 12px more space per side than a static one.",
+      "evidence": "packages/ui-react/src/components/badge/badge.css:257 and 272-280.",
+      "fix": "Drop the margin and rely on the ::after target (document the spacing needed between adjacent interactive badges).",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-34",
+      "subject": "alert",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Alert inline padding is a literal 0.875rem rather than a space token.",
+      "evidence": "packages/ui-react/src/components/alert/alert.css:17.",
+      "fix": "Use a --a63-space-* step (3.5 if it exists, else 3) or add one.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-35",
+      "subject": "AtomSkeleton (iOS)",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "AtomSkeletonRow's image placeholder is a fixed 40x40 frame that does not grow with Dynamic Type while its text lines do.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSkeleton.swift:88-90.",
+      "fix": "Use @ScaledMetric for the placeholder size.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-36",
+      "subject": "badge",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "Tone is conveyed by the label text only; there is no forced-colors treatment in badge or any batch recipe (system-wide gap, see k01).",
+      "evidence": "grep -n forced-colors over the 8 recipes returns nothing.",
+      "fix": "Track with the system-wide forced-colors finding; add a forced-colors border for tonal badges and alerts.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-37",
+      "subject": "alert",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "Batch-wide: none of the 8 web components has a phone-width or touch story, so narrow-width behaviour (Alert action reserve, Empty and FeedbackState centring, LoadMoreTrigger retry) is never captured.",
+      "evidence": "No phone or touch story: grep -il 'phone|viewport|mobile' over the 8 batch story files returns nothing.",
+      "fix": "Add a Phone story (viewport 375, coarse pointer) to alert, empty, feedback-state and load-more-trigger and include them in the visual baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "k08-feedback-38",
+      "subject": "AtomNotice (iOS)",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Batch-wide iOS: the six SwiftUI counterparts have no reference docs beyond the CLI's 'Web and iOS' contract section and the demo catalog.",
+      "evidence": "iOS reference is only the CLI 'Web and iOS' section and the demo catalog (examples/ios-demo/Atom63Demo/CatalogRegistry.swift); no DocC or docs page.",
+      "fix": "Add DocC comments with a usage snippet to each public initializer and surface them in atom63 component <slug> under the iOS heading.",
+      "kind": "fix"
+    }
+  ]
+}

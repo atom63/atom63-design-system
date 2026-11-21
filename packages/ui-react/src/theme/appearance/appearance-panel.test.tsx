@@ -53,7 +53,7 @@ describe('AppearancePanel', () => {
   it('drives the controller setter for an axis', () => {
     const setTheme = vi.fn()
     render(<AppearancePanel controller={makeController({ setTheme })} />)
-    fireEvent.click(screen.getByRole('tab', { name: 'Aqua' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'Aqua' }))
     expect(setTheme).toHaveBeenCalledWith('aqua')
   })
 
