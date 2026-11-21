@@ -1,15 +1,18 @@
 /*
  * Rating recipe — the CHOICE archetype. Stars are the caller's or lucide's
- * glyph in two colors: the amber category color when on, a faint text color
- * when off. A read-only star stacks a filled copy over an empty one and clips
- * it to --rating-fill from the inline start, so halves mirror in right-to-left
- * languages. Input stars are radios; the ring is on :focus-visible.
+ * glyph, and on and off differ by shape as well as colour: an on star is filled
+ * in the warning status colour, an off star is an outline in the input border
+ * colour. Both reach 3:1 against the page and the panel in every theme and mode
+ * (WCAG 1.4.11; contrast.browser.test.ts holds the pairs). A read-only star
+ * stacks a filled copy over an outlined one and clips it to --rating-fill from
+ * the inline start, so halves mirror in right-to-left languages. Input stars
+ * are radios; the ring is on :focus-visible.
  */
 
 .a63-Rating {
   --rating-size: 1.25rem;
-  --rating-on: var(--a63-category-amber);
-  --rating-off: color-mix(in oklch, var(--a63-text-secondary) 35%, transparent);
+  --rating-on: var(--a63-status-warning);
+  --rating-off: var(--a63-border-input);
 
   display: inline-flex;
   align-items: center;
@@ -38,6 +41,7 @@
   border-radius: var(--radius-sm);
   background: transparent;
   color: inherit;
+  --rating-glyph-fill: none;
 }
 
 .a63-Rating-icon {
@@ -48,7 +52,7 @@
 .a63-Rating-icon > :where(svg) {
   width: 100%;
   height: 100%;
-  fill: currentColor;
+  fill: var(--rating-glyph-fill);
   stroke: currentColor;
 }
 
@@ -60,6 +64,7 @@
   width: var(--rating-fill);
   overflow: hidden;
   color: var(--rating-on);
+  --rating-glyph-fill: currentColor;
 }
 .a63-Rating-icon--filled > :where(svg) {
   width: var(--rating-size);
@@ -79,12 +84,15 @@
 }
 .a63-Rating-item[data-on] {
   color: var(--rating-on);
+  --rating-glyph-fill: currentColor;
 }
 .a63-Rating:not([data-read-only], [data-disabled]):has(.a63-Rating-item:hover) .a63-Rating-item {
   color: var(--rating-on);
+  --rating-glyph-fill: currentColor;
 }
 .a63-Rating:not([data-read-only], [data-disabled]) .a63-Rating-item:hover ~ .a63-Rating-item {
   color: var(--rating-off);
+  --rating-glyph-fill: none;
 }
 .a63-Rating-item:focus-visible {
   outline: var(--a63-control-focus-ring-width) solid
@@ -102,19 +110,12 @@
   }
 }
 
-/* Forced colors map the on and off colours to one system colour. On stars take
-   the system selection colour, and off stars draw as outlines, so the score
-   reads by shape as well as colour. */
+/* Forced colors replace the theme colours: on stars take the system selection
+   colour and off stars the text colour; the outline/fill shape still carries
+   the score. */
 @media (forced-colors: active) {
   .a63-Rating {
     --rating-on: Highlight;
     --rating-off: CanvasText;
-  }
-  .a63-Rating-icon > :where(svg) {
-    fill: none;
-  }
-  .a63-Rating-icon--filled > :where(svg),
-  .a63-Rating-item[data-on] .a63-Rating-icon > :where(svg) {
-    fill: currentColor;
   }
 }

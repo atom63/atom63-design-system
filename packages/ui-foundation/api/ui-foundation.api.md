@@ -873,7 +873,7 @@ export const buttonContract: {
     defaultTone: "neutral";
     defaultVariant: "default";
     shapes: readonly ["default", "round"];
-    slots: readonly ["root", "label", "icon", "spinner", "indicator"];
+    slots: readonly ["button", "button-label", "button-spinner", "button-indicator"];
     states: readonly ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
     tones: readonly ["neutral", "muted"];
@@ -964,7 +964,7 @@ export const buttonSizes: readonly ["xs", "sm", "md", "lg", "xl", "tile", "icon-
 export type ButtonSlot = (typeof buttonSlots)[number];
 
 // @public (undocumented)
-export const buttonSlots: readonly ["root", "label", "icon", "spinner", "indicator"];
+export const buttonSlots: readonly ["button", "button-label", "button-spinner", "button-indicator"];
 
 // @public (undocumented)
 export type ButtonState = (typeof buttonStates)[number];
@@ -1976,7 +1976,7 @@ export const crossRendererContracts: readonly [{
     readonly sharedOutcomes: readonly ["one-segment-is-selected-at-a-time", "activation-updates-the-selection-once", "disabled-segment-prevents-selection"];
     readonly accessibilityOutcomes: readonly ["exposes-each-segment-label", "exposes-selected-state", "preserves-single-selection-semantics"];
     readonly platformAdaptations: {
-        readonly react: readonly ["Uses a tab-backed segmented track with focus-visible feedback and an optional animated selection backplate."];
+        readonly react: readonly ["Uses radiogroup and radio semantics on a segmented track, named by aria-label or aria-labelledby, with arrow-key selection, focus-visible feedback and an optional animated selection backplate."];
         readonly swiftUI: readonly ["Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."];
     };
 }, {
@@ -4513,7 +4513,7 @@ export interface SearchFieldContract {
 // @public (undocumented)
 export const searchFieldContract: {
     defaultVariant: "default";
-    slots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear", "search-field-end"];
+    slots: readonly ["search-field", "search-field-icon", "input", "search-field-clear", "search-field-end"];
     states: readonly ["empty", "query", "focus", "disabled"];
     variants: readonly ["default", "filled", "plain"];
     visualArchetypes: readonly ["field", "action"];
@@ -4523,7 +4523,7 @@ export const searchFieldContract: {
 export type SearchFieldSlot = (typeof searchFieldSlots)[number];
 
 // @public (undocumented)
-export const searchFieldSlots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear", "search-field-end"];
+export const searchFieldSlots: readonly ["search-field", "search-field-icon", "input", "search-field-clear", "search-field-end"];
 
 // @public (undocumented)
 export type SearchFieldState = (typeof searchFieldStates)[number];

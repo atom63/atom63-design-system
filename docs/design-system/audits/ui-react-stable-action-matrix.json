@@ -76,7 +76,7 @@
     }
   },
   "summary": {
-    "sourceFamilies": 81,
+    "sourceFamilies": 80,
     "sourceExports": 637,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
@@ -88,12 +88,12 @@
       "assign-owner-and-evidence": 15,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
-      "keep-stable-candidate": 39
+      "keep-stable-candidate": 38
     },
     "sourcePriorityCounts": {
       "P0": 30,
       "P1": 12,
-      "P2": 39
+      "P2": 38
     },
     "packageSubpaths": 82,
     "subpathActionCounts": {
@@ -2407,11 +2407,11 @@
       "source": "./components/toaster",
       "family": "components/toaster",
       "kind": "component-family",
-      "totalExports": 2,
-      "valueExports": 1,
+      "totalExports": 3,
+      "valueExports": 2,
       "typeExports": 1,
       "tierCounts": {
-        "beta-supported-core": 2
+        "beta-supported-core": 3
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -2423,7 +2423,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": ["Toaster", "ToasterProps"],
+      "notableSymbols": ["toast", "Toaster", "ToasterProps"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
@@ -2510,29 +2510,6 @@
         "UIEnvironment",
         "UIProviderProps"
       ],
-      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
-    },
-    {
-      "source": "./sonner",
-      "family": "sonner",
-      "kind": "module",
-      "totalExports": 1,
-      "valueExports": 1,
-      "typeExports": 0,
-      "tierCounts": {
-        "beta-supported-core": 1
-      },
-      "dominantTier": "beta-supported-core",
-      "blockingTier": "beta-supported-core",
-      "recommendedAction": "keep-stable-candidate",
-      "priority": "P2",
-      "stableDecision": "Keep in root for stable after standard QA.",
-      "requiredEvidence": [
-        "visual QA for representative states",
-        "external packed-consumer smoke",
-        "dependency and public type compatibility review"
-      ],
-      "notableSymbols": ["toast"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     }
   ],

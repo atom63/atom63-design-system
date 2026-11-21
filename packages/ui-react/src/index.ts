@@ -625,11 +625,10 @@ export { TextTicker } from './components/text-ticker'
 export type { TextTickerProps } from './components/text-ticker'
 export { Textarea } from './components/textarea'
 export type { TextareaProps } from './components/textarea'
-export { Toaster } from './components/toaster'
+// `toast` is re-exported so consumers can raise package-styled toasts without
+// taking their own sonner dependency.
+export { Toaster, toast } from './components/toaster'
 export type { ToasterProps } from './components/toaster'
-// Re-exported so consumers can raise package-styled toasts without taking their
-// own sonner dependency.
-export { toast } from 'sonner'
 export { Toggle } from './components/toggle'
 export type { ToggleProps } from './components/toggle'
 export { ToggleGroup, ToggleGroupItem, ToggleGroupSeparator } from './components/toggle-group'

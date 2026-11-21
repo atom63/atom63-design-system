@@ -68,7 +68,16 @@ const edgePairs = [
   { fg: '--a63-border-danger', bg: '--a63-surface-control', min: AA_UI },
 ] as const
 
-const pairs = [...textPairs, ...actionPairs, ...statusPairs, ...edgePairs] as const
+// Rating stars (rating.css) carry the score as graphics: an on star is filled in
+// the warning accent, an off star is an outline in the input border colour.
+// Both reach 3:1 against the page and the panel they sit on.
+const ratingPairs = [
+  { fg: '--a63-status-warning', bg: '--a63-surface-panel', min: AA_UI },
+  { fg: '--a63-border-input', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-border-input', bg: '--a63-surface-panel', min: AA_UI },
+] as const
+
+const pairs = [...textPairs, ...actionPairs, ...statusPairs, ...edgePairs, ...ratingPairs] as const
 
 afterEach(() => {
   document.documentElement.removeAttribute('data-a63-theme')

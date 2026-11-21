@@ -1,6 +1,6 @@
 {
   "name": "@atom63/widgets",
-  "version": "0.1.0-beta.4",
+  "version": "0.1.0-beta.5",
   "description": "The Atom63 widget foundation: widget units and scale, the widget card and surface, loading, empty and error states, and the hosted shell",
   "license": "MIT",
   "repository": {
@@ -61,7 +61,7 @@
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 0",
-    "test": "vitest run",
+    "test": "vitest run && vitest run --config vitest.cascade.config.ts",
     "test:watch": "vitest"
   },
   "dependencies": {
@@ -93,6 +93,7 @@
     "tsup": "^9.0.0",
     "typescript": "catalog:",
     "vitest": "catalog:",
-    "vitest-axe": "^0.1.0"
+    "vitest-axe": "^0.1.0",
+    "playwright": "1.65.0"
   }
 }

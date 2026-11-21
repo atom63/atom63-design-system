@@ -391,6 +391,29 @@ describe('recipes.css cascade layering', () => {
   })
 })
 
+/* WCAG 1.4.11: rating stars are graphics that carry the score. Their two
+   colours are pairs contrast.browser.test.ts (packages/styles) holds at 3:1 on
+   the page and the panel, and on and off differ by shape (fill vs outline), not
+   only by hue. */
+describe('rating stars', () => {
+  const css = readRecipe('rating')
+  const base = css.slice(0, css.indexOf('@media'))
+
+  it('draws on stars in the warning accent and off stars in the input border colour', () => {
+    expect(base).toMatch(/--rating-on:\s*var\(--a63-status-warning\);/)
+    expect(base).toMatch(/--rating-off:\s*var\(--a63-border-input\);/)
+  })
+
+  it('fills on stars and draws off stars as outlines', () => {
+    expect(base).toMatch(/\.a63-Rating-item \{[^}]*--rating-glyph-fill:\s*none;/)
+    expect(base).toMatch(
+      /\.a63-Rating-icon > :where\(svg\) \{[^}]*fill:\s*var\(--rating-glyph-fill\);/
+    )
+    expect(base).toMatch(/\.a63-Rating-item\[data-on\] \{[^}]*--rating-glyph-fill:\s*currentColor;/)
+    expect(base).toMatch(/\.a63-Rating-icon--filled \{[^}]*--rating-glyph-fill:\s*currentColor;/)
+  })
+})
+
 describe('state that survives forced colors', () => {
   /* Forced colors (Windows High Contrast) replace fills and text colours with
      system colours and drop shadows and gradients, so a state drawn by colour

@@ -2,9 +2,13 @@ import { gzipSync } from 'node:zlib'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { build } from 'esbuild'
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
+// Two checks. The first is the combined gzip of every published JS file. The
+// second, below it, is what a consumer pays for one import from the root.
+//
 // Combined gzip of every published JS entry. The media lightbox lives on
 // `./media` (~23 kB gzip of its own), and has grown deliberately: 64 kB was the
 // pre-lightbox kit budget, 72 kB was the budget before its motion pass, and 74
@@ -114,6 +118,16 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // mounted and handing focus across, LoadMoreTrigger's persistent live region,
 // SearchField and SegmentedControl forwarding refs and props, and Sidebar's
 // inert collapsed panel and aria-current.
+//
+// 100 kB held 97.3 kB as the sum of each file's own gzip. The root entry then
+// moved to one build file per component so a consumer's bundler can drop the
+// ones it does not import (see the per-import budgets below). That splits the
+// output from 14 files into about 170, and gzipping each file on its own
+// charges every one of them a fresh dictionary: the sum went to 141.3 kB with
+// no new code. The check now gzips all the files as one stream, with source map
+// comments removed, which measured 92.1 kB before the split and 97.8 kB after.
+// The +5.7 kB is the import and export lines between the files. The budget
+// stays at 100 kB.
 const gzipBudgetBytes = 100 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
@@ -124,19 +138,67 @@ if (files.length === 0) {
   process.exit(1)
 }
 
-let gzipBytes = 0
-for (const file of files) {
-  gzipBytes += gzipSync(await readFile(path.join(distDirectory, file))).byteLength
-}
+const sources = await Promise.all(
+  files.map(async file =>
+    (await readFile(path.join(distDirectory, file), 'utf8')).replace(
+      /^\/\/# sourceMappingURL=.*$/gm,
+      ''
+    )
+  )
+)
+const gzipBytes = gzipSync(sources.join('\n')).byteLength
+const failures = []
 
-const formattedSize = `${(gzipBytes / 1024).toFixed(1)} kB`
-const formattedBudget = `${(gzipBudgetBytes / 1024).toFixed(0)} kB`
+const kB = bytes => `${(bytes / 1024).toFixed(1)} kB`
 
 if (gzipBytes > gzipBudgetBytes) {
-  console.error(
-    `UI React bundle-size check failed: ${formattedSize} gzip exceeds ${formattedBudget} budget`
-  )
+  failures.push(`all files: ${kB(gzipBytes)} gzip exceeds ${kB(gzipBudgetBytes)} budget`)
+}
+console.log(`all files: ${kB(gzipBytes)} gzip / ${kB(gzipBudgetBytes)} budget`)
+
+// What one named import from the root entry costs a consumer: esbuild bundles
+// it the way an app would (minified ESM, tree-shaking on, the peers react,
+// react-dom and react-hook-form left external, every dependency included), and
+// the result is gzipped. Before the root was split per component, Kbd cost
+// 35.6 kB, Button 37.8 kB, Separator 107.2 kB and Dialog 107.1 kB, because
+// every import kept all of @atom63/ui-foundation, sonner and input-otp, and the
+// Base UI parts of any shared chunk. Measured after the split: Kbd 8.6 kB
+// (nearly all of it tailwind-merge behind `cn`), Button 11.1, Separator 10.6,
+// Dialog 22.2 and Toaster 20.4 (sonner itself). Each budget leaves about 12-16%
+// headroom; the regression this guards against costs 25 kB or more.
+const importBudgets = {
+  Kbd: 10,
+  Button: 12.5,
+  Separator: 12,
+  Dialog: 25,
+  Toaster: 23,
+}
+const rootEntry = path.join(distDirectory, 'index.js')
+for (const [name, budgetKB] of Object.entries(importBudgets)) {
+  const result = await build({
+    stdin: {
+      contents: `export { ${name} } from ${JSON.stringify(rootEntry)}`,
+      resolveDir: distDirectory,
+      loader: 'js',
+    },
+    bundle: true,
+    external: ['react', 'react-dom', 'react/jsx-runtime', 'react-hook-form'],
+    format: 'esm',
+    logLevel: 'error',
+    minify: true,
+    write: false,
+  })
+  const bytes = gzipSync(result.outputFiles[0].contents).byteLength
+  const budgetBytes = budgetKB * 1024
+  if (bytes > budgetBytes) {
+    failures.push(`import { ${name} }: ${kB(bytes)} gzip exceeds ${kB(budgetBytes)} budget`)
+  }
+  console.log(`import { ${name} }: ${kB(bytes)} gzip / ${kB(budgetBytes)} budget`)
+}
+
+if (failures.length > 0) {
+  console.error(`UI React bundle-size check failed:\n  ${failures.join('\n  ')}`)
   process.exit(1)
 }
 
-console.log(`UI React bundle-size check passed: ${formattedSize} gzip / ${formattedBudget} budget`)
+console.log('UI React bundle-size check passed')

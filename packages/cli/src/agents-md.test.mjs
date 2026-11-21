@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { describe, it } from 'node:test'
 
-import { agentsBlock, markers, syncAgentsBlock } from './agents-md.mjs'
+import { agentsBlock, markers, ruleEnforcementErrors, syncAgentsBlock } from './agents-md.mjs'
 import { rules } from './rules.mjs'
 
 describe('AGENTS.md section', () => {
@@ -13,6 +13,30 @@ describe('AGENTS.md section', () => {
       assert.ok(block.includes(rule.why), rule.id)
     }
     assert.ok(block.startsWith(markers.start) && block.endsWith(markers.end))
+  })
+
+  it('says for every rule how it is enforced, or why it is not', () => {
+    assert.deepEqual(ruleEnforcementErrors(), [])
+    const block = agentsBlock()
+    for (const rule of rules) {
+      for (const text of [rule.checkedBy, rule.unchecked].filter(Boolean))
+        assert.ok(block.includes(text), rule.id)
+    }
+  })
+
+  it('flags a rule with neither a check nor a reason', () => {
+    const base = { rule: 'Do it.', why: 'Because.' }
+    assert.deepEqual(
+      ruleEnforcementErrors([
+        { id: 'craft', ...base, check: 'raw-color' },
+        { id: 'other', ...base, checkedBy: 'axe fails it.' },
+        { id: 'reason', ...base, unchecked: 'It is a judgement.' },
+        { id: 'bare', ...base },
+        { id: 'blank', ...base, unchecked: ' ' },
+        { id: 'both', ...base, check: 'raw-color', unchecked: 'It is a judgement.' },
+      ]).map(error => error.split(':')[0]),
+      ['bare', 'blank', 'both']
+    )
   })
 
   it('points projects without the CLI at the published docs', () => {
