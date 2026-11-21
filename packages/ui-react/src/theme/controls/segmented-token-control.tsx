@@ -7,6 +7,8 @@ import type { PersonalizationOption } from '../core/types'
 
 export interface SegmentedTokenControlProps<T extends string> {
   className?: string
+  /** The group's accessible name, for example the section title it sits under. */
+  label?: string
   onChange: (value: T) => void
   options: readonly PersonalizationOption<T>[]
   value: T
@@ -19,6 +21,7 @@ export interface SegmentedTokenControlProps<T extends string> {
  */
 export function SegmentedTokenControl<T extends string>({
   className,
+  label,
   onChange,
   options,
   value,
@@ -29,6 +32,7 @@ export function SegmentedTokenControl<T extends string>({
   }))
   return (
     <SegmentedControl
+      aria-label={label}
       className={cn('w-full', className)}
       fullWidth
       items={items}

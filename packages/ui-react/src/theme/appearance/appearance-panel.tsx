@@ -98,6 +98,7 @@ export function AppearancePanel({
         {has('theme') && (
           <AppearanceSection title="Theme">
             <SegmentedTokenControl
+              label="Theme"
               onChange={controller.setTheme}
               options={THEME_OPTIONS}
               value={state.theme}
@@ -107,6 +108,7 @@ export function AppearancePanel({
         {has('brand') && (
           <AppearanceSection title="Primary">
             <SwatchTokenControl
+              label="Primary"
               onChange={controller.setBrand}
               options={BRAND_OPTIONS}
               swatch={brandSwatch}
@@ -117,6 +119,7 @@ export function AppearancePanel({
         {has('surface') && (
           <AppearanceSection title="Surface">
             <SwatchTokenControl
+              label="Surface"
               onChange={controller.setSurface}
               options={SURFACE_OPTIONS}
               swatch={surfaceSwatch}
@@ -179,6 +182,7 @@ export function AppearancePanel({
         {has('os') && (
           <AppearanceSection title="System">
             <SegmentedTokenControl
+              label="System"
               onChange={controller.setOs}
               options={OS_OPTIONS}
               value={state.os}
@@ -188,6 +192,7 @@ export function AppearancePanel({
         {has('iconTheme') && (
           <AppearanceSection title="Icons">
             <SegmentedTokenControl
+              label="Icons"
               onChange={controller.setIconTheme}
               options={ICON_THEME_OPTIONS}
               value={state.iconTheme}
