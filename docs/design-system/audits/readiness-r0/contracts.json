@@ -1,0 +1,900 @@
+{
+  "scope": "contracts",
+  "reviewedAt": "2026-11-18",
+  "subjects": [
+    {
+      "subject": "all-contracts",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 1,
+          "evidence": "contracts-1, contracts-7: intent in 3/76 contracts; schema requires only component/maturity/contract; 53 contracts without description, 32 with no stated purpose at all."
+        },
+        {
+          "criterion": "C2",
+          "score": 1,
+          "evidence": "contracts-2, contracts-5: lint passes ('Contract consistency OK (76 contracts)') with a 20-entry baseline, but focus/focus-visible, rest/default/idle, tone and list-name drift are uncaught."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "contracts-3: 2/31 cross-renderer contracts map axes; conformance checks states only; amount missing (contracts-14)."
+        },
+        {
+          "criterion": "C4",
+          "score": 2,
+          "evidence": "contracts-6, contracts-8: 75/76 contracts fully wired (Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv).); menu and progressive-blur are unflagged exceptions."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "contracts-4: 69/76 stable by declaration; component-catalog.ts:742 defaults to stable; stable components with open craft-baseline debt."
+        }
+      ]
+    },
+    {
+      "subject": "progressive-blur",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 0,
+          "evidence": "contracts-9: no contract file exists."
+        },
+        {
+          "criterion": "C2",
+          "score": null,
+          "evidence": "n/a: no contract to compare."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart in packages/ui-ios/Sources/Atom63UI and not listed in contracts/cross-renderer.json."
+        },
+        {
+          "criterion": "C4",
+          "score": 1,
+          "evidence": "contracts-10: component, story, test, baselines (ui-react-progressiveblur-*.png) and index entry exist, contract missing."
+        },
+        {
+          "criterion": "C5",
+          "score": 1,
+          "evidence": "contracts-11: Stable via catalog default."
+        }
+      ]
+    },
+    {
+      "subject": "badge",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "badge.json has description, intent (tone/emphasis axes, web and iOS maps), defaults (variant default, size md), slots, states and maturity; states use `resting` (baseline synonym)."
+        },
+        {
+          "criterion": "C2",
+          "score": 1,
+          "evidence": "contracts-12: accent/neutral mean different things per platform; also `resting` state (contract-consistency-baseline.json)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "contracts-13; axes are mapped to iOS (one of two contracts that do), but requiredStates are validated against the wrong list."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "amount",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "amount.json: sizes, fractions with defaults (defaultSize md, defaultFraction raised), slots, states [rest], maturity preview; no description/intent (contracts-1)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "sizes sm/md/lg-style values and `rest` state match the canonical names; no lint hits."
+        },
+        {
+          "criterion": "C3",
+          "score": 1,
+          "evidence": "contracts-14: AtomAmountText exists and is not mapped."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "maturity preview is honest: no cross-renderer contract and no scorecard yet."
+        }
+      ]
+    },
+    {
+      "subject": "menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-16: checked/destructive missing."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "contracts-17: tone `primary` vs `accent`."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: the iOS Menu counterpart is mapped through dropdown-menu (crossRenderer swiftUIRenderer Menu)."
+        },
+        {
+          "criterion": "C4",
+          "score": 2,
+          "evidence": "contracts-15: recipe + story + baselines (ui-react-menu-*.png) only; no component, test or CLI entry."
+        },
+        {
+          "criterion": "C5",
+          "score": 2,
+          "evidence": "contracts-18: stable on a recipe-only contract."
+        }
+      ]
+    },
+    {
+      "subject": "select",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-19."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "sizes sm/md/lg, states kebab-case and canonical; no lint hits."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "crossRenderer Picker (platform-adaptive) maps states only; sizes unmapped (contracts-3)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "checkbox",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-20."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "sizes sm/md, defaults, states kebab-case; no lint hits."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no checkbox entry in cross-renderer.json; iOS uses AtomSelectionRow/Toggle patterns rather than a checkbox renderer."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "toggle",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-21."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "`focus` state (contracts-2); tone `subtle` exists only here (toggle.json:7)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "crossRenderer AtomChip maps states only; sizes/tones unmapped (contracts-3)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "toggle-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-22."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "`focus` state at toggle-group.json:10 (contracts-2)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "crossRenderer Picker(.segmented) / AtomGhostToggleGroup maps states only; orientation parity is a hand-written Swift test (AtomVariantParityTests.swift:45) (contracts-3)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "frame",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-23."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "`default` state at frame.json:22 (contracts-2)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart in packages/ui-ios/Sources/Atom63UI and not listed in contracts/cross-renderer.json."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "toaster",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-24."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "contracts-25."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "crossRenderer AtomToast (recipe parity) maps states and motion; tones/variants unmapped (contracts-3)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv). No Contract story baseline (contracts-8)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "sidebar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "sidebar.json: description, 7 axes each with a default, slots, states [expanded, collapsed], maturity."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "contracts-26; physical sides left/right in baseline."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart in packages/ui-ios/Sources/Atom63UI and not listed in contracts/cross-renderer.json."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "drawer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "drawer.json: directions + footerVariants with defaults, slots, states [closed, open, dragging, snapped], maturity; no description (contracts-1)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "contracts-27; physical left/right values in baseline."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart in packages/ui-ios/Sources/Atom63UI and not listed in contracts/cross-renderer.json."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "connected-panel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-28."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "contracts-29 (P3): aligns vs alignments."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart in packages/ui-ios/Sources/Atom63UI and not listed in contracts/cross-renderer.json."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "context-menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "contracts-30."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "item variant axis exists on DropdownMenu as itemVariants but is undeclared here (contracts-30)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: the iOS Menu counterpart is mapped through dropdown-menu only."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv). Uses the shared Menu recipe (no own .css)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "field",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "field.json: orientations + legendVariants with defaults, 11 slots, states, maturity; contracts-31 (P3) dead outline selector."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "`default` state at field.json:8 (contracts-2)."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "crossRenderer AtomFormField (strict) maps states only; orientations/legendVariants unmapped, and the iOS field variant subset is a literal in AtomVariantParityTests.swift:11 (contracts-3)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    },
+    {
+      "subject": "button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "button.json: description, intent (tone/emphasis/content, sizes with typography role and heights per platform), 4 defaults, slots, tokenSlots, states, maturity."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "contracts-32; `focusVisible` state in contract-consistency-baseline.json."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "intent.platforms.web and .ios map every variant and size (extensions listed with reasons), generated AtomButtonTone/Emphasis/Variant (AtomComponentIntent.generated.swift:18-80); generator fails on unmapped values (cross-renderer-contracts.md:48-50)."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Wiring sweep: generated src/components/<n>/<n>-contract.ts, ui-react recipe (.css or shared Menu recipe), .stories.tsx, .test.tsx and an agent-index entry all present; `node scripts/generate-component-contracts.mjs --check && node scripts/generate-cross-renderer-contracts.mjs --check` exit 0; check:agent-index exit 0 (sweep/summary.tsv)."
+        },
+        {
+          "criterion": "C5",
+          "score": null,
+          "evidence": "null: pending. No layer-3 scorecard exists yet to cross-check maturity; systemic gap in contracts-4."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "contracts-1",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Only 3 of 76 contracts declare the component `intent` block, and the schema does not require intent, states or slots, so completeness is unchecked.",
+      "evidence": "Only button.json, badge.json and input.json have `intent` (docs/design-system/cross-renderer-contracts.md:46 says so); component-intent.schema.json top-level `required` is only component/maturity/contract (+lists), `intent`, `description`, `states`, `slots` optional. 53/76 contracts have no `description`; 32 of those also have no crossRenderer.intent, so 32 contracts state no purpose at all (e.g. tooltip, popover, sheet, menu, kbd, spinner).",
+      "fix": "Make intent (at minimum a one-line purpose plus the platform-neutral axes) required in the schema, and require `states` and `slots` lists (allowing an explicit empty list with a description for static components). Backfill the 73 contracts.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "Reproduced: only button/badge/input have `intent`, the schema's oneOf requires only component/maturity/contract, and 33 contracts carry no description or crossRenderer.intent. But the `intent` block is by design a cross-renderer semantic-axis map (cross-renderer-contracts.md:44-56), not a purpose field, so it is not expected on every contract. Purpose is published elsewhere: agent-index has e.g. tooltip summary \"Tooltip supplies brief supplementary text...\". 73/76 contracts list states, and the 3 without (alert, app-view, separator) are plausibly stateless. The real gap is that purpose and completeness are not enforced in the contract layer, which is a quality gap and does not block ready."
+      }
+    },
+    {
+      "id": "contracts-2",
+      "subject": "all-contracts",
+      "criterion": "C2",
+      "severity": "P1",
+      "summary": "State names drift across contracts in ways the consistency lint does not catch: focus vs focus-visible, rest vs default vs idle, hover vs hovering, pressed vs active.",
+      "evidence": "`focus` is the listed state in input.json:11, textarea.json:7, breadcrumb.json:7, item.json:25, search-field.json:6, toggle-group.json:10 and toggle.json:8 while 21 contracts use `focus-visible` and AGENTS.md rule 11 forbids :focus rings (input only papers over it with stateAliases focus->focus-visible, input.json:155; textarea/search-field crossRenderer.requiredStates also say `focus`, textarea.json:48, search-field.json:38). Resting state is `rest` in 29 contracts but `default` in field.json:8, form.json:7, frame.json:22 and `idle` in feedback-state.json:17, load-more-trigger.json:7, resizable.json:8, scroll-area.json:8, scrollable-list.json:8. scroll-area uses `hovering` (19 others `hover`). `active` means current/selected in input-otp, navigation-menu, sidebar-nav-tree while button/toggle use `pressed`. `node scripts/design-system/check-contract-consistency.mjs` -> \"Contract consistency OK (76 contracts)\" with none of these in contract-consistency-baseline.json.",
+      "fix": "Add these synonyms to lib/contract-consistency.mjs (focus->focus-visible where the recipe draws :focus-visible, default/idle->rest, hovering->hover), baseline them, then rename in contracts with stateAliases for one release.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced from source. input/textarea/breadcrumb/item/search-field/toggle-group/toggle list `focus` while about 21 contracts use `focus-visible`, and accordion/button use `focusVisible`. Resting state is `default` in field/form/frame and `idle` in resizable/scroll-area/scrollable-list/feedback-state, against `rest` elsewhere and `resting` in badge. scroll-area uses `hovering`. input-otp and navigation-menu use `active`. `node scripts/design-system/check-contract-consistency.mjs` prints \"Contract consistency OK (76 contracts).\" Only input has a stateAliases entry. Mitigation: `focus` on text fields behaves like :focus-visible. Even so, this is exactly the C2 near-synonym class the lint misses."
+      }
+    },
+    {
+      "id": "contracts-3",
+      "subject": "all-contracts",
+      "criterion": "C3",
+      "severity": "P1",
+      "summary": "Of the 31 cross-renderer contracts only Button and Badge map their axes to iOS; the other 29 map states only, and conformance tests check states and outcomes, never axes.",
+      "evidence": "Only button.json and badge.json carry intent.platforms.ios axis maps; input.json maps only size md. dialog sizes, toggle sizes/tones, segmented-control sizes/variants/tones, slider/progress tones, tabs sizes, avatar sizes/shapes, card variants, item variants/sizes/tones, toaster tones, carousel dot axes have no iOS mapping. packages/ui-react/src/conformance/renderer-conformance.ts:3-9 records implementedStates and outcomes only. Where iOS axes are checked they are hard-coded literals, not read from the contract: packages/ui-ios/Tests/Atom63UITests/AtomVariantParityTests.swift:11-12 (`AtomFieldVariant == [\"default\",\"filled\"]`, `AtomCardVariant == [\"default\",\"filled\",\"elevated\"]`).",
+      "fix": "Extend the `intent.platforms` map (props -> axes, with extensions) to every crossRenderer contract, generate the Swift enums from it as for Button/Badge, and make the generator fail when a web axis value is neither mapped nor an extension.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. Only badge.json, button.json and input.json contain an `ios` platform block, and input's maps only minHitTarget. renderer-conformance.ts:3-9 records implementedStates and outcomes, with no axes. AtomVariantParityTests.swift:11-12 hard-codes `[\"default\",\"filled\"]` and `[\"default\",\"filled\",\"elevated\"]` instead of reading the contract. iOS counterparts with axes exist (AtomCard, AtomAvatar, AtomToggle, AtomProgressView, AtomToast, AtomPageDots), and no documented decision defers their mapping."
+      }
+    },
+    {
+      "id": "contracts-4",
+      "subject": "all-contracts",
+      "criterion": "C5",
+      "severity": "P2",
+      "summary": "Maturity is self-declared: 69 of 76 contracts say `stable` with no check tying it to a scorecard, and the docs catalog defaults a contract-less component to Stable.",
+      "evidence": "69 stable / 7 preview (amount, app-view, chat-composer, chat-message, chat-steps, chat-typing-indicator, message). apps/docs/src/lib/component-catalog.ts:742 `status: getComponentMaturity(slug) ?? 'stable'`. Stable components still carry open craft debt: docs/design-system/audits/craft-baseline.json:4,13-19 (kbd mode-branch and token-role; alert, card, input-otp, kbd, progress, slider token-role). No script reads maturity against any readiness file.",
+      "fix": "Default unknown maturity to `preview` (or fail), and add a check that `stable` requires a ready scorecard in docs/design-system/audits/readiness/ once layer 3 lands; demote components whose scorecard is not ready.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "The counts (69 stable / 7 preview) and the `?? 'stable'` default at component-catalog.ts:742 are real. But the bar itself lists the C5 check as \"— (cross-checked against layer 3)\", so having no automated maturity script is not a gap against the bar. The craft-baseline debt cited is minor token-role and mode-branch entries, which do not show a stable component is unready. The only concrete dishonest-maturity case is progressive-blur, which contracts-11 already covers. As a cross-cutting claim it is unproven without the layer-3 scorecards."
+      }
+    },
+    {
+      "id": "contracts-5",
+      "subject": "all-contracts",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "The new consistency lint covers too little: it applies the size synonym only to a list literally named `sizes`, skips every object-form list, and knows two synonyms.",
+      "evidence": "scripts/design-system/lib/contract-consistency.mjs:23-26 (SYNONYMS has only sizes.default->md and resting->rest), :41 (`!Array.isArray(values)` skips valuesList/concat lists such as badge semanticVariants/solidVariants, input variants, frame variants, carousel dotTones), :45 (`SYNONYMS[list]` so sidebar.json:11 `menuButtonSizes: [\"default\",\"sm\",\"lg\"]` is not flagged). No rule compares list key names (sides vs directions, aligns vs alignments) or tone values (accent vs primary vs default).",
+      "fix": "Match size synonyms on any key ending in `Sizes`/`sizes`, resolve object-form lists through `values`/`concat`, add a list-name synonym rule and a tone-value rule, then re-baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-6",
+      "subject": "all-contracts",
+      "criterion": "C4",
+      "severity": "P2",
+      "summary": "Wiring checks do not fail when a ui-react component has no contract or a contract has no component and index entry; two such gaps exist today.",
+      "evidence": "packages/ui-react/src/components/progressive-blur has tsx/stories/test and an agent-index entry with `contract: null`; packages/ui-foundation/contracts/components/menu.json has no component, no test and no index entry (`pnpm -s atom63 component menu` -> `No component \"menu\". (component.not_found)`). Both pass check:agent-index and check:contracts (sweep/summary.tsv exit 0).",
+      "fix": "Add to check:agent-index (or check:contracts) a bidirectional set comparison: every ui-react component directory has a contract and every component contract has a component or is moved to contracts/shared.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-7",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P3",
+      "summary": "Several contracts omit lists the bar counts as part of completeness, without saying why.",
+      "evidence": "No `states`: alert.json, app-view.json, separator.json. No `slots`: portal-container.json; sidebar-nav-tree.json uses a `parts` list instead of `slots`. Empty `visualArchetypes`: marquee.json, portal-container.json.",
+      "fix": "Add the lists, or an explicit empty list with a description of why the component has none.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-8",
+      "subject": "all-contracts",
+      "criterion": "C4",
+      "severity": "P3",
+      "summary": "Six stable components have no `Contract` story baseline, the story that renders the contract axes.",
+      "evidence": "apps/storybook/visual/__screenshots__ has ui-react-<n>-contract-*.png for most components but none for animated-check, destination-link, search-field, spinner, toaster, progressive-blur.",
+      "fix": "Add the Contract story (the ds:new scaffold produces it) and capture baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-9",
+      "subject": "progressive-blur",
+      "criterion": "C1",
+      "severity": "P0",
+      "summary": "ProgressiveBlur is an exported, documented component with no contract at all, so its axes (ProgressiveBlurPosition), defaults, slots and states are nowhere in the contract layer.",
+      "evidence": "No packages/ui-foundation/contracts/components/progressive-blur.json; packages/ui-react/src/components/progressive-blur/{progressive-blur.tsx,stories,test} exist; `pnpm -s atom63 component progressive-blur` prints \"Status: Stable\" and \"TypeScript remains the source of truth for complete prop contracts\" with no axes; agent-index.json entry has `contract: null`.",
+      "fix": "Write contracts/components/progressive-blur.json (positions axis, default, slots, states, maturity preview until scored), run generate:contracts and generate:index.",
+      "kind": "fix",
+      "reviewedSeverity": "P0",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. There is no contracts/components/progressive-blur.json, while ui-react/src/components/progressive-blur/{tsx,stories,test} exist. In agent-index.json it is the only one of 76 entries with `contract: null` and `axisGuidance: null`, and it exports ProgressiveBlurPosition. A missing contract meets P0 = missing. No documented exemption found; production-readiness-audit.md:78 only notes its missing recipe."
+      }
+    },
+    {
+      "id": "contracts-10",
+      "subject": "progressive-blur",
+      "criterion": "C4",
+      "severity": "P1",
+      "summary": "The CLI index publishes progressive-blur with `contract: null` and no check flags it.",
+      "evidence": "packages/cli/generated/agent-index.json component slug progressive-blur: contract null; check:agent-index passed (sweep/agent-index.log).",
+      "fix": "Covered by the bidirectional check in contracts-6; fix the instance with contracts-9.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced: agent-index publishes progressive-blur with contract null, and no check rejects it (it is the sole null). This is a C4 wiring gap. It largely overlaps contracts-9 but is a distinct check failure."
+      }
+    },
+    {
+      "id": "contracts-11",
+      "subject": "progressive-blur",
+      "criterion": "C5",
+      "severity": "P1",
+      "summary": "progressive-blur is shown as Stable only because the catalog defaults missing maturity to stable.",
+      "evidence": "apps/docs/src/lib/component-catalog.ts:742 `getComponentMaturity(slug) ?? 'stable'`; CLI output \"Status: Stable\"; agent-index status stable with no contract.",
+      "fix": "Give it an explicit maturity in its new contract (preview until its layer-3 scorecard is ready) and remove the stable default (contracts-4).",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced: component-catalog.ts:742 `getComponentMaturity(slug) ?? 'stable'`, and agent-index lists the status as stable. ui-react-stable-action-matrix.md:50 itself marks progressive-blur P0 \"Do not promise stable compatibility until an owner... evidence are recorded\", so Stable is dishonest."
+      }
+    },
+    {
+      "id": "contracts-12",
+      "subject": "badge",
+      "criterion": "C2",
+      "severity": "P1",
+      "summary": "Badge `accent` and `neutral` mean different things on web and iOS inside the same contract.",
+      "evidence": "Web: badge.json:16 `accent` is a solid-variant extension \"A neutral on the control hover surface\" (intent.platforms.web extensions, ~:153); `neutral` is a palette hue (badge.json:43). iOS: intent.platforms.ios.props.tone.map (badge.json:241) maps `accent` -> tone primary, emphasis solid and `neutral` -> neutral soft; generated AtomBadgeTone (packages/ui-ios/Sources/Atom63UI/Generated/AtomComponentIntent.generated.swift:5-11) exposes `.accent`. A port of `<Badge variant=\"accent\">` to `AtomBadge(tone: .accent)` changes neutral to brand solid.",
+      "fix": "Rename the iOS case to `primary` (deprecated alias `accent`) to match the intent tone axis, or rename the web extension; keep one meaning per name.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. In badge.json, web `accent` is a variant extension described as \"A neutral on the control hover surface\" (around line 153), and `neutral` is a hue-group extension (line 224). The iOS tone map (around line 237) maps `accent` to primary/solid and `neutral` to neutral/soft. The generated AtomBadgeTone exposes `.accent`. Same name, different meaning within one contract: a C2 violation and a porting hazard."
+      }
+    },
+    {
+      "id": "contracts-13",
+      "subject": "badge",
+      "criterion": "C3",
+      "severity": "P2",
+      "summary": "Badge crossRenderer.requiredStates are checked against the web variant list, where `neutral` and `accent` happen to exist as a palette hue and an extension, so the requirement is satisfied by the wrong values.",
+      "evidence": "badge.json:281 requiredStates [\"neutral\",\"accent\",\"success\",\"warning\",\"error\"] with foundationAxis `variants`; scripts/generate-cross-renderer-contracts.mjs:90-95 only checks membership in that concatenated list (solid+semantic+palette).",
+      "fix": "Check requiredStates for badge against intent.axes.tone instead of the raw variant list, and use `primary` for the shared tone.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-14",
+      "subject": "amount",
+      "criterion": "C3",
+      "severity": "P1",
+      "summary": "Amount has an iOS counterpart (AtomAmountText) that mirrors its `fractions` axis, but amount is not a cross-renderer contract and maps nothing.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAmountText.swift:6-12 (\"Mirrors the amount contract's fractions axis\"), Tests/Atom63UITests/AtomAmountTextTests.swift; amount.json has no crossRenderer; cross-renderer.json components list (31 entries) omits amount.",
+      "fix": "Add amount to cross-renderer.json with a crossRenderer block and an intent map for sizes and fractions; generate AtomAmountFraction from it.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. AtomAmountText.swift:6-7 says \"Mirrors the amount contract's `fractions` axis\". amount.json has only $schema/component/contract/lists/maturity keys, with no crossRenderer or intent, and cross-renderer.json has 31 components and omits amount. Under C3 a web contract with an iOS counterpart must map its axes. Amount being preview does not remove the ready-blocking gap."
+      }
+    },
+    {
+      "id": "contracts-15",
+      "subject": "menu",
+      "criterion": "C4",
+      "severity": "P2",
+      "summary": "The `menu` contract is a shared recipe with no component, no test and no CLI entry, yet sits among component contracts.",
+      "evidence": "packages/ui-react/src/components/menu has only menu.css and menu.stories.tsx (stories comment: \"Static preview of the shared .a63-Menu-* recipe\"); `pnpm -s atom63 component menu` -> not_found.",
+      "fix": "Move it to contracts/shared (or a recipe contract kind) without maturity, and make the consumers (dropdown-menu, context-menu, menubar, select) reference it.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-16",
+      "subject": "menu",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "The menu recipe contract omits states its own story draws: checked and destructive items.",
+      "evidence": "menu.json:8 states [rest, highlighted, disabled, selected, submenu-open]; apps/storybook/visual/__screenshots__/ui-react-menu-tones-chromium-linux.png shows \"Checkbox (checked)\" and \"Delete\"/\"Delete (highlighted)\" destructive rows; dropdown-menu.json and context-menu.json list checked/unchecked/destructive.",
+      "fix": "Add checked, unchecked and destructive to menu.json states so the shared recipe and its consumers agree.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-17",
+      "subject": "menu",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Menu names its highlight tone `primary` where every other contract names the same cue `accent`.",
+      "evidence": "menu.json:6 tones [\"neutral\",\"primary\"]; tones elsewhere: item, progress, segmented-control, sidebar-nav-tree, slider, table, toggle use [\"neutral\",\"accent\"]; AGENTS.md rule 5 tells builders to set `tone=\"accent\"` on a selection. Screenshot ui-react-menu-tones-chromium-linux.png labels it \"primary (data-tone)\".",
+      "fix": "Rename to `accent` with a one-release alias.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-18",
+      "subject": "menu",
+      "criterion": "C5",
+      "severity": "P2",
+      "summary": "`stable` on a recipe-only contract claims a readiness nothing can score: there is no component, test or docs page for it.",
+      "evidence": "menu.json maturity stable; no menu.tsx/menu.test.tsx; not in agent-index.",
+      "fix": "Drop maturity when it moves to contracts/shared (contracts-15).",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-19",
+      "subject": "select",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Select lists no `invalid` or `hover` state, and its recipe draws neither invalid nor documents hover, though Field puts it in an invalid state.",
+      "evidence": "select.json:7 states [closed, open, placeholder, focus-visible, disabled, highlighted-item, selected-item, disabled-item]; grep of select.css finds :hover but no data-invalid/aria-invalid selector; field.json:8 lists invalid; input.json and textarea.json list invalid.",
+      "fix": "Add invalid (and hover) to the contract; the layer-3 batch 3 reviewer should verify the trigger draws the danger edge.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-20",
+      "subject": "checkbox",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Checkbox omits hover and focus-visible though its recipe styles both and Radio lists focus-visible.",
+      "evidence": "checkbox.json:8 states [unchecked, checked, indeterminate, disabled, invalid]; checkbox.css has :hover and :focus-visible selectors; radio.json lists focus-visible.",
+      "fix": "Add hover and focus-visible to checkbox states.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-21",
+      "subject": "toggle",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Toggle's state list mixes two models (on/off and rest/pressed) and names `focus` where the recipe draws `:focus-visible`, so `pressed` is ambiguous between \"on\" and \"being pressed\".",
+      "evidence": "toggle.json:8 states [off, on, rest, hover, pressed, disabled, focus]; toggle.css uses [data-pressed] (the Base UI on state, 5 selectors) and :active, and draws the ring at toggle.css:132 `.a63-Toggle:focus-visible`.",
+      "fix": "States: off, on, hover, active (or pressing), focus-visible, disabled; document that data-pressed = on.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-22",
+      "subject": "toggle-group",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "ToggleGroup takes `size` and `tone` props that its contract does not declare.",
+      "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.tsx:30-31 (`size?: ToggleSize`, `tone?: ToggleTone`) and :54-56 (data-size, data-tone); toggle-group.json lists variants, orientations, selectionModes, states, slots, tokenSlots only. button-group.json does declare sizes for the same pattern.",
+      "fix": "Add sizes and tones (referencing Toggle's lists) with defaults to toggle-group.json.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-23",
+      "subject": "frame",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Frame's `states` list holds axis values, and two axes have no default.",
+      "evidence": "frame.json:22 states [default, border-off, border-subtle, border-strong] duplicates the `borders` axis [off, subtle, strong]; `trays` and `panelSurfaces` lists have no defaultTray/defaultPanelSurface in contract.",
+      "fix": "Remove the border values from states (Frame is static: states may be empty with a reason) and add defaults for trays and panelSurfaces.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-24",
+      "subject": "toaster",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Toaster's `tones` list includes `loading`, which is a state, and has no default tone.",
+      "evidence": "toaster.json:9 tones [default, info, success, warning, error, loading]; contract has defaultVariant only; states (toaster.json:8) lack loading.",
+      "fix": "Move loading to states, add defaultTone.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-25",
+      "subject": "toaster",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Toaster names its neutral tone `default`; every other tone list uses `neutral`.",
+      "evidence": "toaster.json:9 vs tones in button, item, menu, progress, segmented-control, sidebar-nav-tree, slider, table, toggle (all `neutral`).",
+      "fix": "Rename to `neutral` with an alias.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-26",
+      "subject": "sidebar",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "One contract uses two size scales: menu buttons use `default`, sub-buttons use `md`; the lint misses it because the key is not `sizes`.",
+      "evidence": "sidebar.json:11 menuButtonSizes [\"default\",\"sm\",\"lg\"], defaultMenuButtonSize \"default\"; menuSubButtonSizes [\"sm\",\"md\"], default \"md\"; sidebar.sides left/right is already in contract-consistency-baseline.json.",
+      "fix": "Rename menuButtonSizes default -> md; extend the lint (contracts-5).",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-27",
+      "subject": "drawer",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "The same concept (which edge an overlay attaches to) is `directions` in Drawer and `sides` in Sheet and Tooltip, and `directions` also means incoming/outgoing in Message.",
+      "evidence": "drawer.json:6 directions [top,bottom,left,right]; sheet.json:6 sides [right,left,top,bottom]; tooltip.json:6 sides; message.json:7 directions [incoming,outgoing].",
+      "fix": "Rename Drawer's axis to `sides` (alias `direction`), and keep `direction` only for Message.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-28",
+      "subject": "connected-panel",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "ConnectedPanel has a `variant` prop (`button-group` | `default`) that its contract does not declare.",
+      "evidence": "packages/ui-react/src/components/connected-panel/connected-panel.tsx:77 `export type ConnectedPanelVariant = 'button-group' | 'default'`, :89, :162 data-variant; connected-panel.json lists aligns, slots, states, visualArchetypes only. A baseline exists for it: ui-react-connectedpanel-button-*.png.",
+      "fix": "Add variants and defaultVariant to connected-panel.json and type the prop from the generated list.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-29",
+      "subject": "connected-panel",
+      "criterion": "C2",
+      "severity": "P3",
+      "summary": "Alignment is `aligns` here and `alignments` in Tooltip.",
+      "evidence": "connected-panel.json:7 aligns [start,center,end]; tooltip.json:7 alignments [start,center,end]; input.json:58 group aligns.",
+      "fix": "Pick one key (`aligns`, used twice) and rename tooltip's with an alias.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-30",
+      "subject": "context-menu",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "ContextMenu items take a `variant` (`default` | `destructive`) typed inline, not from the contract; DropdownMenu declares the same axis as itemVariants.",
+      "evidence": "packages/ui-react/src/components/context-menu/context-menu.tsx:127 `variant?: 'default' | 'destructive'`; context-menu.json has slots, states, visualArchetypes only; dropdown-menu.json has itemVariants + defaultItemVariant.",
+      "fix": "Add itemVariants/defaultItemVariant to context-menu.json (or reference the shared menu list).",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-31",
+      "subject": "field",
+      "criterion": "C1",
+      "severity": "P3",
+      "summary": "Field's recipe styles an `outline` FieldGroup variant that no contract or prop declares.",
+      "evidence": "packages/ui-react/src/components/field/field.css:60 `.a63-FieldGroup[data-variant='outline']`; field.tsx declares only FieldLegendVariant (legend|label); field.json has no group variants.",
+      "fix": "Either declare a FieldGroup variants list or delete the dead selector.",
+      "kind": "fix"
+    },
+    {
+      "id": "contracts-32",
+      "subject": "button",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Button uses `tone` for two different value sets: the prop list is neutral/muted while the intent axis is neutral/muted/primary/destructive.",
+      "evidence": "button.json lists.tones [\"neutral\",\"muted\"] vs intent.axes.tone [\"neutral\",\"muted\",\"primary\",\"destructive\"]; the CLI shows axis `tones` values [neutral, muted] (agent-index button contract.axes). A builder reading the intent will pass tone=\"primary\", which the prop rejects.",
+      "fix": "Rename the prop-level list to something like `quietness` or document in the intent that primary/destructive tone is reached only through `variant`; keep one value set per name.",
+      "kind": "fix"
+    }
+  ]
+}
