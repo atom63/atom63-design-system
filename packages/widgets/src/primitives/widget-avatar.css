@@ -57,7 +57,8 @@
 }
 
 .a63-WidgetAvatar .a63-WidgetAvatar-avatar[data-outline] {
-  outline: var(--widget-avatar-ring) solid color-mix(in oklab, var(--a63-action-primary) 70%, transparent);
+  outline: var(--widget-avatar-ring) solid
+    color-mix(in oklab, var(--a63-action-primary) 70%, transparent);
   outline-offset: var(--widget-avatar-ring);
 }
 
@@ -67,7 +68,8 @@
   border-radius: var(--a63-avatar-radius, var(--radius-pill));
   box-shadow:
     0 0 0 var(--widget-avatar-ring) var(--a63-surface-page),
-    0 0 0 var(--widget-avatar-ring-outer) color-mix(in oklab, var(--a63-action-primary) 60%, transparent);
+    0 0 0 var(--widget-avatar-ring-outer)
+      color-mix(in oklab, var(--a63-action-primary) 60%, transparent);
   animation: a63-widget-pulse calc(var(--duration-slower) * 2) var(--ease-inout) infinite;
   pointer-events: none;
 }
