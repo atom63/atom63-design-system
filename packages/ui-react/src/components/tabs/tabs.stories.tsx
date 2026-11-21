@@ -55,6 +55,60 @@ export const Variants: Story = {
   ),
 }
 
+/* Vertical orientation: the default track grows with its stacked tabs and the
+   raised plate slides vertically to the selected tab; the underline bar moves
+   to the inline end. The play function checks the plate follows a click. */
+export const Vertical: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 32, alignItems: 'flex-start' }}>
+      {(['default', 'underline'] as const).map(variant => (
+        <Tabs defaultValue="overview" key={variant} orientation="vertical">
+          <TabsList aria-label={`Settings (${variant})`} variant={variant}>
+            <TabsTab value="overview">Overview</TabsTab>
+            <TabsTab value="specs">Specs</TabsTab>
+            <TabsTab value="reviews">Reviews</TabsTab>
+          </TabsList>
+          <TabsPanel style={PANEL_STYLE} value="overview">
+            Overview content
+          </TabsPanel>
+          <TabsPanel style={PANEL_STYLE} value="specs">
+            Specs content
+          </TabsPanel>
+          <TabsPanel style={PANEL_STYLE} value="reviews">
+            Reviews content
+          </TabsPanel>
+        </Tabs>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const list = canvasElement.querySelector<HTMLElement>('.a63-Tabs-list[data-variant="default"]')
+    if (!list) throw new Error('Expected the default vertical list')
+    const tabs = list.querySelectorAll<HTMLElement>('.a63-Tabs-tab')
+    const indicator = list.querySelector<HTMLElement>('.a63-Tabs-indicator')
+    if (tabs.length !== 3 || !indicator) throw new Error('Expected three tabs and an indicator')
+    const listRect = list.getBoundingClientRect()
+    const lastRect = tabs[2].getBoundingClientRect()
+    if (lastRect.bottom > listRect.bottom + 0.5) {
+      throw new Error(
+        `Expected the track to contain every tab (tab bottom ${lastRect.bottom}, track bottom ${listRect.bottom})`
+      )
+    }
+    for (const index of [2, 1, 0]) {
+      tabs[index].click()
+      await new Promise(resolve => setTimeout(resolve, 50))
+      await Promise.all(indicator.getAnimations().map(animation => animation.finished))
+      const tab = tabs[index].getBoundingClientRect()
+      const plate = indicator.getBoundingClientRect()
+      if (Math.abs(plate.top - tab.top) > 1 || Math.abs(plate.height - tab.height) > 1) {
+        throw new Error(
+          `Expected the indicator to cover tab ${index} (tab top ${tab.top}, indicator top ${plate.top})`
+        )
+      }
+    }
+  },
+}
+
 /* Captured with forced colors on (Windows High Contrast): the selected tab of
    every variant takes the system selection colours. */
 export const ForcedColors: Story = { render: Variants.render }
@@ -140,6 +194,12 @@ export const Themes: Story = {
               </Tabs>
               <Tabs defaultValue="one">
                 <TabsList variant="underline">
+                  <TabsTab value="one">First</TabsTab>
+                  <TabsTab value="two">Second</TabsTab>
+                </TabsList>
+              </Tabs>
+              <Tabs defaultValue="two" orientation="vertical">
+                <TabsList variant="default">
                   <TabsTab value="one">First</TabsTab>
                   <TabsTab value="two">Second</TabsTab>
                 </TabsList>

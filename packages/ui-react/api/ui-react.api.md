@@ -2767,6 +2767,8 @@ export interface TextTickerProps extends Omit<ComponentProps<'span'>, 'children'
     marqueeDelay?: number;
     // (undocumented)
     marqueeSpeed?: number;
+    paused?: boolean;
+    pauseLabel?: string;
     variant?: TextTickerVariant;
 }
 

@@ -35,6 +35,10 @@ const docsQueries = [
   '- Start from a component that exists before writing markup of your own.',
 ]
 
+/** `a`, `a and b`, `a, b and c`. */
+const list = items =>
+  items.length > 1 ? `${items.slice(0, -1).join(', ')} and ${items.at(-1)}` : items.join('')
+
 /**
  * `variant: 'cli'` points agents at the `atom63` CLI and MCP server; `'docs'`
  * points them at the published docs, for projects that cannot run the CLI yet.
@@ -44,11 +48,12 @@ export function agentsSection({ variant = 'cli' } = {}) {
     (rule, position) =>
       `${position + 1}. ${rule.rule} ${rule.why}${
         rule.check
-          ? ` In the design system repo, \`check:craft\` enforces it as ${[rule.check]
-              .flat()
-              .map(check => `\`${check}\``)
-              .join(' and ')}.`
+          ? ` In the design system repo, \`check:craft\` enforces it as ${list(
+              [rule.check].flat().map(check => `\`${check}\``)
+            )}.`
           : ''
+      }${rule.checkedBy ? ` ${rule.checkedBy}` : ''}${
+        rule.unchecked ? ` Not checked mechanically: ${rule.unchecked}` : ''
       }`
   )
   return [
@@ -60,6 +65,21 @@ export function agentsSection({ variant = 'cli' } = {}) {
     '',
     ...ruleLines,
   ].join('\n')
+}
+
+/**
+ * Rules that do not say how they are enforced: each needs `check` or
+ * `checkedBy`, or else `unchecked` with the reason no check can enforce it.
+ * @returns {string[]} one message per rule that breaks this
+ */
+export function ruleEnforcementErrors(table = rules) {
+  return table.flatMap(rule => {
+    const checked = Boolean(rule.check || rule.checkedBy)
+    if (checked && rule.unchecked) return [`${rule.id}: names a check and says it is unchecked`]
+    if (!checked && !rule.unchecked?.trim())
+      return [`${rule.id}: names no check (\`check\`, \`checkedBy\`) and no reason (\`unchecked\`)`]
+    return []
+  })
 }
 
 /** The section wrapped in markers, ready to paste into or sync with an AGENTS.md. */
