@@ -1,0 +1,594 @@
+{
+  "scope": "k09-chat",
+  "reviewedAt": "2026-11-18",
+  "subjects": [
+    {
+      "subject": "chat-composer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/chat-composer/chat-composer.tsx:128-149 controlled (value/onValueChange) and uncontrolled (defaultValue) both work, tested in chat-composer.test.tsx:58-68; ...props (incl. React 19 ref) spread on the form at :165, textarea ref via textareaProps :68-72; layout/status match contract chat-composer.json:7-11. Polish: the stop button renders and is focusable even with no onStop (:210-222), a dead control."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "textarea named by aria-label (default 'Message', :169); send/stop/voice buttons named (:212,:225,:238); Enter sends, Shift+Enter newline, IME composition left alone (:188, tested test.tsx:7-26); focus ring from InputGroup focus-within. Gap: footnote (:252-256) is not linked to the field via aria-describedby."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-chatcomposer-themes-chromium-linux.png: each theme reads as its archetype (aqua glossy send, retro bevelled border and square stacked block, terminal tinted field with mono text) in both modes."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines for rest (playground), with-text, voice, streaming (stop), stacked, disabled, controlled, RTL in apps/storybook/visual/__screenshots__/ui-react-chatcomposer-*.png; contract states rest/focus-visible/disabled/streaming (chat-composer.json:20). focus-visible is listed but no story or baseline captures it; 'submitted' status has no separate capture (same visual as streaming)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Send/stop/voice are Button size=icon-sm with the 44px hit-area pseudo-element (packages/ui-react/src/components/button/button.css:635-643); field font goes through textarea.css:37 max(field size, --a63-editable-font-size-min) so iOS does not zoom; all spacing on --a63-space-* which density scales (packages/styles/src/contracts/environment.css:19-22). check:control-alignment passed (sweep summary.tsv)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "RTL story + baseline apps/storybook/visual/__screenshots__/ui-react-chatcomposer-right-to-left-chromium-linux.png; layout uses grid areas and align=inline-start/inline-end (:197,:205); IME/CJK test test.tsx:21-26; check:craft physical-properties passed with no chat-composer entry in craft-baseline.json."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/templates-blocks-chat-panel-phone-chromium-linux.png shows the composer at 390px holding one pill row and the footnote. No phone story on the component itself; max-height: 40vh (chat-composer.css:43) ignores the on-screen keyboard (dvh would track it)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 component chat-composer` Guidance ends with boilerplate that is wrong for this component: 'explain errors beside the affected field' and 'Validate ... invalid state' - the composer has no error or invalid state (contract states chat-composer.json:20). The answer has no prop list ('TypeScript remains the source of truth'), so onStop, onVoice, footnote, textareaProps, sendLabel/stopLabel are discoverable only from types; apps/docs/src/components/props-table.tsx exists but no page imports it (grep)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "9 behaviour tests (packages/ui-react/src/components/chat-composer/chat-composer.test.tsx:7-119), 9 visual baselines, SSR via apps/storybook/ssr/ssr.test.tsx story glob. Untested: the width-based wrap (wraps() :82-88, layout-dependent, jsdom cannot measure) and focus when the button swaps send->stop->send."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (contract has no crossRenderer block; no Atom* view in packages/ui-ios/Sources)"
+        }
+      ]
+    },
+    {
+      "subject": "chat-message",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/chat-message/chat-message.tsx:29-45 from/appearance match chat-message.json roles/appearances, default from contract (:58); props spread on article (:76); streaming is the contract's state, not a variant stand-in."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "ChatMessageList role=log (:23); each turn an article named 'You'/'Assistant' or label (:70); aria-busy while streaming (:69); tested chat-message.test.tsx:8-65. Content contrast is text-primary on surface-muted/panel."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-chatmessage-themes-chromium-linux.png: user bubble tinted, assistant bubble bordered, radius follows the theme (square in retro and terminal), terminal recolours text. Body text stays sans in terminal while the composer goes mono - YZ to confirm that is intended."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states only rest/streaming (chat-message.json:17). There is no error/failed turn: apps/docs/src/pages/pattern-agent.mdx:72-79 hand-rolls one with `text-destructive` and an outline Retry button inside ChatMessage, so every host redraws the failed state its own way. Streaming has no visual distinction beyond the typing indicator."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Spacing and type on --a63-space-* and --typography-base-* (chat-message.css:17-27), which density scales through --a63-space-unit (environment.css:19-22); bubble width capped min(85%,36rem) (:65)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical layout (row-reverse for user, max-inline-size, padding-inline) chat-message.css:30-67; RTL baseline apps/storybook/visual/__screenshots__/ui-react-chatmessage-right-to-left-chromium-linux.png; long strings overflow-wrap:anywhere (:54) with long-content baseline."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/templates-blocks-chat-panel-phone-chromium-linux.png: user bubbles and plain assistant turns hold at 390px with actions row."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component chat-message` gives import, axes, slots, guidance (48rem column, actions slot, markdown width) and 6 examples; no prop list, and no guidance for the error turn (see K4)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 tests (chat-message.test.tsx:8-65) cover naming, appearance, slots, aria-busy; 6 baselines; SSR via story glob."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (contract has no crossRenderer block; no Atom* view in packages/ui-ios/Sources)"
+        }
+      ]
+    },
+    {
+      "subject": "chat-steps",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/chat-steps/chat-steps.tsx:17-25 spreads CollapsibleProps so open/defaultOpen/onOpenChange pass through (:41); statuses match chat-steps.json:7-10. Polish: ChatStep takes statusLabel (one string, :66) while Message takes statusLabels (a map, message.tsx:62) for the same translation job."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Trigger is the Collapsible button with aria-expanded; list is an ol (:52); every step prefixes its status as sr-only text (:109) so status never depends on colour (tested chat-steps.test.tsx:21-37); focus outline on :focus-visible (chat-steps.css:41-45)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-chatsteps-themes-chromium-linux.png: retro light/dark are indistinguishable from modern, terminal only recolours the running row; trigger and steps stay sans in terminal. The connecting hairline (chat-steps.css:78-84) is barely visible between short rows. The 'surface' archetype is not visibly expressed per theme."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "All four statuses captured in apps/storybook/visual/__screenshots__/ui-react-chatsteps-statuses-chromium-linux.png; open/closed via Collapsible; hover (:37-39) and focus-visible (:41-45) designed but not captured in a baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Trigger min-block-size is --a63-control-min-size (chat-steps.css:25), which is 2rem on coarse pointers (packages/styles/src/contracts/environment.css:128-131); the 44px floor is --a63-control-min-target (2.75rem, :133). The trigger is a raw CollapsibleTrigger, not a Button, so it gets no hit-area pseudo-element: a 32px-tall touch target."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Hairline uses inset-inline-start (chat-steps.css:82), text-align:start; RTL baseline apps/storybook/visual/__screenshots__/ui-react-chatsteps-right-to-left-chromium-linux.png; descriptions overflow-wrap:anywhere (:118)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/templates-blocks-chat-panel-phone-chromium-linux.png shows the 'Used 2 tools' trigger at 390px; touch target size is the K5 gap."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component chat-steps` guidance says to keep it open while running and collapsed when done, but does not say this needs controlled open; the chat-panel block passes defaultOpen={running} (packages/templates/src/blocks/chat-panel/chat-panel.tsx:134-136), which never closes on its own."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "3 tests (chat-steps.test.tsx:7-51) cover the disclosure, status text and replacement icon; 5 baselines; SSR via story glob."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (contract has no crossRenderer block; no Atom* view in packages/ui-ios/Sources)"
+        }
+      ]
+    },
+    {
+      "subject": "chat-typing-indicator",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/chat-typing-indicator/chat-typing-indicator.tsx:5-8 one prop (label) plus span props spread (:27); matches contract (slots, rest)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "The indicator is role=status named only by aria-label with every child aria-hidden (:22-36). A live region announces content changes, not its accessible name, and the documented composition puts it inside a ChatMessage with aria-busy=true (chat-typing-indicator.stories.tsx:22, apps/docs/src/pages/pattern-agent.mdx:67-82, packages/templates/src/blocks/chat-panel/chat-panel.tsx:130-146), and aria-busy holds back announcements from that subtree. So the one promise in its doc comment (:12-13, 'a screen reader announces it once') most likely does not happen. Also no forced-colors rule: dots are background-color:currentColor (chat-typing-indicator.css:22), which forced-colors mode replaces with Canvas, so the dots vanish (only button.css has a forced-colors block in ui-react). Reduced motion handled (:49-61). Needs a screen-reader check by the verifier."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional on taste, but one objective defect: dots use --radius-full (chat-typing-indicator.css:21), which follows the radius axis (packages/styles/src/tokens/foundation/radius.css:30-31, --radius-full = 2x --radius-xl, 0 at multiplier 0); radius.css:32-35 says dots must use --radius-pill. Under a 'none' radius the dots turn square. Baseline apps/storybook/visual/__screenshots__/ui-react-chattypingindicator-themes-chromium-linux.png otherwise reads correctly in all 8 frames."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Only state is rest (contract); reduced-motion rest pose designed (css:49-61) and is what the baselines capture (three opacity steps visible in the themes baseline)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Dot size and gap on --a63-space-2/-1 (css:9-13), scaled by density through --a63-space-unit; non-interactive, so no target size applies."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "inline-flex and min-block-size (css:11-14) follow writing direction; no text or directional icon."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline marker inside a message; no phone-specific behaviour. No phone capture of it."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component chat-typing-indicator` gives usage (in place of the message until first text) and 3 examples; the guidance does not warn about the aria-busy interaction in K2."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "2 tests (chat-typing-indicator.test.tsx:7-18) assert role=status and the name; they pass while the announcement itself is untested (see K2). 3 baselines; SSR via story glob."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (contract has no crossRenderer block; no Atom* view in packages/ui-ios/Sources)"
+        }
+      ]
+    },
+    {
+      "subject": "message",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/message/message.tsx:40-63 direction/position defaults from messageContract (:74,:77), statusLabels for translation (:62,:84); props spread on article (:93). Prop is named status while the contract axis is deliveryStates (message.json:8) - polish."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "MessageList role=log (:26); article named by sender label (:87); delivery status is role=img with a label (:113-119); event icon aria-hidden (:147); tested message.test.tsx:11-90. Forced colors: bubble fills (message.css:66-74) become Canvas with no border, so incoming and outgoing lose their shape - polish."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-message-themes-chromium-linux.png is rendered with bare UIProvider (message.stories.tsx:161-180) instead of ThemeMatrix, which stamps data-a63-radius and re-emits the radius ramp (story-probes.tsx:150-157); so retro and terminal show modern's rounded bubbles while ChatMessage in the same themes is square. The baseline cannot show the theme archetype. Incoming bubble (--a63-surface-muted) is almost invisible on the aqua light page."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-message-delivery-states-chromium-linux.png: 'delivered' and 'read' draw the same CheckCheck icon (message.tsx:35-36), so a sighted reader cannot tell a read receipt from delivery; 'failed' is only a 12px AlertCircle in the accent foreground, no danger cue and no slot for a retry. iOS distinguishes read with a filled symbol (AtomMessage.swift:148)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Spacing and type on --a63-space-* and --typography-* tokens (message.css:29-40,119-136), scaled by density; bubble max min(78%,32rem) (:60); non-interactive."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical corner radii for joins and tail (message.css:77-106), float:inline-end meta (:128), row-reverse for outgoing; long link wraps (overflow-wrap:anywhere :63, long-content baseline). No RTL story or baseline, unlike the three chat components."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Thread and LongContent stories are framed at maxWidth 390 (message.stories.tsx Frame), apps/storybook/visual/__screenshots__/ui-react-message-thread-chromium-linux.png."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component message` gives import, all three axes, guidance (MessageList, direction, position, MessageEvent, use ChatMessage for AI), the web/iOS section and 6 examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "7 tests (message.test.tsx:11-90) and 6 baselines, SSR via story glob; but the Themes baseline does not apply the theme radius scale (see K3), so retro/terminal regressions in the real recipe are not guarded."
+        },
+        {
+          "criterion": "K10",
+          "score": 1,
+          "evidence": "AtomMessage exists with strict parity (message.json crossRenderer), but VoiceOver most likely does not read the message text: packages/ui-ios/Sources/Atom63UI/AtomMessage.swift:135-137 combines children and then sets accessibilityLabel(sender), which replaces the combined label. Delivered/read icons also differ from the web (see K4). Finding k09-chat-1; details under subject AtomMessage."
+        }
+      ]
+    },
+    {
+      "subject": "AtomMessage (iOS)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomMessage.swift:4-50 direction/position/deliveryState enums; packages/ui-ios/Tests/Atom63UITests/AtomMessageTests.swift:9-16 asserts they equal the web contract. Gap: no hook for the web's --a63-message-outgoing-background/-foreground override (message.css:72-73); outgoing is hard-wired to actionPrimary (:166-168)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomMessage.swift:135-137: .accessibilityElement(children: .combine) then .accessibilityLabel(Text(sender)) - an explicit label replaces the label combined from the children, so VoiceOver reads 'Ada' plus the value '12:01, Read' and drops 'Hey!'. The status image label (:149) is overridden the same way (the value repeats it). No test asserts the accessibility label. Needs a VoiceOver or accessibility-inspector check by the verifier."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/message.light.png: runs join, the tail is a near-square corner on the sender's side, avatar only on the last message, event row centred; dark and large-type snapshots exist."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/message.light.png 'failed' row: an exclamationmark.circle in the accent foreground, the same treatment as web - no danger cue and no retry affordance. Read vs delivered is distinguished (filled symbol, :148)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Density: compact steps text and padding down (:123,:127-128), tested AtomMessageTests.swift:56-66; Dynamic Type via density.textStyle, examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/message.large-type.png."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "UnevenRoundedRectangle uses topLeading/bottomLeading radii (:184-196) and HStack leading/trailing, which SwiftUI mirrors in RTL. No RTL snapshot."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: a native iPhone view; phone width is its only layout (snapshot at iPhone 17 Pro)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomMessage.swift:52-61 doc comment covers position, density and the AI-turn boundary; `atom63 component message` lists the SwiftUI adaptations."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "AtomMessageTests.swift covers axes, run logic, render and density; light/dark/large-type snapshots from CatalogSnapshotTests.swift. No accessibility test (would have caught K2), and the snapshot showcase has only one-line messages, so the meta layout for wrapped text (HStack beside the content, :120-126, not floated at the end of the last line as the comment and web do) is uncaptured."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "Parity gaps against the web Message (the VoiceOver defect is scored under K2 and in message K10, finding k09-chat-1): radii are hand math rather than tokens - round = Radius.extraLarge + Space.x1 (18) and tail = Radius.small / 3 (2pt) at :178-180 vs web --radius-2xl and --radius-xs (4px at the default anchor, radius.css:19,25), and they ignore the radius axis; read/delivered icons differ from web."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k09-chat-1",
+      "subject": "AtomMessage (iOS)",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "VoiceOver most likely reads only the sender, time and status of an AtomMessage, not the message text.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomMessage.swift:135-137 applies .accessibilityElement(children: .combine) and then .accessibilityLabel(Text(sender)); an explicit label replaces the combined children's label. No test covers it. Verifier: confirm with the Accessibility Inspector on the catalog's message showcase.",
+      "fix": "Keep the combined element but put the sender in the label together with the text (e.g. accessibilityLabel(Text(\"\\(sender): \") + text) for the text initializer, or drop the explicit label and prepend a hidden sender Text), and add a test that reads the accessibility label.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "AtomMessage.swift:135-137 does what the finding says. The bubble calls .accessibilityElement(children: .combine), then .accessibilityLabel(Text(sender)), then .accessibilityValue(time, status). In SwiftUI an explicit accessibilityLabel on a combined element replaces the label merged from its children, so the content Text is dropped. VoiceOver reads only the sender plus the time and status. AtomMessageTests.swift has no accessibility assertions; it checks only enum labels and an ImageRenderer smoke test. No wrapper or documented decision covers this. Not run in the Accessibility Inspector; this verdict comes from reading the source."
+      }
+    },
+    {
+      "id": "k09-chat-2",
+      "subject": "chat-typing-indicator",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The typing indicator most likely announces nothing to screen readers in its documented placement.",
+      "evidence": "chat-typing-indicator.tsx:22-36 is role=status named only by aria-label with all children aria-hidden; live regions announce content, not names. All three documented compositions put it inside an aria-busy ChatMessage (chat-typing-indicator.stories.tsx:22, apps/docs/src/pages/pattern-agent.mdx:67-82, packages/templates/src/blocks/chat-panel/chat-panel.tsx:130-146), which holds back announcements. Verifier: check with VoiceOver/NVDA on the InMessage story.",
+      "fix": "Render the label as visually hidden text inside the status region (not aria-label), and announce from a region that is not under aria-busy (or drop aria-busy until the first text arrives); add a test for the text content and update the guidance.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "The code matches the finding. chat-typing-indicator.tsx is a role=status span with only aria-label, and every child is aria-hidden. ChatMessage sets aria-busy when streaming (chat-message.tsx:69). All three compositions render the indicator inside a streaming ChatMessage: the InMessage story, pattern-agent.mdx:82 and chat-panel.tsx:146. The live region is also inserted together with its name rather than updated, so 'announces it once' in the component's comment is unlikely to hold. It is real, but it is lower than P1. The indicator is a transient extra, and the reply text and the message itself still reach assistive technology once streaming ends. Losing the typing cue does not make the chat unusable or block it from being ready. Not checked with a screen reader."
+      }
+    },
+    {
+      "id": "k09-chat-3",
+      "subject": "chat-typing-indicator",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The dots disappear in forced-colors mode.",
+      "evidence": "chat-typing-indicator.css:22 background-color: currentColor; forced colors replaces backgrounds with Canvas; grep shows only button.css has a forced-colors block in ui-react.",
+      "fix": "Add @media (forced-colors: active) { .a63-ChatTypingIndicator-dot { background-color: CanvasText } } (or forced-color-adjust: none).",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-4",
+      "subject": "chat-typing-indicator",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Dots use --radius-full, which follows the radius axis, so they turn square under a 'none' radius.",
+      "evidence": "chat-typing-indicator.css:21; packages/styles/src/tokens/foundation/radius.css:30-35 says dots must use --radius-pill.",
+      "fix": "Use var(--radius-pill).",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-5",
+      "subject": "chat-composer",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The CLI and docs answer for ChatComposer carries wrong boilerplate and no prop list.",
+      "evidence": "`pnpm -s atom63 component chat-composer` Guidance: 'explain errors beside the affected field' and 'Validate ... invalid state', but the contract has no error/invalid state (chat-composer.json:20). No props listed; apps/docs/src/components/props-table.tsx is imported by no page.",
+      "fix": "Replace the generic field-archetype guidance lines for chat-composer with composer-specific ones (status/onStop, onVoice, footnote, textareaProps), and list the props in the CLI answer.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-6",
+      "subject": "chat-message",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "ChatMessage has no error/failed turn, so hosts hand-roll one.",
+      "evidence": "chat-message.json:17 states rest/streaming only; apps/docs/src/pages/pattern-agent.mdx:72-79 draws the error with text-destructive and an outline Retry button inside ChatMessage.",
+      "fix": "Add an error state (data-status or a status prop) with a designed treatment and a retry slot, a story and a baseline; or a ChatMessageError part.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k09-chat-7",
+      "subject": "chat-steps",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The ChatSteps trigger is 32px tall on touch, below the 44px floor.",
+      "evidence": "chat-steps.css:25 min-block-size: var(--a63-control-min-size) = 2rem under pointer:coarse (packages/styles/src/contracts/environment.css:128-131); the floor token is --a63-control-min-target (2.75rem, :133); the raw CollapsibleTrigger has no hit-area pseudo-element.",
+      "fix": "Use --a63-control-min-target for min-block-size, or add the Button-style hit-area pseudo-element.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-8",
+      "subject": "chat-steps",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "ChatSteps does not visibly express the theme: retro is identical to modern, terminal only recolours.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-chatsteps-themes-chromium-linux.png (provisional, YZ confirms).",
+      "fix": "YZ to decide whether the steps should take theme cues (retro hairline weight, terminal mono, aqua icon treatment).",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k09-chat-9",
+      "subject": "message",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "On the web, 'delivered' and 'read' look identical, and 'failed' has no danger cue.",
+      "evidence": "message.tsx:35-36 both use CheckCheck; apps/storybook/visual/__screenshots__/ui-react-message-delivery-states-chromium-linux.png rows 3-4 are identical; failed is a 12px AlertCircle in the accent foreground. iOS fills the read symbol (AtomMessage.swift:148).",
+      "fix": "Give read a distinct treatment (filled or tinted icon, matching iOS) and failed a danger colour on the meta (or below the bubble) with an optional retry slot, on both renderers.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-10",
+      "subject": "message",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The Message Themes baseline does not apply the theme radius, so retro and terminal render like modern.",
+      "evidence": "message.stories.tsx:161-180 uses bare UIProvider; ThemeMatrix stamps data-a63-radius and re-emits the ramp (story-probes.tsx:150-157); compare apps/storybook/visual/__screenshots__/ui-react-message-themes-chromium-linux.png (rounded in retro) with ui-react-chatmessage-themes-chromium-linux.png (square in retro).",
+      "fix": "Render the Themes story through ThemeMatrix (or stamp the same radius attributes) and update the baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-11",
+      "subject": "message",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Because of that story, the visual baseline does not guard Message in retro and terminal.",
+      "evidence": "Same evidence as the Themes story finding.",
+      "fix": "Fixed by the ThemeMatrix change; re-record the baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-12",
+      "subject": "AtomMessage (iOS)",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "AtomMessage radii are hand math, not tokens, and drift from the web.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomMessage.swift:178-180 round = Radius.extraLarge + Space.x1, tail = Radius.small / 3 (2pt) vs web --radius-2xl (18px) and --radius-xs (4px) at the default anchor (radius.css:19,25); the iOS Radius scale (Generated/Atom63Tokens.generated.swift:145-150) has no xs or 2xl.",
+      "fix": "Generate xs and 2xl radii into AtomTokens.Radius and use them.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-13",
+      "subject": "AtomMessage (iOS)",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "On iOS, 'failed' is drawn like every other status, with no danger cue and no retry affordance.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/message.light.png failed row.",
+      "fix": "Same fix as the web failed state, on both renderers.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-14",
+      "subject": "AtomMessage (iOS)",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "iOS snapshots only show one-line messages; the meta layout for wrapped text is uncaptured and differs from the web.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomMessage.swift:120-126 HStack puts the meta in a column beside the text; the web floats it at the end of the last line (message.css:125-136).",
+      "fix": "Add a long-message row to the showcase and match the web layout or document the difference.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-15",
+      "subject": "AtomMessage (iOS)",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "iOS has no override for the outgoing bubble colours that the web exposes.",
+      "evidence": "message.css:72-73 --a63-message-outgoing-*; AtomMessage.swift:161-169 hard-wires actionPrimary.",
+      "fix": "Add a theme or environment value for outgoing fill and foreground.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-16",
+      "subject": "chat-composer",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "The stop button renders and is focusable when no onStop is passed, and does nothing.",
+      "evidence": "chat-composer.tsx:210-222.",
+      "fix": "Disable the stop button when onStop is undefined.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-17",
+      "subject": "chat-composer",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "The footnote is not linked to the field.",
+      "evidence": "chat-composer.tsx:252-256, no aria-describedby on the textarea.",
+      "fix": "Give the footnote an id and set aria-describedby on the textarea (merged with any from textareaProps).",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-18",
+      "subject": "chat-composer",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "focus-visible is a contract state but no story or baseline captures it.",
+      "evidence": "chat-composer.json:20; no focus story in chat-composer.stories.tsx.",
+      "fix": "Add a focused play story and baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-19",
+      "subject": "chat-composer",
+      "criterion": "K7",
+      "severity": "P3",
+      "summary": "The field caps at 40vh, which ignores the on-screen keyboard on phones.",
+      "evidence": "chat-composer.css:43.",
+      "fix": "Use 40dvh.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-20",
+      "subject": "chat-steps",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "The guidance says to close the steps when the answer arrives, but not that this needs controlled open; the chat-panel block uses defaultOpen, which never closes.",
+      "evidence": "atom63 component chat-steps guidance; packages/templates/src/blocks/chat-panel/chat-panel.tsx:134-136.",
+      "fix": "State in the guidance that open/onOpenChange is required for auto-collapse, and fix the block.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-21",
+      "subject": "chat-steps",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "ChatStep takes one statusLabel string while Message takes a statusLabels map for the same translation job.",
+      "evidence": "chat-steps.tsx:66 vs message.tsx:62.",
+      "fix": "Align on one shape (a statusLabels map) across chat components.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-22",
+      "subject": "message",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "Message has no RTL story or baseline, unlike the three chat components.",
+      "evidence": "message.stories.tsx exports Playground, Thread, DeliveryStates, Media, LongContent, Themes only.",
+      "fix": "Add a RightToLeft story with a run in both directions.",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-23",
+      "subject": "message",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "In forced-colors mode both bubble fills become Canvas with no border, so bubbles lose their shape.",
+      "evidence": "message.css:66-74; no forced-colors rule in ui-react except button.css.",
+      "fix": "Add a forced-colors border on .a63-Message-bubble (same for the ChatMessage user bubble).",
+      "kind": "fix"
+    },
+    {
+      "id": "k09-chat-24",
+      "subject": "chat-message",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "In terminal, ChatMessage body text stays sans while the composer goes mono.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-chatmessage-themes-chromium-linux.png vs ui-react-chatcomposer-themes-chromium-linux.png terminal frames (provisional).",
+      "fix": "YZ to confirm whether content text should follow the terminal font.",
+      "kind": "yz-decision"
+    }
+  ]
+}

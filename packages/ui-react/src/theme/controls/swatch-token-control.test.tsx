@@ -19,7 +19,7 @@ describe('SwatchTokenControl', () => {
       />
     )
     // aria-label is the option name (b2), even though the visible content is a swatch
-    fireEvent.click(screen.getByRole('tab', { name: 'b2' }))
+    fireEvent.click(screen.getByRole('radio', { name: 'b2' }))
     expect(onChange).toHaveBeenCalledWith('b2')
   })
 })

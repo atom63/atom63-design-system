@@ -81,12 +81,12 @@
 /* Invalid state — recolor the border + active ring to danger. */
 .a63-InputOTP-slot[aria-invalid='true'],
 .a63-InputOTP:has(.a63-InputOTP-input[aria-invalid='true']) .a63-InputOTP-slot {
-  --otp-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+  --otp-border: var(--a63-border-danger);
 }
 .a63-InputOTP-slot[aria-invalid='true'][data-active='true'],
 .a63-InputOTP:has(.a63-InputOTP-input[aria-invalid='true']) .a63-InputOTP-slot[data-active='true'] {
-  border-color: var(--a63-action-danger);
-  outline-color: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+  border-color: var(--a63-status-danger);
+  outline-color: var(--a63-status-danger);
 }
 
 /* Fake caret — a blinking hairline centered in the active empty slot. */

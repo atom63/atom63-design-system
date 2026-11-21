@@ -285,7 +285,7 @@ public enum AtomComponentContracts {
       sharedOutcomes: ["one-segment-is-selected-at-a-time", "activation-updates-the-selection-once", "disabled-segment-prevents-selection"],
       accessibilityOutcomes: ["exposes-each-segment-label", "exposes-selected-state", "preserves-single-selection-semantics"],
       motion: nil,
-      platformAdaptations: AtomPlatformAdaptations(react: ["Uses a tab-backed segmented track with focus-visible feedback and an optional animated selection backplate."], swiftUI: ["Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."])
+      platformAdaptations: AtomPlatformAdaptations(react: ["Uses radiogroup and radio semantics on a segmented track, named by aria-label or aria-labelledby, with arrow-key selection, focus-visible feedback and an optional animated selection backplate."], swiftUI: ["Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."])
     ),
     AtomComponentContract(
       id: "radio",

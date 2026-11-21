@@ -83,7 +83,7 @@
   --alert-dialog-accent: var(--a63-action-primary);
 }
 .a63-AlertDialog-popup[data-variant='error'] {
-  --alert-dialog-accent: var(--a63-action-danger);
+  --alert-dialog-accent: var(--a63-status-danger);
 }
 .a63-AlertDialog-popup[data-variant='info'] {
   --alert-dialog-accent: var(--a63-status-info);
