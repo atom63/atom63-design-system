@@ -11,7 +11,8 @@
  *   interactive HTML element;
  * - warnings: patterns that are not wrong but usually unintended, such as a
  *   `<Button>` without `variant`, which draws the heaviest neutral solid, or
- *   more than one `variant="primary"` Button in one file. They are reported,
+ *   more than one `variant="primary"` Button in one file, or a
+ *   `variant="ghost"` Button with no `tone`. They are reported,
  *   never counted as craft violations.
  */
 import ts from 'typescript'
@@ -185,7 +186,10 @@ export function countJsxElements(source, fileName = 'file.tsx') {
  * - `multiple-primary`: one warning, at the second one, when more than one
  *   passes a literal `variant="primary"` (or `{'primary'}`). One main action
  *   per view is the rule; a computed variant is not counted.
- * @returns {{ rule: 'button-without-variant' | 'multiple-primary', line: number, match: string }[]}
+ * - `ghost-without-tone`: each one that passes a literal `variant="ghost"`
+ *   and no `tone` (and spreads no props that could carry one). Secondary
+ *   actions in toolbars, rows and card headers take `tone="muted"`.
+ * @returns {{ rule: 'button-without-variant' | 'multiple-primary' | 'ghost-without-tone', line: number, match: string }[]}
  */
 export function findWarnings(source, fileName = 'file.tsx') {
   const file = ts.createSourceFile(
@@ -242,6 +246,23 @@ export function findWarnings(source, fileName = 'file.tsx') {
       )
       if (variant && ts.isJsxAttribute(variant) && literal(variant.initializer) === 'primary')
         primaries.push({ line: line + 1, match: node.getText(file).split('\n')[0] })
+      const toned = attributes.some(
+        attribute =>
+          ts.isJsxSpreadAttribute(attribute) ||
+          (ts.isJsxAttribute(attribute) && attribute.name.getText(file) === 'tone')
+      )
+      if (
+        variant &&
+        ts.isJsxAttribute(variant) &&
+        literal(variant.initializer) === 'ghost' &&
+        !toned
+      ) {
+        warnings.push({
+          rule: /** @type {const} */ ('ghost-without-tone'),
+          line: line + 1,
+          match: node.getText(file).split('\n')[0],
+        })
+      }
     }
     ts.forEachChild(node, visit)
   }
