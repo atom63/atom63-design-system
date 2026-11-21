@@ -149,6 +149,7 @@ export const visualArchetypes = {
       'Amount',
       'AppView',
       'Message',
+      'ArtPlate',
     ],
     contracts: ['surface'],
   },

@@ -76,37 +76,37 @@
     }
   },
   "summary": {
-    "sourceFamilies": 80,
-    "sourceExports": 637,
+    "sourceFamilies": 81,
+    "sourceExports": 640,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 343,
+      "beta-supported-core": 346,
       "beta-supported-composition-conditional": 184
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
-      "keep-stable-candidate": 38
+      "keep-stable-candidate": 39
     },
     "sourcePriorityCounts": {
       "P0": 30,
       "P1": 12,
-      "P2": 38
+      "P2": 39
     },
-    "packageSubpaths": 82,
+    "packageSubpaths": 83,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 76
+      "keep-import-path-stable": 77
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 76
+      "P2": 77
     }
   },
   "sourceActions": [
@@ -1595,6 +1595,29 @@
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
+      "source": "./components/art-plate",
+      "family": "components/art-plate",
+      "kind": "component-family",
+      "totalExports": 3,
+      "valueExports": 1,
+      "typeExports": 2,
+      "tierCounts": {
+        "beta-supported-core": 3
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": ["ArtPlate", "ArtPlateFocus", "ArtPlateProps"],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
       "source": "./components/badge",
       "family": "components/badge",
       "kind": "component-family",
@@ -2677,6 +2700,15 @@
       "subpath": "./recipes/app-view.css",
       "kind": "css",
       "target": "./src/components/app-view/app-view.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/art-plate.css",
+      "kind": "css",
+      "target": "./src/components/art-plate/art-plate.css",
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",
       "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
