@@ -253,13 +253,13 @@ function toRules(sourcePath, document) {
           const scoped = `[${attribute}='${context}']`
           const selector =
             selectors[context] ?? (context === modifier.default ? `:root,\n${scoped}` : scoped)
-          return { selector, groups: inline(sources) }
+          return { key: context, selector, groups: inline(sources) }
         })
     }
   }
   const order =
     document.resolutionOrder ?? (modifierName ? [{ $ref: `#/modifiers/${modifierName}` }] : [])
-  return order.flatMap(({ $ref }) => {
+  const rules = order.flatMap(({ $ref }) => {
     if (modifierName && $ref === `#/modifiers/${modifierName}`) return modifierRules
     const setName = /^#\/sets\/(.+)$/.exec($ref ?? '')?.[1]
     const set = setName && document.sets?.[setName]
@@ -277,8 +277,45 @@ function toRules(sourcePath, document) {
       }
       return [{ selector, atRule, groups: [], rederive: aliasTarget(seed) }]
     }
-    return [{ selector, atRule, groups: inline(set.sources) }]
+    return [{ key: setName, selector, atRule, groups: inline(set.sources) }]
   })
+  return addModeRescope(sourcePath, document, rules)
+}
+
+/**
+ * `$extensions["io.atom63.css"].rescope` re-declares a mode pair of rules on more
+ * scopes, so a scope that changes what they read (a nested [data-a63-brand] or
+ * [data-a63-surface]) recomputes them instead of inheriting the values its
+ * mode ancestor resolved. `light` and `dark` name the two rules (a context or a
+ * set); `base`, optional, names the rule a token falls back to when only one
+ * side declares it. Each token becomes
+ * `var(--a63-if-light, <light>) var(--a63-if-dark, <dark>)`, keyed to the switch
+ * the nearest mode scope sets: `switch: true` declares it on the two rules
+ * (semantics), as `initial` on its own mode and empty on the other. The rule
+ * goes right after the `dark` rule.
+ */
+function addModeRescope(sourcePath, document, rules) {
+  const rescope = document.$extensions?.['io.atom63.css']?.rescope
+  if (!rescope) return rules
+  const find = key => {
+    const rule = rules.find(candidate => candidate.key === key)
+    if (!rule) throw new Error(`${sourcePath}: rescope names unknown rule "${key}"`)
+    return rule
+  }
+  const light = find(rescope.light)
+  const dark = find(rescope.dark)
+  const base = rescope.base === undefined ? undefined : find(rescope.base)
+  if (!rescope.selector) throw new Error(`${sourcePath}: rescope needs a selector`)
+  if (rescope.switch) {
+    light.raw = ['--a63-if-light: initial;', '--a63-if-dark: ;']
+    dark.raw = ['--a63-if-light: ;', '--a63-if-dark: initial;']
+  }
+  const index = rules.indexOf(dark)
+  return [
+    ...rules.slice(0, index + 1),
+    { selector: rescope.selector, groups: [], rescope: { light, dark, base } },
+    ...rules.slice(index + 1),
+  ]
 }
 
 /**
@@ -348,7 +385,36 @@ function render(sourcePath, document, rules, knownNames) {
         .map(line => ` * ${line}`.trimEnd())
         .join('\n')}`
     : ''
+  const expressions = rule =>
+    new Map(
+      tokensOf([rule]).map(([name, type, value, derive]) => {
+        // The plain value is validated even when a derive expression replaces it.
+        const plain = formatValue(type, value, name, knownNames)
+        return [name, derive === undefined ? plain : formatDerive(derive, name, knownNames, plain)]
+      })
+    )
   const blocks = rules.map(rule => {
+    if (rule.rescope) {
+      const light = expressions(rule.rescope.light)
+      const dark = expressions(rule.rescope.dark)
+      const base = rule.rescope.base ? expressions(rule.rescope.base) : new Map()
+      const names = [...new Set([...light.keys(), ...dark.keys()])]
+      const declarations = names.flatMap(name => {
+        const lightValue = light.get(name) ?? base.get(name)
+        const darkValue = dark.get(name) ?? light.get(name) ?? base.get(name)
+        // A token only the dark rule declares, with nothing to fall back to in
+        // light mode, keeps its inherited value.
+        if (lightValue === undefined) return []
+        const css =
+          lightValue === darkValue
+            ? lightValue
+            : `var(--a63-if-light, ${lightValue}) var(--a63-if-dark, ${darkValue})`
+        return [`  --${name}: ${css};`]
+      })
+      const comment =
+        '  /* The mode roles again, on scopes that change what they read, keyed to the nearest mode scope. */\n'
+      return `${rule.selector} {\n${comment}${declarations.join('\n')}\n}\n`
+    }
     const declarations = tokensOf([rule]).map(([name, type, value, derive, description]) => {
       // The plain value is validated even when a derive expression replaces it.
       const plain = formatValue(type, value, name, knownNames)
@@ -358,6 +424,7 @@ function render(sourcePath, document, rules, knownNames) {
         : ''
       return `${comment}  --${name}: ${css};`
     })
+    for (const line of rule.raw ?? []) declarations.push(`  ${line}`)
     const block = `${rule.selector} {\n${declarations.join('\n')}\n}\n`
     // A set may sit inside a conditional group rule (`@media …`, `@supports …`).
     return rule.atRule ? `${rule.atRule} {\n${block}}\n` : block

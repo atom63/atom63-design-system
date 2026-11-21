@@ -25,7 +25,7 @@
   text-wrap: balance;
 }
 .a63-FeedbackState[data-state='error'] {
-  --feedback-accent: var(--a63-action-danger);
+  --feedback-accent: var(--a63-status-danger);
 }
 .a63-FeedbackState[data-state='loading'] {
   --feedback-accent: var(--a63-action-primary);
