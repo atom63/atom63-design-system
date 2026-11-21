@@ -1,0 +1,1113 @@
+{
+  "scope": "Layer 4: layout and composition (Y1-Y5): 7 page templates, 13 blocks, AppView, Page, Section, ReaderLayout (web/React only)",
+  "reviewedAt": "2026-11-19",
+  "round": 1,
+  "subjects": [
+    {
+      "subject": "page: app-view",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence. apps/storybook/visual/__screenshots__/templates-pages-app-view-desktop/-phone/-edge-to-edge-phone. The md (768) switch where the panel appears and the tab bar hides (app-view.css:121-131) is never captured."
+        },
+        {
+          "criterion": "Y2",
+          "score": 2,
+          "evidence": "AppViewPhonePage pads its first block with raw `pt-[env(safe-area-inset-top)]` (packages/templates/src/pages/app-view/app-view.tsx:275) while the frame reads --a63-safe-area-* (app-view.css:11-16); the EdgeToEdgePhone story (app-view.stories.tsx:24) has no checkSafeArea play, unlike chat-page/app-shell."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "Sample has 5 fixed tracks; no long title, empty library or many-items story (stories: Desktop, Phone, EdgeToEdgePhone, Themes)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 2,
+          "evidence": "Provisional. Phone sample uses text-sm/text-xs/text-3xl (app-view.tsx:249-250,277-278) though `atom63 build \"a phone app home screen with tabs\"` tells builders to keep phone rows on defaults or text roles instead of text-sm/text-xs. Desktop composition in apps/storybook/visual/__screenshots__/templates-pages-app-view-desktop-chromium-linux.png is clean."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build \"a phone app home screen with tabs\"` leads with AppView layout=\"phone\" and points at `atom63 copy app-view`; copy to scratchpad resolved every relative import (checked by script). readiness: draft in catalog is honest."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "page: chat-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Phone story play asserts main paddingBottom 31px/inline 47px and header paddingTop 29px (chat-page.stories.tsx:52-59); chat-page.tsx:134-135 use --a63-safe-area-*."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "Empty (StartScreen) covered; no long unbroken message, code block or many-message transcript story. apps/storybook/visual/__screenshots__/templates-pages-chat-page-phone-chromium-linux.png shows 3 short turns."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in chat-page.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template chat-page` prints page + chat-panel; copy resolved all imports (scratchpad check). But it is returned as noise for unrelated ideas (see r1-layout-15)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "page: dashboard-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence. apps/storybook/visual/__screenshots__/templates-pages-dashboard-page-desktop / -phone look right at those two widths."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Inherits AppShell, whose Phone story asserts header paddingTop 29px/inline 47px and wrapper paddingBottom 63px (app-shell.stories.tsx:36-46)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "No empty-dashboard or long-value story; stat-row values can overflow their card on a phone (r1-layout-11)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in dashboard-page.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 1,
+          "evidence": "`atom63 copy dashboard-page <dir>` writes 7 files but not pages/list-page/list-page-data.ts, which dashboard-page.tsx:13 imports; the copied page does not compile. `atom63 template dashboard-page` also omits that file. (shadcn registry apps/docs/public/r/dashboard-page.json does include it.)"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "page: list-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "All four widths baselined (apps/storybook/visual/__screenshots__/templates-pages-list-page-phone/-tablet/-desktop/-default-wide). At 768 the Amount column is hidden (showFrom: 'lg', list-page.tsx:77-83) while Issued shows; apps/storybook/visual/__screenshots__/templates-pages-list-page-tablet-chromium-linux.png has room for it."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Inside AppShell, whose safe-area owners are asserted (app-shell.stories.tsx:36-46)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Empty, NoInvoices, no-results, Progress, Success, Selected stories at four widths (list-page.stories.tsx:60-123). No long customer-name story (P3)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in list-page.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 4,
+          "evidence": "`atom63 build \"an invoice list with filters\"` leads with list-page; cli.test.mjs:127-145 asserts the copy resolves every import; check:starter installs it from the shadcn registry (sweep-r1/starter.log)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "page: onboarding-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Inside AppShell (app-shell.stories.tsx:36-46)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "Only the 0-of-3 first-run state; no partly-done or all-done checklist story."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/templates-pages-onboarding-page-desktop-chromium-linux.png: tidy, but the same 'Create your first invoice' action appears twice (empty state + checklist step) (P3, yz-decision)."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template onboarding-page` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "page: settings-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence. Settings-section switches from stacked to two columns between the captured widths (apps/storybook/visual/__screenshots__/templates-pages-settings-page-phone / -desktop)."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Inside AppShell (app-shell.stories.tsx:36-46)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "No long label/description or many-row story; the locked row is the only edge case."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in settings-page.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template settings-page` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "page: sign-in-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Centered max-w-sm card with px-4 (sign-in-page.tsx:76; auth-card.tsx:26) stays clear of insets in practice, but Page owns none of them (P3, r1-layout-22)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "MissingEmail and WrongPassword stories with baselines (apps/storybook/visual/__screenshots__/templates-pages-sign-in-page-missing-email / -wrong-password)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in sign-in-page.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build \"a sign in page\"` lists sign-in-page first; copy resolves imports (scratchpad check)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: activity-list",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "No empty handling: items=[] renders an empty <ol> (activity-list.tsx:40-58); no long or many-items story."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in activity-list.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template activity-list` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: app-shell",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Phone story play asserts top bar paddingTop 29px/inline 47px and wrapper paddingBottom 63px (app-shell.stories.tsx:36-46)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Product name truncates (app-shell.tsx:82); used by four pages with 8-row content."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in app-shell.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template app-shell` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: auth-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Used by sign-in error stories with baselines."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in auth-card.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template auth-card` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: chat-panel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "StartScreen, Streaming and WithAgentRuntime stories with baselines (apps/storybook/visual/__screenshots__/templates-blocks-chat-panel-*)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in chat-panel.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template chat-panel` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: data-table-section",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "showFrom is documented as 'the table width at which this column first appears' (data-table-section.tsx:24) but implemented as viewport media queries (hidden md:table-cell / lg:table-cell, lines 58-61), so beside a 256px sidebar the breakpoints are off by the sidebar width; Phone/Desktop only."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "NoResults story + phone stacked rows (apps/storybook/visual/__screenshots__/templates-blocks-data-table-section-no-results)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in data-table-section.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template data-table-section` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: detail-panel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "No overflow handling for long field values (no truncate/min-w-0/break in detail-panel.tsx) and no long-value story."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional. Composed from Sheet; `side=\"right\"` (detail-panel.tsx:49) is a physical edge that sheet.css:45-56 keeps physical in RTL, so the panel opens over the list's start side there (P3)."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template detail-panel` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: empty-state",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Is the empty case; text-balance/wrap present."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in empty-state.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template empty-state` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: filter-bar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Filtered story with clear action (apps/storybook/visual/__screenshots__/templates-blocks-filter-bar-filtered)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in filter-bar.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template filter-bar` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: getting-started-checklist",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "Only one progress state is shown; no all-done or single-step story."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in getting-started-checklist.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template getting-started-checklist` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: page-header",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Actions flex-wrap under the title on phones (page-header.tsx:27-31); no long-title story (P3)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in page-header.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template page-header` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: settings-section",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Locked row case; labels wrap (settings-page phone baseline)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in settings-section.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template settings-section` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: stat-row",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: a block with no edge of its own; the frame it sits in (AppShell/AppView/Sheet) owns the insets"
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "grid-cols-2 cells with a text-2xl value and no wrap/min-w-0 (stat-row.tsx:33-40): a value like $1,248,200 (~145px at 24px tabular) exceeds the ~139px content box of a 390px phone card (estimate from 390-32 gutter-16 gap /2 -32 padding)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). check:craft passes with no baseline entry for packages/templates (sweep-r1/craft.log: 11 baseline violations, none in templates; craft-baseline.json); grep for arbitrary values/literal colors in stat-row.tsx finds none; composed from @atom63/ui-react parts."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template stat-row` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "block: tab-bar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 390 (Phone) and 1280 (Desktop): apps/storybook/.storybook/visual.setup.ts:18-32 sizes a story at 390 only when its id ends in -phone and at 768/1440 only for templates-pages-list-page--*; everything else renders at 1280. No 768 or 1440 evidence."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "AppView gives the tab bar the bottom inset (app-view.css:115-119, asserted by checkFrame in ui-react app-view.stories.tsx:227-235). In inset chrome its negative margins cancel the root's inline inset too (app-view.css:181-184) (P3)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Labels can wrap inside min-h-14 cells (tab-bar.tsx:58); no 5-item long-label story (P3)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 2,
+          "evidence": "Provisional. The only arbitrary value in all templates: `text-[0.6875rem]` (tab-bar.tsx:58), a literal 11px label that ignores the phone type roles that data-a63-form-factor=phone sets."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 template tab-bar` prints source + blocks; listed in catalog.ts and passes check:templates (sweep-r1/templates.log: 7 pages, 13 blocks). Copy is only import-checked for list-page (packages/cli/src/cli.test.mjs:127-145)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "AppView",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Component phone stories are captured at 1280, not 390: apps/storybook/visual/__screenshots__/ui-react-appview-phone-with-tab-bar-chromium-linux.png is 1280 wide, because apps/storybook/.storybook/visual.setup.ts:18-32 matches only ids ending in -phone. The only 390 evidence is the app-view template; 768 (md switch) and 1440 are never captured."
+        },
+        {
+          "criterion": "Y2",
+          "score": 2,
+          "evidence": "checkFrame (app-view.stories.tsx:127-176) asserts one owner per inset on top bar/main/bottom bar/tab bar. Gap: with chrome='inset' and topBarSpan='main', rail and panel run to the top with only space-2 and no top inset; the top-inset rules exist for flush only (app-view.css:207-214), and checkFrame never checks rail/panel."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "TrackList overflow is asserted to scroll only main (app-view.stories.tsx:141-151); rail/panel/aside variants covered."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Provisional. app-view.css uses --a63-* tokens throughout (spaces, surfaces, borders, focus ring outline at lines 87-93); check:craft passes."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build` leads phone ideas with AppView; `atom63 component app-view` gives contract (window/phone, inset/flush, window/main)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "Page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "No story of its own at any width; only used inside ReaderLayout stories (reader-layout.stories.tsx:20,76) captured at 1280."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Not a frame: it owns no inset by design, and page.tsx:10-13 documents rendering a div inside a shell. Used bare by sign-in-page with no inset owner (P3)."
+        },
+        {
+          "criterion": "Y3",
+          "score": null,
+          "evidence": "n/a: a landmark wrapper with no content of its own"
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "page.tsx:16 `pt-8 pb-20` on the Tailwind spacing scale; page.test.tsx covers the landmark."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build` lists Page under Foundation; `atom63 api Page` -> docs pattern-layout which documents it."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "Section",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "No story of its own at any width; responsive presets (section.tsx:21-27, md/sm steps) are never captured except spacing='tight' inside ReaderLayout."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: vertical rhythm only, no edge"
+        },
+        {
+          "criterion": "Y3",
+          "score": null,
+          "evidence": "n/a: a spacing wrapper with no content of its own"
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Spacing scale only, but the presets are not monotonic: 'generous' gap is space-y-6, smaller than 'loose' space-y-8 (section.tsx:29-35), and removeTopSpacing defaults to true (line 18) (P3)."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build` lists Section under Foundation; pattern-layout docs explain each preset."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "ReaderLayout",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines only at 1280 (apps/storybook/visual/__screenshots__/ui-react-readerlayout-docs-with-rail / -reserved-rail / -dark). The aside is `hidden ... xl:block` (reader-layout.tsx:36) with no fallback, so below 1280 the page navigation disappears; `xl:max-w-4xl` on the article (line 26) never applies since 56rem + the 16rem aside exceed the 64rem max-w-5xl frame."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: sits inside Page/Container; owns no edge"
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "DocsWithRail and ReservedRail only; no long heading, wide table/code or no-aside-at-narrow story."
+        },
+        {
+          "criterion": "Y4",
+          "score": 2,
+          "evidence": "Provisional. The only example teaches rule breaks: `focus-visible:ring-2 ... ring-offset-2` (reader-layout.stories.tsx:51, rule 12 says outline), a hand-built bordered card with a tinted bordered header instead of Card (lines 50-63, rule 7). check:craft skips stories (scripts/design-system/check-craft.mjs:56)."
+        },
+        {
+          "criterion": "Y5",
+          "score": 1,
+          "evidence": "A builder is not led to it: `atom63 build \"a docs article page with a table of contents\"` returns compact density + list-page/dashboard-page and never names ReaderLayout; `atom63 build \"a blog post reading layout\"` returns app-view; `atom63 example reader-layout` -> component.not_found; pattern-layout docs mention it in one code snippet only. Findable only by exact name (`atom63 api ReaderLayout`)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r1-layout-1",
+      "subject": "page: dashboard-page",
+      "criterion": "Y5",
+      "severity": "P1",
+      "summary": "`atom63 copy dashboard-page` (and `atom63 template dashboard-page`) leave out pages/list-page/list-page-data.ts, which the page imports, so the copied dashboard does not compile.",
+      "evidence": "dashboard-page.tsx:13 imports '../list-page/list-page-data'. `pnpm -s atom63 copy dashboard-page <scratch>` wrote 7 files (app-shell, activity-list, data-table-section, empty-state, page-header, stat-row, dashboard-page) and no list-page-data.ts; a relative-import scan reported 'UNRESOLVED dashboard-page.tsx -> ../list-page/list-page-data'. `atom63 template dashboard-page` prints the same file set. The shadcn item apps/docs/public/r/dashboard-page.json does include it, so only the CLI path is broken. cli.test.mjs:127-145 checks copy for list-page only.",
+      "fix": "Make the CLI's dependency walk follow every relative import (not only blocks/*), or move the sample invoices into a shared data file the catalog declares; extend the copy test in packages/cli/src/cli.test.mjs to every catalog entry.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. packages/templates/src/pages/dashboard-page/dashboard-page.tsx:13 imports '../list-page/list-page-data'. `pnpm -s atom63 copy dashboard-page <scratch>` wrote only 7 files (dashboard-page plus 6 blocks) and no pages/list-page/list-page-data.ts. `atom63 template dashboard-page` lists only blocks (activity-list, app-shell, data-table-section, page-header, stat-row). So the copied page has an unresolved import and does not compile, which fails Y5 ('the copy works') for a page marked readiness 'ready'."
+      }
+    },
+    {
+      "id": "r1-layout-2",
+      "subject": "ReaderLayout",
+      "criterion": "Y5",
+      "severity": "P2",
+      "summary": "Nothing leads a builder to ReaderLayout: `atom63 build` for a docs or article idea never names it (it suggests compact density and list-page), there is no example, and the docs mention it in one snippet.",
+      "evidence": "`pnpm -s atom63 build \"a docs article page with a table of contents\"` -> Compact density, list-page, chat-page, dashboard-page, data-table-section; Foundation lists Page, Container, Section, SectionHeader only. `atom63 build \"a blog post reading layout\"` -> app-view. `atom63 example reader-layout` -> component.not_found. apps/docs/src/pages/pattern-layout.mdx:51 is the only mention.",
+      "fix": "Add ReaderLayout to the build kit's Foundation list and to the reading/docs/article intent; document its props (aside, reserveAside) and when to use it on pattern-layout; make its story reachable by `atom63 example`. Also stop 'table of contents' from triggering compact density.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "The gap is real but the finding overstates it. `atom63 build \"a docs article page with a table of contents\"` does return compact density, list-page, chat-page, dashboard-page, data-table-section and no ReaderLayout. `atom63 search article` and `atom63 search docs` do not surface it either, and `atom63 example reader-layout` gives component.not_found. But 'nothing leads a builder to it' is wrong: `atom63 search reader` returns `api ReaderLayout`, `atom63 api ReaderLayout` prints the import and points to `atom63 docs pattern-layout`, and apps/docs/src/components/docs-page.tsx uses it. ReaderLayout is a layout primitive, not a template, so `copy` does not apply, and a builder can still put together a reading column from Container/Section. It is a gap a builder can hit (P2), not a blocker for 'ready'."
+      }
+    },
+    {
+      "id": "r1-layout-3",
+      "subject": "all page templates and blocks except list-page",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "Only list-page has tablet (768) and wide (1440) baselines; the other 6 pages and 13 blocks are captured at 390 and 1280 only, so the md breakpoint where the sidebar, panel and tab bar switch is never seen.",
+      "evidence": "apps/storybook/.storybook/visual.setup.ts:18-32: viewportForStory returns 390 for ids ending '-phone', 768/1024/1440 only for 'templates-pages-list-page--*', else 1280. apps/storybook/visual/__screenshots__/ has no *-tablet or *-wide file for any other template.",
+      "fix": "Add Tablet and Wide stories (tabletGlobals/wideGlobals exist in story-matrix.tsx:51-54) to every page template, and widen viewportForStory to any '-tablet'/'-wide' story id; have check:templates require them for ready templates.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-4",
+      "subject": "AppView",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "AppView's own phone stories (PhoneWithTabBar, PhoneWithDockedBar, PhoneWithOverlay) are baselined at 1280 wide, so the component has no phone-width visual evidence.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-appview-phone-with-tab-bar-chromium-linux.png is 1280x900 with the track list across the full width; apps/storybook/.storybook/visual.setup.ts:18-32 only matches ids ending in '-phone'.",
+      "fix": "Give those stories phone globals and size any story with a phone viewport global (not only the '-phone' suffix) at 390 in visual.setup.ts; add a 768 story for the panel/tab-bar switch.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-5",
+      "subject": "page: list-page / block: data-table-section",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "Column breakpoints are viewport media queries though documented as table width, and list-page hides Amount (the key number) at tablet while showing Issued.",
+      "evidence": "data-table-section.tsx:24 doc 'The table width at which this column first appears' vs lines 58-61 'hidden md:table-cell' / 'hidden lg:table-cell'; list-page.tsx:72-83 Issued showFrom md, Amount showFrom lg; apps/storybook/visual/__screenshots__/templates-pages-list-page-tablet-chromium-linux.png shows no Amount column with free space before the row actions.",
+      "fix": "Use container queries (@container on the table frame) so showFrom means table width, fix the doc either way, and give Amount priority over Issued in the list-page sample.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-6",
+      "subject": "page: app-view",
+      "criterion": "Y2",
+      "severity": "P2",
+      "summary": "The phone sample pads its first block with raw env(safe-area-inset-top), bypassing the --a63-safe-area-top variable the AppView frame and hosts use, and no story checks it.",
+      "evidence": "packages/templates/src/pages/app-view/app-view.tsx:275 `pt-[env(safe-area-inset-top)]`; the frame reads var(--a63-safe-area-top, env(...)) (app-view.css:11); environment.native.css:8 defines the variable a native host or test overrides. EdgeToEdgePhone (app-view.stories.tsx:24-27) has no checkSafeArea play, unlike chat-page.stories.tsx:52-59.",
+      "fix": "Use pt-[var(--a63-safe-area-top)] (or expose --a63-app-view-inset-top for the first block) and add a checkSafeArea play to EdgeToEdgePhone.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-7",
+      "subject": "AppView",
+      "criterion": "Y2",
+      "severity": "P2",
+      "summary": "With chrome='inset' and topBarSpan='main', the rail and panel run to the top of the window with no top safe-area inset; only flush chrome pads them, and the frame check never looks at rail or panel.",
+      "evidence": "app-view.css:207-214 apply the top inset to rail/panel only under [data-chrome='flush'][data-top-bar-span='main']; inset chrome gives the root only space-2 (line 150). checkFrame (app-view.stories.tsx:152-160) checks edges top-bar, main, bottom-bar, tab-bar only.",
+      "fix": "Give rail and panel padding-block-start: max(space-2, inset-top) for topBarSpan=main in inset chrome too, and add rail/panel to checkFrame's owners with an inset-chrome TopBarOverMain story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-8",
+      "subject": "page: app-view",
+      "criterion": "Y4",
+      "severity": "P2",
+      "summary": "The phone sample shrinks text with text-sm/text-xs, which the build kit for phone screens tells builders not to do.",
+      "evidence": "app-view.tsx:249-250 (bottom bar title/subtitle text-sm/text-xs) and 277 (album meta text-sm); `atom63 build \"a phone app home screen with tabs\"`: 'keep rows and labels on the defaults or the text roles (text-body, text-subhead, text-footnote) instead of shrinking them with text-sm or text-xs'.",
+      "fix": "Use text-subhead/text-footnote roles in AppViewPhonePage so the copied sample follows the phone form factor.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-9",
+      "subject": "ReaderLayout",
+      "criterion": "Y4",
+      "severity": "P2",
+      "summary": "ReaderLayout's only example teaches code that breaks two AGENTS.md rules (ring focus, nested bordered card), and check:craft does not scan stories.",
+      "evidence": "reader-layout.stories.tsx:51 `focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2` (rule 12: outline); lines 50-63 a bordered link with a bordered, bg-muted/30 header instead of Card (rule 7); scripts/design-system/check-craft.mjs:56 excludes *.stories.tsx.",
+      "fix": "Rebuild the example cards with Card and outline focus; consider running the craft rules over stories that `atom63 example` serves.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-10",
+      "subject": "ReaderLayout",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "The aside (page navigation) vanishes below 1280 with no fallback, the article's xl:max-w-4xl can never apply, and no story shows a width other than 1280.",
+      "evidence": "reader-layout.tsx:36 'hidden w-64 shrink-0 ... xl:block'; line 23 max-w-5xl (64rem) vs line 26 xl:max-w-4xl (56rem) + 16rem aside = 72rem, so the article is held to 48rem by the frame; stories have no viewport globals and baselines are 1280 only.",
+      "fix": "Document or provide the narrow-width fallback (e.g. an inline TOC slot), remove or correct the inert max width, and add phone/tablet stories.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-11",
+      "subject": "block: stat-row",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "A long value overflows its card on a phone: two fixed columns with a 24px value and no wrapping or shrink.",
+      "evidence": "stat-row.tsx:33 grid-cols-2 (minmax(0,1fr)), :39 `text-2xl ... tabular-nums` with no min-w-0/break/clamp; estimated ~139px content width per card at 390 vs ~145px for '$1,248,200'. No long-value story.",
+      "fix": "Let values wrap or step down (e.g. text-xl below sm, or break-all on the dd), and add a LongValues story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-12",
+      "subject": "block: activity-list",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "ActivityList has no empty case: with no items it renders an empty list and nothing explains it.",
+      "evidence": "activity-list.tsx:40-58 maps items into <ol> with no length check; dashboard-page feeds it unguarded.",
+      "fix": "Render the empty-state block (or a one-line 'No activity yet') when items is empty, with a story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-13",
+      "subject": "all page templates and blocks",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "No template has a long-text or many-items stress story; edge cases exist only for list-page, sign-in, filter-bar, data-table-section and chat.",
+      "evidence": "Story exports across packages/templates/src: 20x Desktop, 20x Phone, 20x Themes; extra cases only Empty*/NoInvoices/Progress*/Success*/Selected* (list-page), NoResults, Filtered, MissingEmail, WrongPassword, StartScreen, Streaming. None with long names, long titles or 50+ rows.",
+      "fix": "Add a shared stress fixture (long names, long titles, many rows, one item) and a Stress story per page template; have check:templates require it for ready templates.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-14",
+      "subject": "block: tab-bar",
+      "criterion": "Y4",
+      "severity": "P2",
+      "summary": "The tab bar label size is a literal 11px, the only arbitrary value in the templates, so it ignores the phone type roles and the type-scale preference.",
+      "evidence": "tab-bar.tsx:58 `text-[0.6875rem]`; grep for arbitrary values across packages/templates/src finds only this one.",
+      "fix": "Use a token-backed role (e.g. a caption/footnote step) or add a tab-label token, and look it up with `atom63 token`.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-15",
+      "subject": "atom63 build (all templates)",
+      "criterion": "Y5",
+      "severity": "P2",
+      "summary": "`atom63 build` pads results with unrelated pages and components, so the right template is often one of several.",
+      "evidence": "'a sign in page' -> sign-in-page, chat-page, dashboard-page; 'a settings screen' -> settings-page, chat-page; 'an admin dashboard' -> components carousel, chat-composer, chat-steps; 'a docs article page with a table of contents' -> compact density + list-page.",
+      "fix": "Raise the match threshold for pages and components so weak matches are dropped, and stop 'table' in 'table of contents' from triggering compact density.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-16",
+      "subject": "Page / Section",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "Page and Section have no stories of their own, so their responsive padding presets are never captured at any width.",
+      "evidence": "No *.stories.tsx in packages/ui-react/src/layout uses Page/Section except reader-layout.stories.tsx (spacing='tight' only); no baseline for them in apps/storybook/visual/__screenshots__/.",
+      "fix": "Add a layout story showing each Section spacing preset inside Page at phone, tablet and wide.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-17",
+      "subject": "block: getting-started-checklist",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "Only one progress state is shown; done-all and single-step states are not exercised.",
+      "evidence": "getting-started-checklist.stories.tsx exports Desktop, Phone, Themes only; apps/storybook/visual/__screenshots__/templates-pages-onboarding-page-desktop shows '0 of 3 done'.",
+      "fix": "Add PartlyDone and AllDone stories (and what the block shows when every step is finished).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-18",
+      "subject": "block: detail-panel",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "Long field values have no overflow handling and no story.",
+      "evidence": "detail-panel.tsx has no truncate/min-w-0/break-words (grep); stories Desktop, Phone, Themes only.",
+      "fix": "Add break-words/min-w-0 on values and a long-value story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-19",
+      "subject": "Section",
+      "criterion": "Y4",
+      "severity": "P3",
+      "summary": "Section spacing presets are not monotonic and the top padding is removed by default.",
+      "evidence": "section.tsx:29-35 gap: loose space-y-8 but generous space-y-6; :18 removeTopSpacing = true.",
+      "fix": "Make gaps rise with the preset; keep or reconsider the removeTopSpacing default (documented in pattern-layout).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-20",
+      "subject": "block: detail-panel",
+      "criterion": "Y4",
+      "severity": "P3",
+      "summary": "The detail sheet opens on the physical right, which is the start side in RTL.",
+      "evidence": "detail-panel.tsx:49 side=\"right\"; sheet.css:45-48 keeps left/right physical in RTL.",
+      "fix": "Add an inline-end side to Sheet or pick the side from the direction in the block.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-21",
+      "subject": "AppView / block: tab-bar",
+      "criterion": "Y2",
+      "severity": "P3",
+      "summary": "In inset chrome the tab bar's negative margins cancel the root's inline safe-area padding as well as the space-2 gutter.",
+      "evidence": "app-view.css:181-184 margin-inline: calc(-1 * max(space-2, inset-inline)); tab-bar.tsx:46-47 adds no inline padding.",
+      "fix": "Pad the tab bar's inline edges with the inline inset after the negative margin.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-22",
+      "subject": "page: sign-in-page / Page",
+      "criterion": "Y2",
+      "severity": "P3",
+      "summary": "Bare Page (sign-in) owns no safe-area inset; it works only because the card is narrow and centered.",
+      "evidence": "sign-in-page.tsx:76 `<Page className=\"flex items-center px-4\">`; page.tsx:16 pads pt-8 pb-20 only.",
+      "fix": "Pad Page's inline and block edges with max(gutter, --a63-safe-area-*) when it is the outermost frame, or document that the route owns them.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-layout-23",
+      "subject": "page: onboarding-page",
+      "criterion": "Y4",
+      "severity": "P3",
+      "summary": "The same 'Create your first invoice' action appears twice on the first-run page (empty-state primary and the current checklist step).",
+      "evidence": "apps/storybook/visual/__screenshots__/templates-pages-onboarding-page-desktop-chromium-linux.png.",
+      "fix": "YZ to decide whether the checklist's current step repeats the action or only points to it.",
+      "kind": "yz-decision"
+    }
+  ]
+}

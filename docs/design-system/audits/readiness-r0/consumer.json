@@ -1,0 +1,368 @@
+{
+  "scope": "Layer 6: consumer and agent experience (U1-U5)",
+  "reviewedAt": "2026-11-18",
+  "subjects": [
+    {
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": 2,
+          "evidence": "Index is fresh (sweep agent-index.log: 'Agent index is current.'); MCP answers match the CLI envelope (node --test packages/cli/src/mcp.test.mjs: 16 pass, 0 fail); component contract axes match packages/ui-foundation/contracts/components/button.json; published component-button.md and `atom63 component button` list the same axis values. Gaps a consumer hits: `atom63 token --a63-text-muted` (no such token) exits 0 with a fuzzy list headed by --a63-action-control-text-shadow and no not-found line (packages/cli/src/core.mjs:467-481); `atom63 build \"settings page with a profile form\"` returns chat-page and four chat-* components but no field/input/form; `atom63 build \"a pricing page with three plans\"` leads with chat-page."
+        },
+        {
+          "criterion": "U2",
+          "score": 2,
+          "evidence": "Rule table packages/cli/src/rules.mjs: only rules tokens-only, content-colors, logical-directions, focus-visible, focus-ring-outline, theme-agnostic carry `check` (lines 27,53,59,65,71,77); accent-sparingly and accessible-by-default name the vibe measure and axe in prose; 7 rules name neither a check nor a reason. token-role (scripts/design-system/lib/craft-rules.mjs:36-46) is enforced but absent from rules.mjs:27."
+        },
+        {
+          "criterion": "U3",
+          "score": 2,
+          "evidence": "ds-pack-smoke.log: packed @atom63/cli tarball runs `atom63 build, component, example, token`; ds-registry-smoke.log installs @atom63/cli@beta -> 0.1.0-beta.1. But `npm view @atom63/cli dist-tags` = { latest: '0.1.0-beta.0', beta: '0.1.0-beta.1' }, so `npx @atom63/cli` resolves the older build."
+        },
+        {
+          "criterion": "U4",
+          "score": 1,
+          "evidence": "68 of 101 public Atom* Swift types in packages/ui-ios appear nowhere in packages/cli/generated/agent-index.json (AtomAppBar, AtomDensity, AtomMessageDeliveryState, AtomInform*, AtomListRow, ...); `atom63 search AtomAppBar|AtomMessage|atomDensity` -> 'No results'. Web: `atom63 search lightbox|ReaderLayout|PageSkeleton|logo` -> 'No results'; 28/28 media-lightbox, 13/14 media, 21/26 theme and 16/21 layout API-report values are absent from the index. check:agent-index only diffs the generated file (packages/cli/scripts/build-index.mjs:245-253); it checks no coverage."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a: outcomes are scored on the case-study subject; the CLI's part in them is cited there"
+        }
+      ]
+    },
+    {
+      "subject": "AGENTS.md (repo agent guide and generated rules block)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": null,
+          "evidence": "n/a: AGENTS.md answers no queries; CLI answers are scored on packages/cli"
+        },
+        {
+          "criterion": "U2",
+          "score": 2,
+          "evidence": "check:agents-md passes (sweep agents-md.log: 'AGENTS.md is current.') but only proves the block matches rules.mjs (packages/cli/src/agents-md.test.mjs:38-41). Rules 1,2,3,6,7,8,14 (AGENTS.md:75-77,80-82,88) state no check and no reason why there is none. Rule 4 (AGENTS.md:78) omits the token-role rule that check:craft now enforces. Hand-written rules are covered: generated files by check:api-report/registry/agent-index, changesets by ci.yml:239-241."
+        },
+        {
+          "criterion": "U3",
+          "score": null,
+          "evidence": "n/a: no install surface"
+        },
+        {
+          "criterion": "U4",
+          "score": 3,
+          "evidence": "'Where things live' table (AGENTS.md:9-22) maps 12 paths, but packages/templates, packages/create and packages/figma are not listed."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a: no outcome of its own"
+        }
+      ]
+    },
+    {
+      "subject": "packages/create and the starter",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": null,
+          "evidence": "n/a: the starter answers no queries"
+        },
+        {
+          "criterion": "U2",
+          "score": 2,
+          "evidence": "The starter's craft gate calls scanSource(text)/scanCss(text) with no knownTokens or roles (scripts/design-system/check-starter.mjs:130-134), so unknown-token and token-role never run on generated apps; the app kind copies onboarding-page (packages/create/src/generate.mjs:33-35) whose getting-started-checklist.tsx:87 uses `text-primary`, a token-role entry in docs/design-system/audits/craft-baseline.json, yet the log says 'The app starter passes the craft rules.' (starter.log:482)."
+        },
+        {
+          "criterion": "U3",
+          "score": 2,
+          "evidence": "Sweep starter.log: site, docs and app kinds install, typecheck and build against packed tarballs (lines 415, 459, 482); ds-registry-smoke.log and ds-pack-smoke.log pass. Gaps: starter.log ends at line 482 with no 'passes its route check' line although the app kind has routes (check-starter.mjs:36-38,85-90), and summary.tsv records `check:starter 1 2s`; the shadcn and registry-template path (--shadcn) runs only in CI (.github/workflows/ci.yml:217), not in this sweep. Generated AGENTS.md uses the docs variant (generate.mjs:237) on the stale premise 'the CLI is not published yet' (packages/create/README.md:26) while @atom63/cli@0.1.0-beta.1 is on npm. @atom63/create is private (package.json:4) by recorded decision (docs/design-system/starter-plan.md:49)."
+        },
+        {
+          "criterion": "U4",
+          "score": 3,
+          "evidence": "packages/create/README.md documents usage, kinds and layers (lines 1-40); one stale claim at line 26."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a: no outcome of its own"
+        }
+      ]
+    },
+    {
+      "subject": "apps/docs (docs coverage and Markdown twins)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": 1,
+          "evidence": "apps/docs/src/lib/mdx-to-markdown.ts:60-100 is not code-fence aware: it drops every line starting with import, export, < or {/* even inside ``` blocks. 111 such lines in 16 of 31 pages are lost from the Markdown twins that `atom63 docs` and https://system.atom63.io/*.md serve. `atom63 docs pattern-widgets` renders the WidgetGrid sample (pattern-widgets.mdx:155-162) as an empty ```tsx block (CLI output lines 70-72; same on the published .md); pattern-agent loses all 6 import lines (e.g. `import { createAgentRuntime } from '@atom63/agent'`, pattern-agent.mdx:146); pattern-inform's twin opens with stray demo code and its registry sample loses `export const registry = defineInformRegistry([` (pattern-inform.mdx:77). No test file exists for mdx-to-markdown.ts. Component pages (generated from the catalog) are intact."
+        },
+        {
+          "criterion": "U2",
+          "score": null,
+          "evidence": "n/a: docs carry no rule enforcement"
+        },
+        {
+          "criterion": "U3",
+          "score": null,
+          "evidence": "n/a: docs are not an install path; llms.txt, /components/*.md and /r/registry.json all return 200"
+        },
+        {
+          "criterion": "U4",
+          "score": 1,
+          "evidence": "llms.txt lists 78 component links (all 76 indexed components covered), but whole published entry points have no page and no index entry: @atom63/ui-react/media (VideoDialog, MediaLightbox, ...), @atom63/ui-react/media/lightbox (28 exports), @atom63/ui-react/theme controls, layout's ReaderLayout/PageSkeleton/Grid*, @atom63/mdx (published, packages/mdx/src/index.ts) and @atom63/brand (Atom63Logo, AppLogo). apps/docs/vite-plugins/llms-txt.ts:163 claims root, calendar and layout 'together export every component family'. llms.txt summaries for Inform and Widgets are code fragments ('const [open, setOpen] = useState(false) return ( Open the dialog ) }', from firstParagraph, llms-txt.ts:131-140)."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a: no outcome of its own"
+        }
+      ]
+    },
+    {
+      "subject": "Case-study outcomes (Round 13a/13b and vibe benchmarks)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": null,
+          "evidence": "n/a: outcome subject"
+        },
+        {
+          "criterion": "U2",
+          "score": null,
+          "evidence": "n/a: outcome subject"
+        },
+        {
+          "criterion": "U3",
+          "score": null,
+          "evidence": "n/a: outcome subject"
+        },
+        {
+          "criterion": "U4",
+          "score": null,
+          "evidence": "n/a: outcome subject"
+        },
+        {
+          "criterion": "U5",
+          "score": 2,
+          "evidence": "Round 13a/13b (docs/design-system/case-studies-round-13a.md:17-23,74): mobile web 79.9 (R12 70.9), desktop 87.0 (86.4), iOS 66.4 (64.0); no newer round exists, so means are not below Round 13 (only 21 arms rerun; system-share measure dropped, line 14). Failures not traced to a layer: social-feed -14 to 48/53 and messages-inbox -12 have no stated cause; product-buy 47 is put on builder variance. CRM benchmark (docs/design-system/audits/vibe-crm-three-sample-synthesis-2026-11-03.md:9-13): plain 93.7 vs ds-core 73.7 vs ds-guided 76.7, every arm had serious axe findings (guided sample 2: 237 nodes); its step 5 'Repeat this benchmark after the slice' has no follow-up report (latest is vibe-2026-11-03-s3.md, commit 83517be7). The Round 13a report is untracked in the main checkout (git status '??') and absent from this worktree."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "consumer-1",
+      "subject": "apps/docs (docs coverage and Markdown twins)",
+      "criterion": "U1",
+      "severity": "P1",
+      "summary": "The Markdown twins that agents read (`atom63 docs`, system.atom63.io/*.md) drop code lines inside fenced blocks: 111 lines across 16 of 31 pages, including import lines and whole JSX samples.",
+      "evidence": "apps/docs/src/lib/mdx-to-markdown.ts:77-100 skips lines starting with import/export/</{/* without tracking ``` fences. `pnpm -s atom63 docs pattern-widgets` lines 70-72 print an empty ```tsx block where pattern-widgets.mdx:155-162 has the WidgetGrid sample; `curl https://system.atom63.io/patterns/pattern-widgets.md` lines 70-71 match. pattern-agent.mdx:146,239,265-267 import lines are gone from the twin; pattern-inform twin starts with stray demo code and loses `export const registry = defineInformRegistry([` (mdx:77). Per-page loss: pattern-widgets 22, pattern-layout 18, pattern-local-layout 14, foundation-effects 9, pattern-inform 8, foundation-surface-model 7. No mdx-to-markdown test exists.",
+      "fix": "Track fence state in mdxToMarkdown and pass fenced lines through verbatim; strip only top-level MDX imports, exports and JSX. Add apps/docs/src/lib/mdx-to-markdown.test.ts with a fenced import, export and JSX sample; regenerate the agent index.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. In apps/docs/src/lib/mdx-to-markdown.ts the loop drops any line whose trimmed text starts with `import`, `export`, `<` or `{/*`, and it never tracks ``` fences. pattern-widgets.mdx:155-162 holds a full WidgetGrid sample (an import line plus JSX). `pnpm -s atom63 docs pattern-widgets` prints that block as an empty ```tsx fence. Only mdx-to-markdown.ts and vite-plugins/llms-txt.ts reference mdxToMarkdown, so no test covers it. The twin is what agents read, and losing the code samples breaks U1 for the docs subject. I did not recount the per-page line totals."
+      }
+    },
+    {
+      "id": "consumer-2",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U4",
+      "severity": "P1",
+      "summary": "The iOS API is not findable through the CLI or MCP: 68 of 101 public Atom* Swift types are absent from the agent index, including the ones Round 13a found iOS builders missed.",
+      "evidence": "grep of `public (struct|enum|class|protocol) Atom*` in packages/ui-ios gives 101 names; 68 appear nowhere in packages/cli/generated/agent-index.json (AtomAppBar, AtomAppBarStyle, AtomDensity, AtomMessageDeliveryState, AtomListRow, AtomIconButton, AtomInformArbiter, ...). `pnpm -s atom63 search AtomAppBar`, `AtomMessage`, `atomDensity` -> 'No results'. case-studies-round-13a.md:41-45: iOS builders 'read the ui-ios README and the MCP' and adoption of compact density and AtomAppBar was 1 of 7 until the README (not the index) was fixed in #283.",
+      "fix": "Index ui-ios public API (type names, doc comments, and the README sections) into agent-index.json and make `atom63 search`/`component` return them; add a coverage assertion to check:agent-index that every public Atom* type is indexed.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced. packages/ui-ios declares 101 unique public Atom* struct/enum/class/protocol names, and 68 of them never appear in packages/cli/generated/agent-index.json. The only Atom names in the index are about 30 component types, such as AtomButton, AtomMessage and AtomTokens. AtomAppBar and AtomDensity are absent, and `atom63 search AtomAppBar` and `atom63 search ios` both return 'No results'. build-index.mjs reads ui-ios only for Swift token names. The CLI README claims iOS coverage ('the shared web and iOS contract'). case-studies-round-13a.md confirms iOS builders read the README and the MCP and missed AppBar and compact density, though it blames the README framing more than the missing index entries. The gap in iOS findability is real."
+      }
+    },
+    {
+      "id": "consumer-3",
+      "subject": "apps/docs (docs coverage and Markdown twins)",
+      "criterion": "U4",
+      "severity": "P1",
+      "summary": "Whole published entry points have no docs page and no CLI index entry: @atom63/ui-react/media, /media/lightbox, /theme controls, much of /layout, @atom63/mdx and @atom63/brand.",
+      "evidence": "Against packages/ui-react/api/*.api.md, values found nowhere in agent-index.json: media-lightbox 28/28, media 13/14 (VideoDialog, MediaLightbox, VideoThumbnail), theme 21/26 (AppearanceSection, SwatchTokenControl), layout 16/21 (ReaderLayout, PageSkeleton, GridChrome). Index string counts: '@atom63/mdx' 0, '@atom63/brand' 0. `atom63 search lightbox|ReaderLayout|PageSkeleton|logo` -> 'No results'. apps/docs/vite-plugins/llms-txt.ts:163 reads only index.ts, calendar and layout and claims that covers 'every component family'. check:agent-index only checks staleness (packages/cli/scripts/build-index.mjs:245-253).",
+      "fix": "Add docs pages (or catalog entries) for the media, lightbox, theme-controls and remaining layout exports and for @atom63/mdx and @atom63/brand; extend the index to them; add a check that every value in the published API reports is reachable from the index or explicitly marked internal.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Mostly reproduced. VideoDialog, MediaLightbox, VideoThumbnail, SwatchTokenControl, ReaderLayout, PageSkeleton and GridChrome each occur 0 times in agent-index.json, and AppearanceSection occurs once. The index has no '@atom63/mdx' string, and packages/mdx is a public versioned package. ui-react's package.json exports ./media and ./media/lightbox. llms-txt.ts:163 reads only index.ts, calendar/index.ts and layout/index.ts, yet its comment claims 'every component family'. The stale-index check in build-index.mjs only compares the generated file against the committed one. Two corrections: @atom63/brand is `private: true`, so it is not a published entry point and that part is wrong. ReaderLayout does appear once in pattern-layout.mdx:51, so 'no docs page' overstates that case. The media, lightbox and theme entry points are still undiscoverable to agents, so P1 stands."
+      }
+    },
+    {
+      "id": "consumer-4",
+      "subject": "AGENTS.md (repo agent guide and generated rules block)",
+      "criterion": "U2",
+      "severity": "P2",
+      "summary": "7 of 15 generated rules (1, 2, 3, 6, 7, 8, 14) name no check and give no reason why none exists, and check:agents-md cannot catch that.",
+      "evidence": "AGENTS.md:75-77,80-82,88; packages/cli/src/rules.mjs entries query-first, compose-before-create, contract-values, quiet-secondary-actions, one-boundary, on-media-colors, as-child-spreads-props have no `check`. check:agents-md only asserts the block equals the table (packages/cli/src/agents-md.test.mjs:38-41).",
+      "fix": "Give each rule either `check` (e.g. contract-values from the contracts, a nested-border and asChild lint) or a `why-unchecked` field rendered into the block; add a test that every rule has one of the two and that every named check exists in craft-rules.mjs.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-5",
+      "subject": "AGENTS.md (repo agent guide and generated rules block)",
+      "criterion": "U2",
+      "severity": "P2",
+      "summary": "The new token-role craft rule is enforced in the repo but no AGENTS.md rule tells agents about it.",
+      "evidence": "scripts/design-system/lib/craft-rules.mjs:36-46 defines token-role (e.g. `text-primary` reads a fill as text); packages/cli/src/rules.mjs:27 lists only ['raw-color','unknown-token'] for tokens-only; AGENTS.md:78 says nothing about roles.",
+      "fix": "Add the rule (paint text with --a63-text-* roles, fills only as backgrounds) to rules.mjs with check 'token-role' and run sync:agents-md.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-6",
+      "subject": "packages/create and the starter",
+      "criterion": "U2",
+      "severity": "P2",
+      "summary": "The starter and vibe craft gates run without knownTokens and roles, so unknown-token and token-role never run on generated code; every new app ships a known token-role violation while the check reports it clean.",
+      "evidence": "scripts/design-system/check-starter.mjs:130-134 calls scanCss(text)/scanSource(text) with no options; scanSource needs { knownTokens, roles } (craft-rules.mjs:252). App kind copies onboarding-page (generate.mjs:33-35) which uses packages/templates/src/blocks/getting-started-checklist/getting-started-checklist.tsx:87 `text-primary` (listed in craft-baseline.json); starter.log:482 'The app starter passes the craft rules.' measureSources in vibe-measure.mjs:277-297 passes knownTokens but no roles, so case-study craft counts exclude token-role.",
+      "fix": "Pass knownTokens (from the styles manifest) and roles (styles tailwind/roles.json) in check-starter and vibe-measure; fix the checklist icon to a text role (e.g. text-accent) and drop its baseline entry.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-7",
+      "subject": "packages/create and the starter",
+      "criterion": "U3",
+      "severity": "P2",
+      "summary": "Generated apps get the docs-only AGENTS.md variant on the stale premise that the CLI is unpublished; @atom63/cli@0.1.0-beta.1 is on npm.",
+      "evidence": "packages/create/src/generate.mjs:237 agentsBlock({ variant: 'docs' }); packages/create/README.md:26 'because the CLI is not published yet'; docs/design-system/starter-plan.md:86 records the same premise; ds-registry-smoke.log: '@atom63/cli@beta -> 0.1.0-beta.1'.",
+      "fix": "Decide whether starters add @atom63/cli as a devDependency with the cli variant (build kits, MCP) or keep docs-only; update the README and starter-plan either way.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "consumer-8",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U3",
+      "severity": "P2",
+      "summary": "npm's latest tag for @atom63/cli points at 0.1.0-beta.0 while beta is 0.1.0-beta.1, so `npx @atom63/cli` installs the older build.",
+      "evidence": "`npm view @atom63/cli dist-tags` -> { latest: '0.1.0-beta.0', beta: '0.1.0-beta.1' }.",
+      "fix": "Move latest to the current beta (or remove it) as part of the next approved release; releases need YZ's approval (AGENTS.md:48-50).",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-9",
+      "subject": "packages/create and the starter",
+      "criterion": "U3",
+      "severity": "P2",
+      "summary": "This sweep has no evidence that the app route check or the shadcn and registry-template path passed.",
+      "evidence": "starter.log ends at line 482 'The app starter passes the craft rules.' with no 'passes its route check' line although kindRoutes.app has 5 routes (check-starter.mjs:36-38,85-90); summary.tsv row 'check:starter 1 2s' (sweep.sh records the exit code); --shadcn runs only in CI (.github/workflows/ci.yml:217).",
+      "fix": "Rerun `pnpm check:starter --shadcn` to completion and keep its log as the readiness evidence; if the route check hangs on this Mac (Playwright build mismatch noted in case-studies-round-13a.md:12), fix the browser resolution.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-10",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P2",
+      "summary": "`atom63 token` with a full CSS variable name that does not exist exits 0 with unrelated fuzzy matches and never says the name does not exist; rule 4 tells agents to verify names this way.",
+      "evidence": "packages/cli/src/core.mjs:467-481 falls through to search when there is no exact match. `pnpm -s atom63 token --a63-text-muted` -> first result '--a63-action-control-text-shadow', exit 0; `--a63-bogus-thing` -> exit 0 with 15 results; token.not_found fires only when search is empty.",
+      "fix": "When the query starts with `--a63-` and has no exact match, return token.not_found (non-zero exit) with the near matches as suggestions, as `component` does ('Did you mean').",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-11",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P2",
+      "summary": "`atom63 build` gives poor kits for common ideas: chat pieces for a profile form, and chat-page first for a pricing page.",
+      "evidence": "`pnpm -s atom63 build \"settings page with a profile form\"`: pages settings-page, sign-in-page, chat-page; components include chat-composer, chat-message, chat-steps, chat-typing-indicator, copy-button and no field, input or form (while `atom63 search \"form field\"` ranks field and form first). `atom63 build \"a pricing page with three plans\"`: first page chat-page.",
+      "fix": "Add build-kit golden cases for common product ideas (form, pricing, profile, checkout) to core.test.mjs and fix ranking so off-topic templates fall below a relevance floor and form ideas pull Field/Input/Form.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-12",
+      "subject": "apps/docs (docs coverage and Markdown twins)",
+      "criterion": "U4",
+      "severity": "P2",
+      "summary": "llms.txt and index summaries for pages that open with demo code are code fragments or bare routes, so those pages are hard to find.",
+      "evidence": "apps/docs/vite-plugins/llms-txt.ts:131-140 takes the first paragraph after dropping headings; llms.txt line 117 Inform: 'const [open, setOpen] = useState(false) return ( Open the dialog ) }', line 119 Widgets: 'return ( {children} ) }'; `atom63 search inform` shows only '/patterns/pattern-inform'.",
+      "fix": "Read a frontmatter description (or the first prose paragraph after stripping code) for every page; add an llms-txt test that no summary contains code tokens.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-13",
+      "subject": "Case-study outcomes (Round 13a/13b and vibe benchmarks)",
+      "criterion": "U5",
+      "severity": "P2",
+      "summary": "In the controlled CRM benchmark both DS arms lose about 17-20 points to plain React+Tailwind and every arm has serious axe findings; the decided rerun after the fix slice has not happened.",
+      "evidence": "docs/design-system/audits/vibe-crm-three-sample-synthesis-2026-11-03.md:9-13 (plain 93.7, ds-core 73.7, ds-guided 76.7), :27 (serious axe in every arm, 237 nodes in guided sample 2, nested interactive controls), :33-37 (step 5: repeat after the slice). Latest vibe report is vibe-2026-11-03-s3.md (commit 83517be7); none since.",
+      "fix": "Rerun the three-sample CRM benchmark on current main and trace each remaining loss and axe class to a layer (template, component, rule, guidance).",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-14",
+      "subject": "Case-study outcomes (Round 13a/13b and vibe benchmarks)",
+      "criterion": "U5",
+      "severity": "P2",
+      "summary": "Round 13 failures are not all traced to a layer: social-feed and messages-inbox drops have no cause, and iOS stays 13-20 points below web.",
+      "evidence": "case-studies-round-13a.md:29 (social-feed -14, messages-inbox -12, no cause), :62-74 (13b social-feed 53, product-buy 47; mean 66.4 vs web 79.9/87.0), :79-83 (product-buy put on builder variance and oversized custom views), :14 (system-share measure dropped).",
+      "fix": "For each case under 70, record the judge's top finding and the layer it lands on (component, template, density, guidance, builder variance) in the report.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-15",
+      "subject": "Case-study outcomes (Round 13a/13b and vibe benchmarks)",
+      "criterion": "U5",
+      "severity": "P2",
+      "summary": "The Round 13a/13b report, the baseline U5 is measured against, is not committed: it is untracked in the main checkout and missing from this review worktree.",
+      "evidence": "`git status --short docs/design-system/case-studies-round-13a.md` in . -> '??'; no such file under docs/design-system.",
+      "fix": "Commit the report (with round 12) so the readiness baseline lives in the repo.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-16",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "The Button guidance table in `atom63 component button` lists 5 of 11 sizes and neither tone nor shape; the contract table further down is complete.",
+      "evidence": "`pnpm -s atom63 component button` output (saved at <review-scratch>/cons-button.md) lines 34-60 (sizes xs-xl only) vs line 163 (xs, sm, md, lg, xl, tile, icon-xs, icon-sm, icon, icon-lg, icon-xl) and lines 160-161 (shapes, tones).",
+      "fix": "Add axisGuidance rows for tile, the icon-* sizes, tone and shape in the Button docs data.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-17",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "The stable `menu` contract is not in the index (`atom63 component menu` -> not found), and progressive-blur is listed stable with no contract.",
+      "evidence": "packages/ui-foundation/contracts/components/menu.json maturity 'stable'; `pnpm -s atom63 component menu` -> 'No component \"menu\". (component.not_found)'; agent-index.json progressive-blur: status 'stable', contract null.",
+      "fix": "Expose menu as the shared recipe entry (pointing at dropdown-menu, context-menu, menubar) or mark it internal; give progressive-blur a contract or a non-stable status.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-18",
+      "subject": "apps/docs (docs coverage and Markdown twins)",
+      "criterion": "U4",
+      "severity": "P3",
+      "summary": "llms.txt summaries are cut at 200 characters mid-word.",
+      "evidence": "llms-txt.ts:139 `.slice(0, 200)`; llms.txt line 19 Typography ends '...to balance information den'.",
+      "fix": "Cut at the last sentence or word boundary before the limit.",
+      "kind": "fix"
+    },
+    {
+      "id": "consumer-19",
+      "subject": "AGENTS.md (repo agent guide and generated rules block)",
+      "criterion": "U4",
+      "severity": "P3",
+      "summary": "The 'Where things live' table omits packages/templates, packages/create and packages/figma.",
+      "evidence": "AGENTS.md:9-22 lists styles, ui-foundation, ui-react, ui-ios, mdx, brand, inform, agent, widgets, cli, apps and scripts; `ls packages` also has create, figma, templates.",
+      "fix": "Add the three rows.",
+      "kind": "fix"
+    }
+  ]
+}
