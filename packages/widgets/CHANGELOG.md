@@ -1,5 +1,15 @@
 # @atom63/widgets
 
+## 0.1.0-beta.5
+
+### Patch Changes
+
+- [#284](https://github.com/atom63/atom63-design-system/pull/284) [`13bf48d`](https://github.com/atom63/atom63-design-system/commit/13bf48d6ff84ab404244ee6867c10a2a87b80356) Thanks [@atom63](https://github.com/atom63)! - Make the WidgetAvatar face fill the token box even when a later same-layer `.a63-Avatar` default redeclares `--avatar-size`. The fill rule is now `.a63-WidgetAvatar .a63-WidgetAvatar-avatar`, sets `--avatar-size: 100%`, and sizes the face with `inline-size` and `block-size: 100%`.
+  
+  Reserve 4px of margin on `.a63-WidgetAvatar` for the page ring, busy ring, and outline so overflow:hidden widget hosts no longer clip the top edge.
+- Updated dependencies [[`099d1eb`](https://github.com/atom63/atom63-design-system/commit/099d1eba7a4db553969c367618d2e6f402d57a32), [`336a05c`](https://github.com/atom63/atom63-design-system/commit/336a05c908f7ba943cc9cff76a62c9c9c48a1e2c), [`0d9b571`](https://github.com/atom63/atom63-design-system/commit/0d9b5713c2f6b794b3aff9e1dd997da410c26c3e)]:
+  - @atom63/ui-react@0.2.0-beta.14
+
 ## 0.1.0-beta.4
 
 ### Patch Changes
