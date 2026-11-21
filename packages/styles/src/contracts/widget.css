@@ -102,6 +102,41 @@
     0 32px 48px -18px color-mix(in oklch, black 72%, transparent);
 }
 
+[data-a63-brand],
+[data-a63-surface] {
+  /* The mode roles again, on scopes that change what they read, keyed to the nearest mode scope. */
+  --a63-widget-media-shadow: var(
+      --a63-if-light,
+      0 0 0 1px color-mix(in oklch, black 8%, transparent),
+      0 1px 0 color-mix(in oklch, white 45%, transparent) inset,
+      0 10px 16px -10px color-mix(in oklch, black 22%, transparent),
+      0 22px 34px -16px color-mix(in oklch, black 26%, transparent)
+    )
+    var(
+      --a63-if-dark,
+      0 0 0 1px color-mix(in oklch, white 10%, transparent),
+      0 1px 0 color-mix(in oklch, white 8%, transparent) inset,
+      0 10px 16px -10px color-mix(in oklch, black 50%, transparent),
+      0 22px 34px -16px color-mix(in oklch, black 62%, transparent)
+    );
+  --a63-widget-media-shadow-raised: var(
+      --a63-if-light,
+      0 0 0 1px color-mix(in oklch, black 12%, transparent),
+      0 1px 0 color-mix(in oklch, white 60%, transparent) inset,
+      0 1px 1px color-mix(in oklch, black 12%, transparent),
+      0 14px 22px -10px color-mix(in oklch, black 26%, transparent),
+      0 32px 48px -18px color-mix(in oklch, black 30%, transparent)
+    )
+    var(
+      --a63-if-dark,
+      0 0 0 1px color-mix(in oklch, white 16%, transparent),
+      0 1px 0 color-mix(in oklch, white 12%, transparent) inset,
+      0 1px 1px color-mix(in oklch, black 35%, transparent),
+      0 14px 22px -10px color-mix(in oklch, black 58%, transparent),
+      0 32px 48px -18px color-mix(in oklch, black 72%, transparent)
+    );
+}
+
 [data-widget-kind='weather'],
 [data-widget-kind='location'][data-weather-tone] {
   --a63-widget-background-color: var(--a63-weather-background-color);

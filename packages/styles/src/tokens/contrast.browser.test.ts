@@ -54,9 +54,21 @@ const statusPairs = [
   { fg: '--a63-status-success', bg: '--a63-surface-page', min: AA_UI },
   { fg: '--a63-status-warning', bg: '--a63-surface-page', min: AA_UI },
   { fg: '--a63-status-danger', bg: '--a63-surface-page', min: AA_UI },
+  // The danger accent also draws a focused invalid field's border and ring, and
+  // the error icon on a panel (LoadMoreTrigger, FeedbackState).
+  { fg: '--a63-status-danger', bg: '--a63-surface-panel', min: AA_UI },
+  { fg: '--a63-status-danger', bg: '--a63-surface-control', min: AA_UI },
 ] as const
 
-const pairs = [...textPairs, ...actionPairs, ...statusPairs] as const
+// WCAG 1.4.11: an invalid control's border is how a person finds the error, so it
+// reaches 3:1 against the page, the panel and the field fill in both modes.
+const edgePairs = [
+  { fg: '--a63-border-danger', bg: '--a63-surface-page', min: AA_UI },
+  { fg: '--a63-border-danger', bg: '--a63-surface-panel', min: AA_UI },
+  { fg: '--a63-border-danger', bg: '--a63-surface-control', min: AA_UI },
+] as const
+
+const pairs = [...textPairs, ...actionPairs, ...statusPairs, ...edgePairs] as const
 
 afterEach(() => {
   document.documentElement.removeAttribute('data-a63-theme')
@@ -282,6 +294,84 @@ describe('brand contrast (WCAG AA)', () => {
             if (ratio < AA_TEXT) {
               failures.push(
                 `${brand} ${theme}/${mode} ${label}: ${ratio.toFixed(2)}:1 < ${AA_TEXT}:1 (fg=${fgCss}, bg=${washCss})`
+              )
+            }
+          }
+        }
+      }
+    }
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+})
+
+/* A UIProvider that passes only `brand` or only `surface` stamps that one
+   attribute, under a mode set further up. Every role that reads the brand ramp or
+   the neutral ramp must resolve there as it does on a scope that also sets the
+   mode, and keep its contrast. */
+const scopedRoles = [
+  '--a63-text-accent',
+  '--a63-focus-ring',
+  '--a63-selected-accent-background',
+  '--a63-choice-card-checked-border',
+  '--a63-choice-card-checked-background',
+  '--a63-surface-page',
+  '--a63-surface-panel',
+  '--a63-surface-control',
+  '--a63-text-primary',
+  '--a63-text-secondary',
+  '--a63-border-subtle',
+  '--a63-border-input',
+] as const
+const nestedAxes = [
+  ['data-a63-brand', 'b3'],
+  ['data-a63-surface', 'n3'],
+] as const
+
+describe('nested brand-only and surface-only scopes', () => {
+  it('resolve the brand and neutral roles as a scope that also sets the mode', () => {
+    const failures: string[] = []
+    for (const theme of themes) {
+      for (const mode of modes) {
+        applyThemeMode(theme, mode)
+        for (const [attribute, value] of nestedAxes) {
+          const nested = document.createElement('div')
+          nested.setAttribute(attribute, value)
+          const reference = document.createElement('div')
+          reference.setAttribute(attribute, value)
+          reference.setAttribute('data-a63-theme', theme)
+          reference.setAttribute('data-a63-mode', mode)
+          document.body.replaceChildren(nested, reference)
+          for (const role of scopedRoles) {
+            const got = resolvePaintedColor(role, 'color', nested)
+            const want = resolvePaintedColor(role, 'color', reference)
+            if (got !== want) {
+              failures.push(
+                `${theme}/${mode} [${attribute}=${value}] ${role}: ${got}, want ${want}`
+              )
+            }
+          }
+        }
+      }
+    }
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+
+  it('hold the core pairs inside a nested brand-only and surface-only scope', () => {
+    const failures: string[] = []
+    for (const theme of themes) {
+      for (const mode of modes) {
+        applyThemeMode(theme, mode)
+        for (const [attribute, value] of nestedAxes) {
+          const scope = document.createElement('div')
+          scope.setAttribute(attribute, value)
+          document.body.replaceChildren(scope)
+          for (const { fg, bg, min } of [...pairs, ...brandPairs]) {
+            const fgCss = resolvePaintedColor(fg, 'color', scope)
+            const bgCss = resolvePaintedColor(bg, 'background', scope)
+            const ratio = contrastRatio(parseCssColor(fgCss), parseCssColor(bgCss))
+            if (ratio < min) {
+              failures.push(
+                `${theme}/${mode} [${attribute}=${value}] ${fg} on ${bg}: ${ratio.toFixed(2)}:1 < ${min}:1`
               )
             }
           }

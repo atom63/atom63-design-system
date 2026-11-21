@@ -4,9 +4,9 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1150,
-    "aliasValues": 806,
-    "skipped": 279,
+    "variables": 1151,
+    "aliasValues": 808,
+    "skipped": 412,
     "computed": 64
   },
   "collections": [
@@ -16296,6 +16296,26 @@
           ]
         },
         {
+          "name": "border/danger",
+          "token": "--a63-border-danger",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--color-danger-600",
+                "opacity": 62
+              }
+            },
+            "dark": {
+              "alias": "--color-danger-500"
+            }
+          },
+          "codeSyntax": "var(--a63-border-danger)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
           "name": "category/amber/subtle/foreground",
           "token": "--a63-category-amber-subtle-foreground",
           "type": "COLOR",
@@ -20804,6 +20824,226 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-action-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-hover",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-disabled-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-disabled-border",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-disabled-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-neutral",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-neutral-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-alert-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-amber-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-amber-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-blue-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-blue-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-cyan-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-cyan-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-emerald-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-emerald-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-error-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-fuchsia-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-fuchsia-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-green-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-green-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-indigo-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-indigo-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-info-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-lime-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-lime-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-neutral-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-neutral-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-orange-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-orange-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-pink-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-pink-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-purple-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-purple-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-red-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-red-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-rose-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-rose-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-sky-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-sky-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-success-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-teal-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-teal-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-violet-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-violet-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-warning-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-yellow-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-yellow-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-control",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-input",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-brand-100",
       "reason": "context scope: [data-a63-brand='auto']"
     },
@@ -20846,6 +21086,122 @@
     {
       "token": "--a63-brand-950",
       "reason": "context scope: [data-a63-brand='auto']"
+    },
+    {
+      "token": "--a63-category-amber-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-blue-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-cyan-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-emerald-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-fuchsia-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-gray-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-green-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-indigo-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-lime-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-neutral-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-orange-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-pink-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-purple-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-red-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-rose-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-sky-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-slate-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-stone-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-teal-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-violet-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-yellow-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-zinc-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-1",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-2",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-3",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-4",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-5",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-choice-card-checked-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-choice-card-checked-border",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-choice-indicator-gloss",
@@ -21000,6 +21356,18 @@
       "reason": "conditional: @media (pointer: coarse)"
     },
     {
+      "token": "--a63-control-outline-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-control-outline-hover-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-control-outline-hover-border",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-control-padding-inline-lg",
       "reason": "context scope: :is([data-a63-density], [data-density])"
     },
@@ -21060,8 +21428,16 @@
       "reason": "unresolvable value: (empty)"
     },
     {
+      "token": "--a63-focus-ring",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-gradient-brand",
       "reason": "unresolvable value: linear-gradient(135deg, rgba(44, 127, 255, 1), rgba(0, 57, 158, 1))"
+    },
+    {
+      "token": "--a63-gradient-brand-fade",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-gradient-brand-fade",
@@ -21073,6 +21449,22 @@
     },
     {
       "token": "--a63-gradient-scrim",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-dark",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-dark",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-light",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-light",
       "reason": "unsupported type: string"
     },
     {
@@ -21264,6 +21656,10 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-segment-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
       "token": "--a63-segment-hover-foreground",
       "reason": "theme value not representable, kept its default: terminal-dark: (empty)"
     },
@@ -21308,6 +21704,30 @@
       "reason": "unresolvable value: (empty)"
     },
     {
+      "token": "--a63-selected-accent-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-selected-accent-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-selected-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-selected-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-skeleton-base",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-skeleton-highlight",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-space-0_5",
       "reason": "context scope: :is([data-a63-density], [data-density])"
     },
@@ -21348,6 +21768,70 @@
       "reason": "context scope: :is([data-a63-density], [data-density])"
     },
     {
+      "token": "--a63-status-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-danger-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-danger-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-danger-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-surface-backdrop",
       "reason": "theme value not representable, kept its default: terminal-dark: none"
     },
@@ -21364,6 +21848,14 @@
       "reason": "unresolvable value: solid"
     },
     {
+      "token": "--a63-surface-control",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-control-hover",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-surface-gloss",
       "reason": "theme value not representable, kept its default: terminal-dark: none"
     },
@@ -21378,6 +21870,30 @@
     {
       "token": "--a63-surface-highlight",
       "reason": "unresolvable value: none"
+    },
+    {
+      "token": "--a63-surface-muted",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-overlay",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-page",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-panel",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-recessed",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-sidebar",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-surface-texture-blend",
@@ -21404,8 +21920,36 @@
       "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
+      "token": "--a63-text-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-primary",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-secondary",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-tertiary",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-toggle-gap",
       "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-toggle-on-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-toggle-on-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-trigger-gap",
@@ -21554,6 +22098,14 @@
     {
       "token": "--a63-widget-foreground",
       "reason": "context scope: [data-widget-kind='weather'], [data-widget-kind='location'][data-weather-tone]"
+    },
+    {
+      "token": "--a63-widget-media-shadow",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-widget-media-shadow-raised",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-widget-rim-backdrop",
