@@ -83,6 +83,10 @@
   background-color: var(--a63-surface-muted);
   box-shadow: var(--a63-track-shadow);
 }
+/* Vertical: the track grows with its stacked tabs instead of one row. */
+.a63-Tabs-list[data-variant='default'][data-orientation='vertical'] {
+  height: auto;
+}
 
 /* underline: a flat row with a bottom hairline */
 .a63-Tabs-list[data-variant='underline'] {
@@ -157,6 +161,11 @@
   position: absolute;
   inset-block: calc(var(--tabs-inset) * -1);
   inset-inline: 0;
+}
+/* Stacked tabs extend their hit area sideways into the inset, not into each other. */
+.a63-Tabs-list[data-variant='default'][data-orientation='vertical'] .a63-Tabs-tab::after {
+  inset-block: 0;
+  inset-inline: calc(var(--tabs-inset) * -1);
 }
 
 .a63-Tabs-list[data-orientation='vertical'] .a63-Tabs-tab {
@@ -274,6 +283,10 @@
   background: var(--a63-surface-overlay);
   box-shadow: var(--a63-control-shadow);
   transform: translateX(var(--active-tab-left)) translateY(-50%);
+}
+.a63-Tabs-list[data-variant='default'][data-orientation='vertical'] .a63-Tabs-indicator {
+  inset-block-start: 0;
+  transform: translate(var(--active-tab-left), var(--active-tab-top));
 }
 
 /* underline: a brand-accent bar pinned to the bottom edge */
