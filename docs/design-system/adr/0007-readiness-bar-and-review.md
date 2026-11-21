@@ -46,14 +46,13 @@ not be repeatable, and reviewers who share context anchor on each other's findin
   rule, not the labels: `stable` now means no open P0 or P1.
 - Bad: the review costs many agent runs (32 and 30 agents in the two runs whose size is recorded) and needs the maintainer's go-ahead.
 - Bad: P2 counts stay high (416, 303, 286), and round 2 still has only 17 of 186 subjects ready.
-- Bad: the registers are not in the repository yet, so the numbers above cannot be checked from it.
 
 ## Evidence
 
-- Internal records: the full-review proposal and the readiness-bar proposal (2026-11-18), the
-  review worklog, and "decisions after review round 1" (2026-11-19, the C5 change).
-- Internal records: the round 0, 1 and 2 registers (generated 2026-11-18, 2026-11-19 on main
-  `7ab4fc97`, 2026-11-20 on main `099d1eba`).
+- The bar: [readiness-bar.md](../readiness-bar.md) (approved 2026-11-18; C5 changed 2026-11-19).
+- The rounds and their registers: [audits/readiness-rounds.md](../audits/readiness-rounds.md)
+  (round 0 on 2026-11-18, round 1 on main `7ab4fc97`, round 2 on main `099d1eba`).
+- Internal records: the full-review proposal and the review worklog.
 - New checks: [#285](https://github.com/atom63/atom63-design-system/pull/285).
 - Fixes for round 0 findings: [#287](https://github.com/atom63/atom63-design-system/pull/287),
   [#288](https://github.com/atom63/atom63-design-system/pull/288),
