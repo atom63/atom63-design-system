@@ -1705,26 +1705,44 @@ private struct PaginationShowcase: View {
 private struct ToastShowcase: View {
   @State private var toast: AtomToast?
 
+  private static let tones: [(AtomToastTone, String)] = [
+    (.default, "Link copied"),
+    (.info, "A new version is available"),
+    (.success, "Project saved"),
+    (.warning, "Working offline"),
+    (.error, "Couldn’t save project"),
+    (.loading, "Uploading 3 photos…"),
+  ]
+
   var body: some View {
-    VStack(alignment: .leading, spacing: AtomTokens.Space.x3) {
-      AtomButton("Show success toast", variant: .primary) {
-        toast = AtomToast(message: "Project saved")
+    VStack(alignment: .leading, spacing: AtomTokens.Space.x6) {
+      ShowcaseSection("Tones", subtitle: "The web Toaster's tones, on the default card.") {
+        ForEach(Self.tones, id: \.0) { item in
+          AtomToastView(AtomToast(message: item.1, tone: item.0))
+        }
       }
-      AtomButton("Show warning toast", variant: .outline) {
-        toast = AtomToast(
-          message: "Working offline",
-          systemImage: "wifi.slash"
+      ShowcaseSection("Inverse", subtitle: "A compact pill for a short status.") {
+        AtomToastView(
+          AtomToast(message: "Scheduling message…", systemImage: "clock", variant: .inverse)
         )
       }
-      AtomButton("Show inverse toast", variant: .outline) {
-        toast = AtomToast(
-          message: "Scheduling message…",
-          systemImage: "clock",
-          variant: .inverse
-        )
+      ShowcaseSection("Presented", subtitle: "Swipe up to dismiss. A timed toast leaves after 3 seconds.") {
+        AtomButton("Show success toast", variant: .primary) {
+          toast = AtomToast(message: "Project saved", tone: .success)
+        }
+        AtomButton("Show loading toast", variant: .outline) {
+          toast = AtomToast(message: "Uploading 3 photos…", tone: .loading, duration: nil)
+        }
+        AtomButton("Show inverse toast", variant: .outline) {
+          toast = AtomToast(
+            message: "Scheduling message…",
+            systemImage: "clock",
+            variant: .inverse
+          )
+        }
       }
     }
-    .frame(maxWidth: .infinity, minHeight: 120, alignment: .topLeading)
+    .frame(maxWidth: .infinity, alignment: .topLeading)
     .atomToast($toast)
   }
 }

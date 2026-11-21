@@ -101,7 +101,8 @@ extension View {
 
 /// Square cells, `columns` across, sized by the grid's width. Each child takes
 /// the cells of its `atomWidgetSize` and fills the first gap it fits in, row by
-/// row, as a widget board does.
+/// row, as a widget board does. A row grows past one cell only when a tile's
+/// content does not fit, as at accessibility text sizes.
 public struct AtomWidgetGrid: Layout {
   public var columns: Int
   public var spacing: CGFloat
@@ -150,15 +151,44 @@ public struct AtomWidgetGrid: Layout {
     Self.pack(subviews.map { $0[AtomWidgetSizeKey.self] }, columns: columns)
   }
 
+  private func tileWidth(_ placement: Placement, cell: CGFloat) -> CGFloat {
+    let span = min(placement.size.columns, columns)
+    return CGFloat(span) * cell + CGFloat(span - 1) * spacing
+  }
+
+  /// Each row is one cell tall, unless a tile's content needs more, as at accessibility text
+  /// sizes: then the last row the tile spans grows to fit it, so tiles never overlap.
+  private func rowHeights(
+    _ placements: [Placement],
+    subviews: Subviews,
+    cell: CGFloat
+  ) -> [CGFloat] {
+    let rowCount = placements.map { $0.row + $0.size.rows }.max() ?? 0
+    var heights = Array(repeating: cell, count: rowCount)
+    // One-row tiles first, so a taller tile only adds what its rows still lack.
+    let tiles = zip(subviews, placements).sorted { $0.1.size.rows < $1.1.size.rows }
+    for (subview, placement) in tiles {
+      let width = tileWidth(placement, cell: cell)
+      let rows = placement.row..<(placement.row + placement.size.rows)
+      let available = rows.map { heights[$0] }.reduce(0, +) + CGFloat(rows.count - 1) * spacing
+      let squeezed = subview.sizeThatFits(ProposedViewSize(width: width, height: available)).height
+      guard squeezed > available else { continue }
+      // Content that does not fit gets its natural height, so text wraps instead of truncating.
+      let natural = subview.sizeThatFits(ProposedViewSize(width: width, height: nil)).height
+      heights[rows.upperBound - 1] += max(squeezed, natural) - available
+    }
+    return heights
+  }
+
   public func sizeThatFits(
     proposal: ProposedViewSize,
     subviews: Subviews,
     cache: inout ()
   ) -> CGSize {
     let width = proposal.width ?? 360
-    let cell = cell(for: width)
-    let rows = placements(subviews).map { $0.row + $0.size.rows }.max() ?? 0
-    let height = rows == 0 ? 0 : CGFloat(rows) * cell + CGFloat(rows - 1) * spacing
+    let heights = rowHeights(placements(subviews), subviews: subviews, cell: cell(for: width))
+    let height =
+      heights.isEmpty ? 0 : heights.reduce(0, +) + CGFloat(heights.count - 1) * spacing
     return CGSize(width: width, height: height)
   }
 
@@ -169,16 +199,24 @@ public struct AtomWidgetGrid: Layout {
     cache: inout ()
   ) {
     let cell = cell(for: bounds.width)
-    for (subview, placement) in zip(subviews, placements(subviews)) {
-      let width = min(placement.size.columns, columns)
+    let placed = placements(subviews)
+    let heights = rowHeights(placed, subviews: subviews, cell: cell)
+    var tops: [CGFloat] = []
+    var top = bounds.minY
+    for height in heights {
+      tops.append(top)
+      top += height + spacing
+    }
+    for (subview, placement) in zip(subviews, placed) {
+      let rows = placement.row..<(placement.row + placement.size.rows)
       let size = CGSize(
-        width: CGFloat(width) * cell + CGFloat(width - 1) * spacing,
-        height: CGFloat(placement.size.rows) * cell + CGFloat(placement.size.rows - 1) * spacing
+        width: tileWidth(placement, cell: cell),
+        height: rows.map { heights[$0] }.reduce(0, +) + CGFloat(rows.count - 1) * spacing
       )
       subview.place(
         at: CGPoint(
           x: bounds.minX + CGFloat(placement.column) * (cell + spacing),
-          y: bounds.minY + CGFloat(placement.row) * (cell + spacing)
+          y: tops[placement.row]
         ),
         proposal: ProposedViewSize(size)
       )

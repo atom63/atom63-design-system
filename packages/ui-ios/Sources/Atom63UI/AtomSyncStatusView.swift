@@ -5,9 +5,15 @@ public struct AtomSyncStatusView: View {
   @Environment(\.colorScheme) private var colorScheme
 
   private let intent: AtomSyncIntent
+  private let label: String?
 
-  public init(intent: AtomSyncIntent) {
+  /// - Parameters:
+  ///   - intent: The synchronization state to show.
+  ///   - label: The text to show and speak, already localized. `nil` shows the English default
+  ///     for the intent, such as "Up to date".
+  public init(intent: AtomSyncIntent, label: String? = nil) {
     self.intent = intent
+    self.label = label
   }
 
   public var body: some View {
@@ -40,6 +46,10 @@ public struct AtomSyncStatusView: View {
   }
 
   private var title: String {
+    label ?? Self.defaultLabel(for: intent)
+  }
+
+  static func defaultLabel(for intent: AtomSyncIntent) -> String {
     switch intent {
     case .idle:
       "Not synchronized"

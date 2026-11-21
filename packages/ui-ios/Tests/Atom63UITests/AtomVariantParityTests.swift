@@ -13,6 +13,23 @@ struct AtomVariantParityTests {
   }
 
   @Test
+  func toastVariantsAndTonesMatchTheToasterContract() {
+    #expect(AtomToastVariant.allCases.map(\.rawValue) == ["default", "inverse"])
+    #expect(
+      AtomToastTone.allCases.map(\.rawValue)
+        == ["default", "info", "success", "warning", "error", "loading"]
+    )
+    // Only the plain and loading tones show no semantic symbol of their own.
+    #expect(AtomToastTone.allCases.filter { $0.semanticTone == nil } == [.default, .loading])
+  }
+
+  @Test
+  func toastsDismissAfterTheDefaultDurationUnlessToldOtherwise() {
+    #expect(AtomToast(message: "Saved").duration == AtomToast.defaultDuration)
+    #expect(AtomToast(message: "Uploading", tone: .loading, duration: nil).duration == nil)
+  }
+
+  @Test
   func raisedButtonMapsToTheRaisedEmphasis() {
     #expect(AtomButtonVariant.raised.tone == .neutral)
     #expect(AtomButtonVariant.raised.emphasis == .raised)
