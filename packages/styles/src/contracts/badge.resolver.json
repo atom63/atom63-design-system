@@ -443,6 +443,11 @@
       "selectors": {
         "light": ":root,\n.light,\n[data-a63-mode='light']",
         "dark": ":is(.dark, [data-a63-mode='dark'])"
+      },
+      "rescope": {
+        "selector": "[data-a63-brand], [data-a63-surface]",
+        "light": "light",
+        "dark": "dark"
       }
     }
   }

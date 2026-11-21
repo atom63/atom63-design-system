@@ -573,7 +573,13 @@
   ],
   "$extensions": {
     "io.atom63.css": {
-      "imports": ["./terminal.native.css"]
+      "imports": ["./terminal.native.css"],
+      "rescope": {
+        "selector": "[data-a63-theme='terminal']:is([data-a63-brand], [data-a63-surface]), [data-a63-theme='terminal'] :is([data-a63-brand], [data-a63-surface])",
+        "light": "02-data-a63-theme-terminal-is-root-light-data-a63-m",
+        "dark": "03-data-a63-theme-terminal-is-dark-data-a63-mode-da",
+        "base": "01-data-a63-theme-terminal"
+      }
     }
   }
 }

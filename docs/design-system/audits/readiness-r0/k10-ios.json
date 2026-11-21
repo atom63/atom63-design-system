@@ -1,0 +1,1222 @@
+{
+  "scope": "k10-ios",
+  "reviewedAt": "2026-11-18",
+  "subjects": [
+    {
+      "subject": "AtomActionBar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:9,12-13: primaryVariant takes the legacy AtomButtonVariant (generated doc says 'Use tone and emphasis', Generated/AtomComponentIntent.generated.swift:34); secondaryTitle/secondaryAction are two optionals that must both be set or the button silently disappears (:67)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:33-37: at accessibility sizes buttons stack primary-first; both are AtomButton with native button semantics; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/actionBar.large-type.png shows the stack."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/actionBar.light.png: hairline + panel fill reads clean."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:15-22: loading only on the primary; no disabled state for the primary (a form-invalid Save) and no loading on the secondary."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:34,39,45: spacing/padding use raw AtomTokens.Space, no atomDensity (README.md:83-87 lists the density-aware set; ActionBar is not in it). Touch targets come from AtomButton (44pt)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:39-42: HStack mirrors in RTL; AX sizes restack (examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/actionBar.large-type.png)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:46: background is not extended with ignoresSafeArea(edges: .bottom), while docs/building-blocks.md:119-121 tell callers to place it in safeAreaInset(edge: .bottom); the home-indicator strip shows the page color under the panel. Compare AtomAppBar.swift:62-63 which does extend."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "docs/building-blocks.md:24,119-121 and README.md:25 list it; `pnpm -s atom63 search action bar` returns progress/filter-bar/tab-bar/alert, not AtomActionBar."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test references AtomActionBar (grep of packages/ui-ios/Tests); only catalog snapshots actionBar.{light,dark,large-type}.png."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomAppBar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAppBar.swift:30-40,92-107: leading/principal/trailing ViewBuilder slots with EmptyView defaults, style enum, title convenience init; matches app-view top-bar slot."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAppBar.swift:66,126: container .contain, title isHeader; floating plates use onMedia tokens (:81-86) so controls hold contrast on media (examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/appBar.light.png)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/appBar.light.png: standard, compact and floating variants render cleanly."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "States are carried by the child controls (AtomIconButton); the bar itself has standard/floating and both densities captured (Tests/Atom63UITests/AtomAppBarTests.swift:17)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAppBar.swift:43,57-59,83: density-scaled spacing, minHeight = Control.minTouchTarget, plates at least 44 wide."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAppBar.swift:125: title lineLimit(1) truncates like the native bar; HStack mirrors."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAppBar.swift:63,133-135: surface runs under the status bar; .atomAppBar puts it in the top safe-area inset."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "README.md 'App bar' section (README.md:95ff) explains when to use it over the native bar; app-view contract names AtomAppBar."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Tests/Atom63UITests/AtomAppBarTests.swift:9,17 (title principal; both styles x densities) plus appBar snapshots."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomListRow",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:15-22: plain value API; tap handled by wrapping NavigationLink/Button as documented in AtomListSection.swift:11-14."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:39,64,70: decorative icon and chevron hidden, row combined into one element."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. Token role: packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:35 draws the icon in actionPrimary (a fill token) on surfaceMuted; 2.65:1 in dark (computed from Generated/Atom63Tokens.generated.swift:45,63)."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Non-interactive by itself: no pressed or disabled appearance is designed or captured; inside a NavigationLink with .plain style there is no pressed highlight (listRow snapshots show rest state only)."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:36,74: icon tile is a fixed 32/28pt frame while its glyph font scales with Dynamic Type; at AX3 the tile stays 32pt beside 3x text (examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/listRow.large-type.png)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/listRow.large-type.png: title wraps, subtitle truncates at 2 lines (:50); chevron.forward mirrors in RTL (:61)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Phone-native row; padding from atomListRowInsets inside the tap area (AtomListSection.swift:148-167)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Documented in docs/building-blocks.md and README.md, but no contract maps it (grep of packages/ui-foundation/contracts finds no AtomListRow) so `atom63 component` cannot return it."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test references AtomListRow; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomListSection",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListSection.swift:108-110,183-194: the iOS 17 path uses the underscored private _VariadicView API, which Apple does not support and can change without notice."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListSection.swift:85,179: container .contain, dividers hidden; header is AtomSectionHeader with isHeader."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/listSection.light.png. Header style is headline semibold where iOS Settings uses a small secondary section label (taste, see P3)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Structure has no interactive states of its own; card and muted surfaces captured in listSection snapshots."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListSection.swift:125,128: row height 52 and corner radius 18 are literals; Generated/Atom63Tokens.generated.swift:145-150 has no 18pt radius (web --radius-2xl). Header/footer padding and footer font (:68,79-81) ignore atomDensity."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListSection.swift:150: min row height is @ScaledMetric; dividers start at the leading inset and mirror."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Works edge to edge in a ScrollView on phone; tap area includes insets (:163)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "item contract swiftUIRenderer AtomListSection; `atom63 search list section` returns item + InsetGroup example; docs/building-blocks.md:28ff."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Tests/Atom63UITests/AtomListPatternTests.swift:34 renders it against the item contract; listSection snapshots."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomSectionHeader",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSectionHeader.swift:10-11,41: actionTitle and action are two optionals; passing only one silently drops the action."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSectionHeader.swift:31: title isHeader; action is a native Button."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/sectionHeader.light.png: the 'Manage' action draws in the system accent blue, not theme.colors.actionPrimary (no tint set at :42-43), visibly off-brand next to Atom63 controls."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "The action has no themed pressed/disabled styling; only the rest state is captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSectionHeader.swift:42-43: text-only Button with no minHeight; its hit area is the subheadline line (~20pt), below the 44pt target."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSectionHeader.swift:26: firstTextBaseline HStack mirrors; title wraps."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Phone-native header; no overlay or safe-area concerns."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Listed in docs/building-blocks.md and README.md only; no contract or CLI entry (grep of contracts and packages/cli finds none)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomSelectionRow",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSelectionRow.swift:27-30,49: ignores atomDensity (unlike AtomListRow/AtomValueRow), title has no font of its own, and the 44 is a literal instead of AtomTokens.Control.minTouchTarget."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSelectionRow.swift:43,54: selected checkmark uses actionPrimary, 2.93:1 on surfacePanel in dark (computed from tokens) - below 3:1 for a state indicator; each row is a separate button with isSelected but no group/radio container semantics."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/selectionRow.light.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "No disabled state (no isDisabled/disabled styling); only rest selected/unselected captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSelectionRow.swift:49: literal 44; spacing x3/x1 not density-scaled."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "HStack mirrors; title wraps (no lineLimit)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Touch target >= 44 and edge-to-edge tap via atomListRowInsets (:50-51)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "radio contract swiftUIRenderer 'Picker(.inline) in a Form / AtomSelectionRow group'; docs/building-blocks.md."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomValueRow",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomValueRow.swift:19-25: label, value, icon, emphasis and disclosure match item InsetGroup example (CLI `atom63 search value row`)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomValueRow.swift:51,57: chevron hidden, row combined."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. Token role: icon in actionPrimary (:68), 2.93:1 on panel in dark."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Display row; navigation states come from the wrapping NavigationLink; emphasized/plain captured in valueRow snapshots."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomValueRow.swift:34-45: density-scaled and restacks at accessibility sizes."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomValueRow.swift:81: alignment flips leading at AX sizes; chevron.forward mirrors."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Phone row with atomListRowInsets."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "item contract + CLI 'iOS AtomValueRow(_:value:emphasizesValue:showsDisclosure:)'; docs/building-blocks.md."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomTabRow",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomTabRow.swift:40: label + Binding + [AtomTab]; tabs contract maps underline/attached to it."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomTabRow.swift:75-77,107,115-116: isTabBar container, per-tab button + isSelected, thicker indicator under Increase Contrast; reduce motion honored (:125-127)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/tabs.large-type.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Selected/unselected and icon variant captured; Tests/Atom63UITests/AtomTabRowTests.swift:58 checks traits."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomTabRow.swift:102: 44pt min height (literal); fonts are fixed text styles that scale but do not step with density (P3)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/tabs.large-type.png: fixedSize labels scroll sideways instead of truncating; ScrollView mirrors in RTL."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Scrolls selected tab into view (:60-67)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "docs/building-blocks.md:123ff; tabs contract; CLI synonyms."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Tests/Atom63UITests/AtomTabRowTests.swift:35-70 (binding, reselect, ids, traits, reduce motion, contract)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomPageDots",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomPageDots.swift:58-74: count/selection/shape/tone mirror carousel dotShapes/dotTones (tested AtomListPatternTests.swift:15)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomPageDots.swift:146-147: resting dots are textSecondary at 35% opacity: 1.64:1 on surfacePage light, 2.13:1 dark (computed) - below 3:1 for a page indicator. Adjustable action and value are good (:102-114)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/pageDots.dark.png: the pill shape spaces dots at a 44pt pitch, visibly looser than the dot row."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Current/rest per tone captured in pageDots snapshots."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomPageDots.swift:125-129: round dots are 16pt wide tap targets (documented trade-off for VoiceOver), below 44pt for touch."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Default English labels are overridable (:63-66); HStack mirrors."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "onMedia tone for dots over photos (:140,147)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Carousel contract + `atom63 search page dots` returns the iOS usage line."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "AtomListPatternTests.swift:7,15,34 plus snapshots."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomChip",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomChip.swift:61-64: selected fill is always actionPrimary; the toggle contract (renderer AtomChip) has tones neutral|accent|subtle default neutral and sizes sm|md|lg, and AGENTS rule 5 says selection is neutral by default. No tone or size parameter."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomChip.swift:51-52: native button, isSelected trait, thicker border under Increase Contrast (:43)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/chip.light.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Toggle contract requires 'disabled' (requiredStates off/on/disabled); AtomChip draws no disabled style from actionDisabled* tokens and no pressed style (.plain, :51); only off/on captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomChip.swift:35-36,48: literal 44, fixed padding, no atomDensity."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Label mirrors; text scales."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "44pt min height for touch (:48)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 search AtomChip` -> 'No results'; reachable only through the toggle contract text."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test references AtomChip; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomNotice",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomNotice.swift:3-8: tones info|success|warning|error; the alert contract it renders has variants default|error|info|success|warning with default 'default' (atom63 component alert), so the neutral notice is missing. actionTitle/action paired optionals (:18-19,59)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomNotice.swift:60-63 + AtomSemanticTone.swift:23: the error 'Retry' label is actionDanger (#BB1D22 in both modes, Generated/Atom63Tokens.generated.swift:73) on surfaceMuted dark #222: 2.48:1, failing 4.5:1 for text (examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/notice.dark.png)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/notice.dark.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "All four required tones captured in notice snapshots; conformance test AtomRendererConformanceTests.swift:43."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomNotice.swift:36,41,64,67: literals 24/44, raw Space, no atomDensity."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "AtomSemanticTone.swift:27-40: the VoiceOver tone prefix ('Information', 'Error') is hard-coded English and cannot be overridden (AtomNotice.swift:48)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "In-flow callout; no overlay concerns."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "alert contract swiftUIRenderer AtomNotice; agent-index; docs/building-blocks.md."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Only enum/conformance tests (Atom63TokenTests.swift:52); no behaviour test of the action or label."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomSyncStatusView",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSyncStatusView.swift:9: takes only an intent; no way to pass a label or a retry action for .failed/.offline."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSyncStatusView.swift:18,22,35-39: icons hidden, text carries the state, updatesFrequently while refreshing."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/syncStatus.large-type.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "All six intents captured, but .failed offers no recovery action, unlike AtomContentStateView/AtomNotice."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSyncStatusView.swift:14,32-33: raw Space, fixed footnote, no atomDensity."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSyncStatusView.swift:42-57: every label is a hard-coded English String rendered with Text(String) (verbatim, never localized) and there is no override; docs/coverage.md lists 'localization resources instead of demo strings' as remaining work."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline status strip; wraps at AX3 (snapshot)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "docs/app-foundation.md and building-blocks.md mention it; no contract maps it and `atom63 search sync status` does not return it."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomContentStateView",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomContentStateView.swift:19-26: wraps ContentUnavailableView; title/message/symbol/tone/action."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomContentStateView.swift:37-38,54-55: foregroundStyle on the Label colors the title as well as the icon, so the error title is actionDanger: 2.98:1 on surfacePage dark (computed), failing 3:1 even as large text; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/contentState.light.png shows the red title."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/contentState.light.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 1,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomContentStateView.swift:43: the error state's recovery button uses tone .destructive (a red 'Try again', examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/contentState.light.png); the web Empty error story uses variant='outline' for Retry (packages/ui-react/src/components/empty/empty.stories.tsx:93-94) and the empty contract's outcome is 'recovery-action-remains-available', not a destructive action."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "ContentUnavailableView scales and wraps with Dynamic Type."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "System layout handles RTL and long strings."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Fills the content area; no overlay."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "empty contract swiftUIRenderer AtomContentStateView; docs/app-foundation.md."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "No unit test; snapshots only."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    },
+    {
+      "subject": "AtomWidget",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomWidget.swift:9-30,38-46,105-112: AtomWidgetSize mirrors web WidgetSize with widgetFamily mapping; card, header, grid and AtomWidgetStateView compose."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomWidget.swift:62,87 and AtomWidgetState.swift:53,65-66: card .contain, header isHeader, state text combined with updatesFrequently while loading."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). iOS baselines cover only AtomTheme.standard x light/dark/AX3 (examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:237-242); aqua, retro and terminal are never captured, so the per-theme archetype cannot be judged. Rim width follows the skin (AtomWidgetTests.swift:30) but only the standard skin is captured."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "loading/empty/error designed and captured; resolve order tested (AtomWidgetTests.swift:36)."
+        },
+        {
+          "criterion": "K5",
+          "score": 1,
+          "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/widgetCard.large-type.png: at AX3 the square cells do not grow, so content overflows each tile; the medium 'Release' tile overlaps the bottoms of the small tiles above it and the error tile's 'Try again' button is cut off. packages/ui-ios/Sources/Atom63UI/AtomWidget.swift:153-185 sizes cells from width only."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomWidget.swift:86: header lineLimit(1) truncates to 'Bu…'/'Re…' at AX3 (snapshot); AtomWidgetState.swift:69 'Try again' is a literal looked up only in the app bundle."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Grid fills the phone width; AtomWidgetSize maps to WidgetKit families."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No consumer docs: AtomWidget* appears in none of packages/ui-ios/README.md, packages/ui-ios/docs/*.md, CHANGELOG.md or the CLI index (grep); only planning docs docs/design-system/ios-widgets-plan.md and widgets-foundation-plan.md, although public-api.json exports it (152 mentions)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Tests/Atom63UITests/AtomWidgetTests.swift:7-36 (spans, packing, backfill, wide tile, rim, state order) plus snapshots."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS-only component, no web counterpart batch to compare against (K10 excluded for batch 10 by the run scope)"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k10-ios-1",
+      "subject": "AtomWidget",
+      "criterion": "K5",
+      "severity": "P1",
+      "summary": "At accessibility text sizes widget tiles overflow their square cells and overlap each other; the error tile's retry button is cut off.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/widgetCard.large-type.png; packages/ui-ios/Sources/Atom63UI/AtomWidget.swift:153-185 (cell size from width only), :54 (card fills, does not clip or cap).",
+      "fix": "Cap Dynamic Type inside AtomWidgetCard (e.g. .dynamicTypeSize(...DynamicTypeSize.xxLarge), as WidgetKit does) and/or let the grid grow a row to fit content at AX sizes; add an AX3 test that no tile exceeds its cell.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "AtomWidgetGrid sizes cells from width only (cell(for:) in sizeThatFits/placeSubviews), and AtomWidgetCard fills its frame with no clip or type cap. The widgetCard.large-type.png snapshot shows the top-row tiles running into the Release tile, and the error tile's 'Try again' button cut off at the bottom. Text scaling is part of K5, so this blocks ready."
+      }
+    },
+    {
+      "id": "k10-ios-2",
+      "subject": "AtomWidget",
+      "criterion": "K8",
+      "severity": "P1",
+      "summary": "AtomWidgetCard, AtomWidgetHeader, AtomWidgetGrid, AtomWidgetSize and AtomWidgetStateView are public but documented nowhere a consumer or agent looks.",
+      "evidence": "grep of packages/ui-ios/README.md, packages/ui-ios/docs/*.md, CHANGELOG.md and packages/cli/generated finds no AtomWidget; only docs/design-system/ios-widgets-plan.md (a plan).",
+      "fix": "Add a Widgets section to packages/ui-ios/README.md and docs/building-blocks.md with a grid + state example, map it in the widgets contract/CLI index, and list it in docs/coverage.md.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "No AtomWidget mention exists in packages/ui-ios/README.md, packages/ui-ios/docs/*.md or the CLI generated index. It appears only in the two plan docs, two pending changesets (release notes, not usage docs), public-api.json, tests and the demo catalog. K8 needs a docs page, usage guidance and an atom63 component answer, and none of these exist."
+      }
+    },
+    {
+      "id": "k10-ios-3",
+      "subject": "AtomSyncStatusView",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "Every sync label is hard-coded English rendered verbatim, with no override, so the component cannot ship in a non-English product.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSyncStatusView.swift:25,42-57 (Text(title) with String, never localized); docs/coverage.md 'Remaining production work: localization resources instead of demo strings'.",
+      "fix": "Accept caller labels (a label closure or LocalizedStringResource per intent, as AtomPageDots does with pageLabel) or ship a String Catalog in the package with Bundle.module lookups.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "AtomSyncStatusView.swift has title as a computed String with six hard-coded English literals, passed to Text(String), so no localization lookup happens. The init takes only intent, so a caller cannot override the label. coverage.md lists localization as 'Remaining production work', which admits the gap rather than closing it. Unlike other components, a caller cannot supply translated text."
+      }
+    },
+    {
+      "id": "k10-ios-4",
+      "subject": "AtomContentStateView",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The error state's retry action is drawn as a destructive (red) button, signalling data loss for a harmless retry and diverging from web Empty, which uses an outline Retry.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomContentStateView.swift:43; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/contentState.light.png; packages/ui-react/src/components/empty/empty.stories.tsx:93-94.",
+      "fix": "Use a neutral/outline AtomButton for the error recovery action (match web), keep .destructive only for actions that destroy data.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "It is real: line 43 maps tone .error to AtomButton tone .destructive, the dark snapshot shows a red 'Try again', and web Empty uses variant=\"outline\" for Retry. But nothing is missing, broken or inaccessible. White on #BB1D22 passes contrast. The error state is designed and captured, so K4's state coverage is met. This is a design-semantics mismatch across platforms, not a blocker."
+      }
+    },
+    {
+      "id": "k10-ios-5",
+      "subject": "AtomContentStateView",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The tone color is applied to the whole Label, so the error title is drawn in actionDanger and fails contrast in dark mode (2.98:1).",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomContentStateView.swift:37-38,54-55; actionDanger #BB1D22 in both modes (Generated/Atom63Tokens.generated.swift:73) vs surfacePage dark #111; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/contentState.light.png shows the red title.",
+      "fix": "Tint only the icon (Label { Text(title) } icon: { Image(...).foregroundStyle(iconColor) }) and keep the title textPrimary; use a text-danger role color for any red text.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": ".foregroundStyle(iconColor) is on the whole Label, and the dark snapshot shows the title 'Couldn't load projects' in red. I measured #BB1D22 on #111111 at 2.98:1. But ContentUnavailableView's title is large bold text (title2 bold, about 22pt), so the WCAG threshold is 3:1, not 4.5:1. It misses by 0.02, and the message and button stay readable. It is a real but marginal failure, fixed by tinting only the icon, so P2 rather than a ready-blocker."
+      }
+    },
+    {
+      "id": "k10-ios-6",
+      "subject": "AtomNotice",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "The error notice's action label is actionDanger text on surfaceMuted, 2.48:1 in dark mode, failing 4.5:1.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomNotice.swift:60-63, AtomSemanticTone.swift:23; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/notice.dark.png ('Retry'); measured from Generated/Atom63Tokens.generated.swift:45,73.",
+      "fix": "Give iOS a mode-aware danger text color (Swift counterpart of --a63-text-danger, danger-400 in dark) and use it for error text and the action label; keep actionDanger for fills.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "AtomNotice puts .foregroundStyle(tint) on the action Button, and for .error the tint is actionDanger (AtomSemanticTone.swift:23). actionDanger is #BB1D22 in both modes, and dark surfaceMuted is #222222. I measured 2.51:1 at subheadline semibold (about 15pt, normal-size text, so 4.5:1 applies). AtomTheme passes the token straight through, so no wrapper or theme override fixes it. It is a clear contrast failure on an interactive label."
+      }
+    },
+    {
+      "id": "k10-ios-7",
+      "subject": "Batch 10 (all 14)",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "iOS visual baselines capture only the standard (modern) theme, so aqua, retro and terminal and their archetypes are never seen for any iOS component.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/CatalogSnapshotTests.swift:137-151,237-242 (variants light/dark/large-type, .atomTheme(.standard) only).",
+      "fix": "Add per-skin variants (AtomTheme(skin:) for aqua, retro, terminal) to the catalog snapshot matrix, at least for light/dark, so YZ's contact sheet has 4 themes x 2 modes.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-8",
+      "subject": "Batch 10 (all 14)",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "iOS components use action fill tokens (actionPrimary, actionDanger) as text and icon colors; the new token-role rule does not scan Swift, and iOS has no text-danger/text-accent role on AtomThemeColors. In dark mode these measure 2.5-2.9:1.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:35, AtomValueRow.swift:68, AtomSelectionRow.swift:43, AtomSyncStatusView.swift:81,87, AtomSemanticTone.swift:23, AtomContentStateView.swift:55, AtomWidgetState.swift:89; craft-baseline.json token-role entries are web-only (no .swift path); AtomTheme.swift:3-43 has no textDanger/textAccent.",
+      "fix": "Add textAccent/textDanger (theme-aware) to AtomThemeColors from the token graph, switch foreground uses to them, and extend the token-role check to Swift sources.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-9",
+      "subject": "Batch 10 (all 14)",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Compact density reaches only 4 of the 14 (AppBar, ListRow, ValueRow, SectionHeader); ActionBar, ListSection, SelectionRow, Chip, Notice, SyncStatus, TabRow and the widget ignore atomDensity, so a compact screen mixes two densities.",
+      "evidence": "README.md:83-87 (density-aware list); e.g. AtomSelectionRow.swift:27, AtomChip.swift:35-36, AtomNotice.swift:36,67, AtomActionBar.swift:45, AtomListSection.swift:68,79.",
+      "fix": "Read @Environment(\\.atomDensity) and use density.space/textStyle in each, keeping 44pt targets; extend AtomDensityTests to the list.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-10",
+      "subject": "Batch 10 (all 14)",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Nine of the 14 have no behaviour test at all (ActionBar, ListRow, SectionHeader, SelectionRow, ValueRow, Chip, Notice action, SyncStatus, ContentState); only snapshots guard them.",
+      "evidence": "grep of packages/ui-ios/Tests/Atom63UITests for each type name finds only AtomAppBar, AtomTabRow, AtomPageDots, AtomListSection, AtomWidget* and AtomNotice enum use.",
+      "fix": "Add Swift Testing cases for paired-optional actions, selection traits, loading/disabled, AX restacking and sync intent labels.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-11",
+      "subject": "AtomActionBar",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "The action bar's panel fill stops at the bottom safe area, so the home-indicator strip shows the page color under it when placed as documented.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:46 (no ignoresSafeArea) vs AtomAppBar.swift:62-63; docs/building-blocks.md:119-121 places it in safeAreaInset(edge: .bottom).",
+      "fix": "Extend the background with .background { color.ignoresSafeArea(edges: .bottom) }.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-12",
+      "subject": "AtomActionBar",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The primary button is configured through the legacy AtomButtonVariant instead of tone and emphasis, and the secondary action is two optionals that silently drop if one is missing.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:9,12-13,67; Generated/AtomComponentIntent.generated.swift:34 ('Use tone and emphasis').",
+      "fix": "Take primaryTone/primaryEmphasis (or an AtomButton configuration) and a single optional secondary (title, action) pair.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-13",
+      "subject": "AtomActionBar",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No disabled state for the primary action, so a form screen cannot show Save as unavailable.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomActionBar.swift:15-22.",
+      "fix": "Add isPrimaryDisabled (or honor .disabled from the environment) and capture it in the catalog.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-14",
+      "subject": "AtomListRow",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The icon tile is a fixed 32/28pt square while the glyph and text scale, so the tile is undersized and the glyph crowds it at accessibility sizes.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:34-36,74; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/listRow.large-type.png.",
+      "fix": "Make the tile size @ScaledMetric(relativeTo: .headline) (capped) so it tracks Dynamic Type.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-15",
+      "subject": "AtomListRow",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "No contract or CLI entry maps AtomListRow, so `atom63 component` and search cannot lead a builder to it.",
+      "evidence": "grep of packages/ui-foundation/contracts/components finds no AtomListRow; README.md and docs/building-blocks.md only.",
+      "fix": "Map it in the item contract's swiftUIRenderer notes (like AtomValueRow) and regenerate the index.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-16",
+      "subject": "AtomListRow",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "As a NavigationLink/Button label the row has no designed pressed highlight or disabled look; only the rest state is captured.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:31-71; listRow snapshots.",
+      "fix": "Provide an Atom row button style (pressed = surfaceMuted fill) used by ListRow/ValueRow, and capture pressed and disabled.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-17",
+      "subject": "AtomListSection",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The iOS 17 path walks children with the private underscored _VariadicView API.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListSection.swift:108-110,183-194.",
+      "fix": "Raise the floor to iOS 18 for this view, or take rows as an explicit collection on iOS 17; do not depend on _VariadicView.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-18",
+      "subject": "AtomListSection",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Row height 52 and corner radius 18 are literals with no Swift token (web --radius-2xl / --a63-inset-*), and header/footer ignore density.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListSection.swift:68,79-81,125,128; Generated/Atom63Tokens.generated.swift:145-150 (radius tops out at 14).",
+      "fix": "Generate the inset-group tokens into AtomTokens and read them here; apply density to header/footer.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-19",
+      "subject": "AtomSectionHeader",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The header action draws in the system accent color, not the theme's, so it is off-brand next to Atom63 controls (provisional, YZ confirms).",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSectionHeader.swift:42-43; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/sectionHeader.light.png ('Manage' in system blue vs the theme blue of actionBar.light.png).",
+      "fix": "Tint the button from theme (textAccent once it exists, else actionPrimary) or make it an AtomButton ghost/link.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-20",
+      "subject": "AtomSectionHeader",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The header action is a text-only button with no minimum height, so its hit area is about 20pt.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSectionHeader.swift:42-43.",
+      "fix": "Give it .frame(minHeight: AtomTokens.Control.minTouchTarget) with contentShape, as AtomNotice does at :64.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-21",
+      "subject": "AtomSectionHeader",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "actionTitle and action (also on AtomNotice and AtomContentStateView) are separate optionals; passing one without the other silently renders nothing.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSectionHeader.swift:15-16,41; AtomNotice.swift:25-26,59; AtomContentStateView.swift:24-25,42.",
+      "fix": "Replace each pair with one optional action value (title + closure) or overloads that require both.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-22",
+      "subject": "AtomSectionHeader",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "No contract or CLI entry names AtomSectionHeader.",
+      "evidence": "grep of contracts and packages/cli finds none.",
+      "fix": "Map it (e.g. in the item or card contract) and regenerate the agent index.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-23",
+      "subject": "AtomSelectionRow",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The selected checkmark uses actionPrimary, 2.93:1 on the panel in dark mode, and the rows expose no group semantics for a single-choice set.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSelectionRow.swift:40-46,54; contrast computed from Generated/Atom63Tokens.generated.swift:43,63.",
+      "fix": "Use a theme-aware accent text/icon color with >=3:1, and document or provide a container (AtomSelectionGroup) that labels the set.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-24",
+      "subject": "AtomSelectionRow",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Ignores density, uses a literal 44 and sets no title font, unlike its sibling rows.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSelectionRow.swift:27-30,49.",
+      "fix": "Read atomDensity, use density.textStyle(.body) and AtomTokens.Control.minTouchTarget.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-25",
+      "subject": "AtomSelectionRow",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No disabled state is designed or captured.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSelectionRow.swift:13-23.",
+      "fix": "Style the environment's isEnabled with actionDisabledForeground and capture it.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-26",
+      "subject": "AtomPageDots",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Resting dots measure 1.64:1 (light) and 2.13:1 (dark) against the page, below 3:1 for a page indicator.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomPageDots.swift:144-148; computed from textSecondary and surfacePage in Generated/Atom63Tokens.generated.swift:41,53.",
+      "fix": "Raise the rest opacity (or use borderInput, which is specified at 3:1) so rest dots clear 3:1.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-27",
+      "subject": "AtomPageDots",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Round dots are 16pt-wide tap targets, below the 44pt bar (documented trade-off).",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomPageDots.swift:122-130.",
+      "fix": "Keep 16pt visual pitch but extend each dot's contentShape to share the row so the row is tappable at 44pt, or accept as a documented exception (YZ).",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-28",
+      "subject": "AtomChip",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The selected chip is always accent-filled with no tone or size axis, while the toggle contract it renders defaults to tone neutral and AGENTS rule 5 makes selection neutral by default.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomChip.swift:55-65; `atom63 component toggle` axes sizes sm|md|lg, tones neutral|accent|subtle default neutral.",
+      "fix": "Add tone (.neutral default, .accent) and map sizes, per the contract.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-29",
+      "subject": "AtomChip",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The contract's required 'disabled' state has no design on iOS; the chip relies on .plain dimming and has no pressed style.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomChip.swift:51; toggle contract requiredStates off/on/disabled.",
+      "fix": "Draw disabled from actionDisabled* tokens and a pressed fill; capture both.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-30",
+      "subject": "AtomChip",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "`atom63 search AtomChip` returns no results.",
+      "evidence": "pnpm -s atom63 search AtomChip -> 'No results for \"AtomChip\"'.",
+      "fix": "Index iOS renderer names as search synonyms (packages/cli/src/synonyms.mjs already does this for AtomTabRow/AtomPageDots).",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-31",
+      "subject": "AtomNotice",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AtomNotice lacks the alert contract's default (neutral) variant.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomNotice.swift:3-8; alert contract variants default|error|info|success|warning, default 'default'.",
+      "fix": "Add .neutral (AtomSemanticTone.neutral already exists) and make it the default to match the contract.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-32",
+      "subject": "AtomNotice",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The VoiceOver tone prefix ('Information', 'Error') is hard-coded English with no override.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSemanticTone.swift:27-40; AtomNotice.swift:48.",
+      "fix": "Localize via a package String Catalog (Bundle.module) or accept a toneLabel parameter.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-33",
+      "subject": "AtomSyncStatusView",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The failed and offline states offer no recovery action.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomSyncStatusView.swift:9-11.",
+      "fix": "Accept an optional retry action shown for .failed (and .offline), styled neutral.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-34",
+      "subject": "AtomSyncStatusView",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "No contract maps AtomSyncStatusView and the CLI cannot find it.",
+      "evidence": "`pnpm -s atom63 search sync status` returns badge/chat-steps/message; grep of contracts finds none.",
+      "fix": "Map it to a web counterpart contract (feedback-state or a sync pattern) and index it.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-35",
+      "subject": "AtomWidget",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Widget headers truncate to two letters at AX3, and the retry label is a literal looked up only in the app bundle.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomWidget.swift:86; AtomWidgetState.swift:69; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/widgetCard.large-type.png ('Bu…', 'Re…').",
+      "fix": "Allow two lines (or minimumScaleFactor) in the header and cap type in tiles; localize via Bundle.module or a parameter.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-36",
+      "subject": "AtomPageDots",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "The pill shape spreads the dots on a 44pt pitch, visibly looser than the round row and than CarouselDots pill.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/pageDots.dark.png.",
+      "fix": "YZ to decide the pill pitch; keep the hit area via contentShape rather than spacing.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k10-ios-37",
+      "subject": "AtomListSection",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Section headers are headline semibold; iOS Settings uses a small secondary label, so the inset list reads heavier than native.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListSection.swift:66-69; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/listSection.light.png.",
+      "fix": "YZ to choose between the current heading and a footnote secondary header style.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k10-ios-38",
+      "subject": "AtomListRow",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Inside a section the row gets x1 vertical padding plus the section's x2 insets, so it is taller than AtomSelectionRow in the same section.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomListRow.swift:67-68; AtomValueRow.swift:54-55; AtomListSection.swift:117-122.",
+      "fix": "Apply the x1 padding only outside a section (as AtomSelectionRow does with listRowInsets == nil).",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-39",
+      "subject": "Batch 10 (all 14)",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "docs/coverage.md is stale: it counts 42 catalog entries and 29 contracts and omits the widget components.",
+      "evidence": "packages/ui-ios/docs/coverage.md (Ownership table, 'Current reference flows').",
+      "fix": "Regenerate or update the counts and add AtomWidget* to the ownership table.",
+      "kind": "fix"
+    },
+    {
+      "id": "k10-ios-40",
+      "subject": "AtomTabRow",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Tab labels use fixed text styles and a literal 44, so compact density does not reach them.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomTabRow.swift:88,92,102.",
+      "fix": "Use density.textStyle and AtomTokens.Control.minTouchTarget.",
+      "kind": "fix"
+    }
+  ]
+}

@@ -1,0 +1,3020 @@
+{
+  "scope": "k11-packages",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "layer-3 batch-11 reviewer",
+  "verifiedBy": null,
+  "notes": "Layer 3, batch 11: @atom63/mdx, @atom63/inform, @atom63/widgets, @atom63/brand. K3 scores are provisional until YZ sees the contact sheets. Evidence from source reads, the CLI (pnpm -s atom63 component/search/docs/token), visual baselines and the sweep logs (all check:* passed). No older audit doc was relied on; packages/mdx/BLOCK_REVIEW.md is cited only for open follow-ups. Contrast ratios are quoted from in-repo measurements (craft-rules.mjs:44-45, inform-parts.css:141-145), not re-measured. @atom63/brand is private, so K8 is n/a there. Cluster findings name several subjects in one finding.",
+  "subjects": [
+    {
+      "subject": "mdx/prose (mdxComponents, MDXContentProvider, DocsMDXContentProvider)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/mdx/src/mdx-components.tsx:226-228 createStyledTag spreads props and merges className for h1-h6, ul/ol/li, strong/em/kbd/hr, details/summary, mark/del/ins/sub/sup (:261-342); tables map to ui-react Table parts with props spread (:309-330). Refs are not forwarded through the styled tags (function components, React 19 ref arrives as a prop and is spread, so OK). Provider variants documented in README.md:59."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Native semantics kept (headings, lists, tables, details). External links get target=_blank + rel=noopener (mdx-components.tsx:78-87) with no \"opens in a new tab\" cue for screen readers or sighted users; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists; no @media (forced-colors) rule anywhere in packages/*/src (grep forced-colors finds only comments in cli/src/rules.mjs:70 and ui-react button.css:189)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-prose-typography-full-page-chromium-linux.png, -headings-, -tables-, -lists- show a coherent light article; no dark capture."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Baselines cover static prose (9 mdx-prose-typography-* PNGs: blockquotes, code blocks, details/summary, headings, hr, inline, lists, tables, full page); no link hover/focus-visible capture and no details open/closed focus state."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. Prose has no controls of its own."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. No long-word/URL or CJK prose story (mdx-prose-typography-* are English only); tables have no overflow wrapper visible in mdx-components.tsx:309-311 beyond ui-react Table."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone-width prose story (no viewport parameter in packages/mdx/src/typography/typography.stories.tsx); base.css:96 has one min-width:40rem breakpoint."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. The prose map and the two providers are the main entry of the package, yet a builder has only README.md:59 \"Provider variants\"."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "mdx-components-code.test.tsx and mdx-external-href.test.ts cover code and link detection; no test for the heading/table/list map; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/Accordion",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Thin wrapper over ui-react Accordion that spreads props (packages/mdx/src/blocks/accordion/accordion.tsx, 2 spreads in 34 lines); compound parts Accordion.Item/Trigger/Content."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Inherits the ui-react Accordion APG disclosure behaviour; packages/mdx/src/blocks/blocks.a11y.test.tsx:49 axe passes; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-accordion-multiple-chromium-linux.png, -single-collapsible-."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Open/closed captured (2 baselines); hover and focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Controls come from ui-react Accordion (sizes and 44px coarse targets owned there); MDX wrapper only adds spacing."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. No long-trigger or CJK story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "accordion test file has 3 tests plus blocks.a11y.test.tsx:49; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/Callout",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/callout/callout.tsx:19 takes only children, className, type; no rest props, no id/aria passthrough, no ref. Tone set info|warning|error|success (mdx-styles.ts:176) matches ui-react Alert (error) but not @atom63/inform (danger)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Tone is carried by color only: NoticeBlock renders a plain div with data-tone and no icon, role or visually hidden tone text unless the author supplies them (foundations/notice/notice-block.tsx:61-64); ui-react Alert contract requires \"Tone is not conveyed by color alone\" (atom63 component alert). Stories put the tone word into the copy by hand (apps/storybook/visual/__screenshots__/mdx-blocks-callout-all-types-chromium-linux.png). axe passes (blocks.a11y.test.tsx:20)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-callout-all-types-chromium-linux.png shows four tinted, bordered rows."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static block; every tone captured (5 baselines: info, warning, error, success, all types). Actions slot exists (callout.tsx:15) but no baseline shows it."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. No long or CJK story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "3 tests plus axe (blocks.a11y.test.tsx:20); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/CodeBlock",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Spreads props (code-block.tsx, 3 spreads); copyLabel, loadingLabel and fallbackLangLabel overridable (code-block.tsx:48,149); embedded variant for DocExample."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Copy control labelled and focus-visible styled (code-block.css); dark syntax colours come from a mode branch `dark:[&_.shiki]:text-[var(--shiki-dark)]` (code-block.tsx:81,135), recorded in docs/design-system/audits/craft-baseline.json:2-3 (mode-branch, AGENTS.md rule 13), so themes that are dark without the .dark class get light syntax colours; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-codeblock-type-script-, -long-overflow-, -unknown-language-fallback-chromium-linux.png; dark syntax palette never captured."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Default, long overflow and unknown-language captured; loading (\"Highlighting code\") and copied states not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Copy button is a ui-react control; code text rem-based."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. Long-line overflow story exists (mdx-blocks-codeblock-long-overflow-chromium-linux.png) and scrolls horizontally."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "7 tests (code-block.test.tsx:6-47) cover wide layout, labels and copy omission; highlighting path untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/ColorSwatchItem",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 1,
+          "evidence": "packages/mdx/src/blocks/color-swatch-item/color-swatch-item.tsx:1-19 accepts only name and variable: no className, no rest props, no ref, so a consumer cannot place or label it."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Plain divs; the swatch is a decorative div with only a background, which is fine as the name and variable are text; no test and no axe test of its own beyond the story run (every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-colorswatchitem-grid-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: static, non-interactive swatch with one state."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. Fixed size-16 swatch and max-w-80 (color-swatch-item.tsx:9-10)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. Long token names are not truncated (no min-w-0 truncate on .mdx-color-swatch-var)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file (ls packages/mdx/src/blocks/color-swatch-item: no *.test.tsx); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/Compare",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/compare/compare.tsx (72 lines) has no rest-prop spread or ref; Compare.Item owns tone hooks (BLOCK_REVIEW.md)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "The negative item paints its text with the action fill: `.mdx-frame-item-negative { color: var(--a63-action-danger) }` (packages/mdx/src/styles/base.css:39), a token-role violation in docs/design-system/audits/craft-baseline.json:10. --a63-action-danger has no dark value (atom63 token --a63-action-danger lists only the light scope, danger-600), and a raw danger colour measured 3.0:1 on the dark page (packages/inform/src/surfaces/inform-parts.css:141-145 comment), below 4.5:1 for body text. No dark story, so axe never sees it."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-compare-before-after-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static; positive and negative items both captured in the baselines."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. CJK story exists: apps/storybook/visual/__screenshots__/mdx-blocks-compare-dense-chinese-content-chromium-linux.png."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story; compare.tsx uses one sm: breakpoint."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 tests in compare test file; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/ComparisonPair",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "comparison-pair.tsx:60-153: Before/After slots take className and label only; no rest props or ref on the root; slowMotionLabel overridable (:101)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Slow-motion uses the ui-react Switch with a visible label (comparison-pair.tsx:78-93); the slow-motion animation has no reduced-motion handling in the block (grep prefers-reduced|useReducedMotion in comparison-pair/: none); every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-comparisonpair-before-after-, -with-speed-control-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Default and speed-control captured; slow-motion on and switch focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Switch is a ui-react control (contract sizes and coarse targets there)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Stacks below md (comparison-pair.tsx:118 \"flex flex-col md:aspect-video md:flex-row\"), but no phone story captures it."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Only 2 tests, both about the label (comparison-pair.test.tsx:6,16); switching speed is untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/CreditsBlock",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "credits-block.tsx:19 takes credits, className, label; no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Built on ui-react Collapsible, but the trigger restyles itself with a hover-scale ::before and has no focus-visible rule (credits-block.css:1-16 has none; ui-react collapsible.css has none either), so keyboard focus falls back to the UA outline; motion durations are literals (credits-block.tsx:43,54,70: duration 0.15/0.25, cubic ease) with no MotionConfig reducedMotion, so the expand animation ignores prefers-reduced-motion; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-creditsblock-default-, -custom-label-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Collapsed only in baselines; expanded, hover and focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Trigger is a full-width row (py-1) without the 44px coarse-pointer floor; spacing Tailwind-fixed. Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "2 tests; open/close and reduced motion untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/DemoStage (with DemoConfigPanel)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "demo-stage.tsx (215 lines) has no rest-prop spread or ref; DemoConfigPanel label/title overridable (demo-config-panel.tsx:88,98)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Config panel uses ui-react Sheet (demo-config-panel.tsx:15-19), so focus trap and Escape come from the primitive; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-demostage-default-, -with-config-panel-, -with-rich-content-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Panel open state not captured; trigger hover/focus not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Trigger and controls are ui-react Buttons/Sheet."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Sheet handles phone placement, but no phone story of the stage."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "3 shallow render tests (demo-stage.test.tsx:8,18,30); opening the panel untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/DocExample",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "doc-example.tsx (224 lines) has no rest spread or ref; tab, copy and announcement labels overridable (:49-54) but the tablist name is a hard-coded English template `${titleString} example view` / \"Component example view\" (doc-example.tsx:154)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Hand-written APG tabs: role=tablist/tab/tabpanel with aria-selected, aria-controls, roving tabIndex, Arrow/Home/End keys (doc-example.tsx:82-105,154-213); outline focus ring (doc-example.css:20-22); copy announced (copiedAnnouncement); every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-docexample-default-, -code-panel-, -wide-, -left-aligned-, -no-title-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Preview and code tabs, title/no title, wide captured; focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Tabs and copy are ui-react Buttons."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. ArrowLeft/ArrowRight are not swapped in RTL (doc-example.tsx:90)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. DocExample is the docs site infrastructure block, yet it is not in portableBlockNames (blocks/index.ts:46-74)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "6 tests on labels and slots (doc-example.test.tsx:8-75); keyboard tab switching untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/DocExampleCode",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "doc-example-code.tsx:1-20 is a locked CodeBlock variant=\"embedded\" wrapper; regression-covered (BLOCK_REVIEW.md)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Inherits CodeBlock semantics and copy control."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-docexamplecode-tsx-, -css-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: static code panel; states belong to CodeBlock."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inherits CodeBlock."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "1 test plus CodeBlock coverage; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/ExampleContainer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/example-container/example-container.tsx exported from @atom63/mdx/blocks (blocks/index.ts:26); no rest spread found."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Live demo frame; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists; no own test."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-prose-examplecontainer-default-, -embedded-, -with-title-, -with-description-, -left-aligned-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Five layouts captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/example-container (only example-container.stories.tsx); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/FigureBlock (with the figure lightbox)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "figure-block.tsx (123 lines) no rest spread or ref; enableLightbox default true (:49) needs FigureLightboxHost from MDXContentProvider (:39)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Trigger is a native button with a name, but the name is a hard-coded English template `View ${alt} in gallery` (lightbox/figure-lightbox-trigger.tsx:24) with no label prop; the button has no focus-visible outline of its own, only a fading badge (figure-lightbox-trigger.tsx:29-46 group-focus-visible:opacity-100), so the focus indicator is a 32px corner icon, not the control; the known lightbox focus flake is tracked under A6 (bar); every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-figureblock-string-caption-, -rich-caption-slot-, -with-aside-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Lightbox open, hover and focus states not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Trigger covers the whole image (block w-full)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. The zoom badge is pinned with physical right-3 (figure-lightbox-trigger.tsx:44) and does not mirror."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "PhotoSwipe handles touch; no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "3 tests plus lightbox host tests (lightbox/figure-lightbox-host.test.ts:12,24; figure-lightbox-host-open.test.tsx:37); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/ImageCompare",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "forwardRef, but ref and rest props land on the inner stage div while className lands on the outer figure (image-compare.tsx:247-255 vs :293-310), so `id`/`aria-*` and `className` end up on different elements; transition default is a literal \"0.25s cubic-bezier(.17,.67,.83,.67)\" (:150), not a motion token."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Keyboard and slider role come from the lazy react-compare-slider; the handle focus ring is an outline (image-compare.css:20-24). The literal transition and the idle/leave auto-reset have no reduced-motion handling (grep prefers-reduced in image-compare/: none); every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-imagecompare-side-by-side-, -plain-, -long-labels-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Fallback skeleton and focus-visible on the handle not captured; dragging not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Handle size comes from ImageCompareHandle (size-4 icon); no coarse-pointer floor in image-compare.css."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. Long labels truncate at 45% (image-compare.tsx:280-283) with a story (mdx-blocks-imagecompare-long-labels-chromium-linux.png)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Pointer handlers cover touch (image-compare.tsx:249-252); no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "3 render tests (image-compare.test.tsx:9,18,28); keyboard, reset-after-idle and onPositionChange untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/KeyIdea",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "key-idea.tsx:11 children, className, label, title; no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "The eyebrow paints the primary action fill as text: `.mdx-insight-eyebrow { color: var(--a63-action-primary) }` (packages/mdx/src/styles/base.css:141), a token-role entry in docs/design-system/audits/craft-baseline.json:11. That fill is 2.9:1 on the dark page (scripts/design-system/lib/craft-rules.mjs:44-45) and the eyebrow is text-xs mono (foundations/notice/notice-block.tsx:39), so it fails WCAG 1.4.3 in dark mode; --a63-text-accent exists for exactly this (atom63 token --a63-text-accent). No dark story, so axe never sees it."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-keyidea-default-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static; default and CJK captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. CJK story: apps/storybook/visual/__screenshots__/mdx-blocks-keyidea-chinese-article-note-chromium-linux.png."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/blocks/key-idea; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/LayerStack",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "layer-stack.tsx (84 lines) no rest spread or ref; items keyed by index (BLOCK_REVIEW.md: \"consider optional id\")."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Item titles are fixed <h3> (layer-stack.tsx:55), breaking the outline when the block sits under an h3/h4; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-layerstack-primitive-procedure-product-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static; two content sets captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. CJK story: mdx-blocks-layerstack-chinese-course-model-chromium-linux.png."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "3 tests; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/MdxPageSkeleton",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "mdx-page-skeleton.tsx takes className, showRail, variant; className concatenated by hand (:47) instead of clsx; no rest props."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Rendered as <output aria-live=polite aria-label=\"Loading page content\"> (mdx-page-skeleton.tsx:44-46): the name is hard-coded English with no label prop; Skeleton pulse comes from ui-react; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-page-skeleton-docs-variant-, -lesson-, -no-rail-, -no-inline-toc-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Loading-only block; its 4 layouts captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. The only accessible text is English."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Rail appears only at 2xl (:52); no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/blocks/mdx-page-skeleton; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/MediaCaption",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "media-caption.tsx:11-14 children and className only; no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Renders a native figcaption."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-mediacaption-default-, -with-markup-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: static text with one state."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/blocks/media-caption; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/MediaPlaceholder",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "media-placeholder.tsx (57 lines) no rest props or ref; BLOCK_REVIEW.md marks it \"Review later\" and not on MediaFigure."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists; no test."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-mediaplaceholder-image-, -video-, -diagram-, -square-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "All four kinds captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/blocks/media-placeholder; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/MermaidDiagram",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "labels partial override with defaultMermaidDiagramLabels exported (blocks/index.ts:40-44); animated prop; theme mapped from --a63-* tokens (mermaid-diagram.tsx:147-158)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "The render error text paints the danger action fill as text: `.mdx-mermaid-error-text { color: var(--a63-action-danger) }` (mermaid-diagram.css:44-46; craft-baseline.json:5); --a63-action-danger has no dark value and a raw danger colour is 3.0:1 on the dark page (inform-parts.css:141-145), so the one message that explains a broken diagram fails contrast in dark mode. The SVG is role=img with only a title or the generic \"diagram\" label (mermaid-diagram.tsx:283-284), so diagram content has no text alternative. Reduced motion gates the draw-on animation (:296)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-mermaiddiagram-flowchart-, -sequence-, -class-diagram-, -state-diagram-, -animated-, -overview-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Diagram types captured; error state and zoom controls focus not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Zoom controls are ghost ui-react Buttons (mermaid-diagram.tsx:126-131)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Story has a viewport parameter (grep viewport in mermaid-diagram.stories.tsx)."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "5 tests, mostly labels and the reduced-motion gate (mermaid-diagram.test.tsx:18-51); render error and zoom untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/PageMeta",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "page-meta.tsx (47 lines) no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Always renders an <h1> (page-meta.tsx:39) with no level prop, so a page with its own h1 gets two; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-pagemeta-full-, -title-only-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static; full and title-only captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. Title text-4xl md:text-5xl."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. No long-title or CJK story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "One md: step, no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/blocks/page-meta; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/PageTableOfContents",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "page-table-of-contents.tsx (529 lines) no rest props; label overridable (:203) but the compact trigger name is built as `Open ${label.toLowerCase()}` (:406), English grammar that breaks for any other language, and the sheet trigger is a fixed \"Open page navigation\" (:457)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Active rail link paints the primary action fill as text: `.mdx-toc-link-rail[data-active='true'] { color: var(--a63-action-primary) }` (page-table-of-contents.css:51-53; craft-baseline.json:6), 2.9:1 on the dark page (craft-rules.mjs:44-45), so the \"you are here\" cue fails WCAG 1.4.3 in dark mode. Otherwise nav landmark with aria-label and aria-current=location (:382-385), menu via ui-react DropdownMenu, outline focus rings (css:5-48)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-page-table-of-contents-rail-, -menu-, -custom-label-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Rail, menu and custom label captured; active-item, menu-open and focus-visible states not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Menu/sheet triggers are ui-react controls."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. The concatenated trigger label is English-only."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Portalled sheet variant for narrow pages (:443-480)."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "3 tests (page-table-of-contents.test.tsx:6,24,49); active-heading tracking and Escape untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/ResourceList",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "resource-list.tsx:95 items, className only; the landmark name \"External resources\" is hard-coded (:101)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Every row opens a new tab (target=_blank, :55-58) with no cue; row focus ring is an outline (resource-list.css:75-78); every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-resourcelist-default-, -with-notes-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Favicon-missing fallback (:72) and hover/focus states not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. ArrowUpRight (resource-list.tsx:79) is a directional glyph that does not mirror in RTL; names and notes truncate (:76-82)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Two-column grid from 40rem (resource-list.css:27); no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/blocks/resource-list; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/ScrollStage",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "scroll-stage.tsx (214 lines) no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Reduced-motion path renders steps statically with media inline (scroll-stage.tsx:203-206; tested at scroll-stage.test.tsx:44,56); every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-scrollstage-default-chromium-linux.png only."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Only the default capture; active-step and reduced-motion layouts not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Story has a viewport parameter; 4 responsive utilities in scroll-stage.tsx."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "8 tests including the observer and the static path (scroll-stage.test.tsx:18-92); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/StatCard",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "stat-card.tsx:30 label, value, change, trend, className; no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "The \"down\" trend paints the danger action fill as text: `.mdx-stat-card-change-down { color: var(--a63-action-danger) }` (stat-card.css:15-17; craft-baseline.json:7), with no dark value and 3.0:1 for a raw danger colour on the dark page (inform-parts.css:141-145); the up trend reads --a63-status-success as text (stat-card.css:12). axe passes in light only (blocks.a11y.test.tsx:76)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-statcard-standalone-, -grid-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static; trends captured in the grid story."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. Long labels not truncated or tested."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "5 tests plus axe; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/StatGrid",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "stat-grid.tsx (29 lines) no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Layout only; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-stat-grid-default-, -two-cards-, -six-cards-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: layout wrapper with no states."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "One sm: column step; no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "2 tests; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/Steps",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "steps.tsx (77 lines) no rest props or ref on Steps; Steps.Step takes className."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Ordered list (foundations/sequence/sequence-block.tsx:14) but step titles are fixed <h3> (:29); axe passes (blocks.a11y.test.tsx:65)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-steps-install-guide-, -auto-numbering-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static; both forms captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 tests plus axe; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/Tabs",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Thin wrapper over ui-react Tabs spreading props (tabs.tsx, 2 spreads in 26 lines)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG tabs from ui-react; axe passes (blocks.a11y.test.tsx:35)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-tabs-two-panels-, -three-panels-, -underline-variant-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Hover/focus-visible not captured here (owned by ui-react tabs)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "ui-react Tabs sizes."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "3 tests plus axe; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/Timeline",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "timeline.tsx:56 children, className; no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Ordered list, but dates are plain divs, not <time> (timeline.tsx:35-37), and the dot is drawn with `background-color: var(--a63-text-primary)` (timeline.css:9; craft-baseline.json:8 token-role); every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-timeline-release-history-chromium-linux.png only."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static; one story."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Spacing uses the default Tailwind scale (gap-3, mt-1 etc.), not --a63-space-*, so the block ignores compact density (grep density in packages/mdx/src finds only a comment in variants/docs.ts:28); type is rem-based so it follows browser text size. "
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story exists in packages/mdx/src. Date column is fixed 6rem at sm (timeline.tsx:31); long or CJK dates untested."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Narrow grid below sm (timeline.tsx:31); no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 tests; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "mdx/VideoBlock",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "video-block.tsx:36-49 no rest props or ref; the source type is fixed to video/mp4 (:70), so webm/mov sources are mislabelled; caption policy is a typed union (:9-19), good."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "autoPlay does not check prefers-reduced-motion (video-block.tsx:50,63), so an autoplaying loop ignores the reader setting; native controls on by default; every story runs axe at error level (apps/storybook/.storybook/preview.tsx:151-153; package stories included by apps/storybook/.storybook/main.ts:18-21), light mode only unless a Dark story exists."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light-mode, modern-theme baselines only: no Themes and no Dark story exists in any packages/mdx story file (grep \"export const Dark|Themes|mode: 'dark'\" over packages/mdx/src finds none), so the 4 themes x 2 modes and the per-theme archetype are not captured. apps/storybook/visual/__screenshots__/mdx-blocks-video-block-default-, -with-caption-, -cover-fit-, -autoplay-loop-, -decorative-background-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Five configurations captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Native video controls."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "The caption track is hard-coded `label=\"English captions\" srcLang=\"en\"` (video-block.tsx:72) whatever language trackSrc is in, so a Chinese caption file is announced and tagged as English; there is no trackLang/trackLabel prop."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "playsInline set (:66); no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "No docs page for the block in apps/docs/src/pages (no mdx/block page there); `pnpm -s atom63 component <slug>` returns component.not_found and `pnpm -s atom63 search mdx` returns \"No results for \\\"mdx\\\"\", so neither the CLI nor MCP can lead a builder to it. Only packages/mdx/README.md:127 (block inventory), BLOCK_REVIEW.md and the Storybook stories. "
+        },
+        {
+          "criterion": "K9",
+          "score": 1,
+          "evidence": "No test file in packages/mdx/src/blocks/video-block (BLOCK_REVIEW.md follow-up \"Add focused tests for VideoBlock caption-policy rendering\" still open); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested. "
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart (packages/ui-ios/Sources/Atom63UI has no MDX/prose renderer)"
+        }
+      ]
+    },
+    {
+      "subject": "inform/InformBanner",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/inform/src/surfaces/inform-banner.tsx:23-33 destructures a fixed prop list and spreads nothing: no id, data-*, aria-* or ref reach the root. Severity vocabulary is info|success|warning|danger (core/types.ts) while ui-react Alert and mdx Callout use error for the same concept (atom63 component alert)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "role=status aria-live=polite for every severity including danger (inform-banner.tsx:36-40), with action buttons inside the live region; dismiss button named and focus-visible outlined (dismiss-button.tsx:28, inform-parts.css:60-63); danger title colour mixes --a63-action-danger (a fill) instead of --a63-text-danger (inform-parts.css:173-176; atom63 token --a63-text-danger exists); axe passes (inform-banner.test.tsx:222); no @media (forced-colors) rule anywhere in packages/*/src (grep forced-colors finds only comments in cli/src/rules.mjs:70 and ui-react button.css:189)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story per surface; no Themes story, so aqua/retro/terminal are never captured (grep Themes in packages/inform/src/**/*.stories.tsx: none). apps/storybook/visual/__screenshots__/inform-banner-dark-chromium-linux.png shows four bordered rows, coherent but plain."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "14 baselines: every severity, title, two/many lines, icon, actions, dismissable, dark. Dismiss hover and focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Dismiss target is an invisible 24px expansion (inform-parts.css:46-54) with no 44px coarse-pointer rule, short of the bar's 44px; spacing reads --a63-space-* so density applies; text in typography tokens scales."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL, long-string or CJK story in packages/inform/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "In-flow, full width (inform-banner.css:12); no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-inform.mdx (208 lines) covers the model, outlet and all four surfaces; but `pnpm -s atom63 component <surface>` is component.not_found, `atom63 search InformSpotlight` returns \"No results\", and `pnpm -s atom63 docs pattern-inform` prints the page with its live-demo JSX stripped to fragments (\"const [open, setOpen] = useState(false) / return ( / Open the dialog\"), so an agent gets broken code. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "18 behaviour tests (inform-banner.test.tsx:11-222) incl. alignment, glyphs, 24px target, axe; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "iOS: packages/ui-ios/Sources/Atom63UI/AtomInformSurfaces.swift and AtomInformSpotlight.swift, snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/inform.{light,dark,large-type}.png. iOS AtomInformCard puts the 44pt close button outside the bordered notice (AtomInformSurfaces.swift:28-43; inform.light.png) while the web places it inside the row; iOS honours dismiss none, Dynamic Type and dark are snapshotted."
+        }
+      ]
+    },
+    {
+      "subject": "inform/InformDialog",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 1,
+          "evidence": "`dismissable={false}` only hides the close button (inform-dialog.tsx:51-53); onOpenChange still calls onDismiss on Escape and outside press (inform-dialog.tsx:44-47), so a must-acknowledge dialog closes on Escape. Through the runtime, a message with dismiss:\"none\" (inform-outlet.tsx:60) then reaches store.dismiss (core/store.ts:73-81), which records it in memory and the arbiter drops it (core/arbiter.ts:24). dismissLabel is accepted (types.ts) but ignored: the close button stays \"Close\" (ui-react dialog.tsx:146-150) though DialogPopup takes closeProps. No ref or rest props."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Focus trap, Escape and inert come from the ui-react/Base UI dialog; focus moves in (inform-dialog.test.tsx:23); title optional, and with no title DialogTitle is not rendered so the dialog has no accessible name (inform-dialog.tsx:75-79); axe passes only with a title (inform-dialog.test.tsx:77-91)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story per surface; no Themes story, so aqua/retro/terminal are never captured (grep Themes in packages/inform/src/**/*.stories.tsx: none). apps/storybook/visual/__screenshots__/inform-dialog-default-, -danger-, -with-media-, -dark-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Default, danger, actions, media, not dismissable and dark captured; but \"not dismissable\" is not actually non-dismissable (see K1)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Actions are ui-react Button size sm; close button from ui-react Dialog."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL, long-string or CJK story in packages/inform/src. Close label cannot be translated (K1)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inherits ui-react DialogPopup mobilePlacement bottom by default (dialog.tsx:128-130)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-inform.mdx (208 lines) covers the model, outlet and all four surfaces; but `pnpm -s atom63 component <surface>` is component.not_found, `atom63 search InformSpotlight` returns \"No results\", and `pnpm -s atom63 docs pattern-inform` prints the page with its live-demo JSX stripped to fragments (\"const [open, setOpen] = useState(false) / return ( / Open the dialog\"), so an agent gets broken code. "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "8 tests (inform-dialog.test.tsx:9-77); the dismissable=false + Escape path and untitled naming are untested; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "iOS: packages/ui-ios/Sources/Atom63UI/AtomInformSurfaces.swift and AtomInformSpotlight.swift, snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/inform.{light,dark,large-type}.png. iOS renders a system alert for at most two actions and a sheet beyond (AtomInformSurfaces.swift:88-145); choosing an action records the dismissal on iOS (:127-132) but not on the web, where InformActions only calls action.onSelect (inform-actions.tsx:17-24)."
+        }
+      ]
+    },
+    {
+      "subject": "inform/InformCornerFlyout (with InformFlyoutStack)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "inform-corner-flyout.tsx:30-42 fixed prop list, no rest props or ref; stack placement names physical corners bottom-right etc. (flyout-stack.tsx:6)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "role=status aria-live=polite, does not steal focus (inform-corner-flyout.test.tsx:25); stack expands on focus-within so the keyboard reaches back cards (flyout-stack.tsx:33-35; flyout-stack.test.tsx:94); reduced motion dismisses instantly and drops transitions (inform-corner-flyout.tsx:63-70; inform-corner-flyout.css:68-73); axe passes (:155)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story per surface; no Themes story, so aqua/retro/terminal are never captured (grep Themes in packages/inform/src/**/*.stories.tsx: none). apps/storybook/visual/__screenshots__/inform-corner-flyout-default-, -with-media-and-actions-, -in-a-stack-, -dark-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "8 baselines incl. stack, media, warning, not dismissable, dark; leaving state not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Dismiss target 24px only (inform-parts.css:46-54); stack width min(22rem, 100vw - 2rem) (inform-corner-flyout.css:51)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL, long-string or CJK story in packages/inform/src. The exit always slides toward the physical right (`transform: translateX(var(--a63-space-4))`, inform-corner-flyout.css:31-34), so a left-corner stack exits away from its own edge."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "position:fixed stack inset by `offset` (default 1rem) with no env(safe-area-inset-*) (grep safe-area in packages/inform/src: none), so on a notched phone a bottom stack sits under the home indicator unless the caller passes the inset."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-inform.mdx (208 lines) covers the model, outlet and all four surfaces; but `pnpm -s atom63 component <surface>` is component.not_found, `atom63 search InformSpotlight` returns \"No results\", and `pnpm -s atom63 docs pattern-inform` prints the page with its live-demo JSX stripped to fragments (\"const [open, setOpen] = useState(false) / return ( / Open the dialog\"), so an agent gets broken code. "
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "13 flyout tests and 10 stack tests (inform-corner-flyout.test.tsx:11-155; flyout-stack.test.tsx:26-131) cover enter/leave, reduced motion, measuring, pointer pass-through, focus expansion."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "iOS: packages/ui-ios/Sources/Atom63UI/AtomInformSurfaces.swift and AtomInformSpotlight.swift, snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/inform.{light,dark,large-type}.png. iOS flyouts are the same AtomInformCard as the banner, a bordered notice at the bottom edge (AtomInformSurfaces.swift:111-118; inform.light.png), not the raised overlay card the web draws (inform-corner-flyout.css:7-18)."
+        }
+      ]
+    },
+    {
+      "subject": "inform/InformSpotlight",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "InformSpotlightProps extends InformSurfaceProps (inform-spotlight.tsx:15-19) but silently ignores dismissable, dismissLabel and media (not destructured, :59-69); no ref or rest props."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "A blocking modal (scrim, body overflow hidden, background inert, focus trapped: inform-spotlight.tsx:120-160) whose only exit is Escape (:132-136) or an action: there is no dismiss button and the scrim has no click handler (:180-221). On a phone, or for a switch/voice user with no Escape key, a spotlight registered without actions cannot be closed. The cutout scrim is a 9999px box-shadow (inform-spotlight.css:20-24), which forced-colors mode drops, so the page is no longer dimmed; no @media (forced-colors) rule anywhere in packages/*/src (grep forced-colors finds only comments in cli/src/rules.mjs:70 and ui-react button.css:189). Naming, focus restore and inert are good (tests at inform-spotlight.test.tsx:62-177,303)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story per surface; no Themes story, so aqua/retro/terminal are never captured (grep Themes in packages/inform/src/**/*.stories.tsx: none). apps/storybook/visual/__screenshots__/inform-spotlight-default-chromium-linux.png shows the bubble with a heavy 2px focus ring drawn on open, because the bubble itself is focused (inform-spotlight.tsx:126,193-196)."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Default, actions, near edges, missing anchor and dark captured; no captured state offers a way to close (K2)."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Bubble min(20rem, 100vw - 2rem) (inform-spotlight.css:29); no dismiss control to size."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL, long-string or CJK story in packages/inform/src. Bubble placement uses physical top/left from script (inform-spotlight.css:5 comment), acceptable for viewport coordinates."
+        },
+        {
+          "criterion": "K7",
+          "score": 1,
+          "evidence": "Phone and touch: no touch path to dismiss (K2) and no safe-area handling in placeBubble (place-bubble.ts) or the CSS; no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-inform.mdx (208 lines) covers the model, outlet and all four surfaces; but `pnpm -s atom63 component <surface>` is component.not_found, `atom63 search InformSpotlight` returns \"No results\", and `pnpm -s atom63 docs pattern-inform` prints the page with its live-demo JSX stripped to fragments (\"const [open, setOpen] = useState(false) / return ( / Open the dialog\"), so an agent gets broken code. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "19 tests (inform-spotlight.test.tsx:40-303) on focus, inert, scroll lock, placement and naming; nothing tests a touch or pointer dismissal because none exists."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "iOS: packages/ui-ios/Sources/Atom63UI/AtomInformSurfaces.swift and AtomInformSpotlight.swift, snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/inform.{light,dark,large-type}.png. iOS uses a TipKit popover (AtomInformSpotlight.swift:9-48), which carries its own close button, so iOS can dismiss by touch while the web cannot."
+        }
+      ]
+    },
+    {
+      "subject": "inform/InformOutlet and InformProvider (runtime)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "inform-outlet.tsx:27-31 surfaces, flyoutOffset, flyoutPlacement; passes dismissable={dismiss !== \"none\"} but every surface's onDismiss calls store.dismiss unconditionally (:50-87), so the Escape path in InformDialog and InformSpotlight dismisses dismiss:\"none\" messages (core/store.ts:73-81)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Renders nothing before hydration so SSR and first paint match (inform-runtime.test.tsx:119-131); surfaces own their a11y."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story per surface; no Themes story, so aqua/retro/terminal are never captured (grep Themes in packages/inform/src/**/*.stories.tsx: none). apps/storybook/visual/__screenshots__/inform-runtime-arbitration-, -stacking-*-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Arbitration and four stacking corners captured."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: no controls of its own."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL, long-string or CJK story in packages/inform/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "flyoutOffset is a single length; no safe-area default (see corner flyout K7)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-inform.mdx (208 lines) covers the model, outlet and all four surfaces; but `pnpm -s atom63 component <surface>` is component.not_found, `atom63 search InformSpotlight` returns \"No results\", and `pnpm -s atom63 docs pattern-inform` prints the page with its live-demo JSX stripped to fragments (\"const [open, setOpen] = useState(false) / return ( / Open the dialog\"), so an agent gets broken code. "
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "11 runtime tests incl. renderToStaticMarkup SSR check (inform-runtime.test.tsx:3,49-165) plus store, arbiter, registry, persistence tests in packages/inform/src/core/*.test.ts."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "iOS: packages/ui-ios/Sources/Atom63UI/AtomInformSurfaces.swift and AtomInformSpotlight.swift, snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/inform.{light,dark,large-type}.png. atomInform(_:route:store:) resolves the same registry model (AtomInformSurfaces.swift:205-215)."
+        }
+      ]
+    },
+    {
+      "subject": "widgets/WidgetCard (with WidgetShell, header, title, content, block parts)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "WidgetCard spreads rest onto WidgetSurface (widget-card.tsx:46-56), but every part (WidgetCardHeader, -HeaderLeft, -HeaderRight, -Content, -Title, -TextGroup, -Row, WidgetBlock*) takes only children/className/style and drops id, aria-* and data-* (widget-card.tsx:67-260); parts are named Left/Right while their classes say start/end (:100,115); a deprecated empty WIDGET_BODY_INSET_CLASS map is still exported (:33-37; primitives/index.ts:8)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "WidgetCardTitle is a div (widget-card.tsx:211-230), so the widget has no heading and the card no name, while iOS AtomWidgetHeader adds .isHeader (AtomWidget.swift:87); axe passes (widget-card.test.tsx)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story; no Themes story in packages/widgets/src, so aqua/retro/terminal and the rim per theme are not captured. apps/storybook/visual/__screenshots__/widgets-card-footprints-chromium-linux.png: quiet uppercase chrome title and a large figure; reads well, archetype per theme unseen."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Static container; small, medium, large, blocks, header slots, shell and dark captured (8 widgets-card-* PNGs)."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Footprint sizes small|medium|large only (types.ts); spacing in widget units derived from the cell width in px (layout/widget-scale.ts:99-139), so text does not follow browser text size by design; controls reach 44px through hit expansion (widget-scale.ts:73-84)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story in packages/widgets/src. Header parts named Left/Right."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "widget-units.stories.tsx:68 shows one composition at three host cells with viewport scaling."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-widgets.mdx (297 lines: units, contract tokens, card and surface :180, states :215, hosted shell :256, live example); `atom63 search widgets` finds it, but `atom63 component <name>` is component.not_found and `pnpm -s atom63 docs pattern-widgets` prints the live examples with JSX stripped (\"return ( / {children} / )\"). "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "13 tests (widget-card.test.tsx) incl. axe; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "AtomWidgetCard + AtomWidgetHeader (AtomWidget.swift:38-88), snapshots widgetCard.{light,dark,large-type}.png; iOS card takes no size (size comes from the grid layout value, :97-98) and its title is subheadline semibold, not the web quiet uppercase chrome."
+        }
+      ]
+    },
+    {
+      "subject": "widgets/WidgetSurface (with WidgetSurfaceSizeProvider)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Spreads rest and ref onto the outer shell (widget-surface.tsx:107-114); className partitioned between shell and face by documented rules (:20-49, :87-104); size context exported."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Neutral container, no semantics needed; axe passes (widget-surface.test.tsx)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story; no Themes story in packages/widgets/src, so aqua/retro/terminal and the rim per theme are not captured. apps/storybook/visual/__screenshots__/widgets-surface-small-, -medium-, -large-, -footprints-, -dark-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: a material with no interactive states."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "size signal only, box from the host (widget-surface.tsx:87-92)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story in packages/widgets/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Scales with the host cell (widget-units.stories.tsx:68)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-widgets.mdx (297 lines: units, contract tokens, card and surface :180, states :215, hosted shell :256, live example); `atom63 search widgets` finds it, but `atom63 component <name>` is component.not_found and `pnpm -s atom63 docs pattern-widgets` prints the live examples with JSX stripped (\"return ( / {children} / )\"). "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "11 tests incl. class partitioning (widget-surface.test.tsx); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "AtomWidgetCard draws the same rim + face (AtomWidget.swift:49-61) from AtomTokens.Widget.rimWidth/radius."
+        }
+      ]
+    },
+    {
+      "subject": "widgets/WidgetStateFeedback",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "copy, state, onRetry, size, className (widget-state-feedback.tsx:96-103); no rest props or ref; the retry label \"Try again\" (:24), \"View error details\" (:61), \"Error details\", \"Technical information you can copy...\" and \"Copy details\" (:75-85) are hard-coded with no copy fields, while WidgetHostErrorFallback says \"Retry\" for the same action (widget-host-error-fallback.tsx:43)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "role=alert for error, status otherwise (widget-state-feedback.tsx:133); icons aria-hidden; details button named; spinner stops under reduced motion (runtime/widget-runtime.css:132-136, asserted in styles.test.ts:63); axe passes."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story; no Themes story in packages/widgets/src, so aqua/retro/terminal and the rim per theme are not captured. apps/storybook/visual/__screenshots__/widgets-states-footprints-chromium-linux.png shows loading, empty and error at three footprints, centred and calm."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Loading, empty, error, error large and dark captured (6 widgets-states-* PNGs); details popover open not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "compact vs large density by footprint (widget-state-feedback.tsx:121-128); buttons ui-react sm / icon-sm."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story in packages/widgets/src. Five user-visible strings are English literals with no override (K1), so a non-English widget shows English recovery controls and error-details chrome."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Footprint-driven; popover from ui-react."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-widgets.mdx (297 lines: units, contract tokens, card and surface :180, states :215, hosted shell :256, live example); `atom63 search widgets` finds it, but `atom63 component <name>` is component.not_found and `pnpm -s atom63 docs pattern-widgets` prints the live examples with JSX stripped (\"return ( / {children} / )\"). "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "5 tests on density and recovery controls (widget-state-feedback.test.tsx:9-127); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "AtomWidgetStateView (AtomWidgetState.swift:27-73) shows the error description inline, where the web hides it behind a details popover; no iOS snapshot of the state view (only widgetCard.*.png)."
+        }
+      ]
+    },
+    {
+      "subject": "widgets/WidgetHostedShell (with loading shell, error fallback, transitions)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "WidgetHostedShell spreads cardProps (widget-hosted-shell.tsx:42-80); but its doc warns children must supply their own inset unless a footer is given (:10-14), an easy-to-miss trap; WidgetHostLoadingShell and WidgetHostErrorFallback take fixed props."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "WidgetContentFallback is an <output aria-busy> holding only an aria-hidden spinner (widget-content-fallback.tsx:5-12), so the loading state has no accessible text; transitions honour useReducedMotion (widget-host-content-transition.tsx:30-39); axe passes for loading and error shells (widget-runtime.test.tsx:148)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story; no Themes story in packages/widgets/src, so aqua/retro/terminal and the rim per theme are not captured. apps/storybook/visual/__screenshots__/widgets-hosted-shell-hosted-shell-, -loading-shell-, -error-fallback-, -dark-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Hosted, loading, error and dark captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inherits WidgetCard sizes; Retry is a ui-react ghost Button sm."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story in packages/widgets/src. Default title \"Widget failed to load\" is overridable but \"Retry\" (widget-host-error-fallback.tsx:43) is not."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Fills its host box (widget-runtime.test.tsx:210)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-widgets.mdx (297 lines: units, contract tokens, card and surface :180, states :215, hosted shell :256, live example); `atom63 search widgets` finds it, but `atom63 component <name>` is component.not_found and `pnpm -s atom63 docs pattern-widgets` prints the live examples with JSX stripped (\"return ( / {children} / )\"). "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "19 runtime tests (widget-runtime.test.tsx:18-210) incl. crossfade and axe; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: web runtime host concept; WidgetKit owns hosting on iOS."
+        }
+      ]
+    },
+    {
+      "subject": "widgets/WidgetAvatar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "memo component with alt, size sm|md|lg|xl, busy, status, onShuffle (widget-avatar.tsx:6-46); no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "busy ring and status dot are aria-hidden (widget-avatar.tsx:64,85), so busy and presence are not announced unless the caller adds text; shuffle button named (:67-72); spin stops under reduced motion (widget-avatar.css:144)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story; no Themes story in packages/widgets/src, so aqua/retro/terminal and the rim per theme are not captured. apps/storybook/visual/__screenshots__/widgets-avatar-default-, -sizes-, -busy-, -with-status-, -shuffle-, -dark-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Busy, status, shuffle captured; shuffle hover rotate (widget-avatar.css:120) and focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Shuffle button geometry from the stylesheet per size; no evidence it meets 44px on coarse pointers."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story in packages/widgets/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-widgets.mdx (297 lines: units, contract tokens, card and surface :180, states :215, hosted shell :256, live example); `atom63 search widgets` finds it, but `atom63 component <name>` is component.not_found and `pnpm -s atom63 docs pattern-widgets` prints the live examples with JSX stripped (\"return ( / {children} / )\"). "
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Only 2 tests (widget-avatar.test.tsx); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS widget avatar."
+        }
+      ]
+    },
+    {
+      "subject": "widgets/WidgetImage",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "alt required (image.tsx:9); no rest props or ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Crossfading incoming image hidden from AT (image.tsx:151-152); lazy by default (:155)."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: no baseline of its own; rendered inside card stories."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Loading attribute data-widget-image-loading (:145) but no captured loading or error state."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: media, no size axis."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\")."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: no viewport-specific behaviour."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-widgets.mdx (297 lines: units, contract tokens, card and surface :180, states :215, hosted shell :256, live example); `atom63 search widgets` finds it, but `atom63 component <name>` is component.not_found and `pnpm -s atom63 docs pattern-widgets` prints the live examples with JSX stripped (\"return ( / {children} / )\"). "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 tests (image.test.tsx); apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart."
+        }
+      ]
+    },
+    {
+      "subject": "widgets/WidgetGrid and units (WidgetViewport, widget scale)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Pure helpers and two components (layout/widget-grid.tsx, widget-viewport.tsx); scale API documented (widget-scale.ts:20-139)."
+        },
+        {
+          "criterion": "K2",
+          "score": null,
+          "evidence": "n/a: layout only."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). Light modern baselines plus one Dark story; no Themes story in packages/widgets/src, so aqua/retro/terminal and the rim per theme are not captured. apps/storybook/visual/__screenshots__/widgets-units-and-scale-grid-, -scale-, -type-ramp-, -dark-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: no states."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "--widget-u is derived from the cell width in px with an optional px floor (widget-scale.ts:25,99-139), so widget type ignores the reader's text size; 44px via hit expansion (:73-84)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); no RTL story in packages/widgets/src. "
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "widget-units.stories.tsx:68 one composition at three host cells."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Docs page apps/docs/src/pages/pattern-widgets.mdx (297 lines: units, contract tokens, card and surface :180, states :215, hosted shell :256, live example); `atom63 search widgets` finds it, but `atom63 component <name>` is component.not_found and `pnpm -s atom63 docs pattern-widgets` prints the live examples with JSX stripped (\"return ( / {children} / )\"). "
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "7 test files in layout/ (widget-grid, -units, -scale, -type, -inset, -viewport) with 40+ assertions."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "AtomWidgetGrid packs the same spans (AtomWidget.swift:102-160)."
+        }
+      ]
+    },
+    {
+      "subject": "brand/AppLogo",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "app-logo.tsx:71-76 className, colored, height, variant; no rest props or ref, the name is always \"ATOM63\" with no title prop (:87,105,47,63) while Atom63Logo takes title; `colored` is a boolean standing in for a tone axis."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "role=img with aria-label on lockups, parts aria-hidden (app-logo.tsx:24-27,84-90); axe passes (app-logo.test.tsx:42). `colored` paints --a63-action-primary as the symbol colour (app-logo.tsx:79), a fill used as a foreground that the craft token-role rule cannot see in inline styles; 2.9:1 on the dark page (craft-rules.mjs:44-45), under the 3:1 non-text floor."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/brand-logo-variants-chromium-linux.png and brand-logo-dark-chromium-linux.png; the story itself says it \"has no Themes matrix\" (app-logo.stories.tsx:39-41)."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: static mark."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: height is free by design."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\"); logos do not mirror, correctly."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: static mark."
+        },
+        {
+          "criterion": "K8",
+          "score": null,
+          "evidence": "n/a: packages/brand/package.json \"private\": true; README.md:3-5 says it is for this repo's docs and Storybook only. not part of the public surface; README.md documents the exports."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 tests (app-logo.test.tsx:26-55) incl. axe; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS logo component (grep -ri logo packages/ui-ios/Sources: none)."
+        }
+      ]
+    },
+    {
+      "subject": "brand/Atom63Logo",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "atom63-logo.tsx:3-34 spreads SVG props, takes title (default \"ATOM63 logo\") and height; width derived."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "role=img with <title> (atom63-logo.tsx:24-30); tested (app-logo.test.tsx:54-60)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. In apps/storybook/visual/__screenshots__/brand-logo-variants-chromium-linux.png; no theme matrix."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: static mark."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: height is free by design."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "check:craft passes with packages/mdx/src, inform/src, widgets/src and brand/src in scope (scripts/design-system/check-craft.mjs:33-39; sweep/craft.log \"Craft check passed (5 baseline violation(s) remaining)\")."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: static mark."
+        },
+        {
+          "criterion": "K8",
+          "score": null,
+          "evidence": "n/a: packages/brand/package.json \"private\": true; README.md:3-5 says it is for this repo's docs and Storybook only. "
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Covered by app-logo.test.tsx:54-60; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react stories, so no story of this package is SSR-smoke-tested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS logo component."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k11-packages-1",
+      "subject": "inform/InformSpotlight",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "The spotlight is a blocking modal with no dismiss control and no scrim click, so it can only be closed with Escape or an action.",
+      "evidence": "packages/inform/src/surfaces/inform-spotlight.tsx:120-160 (scroll lock, inert, focus trap), :132-136 (Escape is the only dismissal), :180-221 (no close button, no scrim handler); dismissable/dismissLabel ignored (:59-69); iOS TipKit tip has a close button (AtomInformSpotlight.swift:9-48).",
+      "fix": "Render InformDismissButton in the bubble when dismissable (default true), honour dismissLabel, and dismiss on scrim click outside the cutout; add a touch/pointer dismissal test.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "inform-spotlight.tsx destructures no dismissable/dismissLabel (lines 62-72), the only dismissal is the Escape keydown handler; the bubble renders no close button and the scrim/cutout has no click handler. Body is inert and scroll-locked, so a pointer user facing a message without actions is stuck. The docs demo (pattern-inform.mdx:36-44) itself relies on 'Escape closes it'."
+      }
+    },
+    {
+      "id": "k11-packages-2",
+      "subject": "inform/InformSpotlight",
+      "criterion": "K7",
+      "severity": "P1",
+      "summary": "On a phone the spotlight traps the page with no touch path out when its message has no action.",
+      "evidence": "Same code as the K2 finding; no phone story and no safe-area handling in packages/inform/src/surfaces/place-bubble.ts or inform-spotlight.css.",
+      "fix": "Fixed by the dismiss control above; add a phone-width story and keep the bubble inside env(safe-area-inset-*).",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Same root cause as -1 on touch (no Escape key at all), plus independently: stories are Default/WithActions/MissingAnchor/NearViewportBottom/NearRightEdge/Dark with no phone story, and place-bubble.ts clamps to a fixed 8px BUBBLE_MARGIN with no env(safe-area-inset-*) handling in it or inform-spotlight.css."
+      }
+    },
+    {
+      "id": "k11-packages-3",
+      "subject": "inform/InformDialog",
+      "criterion": "K1",
+      "severity": "P1",
+      "summary": "dismissable={false} does not make the dialog non-dismissable: Escape and outside press still call onDismiss, and the runtime then drops dismiss:\"none\" messages.",
+      "evidence": "packages/inform/src/surfaces/inform-dialog.tsx:44-53 (onOpenChange always calls onDismiss; only showCloseButton follows dismissable); packages/inform/src/react/inform-outlet.tsx:58-66; packages/inform/src/core/store.ts:73-81; packages/inform/src/core/arbiter.ts:24. The NotDismissable story (inform-dialog.stories.tsx:43-48) suggests it cannot be dismissed.",
+      "fix": "When dismissable is false, ignore close reasons from Escape and outside press (Base UI onOpenChange reason / disablePointerDismissal) and have store.dismiss no-op for dismiss:\"none\"; add a test that Escape does not dismiss.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "inform-dialog.tsx onOpenChange calls onDismiss on any close (Escape/outside press) regardless of dismissable, which only gates showCloseButton. The outlet's onDismiss calls store.dismiss, which sets the in-memory dismissals[key] even for mode 'none' (persistence.ts only skips the write), and arbiter isEligible then filters the message out for the session. NotDismissable story implies otherwise."
+      }
+    },
+    {
+      "id": "k11-packages-4",
+      "subject": "mdx/KeyIdea",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "Text is painted with an action fill token (.mdx-insight-eyebrow), which fails 4.5:1 in dark mode; no dark story exists, so axe never sees it.",
+      "evidence": "packages/mdx/src/styles/base.css:140-142: --a63-action-primary, 2.9:1 on the dark page (scripts/design-system/lib/craft-rules.mjs:44-45); eyebrow is text-xs mono; listed as token-role debt in docs/design-system/audits/craft-baseline.json.",
+      "fix": "Paint it with the text role (--a63-text-accent for primary, --a63-text-danger for danger), remove the baseline entry, and add a Dark story so axe covers it.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "KeyIdea renders NoticeBlock mode='insight', whose eyebrow carries .mdx-insight-eyebrow with color: var(--a63-action-primary) (base.css:140-142), xs mono text. craft-rules.mjs documents the primary fill at 2.9:1 on the dark page; the line is in craft-baseline.json as token-role debt. No mdx story sets dark mode and Storybook defaults to light, so axe does not see it."
+      }
+    },
+    {
+      "id": "k11-packages-5",
+      "subject": "mdx/PageTableOfContents",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "Text is painted with an action fill token (.mdx-toc-link-rail[data-active='true']), which fails 4.5:1 in dark mode; no dark story exists, so axe never sees it.",
+      "evidence": "packages/mdx/src/blocks/page-table-of-contents/page-table-of-contents.css:51-53: --a63-action-primary, 2.9:1 on the dark page; listed as token-role debt in docs/design-system/audits/craft-baseline.json.",
+      "fix": "Paint it with the text role (--a63-text-accent for primary, --a63-text-danger for danger), remove the baseline entry, and add a Dark story so axe covers it.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "page-table-of-contents.tsx:107 applies mdx-toc-link-rail; the active state uses color: var(--a63-action-primary) (css:51-53), baselined as token-role debt; no dark story in packages/mdx."
+      }
+    },
+    {
+      "id": "k11-packages-6",
+      "subject": "mdx/Compare",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "Text is painted with an action fill token (.mdx-frame-item-negative), which fails 4.5:1 in dark mode; no dark story exists, so axe never sees it.",
+      "evidence": "packages/mdx/src/styles/base.css:36-40: --a63-action-danger, light-only token (atom63 token --a63-action-danger), a raw danger colour measured 3.0:1 on the dark page (packages/inform/src/surfaces/inform-parts.css:141-145); listed as token-role debt in docs/design-system/audits/craft-baseline.json.",
+      "fix": "Paint it with the text role (--a63-text-accent for primary, --a63-text-danger for danger), remove the baseline entry, and add a Dark story so axe covers it.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Compare.Item tone='negative' maps through MdxFrameItemPanel to mdx-frame-item-negative, which sets color: var(--a63-action-danger). semantics.css keeps --a63-action-danger at danger-600 in dark (only --a63-text-danger moves to 400), and inform-parts.css records raw danger at 3.0:1 on the dark page. Baselined as debt; no dark story."
+      }
+    },
+    {
+      "id": "k11-packages-7",
+      "subject": "mdx/StatCard",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "Text is painted with an action fill token (.mdx-stat-card-change-down), which fails 4.5:1 in dark mode; no dark story exists, so axe never sees it.",
+      "evidence": "packages/mdx/src/blocks/stat-card/stat-card.css:15-17: --a63-action-danger, about 3.0:1 on the dark page; listed as token-role debt in docs/design-system/audits/craft-baseline.json.",
+      "fix": "Paint it with the text role (--a63-text-accent for primary, --a63-text-danger for danger), remove the baseline entry, and add a Dark story so axe covers it.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "stat-card.tsx:21 maps 'down' to mdx-stat-card-change-down, color: var(--a63-action-danger) (danger-600 in both modes); baselined; no dark story."
+      }
+    },
+    {
+      "id": "k11-packages-8",
+      "subject": "mdx/MermaidDiagram",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "Text is painted with an action fill token (.mdx-mermaid-error-text), which fails 4.5:1 in dark mode; no dark story exists, so axe never sees it.",
+      "evidence": "packages/mdx/src/blocks/mermaid-diagram/mermaid-diagram.css:44-46: --a63-action-danger, about 3.0:1 on the dark page; listed as token-role debt in docs/design-system/audits/craft-baseline.json.",
+      "fix": "Paint it with the text role (--a63-text-accent for primary, --a63-text-danger for danger), remove the baseline entry, and add a Dark story so axe covers it.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "mermaid-diagram.tsx:405 renders the error message with mdx-mermaid-error-text, color: var(--a63-action-danger); same dark-mode danger-600 problem; baselined; no dark story."
+      }
+    },
+    {
+      "id": "k11-packages-9",
+      "subject": "mdx/VideoBlock",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "The caption track is always labelled \"English captions\" with srclang=\"en\", whatever language the file is in.",
+      "evidence": "packages/mdx/src/blocks/video-block/video-block.tsx:72; VideoBlockProps (:21-33) has no track language or label.",
+      "fix": "Add trackLang (required with trackSrc) and trackLabel props, default label from the language, and a test of the caption policy (the open BLOCK_REVIEW.md follow-up).",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "video-block.tsx renders <track default kind='captions' label='English captions' srcLang='en'> hard-coded; VideoBlockProps/VideoCaptionPolicy expose only trackSrc, no language or label."
+      }
+    },
+    {
+      "id": "k11-packages-10",
+      "subject": "widgets/WidgetStateFeedback",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "Five user-visible strings in the widget error state are English literals that cannot be overridden.",
+      "evidence": "packages/widgets/src/state/widget-state-feedback.tsx:24 (\"Try again\"), :61 (\"View error details\"), :75-85 (\"Error details\", \"Technical information you can copy when reporting this problem.\", \"Copy details\"); WidgetFeedbackCopy (state/types.ts) has no fields for them; WidgetHostErrorFallback says \"Retry\" (runtime/widget-host-error-fallback.tsx:43).",
+      "fix": "Add retryLabel and details labels to WidgetFeedbackCopy (or a labels prop) with the current English as defaults, and use one verb for retry in both components.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "widget-state-feedback.tsx hard-codes RETRY_LABEL 'Try again', aria-label 'View error details', PopoverTitle 'Error details', the description sentence, and 'Copy details' (plus CopyButton label). WidgetStateFeedbackProps takes only className/copy/onRetry/size/state and WidgetFeedbackCopy is {title, description}. No locale/labels mechanism in widgets. Host fallback says 'Retry', inconsistent."
+      }
+    },
+    {
+      "id": "k11-packages-11",
+      "subject": "@atom63/mdx (all blocks and prose)",
+      "criterion": "K8",
+      "severity": "P1",
+      "summary": "No MDX block or prose component can be found through the CLI or MCP, and none has a docs page.",
+      "evidence": "`pnpm -s atom63 search mdx` -> No results; `pnpm -s atom63 component callout` (and code-block) -> component.not_found; apps/docs/src/pages has no mdx page; only packages/mdx/README.md:127 lists blocks.",
+      "fix": "Index the portable blocks (blocks/index.ts:46-74) and the prose providers in the CLI index with import line, props and a story example, and add one docs page for the package.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced: `pnpm -s atom63 search mdx` -> No results; `atom63 component callout` -> component.not_found; `atom63 search callout` returns only foundation-typography. apps/docs/src/pages has no page for @atom63/mdx blocks."
+      }
+    },
+    {
+      "id": "k11-packages-12",
+      "subject": "mdx/ColorSwatchItem, KeyIdea, MdxPageSkeleton, MediaCaption, MediaPlaceholder, PageMeta, ResourceList, VideoBlock, ExampleContainer",
+      "criterion": "K9",
+      "severity": "P1",
+      "summary": "Nine public MDX blocks have no test file at all.",
+      "evidence": "ls packages/mdx/src/blocks/<block>/ shows no *.test.tsx for color-swatch-item, key-idea, mdx-page-skeleton, media-caption, media-placeholder, page-meta, resource-list, video-block; packages/mdx/src/example-container has none; blocks.a11y.test.tsx covers only Callout, Tabs, Accordion, Steps, StatCard.",
+      "fix": "Add a render + axe test per block, and behaviour tests for VideoBlock caption policy and ResourceList favicon fallback.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Directory listings show only stories/tsx/css/index for all eight blocks and example-container; grep finds no test referencing these components. Stories do get the Storybook axe smoke run, but there are no behaviour tests (e.g. VideoBlock caption policy, autoplay-mute) and no SSR test in packages/mdx."
+      }
+    },
+    {
+      "id": "k11-packages-13",
+      "subject": "mdx/ColorSwatchItem",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "ColorSwatchItem takes no className or rest props, so it cannot be placed, labelled or styled by a consumer.",
+      "evidence": "packages/mdx/src/blocks/color-swatch-item/color-swatch-item.tsx:1-19.",
+      "fix": "Accept className and spread the remaining div props onto the root.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "Real: ColorSwatchItem takes only name and variable, no className or rest props. But it is a token-docs helper used only via mdx-components; a consumer can still wrap or place it, and it carries no interactive or labelling need, so it does not block 'ready' at P1."
+      }
+    },
+    {
+      "id": "k11-packages-14",
+      "subject": "mdx/Callout",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Callout conveys tone by colour alone unless the author writes the tone into the text.",
+      "evidence": "packages/mdx/src/foundations/notice/notice-block.tsx:61-64 (div with data-tone, no icon or hidden text); ui-react Alert contract says tone is not conveyed by colour alone.",
+      "fix": "Render a default tone icon and a visually hidden tone word (overridable), as Alert does.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-15",
+      "subject": "inform/InformBanner",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Inform surfaces drop id, aria-* and data-* and do not forward refs; severity says danger where the rest of the system says error.",
+      "evidence": "packages/inform/src/surfaces/inform-banner.tsx:23-33, inform-corner-flyout.tsx:30-42, inform-spotlight.tsx:59-69, inform-dialog.tsx:28-38; core/types.ts InformSeverity vs atom63 component alert variants (error).",
+      "fix": "Spread rest props and the ref onto each surface root; decide whether to rename danger to error or alias it.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k11-packages-16",
+      "subject": "inform/InformBanner",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The danger banner announces politely as role=status, and its title colour mixes the danger action fill instead of --a63-text-danger.",
+      "evidence": "packages/inform/src/surfaces/inform-banner.tsx:36-40; inform-parts.css:173-176; atom63 token --a63-text-danger.",
+      "fix": "Use role=alert for danger, and --a63-text-danger for the danger title.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-17",
+      "subject": "inform/InformDialog",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "An InformDialog without a title has no accessible name, and its close button cannot be translated.",
+      "evidence": "packages/inform/src/surfaces/inform-dialog.tsx:75-79 (DialogTitle only when title is set; DialogDescription is not a name); dismissLabel ignored though ui-react DialogPopup takes closeProps (dialog.tsx:116,146-150).",
+      "fix": "Label the popup from the body when there is no title (as the spotlight does, inform-spotlight.tsx:186-187) and pass closeProps={{\"aria-label\": dismissLabel}}.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-18",
+      "subject": "inform/InformBanner, InformCornerFlyout",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The inform dismiss control is a 24px target with no 44px coarse-pointer floor.",
+      "evidence": "packages/inform/src/surfaces/inform-parts.css:46-54; iOS uses minTouchTarget 44pt (AtomInformSurfaces.swift:38-40).",
+      "fix": "Add a (pointer: coarse) rule expanding the ::after to --a63-control-min-target.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-19",
+      "subject": "inform/InformCornerFlyout (with InformFlyoutStack)",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "The fixed flyout stack ignores safe-area insets.",
+      "evidence": "packages/inform/src/surfaces/flyout-stack.tsx:45 (offset default 1rem); grep safe-area in packages/inform/src: none.",
+      "fix": "Default the anchored-edge inset to max(offset, env(safe-area-inset-bottom/top)) and the side to env(safe-area-inset-left/right).",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-20",
+      "subject": "inform/InformCornerFlyout (with InformFlyoutStack)",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "The flyout exit always slides to the physical right, even in a left corner.",
+      "evidence": "packages/inform/src/surfaces/inform-corner-flyout.css:31-34.",
+      "fix": "Slide toward the anchored side ([data-placement$=left] negates the translate).",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-21",
+      "subject": "inform/InformSpotlight",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The spotlight scrim is a box-shadow, which forced-colors mode removes, and no surface has a forced-colors rule.",
+      "evidence": "packages/inform/src/surfaces/inform-spotlight.css:20-24; grep forced-colors packages/*/src: comments only.",
+      "fix": "Add a forced-colors fallback (an outline on the cutout and a Canvas-coloured backdrop), system-wide.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-22",
+      "subject": "inform/InformDialog",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "Choosing a dialog action records the dismissal on iOS but not on the web.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomInformSurfaces.swift:127-132 vs packages/inform/src/surfaces/inform-actions.tsx:17-24 and inform-outlet.tsx:56-66.",
+      "fix": "Pick one rule (recommend: an action closes and records, as iOS) and implement it in InformOutlet.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k11-packages-23",
+      "subject": "inform/InformCornerFlyout (with InformFlyoutStack)",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "iOS draws flyouts as banner-style notices with the close button outside the box, not the raised overlay card of the web.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/inform.light.png; AtomInformSurfaces.swift:21-60 vs packages/inform/src/surfaces/inform-corner-flyout.css:7-18.",
+      "fix": "Decide whether iOS flyouts should match the web overlay card and inline close.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k11-packages-24",
+      "subject": "@atom63/inform, @atom63/widgets",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "`atom63 docs` strips the live-demo JSX from the inform and widgets pages, and no surface has an `atom63 component` entry.",
+      "evidence": "`pnpm -s atom63 docs pattern-inform` and `pnpm -s atom63 docs pattern-widgets` output fragments such as \"return ( / {children} / )\"; `atom63 search InformSpotlight` -> No results.",
+      "fix": "Keep exported demo functions intact in the docs-to-Markdown step, and index the inform and widgets exports.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-25",
+      "subject": "@atom63/mdx, @atom63/inform, @atom63/widgets, @atom63/brand",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "None of the four packages has a Themes story, so no baseline shows them in aqua, retro or terminal, and MDX has no dark baseline at all.",
+      "evidence": "apps/storybook/visual/__screenshots__: no *-themes-* file for mdx-, inform-, widgets- or brand-; packages/brand/src/logo/app-logo.stories.tsx:39-41 says so; the 93 mdx-blocks/prose baselines are all light.",
+      "fix": "Add a Themes matrix story per surface (as ui-react has) and a Dark story for every MDX block; YZ confirms K3 from the contact sheets.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-26",
+      "subject": "@atom63/mdx, @atom63/inform, @atom63/widgets, @atom63/brand",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "The SSR smoke test covers only ui-react stories.",
+      "evidence": "apps/storybook/ssr/ssr.test.tsx:16 import.meta.glob(\"../../../packages/ui-react/src/**/*.stories.tsx\"); only inform-runtime.test.tsx:3,120 renders to static markup.",
+      "fix": "Extend the glob to the four packages.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-27",
+      "subject": "@atom63/mdx (blocks)",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Most MDX blocks accept only className: no rest props, no id or aria passthrough, no ref.",
+      "evidence": "24 of 27 block entry files have no ...props/...rest spread (only accordion, tabs, code-block, image-compare spread); e.g. callout.tsx:19, stat-card.tsx:30, timeline.tsx:56, video-block.tsx:36-49.",
+      "fix": "Spread the remaining root props and the ref onto each block root.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-28",
+      "subject": "@atom63/mdx (blocks)",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "MDX blocks space themselves with the default Tailwind scale and ignore the density axis.",
+      "evidence": "Tailwind gap/mt/py utilities throughout packages/mdx/src/blocks; grep density in packages/mdx/src finds only a comment (variants/docs.ts:28); inform and widgets use --a63-space-*.",
+      "fix": "Decide whether long-form MDX should follow compact density; if yes, map block spacing to --a63-space-*.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k11-packages-29",
+      "subject": "mdx/CodeBlock",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "CodeBlock switches syntax colours with a dark: mode branch, so a dark theme without the .dark class shows light syntax colours.",
+      "evidence": "packages/mdx/src/blocks/code-block/code-block.tsx:81,135; docs/design-system/audits/craft-baseline.json:2-3; AGENTS.md rule 13.",
+      "fix": "Drive Shiki dual themes from a token-scoped CSS variable set by the mode resolver, and remove the baseline entries.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-30",
+      "subject": "mdx/CreditsBlock",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The credits trigger has no system focus ring and its animations ignore reduced motion.",
+      "evidence": "packages/mdx/src/blocks/credits-block/credits-block.tsx:30-70 (literal durations, no MotionConfig); credits-block.css:1-16 has no focus-visible rule.",
+      "fix": "Add an outline focus-visible rule, use motion tokens, and respect useReducedMotion.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-31",
+      "subject": "mdx/ImageCompare",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "ImageCompare puts ref and rest props on the inner stage but className on the outer figure, and its default transition is a literal.",
+      "evidence": "packages/mdx/src/blocks/image-compare/image-compare.tsx:150,247-255,293-310.",
+      "fix": "Put ref, rest and className on the same root; take the duration and easing from motion tokens and drop it under reduced motion.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-32",
+      "subject": "mdx/FigureBlock (with the figure lightbox)",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The lightbox trigger name is a fixed English template and its focus indicator is only a fading corner badge.",
+      "evidence": "packages/mdx/src/lightbox/figure-lightbox-trigger.tsx:24,29-46.",
+      "fix": "Add a label prop, and draw an outline focus-visible ring on the button.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-33",
+      "subject": "mdx/PageTableOfContents",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The compact TOC trigger name is built with English grammar and the sheet trigger name is fixed.",
+      "evidence": "packages/mdx/src/blocks/page-table-of-contents/page-table-of-contents.tsx:406 (`Open ${label.toLowerCase()}`), :457 (\"Open page navigation\").",
+      "fix": "Add an openLabel prop used for both triggers.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-34",
+      "subject": "mdx/ResourceList",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "ResourceList fetches every favicon from Google, its landmark name is fixed English, and its arrow does not mirror in RTL.",
+      "evidence": "packages/mdx/src/blocks/resource-list/resource-list.tsx:31 (https://www.google.com/s2/favicons), :101 (\"External resources\"), :79 (ArrowUpRight).",
+      "fix": "Make the favicon source a prop (off or self-hosted by default), add a label prop, and mirror the arrow with rtl:-scale-x-100.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k11-packages-35",
+      "subject": "mdx/VideoBlock",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "VideoBlock autoplays regardless of prefers-reduced-motion and always declares video/mp4.",
+      "evidence": "packages/mdx/src/blocks/video-block/video-block.tsx:50,63,70.",
+      "fix": "Skip autoplay under reduced motion and infer or accept the source type.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-36",
+      "subject": "mdx/MermaidDiagram",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "A rendered diagram is a role=img with only a generic name, so its content has no text alternative.",
+      "evidence": "packages/mdx/src/blocks/mermaid-diagram/mermaid-diagram.tsx:283-284.",
+      "fix": "Accept a description prop (or expose the source in a disclosure) and wire it with aria-describedby.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-37",
+      "subject": "mdx/PageMeta, Steps, LayerStack",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Blocks hard-code heading levels (h1 in PageMeta, h3 in Steps and LayerStack).",
+      "evidence": "packages/mdx/src/blocks/page-meta/page-meta.tsx:39; foundations/sequence/sequence-block.tsx:29; blocks/layer-stack/layer-stack.tsx:55.",
+      "fix": "Add a headingLevel (or as) prop.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-38",
+      "subject": "mdx/MdxPageSkeleton",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The page skeleton announces a fixed English \"Loading page content\".",
+      "evidence": "packages/mdx/src/blocks/mdx-page-skeleton/mdx-page-skeleton.tsx:45.",
+      "fix": "Add a label prop.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-39",
+      "subject": "mdx/prose (mdxComponents, MDXContentProvider, DocsMDXContentProvider)",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "External prose links open a new tab with no cue.",
+      "evidence": "packages/mdx/src/mdx-components.tsx:78-87; same in ResourceList (resource-list.tsx:55-58).",
+      "fix": "Append a visually hidden \"(opens in a new tab)\" label (overridable) and an optional icon.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-40",
+      "subject": "widgets/WidgetCard (with WidgetShell, header, title, content, block parts)",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The widget title is a plain div, so a widget has no heading and no name; iOS marks it as a header.",
+      "evidence": "packages/widgets/src/primitives/widget-card.tsx:211-230 vs packages/ui-ios/Sources/Atom63UI/AtomWidget.swift:87.",
+      "fix": "Render the title text as a heading (level prop) and label the card from it.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-41",
+      "subject": "widgets/WidgetCard (with WidgetShell, header, title, content, block parts)",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Widget card parts drop id/aria/data props, use Left/Right names, and a deprecated empty export remains.",
+      "evidence": "packages/widgets/src/primitives/widget-card.tsx:33-37,67-260; primitives/index.ts:8.",
+      "fix": "Spread rest props on every part, add Start/End aliases, and remove WIDGET_BODY_INSET_CLASS at the next minor.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-42",
+      "subject": "widgets/WidgetHostedShell (with loading shell, error fallback, transitions)",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The in-widget loading fallback has no accessible text.",
+      "evidence": "packages/widgets/src/runtime/widget-content-fallback.tsx:5-12 (output aria-busy with only an aria-hidden icon).",
+      "fix": "Add a visually hidden, overridable \"Loading\" label.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-43",
+      "subject": "widgets/WidgetGrid and units (WidgetViewport, widget scale)",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Widget type is sized from the cell width in px, so it ignores the reader text-size setting.",
+      "evidence": "packages/widgets/src/layout/widget-scale.ts:25,99-139.",
+      "fix": "Decide whether widgets follow browser text size (as WidgetKit follows Dynamic Type) or stay cell-proportional.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k11-packages-44",
+      "subject": "widgets/WidgetStateFeedback",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "iOS shows the error description inline where the web hides it behind a details popover, and the iOS state view has no snapshot.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomWidgetState.swift:48-73 vs packages/widgets/src/state/widget-state-feedback.tsx:116-118,154-156; snapshots list only widgetCard.*.png.",
+      "fix": "Align the anatomy (or document the platform difference) and add widgetState snapshots.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k11-packages-45",
+      "subject": "widgets/WidgetAvatar",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Avatar busy and presence states are aria-hidden and announced nowhere.",
+      "evidence": "packages/widgets/src/primitives/widget-avatar.tsx:64,85.",
+      "fix": "Expose busy via aria-busy and status via a visually hidden label prop.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-46",
+      "subject": "brand/AppLogo",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AppLogo cannot be renamed, drops rest props and ref, and paints its coloured symbol with the action fill token.",
+      "evidence": "packages/brand/src/logo/app-logo.tsx:71-79,87,105; Atom63Logo takes title (atom63-logo.tsx:9-14).",
+      "fix": "Add title, spread rest props, and use --a63-text-accent (or a brand mark token) for colored.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-47",
+      "subject": "mdx/DocExample",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "DocExample tablist name is a fixed English template and arrow keys do not swap in RTL.",
+      "evidence": "packages/mdx/src/blocks/doc-example/doc-example.tsx:90,154.",
+      "fix": "Add a tablistLabel prop and swap ArrowLeft/ArrowRight when dir=rtl.",
+      "kind": "fix"
+    },
+    {
+      "id": "k11-packages-48",
+      "subject": "@atom63/mdx, @atom63/inform, @atom63/widgets",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "No baseline captures hover or focus-visible for any interactive surface in these packages.",
+      "evidence": "apps/storybook/visual/__screenshots__: no *-focus-* or *-hover-* file for mdx-, inform-, widgets-.",
+      "fix": "Add a pseudo-state story for each interactive block and surface.",
+      "kind": "fix"
+    }
+  ]
+}

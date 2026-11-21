@@ -1,0 +1,807 @@
+{
+  "scope": "Layer 3 batch 1 actions (K1-K10): button, button-group, toggle, toggle-group, copy-button, destination-link, panel-setting-button, kbd",
+  "reviewedAt": "2026-11-19",
+  "round": 1,
+  "subjects": [
+    {
+      "subject": "button",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button/button.tsx:103-104 sets disabled and type='button' unconditionally, also when render swaps the element (render={<a href>} gets a no-op disabled attribute and type=button, so a loading/disabled link-button stays activatable); no test of render or ref (button.test.tsx has 11 tests, none for render). Props otherwise match packages/ui-foundation/contracts/components/button.json (variants, sizes incl. tile, shapes, tones); api-report pass."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button/button.tsx:56,103 loading sets native disabled, so a focused button that starts loading drops focus to <body> (no focusableWhenDisabled path); packages/ui-react/src/components/button/button.css has no forced-colors rule and there is no Button ForcedColors story, so data-pressed is indistinguishable in forced colors. Positives: native button, aria-busy, indicator joins the name (button.tsx:62-107), outline focus ring (button.css:192), reduced motion (button.css:713), axe on every story (.storybook/preview.tsx:153), conformance test src/conformance/renderer-conformance.test.tsx:157. No APG pattern binding in apps/storybook/a11y/patterns.test.ts."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-button-themes-chromium-linux.png: 4 themes x 2 modes, archetype visible (aqua gloss, retro bevel, terminal mono + glow). Provisional, YZ confirms."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-button-states-chromium-linux.png captures rest, loading, disabled, disabled primary, pressed in web/iOS light/dark; ui-react-button-loading-*.png. Hover and focus-visible (contract states) have no baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 4,
+          "evidence": "scripts/design-system/check-control-alignment.mjs renders .a63-Button at sm/md/lg across 8 axis combinations (sweep-r1/control-alignment.log: passed); touch target via ::before min-target (button.css:131-138); compact density in Endpoints baseline apps/storybook/visual/__screenshots__/ui-react-button-endpoints-chromium-linux.png."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button/button.css:107 white-space: nowrap and .a63-Button-label min-width:0 (button.css:273) with no overflow/ellipsis: a long or translated label spills out of a width-constrained button. No long-string, CJK or RTL story in packages/ui-react/src/components/button/button.stories.tsx. Logical props used for the indicator (button.css:391-418)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Endpoints story renders iOS touch (button.stories.tsx:638-641, baseline ui-react-button-endpoints); ::before 44px floor on coarse pointers. No phone-width story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component button: rich hand-written page (button.mdx) with examples and decisions, but unlike the other subjects it has no Contract, Related components or Examples sections, its axis table omits tile and the icon-* sizes, and the Public API row omits indicator/indicatorLabel."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button/button.test.tsx (11 tests) + renderer-conformance.test.tsx:157 (activation, disabled, loading) + SSR smoke apps/storybook/ssr/ssr.test.tsx over every story + 19 baselines. Untested: render composition, ref forwarding, focus during loading."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "button-group",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.tsx:31-41: root has no render prop (ButtonGroupText does, :46-61) and spreads props after data-slot/role so they can be overridden; ButtonGroupProvider/useButtonGroupContext are exported from the stable root (packages/ui-react/src/index.ts:80,83; api/ui-react.api.md:495,3056) but nothing reads the context (grep: no consumer outside the component). Sizes use 'default' where Button uses 'md' (contract-consistency-baseline.json: 'synonym | button-group.sizes | default -> md')."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.css:157-169 draws aria-pressed/data-pressed members as the selected plate only through fills and shadow, and the file has no forced-colors rule (grep), so in forced-colors mode a pressed member looks like the others; toggle-group.css:175 handles the same case. role=group is set (button-group.tsx:38) but the name is left to the consumer (docs say add aria-label)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-buttongroup-themes-chromium-linux.png: welded bars read per theme. But the Themes story (button-group.stories.tsx:107-117) puts text labels in an icon-sm group, so the On/Off/Off baseline shows labels crammed against the seams. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "rest, pressed (aria-pressed in Themes), with-input, separator, vertical baselines (ui-react-buttongroup-*.png). Contract states only rest/focus-within; focus-within has no baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.css:96 sets overflow:hidden on every Button member and :25 overflow-x:auto on the root, both of which clip the Button ::before hit-area (button.css:131-138). On input=touch a grouped md button is 32px tall (environment.css min-size) instead of the 44px floor. Toggle fixed the identical clip (toggle.css:84-87 comment). Group data-size only sets height (:271-306); member font/padding stay at the member's own size (md), so size='xs' gives 24px cells with md text."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical properties throughout (button-group.css:177-211 border-start-*-radius, border-inline-start-width); long runs scroll horizontally (:25). No RTL/long story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Endpoints story exists but the touch target is clipped (see K5); horizontal scroll with hidden scrollbar (:27-31) gives no visible overflow cue at phone width."
+        },
+        {
+          "criterion": "K8",
+          "score": 4,
+          "evidence": "pnpm -s atom63 component button-group: example code, when-to-use, ownership table, tokens, contract, related, 9 examples; apps/docs/src/pages/component-button-group.mdx; check:agent-index pass."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.test.tsx: 5 structural tests; 9 baselines; SSR smoke. No test of member flattening or pressed state."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "toggle",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 4,
+          "evidence": "packages/ui-react/src/components/toggle/toggle.tsx:21-41 wraps Base UI Toggle (pressed/defaultPressed/onPressedChange, render), props match toggle.json sizes/tones; conformance renderer-conformance.test.tsx:181."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Base UI aria-pressed button; forced colors toggle.css:186 + baseline ui-react-toggle-forced-colors; reduced motion toggle.css:193; axe on stories. No APG button-pattern binding (apps/storybook/a11y/patterns.test.ts binds only dialog, alert-dialog, menu, tabs, select, checkbox, radio, switch, accordion). Contract state 'focus' rather than 'focus-visible' (contract-consistency-baseline.json:38)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-toggle-themes-chromium-linux.png: aqua and retro rows are pixel-alike to modern (flat fill, no gloss, no bevel) although toggle.json lists toggle.gloss/shadow token slots; only terminal changes. Provisional, taste."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-toggle-states-chromium-linux.png: rest, pressed, disabled, disabled-on. Hover and focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 4,
+          "evidence": "check-control-alignment.mjs covers Toggle on the same rungs (sweep pass); ::before min-target toggle.css:94-100; IconSizes/Sizes baselines."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/toggle/toggle.css:66 nowrap + .a63-Toggle-content overflow:hidden (:87) clips a long label with no ellipsis; no long/CJK story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Endpoints baseline includes touch; hit area floor from ::before."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component toggle: no code example beyond the import line; guidance includes generic form text ('explain errors beside the affected field', 'invalid state') that does not apply to a Toggle; no apps/docs page (component-catalog.ts only)."
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "packages/ui-react/src/components/toggle/toggle.test.tsx: 5 tests incl. click and disabled; conformance test; 10 baselines; SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "toggle-group",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.tsx:28-33 exposes size and tone, but toggle-group.json has no sizes or tones lists, so `atom63 component toggle-group` never tells a builder they exist (AGENTS.md rule 3: pass only contract values). Contract 'selectionModes' maps to Base UI's boolean `multiple` prop."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Base UI group with roving focus, tested: toggle-group.test.tsx:110 (one tab stop, arrows, Space); forced colors baseline ui-react-togglegroup-forced-colors; axe. No APG pattern binding; state 'focus' not 'focus-visible' (contract-consistency-baseline.json:37)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-togglegroup-themes-chromium-linux.png: neutral and accent bars, aqua gloss, retro inset, terminal mono. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "selected, disabled, multiple, vertical, pills, ghost baselines (ui-react-togglegroup-*.png). Hover/focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Items inherit the Toggle ::before floor and toggle-group.css has no overflow clip (grep); sizes ride Toggle's sizes, which are not in this contract (see K1)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical layout; Base UI handles RTL arrow direction. No RTL/long story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Endpoints baseline with touch; no phone-width story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component toggle-group: variant guidance table, contract, examples; no code example and the same generic form guidance; size/tone undocumented."
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.test.tsx: 8 tests incl. keyboard; conformance renderer-conformance.test.tsx:201; 15 baselines; SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "copy-button",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:51-101: built on Button, sizes/variants match copy-button.json sizePairs; no onCopy/onError callback, so a consumer cannot react to success or failure (failure only toasts)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "aria-label swaps label/copiedLabel (copy-button.tsx:84), hidden duplicate item aria-hidden (:116,133), reduced motion via useReducedMotion (:108), title shows label not secret value (:94). The outcome is only announced through sonner, so without a mounted Toaster nothing is announced."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-copybutton-themes-chromium-linux.png: themed ghost/outline/secondary. Aqua/dark secondary icon button shows a heavy white gloss cap over the glyph. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract state 'copied' (copy-button.json states) has no story or baseline: copy-button.stories.tsx has no copied story or play function, ui-react-copybutton-*.png are all rest-state; the copy-failure path has no designed state."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inherits Button sizing and ::before floor; Sizes baseline shows all pairs."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:146 visible 'Copied!' and :77 'Failed to copy to clipboard' are hardcoded English with no prop; :73 default success text composes English around `label`."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Button-based touch floor; Endpoints baseline."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component copy-button: contract table prints iconSizes and labelSizes as all 10 flattened sizes (wrong); no code example; guidance includes unrelated boilerplate ('Make loading, disabled, and destructive behavior explicit')."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/copy-button/copy-button.test.tsx: 8 tests, toast.error mocked but the rejection path is never exercised; no baseline of the copied state; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "destination-link",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx:20-59 useRender + mergeProps, router link via render; render silently ignored for external (:54). DestinationIndicator (:77-95) accepts only className and kind: no prop spread, no ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 4,
+          "evidence": "Native anchor, new-tab behaviour added to the name (destination-link.tsx:28-36), rel=noopener noreferrer; tests destination-link.test.tsx:43-60 and renderer-conformance.test.tsx:409; outline focus ring destination-link.css:19-23; axe."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-destination-link-themes-chromium-linux.png: the link looks the same in modern, aqua and retro, terminal does not take the mono face, and the matrix has no theme/mode labels. The internal glyph is an eye (destination-link.tsx:84), which reads as 'preview', not 'stays in app'. Provisional, taste."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states only rest and focus-visible (destination-link.json) while the recipe has a hover state (destination-link.css:15-17); no focus-visible baseline; baselines are internal/external/dark/themes only."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inline text link with no size axis; indicator uses margin-inline-start and em-relative alignment (destination-link.css:25-28)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx:28,32 hardcode '(opens in new tab)' in English with no prop to localise the accessible name."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No touch or phone evidence: no Endpoints story; standalone use (not inline in a sentence) has no target floor, so a 14px link is about 20px tall on touch."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component destination-link: no code example (the router render pattern is described only in prose), guidance boilerplate about 'loading, disabled, and destructive behavior' does not apply to a link; no Playground/Endpoints/ContractMetadata story."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/destination-link/destination-link.test.tsx: 5 tests + conformance; 4 baselines; SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "panel-setting-button",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.tsx:19-54: `active` is controlled-only (no defaultActive, no onActiveChange), though the contract makes it a toggle (states off/on, archetype toggle); compare Toggle on Base UI. Comment :12-16 says Button has no tile size, but Button now ships size='tile' (button.json sizes; button.css:601) and the tile layout is duplicated here."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "aria-pressed through Button (panel-setting-button.tsx:39), forced colors with Highlight (panel-setting-button.css:80-90) + baseline ui-react-panelsettingbutton-forced-colors; axe. No keyboard test."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-panelsettingbutton-themes-chromium-linux.png (modern/dark and aqua/dark rows): the active tile's icon is drawn in --a63-action-primary on a 15% primary tint (panel-setting-button.css:59-61) and reads dimmer than the inactive tile's icon; no declared contrast pair covers it."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-panelsettingbutton-states-chromium-linux.png: off, on, disabled. Focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "panel-setting-button.css:26 min-height 4.5rem is a fixed rem, not on the density ramp; padding uses space tokens; tile is far above 44px."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Button's white-space:nowrap (button.css:107) reaches .a63-PanelSettingButton-label (panel-setting-button.css:46-49 sets no wrap or truncation), so a long or translated label widens or overflows the tile; no long-label story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Tile height 72px exceeds the touch floor; Endpoints baseline."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "pnpm -s atom63 component panel-setting-button: no code example; guidance includes 'explain errors beside the affected field' and 'invalid state', which this control does not have; no axes documented."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.test.tsx: 3 render tests, no activation or keyboard test, not in renderer-conformance.test.tsx."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "kbd",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/kbd/kbd.tsx:19-21 KbdGroup renders a <div>, so the documented use inside running text (<p>Press <KbdGroup>...) is invalid nesting and a React hydration warning; the story avoids it by using a flex <div> (kbd.stories.tsx:79-99)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Semantic <kbd>, pointer-events none; symbols such as the command glyph are read literally by screen readers and the docs give no guidance on labelling them."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-kbd-themes-chromium-linux.png: recessed cap per theme (retro bevel visible). Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Single 'rest' state captured; the tooltip-inverted cap and its dark-mode branch (kbd.css:50-66) have no story or baseline (no Tooltip story uses Kbd)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sizes sm/md from kbd.json; fixed rem heights (kbd.css:13-14,33-34) scale with text but not with density."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "nowrap cap, padding-inline logical (kbd.css:15). No long-key story."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: presentational marker, not interactive and no phone-specific behaviour"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component kbd: contract, examples; kbd.mdx:23 says it reads --a63-control-radius but kbd.css:19 uses --radius-sm and omits --a63-marker-shadow (stale)."
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "packages/ui-react/src/components/kbd/kbd.test.tsx: 3 tests sufficient for a presentational part; 7 baselines; SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "r1-k01-actions-1",
+      "subject": "button",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Button sets disabled and type=button even when render swaps in a non-button element, so a disabled or loading link-styled Button still navigates.",
+      "evidence": "packages/ui-react/src/components/button/button.tsx:103-104",
+      "fix": "When render targets a non-button element, emit aria-disabled and tabIndex handling instead of disabled, omit type, and block activation (Base UI nativeButton pattern); add render-as-anchor and ref tests.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-2",
+      "subject": "button",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Entering loading sets native disabled, so a keyboard user who activates the button loses focus to the document body.",
+      "evidence": "packages/ui-react/src/components/button/button.tsx:56,103",
+      "fix": "Keep a loading button focusable (aria-disabled plus prevented activation, like Base UI focusableWhenDisabled) and test that focus stays on it.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-3",
+      "subject": "button",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "No truncation strategy for long or translated labels: nowrap with no overflow handling, and no long/CJK/RTL story.",
+      "evidence": "packages/ui-react/src/components/button/button.css:107,273; button.stories.tsx",
+      "fix": "Add overflow:hidden + text-overflow:ellipsis on .a63-Button-label text (or document wrapping), plus a long-label/CJK/RTL story with a baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-4",
+      "subject": "button",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "No forced-colors handling or ForcedColors story; data-pressed relies on fill only.",
+      "evidence": "packages/ui-react/src/components/button/button.css (no forced-colors block)",
+      "fix": "Add a forced-colors rule for [data-pressed]/[aria-pressed] (Highlight) and a ForcedColors story like toggle's.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-5",
+      "subject": "button",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "CLI page for button lacks the Contract, Related and Examples sections other components get, and omits tile, icon-* sizes and indicator props.",
+      "evidence": "pnpm -s atom63 component button",
+      "fix": "Append the generated contract/related/examples sections after the hand-written body and list indicator/indicatorLabel.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-6",
+      "subject": "button",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "Hover and focus-visible states have no baseline for any subject in this batch.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-button-states-chromium-linux.png (and the other batch baselines)",
+      "fix": "Add pseudo-state captures (storybook-addon-pseudo-states or forced data attributes) for hover and focus-visible in each States story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-7",
+      "subject": "button-group",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Grouped buttons lose the 44px touch target: overflow:hidden on members (and overflow-x:auto on the root) clips Button's ::before hit area, leaving 32px cells on touch.",
+      "evidence": "packages/ui-react/src/components/button-group/button-group.css:25,96; compare toggle/toggle.css:84-87",
+      "fix": "Move the clip to the label (as Toggle did) and raise --button-group-height to the min-target under input=touch, or otherwise guarantee the 44px floor; add a touch endpoint assertion.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-8",
+      "subject": "button-group",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Pressed members (aria-pressed/data-pressed) are not distinguishable in forced-colors mode.",
+      "evidence": "packages/ui-react/src/components/button-group/button-group.css:157-169, no forced-colors block",
+      "fix": "Add a forced-colors rule mapping pressed members to Highlight/HighlightText, plus a ForcedColors story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-9",
+      "subject": "button-group",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Group size only sets cell height; member font and padding stay at the member's own size, so size='xs' gives 24px cells with md text.",
+      "evidence": "packages/ui-react/src/components/button-group/button-group.css:271-306",
+      "fix": "Have the group size drive member padding/font (or document that members must take the matching size).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-10",
+      "subject": "button-group",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Dead public API: ButtonGroupProvider/useButtonGroupContext are exported as stable but nothing reads the context; root lacks render and lets props override data-slot/role.",
+      "evidence": "packages/ui-react/src/components/button-group/button-group-context.tsx; packages/ui-react/src/index.ts:80,83; button-group.tsx:31-41",
+      "fix": "Stop exporting the context (or use it); put data-slot/role after the spread and add render for parity with ButtonGroupText.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-11",
+      "subject": "button-group",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Themes baseline puts text labels in an icon-sm group, so the On/Off/Off cells look crammed.",
+      "evidence": "packages/ui-react/src/components/button-group/button-group.stories.tsx:107-117; apps/storybook/visual/__screenshots__/ui-react-buttongroup-themes-chromium-linux.png",
+      "fix": "Use size='sm' (text) or real icons in that row and re-baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-12",
+      "subject": "toggle",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Toggle shows no theme archetype in aqua or retro: both rows look like modern, though the contract lists gloss and shadow token slots.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-toggle-themes-chromium-linux.png; toggle.json tokenSlots",
+      "fix": "YZ to confirm whether aqua/retro toggles should carry gloss/bevel like Button and ToggleGroup; then wire the toggle.gloss/shadow slots per theme.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r1-k01-actions-13",
+      "subject": "toggle",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "CLI answer has no code example and generic form guidance (errors, invalid state) that does not apply to Toggle.",
+      "evidence": "pnpm -s atom63 component toggle",
+      "fix": "Add a usage example and component-specific guidance in component-catalog.ts; drop the form boilerplate for non-field controls.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-14",
+      "subject": "toggle",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "Long toggle labels are clipped with no ellipsis (nowrap + overflow:hidden on content).",
+      "evidence": "packages/ui-react/src/components/toggle/toggle.css:66,87",
+      "fix": "Add text-overflow:ellipsis on the content text or allow wrapping, and a long-label story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-15",
+      "subject": "toggle-group",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "ToggleGroup exposes size and tone props that its contract does not list, so the CLI never surfaces them; selectionModes maps to a boolean multiple prop.",
+      "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.tsx:28-33; packages/ui-foundation/contracts/components/toggle-group.json",
+      "fix": "Add sizes and tones (shared with toggle) to toggle-group.json and document the selectionModes -> multiple mapping.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-16",
+      "subject": "toggle-group",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "No APG pattern contract binds toggle, toggle-group or button; keyboard behaviour is covered only by unit tests.",
+      "evidence": "apps/storybook/a11y/patterns.test.ts bindings list",
+      "fix": "Add a button (toggle) and toolbar/radio-like pattern contract in ui-foundation/src/a11y and bind these stories.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-17",
+      "subject": "copy-button",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The contract's 'copied' state has no story or baseline, and the failure state is not designed.",
+      "evidence": "packages/ui-react/src/components/copy-button/copy-button.stories.tsx; copy-button.json states",
+      "fix": "Add a Copied story (CopyButtonFeedback copied, icon-only and labelled) with a baseline, and a failure test.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-18",
+      "subject": "copy-button",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Visible 'Copied!' and the failure toast text are hardcoded English with no prop.",
+      "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:73,77,146",
+      "fix": "Add copiedText and errorMessage props (and use copiedLabel for the visible label) so products can localise.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-19",
+      "subject": "copy-button",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "CLI contract table prints iconSizes and labelSizes as all ten sizes, and the page has no code example.",
+      "evidence": "pnpm -s atom63 component copy-button",
+      "fix": "Fix the CLI renderer for defaultIconSize/defaultLabelSize (they are defaults, not axes) and add an example.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-20",
+      "subject": "copy-button",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "The clipboard failure path is never exercised in tests.",
+      "evidence": "packages/ui-react/src/components/copy-button/copy-button.test.tsx (toast.error mocked, never asserted)",
+      "fix": "Add a test where writeText rejects and assert the error toast and that copied stays false.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-21",
+      "subject": "copy-button",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "No onCopy/onError callback; consumers cannot react to the outcome.",
+      "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:69-79",
+      "fix": "Add onCopy(value) and onCopyError(error) props.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-22",
+      "subject": "destination-link",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "'(opens in new tab)' is hardcoded English in the accessible name with no prop.",
+      "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx:28,32",
+      "fix": "Add an externalLabel prop (default '(opens in new tab)').",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-23",
+      "subject": "destination-link",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Hover exists in the recipe but not the contract, and focus-visible (a required state) has no baseline.",
+      "evidence": "packages/ui-react/src/components/destination-link/destination-link.css:15-23; destination-link.json states",
+      "fix": "Add hover to the contract and baseline hover/focus-visible.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-24",
+      "subject": "destination-link",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No touch or phone evidence and no target floor for standalone links.",
+      "evidence": "no Endpoints story in destination-link.stories.tsx",
+      "fix": "Add an Endpoints story with touch, and a min-block-size/padding floor when the link is not inline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-25",
+      "subject": "destination-link",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "CLI page has no code example of the router render pattern and carries unrelated boilerplate; no Playground story.",
+      "evidence": "pnpm -s atom63 component destination-link",
+      "fix": "Add a render={<RouterLink/>} example and a Playground; make guidance specific.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-26",
+      "subject": "destination-link",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The link looks the same in every theme, terminal does not take its mono face, the themes matrix is unlabelled, and the internal glyph is an eye.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-destination-link-themes-chromium-linux.png; destination-link.tsx:84",
+      "fix": "YZ to decide the per-theme link treatment and the internal-destination glyph; label the matrix rows.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r1-k01-actions-27",
+      "subject": "destination-link",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "DestinationIndicator takes only className and kind: no prop spread, no ref.",
+      "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx:77-95",
+      "fix": "Accept ComponentProps<'span'> and spread them.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-28",
+      "subject": "panel-setting-button",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "active is controlled-only: no defaultActive or onActiveChange, unlike Toggle; the tile layout duplicates Button size='tile' behind a stale comment.",
+      "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.tsx:12-54",
+      "fix": "Add defaultActive/onActiveChange (or build on Base UI Toggle) and reuse Button size='tile'; update the comment.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-29",
+      "subject": "panel-setting-button",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "In dark modes the active tile's icon (action-primary on a 15% primary tint) reads dimmer than the inactive icon.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-panelsettingbutton-themes-chromium-linux.png; panel-setting-button.css:59-61",
+      "fix": "Use the accent text token (e.g. --a63-text-accent) for the active foreground and declare the pair in the contrast test.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-30",
+      "subject": "panel-setting-button",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Long or translated labels do not wrap or truncate inside the tile (inherited nowrap).",
+      "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.css:46-49; button.css:107",
+      "fix": "Set white-space:normal with line clamp or ellipsis on .a63-PanelSettingButton-label and add a long-label story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-31",
+      "subject": "panel-setting-button",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "CLI page has no example and generic form guidance (errors, invalid state).",
+      "evidence": "pnpm -s atom63 component panel-setting-button",
+      "fix": "Add an example and component-specific guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-32",
+      "subject": "panel-setting-button",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Only three render tests; no activation, keyboard or conformance coverage.",
+      "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.test.tsx",
+      "fix": "Add click/Space toggling and disabled tests.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-33",
+      "subject": "kbd",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "KbdGroup renders a div, so the documented use inside running text is invalid nesting (hydration warning).",
+      "evidence": "packages/ui-react/src/components/kbd/kbd.tsx:19-21",
+      "fix": "Render KbdGroup as a <kbd> (or <span>), as nested <kbd> is valid HTML.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-34",
+      "subject": "kbd",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "The tooltip-inverted cap and its dark-mode branch have no story or baseline; the branch is listed debt (mode-branch and surface-page-as-text in craft-baseline.json).",
+      "evidence": "packages/ui-react/src/components/kbd/kbd.css:50-66; docs/design-system/audits/craft-baseline.json:4,9",
+      "fix": "Read the tooltip foreground token instead of branching on mode, and add a Kbd-in-Tooltip story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k01-actions-35",
+      "subject": "kbd",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "kbd.mdx names --a63-control-radius but the recipe uses --radius-sm and --a63-marker-shadow.",
+      "evidence": "packages/ui-react/src/components/kbd/kbd.mdx:23; kbd.css:19-21",
+      "fix": "Update the tokens line.",
+      "kind": "fix"
+    }
+  ]
+}

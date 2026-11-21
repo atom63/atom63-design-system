@@ -1,0 +1,946 @@
+{
+  "scope": "k06-surfaces",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "layer-3 batch-6 reviewer",
+  "verifiedBy": null,
+  "notes": "Read-only review. Taste scores (K3) are provisional until YZ sees the contact sheet. iOS: AtomCard reviewed under card K10; DisclosureGroup under accordion, AtomListSection under item. All 10 contracts are maturity \"stable\" while 0 of 10 scorecards are ready (a C5 input for layer 2). Older audits under docs/design-system/audits/vibe-* were not relied on.",
+  "subjects": [
+    {
+      "subject": "card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/card/card.tsx:38-305 every part uses useRender + mergeProps (render prop, React 19 ref-as-prop); variants are a contract axis, not booleans; hoverScale is a behaviour toggle"
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/card/card.tsx:213-229 CardTitle renders a <span> (no heading in the outline); card.css:337-345 only .a63-CardLink has a focus-visible ring, a Card rendered as <a>/<button> via render gets none; card.tsx:178-192 CardMediaOverlayIconButton is a <span>, story card.stories.tsx:150-152 puts a \"↗\" Kbd in it with no name; 0 forced-colors rules"
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-card-themes-chromium-linux.png shows each theme expressed (aqua lift, retro offset shadow, terminal tinted edge) in light and dark; craft-baseline token-role entries for card.css:417-418"
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "contract states rest/hover/focus-visible/interactive/cursor-active; baselines cover rest, variants and cursor-label only (9 card PNGs); no hover or focus-visible baseline, and a focus-visible style exists only on the CardLink wrapper (card.css:343)"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "card.tsx:20-31 + card.css:350 container-query responsive padding; contract paddings none/sm/md/lg; Endpoints story covers compact density; apps/storybook/visual/__screenshots__/ui-react-card-endpoints-chromium-linux.png"
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "logical insets in media overlay (card.css:196-209 inset-inline-end); lineClamp 1-3 truncation; K6 batch: no batch-6 story renders dir=\"rtl\", CJK or long strings except scrollable-list (grep of */*.stories.tsx: rtl=0, cjk=0 for 9 of 10)"
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "card.css:77-85 hover lift (translateY -4px, shadow) is not gated by @media (hover: hover), so it sticks after a tap on touch; K7 batch: no phone-width story (grep phone|viewport|mobile in stories = 0); Endpoints story covers ios/touch input and compact density only (e.g. accordion.stories.tsx:116-141)"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component card: guidance, contract, iOS mapping, 9 examples; card.mdx:9 still says the cursor label is \"intentionally NOT part of the foundation component\" while CardCursorLabel/useCardCursor ship"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/card/card.test.tsx: 11 behaviour tests (padding defaults, responsive padding, render prop, cursor onMove); apps/storybook/ssr/ssr.test.tsx renders every story to string; 9 baselines"
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomCard.swift: 3 of 6 variants; action card uses .buttonStyle(.plain) (line 34), no press/focus feedback although the contract says touch and keyboard feedback replace hover; elevated shadow uses literals radius 12 / y 4 / opacity 0.14 (lines 71-83) not a shadow token; snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/card.{light,dark,large-type}.png cover only the default variant and show the interactive card identical to the static one"
+        }
+      ]
+    },
+    {
+      "subject": "item",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/item/item.tsx:76-104 Item uses useRender (render swaps to <a>, test item.test.tsx:53); variant/size/tone are contract axes; ItemGroup/ItemMedia/ItemTitle are plain elements without render"
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "item.tsx:35-50 ItemGroup is a <div> with no list role and Items are <div>s, so a list of rows is not exposed as a list; item.tsx:54-63 ItemSeparator renders a semantic Separator (role=separator) by default, contradicting the contract outcome \"Hides dividers from assistive technology\" (atom63 component item); selected state (item.css:146-154) is background-only with no forced-colors rule"
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-item-themes-chromium-linux.png: one boundary, theme button treatments visible, terminal mono; 12 item baselines"
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-item-selected-and-current-chromium-linux.png, ui-react-item-as-link-chromium-linux.png capture selected/current; hover (item.css:126) and focus-visible (item.css:97) not captured"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "item.css:58-121 rows floor at --a63-control-min-size; inset group 52px in phone form factor; sizes default/sm/xs; apps/storybook/visual/__screenshots__/ui-react-item-sizes-chromium-linux.png; contract-consistency-baseline \"synonym | item.sizes | default -> md\""
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "K6 batch: no batch-6 story renders dir=\"rtl\", CJK or long strings except scrollable-list (grep of */*.stories.tsx: rtl=0, cjk=0 for 9 of 10)"
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "item.stories.tsx:197-203 renders InsetGroup in data-a63-form-factor=\"phone\"; apps/storybook/visual/__screenshots__/ui-react-item-inset-group-chromium-linux.png"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component item: dense-list guidance (size sm/xs), React and SwiftUI adaptations, 12 examples"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/item/item.test.tsx: 8 tests (tone, render, group variant/surface); SSR via ssr.test.tsx; 12 baselines"
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "AtomListSection snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/listSection.{light,dark,large-type}.png and listRow.*; CLI documents 52pt rows, Dynamic Type, surface parity"
+        }
+      ]
+    },
+    {
+      "subject": "frame",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/frame/frame.tsx:51-145 all parts are plain <div>s with no render prop, unlike Card/Item in the same batch, so a Frame cannot become <section>/<aside> without a wrapper"
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "frame.tsx:115-122 FrameTitle is a <div>: a titled panel has no heading and the frame no accessible name; frame.test.tsx:71 does guard against banner/contentinfo landmarks"
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-frame-themes-chromium-linux.png: retro and terminal draw a bordered panel inside a bordered tray (two and three visible strokes), against AGENTS.md rule 7 \"Don't nest outlined containers\""
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "states are the border axis (off/subtle/strong): apps/storybook/visual/__screenshots__/ui-react-frame-variants-chromium-linux.png; static, no interactive states"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "frame.css:19 tray pad from --a63-frame-pad, :54 --a63-space-5, concentric radius at :51; Endpoints story apps/storybook/visual/__screenshots__/ui-react-frame-endpoints-chromium-linux.png"
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "K6 batch: no batch-6 story renders dir=\"rtl\", CJK or long strings except scrollable-list (grep of */*.stories.tsx: rtl=0, cjk=0 for 9 of 10)"
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "K7 batch: no phone-width story (grep phone|viewport|mobile in stories = 0); Endpoints story covers ios/touch input and compact density only (e.g. accordion.stories.tsx:116-141)"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component frame: contract table, Card-vs-Frame guidance, 6 examples"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/frame/frame.test.tsx: 6 tests (chrome resolution, overrides, landmarks); SSR; 6 baselines"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart in the contract (no crossRenderer)"
+        }
+      ]
+    },
+    {
+      "subject": "separator",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/separator/separator.tsx:9-14 `decorative?: boolean` stands in for the contract axis `modes: decorative | semantic` (default semantic) - a boolean standing in for a variant"
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "separator.css:6-20 the line is a 1px background-color; forced-colors mode replaces backgrounds, so the separator vanishes; no forced-colors rule in the batch (grep forced-colors = 0)"
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-separator-themes-chromium-linux.png and -gradient- baselines"
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: static divider, no interactive states"
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: no size axis; 1px hairline"
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "no directional content; gradient fades are symmetric (separator.css gradient rules)"
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: no touch interaction"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component separator: decorative-vs-semantic guidance, 8 examples"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/separator/separator.test.tsx: 4 tests incl. decorative hides from AT; SSR; 8 baselines"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart"
+        }
+      ]
+    },
+    {
+      "subject": "accordion",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/accordion/accordion.tsx:116-131 root passes className={cn('a63-Accordion')} and then {...props}, so a consumer className replaces the recipe class (font-family, color, flex column from accordion.css:11-16 are lost); accordion.tsx:101 `collapsible` is accepted and silently ignored"
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "apps/storybook/a11y/patterns.test.ts:95-97 APG accordion pattern test + snapshot (heading level 3 > button [expanded], region); accordion.tsx:29-37 aria-controls kept valid for unmounted panels; focus ring is an outline (accordion.css:79-82); reduced motion at :183"
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-accordion-themes-chromium-linux.png: terminal mono reads, but modern/aqua/retro are nearly identical (retro shows no bevel)"
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "contract states closed/open/focusVisible/disabled; accordion.stories.tsx has no disabled story (grep disabled = 0) and no focus baseline; only 5 baselines"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "accordion.css:42 trigger padding space-4 x space-2 (~52px row); Endpoints touch/compact apps/storybook/visual/__screenshots__/ui-react-accordion-endpoints-chromium-linux.png"
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "K6 batch: no batch-6 story renders dir=\"rtl\", CJK or long strings except scrollable-list (grep of */*.stories.tsx: rtl=0, cjk=0 for 9 of 10)"
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "K7 batch: no phone-width story (grep phone|viewport|mobile in stories = 0); Endpoints story covers ios/touch input and compact density only (e.g. accordion.stories.tsx:116-141)"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component accordion: APG link, Accordion-vs-Collapsible guidance, iOS DisclosureGroup mapping"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/accordion/accordion.test.tsx: 6 tests (expand, aria-controls cases) + pattern test + SSR"
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "DisclosureGroup snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/disclosureGroup.{light,dark,large-type}.png; contract crossRenderer maps closed/open/disabled"
+        }
+      ]
+    },
+    {
+      "subject": "collapsible",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/collapsible/collapsible.tsx:22-73 thin Base UI pass-through with render prop (test collapsible.test.tsx:54)"
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "collapsible.css:9-15 the trigger recipe sets only cursor: no focus-visible ring, no hover, so a bare CollapsibleTrigger shows the UA ring at best; no APG disclosure pattern test (patterns.test.ts binds only select, switch, checkbox, accordion, radio)"
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "provisional; the component draws no chrome (\"visible chrome is left to the consumer\", collapsible.css:6); apps/storybook/visual/__screenshots__/ui-react-collapsible-themes-chromium-linux.png chrome comes from story-local inline styles"
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "contract states closed/open/starting/ending/disabled; every story uses defaultOpen (collapsible.stories.tsx:45), so no closed or disabled baseline"
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "no size or target floor of its own; a bare trigger can be any height; 44px only when the consumer renders a Button"
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "K6 batch: no batch-6 story renders dir=\"rtl\", CJK or long strings except scrollable-list (grep of */*.stories.tsx: rtl=0, cjk=0 for 9 of 10)"
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "K7 batch: no phone-width story (grep phone|viewport|mobile in stories = 0); Endpoints story covers ios/touch input and compact density only (e.g. accordion.stories.tsx:116-141)"
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "collapsible.stories.tsx:30-52 the reference example needs a story-local Frame with inline border styles and a Button with style={{borderRadius:0,justifyContent:'space-between',width:'100%'}}; a builder copying it inherits inline overrides"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/collapsible/collapsible.test.tsx: 4 tests (slots, indicator, toggle, render); SSR; 4 baselines"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no crossRenderer mapping; Accordion carries DisclosureGroup"
+        }
+      ]
+    },
+    {
+      "subject": "resizable",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/resizable/resizable.tsx:14-20 both `direction` and `orientation` props (duplicate alias); :62-63 deprecated boolean `withHandle` still in the API next to `variant`"
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "resizable.tsx:67 default aria-label \"Resize panels\" is hard-coded English; resizable.css:19-27 the handle line is a 1px background-color that disappears in forced colors; no window-splitter APG pattern test"
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-resizable-themes-chromium-linux.png: the 12x16 grip chip is barely visible in every theme and the terminal/dark line is near-invisible; no theme expression"
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "contract states idle/hover/focus-visible/dragging/disabled; the 7 baselines show only idle"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "resizable.css:39-45 hit area max(0.75rem, --a63-control-min-target) = 2.75rem on touch (atom63 token --a63-control-min-target)"
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "resizable.css:42 `left: 50%` centering (symmetric); no RTL story to confirm keyboard direction; K6 batch: no batch-6 story renders dir=\"rtl\", CJK or long strings except scrollable-list (grep of */*.stories.tsx: rtl=0, cjk=0 for 9 of 10)"
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "touch-action: none (resizable.css:27); K7 batch: no phone-width story (grep phone|viewport|mobile in stories = 0); Endpoints story covers ios/touch input and compact density only (e.g. accordion.stories.tsx:116-141)"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component resizable: minimums/handle guidance, 7 examples"
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/resizable/resizable.test.tsx: 5 tests are render/attribute checks only; no keyboard (arrow/Home/End) or drag resize test"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart"
+        }
+      ]
+    },
+    {
+      "subject": "scroll-area",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/scroll-area/scroll-area.tsx:56-57 always renders both scrollbars; the contract axis orientations vertical|horizontal|both has no prop; no ScrollAreaProps type is exported (only ScrollAreaViewportProps)"
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "scroll-area.css:34-37 viewport focus-visible outline; native scrolling kept; thumb is a background fill with no forced-colors rule (P3)"
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-scrollarea-themes-chromium-linux.png"
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "states idle/hovering/scrolling/focus-visible; apps/storybook/visual/__screenshots__/ui-react-scrollarea-options-chromium-linux.png covers options; hover/scrolling transient states not captured"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "scroll-area.css:120 touch-input rule; options are independent toggles"
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "no directional icons; apps/storybook/visual/__screenshots__/ui-react-scrollarea-horizontal-chromium-linux.png"
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "scroll-area.css:120 :is([data-a63-input=touch]) adjustments"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component scroll-area: guidance and 6 examples"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/scroll-area/scroll-area.test.tsx: 5 tests (fade, observer, options, viewport props); SSR"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart"
+        }
+      ]
+    },
+    {
+      "subject": "scrollable-list",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/scrollable-list/scrollable-list.tsx:18-53 closed props interface: no ...rest, no ref, no aria-label/id/data-*; contract axis layouts scroll|wrap is exposed only as wrapLayoutBreakpoint?: number; option `chevrons` is named showChevrons"
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "scrollable-list.tsx:272-311 each chevron Button is conditionally rendered on canScrollStart/End; a keyboard user who activates \"Scroll right\" until the end unmounts the focused button and focus drops to <body>; labels \"Scroll left/right\" (:280, :301) are hard-coded English with no prop; the list itself has no accessible name"
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-scrollablelist-themes-chromium-linux.png: the icon-lg (44px) chevron overhangs a ~20px chip row and covers the last chip instead of the mask fading it"
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "contract states include disabled and dragging; no disabled story (grep = 0), dragging not captured"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "chevrons use Button size icon-lg (scrollable-list.tsx:283) which follows density; Endpoints story present"
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "RTL scroll math and icon mirroring are tested (scrollable-list.test.tsx:85-98, css:89-91), but the aria-labels cannot be localized"
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "K7 batch: no phone-width story (grep phone|viewport|mobile in stories = 0); Endpoints story covers ios/touch input and compact density only (e.g. accordion.stories.tsx:116-141)"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component scrollable-list: guidance and 8 examples incl. RightToLeft"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/scrollable-list/scrollable-list.test.tsx: 8 tests incl. RTL negative scrollLeft; SSR; 8 baselines; no test for focus after the last scroll"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart"
+        }
+      ]
+    },
+    {
+      "subject": "connected-panel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/connected-panel/connected-panel.tsx:77,89 exported `variant: 'button-group' | 'default'` is not in the contract (axes: aligns only); collapsedWidth/expandedWidth default to literal 192/320 px"
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "connected-panel.tsx:243 trigger always sets aria-controls={contentId}, but :342 unmounts the content when closed unless forceMount, so a closed trigger points at a missing id (Accordion solves this case at accordion.tsx:29-37); expanded state and reduced motion are handled"
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "provisional; apps/storybook/visual/__screenshots__/ui-react-connectedpanel-themes-chromium-linux.png: trigger and panel read as one surface in every theme; motion timings are literals (connected-panel.tsx:46-50) instead of --a63 motion tokens"
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "contract states closed/open/hover/focus-visible/disabled; no disabled story, only open captured"
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "connected-panel.css:160-168 trigger height floors at --a63-row-min-size (44px on touch)"
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "K6 batch: no batch-6 story renders dir=\"rtl\", CJK or long strings except scrollable-list (grep of */*.stories.tsx: rtl=0, cjk=0 for 9 of 10)"
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "connected-panel.css:14 max-width:100% caps the 320px default; K7 batch: no phone-width story (grep phone|viewport|mobile in stories = 0); Endpoints story covers ios/touch input and compact density only (e.g. accordion.stories.tsx:116-141)"
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "pnpm -s atom63 component connected-panel: Popover-vs-ConnectedPanel guidance, 6 examples"
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/connected-panel/connected-panel.test.tsx: 5 tests incl. forceMount inert; SSR; 6 baselines"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: no iOS counterpart"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k06-surfaces-1",
+      "subject": "scrollable-list",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "Activating a chevron scroll control can unmount the focused button, dropping keyboard focus to <body>; its labels are fixed English and the list has no accessible name.",
+      "evidence": "packages/ui-react/src/components/scrollable-list/scrollable-list.tsx:272-311 renders each control only while canScrollStart/canScrollEnd; :280,:301 aria-label literals; :18-41 no aria-label prop",
+      "fix": "Keep both controls mounted and set disabled/aria-disabled (or move focus to the remaining control) when an edge is reached; add labels props (scrollStartLabel/scrollEndLabel) and spread rest props so aria-label reaches the root; add a test that focus survives the last scroll.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "I checked scrollable-list.tsx and the claim matches the code. Both chevron Buttons sit inside `{showChevrons && canScrollStart/End && !disabled && ...}` (lines 272-311), so the control unmounts when the scroll reaches that edge. A keyboard user who presses 'Scroll right' until the end therefore loses the focused element. Nothing in the component handles focus: no focus or ref handoff, no visibility- or inert-based hiding (the CSS only uses display:flex). The test file has no test of focus after the last scroll. The aria-labels 'Scroll left' and 'Scroll right' are literals that change only with RTL, and the props interface (lines 18-41) has no label or i18n prop and no ...rest, so adopters cannot localize them or name the list. The missing accessible name is the weakest part, because a plain div does not strictly need one. The focus loss and the fixed English labels alone are a real K2 focus-management and naming gap for a beta-supported component, so P1 stands."
+      }
+    },
+    {
+      "id": "k06-surfaces-2",
+      "subject": "accordion",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "A consumer className on Accordion replaces the recipe class a63-Accordion, and the shadcn `collapsible` prop is accepted but ignored.",
+      "evidence": "packages/ui-react/src/components/accordion/accordion.tsx:100-131 (className not destructured; {...props} spread after className={cn('a63-Accordion')}); :101 collapsible: _collapsible",
+      "fix": "Destructure className and pass cn('a63-Accordion', className); either implement collapsible={false} (block closing the last open item in single mode) or drop it from the type; add a test for both.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-3",
+      "subject": "accordion",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The disabled state the contract lists has no story or baseline, and focus-visible is not captured.",
+      "evidence": "accordion.stories.tsx (grep disabled = 0); 5 accordion PNGs in apps/storybook/visual/__screenshots__/",
+      "fix": "Add a Disabled story (one disabled item) and a focused-trigger capture to the visual suite.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-4",
+      "subject": "card",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "CardTitle has no heading semantics, an interactive Card rendered through `render` gets no focus ring, and CardMediaOverlayIconButton is a span named like a button.",
+      "evidence": "packages/ui-react/src/components/card/card.tsx:213-229, :178-192; card.css:337-345 (focus only on .a63-CardLink); card.stories.tsx:150-152",
+      "fix": "Let CardTitle default to a heading level prop or document render={<h3/>}; add .a63-Card:focus-visible outline for interactive/overlay; rename or document the icon slot as decorative (aria-hidden) and require a name when it hosts a control.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-5",
+      "subject": "card",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Hover and focus-visible, both contract states, are not captured, and focus-visible is not designed on the Card itself.",
+      "evidence": "9 card baselines in apps/storybook/visual/__screenshots__/ (none hover/focus); card.css:343",
+      "fix": "Design focus-visible on the Card (see K2) and add hover/focus captures for interactive and overlay.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-6",
+      "subject": "card",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "The interactive/overlay hover lift is not gated by (hover: hover), so it sticks after a tap on touch screens.",
+      "evidence": "packages/ui-react/src/components/card/card.css:77-85, :396-398",
+      "fix": "Wrap the hover lift and media hover-scale in @media (hover: hover) as resizable.css:64 already does.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-7",
+      "subject": "card",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "AtomCard covers 3 of 6 variants, gives the action card no press or focus feedback, uses literal shadow values, and its snapshots cover only the default variant in one theme.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomCard.swift:3-7, :34, :71-83; examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/card.dark.png",
+      "fix": "Add a pressed style (scale/opacity from motion tokens) for action cards, read the raised-shadow token, snapshot filled and elevated, and state in the contract which web variants iOS omits.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-8",
+      "subject": "card",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "card.mdx contradicts the shipped API (says the cursor label is not part of the component) and lists only 4 of 6 variants in its intro.",
+      "evidence": "packages/ui-react/src/components/card/card.mdx:9",
+      "fix": "Rewrite the intro paragraph to match card.tsx.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-9",
+      "subject": "card",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "The cursor-label pill paints text-primary as a fill and surface-page as text (craft-baseline token-role); there is no inverse surface token pair.",
+      "evidence": "docs/design-system/audits/craft-baseline.json (\"card.css | background-color: var(--a63-text-primary)\", \"color: var(--a63-surface-page)\"); card.css:417-418; `atom63 token inverse` -> not found",
+      "fix": "Add an inverse surface/foreground token pair (shared with Kbd, Progress, Slider entries) and use it; then drop the baseline entries.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-10",
+      "subject": "item",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "ItemGroup exposes no list semantics and ItemSeparator is announced as a separator by default, contrary to the contract's \"Hides dividers from assistive technology\".",
+      "evidence": "packages/ui-react/src/components/item/item.tsx:35-63; contract crossRenderer accessibilityOutcomes (atom63 component item)",
+      "fix": "Give ItemGroup role=\"list\" and Item role=\"listitem\" when inside a group (or document rendering ul/li), and default ItemSeparator to decorative.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-11",
+      "subject": "item",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Item sizes use `default` where the rest of the system says `md` (contract-consistency-baseline).",
+      "evidence": "docs/design-system/audits/contract-consistency-baseline.json \"synonym | item.sizes | default -> md\"",
+      "fix": "Rename in the contract with a deprecation alias.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-12",
+      "subject": "frame",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Frame parts are plain divs with no render prop, unlike Card and Item, so they cannot become section/aside or merge into a host element.",
+      "evidence": "packages/ui-react/src/components/frame/frame.tsx:51-145",
+      "fix": "Port the parts to useRender + mergeProps like card.tsx.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-13",
+      "subject": "frame",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "FrameTitle is a div: a titled frame has no heading and no accessible name.",
+      "evidence": "packages/ui-react/src/components/frame/frame.tsx:115-122",
+      "fix": "Render FrameTitle as a heading (level prop or render) and optionally aria-labelledby the panel to it.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-14",
+      "subject": "frame",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Retro and terminal draw a bordered panel inside a bordered tray, breaking the one-boundary rule.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-frame-themes-chromium-linux.png; AGENTS.md rule 7",
+      "fix": "Decide whether a Frame tray may carry a stroke when its panel does; if not, drop the tray border in those themes (border=\"strong\" default).",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k06-surfaces-15",
+      "subject": "separator",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "`decorative?: boolean` stands in for the contract axis `modes: decorative | semantic`.",
+      "evidence": "packages/ui-react/src/components/separator/separator.tsx:9-14; atom63 component separator (modes axis)",
+      "fix": "Add `mode?: SeparatorMode` from the contract; keep `decorative` as a deprecated alias.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-16",
+      "subject": "separator",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The separator line is a background-color, so it disappears in forced-colors mode; the same holds for the Resizable handle line and the Item selected fill.",
+      "evidence": "packages/ui-react/src/components/separator/separator.css:6-20; resizable/resizable.css:19-27; item/item.css:146-154; grep forced-colors across batch-6 CSS = 0",
+      "fix": "Add @media (forced-colors: active) rules (background-color: CanvasText for lines, a Highlight border for selected rows).",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-17",
+      "subject": "collapsible",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The trigger recipe has no focus-visible ring or hover; a bare CollapsibleTrigger relies on the UA, and there is no disclosure pattern test.",
+      "evidence": "packages/ui-react/src/components/collapsible/collapsible.css:9-15; apps/storybook/a11y/patterns.test.ts bindings",
+      "fix": "Give .a63-Collapsible-trigger an outline focus ring and add a disclosure APG binding to patterns.test.ts.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-18",
+      "subject": "collapsible",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Collapsible draws no chrome, so every product rebuilds the disclosure row; the story chrome is inline styles.",
+      "evidence": "collapsible.css:6; collapsible.stories.tsx:22-52; apps/storybook/visual/__screenshots__/ui-react-collapsible-themes-chromium-linux.png",
+      "fix": "Decide whether Collapsible ships a default trigger row (like ConnectedPanel) or stays headless and says so in its contract and docs.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k06-surfaces-19",
+      "subject": "collapsible",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Only the open state is captured; closed and disabled from the contract have no story.",
+      "evidence": "collapsible.stories.tsx:45 defaultOpen in every story",
+      "fix": "Add Closed and Disabled stories.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-20",
+      "subject": "collapsible",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "A bare trigger has no target-size floor; 44px depends on the consumer rendering a Button.",
+      "evidence": "collapsible.css:9-15",
+      "fix": "Floor the trigger at --a63-control-min-target, or document render={<Button/>} as required.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-21",
+      "subject": "collapsible",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The reference example needs inline style overrides on Button and a story-local framed wrapper, which a builder would copy.",
+      "evidence": "packages/ui-react/src/components/collapsible/collapsible.stories.tsx:30-52",
+      "fix": "Provide the row chrome in the recipe (or a documented class) so the example has no inline styles.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-22",
+      "subject": "resizable",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The group takes both `direction` and `orientation`, and the deprecated boolean `withHandle` sits beside `variant`.",
+      "evidence": "packages/ui-react/src/components/resizable/resizable.tsx:14-20, :62-63",
+      "fix": "Keep `orientation` only (deprecate `direction`), and schedule `withHandle` removal.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-23",
+      "subject": "resizable",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The default handle label is hard-coded English and the window-splitter pattern has no a11y pattern test.",
+      "evidence": "packages/ui-react/src/components/resizable/resizable.tsx:67; apps/storybook/a11y/patterns.test.ts",
+      "fix": "Require or localize the label (provider string), and bind the window-splitter APG pattern in patterns.test.ts.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-24",
+      "subject": "resizable",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The grip chip is barely visible and the terminal/dark line is near invisible; no theme expresses the handle.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-resizable-themes-chromium-linux.png",
+      "fix": "Raise grip contrast (border-control, larger chip) and let themes style the handle.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k06-surfaces-25",
+      "subject": "resizable",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Hover, focus-visible, dragging and disabled states are designed in CSS but not captured.",
+      "evidence": "7 resizable baselines, all idle",
+      "fix": "Add focused and active-handle captures.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-26",
+      "subject": "resizable",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Tests check rendering only; no keyboard or pointer resize is tested.",
+      "evidence": "packages/ui-react/src/components/resizable/resizable.test.tsx:7-72",
+      "fix": "Add arrow-key, Home/End and pointer-drag tests asserting panel sizes and aria-valuenow.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-27",
+      "subject": "scroll-area",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The contract axis orientations (vertical|horizontal|both) has no prop: both scrollbars always render; no ScrollAreaProps type is exported.",
+      "evidence": "packages/ui-react/src/components/scroll-area/scroll-area.tsx:15-33, :56-57",
+      "fix": "Add `orientation` from the contract to choose scrollbars and export ScrollAreaProps (scrollable-list.tsx:260 currently hides the vertical bar with a class hack).",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-28",
+      "subject": "scrollable-list",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The props interface is closed (no rest, ref, aria-*), and the contract `layouts` axis is exposed only as a numeric breakpoint.",
+      "evidence": "packages/ui-react/src/components/scrollable-list/scrollable-list.tsx:18-53",
+      "fix": "Extend React.ComponentProps<'div'>, spread rest on the root, add `layout?: 'scroll' | 'wrap'` with the breakpoint as an option.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-29",
+      "subject": "scrollable-list",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The 44px chevron overhangs the chip row and covers the last item rather than the mask fading it.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-scrollablelist-themes-chromium-linux.png",
+      "fix": "Size the control to the row (icon-sm/md for short rows) or make the frame tall enough; check the mask still reads.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k06-surfaces-30",
+      "subject": "scrollable-list",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Disabled and dragging states from the contract have no story or capture.",
+      "evidence": "scrollable-list.stories.tsx (grep disabled = 0)",
+      "fix": "Add Disabled and a dragging capture.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-31",
+      "subject": "connected-panel",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The exported `variant` prop is missing from the contract, and widths default to literal px.",
+      "evidence": "packages/ui-react/src/components/connected-panel/connected-panel.tsx:77-107; atom63 component connected-panel (axes: aligns)",
+      "fix": "Add `variants: default | button-group` to connected-panel.json and regenerate.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-32",
+      "subject": "connected-panel",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "A closed trigger keeps aria-controls pointing at content that is not mounted.",
+      "evidence": "packages/ui-react/src/components/connected-panel/connected-panel.tsx:243, :342",
+      "fix": "Set aria-controls only while the content is mounted (open or forceMount), as Accordion does.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-33",
+      "subject": "connected-panel",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Disabled (a contract state) has no story; hover and focus are not captured.",
+      "evidence": "connected-panel.stories.tsx (grep disabled = 0)",
+      "fix": "Add a Disabled story and a focused-trigger capture.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-34",
+      "subject": "connected-panel",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Panel motion uses literal durations and a spring instead of --a63 motion tokens.",
+      "evidence": "packages/ui-react/src/components/connected-panel/connected-panel.tsx:46-50",
+      "fix": "Read duration/ease from the motion tokens.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-35",
+      "subject": "all batch-6 components",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "No batch-6 story except scrollable-list exercises RTL, CJK or long strings.",
+      "evidence": "grep of packages/ui-react/src/components/{card,item,frame,separator,accordion,collapsible,resizable,scroll-area,connected-panel}/*.stories.tsx for rtl / CJK = 0",
+      "fix": "Add one RTL + CJK + long-text story per component (title/trigger truncation, chevrons, handle keyboard direction) to the visual suite.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-36",
+      "subject": "all batch-6 components",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No phone-width story in the batch except Item's inset group; Endpoints covers touch input, not width.",
+      "evidence": "grep phone|viewport|mobile in batch stories; accordion.stories.tsx:116-141",
+      "fix": "Add a 390px capture per component (or one batch contact sheet) to the visual suite.",
+      "kind": "fix"
+    },
+    {
+      "id": "k06-surfaces-37",
+      "subject": "all batch-6 components",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Two of three guidance bullets are the same boilerplate on every page (\"Keep product data and fetching outside...\", \"Test long, empty, and narrow content...\").",
+      "evidence": "pnpm -s atom63 component <slug> for all 10",
+      "fix": "Replace them with component-specific do/don't lines.",
+      "kind": "fix"
+    }
+  ]
+}
