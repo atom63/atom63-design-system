@@ -68,7 +68,8 @@ Status: ✅ built · 🟡 partial · 🔲 planned
 
 **Brand** — *primary/accent color ramp; only primary switches, status colors stay semantic.*
 - ✅ brand ramp — `--a63-brand-50 … --a63-brand-950` (`auto` falls back to b1 until wallpaper-derived `--color-auto-*` fills in)
-- ✅ primary action + focus — `--a63-action-primary`, `-hover`, `-foreground`, `--a63-focus-ring` (in `tokens/brand.css`, scoped to `[data-a63-brand]`)
+- ✅ primary action — `--a63-action-primary`, `-hover`, `-foreground`, `--a63-brand-text` (in `tokens/brand-action.css`, on `:root` and `[data-a63-brand]`)
+- ✅ brand-derived roles — `--a63-focus-ring`, `--a63-text-accent`, `--a63-selected-accent-*`, `--a63-choice-card-checked-*` and the tinted surfaces and borders (in `tokens/semantics.css`, per mode). A nested `[data-a63-brand]` or `[data-a63-surface]` scope without a mode re-declares them, keyed to the nearest mode scope through the `--a63-if-light` / `--a63-if-dark` switch, so a brand-only or surface-only `UIProvider` recolors them too.
 
 **Input** — *pointer ergonomics.*
 - ✅ touch target — `--a63-control-min-target`

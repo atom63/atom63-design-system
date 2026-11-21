@@ -26,7 +26,7 @@
 }
 
 .a63-LoadMoreTrigger[data-tone='error'] {
-  --load-more-accent: var(--a63-action-danger);
+  --load-more-accent: var(--a63-status-danger);
 }
 
 /* Hidden keeps only the empty live region mounted; it takes no space. */
@@ -90,7 +90,9 @@
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--load-more-accent);
+  /* Retry shows only in the failed row: text, so the danger text role (4.5:1),
+     not the 3:1 accent the icon uses. */
+  color: var(--a63-text-danger);
   font: inherit;
   font-weight: 600;
   cursor: pointer;

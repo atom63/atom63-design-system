@@ -572,6 +572,14 @@
                     "io.atom63.derive": "color-mix( in oklab, {surface.light.10} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   },
                   "$description": "The border of a form control a person has to find: text fields, selects,\ncheckboxes, radios, switches and slider thumbs. WCAG 1.4.11 needs 3:1 against\nthe page, the panel and the field fill; step 10 reaches that on every theme,\nbrand and surface (step 9 falls to about 2.97:1). Decorative edges keep\n--a63-border-control."
+                },
+                "danger": {
+                  "$type": "color",
+                  "$value": "{color.danger.600}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {color.danger.600} 62%, transparent)"
+                  },
+                  "$description": "The border of an invalid form control (aria-invalid or data-invalid). WCAG 1.4.11 needs\n3:1 against the page, the panel and the field fill: step 600 at 62% reaches about 3.1:1\non light surfaces. Mixed toward transparent so the red keeps its hue. A focused\ninvalid control draws its border and ring in --a63-status-danger."
                 }
               },
               "control": {
@@ -644,7 +652,8 @@
                 "danger": {
                   "$root": {
                     "$type": "color",
-                    "$value": "{color.danger.600}"
+                    "$value": "{color.danger.600}",
+                    "$description": "The fill of a danger action (a destructive Button), under a white label. It keeps step 600 in both modes, which is about 2.8:1 on dark surfaces, so it is never text, an icon or an edge: those use --a63-text-danger, --a63-status-danger and --a63-border-danger."
                   },
                   "hover": {
                     "$type": "color",
@@ -1156,6 +1165,11 @@
                     "io.atom63.derive": "color-mix( in oklab, {surface.dark.9} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   },
                   "$description": "Step 9 on dark surfaces reaches 3:1 against the page, the panel and the field fill."
+                },
+                "danger": {
+                  "$type": "color",
+                  "$value": "{color.danger.500}",
+                  "$description": "Step 500, opaque, on dark surfaces: about 4.2:1 on the panel (step 600 at 62% was about 1.7:1)."
                 }
               },
               "control": {
@@ -1579,6 +1593,13 @@
       "selectors": {
         "light": ":root,\n.light,\n[data-a63-mode='light']",
         "dark": ":is(.dark, [data-a63-mode='dark'])"
+      },
+      "rescope": {
+        "selector": "[data-a63-brand], [data-a63-surface]",
+        "light": "light",
+        "dark": "dark",
+        "base": "base",
+        "switch": true
       }
     }
   }
