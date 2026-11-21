@@ -3711,6 +3711,12 @@
      "labelSlots",
      "labelStates",
      "labelVisualArchetypes",
+     "layeredSceneContract",
+     "layeredScenePlacements",
+     "layeredSceneSlots",
+     "layeredSceneStates",
+     "layeredSceneVisualArchetypes",
+     "layeredSceneWidths",
      "loadMoreTriggerContract",
      "loadMoreTriggerSlots",
      "loadMoreTriggerStates",
@@ -4209,6 +4215,11 @@
      "Kbd",
      "KbdGroup",
      "Label",
+     "LayeredScene",
+     "LayeredSceneContent",
+     "LayeredSceneForeground",
+     "LayeredScenePlate",
+     "LayeredSceneStage",
      "LoadMoreTrigger",
      "Marquee",
      "Menubar",
@@ -12565,6 +12576,101 @@
     "ItemContent",
     "ItemTitle",
     "ItemActions"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
+      "description": "In-flow containers and content surfaces that do not inherently manipulate state.",
+      "id": "surface",
+      "label": "Static content surfaces"
+     }
+    ],
+    "axes": [
+     {
+      "name": "placements",
+      "values": [
+       "center-bottom",
+       "end-bottom",
+       "start-bottom"
+      ],
+      "default": "center-bottom"
+     },
+     {
+      "name": "widths",
+      "values": [
+       "wide",
+       "half"
+      ],
+      "default": "wide"
+     }
+    ],
+    "exportName": "layeredSceneContract",
+    "slots": [
+     "layered-scene",
+     "layered-scene-content",
+     "layered-scene-stage",
+     "layered-scene-foreground"
+    ],
+    "source": "packages/ui-foundation/contracts/components/layered-scene.json",
+    "states": [
+     "rest"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "LayeredSceneForegroundProps",
+     "LayeredScenePlateProps",
+     "LayeredSceneProps"
+    ],
+    "values": [
+     "LayeredScene",
+     "LayeredSceneContent",
+     "LayeredSceneForeground",
+     "LayeredScenePlate",
+     "LayeredSceneStage"
+    ]
+   },
+   "group": {
+    "id": "content-and-surfaces",
+    "title": "Content and surfaces"
+   },
+   "guidance": [
+    "Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.",
+    "Keep product data and fetching outside the presentational component.",
+    "Test long, empty, and narrow content before adding local layout overrides."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Layered Scene",
+   "markdown": "# Layered Scene\n\nLayered Scene stacks a plate, a stage of product UI and an inert foreground cut-out so the interface sits inside the picture.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { LayeredScene, LayeredScenePlate, LayeredSceneContent, LayeredSceneStage, LayeredSceneForeground } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `LayeredScene`, `LayeredSceneContent`, `LayeredSceneForeground`, `LayeredScenePlate`, `LayeredSceneStage`\n\n**Types:** `LayeredSceneForegroundProps`, `LayeredScenePlateProps`, `LayeredSceneProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/layered-scene.json` (`layeredSceneContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `placements` | `center-bottom`, `end-bottom`, `start-bottom` | `center-bottom` |\n| `widths` | `wide`, `half` | `wide` |\n\n**Slots:** `layered-scene`, `layered-scene-content`, `layered-scene-stage`, `layered-scene-foreground`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Art Plate](/components/component-art-plate)\n- [Frame](/components/component-frame)\n- [Card](/components/component-card)\n",
+   "related": [
+    "art-plate",
+    "frame",
+    "card"
+   ],
+   "route": "/components/component-layered-scene",
+   "slug": "layered-scene",
+   "status": "preview",
+   "stories": {
+    "file": "packages/ui-react/src/components/layered-scene/layered-scene.stories.tsx",
+    "names": [
+     "Playground",
+     "EndPlacement",
+     "WithoutForeground"
+    ],
+    "source": "import { layeredScenePlacements, layeredSceneWidths } from '@atom63/ui-foundation'\nimport {\n  Badge,\n  Button,\n  Frame,\n  FrameDescription,\n  FrameHeader,\n  FramePanel,\n  FrameTitle,\n  LayeredScene,\n  LayeredSceneContent,\n  LayeredSceneForeground,\n  LayeredScenePlate,\n  LayeredSceneStage,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\n// Remote pictures are pinned to one placeholder in the visual and craft runs.\nconst PLATE = 'https://picsum.photos/id/1018/1920/1080'\nconst FOCUS = { x: 0.5, y: 0.7 }\n\n// A stand-in cut-out: a ridge across the bottom eighth of the plate, transparent\n// above it. A real scene uses a cut-out of its own plate.\nconst RIDGE =\n  'data:image/svg+xml,' +\n  encodeURIComponent(\n    '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1920 1080\" preserveAspectRatio=\"xMidYMid slice\"><path fill-opacity=\"0.9\" d=\"M0 1000 L180 960 L360 990 L560 945 L760 985 L980 950 L1180 990 L1400 955 L1620 985 L1920 960 L1920 1080 L0 1080 Z\"/></svg>'\n  )\n\nconst meta = {\n  title: 'UI React/LayeredScene',\n  component: LayeredScene,\n  parameters: { layout: 'fullscreen' },\n  argTypes: {\n    placement: { control: 'inline-radio', options: layeredScenePlacements },\n    width: { control: 'inline-radio', options: layeredSceneWidths },\n  },\n  args: { placement: 'center-bottom', width: 'wide' },\n} satisfies Meta<typeof LayeredScene>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nfunction ProductWindow() {\n  return (\n    <Frame>\n      <FrameHeader>\n        <FrameTitle>Render queue</FrameTitle>\n        <FrameDescription>3 jobs running on 4 workers</FrameDescription>\n      </FrameHeader>\n      <FramePanel>\n        <div style={{ display: 'grid', gap: 'var(--a63-space-2)' }}>\n          <span>title-sequence.mov · 72%</span>\n          <span>logo-sting.mov · 40%</span>\n          <span>lower-thirds.mov · queued</span>\n        </div>\n        {/* Empty room at the bottom of the window: the only part the cut-out may cover. */}\n        <div style={{ blockSize: 'var(--spacing-24)' }} />\n      </FramePanel>\n    </Frame>\n  )\n}\n\nfunction Copy() {\n  return (\n    <>\n      <Badge variant=\"secondary\">Browser-native rendering</Badge>\n      <h1\n        style={{\n          margin: 0,\n          fontSize: 'var(--a63-type-display-large-font-size)',\n          lineHeight: 'var(--a63-type-display-large-line-height)',\n          maxInlineSize: '18ch',\n        }}\n      >\n        Render at the speed of thought\n      </h1>\n      <p style={{ margin: 0 }}>A motion timeline that renders in the browser.</p>\n      <div style={{ display: 'flex', gap: 'var(--a63-space-2)' }}>\n        <Button>Start free</Button>\n        <Button variant=\"outline\">Take a tour</Button>\n      </div>\n    </>\n  )\n}\n\nexport const Playground: Story = {\n  render: args => (\n    <LayeredScene {...args}>\n      <LayeredScenePlate alt=\"\" focus={FOCUS} priority src={PLATE} />\n      <LayeredSceneContent>\n        <Copy />\n      </LayeredSceneContent>\n      <LayeredSceneStage>\n        <ProductWindow />\n      </LayeredSceneStage>\n      <LayeredSceneForeground focus={FOCUS} priority src={RIDGE} />\n    </LayeredScene>\n  ),\n}\n\nexport const EndPlacement: Story = {\n  args: { placement: 'end-bottom', width: 'half' },\n  render: Playground.render,\n}\n\nexport const WithoutForeground: Story = {\n  render: args => (\n    <LayeredScene {...args}>\n      <LayeredScenePlate alt=\"\" focus={FOCUS} src={PLATE} />\n      <LayeredSceneContent>\n        <Copy />\n      </LayeredSceneContent>\n      <LayeredSceneStage>\n        <ProductWindow />\n      </LayeredSceneStage>\n    </LayeredScene>\n  ),\n}\n"
+   },
+   "summary": "Layered Scene stacks a plate, a stage of product UI and an inert foreground cut-out so the interface sits inside the picture.",
+   "usage": "Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.",
+   "usageExports": [
+    "LayeredScene",
+    "LayeredScenePlate",
+    "LayeredSceneContent",
+    "LayeredSceneStage",
+    "LayeredSceneForeground"
    ]
   },
   {

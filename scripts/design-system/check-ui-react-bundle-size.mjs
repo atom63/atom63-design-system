@@ -128,7 +128,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // comments removed, which measured 92.1 kB before the split and 97.8 kB after.
 // The +5.7 kB is the import and export lines between the files. The budget
 // stays at 100 kB.
-const gzipBudgetBytes = 100 * 1024
+//
+// 100 kB held 98.5 kB. The art-landing parts take it to 100.1, so it moves to
+// 102. ArtPlate and Image's native <picture> path (srcSet, sizes and
+// art-directed sources) add 1.2 kB; LayeredScene, its copy, stage and inert
+// foreground cut-out add 0.4 kB. They are what a plate-first landing page or a
+// portfolio hero needs, and a consumer that does not import them drops them.
+const gzipBudgetBytes = 102 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

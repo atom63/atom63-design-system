@@ -3388,6 +3388,65 @@ export type LabelVisualArchetype = (typeof labelVisualArchetypes)[number];
 export const labelVisualArchetypes: readonly ["field"];
 
 // @public (undocumented)
+export interface LayeredSceneContract {
+    // (undocumented)
+    defaultPlacement: LayeredScenePlacement;
+    // (undocumented)
+    defaultWidth: LayeredSceneWidth;
+    // (undocumented)
+    placements: readonly LayeredScenePlacement[];
+    // (undocumented)
+    slots: readonly LayeredSceneSlot[];
+    // (undocumented)
+    states: readonly LayeredSceneState[];
+    // (undocumented)
+    visualArchetypes: readonly LayeredSceneVisualArchetype[];
+    // (undocumented)
+    widths: readonly LayeredSceneWidth[];
+}
+
+// @public (undocumented)
+export const layeredSceneContract: {
+    defaultPlacement: "center-bottom";
+    defaultWidth: "wide";
+    placements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+    widths: readonly ["wide", "half"];
+    slots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type LayeredScenePlacement = (typeof layeredScenePlacements)[number];
+
+// @public (undocumented)
+export const layeredScenePlacements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+
+// @public (undocumented)
+export type LayeredSceneSlot = (typeof layeredSceneSlots)[number];
+
+// @public (undocumented)
+export const layeredSceneSlots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+
+// @public (undocumented)
+export type LayeredSceneState = (typeof layeredSceneStates)[number];
+
+// @public (undocumented)
+export const layeredSceneStates: readonly ["rest"];
+
+// @public (undocumented)
+export type LayeredSceneVisualArchetype = (typeof layeredSceneVisualArchetypes)[number];
+
+// @public (undocumented)
+export const layeredSceneVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
+export type LayeredSceneWidth = (typeof layeredSceneWidths)[number];
+
+// @public (undocumented)
+export const layeredSceneWidths: readonly ["wide", "half"];
+
+// @public (undocumented)
 export interface LoadMoreTriggerContract {
     // (undocumented)
     defaultVariant: LoadMoreTriggerVariant;
@@ -5963,7 +6022,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate", "LayeredScene"];
         readonly contracts: readonly ["surface"];
     };
 };
