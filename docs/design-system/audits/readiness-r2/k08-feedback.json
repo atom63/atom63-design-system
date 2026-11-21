@@ -1,0 +1,737 @@
+{
+  "scope": "Layer 3, batch 8: feedback and status (web/React)",
+  "reviewedAt": "2026-11-20",
+  "round": 2,
+  "subjects": [
+    {
+      "subject": "alert",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/alert/alert.tsx:31-42 spreads props onto a div after the defaults (role overridable, test alert.test.tsx:40-47); variant matches contract list default|error|info|success|warning (alert.json lists.variants). Plain div parts, so no render/asChild needed; React 19 passes ref through props."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/alert/alert.tsx:14-20 maps tone to role status/alert, tested alert.test.tsx:25-38; ActionVariants/ActionThemes play functions assert 4.5:1 on every action label in 4 themes x 2 modes (alert.stories.tsx:71-85,220-257). Gap (P3): persistent warning alerts are role=alert at mount. No forced-colors rule, but border survives forced colors."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-alert-action-themes-chromium-linux.png: retro bevel, aqua gloss, terminal mono + scanlines all visible; tones distinct in light and dark. Provisional (YZ confirms)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "All five tones with and without action captured (ui-react-alert-variants / action-variants / dark-action-variants baselines). Alert itself has no interactive states; the action Button carries its own."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/alert/alert.css:14-20 uses density-scaled --a63-space-* for gaps/padding; one literal (padding-inline 0.875rem, alert.css:20). No size axis in contract."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/alert/alert.css:15,55-57,104-110: AlertAction is absolutely positioned and the content only reserves max(padding, --a63-space-6*3)=72px at density 1. A longer or translated label, or two buttons, overlaps the title/description. RTL itself mirrors correctly (apps/storybook/visual/__screenshots__/ui-react-alert-right-to-left-chromium-linux.png). No long-string or CJK story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Endpoints story renders iOS touch context (apps/storybook/visual/__screenshots__/ui-react-alert-endpoints-chromium-linux.png); width:100% grid wraps. Narrow-width overlap of the action is scored under K6."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 component alert` returns import line, contract, cross-renderer outcomes and examples; catalog usage apps/docs/src/lib/component-catalog.ts:52-59. Guidance is thin on when to use role override."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/alert/alert.test.tsx (5 tests: roles per tone, override, slots); contrast play functions; 9 baselines; SSR smoke apps/storybook/ssr/ssr.test.tsx globs all stories."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "badge",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/badge/badge.tsx:18-50 uses useRender + mergeProps (render prop composes, ref merges); variant/size typed from contract; test badge.test.tsx:28-32 covers render as <a>. dot is boolean|hue, not a variant stand-in."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Non-interactive span by default; interactive via render gets :focus-visible outline from tokens (badge.css:282-285) and a 44px ::after hit area (badge.css:273-280); dot is aria-hidden (badge.tsx:34-39); status text carries meaning."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-badge-themes-chromium-linux.png: retro bevel, aqua gloss, terminal mono visible per theme; semantic tints read in both modes. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/badge/badge.css:262-270 hover is only an 88% alpha of the same fill (near-invisible on soft tints); no :active style; apps/storybook/visual/__screenshots__/ui-react-badge-interactive-chromium-linux.png captures rest only, no hover/focus-visible/disabled-vs-rest comparison."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/badge/badge.css:10-11,119-129 heights/padding are literal rem (1rem/1.25rem/1.5rem) and font sizes are px calc hacks, so compact density does not touch Badge while every space-token component around it shrinks."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/badge/badge.css:31 white-space: nowrap with no max-width/overflow/text-overflow: a long or translated label overflows its container. No long-string, CJK or RTL story (badge.stories.tsx export list)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Interactive badges reach --a63-control-min-target via margin + ::after (badge.css:256-280); Endpoints story covers touch input."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/badge/badge.mdx exists plus generated page; `atom63 component badge` returns contract with tone/emphasis mapping."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/badge/badge.test.tsx (4 tests: defaults, variant/size, render, dot); 9 baselines; SSR smoke. Interactive disabled not tested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "avatar",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.tsx:32-49 wraps Base UI Avatar.Root and spreads props; sizes xs|sm|md|lg + deprecated default alias (tested avatar.test.tsx:27-30); ring boolean|unseen|seen normalised (avatar.test.tsx:83-92)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.tsx:84-102 AvatarGroup is a bare div with no role=group or label, and AvatarGroupCount \"+5\" is read as \"plus 5\" with no \"more people\" text; AvatarBadge (avatar.tsx:77-82) is a colour-only status dot with no labelling slot or guidance; the unseen/seen ring is not exposed to assistive tech. No forced-colors rule: the badge dot fill becomes Canvas."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-avatar-themes-chromium-linux.png: the eight theme/mode rows are near-identical (only the badge ring colour changes); the marker archetype that Badge expresses (retro bevel, aqua gloss) is absent. Provisional, YZ confirms."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Fallback, icon fallback, ring unseen/seen, square, badge and group captured (ui-react-avatar-* baselines, 12 files). Loading phase not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.css:188-203 sizes AvatarGroupCount for sm and lg only; with xs avatars (20px) the count stays 32px (avatar.css:174-175)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.css:119-120 pins AvatarBadge with physical right:0/bottom:0, so it does not mirror in RTL (check:craft scopes out left/right positioning, scripts/design-system/lib/craft-rules.mjs:14). No RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: non-interactive identity marker; sizes are fixed tokens, no phone-specific behaviour."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component avatar` returns contract, rings and platform notes; catalog usage stresses alt text (component-catalog.ts:97-103)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/avatar/avatar.test.tsx (8 tests); LargeCircle play check (avatar.stories.tsx:92); SSR smoke. Group-count sizing untested."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "empty",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/empty/empty.tsx:83-110 EmptyErrorDetail keeps expanded in local useState with no expanded/defaultExpanded/onExpandedChange, and its labels \"Show details\"/\"Hide details\" are hard-coded; other parts spread props correctly."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "EmptyTitle role=heading aria-level=3 overridable (empty.tsx:48-61); toggle uses aria-expanded + aria-controls (empty.tsx:98-108); ErrorState/ErrorThemes play functions check toggle contrast (empty.stories.tsx:142-169)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-empty-error-themes-chromium-linux.png: aqua gloss, retro heavy dash, terminal scanlines visible. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states empty|error|collapsed|expanded (empty.json lists.states); no story or baseline renders the expanded detail box with the CopyButton (empty.stories.tsx has no play that clicks the toggle)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Space tokens throughout; literal font sizes at empty.css:101 (0.875rem) and :134 (0.75rem) bypass the type-scale tokens."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/empty/empty.tsx:109 English-only toggle labels with no prop; empty.css:124-125,141-142 pin the copy button and its padding reserve to the physical right, so in RTL it sits at the text start edge. No RTL or long-error story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Centered column with max-width 24rem (empty.css:32-38,93-103); template phone baseline apps/storybook/visual/__screenshots__/templates-blocks-empty-state-phone-chromium-linux.png holds."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component empty` and catalog usage (component-catalog.ts:312-318); examples listed."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/empty/empty.test.tsx (3 tests incl. collapse/expand + copy button); 7 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "feedback-state",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.tsx:49-62,162-188: FeedbackStateProps is a closed interface; no rest props, ref, id, aria-* or data-* reach the root, so a host cannot label, target or measure it. Contract states rest|busy|actionable (feedback-state.json lists.states) are never rendered; data-state carries the kind instead."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "One persistent live region, role=alert for error else status (feedback-state.tsx:181-188), tested feedback-state.test.tsx:23-43; heading level prop; spinner aria-hidden; reduced motion stops the spin (feedback-state.css:99-103)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-feedbackstate-themes-chromium-linux.png: in every dark row the error media icon is a dim dark red. feedback-state.css:27-29 sets --feedback-accent to --a63-action-danger, which stays danger-600 rgb(187,29,34) in dark (packages/styles/src/tokens/semantics.css:215,255-259), about 2.8:1 on the dark surface; --a63-status-danger is the token that moves to 500 for 3:1."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "All seven kinds in States; sizes, actions and no-results captured (8 baselines)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sizes inline|panel|page|widget match contract (feedback-state.css:35-53); media box 2.5rem and page padding 4rem are literals."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical layout; long descriptions wrap (overflow-wrap:anywhere, feedback-state.css:119; test feedback-state.test.tsx:132). English defaults are overridable via title/description; the no-results sentence is built in code (feedback-state.tsx:122)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Centered column, actions wrap (feedback-state.css:130-141); Endpoints touch context. page size uses min-height:100dvh, which overflows inside an app shell (P3)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 component feedback-state` prints \"States: rest, busy, actionable\", \"Deprecated aliases: idle -> rest\" and archetype \"Action controls\"; none match the component, which has kinds, no state prop and no action archetype of its own."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/feedback-state/feedback-state.test.tsx (14 tests incl. live region and heading level); 8 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "skeleton",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/skeleton/skeleton.tsx:7-16 spreads div props after aria-hidden; consumer sizes it."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "aria-hidden (skeleton.tsx:10) and reduced motion (skeleton.css:38-42) are correct, but there is no forced-colors rule: the fill is a background, so in forced colors the placeholder vanishes. The contract promises \"blocks-interaction-while-active\" (skeleton.json crossRenderer.accessibilityOutcomes) and nothing on web delivers or documents it (no aria-busy/inert guidance)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-skeleton-themes-chromium-linux.png: identical shape in all four themes (no retro/terminal expression; visualArchetypes is empty), light rows nearly invisible against white, and a static highlight band toward the trailing end because skeleton.css:18-25 leaves the 200%-wide gradient in place when the animation is off. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Loading captured in 5 baselines; reduced-motion is the static case in the screenshot run."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No size axis; radius from --radius-md; consumer sets size."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/skeleton/skeleton.css:29-36 animates translateX(-100%) -> translateX(100%), a physical left-to-right sweep; the contract says direction \"leading-to-trailing\" (skeleton.json crossRenderer.motion), so in RTL it runs trailing-to-leading. No RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Consumer-sized block; Endpoints story covers touch context."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 component skeleton` lists accessibility outcome \"Blocks interaction while active\" and shared outcome \"Interaction is blocked while loading\", which the React Skeleton does not implement."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/skeleton/skeleton.test.tsx: slot/aria-hidden test; the \"reduced-motion fallback\" test (skeleton.test.tsx:18-28) only compares contract JSON, not CSS. SSR smoke, 5 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "load-more-trigger",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.tsx:14-27,55: state is set two ways, the explicit state prop or the booleans isLoading/hasMore, so booleans stand in for the state axis. No rest props (id, aria-*, data-*) reach the root. The children path (load-more-trigger.tsx:58-69) drops role=status/aria-live, so switching between children and the built-in message remounts the live region."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Failed state: load-more-trigger.css:28-30,93 colours the Retry label and icon with --a63-action-danger, which stays danger-600 rgb(187,29,34) in dark mode (packages/styles/src/tokens/semantics.css:215; the token comment at :255-258 says text must use --a63-text-danger). Measured from primitives: 2.95:1 on --color-n1-dark-1 rgb(17,17,17) and 2.78:1 on n1-dark-2 rgb(25,25,25); the 14px semibold Retry needs 4.5:1. No dark failed story exists to catch it (Themes renders only loading, load-more-trigger.stories.tsx:87-114)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-loadmoretrigger-themes-chromium-linux.png and -states-: restrained row, terminal mono; theme expression is type only. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "idle/loading/failed/exhausted captured in light only; Retry has no hover style (load-more-trigger.css:88-97) and its focus ring is a literal 2px outline in the danger accent (css:110-114) instead of the focus-ring tokens other controls use; no focus or dark failed baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Space-unit based padding/min-height (css:13,40); spinner/icon 1rem literals."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "All copy is a prop (exhaustedMessage, failedMessage, idleMessage, loadingMessage, retryLabel; tsx:42-49); logical layout. No RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 4,
+          "evidence": "FailedTouch play function asserts the Retry hit area is at least 44x44 under input=touch (load-more-trigger.stories.tsx:58-74); baseline apps/storybook/visual/__screenshots__/ui-react-loadmoretrigger-failed-touch-chromium-linux.png."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component load-more-trigger` returns states, cross-renderer outcomes and guidance to attach fetching to the ref."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/load-more-trigger/load-more-trigger.test.tsx (9 tests incl. one live region, failed + retry, ref forwarding); 10 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    },
+    {
+      "subject": "animated-check",
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/animated-check/animated-check.tsx:34-79 spreads svg props (ref via React 19 props), contract variant animated|static with deprecated animate={false} alias (tested animated-check.test.tsx:39-46)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Forced aria-hidden (decorative, tsx:58; test :48-53); reduced motion draws the check at once (tsx:26-31); catalog says pair with visible text."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Only modern light/dark baselines exist (apps/storybook/visual/__screenshots__/ui-react-animatedcheck-playground/-dark/-static-sizes); no 4 themes x 2 modes evidence. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "mounting/drawn (Playground replay), static sizes and dark captured; reduced-motion handled in CSS."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sized in em so it scales with text (tsx:10-11)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "A checkmark is not a directional glyph and correctly does not mirror."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: decorative non-interactive glyph sized by its text."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component animated-check` and catalog usage (component-catalog.ts:74-80) explain the decorative role."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/animated-check/animated-check.test.tsx (5 tests); 3 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ],
+      "ready": false
+    }
+  ],
+  "findings": [
+    {
+      "id": "r2-k08-1",
+      "subject": "load-more-trigger",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "In dark mode the failed-state Retry label (and its icon) is drawn in --a63-action-danger, which stays danger-600 in dark and gives about 2.8-2.95:1 on dark surfaces, below the 4.5:1 WCAG 1.4.3 needs for text.",
+      "evidence": "load-more-trigger.css:28-30 sets --load-more-accent: var(--a63-action-danger) for data-tone=error; css:93 paints .a63-LoadMoreTrigger-action with it. packages/styles/src/tokens/semantics.css:215 (action-danger = danger-600, no dark override; comment :255-258 says error text uses --a63-text-danger, which moves to danger-400 at :363). danger-600 rgb(187,29,34) vs n1-dark-1 rgb(17,17,17) = 2.95:1, vs n1-dark-2 rgb(25,25,25) = 2.78:1 (computed from primitives.css:95,123-124). Themes story renders only the loading state (stories.tsx:87-114), so no dark failed baseline catches it.",
+      "fix": "Paint the Retry label with --a63-text-danger and the failed icon with --a63-status-danger (as Alert does, alert.css:134-136), and add a dark/4-theme Failed story with a contrast play check like alert.stories.tsx:71-85.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-2",
+      "subject": "feedback-state",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The error media icon and its tint use --a63-action-danger, a fill token that stays danger-600 in dark, so the icon reads as a dim dark red (about 2.8:1) in every dark theme.",
+      "evidence": "feedback-state.css:27-29,73-77; apps/storybook/visual/__screenshots__/ui-react-feedbackstate-themes-chromium-linux.png dark rows; semantics.css:255-259,413.",
+      "fix": "Use --a63-status-danger for the error accent (it moves to danger-500 in dark for 3:1).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-3",
+      "subject": "load-more-trigger",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "State is settable two ways (state prop vs isLoading/hasMore booleans), the root takes no rest props, and the children path drops the live region.",
+      "evidence": "load-more-trigger.tsx:14-27 (props), :55 (resolution), :58-69 (children path renders without role=status/aria-live), :74-85 (no {...props}).",
+      "fix": "Deprecate isLoading/hasMore in favour of state; spread remaining div props onto the root; keep role=status/aria-live on the children path too.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-4",
+      "subject": "load-more-trigger",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The Retry action has no hover style, a focus ring that bypasses the focus-ring tokens, and the failed state is captured only in modern light.",
+      "evidence": "load-more-trigger.css:88-97 (no :hover), :110-114 (outline: 2px solid var(--load-more-accent)); baselines ui-react-loadmoretrigger-failed / -failed-touch are light only; Themes story covers loading only.",
+      "fix": "Render Retry as a DS Button (ghost/link, size sm) or give it hover + token focus ring (--a63-control-focus-ring-width/-color); extend Themes to the failed state.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-5",
+      "subject": "feedback-state",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "FeedbackState accepts only className from DOM props: no ref, id, aria-*, data-* or style reach the root.",
+      "evidence": "feedback-state.tsx:49-62 (closed FeedbackStateProps), :162-188 (root built without {...props}).",
+      "fix": "Extend React.ComponentProps<'div'> (omitting title) and spread the rest onto the root.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-6",
+      "subject": "feedback-state",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The CLI answer lists states rest/busy/actionable, an idle->rest alias and the \"Action controls\" archetype, none of which the component has.",
+      "evidence": "`pnpm -s atom63 component feedback-state` output; packages/ui-foundation/contracts/components/feedback-state.json lists.states and visualArchetypes; feedback-state.tsx renders data-state=<kind> only.",
+      "fix": "Drop the unused states (or implement busy/actionable as data attributes) and set the archetype to surface, then regenerate contracts and the agent index.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-7",
+      "subject": "alert",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "AlertAction is absolutely positioned against a fixed 72px reserve, so a longer or translated label, or two actions, overlaps the title and description.",
+      "evidence": "alert.css:15 (--alert-action-reserve: calc(--a63-space-6 * 3)), :55-57 (padding-inline-end reserve), :104-110 (position:absolute). No long-label or CJK story; RTL story uses a short label.",
+      "fix": "Put the action in its own grid column (auto) instead of absolute positioning, or reserve its measured width; add a long-label/CJK story at phone width.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-8",
+      "subject": "badge",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Badge never truncates: white-space:nowrap with no max-width or ellipsis lets a long or translated label overflow its row.",
+      "evidence": "badge.css:31; badge.stories.tsx has no long-string, CJK or RTL story.",
+      "fix": "Add max-inline-size: 100%, overflow: hidden and text-overflow: ellipsis on a text wrapper, and a long/CJK story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-9",
+      "subject": "badge",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Badge heights and padding are literal rems and font sizes are ±1px calcs, so compact density does not reach Badge.",
+      "evidence": "badge.css:10-12,119-129.",
+      "fix": "Derive height/padding from --a63-space-unit (or control-height tokens) times --a63-density-scale, as Button does (button.css:46-47).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-10",
+      "subject": "badge",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Interactive badges have a barely visible hover (88% alpha of the same fill), no active state, and no hover/focus capture.",
+      "evidence": "badge.css:262-270; apps/storybook/visual/__screenshots__/ui-react-badge-interactive-chromium-linux.png shows rest only.",
+      "fix": "Use the control hover/active surface mix used by Button/Toggle and add hover/focus-visible baselines for the Interactive story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-11",
+      "subject": "avatar",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "AvatarGroup has no group semantics or label, the \"+N\" count has no accessible wording, AvatarBadge conveys status by colour only, and the ring state is not exposed.",
+      "evidence": "avatar.tsx:77-102; avatar.css:117-131 (badge fill only); no forced-colors rule in avatar.css.",
+      "fix": "Give AvatarGroup role=\"group\" and an aria-label prop, document an sr-only label for AvatarGroupCount and AvatarBadge (or add a label prop), and add a forced-colors border for the badge dot.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-12",
+      "subject": "avatar",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "AvatarGroupCount has no xs rule, so beside xs avatars (20px) it stays 32px.",
+      "evidence": "avatar.css:174-175 default 32px; :188-203 cover sm and lg only; contract sizes xs|sm|md|lg.",
+      "fix": "Add the xs rule (calc(--a63-space-unit * 5), icon --a63-space-2_5) and a group-sizes story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-13",
+      "subject": "avatar",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "AvatarBadge is pinned with physical right/bottom and does not mirror in RTL.",
+      "evidence": "avatar.css:119-120; craft-rules.mjs:14 scopes left/right positioning out of check:craft.",
+      "fix": "Use inset-inline-end: 0; inset-block-end: 0 and add an RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-14",
+      "subject": "avatar",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Avatar looks the same in all four themes; the marker archetype it declares is not expressed (compare Badge).",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-avatar-themes-chromium-linux.png; avatar.json visualArchetypes [\"marker\"].",
+      "fix": "YZ to decide whether avatars should carry the theme's marker treatment (retro bevel ring, aqua gloss) or stay neutral; then either apply --a63-marker-shadow or drop the archetype.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k08-15",
+      "subject": "empty",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "EmptyErrorDetail is uncontrolled only and its toggle labels are fixed.",
+      "evidence": "empty.tsx:83-110 (useState, literal \"Show details\"/\"Hide details\").",
+      "fix": "Add expanded/defaultExpanded/onExpandedChange and showLabel/hideLabel props.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-16",
+      "subject": "empty",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Empty's error detail is English-only and its copy button stays on the physical right in RTL.",
+      "evidence": "empty.tsx:109; empty.css:124-125 (four-value padding reserving the right), :141-142 (top/right).",
+      "fix": "Take the labels as props and use padding-inline-end / inset-inline-end; add an RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-17",
+      "subject": "empty",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The expanded error detail (a contract state) is never rendered in a story or baseline.",
+      "evidence": "empty.json lists.states includes expanded; empty.stories.tsx has no story with the detail open.",
+      "fix": "Add an ErrorExpanded story (play clicks the toggle) so the error box and CopyButton get a baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-18",
+      "subject": "skeleton",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The shimmer sweeps physically left to right, so in RTL it runs trailing-to-leading against the contract.",
+      "evidence": "skeleton.css:29-36; skeleton.json crossRenderer.motion.direction \"leading-to-trailing\".",
+      "fix": "Flip the keyframes under :dir(rtl) (or drive translate from a direction variable) and add an RTL story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-19",
+      "subject": "skeleton",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Skeleton disappears in forced-colors mode, and the contract's \"blocks interaction while active\" outcome has no web implementation or guidance.",
+      "evidence": "skeleton.css has no @media (forced-colors); skeleton.json crossRenderer.accessibilityOutcomes includes blocks-interaction-while-active.",
+      "fix": "Add a forced-colors rule (e.g. border: 1px solid CanvasText or background: GrayText) and document aria-busy/inert on the loading container, or drop the outcome from the web side.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-20",
+      "subject": "skeleton",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The CLI tells builders Skeleton blocks interaction while loading, which the React component does not do.",
+      "evidence": "`pnpm -s atom63 component skeleton` output (Shared outcomes / Accessibility outcomes).",
+      "fix": "Fix with the K2 finding: implement or reword the outcome for web, then regenerate the index.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-21",
+      "subject": "skeleton",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Skeleton is identical across themes, nearly invisible on light panels, and shows a static highlight band toward the trailing edge when motion is off.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-skeleton-themes-chromium-linux.png; skeleton.css:14-25 keeps the 200%-wide gradient at its start position when animation is none.",
+      "fix": "Hide ::after (or set its opacity to 0) under reduced motion; YZ to judge whether the base fill needs more contrast on light and per-theme radius.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-22",
+      "subject": "animated-check",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "AnimatedCheck has no 4-theme x 2-mode evidence; only modern light/dark baselines exist.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-animatedcheck-playground/-dark/-static-sizes-chromium-linux.png; animated-check.stories.tsx exports Playground, StaticSizes, Dark only.",
+      "fix": "Add a Themes story (static variant) for the contact sheet.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-23",
+      "subject": "animated-check",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "The draw animation uses a literal 300ms ease-out instead of motion tokens, and every instance injects its own <style> block.",
+      "evidence": "animated-check.tsx:6-32,70.",
+      "fix": "Read duration/easing from --a63-motion-* tokens and move the CSS to the shared stylesheet.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-24",
+      "subject": "alert",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "Warning alerts default to role=\"alert\", so a persistent warning present at page load is announced assertively.",
+      "evidence": "alert.tsx:14-20.",
+      "fix": "Default warning to status (keep alert for error), or document passing role=\"status\" for persistent warnings.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-25",
+      "subject": "feedback-state",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "Loading defaults read \"Loading\" then \"Loading...\", page size uses min-height:100dvh, and an Error's raw message becomes the description, against the catalog guidance to keep technical detail secondary.",
+      "evidence": "feedback-state.tsx:75-79,117-119; feedback-state.css:45; component-catalog.ts:322.",
+      "fix": "Give loading a distinct default description, use min-block-size:100% for page inside shells, and show error.message only when opted in.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-26",
+      "subject": "empty",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Empty uses literal font sizes that bypass the type-scale tokens.",
+      "evidence": "empty.css:101 (0.875rem), :134 (0.75rem).",
+      "fix": "Use --typography-sm-font-size / --typography-xs-font-size.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-27",
+      "subject": "skeleton",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "The test named for the reduced-motion fallback only compares contract JSON; the CSS behaviour is untested.",
+      "evidence": "skeleton.test.tsx:18-28.",
+      "fix": "Rename it, and assert the reduced-motion and RTL rules in a browser story play function.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k08-28",
+      "subject": "empty",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Empty and FeedbackState cover the same states with different visuals (dashed bordered card vs borderless column), both stable.",
+      "evidence": "empty.css:19 vs feedback-state.css:8-26; apps/storybook/visual/__screenshots__/ui-react-empty-themes and ui-react-feedbackstate-themes baselines.",
+      "fix": "YZ to decide whether FeedbackState should compose Empty (one look) or whether the two stay distinct, and say when to use each in the catalog.",
+      "kind": "yz-decision"
+    }
+  ]
+}

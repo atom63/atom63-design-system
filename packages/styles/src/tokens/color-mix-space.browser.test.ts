@@ -18,9 +18,31 @@ import { resetRoot, root } from '../test/apply-styles'
 
 const lowChroma = { min: 0.000004, max: 0.04 }
 
-const mixes = (
-  manifest as { entries: { cssVar: string; type: string; value: string; scope: string }[] }
-).entries.filter(entry => entry.type === 'color' && /color-mix\(\s*in oklch/.test(entry.value))
+type Entry = { cssVar: string; type: string; value: string; scope: string }
+
+/* A nested brand or surface scope declares a mode role as
+   `var(--a63-if-light, <light>) var(--a63-if-dark, <dark>)`; only one branch
+   applies, so each is checked as its own value. */
+function branches(entry: Entry): Entry[] {
+  const found: Entry[] = []
+  for (const mode of ['light', 'dark']) {
+    const start = entry.value.search(new RegExp(`var\\(\\s*--a63-if-${mode}\\s*,`))
+    if (start === -1) continue
+    let depth = 0
+    let end = start
+    for (; end < entry.value.length; end++) {
+      if (entry.value[end] === '(') depth++
+      if (entry.value[end] === ')' && --depth === 0) break
+    }
+    const value = entry.value.slice(entry.value.indexOf(',', start) + 1, end)
+    found.push({ ...entry, value, scope: `${entry.scope} (${mode})` })
+  }
+  return found.length > 0 ? found : [entry]
+}
+
+const mixes = (manifest as { entries: Entry[] }).entries
+  .flatMap(branches)
+  .filter(entry => entry.type === 'color' && /color-mix\(\s*in oklch/.test(entry.value))
 
 const probe = document.createElement('div')
 document.body.append(probe)

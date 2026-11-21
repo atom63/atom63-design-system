@@ -20,3 +20,11 @@
   --a63-skeleton-base: var(--a63-surface-muted);
   --a63-skeleton-highlight: var(--color-white-10);
 }
+
+[data-a63-brand],
+[data-a63-surface] {
+  /* The mode roles again, on scopes that change what they read, keyed to the nearest mode scope. */
+  --a63-skeleton-base: var(--a63-surface-muted);
+  --a63-skeleton-highlight: var(--a63-if-light, var(--color-white-60))
+    var(--a63-if-dark, var(--color-white-10));
+}

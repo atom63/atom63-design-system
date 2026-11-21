@@ -71,9 +71,9 @@
 /* Invalid: the same danger edge as .a63-Input[data-invalid] (input.css). */
 .a63-Select-trigger[data-invalid],
 .a63-Select-trigger[aria-invalid='true'] {
-  --select-border: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
-  --select-focus-border: var(--a63-action-danger);
-  --select-focus-ring: color-mix(in oklch, var(--a63-action-danger) 35%, transparent);
+  --select-border: var(--a63-border-danger);
+  --select-focus-border: var(--a63-status-danger);
+  --select-focus-ring: var(--a63-status-danger);
 }
 
 .a63-Select-trigger[data-disabled] {

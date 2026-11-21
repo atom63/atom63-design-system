@@ -1,0 +1,184 @@
+{
+  "scope": "Layer 6: consumer and agent experience (U1-U5), web and React only",
+  "reviewedAt": "2026-11-20",
+  "round": 2,
+  "subjects": [
+    {
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "ready": false,
+      "scores": [
+        { "criterion": "U1", "score": 2, "evidence": "Core answers match source: `pnpm -s atom63 component button` lists variants/sizes/shapes/tones identical to packages/ui-foundation/contracts/components/button.json `lists` (12 variants, 11 sizes incl. tile and icon-*); `atom63 build \"a phone screen to send money to a friend\"` cites Amount props size/strong/fraction/currency/value, all present in packages/ui-react/src/components/amount/amount.tsx:8-21; MCP tools are generated from the same command table (packages/cli/src/mcp.mjs:47-66) and `node --test src/mcp.test.mjs` = 17 pass. Gaps a consumer hits: `atom63 api DialogPrimitive` answers `import { DialogPrimitive } from '@atom63/ui-react'` (all 29 /preview names also resolve to the root) while docs/design-system/quickstart.md:86-97 says import preview APIs from @atom63/ui-react/preview; `atom63 docs component-dialog` -> docs.not_found although https://system.atom63.io/components/component-dialog.md is 200 and the starter AGENTS.md cites that slug; `atom63 api InformBanner` returns only the import line and a docs pointer, no props; MCP reports version '0.0.0' (mcp.mjs:18) vs package 0.1.0-beta.2; `atom63 token muted-foreground` returns --a63-weather-muted-foreground etc., never the shadcn/Tailwind alias (--muted-foreground -> --a63-text-secondary, packages/styles/src/compat/shadcn.css:26) that the starter AGENTS.md tells agents to use." },
+        { "criterion": "U2", "score": null, "evidence": "n/a: the rule table lives in packages/cli/src/rules.mjs but is scored under the AGENTS.md subject." },
+        { "criterion": "U3", "score": 3, "evidence": "sweep-r2/ds-registry-smoke.log resolves @atom63/cli@beta -> 0.1.0-beta.2 from registry.npmjs.org; sweep-r2/ds-pack-smoke.log runs `pnpm run cli (atom63 build, component, example, token)` against the packed tarball. MCP stdio startup is not part of either smoke (polish)." },
+        { "criterion": "U4", "score": 2, "evidence": "Findable: every JS entry point is in the agent index with a docs page (packages/cli/generated/agent-index.json api.web, 26 modules; build-index fails on an entry with no docs page per packages/cli/README.md step 6) and `atom63 api <name>` resolves every export. Documented: the answer for most subpath exports is only a page pointer whose Markdown never names the export (measured over agent-index docs+components markdown: @atom63/ui-react/media/lightbox 27 of 28 names absent, @atom63/inform/surfaces 13/14, @atom63/widgets 26/35, @atom63/mdx/primitives 22/28, @atom63/ui-react/theme 20/26, @atom63/ui-foundation 363/504)." },
+        { "criterion": "U5", "score": null, "evidence": "n/a: outcomes scored under the case-study subject." }
+      ]
+    },
+    {
+      "subject": "AGENTS.md rules vs checks",
+      "ready": false,
+      "scores": [
+        { "criterion": "U1", "score": null, "evidence": "n/a: scored under the CLI subject." },
+        { "criterion": "U2", "score": 1, "evidence": "AGENTS.md:76-90 (generated from packages/cli/src/rules.mjs). 6 of 15 rules name a check (4, 9, 10, 11, 12, 13 via `check` fields at rules.mjs:27,53,59,65,71,77); rule 15 cites axe on stories and rule 5 cites a vibe-benchmark warning (not a CI gate). Rules 1, 2, 3, 6, 7, 8 and 14 (rules.mjs ids query-first, compose-before-create, contract-values:19, quiet-secondary-actions:35, one-boundary:40, on-media-colors:45, as-child-spreads-props:80) name no check and give no reason why none exists. `check:agents-md` (packages/cli/scripts/sync-agents-md.mjs:18-26) only diffs the generated block, so it cannot catch this. Reverse gap: check:craft's `token-role` rule (9942f2c3) has no AGENTS.md rule. Repo-level rules above the block (changesets per published package, no brand icons in ui-react) also have no CI check (.github/workflows has changeset counting only in release-beta.yml:55-59). The repo's own craft-baseline.json grandfathers 3 `mode-branch` hits (kbd.css, mdx code-block) against rule 13." },
+        { "criterion": "U3", "score": null, "evidence": "n/a: install path scored under packages/create." },
+        { "criterion": "U4", "score": null, "evidence": "n/a: export docs scored under CLI and apps/docs." },
+        { "criterion": "U5", "score": null, "evidence": "n/a: outcomes scored under the case-study subject." }
+      ]
+    },
+    {
+      "subject": "packages/create and the starter",
+      "ready": false,
+      "scores": [
+        { "criterion": "U1", "score": 2, "evidence": "Generated AGENTS.md uses `agentsBlock({ variant: 'docs' })` (packages/create/src/generate.mjs:237), pointing agents at llms.txt and .md twins instead of `atom63 build`; packages/create/README.md:26 justifies it with 'the CLI is not published yet' and :65 with '@atom63/mdx ... has been published', both false (sweep-r2/ds-registry-smoke.log: @atom63/cli@beta 0.1.0-beta.2, @atom63/mdx@beta 0.4.0-beta.4). The starter package.json never adds @atom63/cli (generate.mjs layerPackages). Round 13a credits web adoption to `atom63 build` ('The web builders found the new pieces through `atom63 build` and the rules', case-studies-round-13a.md), so starter apps lose the channel that worked." },
+        { "criterion": "U2", "score": null, "evidence": "n/a: same rule table as the repo AGENTS.md; scored there. The starter check holds generated source to craft rules (sweep-r2/starter.log 'The app starter passes the craft rules')." },
+        { "criterion": "U3", "score": 2, "evidence": "sweep-r2/starter.log: 'The app starter passes its route check (5 routes x 2 widths x 2 modes = 20 pages)' and 'Starter check passed'. Gaps: @atom63/create is `private: true`, version 0.0.0 (packages/create/package.json), so `pnpm create @atom63` does not exist and a fresh install outside this repo has no starter (README.md:9 'once published'); the shadcn path runs only in CI with `--shadcn` (ci.yml:217) via unpinned `shadcn@latest` (check-starter.mjs:157,189), the local sweep did not exercise it, and only list-page (1 of 20 registry items) is installed through the Atom63 registry. Registry smoke against npm passes (ds-registry-smoke.log)." },
+        { "criterion": "U4", "score": null, "evidence": "n/a: the starter exports nothing." },
+        { "criterion": "U5", "score": null, "evidence": "n/a: outcomes scored under the case-study subject." }
+      ]
+    },
+    {
+      "subject": "apps/docs coverage and agent docs",
+      "ready": false,
+      "scores": [
+        { "criterion": "U1", "score": null, "evidence": "n/a: query correctness scored under the CLI." },
+        { "criterion": "U2", "score": null, "evidence": "n/a" },
+        { "criterion": "U3", "score": 2, "evidence": "The docs site's only install guidance is `pnpm add @atom63/styles@beta @atom63/ui-react@beta` (apps/docs/src/pages/home.mdx:20-24); no page shows the `@atom63/ui-react/styles.css` import or the Atom63Theme wrapper (grep over apps/docs/src/pages/*.mdx), which live only in repo docs/design-system/quickstart.md. Starter-generated agents are pointed at this site (llms.txt 200, 18.6 kB), so they cannot learn setup from it. home.mdx 'What ships' lists 4 of the 9 published web packages (no mdx, inform, agent, widgets, cli) and no page covers the CLI/MCP or the agent rules." },
+        { "criterion": "U4", "score": 2, "evidence": "Every component has a route (76 components in agent-index, 0 without route; the only uncovered folder is the shared `menu` recipe). But Markdown twins drop live JSX examples: apps/docs/src/pages/pattern-inform.mdx:145-157 renders InformBanner with body/severity/dismissable/actions, yet `atom63 docs pattern-inform` and https://system.atom63.io/patterns/pattern-inform.md contain 0 occurrences of 'InformBanner' (curl | grep -c = 0). Same pipeline (apps/docs/vite-plugins/llms-txt.ts:196 mdxToMarkdown) feeds the CLI index, so agents never see those usages. Export coverage gaps measured under the CLI subject." },
+        { "criterion": "U5", "score": null, "evidence": "n/a" }
+      ]
+    },
+    {
+      "subject": "Case-study outcomes (Round 13a, audits/vibe*)",
+      "ready": false,
+      "scores": [
+        { "criterion": "U1", "score": null, "evidence": "n/a" },
+        { "criterion": "U2", "score": null, "evidence": "n/a" },
+        { "criterion": "U3", "score": null, "evidence": "n/a" },
+        { "criterion": "U4", "score": null, "evidence": "n/a" },
+        { "criterion": "U5", "score": 2, "evidence": "Round 13a (main 889ecc81, Codex builder+judge, 3 runs median) web means: mobile 79.9 (+9.0 vs R12), desktop 87.0 (+0.6). 28 commits have landed since (`git log 889ecc81..HEAD`, including token text-role changes #288, contract renames #307, shadcn bridge #305 and both readiness fix rounds) with no case-study or vibe rerun: newest vibe report is docs/design-system/audits/vibe-2026-11-03-s3.md. Not every failure is traced to a layer: 13a lists doc-page -4 and attributes mobile gains partly to a harness change ('this run does not separate them'). The last web benchmark with a plain baseline (audits/vibe-crm-three-sample-synthesis-2026-11-03.md) had plain 93.7 vs ds-core 73.7 / ds-guided 76.7 and 'Every arm in every sample had serious axe findings'; its step 5 (repeat after the responsive slice) has no report. The Round 12/13a reports are untracked files (`git status` in .: '?? docs/design-system/case-studies-round-13a.md'); they are absent from this main worktree." }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r2-consumer-1",
+      "subject": "AGENTS.md rules vs checks",
+      "criterion": "U2",
+      "severity": "P1",
+      "summary": "7 of the 15 AGENTS.md rules (1 query-first, 2 compose-before-create, 3 contract-values, 6 quiet-secondary-actions, 7 one-boundary, 8 on-media-colors, 14 as-child-spreads-props) name no enforcing check and give no reason why not, and check:agents-md only verifies the block is in sync, so nothing holds the bar's U2 criterion.",
+      "evidence": "AGENTS.md:76-90; packages/cli/src/rules.mjs:19,35,40,45,80 (no `check` field); packages/cli/scripts/sync-agents-md.mjs:18-26 (diff only). check:craft `token-role` has no matching rule. Repo-level rules (changeset per published-package change, no brand icons in ui-react) have no CI gate.",
+      "fix": "Give every rule in rules.mjs either `check` or `unchecked: '<why>'` (e.g. contract-values: TypeScript unions reject other values; query-first: process rule, not checkable), render the reason in the generated block, and make check:agents-md fail on a rule with neither. Add a token-role rule (or fold it into rule 4's wording). Where cheap, add vibe-measure/craft lint for rule 6 (ghost without tone=\"muted\" in toolbars) and rule 8.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-2",
+      "subject": "Case-study outcomes (Round 13a, audits/vibe*)",
+      "criterion": "U5",
+      "severity": "P2",
+      "summary": "No case-study run on current main: 28 commits (both readiness fix rounds, token role and contract-name changes) landed after the Round 13a baseline, so 'means no lower than Round 13' is unmeasured; the Round 12/13a reports are untracked and some 13a drops are not traced to a layer.",
+      "evidence": "`git log 889ecc81..HEAD | wc -l` = 28; newest vibe report audits/vibe-2026-11-03-s3.md; case-studies-round-13a.md is '??' in the main checkout and missing here; 13a: 'this run does not separate them', doc-page -4 untraced.",
+      "fix": "Commit the case-study reports (round 12, 13a/13b) to docs/design-system; rerun the 14 web arms of Round 13 on current main with the same setup; record per-case drops with the layer each traces to.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-3",
+      "subject": "packages/create and the starter",
+      "criterion": "U1",
+      "severity": "P2",
+      "summary": "Generated starter apps get the docs-variant AGENTS.md (no `atom63 build`, no MCP) and no @atom63/cli dependency, justified by a README claim that the CLI is unpublished; @atom63/cli@beta is published.",
+      "evidence": "packages/create/src/generate.mjs:237 `agentsBlock({ variant: 'docs' })`; packages/create/README.md:26 'because the CLI is not published yet' and :65 '@atom63/mdx ... published'; sweep-r2/ds-registry-smoke.log '@atom63/cli@beta -> 0.1.0-beta.2', '@atom63/mdx@beta -> 0.4.0-beta.4'.",
+      "fix": "Add @atom63/cli as a devDependency of generated apps, switch the starter to the cli variant (keep the docs URLs as a fallback line), add a .mcp.json pointing at `pnpm exec atom63 mcp`, and delete the two stale README sentences.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-4",
+      "subject": "apps/docs coverage and agent docs",
+      "criterion": "U4",
+      "severity": "P2",
+      "summary": "Markdown twins (llms .md pages and the CLI docs index) drop live JSX examples, so components shown only in examples (InformBanner, InformDialog, InformSpotlight usage and props) never appear in what agents read.",
+      "evidence": "apps/docs/src/pages/pattern-inform.mdx:145-157 vs `pnpm -s atom63 docs pattern-inform | grep -c InformBanner` = 0 and `curl https://system.atom63.io/patterns/pattern-inform.md | grep -c InformBanner` = 0; shared converter apps/docs/vite-plugins/llms-txt.ts:196.",
+      "fix": "In mdxToMarkdown, emit the JSX inside ExampleContainer (and similar live-example wrappers) as a ```tsx fence instead of dropping it; add a test that every component tag used in a page's examples appears in its twin.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-5",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U4",
+      "severity": "P2",
+      "summary": "Most subpath exports are 'documented' only by a page pointer that never names them; `atom63 api` for a JS export returns just an import line, with no props or signature.",
+      "evidence": "Names absent from all indexed docs/component Markdown: media/lightbox 27/28 (LightboxBackdrop...), inform/surfaces 13/14, widgets 26/35, mdx/primitives 22/28, ui-react/theme 20/26, mdx/lightbox 11/12. `pnpm -s atom63 api InformBanner` -> import line + 'Docs: atom63 docs pattern-inform' only.",
+      "fix": "Extend build-index to attach each React export's props (from the .d.ts / API report already generated) and its TSDoc summary to `atom63 api`; fail check:agent-index when a public export has neither a docs mention nor a TSDoc summary (with an allowlist for internal-looking constants, or move those to /preview).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-6",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P2",
+      "summary": "`atom63 api` gives the root import for all 29 preview APIs (e.g. DialogPrimitive), contradicting the quickstart rule to import them from @atom63/ui-react/preview, and does not flag them as preview.",
+      "evidence": "`pnpm -s atom63 api DialogPrimitive` -> `import { DialogPrimitive } from '@atom63/ui-react'`; agent-index: 29 of 29 @atom63/ui-react/preview names also in the root module; docs/design-system/quickstart.md:86-97.",
+      "fix": "When a name is exported from /preview, answer with the /preview import and a 'preview: no stability promise' line; same in `atom63 component` usageExports.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-7",
+      "subject": "packages/create and the starter",
+      "criterion": "U3",
+      "severity": "P2",
+      "summary": "There is no fresh-install starter outside this repo: @atom63/create is private 0.0.0, so `pnpm create @atom63` fails, and consumers must assemble the Tailwind/shadcn/token wiring by hand.",
+      "evidence": "packages/create/package.json `\"private\": true`, version 0.0.0; packages/create/README.md:9 'once published'; docs/design-system/starter-plan.md:49 'private until release work resumes'.",
+      "fix": "Decide whether to publish @atom63/create on the beta tag with the other packages (check:starter already proves it against tarballs).",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-consumer-8",
+      "subject": "apps/docs coverage and agent docs",
+      "criterion": "U3",
+      "severity": "P2",
+      "summary": "The published docs site, which starter agents are told to read, has no setup page (CSS import, Atom63Theme, Tailwind wiring), lists only 4 of 9 web packages and says nothing about the CLI, MCP or agent rules.",
+      "evidence": "apps/docs/src/pages/home.mdx:11-24 (one `pnpm add` line, packages table without mdx/inform/agent/widgets/cli); no page in apps/docs/src/pages imports '@atom63/ui-react/styles.css' with Atom63Theme setup; quickstart lives only at docs/design-system/quickstart.md.",
+      "fix": "Add a 'Get started' docs page from quickstart.md (install, CSS, theme, Tailwind/shadcn bridge, create starter) and a 'Build with agents' page (CLI, MCP config, the rules), and complete the home packages table.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-9",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "`atom63 docs component-<slug>` is not found although the published site and the starter AGENTS.md use those slugs; the error gives no pointer to `atom63 component <slug>`.",
+      "evidence": "`pnpm -s atom63 docs component-dialog` -> 'No docs page \"component-dialog\". (docs.not_found)'; https://system.atom63.io/components/component-dialog.md -> 200; packages/cli/src/agents-md.mjs docsQueries cites component-dialog.md.",
+      "fix": "Resolve component-<slug> in `docs` to the component's Markdown, or return a `next: atom63 component <slug>` hint.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-10",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "Token search does not know the Tailwind/shadcn alias names the starter tells agents to use, and ranks shadow tokens above text colours for 'muted text'.",
+      "evidence": "`atom63 token muted-foreground` -> --a63-weather-muted-foreground, --a63-action-danger-foreground...; `atom63 token \"muted text\"` lists 4 shadow/brand tokens before --a63-text-secondary; mapping is packages/styles/src/compat/shadcn.css:26.",
+      "fix": "Index the compat aliases (muted-foreground -> --a63-text-secondary, utility text-muted-foreground) as synonyms of their target tokens.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-11",
+      "subject": "packages/cli (atom63 CLI and MCP)",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "The MCP server reports version 0.0.0 instead of the package version.",
+      "evidence": "packages/cli/src/mcp.mjs:18 `const packageVersion = '0.0.0'`; packages/cli/package.json version 0.1.0-beta.2.",
+      "fix": "Read the version from package.json.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-consumer-12",
+      "subject": "packages/create and the starter",
+      "criterion": "U3",
+      "severity": "P3",
+      "summary": "The shadcn path is proved only in CI, with unpinned shadcn@latest, and installs 1 of 20 Atom63 registry items.",
+      "evidence": "scripts/design-system/check-starter.mjs:157,189 (`shadcn@latest`, list-page only); .github/workflows/ci.yml:217; sweep-r2/starter.log has no shadcn add step.",
+      "fix": "Pin the shadcn CLI version and install every page item (which pulls all blocks) in the --shadcn run.",
+      "kind": "fix"
+    }
+  ]
+}

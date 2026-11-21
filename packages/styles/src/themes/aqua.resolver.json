@@ -1292,7 +1292,13 @@
   ],
   "$extensions": {
     "io.atom63.css": {
-      "imports": ["./aqua.native.css"]
+      "imports": ["./aqua.native.css"],
+      "rescope": {
+        "selector": "[data-a63-theme='aqua']:is([data-a63-brand], [data-a63-surface]), [data-a63-theme='aqua'] :is([data-a63-brand], [data-a63-surface])",
+        "light": "02-data-a63-theme-aqua-is-root-light-data-a63-mode-",
+        "dark": "03-data-a63-theme-aqua-is-dark-data-a63-mode-dark",
+        "base": "01-data-a63-theme-aqua"
+      }
     }
   }
 }
