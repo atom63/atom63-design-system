@@ -28,9 +28,13 @@ env:
 permissions:
   contents: read
 
+# Release runs go one at a time and none is cancelled. queue: max keeps every
+# waiting run (up to 100) in line; with the default queue, a newer push would
+# cancel the run still waiting, which could be the Version Packages merge.
 concurrency:
   group: release-beta
   cancel-in-progress: false
+  queue: max
 
 jobs:
   detect:
