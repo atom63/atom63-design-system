@@ -1,8 +1,8 @@
 # ADR 0001: Base UI as the primitive layer
 
 **Status:** Accepted. The decision predates this repository: Base UI was already the primitive
-layer when the system was extracted from its first host app on 2026-09-21. The date and the
-alternatives weighed at the time are not recorded.
+layer when the system was extracted from its first host app on 2026-09-21. The exact date of the
+choice is not recorded; the reasons below are the author's, written down on 2026-11-21.
 
 ## Context
 
@@ -21,11 +21,14 @@ APIs, the dependency is pinned to an exact version through the beta.
 
 ## Options considered
 
-- **Radix primitives.** The most common choice in the shadcn ecosystem at the time. Why not: not
-  recorded. A later internal record (positioning proposal, 2026-11-21) notes that Base UI became
-  shadcn's default in 2026-07, so the two are now the same layer.
-- **Primitives written from scratch.** Why not: not recorded. The cost of owning keyboard and
-  focus behaviour for every widget is the usual reason; this repository has no record saying so.
+- **Radix primitives.** The most common choice in the shadcn ecosystem at the time. Why not:
+  several of Radix's core people moved on to build Base UI (it describes itself as "from the
+  creators of Radix, Floating UI and Material UI"), and Base UI has iterated faster since its 1.0
+  in 2025-12, shipping roughly monthly, while Radix, now maintained by WorkOS, releases more
+  slowly. shadcn made Base UI its default in 2026-07, which confirmed the bet: the primitive under
+  the most common React stack is now the one Atom63 uses.
+- **Primitives written from scratch.** Why not: the reason is not recorded. The cost of owning
+  keyboard and focus behaviour for every widget is the usual one.
 - **Base UI.** Chosen.
 
 ## Consequences
@@ -54,4 +57,7 @@ APIs, the dependency is pinned to an exact version through the beta.
   [#76](https://github.com/atom63/atom63-design-system/pull/76),
   [#81](https://github.com/atom63/atom63-design-system/pull/81); workarounds in
   [#83](https://github.com/atom63/atom63-design-system/pull/83).
-- The original choice of Base UI over Radix or custom primitives: not recorded.
+- The reasons over Radix: the author's account (2026-11-21), checked against
+  [Base UI's about page](https://base-ui.com/react/overview/about),
+  [its repository](https://github.com/mui/base-ui) and shadcn/ui's
+  [2026-07 changelog](https://ui.shadcn.com/docs/changelog/2026-07-base-ui-default).
