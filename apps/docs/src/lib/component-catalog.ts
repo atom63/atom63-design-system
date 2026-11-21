@@ -395,6 +395,20 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usage: 'Connect htmlFor to the control id; placeholder text is not a label.',
     usageExports: ['Label'],
   },
+  'layered-scene': {
+    relatedSlugs: ['art-plate', 'frame', 'card'],
+    summary:
+      'Layered Scene stacks a plate, a stage of product UI and an inert foreground cut-out so the interface sits inside the picture.',
+    usage:
+      'Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.',
+    usageExports: [
+      'LayeredScene',
+      'LayeredScenePlate',
+      'LayeredSceneContent',
+      'LayeredSceneStage',
+      'LayeredSceneForeground',
+    ],
+  },
   'load-more-trigger': {
     relatedSlugs: ['scrollable-list', 'spinner', 'progress'],
     summary: 'Load More Trigger is an observable sentinel row for incremental collection loading.',
@@ -850,6 +864,7 @@ export const componentCatalogGroups = [
       'feedback-state',
       'frame',
       'item',
+      'layered-scene',
       'message',
       'scroll-area',
       'scrollable-list',

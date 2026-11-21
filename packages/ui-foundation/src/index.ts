@@ -739,6 +739,22 @@ export type {
   LabelVisualArchetype,
 } from './components/label/label-contract'
 export {
+  layeredSceneContract,
+  layeredScenePlacements,
+  layeredSceneSlots,
+  layeredSceneStates,
+  layeredSceneVisualArchetypes,
+  layeredSceneWidths,
+} from './components/layered-scene/layered-scene-contract'
+export type {
+  LayeredSceneContract,
+  LayeredScenePlacement,
+  LayeredSceneSlot,
+  LayeredSceneState,
+  LayeredSceneVisualArchetype,
+  LayeredSceneWidth,
+} from './components/layered-scene/layered-scene-contract'
+export {
   loadMoreTriggerContract,
   loadMoreTriggerSlots,
   loadMoreTriggerStates,
