@@ -11,6 +11,8 @@
  */
 :root {
   --a63-font-app: var(--font-family-sans);
+  /* Headline font role. Defaults to the app font; a page or a plate scope can set it to the serif stack while the UI stays sans. */
+  --a63-font-display: var(--a63-font-app);
   --font-weight-medium: 500;
 }
 

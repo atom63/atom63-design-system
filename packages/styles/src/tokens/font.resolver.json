@@ -10,6 +10,11 @@
               "app": {
                 "$type": "fontFamily",
                 "$value": "{font.family.sans}"
+              },
+              "display": {
+                "$type": "fontFamily",
+                "$value": "{a63.font.app}",
+                "$description": "Headline font role. Defaults to the app font; a page or a plate scope can set it to the serif stack while the UI stays sans."
               }
             }
           },

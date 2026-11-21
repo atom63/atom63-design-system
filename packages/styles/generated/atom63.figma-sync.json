@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1150,
-    "aliasValues": 806,
+    "variables": 1158,
+    "aliasValues": 807,
     "skipped": 279,
     "computed": 64
   },
@@ -3864,6 +3864,20 @@
           ]
         },
         {
+          "name": "font/display",
+          "token": "--a63-font-display",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "alias": "--a63-font-app"
+            }
+          },
+          "codeSyntax": "var(--a63-font-display)",
+          "scopes": [
+            "FONT_FAMILY"
+          ]
+        },
+        {
           "name": "font/weight/medium",
           "token": "--font-weight-medium",
           "type": "FLOAT",
@@ -4470,6 +4484,46 @@
           ]
         },
         {
+          "name": "type/display/hero/font/weight",
+          "token": "--a63-type-display-hero-font-weight",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 600
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/font/weight/strong",
+          "token": "--a63-type-display-hero-font-weight-strong",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 700
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight-strong)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/letter/spacing",
+          "token": "--a63-type-display-hero-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.045em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/font/size",
           "token": "--a63-type-display-large-font-size",
           "type": "FLOAT",
@@ -4512,6 +4566,18 @@
           ]
         },
         {
+          "name": "type/display/large/letter/spacing",
+          "token": "--a63-type-display-large-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.04em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/line/height",
           "token": "--a63-type-display-large-line-height",
           "type": "FLOAT",
@@ -4524,6 +4590,18 @@
           "scopes": [
             "LINE_HEIGHT"
           ]
+        },
+        {
+          "name": "type/display/letter/spacing",
+          "token": "--a63-type-display-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.03em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-letter-spacing)",
+          "scopes": []
         },
         {
           "name": "type/display/line/height",
@@ -20040,6 +20118,52 @@
           "codeSyntax": "var(--a63-trigger-indicator-size)",
           "scopes": [
             "WIDTH_HEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/font/size",
+          "token": "--a63-type-display-hero-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 67.5156
+            },
+            "compact": {
+              "value": 64.7969
+            },
+            "comfortable": {
+              "value": 67.5156
+            },
+            "large": {
+              "value": 67.5156
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "type/display/hero/line/height",
+          "token": "--a63-type-display-hero-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 70.8906
+            },
+            "compact": {
+              "value": 68.0312
+            },
+            "comfortable": {
+              "value": 70.8906
+            },
+            "large": {
+              "value": 70.8906
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
           ]
         },
         {

@@ -7,6 +7,44 @@
         {
           "a63": {
             "type": {
+              "display-hero": {
+                "font-size": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 72,
+                    "unit": "px"
+                  },
+                  "$description": "Marketing hero headline, above display-large: fluid from the display step on phones to 72px on wide screens. Web only; iOS keeps display-large.",
+                  "$extensions": {
+                    "io.atom63.derive": "clamp({typography.10xl.font.size}, calc(1.5rem + 3.4vw), calc({$value} * var(--typography-scale, 1)))"
+                  }
+                },
+                "line-height": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": 76,
+                    "unit": "px"
+                  },
+                  "$extensions": {
+                    "io.atom63.derive": "calc({a63.type.display-hero.font-size} * 1.05)"
+                  }
+                },
+                "font-weight": {
+                  "$type": "fontWeight",
+                  "$value": 600
+                },
+                "font-weight-strong": {
+                  "$type": "fontWeight",
+                  "$value": 700
+                },
+                "letter-spacing": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": -0.045,
+                    "unit": "em"
+                  }
+                }
+              },
               "display-large": {
                 "font-size": {
                   "$type": "dimension",
@@ -32,6 +70,14 @@
                 "font-weight-strong": {
                   "$type": "fontWeight",
                   "$value": 700
+                },
+                "letter-spacing": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": -0.04,
+                    "unit": "em"
+                  },
+                  "$description": "Display tracking, tighter than text: about −0.04em for the sans display; a serif display (--a63-font-display) reads better near −0.025em."
                 }
               },
               "display": {
@@ -59,6 +105,13 @@
                 "font-weight-strong": {
                   "$type": "fontWeight",
                   "$value": 700
+                },
+                "letter-spacing": {
+                  "$type": "dimension",
+                  "$value": {
+                    "value": -0.03,
+                    "unit": "em"
+                  }
                 }
               },
               "large-title": {

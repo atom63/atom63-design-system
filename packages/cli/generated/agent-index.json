@@ -19758,6 +19758,22 @@
    ]
   },
   {
+   "cssVar": "--a63-font-display",
+   "figma": {
+    "collection": "Semantic",
+    "path": "font/display"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--a63-font-app)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-gradient-brand",
    "figma": {
     "collection": "Semantic",
@@ -23317,6 +23333,86 @@
    ]
   },
   {
+   "cssVar": "--a63-type-display-hero-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "clamp( var(--typography-10xl-font-size), calc(1.5rem + 3.4vw), calc(72px * var(--typography-scale, 1)) )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-letter-spacing",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/letter/spacing"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "-0.045em"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "calc(var(--a63-type-display-hero-font-size) * 1.05)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-type-display-large-font-size",
    "figma": {
     "collection": "Semantic",
@@ -23365,6 +23461,22 @@
    ]
   },
   {
+   "cssVar": "--a63-type-display-large-letter-spacing",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/large/letter/spacing"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "-0.04em"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-type-display-large-line-height",
    "figma": {
     "collection": "Semantic",
@@ -23377,6 +23489,22 @@
     {
      "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-11xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-letter-spacing",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/letter/spacing"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "-0.03em"
     }
    ]
   },
