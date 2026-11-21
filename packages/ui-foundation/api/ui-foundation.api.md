@@ -873,7 +873,7 @@ export const buttonContract: {
     defaultTone: "neutral";
     defaultVariant: "default";
     shapes: readonly ["default", "round"];
-    slots: readonly ["root", "label", "icon", "spinner", "indicator"];
+    slots: readonly ["button", "button-label", "button-spinner", "button-indicator"];
     states: readonly ["rest", "hover", "pressed", "focus-visible", "disabled", "loading"];
     tokenSlots: readonly ["button.background", "button.foreground", "button.border.color", "button.border.width", "button.radius", "button.shadow", "button.focusRing", "button.height", "button.paddingInline", "button.gap", "button.iconSize", "button.motion.press"];
     tones: readonly ["neutral", "muted"];
@@ -964,7 +964,7 @@ export const buttonSizes: readonly ["xs", "sm", "md", "lg", "xl", "tile", "icon-
 export type ButtonSlot = (typeof buttonSlots)[number];
 
 // @public (undocumented)
-export const buttonSlots: readonly ["root", "label", "icon", "spinner", "indicator"];
+export const buttonSlots: readonly ["button", "button-label", "button-spinner", "button-indicator"];
 
 // @public (undocumented)
 export type ButtonState = (typeof buttonStates)[number];
@@ -4513,7 +4513,7 @@ export interface SearchFieldContract {
 // @public (undocumented)
 export const searchFieldContract: {
     defaultVariant: "default";
-    slots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear", "search-field-end"];
+    slots: readonly ["search-field", "search-field-icon", "input", "search-field-clear", "search-field-end"];
     states: readonly ["empty", "query", "focus", "disabled"];
     variants: readonly ["default", "filled", "plain"];
     visualArchetypes: readonly ["field", "action"];
@@ -4523,7 +4523,7 @@ export const searchFieldContract: {
 export type SearchFieldSlot = (typeof searchFieldSlots)[number];
 
 // @public (undocumented)
-export const searchFieldSlots: readonly ["search-field", "search-field-icon", "search-field-input", "search-field-clear", "search-field-end"];
+export const searchFieldSlots: readonly ["search-field", "search-field-icon", "input", "search-field-clear", "search-field-end"];
 
 // @public (undocumented)
 export type SearchFieldState = (typeof searchFieldStates)[number];
