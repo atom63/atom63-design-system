@@ -63,4 +63,29 @@ describe('@atom63/widgets/styles.css', () => {
       /prefers-reduced-motion: reduce\)\s*\{\s*\.a63-Widget-spin\s*\{\s*animation: none;/
     )
   })
+
+  it('fills the avatar face even if a later same-layer .a63-Avatar default is injected', () => {
+    const fill = declarations('.a63-WidgetAvatar .a63-WidgetAvatar-avatar')
+    expect(fill['--avatar-size']).toBe('100%')
+    expect(fill['inline-size']).toBe('100%')
+    expect(fill['block-size']).toBe('100%')
+    // A single-class fill would lose to a later same-layer `.a63-Avatar` default.
+    expect(declarations('.a63-WidgetAvatar-avatar')['--avatar-size']).toBeUndefined()
+    expect(readStylesheet('styles.css')).toContain(
+      "@import './primitives/widget-avatar.css' layer(components);"
+    )
+  })
+
+  it('reserves margin so WidgetAvatar rings stay inside overflow:hidden hosts', () => {
+    const root = declarations('.a63-WidgetAvatar')
+    expect(root['--widget-avatar-ring']).toBe('2px')
+    expect(root['--widget-avatar-ring-outer']).toBe('4px')
+    expect(root.margin).toBe('var(--widget-avatar-ring-outer)')
+    expect(declarations('.a63-WidgetAvatar .a63-WidgetAvatar-avatar')['box-shadow']).toContain(
+      'var(--widget-avatar-ring)'
+    )
+    expect(declarations('.a63-WidgetAvatar-busyRing')['box-shadow']).toContain(
+      'var(--widget-avatar-ring-outer)'
+    )
+  })
 })

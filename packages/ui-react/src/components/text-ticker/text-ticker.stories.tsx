@@ -59,10 +59,35 @@ export const FitsInContainer: Story = {
   render: args => frame(<TextTicker {...args} />),
 }
 
-/* autoPlay scrolls continuously once the content overflows, no hover needed. */
+/* autoPlay scrolls continuously once the content overflows, no hover needed.
+   It pauses on hover and focus and shows a pause toggle (WCAG 2.2.2). */
 export const AutoPlay: Story = {
   args: { autoPlay: true },
   render: args => frame(<TextTicker {...args} />),
+  play: async ({ canvasElement }) => {
+    await new Promise(resolve => setTimeout(resolve, 50))
+    const toggle = canvasElement.querySelector<HTMLButtonElement>('button[aria-label="Pause"]')
+    // Under reduced motion (the visual run sets it) the ticker stands still and shows no toggle.
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (toggle) throw new Error('Expected no pause toggle under reduced motion')
+      return
+    }
+    if (!toggle) throw new Error('Expected the built-in pause toggle')
+    toggle.click()
+    await new Promise(resolve => setTimeout(resolve, 50))
+    if (toggle.getAttribute('aria-pressed') !== 'true') {
+      throw new Error('Expected the pause toggle to be pressed')
+    }
+    const track = canvasElement.querySelector('.a63-TextTicker-marqueeTrack')
+    if (!track || getComputedStyle(track).animationPlayState !== 'paused') {
+      throw new Error('Expected the marquee track to be paused')
+    }
+    toggle.click()
+    await new Promise(resolve => setTimeout(resolve, 50))
+    if (getComputedStyle(track).animationPlayState !== 'running') {
+      throw new Error('Expected the marquee track to run again after resuming')
+    }
+  },
 }
 
 /* The default truncate variant is a plain truncating line. */

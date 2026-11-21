@@ -3481,6 +3481,10 @@
       "source": "./components/toaster",
       "values": [
         {
+          "name": "toast",
+          "proposedTier": "beta-supported-core"
+        },
+        {
           "name": "Toaster",
           "proposedTier": "beta-supported-core"
         }
@@ -3750,16 +3754,6 @@
           "proposedTier": "beta-supported-core"
         }
       ]
-    },
-    {
-      "source": "./sonner",
-      "values": [
-        {
-          "name": "toast",
-          "proposedTier": "beta-supported-core"
-        }
-      ],
-      "types": []
     }
   ],
   "subpathExports": [

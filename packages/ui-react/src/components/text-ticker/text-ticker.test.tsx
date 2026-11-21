@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { createRef } from 'react'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { TextTicker } from './text-ticker'
 
@@ -57,5 +58,87 @@ describe('TextTicker', () => {
     expect(container.querySelector('[data-testid="ticker"]')).toHaveStyle({
       color: 'rgb(255, 0, 0)',
     })
+  })
+})
+
+describe('TextTicker autoPlay pause (WCAG 2.2.2)', () => {
+  // jsdom has no layout: make the measured text wider than its viewport.
+  beforeEach(() => {
+    vi.spyOn(HTMLElement.prototype, 'scrollWidth', 'get').mockImplementation(function (
+      this: HTMLElement
+    ) {
+      return this.classList.contains('a63-TextTicker-measure') ? 400 : 0
+    })
+    vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockReturnValue(200)
+  })
+  afterEach(() => {
+    vi.restoreAllMocks()
+  })
+
+  const long = 'A very long track title that should overflow its container'
+
+  it('renders a pause toggle that pauses and resumes the autoplaying marquee', () => {
+    const { container } = render(
+      <TextTicker autoPlay variant="marquee">
+        {long}
+      </TextTicker>
+    )
+    const root = container.querySelector('.a63-TextTicker')
+    expect(root).toHaveAttribute('data-autoplay')
+    expect(root).not.toHaveAttribute('data-paused')
+
+    const toggle = screen.getByRole('button', { name: 'Pause' })
+    expect(toggle).toHaveAttribute('aria-pressed', 'false')
+    fireEvent.click(toggle)
+    expect(toggle).toHaveAttribute('aria-pressed', 'true')
+    expect(root).toHaveAttribute('data-paused')
+    fireEvent.click(toggle)
+    expect(root).not.toHaveAttribute('data-paused')
+  })
+
+  it('takes a translated label for the toggle', () => {
+    render(
+      <TextTicker autoPlay pauseLabel="暂停" variant="marquee">
+        {long}
+      </TextTicker>
+    )
+    expect(screen.getByRole('button', { name: '暂停' })).toBeInTheDocument()
+  })
+
+  it('hands pausing to the caller when paused is passed', () => {
+    const { container, rerender } = render(
+      <TextTicker autoPlay paused variant="marquee">
+        {long}
+      </TextTicker>
+    )
+    expect(screen.queryByRole('button')).toBeNull()
+    expect(container.querySelector('.a63-TextTicker')).toHaveAttribute('data-paused')
+    rerender(
+      <TextTicker autoPlay paused={false} variant="marquee">
+        {long}
+      </TextTicker>
+    )
+    expect(container.querySelector('.a63-TextTicker')).not.toHaveAttribute('data-paused')
+  })
+
+  it('renders no toggle without autoPlay', () => {
+    render(<TextTicker variant="marquee">{long}</TextTicker>)
+    expect(screen.queryByRole('button')).toBeNull()
+  })
+
+  it('forwards a caller ref and onClick without breaking overflow measurement', () => {
+    const ref = createRef<HTMLSpanElement>()
+    const onClick = vi.fn()
+    const { container } = render(
+      <TextTicker autoPlay onClick={onClick} ref={ref} variant="marquee">
+        {long}
+      </TextTicker>
+    )
+    const root = container.querySelector('.a63-TextTicker')
+    expect(ref.current).toBe(root)
+    expect(root).toHaveAttribute('data-overflowing')
+    fireEvent.click(screen.getByRole('button', { name: 'Pause' }))
+    expect(root).toHaveAttribute('data-paused')
+    expect(onClick).toHaveBeenCalledTimes(1)
   })
 })

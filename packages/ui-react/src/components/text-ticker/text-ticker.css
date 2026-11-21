@@ -22,11 +22,32 @@
   position: relative;
 }
 
+/* With the pause toggle, the text viewport and the toggle share one row. */
+.a63-TextTicker--marquee[data-control] {
+  display: flex;
+  align-items: center;
+  gap: var(--a63-space-1);
+  overflow: visible;
+}
+
+/* The text area: clips the marquee and carries the edge fade. */
+.a63-TextTicker-viewport {
+  position: relative;
+  display: block;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.a63-TextTicker-control {
+  flex-shrink: 0;
+}
+
 /* Edge fade — only while the marquee is active (overflowing + hover/focus/auto). */
-.a63-TextTicker--marquee[data-overflowing][data-autoplay],
-.a63-TextTicker--marquee[data-overflowing]:hover,
-.a63-TextTicker--marquee[data-overflowing]:focus-visible,
-.a63-TextTicker--marquee[data-overflowing]:focus-within {
+.a63-TextTicker--marquee[data-overflowing][data-autoplay] .a63-TextTicker-viewport,
+.a63-TextTicker--marquee[data-overflowing]:hover .a63-TextTicker-viewport,
+.a63-TextTicker--marquee[data-overflowing]:focus-visible .a63-TextTicker-viewport,
+.a63-TextTicker--marquee[data-overflowing]:focus-within .a63-TextTicker-viewport {
   mask-image: linear-gradient(
     to right,
     transparent,
@@ -104,6 +125,18 @@
 .a63-TextTicker--marquee[data-overflowing]:focus-within .a63-TextTicker-marqueeTrack {
   animation: a63-text-ticker-marquee var(--a63-text-ticker-duration, 24s) linear
     var(--a63-text-ticker-delay, 0ms) infinite;
+}
+
+/* WCAG 2.2.2: an autoplaying marquee stops while the text is hovered or the
+   ticker itself holds focus, and while paused by the toggle or the caller.
+   The toggle is left out of the hover/focus pause so a click on it resumes. */
+.a63-TextTicker--marquee[data-overflowing][data-autoplay]
+  .a63-TextTicker-viewport:hover
+  .a63-TextTicker-marqueeTrack,
+.a63-TextTicker--marquee[data-overflowing][data-autoplay]:focus-visible
+  .a63-TextTicker-marqueeTrack,
+.a63-TextTicker--marquee[data-overflowing][data-paused] .a63-TextTicker-marqueeTrack {
+  animation-play-state: paused;
 }
 
 @keyframes a63-text-ticker-marquee {
