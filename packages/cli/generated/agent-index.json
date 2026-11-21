@@ -3472,6 +3472,14 @@
      "appViewSlots",
      "appViewTopBarSpans",
      "appViewVisualArchetypes",
+     "artPlateContract",
+     "artPlateSafeAreas",
+     "artPlateSizes",
+     "artPlateSlots",
+     "artPlateStates",
+     "artPlateTones",
+     "artPlateVeils",
+     "artPlateVisualArchetypes",
      "autocompleteContract",
      "autocompleteSizeAliases",
      "autocompleteSizes",
@@ -3981,6 +3989,7 @@
      "AlertTitle",
      "Amount",
      "AnimatedCheck",
+     "ArtPlate",
      "Atom63Theme",
      "Autocomplete",
      "AutocompleteClear",
@@ -10852,6 +10861,113 @@
    "usage": "Wrap a product view that has no site header or footer; pass layout=\"phone\" for a phone app screen. A window takes chrome=\"flush\" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region. For a multi-pane app, add rail (an icon column before the panel), aside (a thread or details pane after the main region, from lg up) and topBarSpan=\"main\" (the top bar starts after the panel, which runs full height).",
    "usageExports": [
     "AppView"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
+      "description": "In-flow containers and content surfaces that do not inherently manipulate state.",
+      "id": "surface",
+      "label": "Static content surfaces"
+     }
+    ],
+    "axes": [
+     {
+      "name": "sizes",
+      "values": [
+       "viewport",
+       "band",
+       "card"
+      ],
+      "default": "viewport"
+     },
+     {
+      "name": "safeAreas",
+      "values": [
+       "top",
+       "bottom",
+       "center",
+       "start",
+       "end"
+      ],
+      "default": "top"
+     },
+     {
+      "name": "tones",
+      "values": [
+       "page",
+       "media"
+      ],
+      "default": "page"
+     },
+     {
+      "name": "veils",
+      "values": [
+       "none",
+       "soft",
+       "strong"
+      ],
+      "default": "none"
+     }
+    ],
+    "exportName": "artPlateContract",
+    "slots": [
+     "art-plate",
+     "art-plate-image",
+     "art-plate-content"
+    ],
+    "source": "packages/ui-foundation/contracts/components/art-plate.json",
+    "states": [
+     "rest"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "ArtPlateFocus",
+     "ArtPlateProps"
+    ],
+    "values": [
+     "ArtPlate"
+    ]
+   },
+   "group": {
+    "id": "content-and-surfaces",
+    "title": "Content and surfaces"
+   },
+   "guidance": [
+    "Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.",
+    "Keep product data and fetching outside the presentational component.",
+    "Test long, empty, and narrow content before adding local layout overrides."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Art Plate",
+   "markdown": "# Art Plate\n\nArt Plate shows a full-bleed picture that owns its crop and keeps a safe area for headline and product UI.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { ArtPlate } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `ArtPlate`\n\n**Types:** `ArtPlateFocus`, `ArtPlateProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/art-plate.json` (`artPlateContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `viewport`, `band`, `card` | `viewport` |\n| `safeAreas` | `top`, `bottom`, `center`, `start`, `end` | `top` |\n| `tones` | `page`, `media` | `page` |\n| `veils` | `none`, `soft`, `strong` | `none` |\n\n**Slots:** `art-plate`, `art-plate-image`, `art-plate-content`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Card](/components/component-card)\n- [Frame](/components/component-frame)\n- [Progressive Blur](/components/component-progressive-blur)\n",
+   "related": [
+    "card",
+    "frame",
+    "progressive-blur"
+   ],
+   "route": "/components/component-art-plate",
+   "slug": "art-plate",
+   "status": "preview",
+   "stories": {
+    "file": "packages/ui-react/src/components/art-plate/art-plate.stories.tsx",
+    "names": [
+     "Playground",
+     "Viewport",
+     "SafeAreas",
+     "Card",
+     "Themes"
+    ],
+    "source": "import {\n  artPlateSafeAreas,\n  artPlateSizes,\n  artPlateTones,\n  artPlateVeils,\n  themes,\n} from '@atom63/ui-foundation'\nimport { ArtPlate, Button, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\n// Remote pictures are pinned to one placeholder in the visual and craft runs.\nconst PLATE = 'https://picsum.photos/id/1018/1920/1080'\n\nconst meta = {\n  title: 'UI React/ArtPlate',\n  component: ArtPlate,\n  parameters: { layout: 'fullscreen' },\n  argTypes: {\n    safeArea: { control: 'inline-radio', options: artPlateSafeAreas },\n    size: { control: 'inline-radio', options: artPlateSizes },\n    tone: { control: 'inline-radio', options: artPlateTones },\n    veil: { control: 'inline-radio', options: artPlateVeils },\n  },\n  args: {\n    alt: '',\n    focus: { x: 0.5, y: 0.7 },\n    safeArea: 'top',\n    size: 'band',\n    src: PLATE,\n    tone: 'media',\n    veil: 'soft',\n  },\n} satisfies Meta<typeof ArtPlate>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nfunction HeroCopy() {\n  return (\n    <div style={{ display: 'grid', gap: 'var(--a63-space-4)', maxInlineSize: '36rem' }}>\n      <h1\n        style={{\n          margin: 0,\n          fontSize: 'var(--a63-type-display-large-font-size)',\n          lineHeight: 'var(--a63-type-display-large-line-height)',\n        }}\n      >\n        Render at the speed of thought\n      </h1>\n      <p style={{ margin: 0 }}>A motion timeline that renders in the browser.</p>\n      <div style={{ display: 'flex', gap: 'var(--a63-space-2)' }}>\n        <Button>Start free</Button>\n        <Button variant=\"outline\">Read the docs</Button>\n      </div>\n    </div>\n  )\n}\n\nexport const Playground: Story = {\n  render: args => (\n    <ArtPlate {...args}>\n      <HeroCopy />\n    </ArtPlate>\n  ),\n}\n\nexport const Viewport: Story = {\n  args: { priority: true, size: 'viewport', safeArea: 'center' },\n  render: args => (\n    <ArtPlate {...args}>\n      <HeroCopy />\n    </ArtPlate>\n  ),\n}\n\nexport const SafeAreas: Story = {\n  render: args => (\n    <div style={{ display: 'grid', gap: 'var(--a63-space-4)' }}>\n      {artPlateSafeAreas.map(safeArea => (\n        <ArtPlate key={safeArea} {...args} safeArea={safeArea}>\n          <p style={{ margin: 0 }}>safeArea=&quot;{safeArea}&quot;</p>\n        </ArtPlate>\n      ))}\n    </div>\n  ),\n}\n\nexport const Card: Story = {\n  args: { size: 'card', safeArea: 'bottom', veil: 'strong' },\n  render: args => (\n    <div style={{ padding: 'var(--a63-space-6)' }}>\n      <ArtPlate {...args}>\n        <p style={{ margin: 0 }}>Ship your next render tonight.</p>\n      </ArtPlate>\n    </div>\n  ),\n}\n\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 'var(--a63-space-3)' }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div style={{ background: 'var(--a63-surface-page)', padding: 'var(--a63-space-3)' }}>\n              <ArtPlate alt=\"\" safeArea=\"start\" size=\"card\" src={PLATE} tone=\"page\" veil=\"strong\">\n                <p style={{ margin: 0 }}>\n                  {theme} / {mode}\n                </p>\n              </ArtPlate>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n"
+   },
+   "summary": "Art Plate shows a full-bleed picture that owns its crop and keeps a safe area for headline and product UI.",
+   "usage": "Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.",
+   "usageExports": [
+    "ArtPlate"
    ]
   },
   {

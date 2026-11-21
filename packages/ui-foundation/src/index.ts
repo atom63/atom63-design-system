@@ -217,6 +217,26 @@ export type {
   AppViewVisualArchetype,
 } from './components/app-view/app-view-contract'
 export {
+  artPlateContract,
+  artPlateSafeAreas,
+  artPlateSizes,
+  artPlateSlots,
+  artPlateStates,
+  artPlateTones,
+  artPlateVeils,
+  artPlateVisualArchetypes,
+} from './components/art-plate/art-plate-contract'
+export type {
+  ArtPlateContract,
+  ArtPlateSafeArea,
+  ArtPlateSize,
+  ArtPlateSlot,
+  ArtPlateState,
+  ArtPlateTone,
+  ArtPlateVeil,
+  ArtPlateVisualArchetype,
+} from './components/art-plate/art-plate-contract'
+export {
   badgeContract,
   badgeDotColors,
   badgePaletteVariants,

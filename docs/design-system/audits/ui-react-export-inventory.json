@@ -46,10 +46,10 @@
     ]
   },
   "counts": {
-    "rootValueExports": 437,
-    "rootTypeExports": 200,
-    "packageExportKeys": 82,
-    "cssExportKeys": 75
+    "rootValueExports": 438,
+    "rootTypeExports": 202,
+    "packageExportKeys": 83,
+    "cssExportKeys": 76
   },
   "packageExportKeys": [
     ".",
@@ -64,6 +64,7 @@
     "./recipes/alert.css",
     "./recipes/amount.css",
     "./recipes/app-view.css",
+    "./recipes/art-plate.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -142,6 +143,7 @@
     "./recipes/alert.css",
     "./recipes/amount.css",
     "./recipes/app-view.css",
+    "./recipes/art-plate.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -296,6 +298,11 @@
       "subpath": "./recipes/app-view.css",
       "kind": "css",
       "target": "./src/components/app-view/app-view.css"
+    },
+    {
+      "subpath": "./recipes/art-plate.css",
+      "kind": "css",
+      "target": "./src/components/art-plate/art-plate.css"
     },
     {
       "subpath": "./recipes/autocomplete.css",
@@ -839,6 +846,25 @@
         {
           "name": "AnimatedCheckProps",
           "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/art-plate",
+      "values": [
+        {
+          "name": "ArtPlate",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ArtPlateFocus",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ArtPlateProps",
+          "proposedTier": "beta-supported-core"
         }
       ]
     },
