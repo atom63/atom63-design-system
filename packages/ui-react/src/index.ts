@@ -396,6 +396,18 @@ export { Kbd, KbdGroup } from './components/kbd'
 export type { KbdProps } from './components/kbd'
 export { Label } from './components/label'
 export type { LabelProps } from './components/label'
+export {
+  LayeredScene,
+  LayeredSceneContent,
+  LayeredSceneForeground,
+  LayeredScenePlate,
+  LayeredSceneStage,
+} from './components/layered-scene'
+export type {
+  LayeredSceneForegroundProps,
+  LayeredScenePlateProps,
+  LayeredSceneProps,
+} from './components/layered-scene'
 export { LoadMoreTrigger } from './components/load-more-trigger'
 export type {
   LoadMoreTriggerProps,

@@ -46,10 +46,10 @@
     ]
   },
   "counts": {
-    "rootValueExports": 438,
-    "rootTypeExports": 202,
-    "packageExportKeys": 83,
-    "cssExportKeys": 76
+    "rootValueExports": 443,
+    "rootTypeExports": 205,
+    "packageExportKeys": 84,
+    "cssExportKeys": 77
   },
   "packageExportKeys": [
     ".",
@@ -99,6 +99,7 @@
     "./recipes/item.css",
     "./recipes/kbd.css",
     "./recipes/label.css",
+    "./recipes/layered-scene.css",
     "./recipes/load-more-trigger.css",
     "./recipes/marquee.css",
     "./recipes/media-lightbox.css",
@@ -178,6 +179,7 @@
     "./recipes/item.css",
     "./recipes/kbd.css",
     "./recipes/label.css",
+    "./recipes/layered-scene.css",
     "./recipes/load-more-trigger.css",
     "./recipes/marquee.css",
     "./recipes/media-lightbox.css",
@@ -473,6 +475,11 @@
       "subpath": "./recipes/label.css",
       "kind": "css",
       "target": "./src/components/label/label.css"
+    },
+    {
+      "subpath": "./recipes/layered-scene.css",
+      "kind": "css",
+      "target": "./src/components/layered-scene/layered-scene.css"
     },
     {
       "subpath": "./recipes/load-more-trigger.css",
@@ -2385,6 +2392,45 @@
       "types": [
         {
           "name": "LabelProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/layered-scene",
+      "values": [
+        {
+          "name": "LayeredScene",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneForeground",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredScenePlate",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneStage",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "LayeredSceneForegroundProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredScenePlateProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneProps",
           "proposedTier": "beta-supported-core"
         }
       ]
