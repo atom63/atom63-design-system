@@ -223,6 +223,26 @@ describe('findWarnings: multiple-primary', () => {
   })
 })
 
+describe('findWarnings: ghost-without-tone', () => {
+  it('warns at a literal ghost variant of the system Button with no tone', () => {
+    const source = [
+      "import { Button as Action } from '@atom63/ui-react'",
+      "import { Button } from './local-button'",
+      'export const A = (props: object) => (',
+      '  <div>',
+      '    <Action variant="ghost">Share</Action>',
+      '    <Action variant="ghost" tone="muted">Copy</Action>',
+      '    <Action variant="ghost" {...props}>Spread</Action>',
+      '    <Button variant="ghost" />',
+      '  </div>',
+      ')',
+    ].join('\n')
+    assert.deepEqual(findWarnings(source), [
+      { rule: 'ghost-without-tone', line: 5, match: '<Action variant="ghost">' },
+    ])
+  })
+})
+
 describe('measureSources', () => {
   it('adds the measures of every file', () => {
     const measures = measureSources(
