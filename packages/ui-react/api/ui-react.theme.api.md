@@ -354,6 +354,7 @@ export function SegmentedTokenControl<T extends string>(input: SegmentedTokenCon
 export interface SegmentedTokenControlProps<T extends string> {
     // (undocumented)
     className?: string;
+    label?: string;
     // (undocumented)
     onChange: (value: T) => void;
     // (undocumented)
@@ -393,6 +394,7 @@ export function SwatchTokenControl<T extends string>(input: SwatchTokenControlPr
 export interface SwatchTokenControlProps<T extends string> {
     // (undocumented)
     className?: string;
+    label?: string;
     // (undocumented)
     onChange: (value: T) => void;
     // (undocumented)

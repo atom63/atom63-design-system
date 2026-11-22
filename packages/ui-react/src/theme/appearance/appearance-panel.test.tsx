@@ -62,4 +62,16 @@ describe('AppearancePanel', () => {
     expect(screen.getAllByText('Mode').length).toBeGreaterThan(0)
     expect(screen.queryByText('Radius')).toBeNull()
   })
+
+  it('names every segmented choice group after its section', () => {
+    render(
+      <AppearancePanel
+        controller={makeController()}
+        sections={['theme', 'brand', 'surface', 'os', 'iconTheme']}
+      />
+    )
+    for (const name of ['Theme', 'Primary', 'Surface', 'System', 'Icons']) {
+      expect(screen.getByRole('radiogroup', { name })).toBeTruthy()
+    }
+  })
 })
