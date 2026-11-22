@@ -135,6 +135,20 @@ function buildKit(data) {
           '',
         ]
       : []),
+    ...(data.reading
+      ? [
+          '## Reading page',
+          data.reading.use,
+          '',
+          '```tsx',
+          ...data.reading.imports,
+          '',
+          data.reading.snippet,
+          '```',
+          `→ ${data.reading.next}`,
+          '',
+        ]
+      : []),
     ...(data.amount
       ? [
           '## Display amount',

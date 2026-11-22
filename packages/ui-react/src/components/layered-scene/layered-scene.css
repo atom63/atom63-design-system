@@ -1,0 +1,117 @@
+/*
+ * LayeredScene recipe — the SURFACE archetype. A two-row grid: the plate and
+ * the foreground span both rows, the copy takes the first and the stage the
+ * second, docked at the bottom. Levers: `data-placement` (stage position and
+ * copy alignment), `data-width` (stage width from the medium breakpoint up),
+ * `data-phone` on the foreground. Layers use the in-context z band. The
+ * foreground reads the plate's focal point variables, so it crops the same way.
+ * Tokens only: no literal colors, logical directions, and focus styles on
+ * :focus-visible (`pnpm check:craft`).
+ */
+
+.a63-LayeredScene {
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto 1fr;
+  overflow: clip;
+}
+
+.a63-LayeredScene > .a63-LayeredScene-plate {
+  z-index: var(--z-layer-below);
+  grid-row: 1 / -1;
+  grid-column: 1;
+}
+
+/* Copy */
+
+.a63-LayeredScene-content {
+  z-index: var(--z-layer-default);
+  box-sizing: border-box;
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: var(--a63-space-4);
+  grid-row: 1;
+  grid-column: 1;
+  padding-block: var(--spacing-24) var(--spacing-10);
+  padding-inline: var(--a63-space-6);
+  text-align: center;
+}
+
+.a63-LayeredScene:not([data-placement='center-bottom']) .a63-LayeredScene-content {
+  justify-items: start;
+  text-align: start;
+}
+
+@media (min-width: 768px) {
+  .a63-LayeredScene-content {
+    padding-inline: var(--spacing-16);
+  }
+}
+
+/* Stage */
+
+.a63-LayeredScene-stage {
+  z-index: var(--z-layer-default);
+  box-sizing: border-box;
+  grid-row: 2;
+  grid-column: 1;
+  align-self: end;
+  justify-self: center;
+  inline-size: calc(100% - var(--a63-space-6) * 2);
+  margin-block-end: var(--spacing-12);
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--effect-shadow-2xl);
+}
+
+@media (min-width: 768px) {
+  .a63-LayeredScene-stage {
+    inline-size: 66%;
+  }
+
+  .a63-LayeredScene[data-width='half'] .a63-LayeredScene-stage {
+    inline-size: 45%;
+  }
+
+  .a63-LayeredScene[data-placement='end-bottom'] .a63-LayeredScene-stage {
+    justify-self: end;
+    margin-inline-end: var(--spacing-16);
+  }
+
+  .a63-LayeredScene[data-placement='start-bottom'] .a63-LayeredScene-stage {
+    justify-self: start;
+    margin-inline-start: var(--spacing-16);
+  }
+}
+
+/* Foreground: the plate's box, inert, in front of the stage. */
+
+.a63-LayeredScene-foreground {
+  position: relative;
+  z-index: var(--z-layer-raised);
+  grid-row: 1 / -1;
+  grid-column: 1;
+  pointer-events: none;
+}
+
+.a63-LayeredScene-foreground img {
+  position: absolute;
+  inset: 0;
+  inline-size: 100%;
+  block-size: 100%;
+  object-fit: cover;
+  object-position: var(--a63-art-plate-focus, 50% 50%);
+}
+
+@media (max-width: 767px) {
+  .a63-LayeredScene-foreground img {
+    object-position: var(--a63-art-plate-focus-mobile, var(--a63-art-plate-focus, 50% 50%));
+  }
+
+  .a63-LayeredScene-foreground[data-phone='hide'] {
+    display: none;
+  }
+}

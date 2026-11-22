@@ -10,11 +10,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  type TableSort,
   UIProvider,
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Ellipsis } from 'lucide-react'
+import { useState } from 'react'
 
 const meta = {
   title: 'UI React/Table',
@@ -64,6 +66,75 @@ export const Playground: Story = {
       </Table>
     </div>
   ),
+}
+
+const amountOf = (row: (typeof rows)[number]) => Number(row.amount.replace(/[^0-9.]/g, ''))
+
+function SortableTable() {
+  const [sort, setSort] = useState<TableSort | null>({ column: 'amount', direction: 'descending' })
+  const sign = sort?.direction === 'ascending' ? 1 : -1
+  const sorted = [...rows].sort((a, b) =>
+    sort?.column === 'invoice'
+      ? a.invoice.localeCompare(b.invoice) * sign
+      : sort?.column === 'amount'
+        ? (amountOf(a) - amountOf(b)) * sign
+        : 0
+  )
+  return (
+    <div style={{ width: 480 }}>
+      <Table aria-label="Invoices" onSortChange={setSort} sort={sort}>
+        <TableHeader>
+          <TableRow>
+            <TableHead sortKey="invoice">Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead
+              firstSortDirection="descending"
+              sortKey="amount"
+              style={{ textAlign: 'end' }}
+            >
+              Amount
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sorted.map(r => (
+            <TableRow key={r.invoice}>
+              <TableCell>{r.invoice}</TableCell>
+              <TableCell>{r.status}</TableCell>
+              <TableCell style={{ textAlign: 'end' }}>{r.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}
+
+/** Sortable heads: the caller owns `sort` and sorts the rows; the head shows the direction
+ *  with an icon and `aria-sort`, and pressing it asks for the next sort. */
+export const SortableColumns: Story = {
+  render: () => <SortableTable />,
+  play: async ({ canvasElement }) => {
+    const heads = canvasElement.querySelectorAll('th')
+    if (heads[2]?.getAttribute('aria-sort') !== 'descending') {
+      throw new Error('Expected the Amount column sorted descending')
+    }
+    const invoice = heads[0]?.querySelector('button')
+    if (!invoice) throw new Error('Expected a sort button in the Invoice head')
+    invoice.click()
+    await new Promise(resolve => setTimeout(resolve, 0))
+    if (
+      heads[0]?.getAttribute('aria-sort') !== 'ascending' ||
+      heads[2]?.hasAttribute('aria-sort')
+    ) {
+      throw new Error('Expected pressing Invoice to sort by it, ascending')
+    }
+    invoice.click()
+    await new Promise(resolve => setTimeout(resolve, 0))
+    const first = canvasElement.querySelector('tbody td')?.textContent
+    if (first !== 'INV003') throw new Error(`Expected INV003 first when descending, got ${first}`)
+    canvasElement.querySelector<HTMLButtonElement>('th:nth-child(3) button')?.click()
+  },
 }
 
 /* A compact three-row table reused by the theme matrix. */

@@ -76,37 +76,37 @@
     }
   },
   "summary": {
-    "sourceFamilies": 81,
-    "sourceExports": 640,
+    "sourceFamilies": 82,
+    "sourceExports": 651,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 346,
-      "beta-supported-composition-conditional": 184
+      "beta-supported-core": 356,
+      "beta-supported-composition-conditional": 185
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
       "move-to-preview-or-approve": 15,
       "document-before-stable": 12,
-      "keep-stable-candidate": 39
+      "keep-stable-candidate": 40
     },
     "sourcePriorityCounts": {
       "P0": 30,
       "P1": 12,
-      "P2": 39
+      "P2": 40
     },
-    "packageSubpaths": 83,
+    "packageSubpaths": 86,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 77
+      "keep-import-path-stable": 80
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 77
+      "P2": 80
     }
   },
   "sourceActions": [
@@ -719,11 +719,11 @@
       "source": "./components/command",
       "family": "components/command",
       "kind": "component-family",
-      "totalExports": 20,
+      "totalExports": 21,
       "valueExports": 19,
-      "typeExports": 1,
+      "typeExports": 2,
       "tierCounts": {
-        "beta-supported-composition-conditional": 19,
+        "beta-supported-composition-conditional": 20,
         "preview-experimental-candidate": 1
       },
       "dominantTier": "beta-supported-composition-conditional",
@@ -1997,6 +1997,38 @@
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
+      "source": "./components/layered-scene",
+      "family": "components/layered-scene",
+      "kind": "component-family",
+      "totalExports": 8,
+      "valueExports": 5,
+      "typeExports": 3,
+      "tierCounts": {
+        "beta-supported-core": 8
+      },
+      "dominantTier": "beta-supported-core",
+      "blockingTier": "beta-supported-core",
+      "recommendedAction": "keep-stable-candidate",
+      "priority": "P2",
+      "stableDecision": "Keep in root for stable after standard QA.",
+      "requiredEvidence": [
+        "visual QA for representative states",
+        "external packed-consumer smoke",
+        "dependency and public type compatibility review"
+      ],
+      "notableSymbols": [
+        "LayeredScene",
+        "LayeredSceneContent",
+        "LayeredSceneForeground",
+        "LayeredScenePlate",
+        "LayeredSceneStage",
+        "LayeredSceneForegroundProps",
+        "LayeredScenePlateProps",
+        "LayeredSceneProps"
+      ],
+      "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
+    },
+    {
       "source": "./components/message",
       "family": "components/message",
       "kind": "component-family",
@@ -2338,11 +2370,11 @@
       "source": "./components/table",
       "family": "components/table",
       "kind": "component-family",
-      "totalExports": 16,
+      "totalExports": 18,
       "valueExports": 8,
-      "typeExports": 8,
+      "typeExports": 10,
       "tierCounts": {
-        "beta-supported-core": 16
+        "beta-supported-core": 18
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -2796,6 +2828,15 @@
       "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
     },
     {
+      "subpath": "./recipes/chart.css",
+      "kind": "css",
+      "target": "./src/components/chart/chart.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
       "subpath": "./recipes/chat-composer.css",
       "kind": "css",
       "target": "./src/components/chat-composer/chat-composer.css",
@@ -3015,6 +3056,15 @@
       "subpath": "./recipes/label.css",
       "kind": "css",
       "target": "./src/components/label/label.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
+      "subpath": "./recipes/layered-scene.css",
+      "kind": "css",
+      "target": "./src/components/layered-scene/layered-scene.css",
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",
       "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
@@ -3342,6 +3392,19 @@
         "@atom63/source": "./src/index.ts",
         "import": "./dist/index.js",
         "types": "./dist/index.d.ts"
+      },
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Root package API or public JavaScript subpath."
+    },
+    {
+      "subpath": "./chart",
+      "kind": "module",
+      "target": {
+        "@atom63/source": "./src/chart/index.ts",
+        "import": "./dist/chart/index.js",
+        "types": "./dist/chart/index.d.ts"
       },
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",

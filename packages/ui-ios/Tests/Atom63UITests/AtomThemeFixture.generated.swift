@@ -1814,8 +1814,8 @@ modern b1 n3 light surfaceControl 0.988235 0.988235 0.992157 1
 modern b1 n3 dark surfaceControl 0.066667 0.066667 0.07451 1
 modern b1 n3 light textPrimary 0.109804 0.12549 0.141176 1
 modern b1 n3 dark textPrimary 0.929412 0.933333 0.941176 1
-modern b1 n3 light textSecondary 0.376471 0.392157 0.423529 1
-modern b1 n3 dark textSecondary 0.690196 0.705882 0.729412 1
+modern b1 n3 light textSecondary 0.37647 0.392157 0.423529 1
+modern b1 n3 dark textSecondary 0.690197 0.705882 0.729412 1
 modern b1 n3 light textDanger 0.733333 0.113725 0.133333 1
 modern b1 n3 dark textDanger 1 0.556863 0.513726 1
 modern b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
@@ -1887,7 +1887,7 @@ modern b1 n4 dark surfaceControl 0.062745 0.070588 0.066667 1
 modern b1 n4 light textPrimary 0.101961 0.129412 0.117647 1
 modern b1 n4 dark textPrimary 0.92549 0.933333 0.929412 1
 modern b1 n4 light textSecondary 0.372549 0.396078 0.388235 1
-modern b1 n4 dark textSecondary 0.678431 0.709804 0.698039 1
+modern b1 n4 dark textSecondary 0.678432 0.709804 0.698039 1
 modern b1 n4 light textDanger 0.733333 0.113725 0.133333 1
 modern b1 n4 dark textDanger 1 0.556863 0.513726 1
 modern b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
@@ -1958,8 +1958,8 @@ modern b1 n5 light surfaceControl 0.988235 0.992157 0.988235 1
 modern b1 n5 dark surfaceControl 0.066667 0.070588 0.062745 1
 modern b1 n5 light textPrimary 0.113725 0.129412 0.109804 1
 modern b1 n5 dark textPrimary 0.92549 0.933333 0.92549 1
-modern b1 n5 light textSecondary 0.376471 0.396078 0.372549 1
-modern b1 n5 dark textSecondary 0.686275 0.709804 0.678431 1
+modern b1 n5 light textSecondary 0.37647 0.396078 0.372549 1
+modern b1 n5 dark textSecondary 0.686274 0.709804 0.678431 1
 modern b1 n5 light textDanger 0.733333 0.113725 0.133333 1
 modern b1 n5 dark textDanger 1 0.556863 0.513726 1
 modern b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
@@ -2031,7 +2031,7 @@ modern b1 n6 dark surfaceControl 0.066667 0.066667 0.062745 1
 modern b1 n6 light textPrimary 0.129412 0.12549 0.109804 1
 modern b1 n6 dark textPrimary 0.933333 0.933333 0.92549 1
 modern b1 n6 light textSecondary 0.388235 0.388235 0.368627 1
-modern b1 n6 dark textSecondary 0.709804 0.701961 0.678431 1
+modern b1 n6 dark textSecondary 0.709804 0.701961 0.678432 1
 modern b1 n6 light textDanger 0.733333 0.113725 0.133333 1
 modern b1 n6 dark textDanger 1 0.556863 0.513726 1
 modern b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
@@ -2174,8 +2174,8 @@ aqua b1 n3 light surfaceControl 0.988235 0.988235 0.992157 1
 aqua b1 n3 dark surfaceControl 0.066667 0.066667 0.07451 1
 aqua b1 n3 light textPrimary 0.109804 0.12549 0.141176 1
 aqua b1 n3 dark textPrimary 0.929412 0.933333 0.941176 1
-aqua b1 n3 light textSecondary 0.376471 0.392157 0.423529 1
-aqua b1 n3 dark textSecondary 0.690196 0.705882 0.729412 1
+aqua b1 n3 light textSecondary 0.37647 0.392157 0.423529 1
+aqua b1 n3 dark textSecondary 0.690197 0.705882 0.729412 1
 aqua b1 n3 light textDanger 0.733333 0.113725 0.133333 1
 aqua b1 n3 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
@@ -2247,7 +2247,7 @@ aqua b1 n4 dark surfaceControl 0.062745 0.070588 0.066667 1
 aqua b1 n4 light textPrimary 0.101961 0.129412 0.117647 1
 aqua b1 n4 dark textPrimary 0.92549 0.933333 0.929412 1
 aqua b1 n4 light textSecondary 0.372549 0.396078 0.388235 1
-aqua b1 n4 dark textSecondary 0.678431 0.709804 0.698039 1
+aqua b1 n4 dark textSecondary 0.678432 0.709804 0.698039 1
 aqua b1 n4 light textDanger 0.733333 0.113725 0.133333 1
 aqua b1 n4 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
@@ -2318,8 +2318,8 @@ aqua b1 n5 light surfaceControl 0.988235 0.992157 0.988235 1
 aqua b1 n5 dark surfaceControl 0.066667 0.070588 0.062745 1
 aqua b1 n5 light textPrimary 0.113725 0.129412 0.109804 1
 aqua b1 n5 dark textPrimary 0.92549 0.933333 0.92549 1
-aqua b1 n5 light textSecondary 0.376471 0.396078 0.372549 1
-aqua b1 n5 dark textSecondary 0.686275 0.709804 0.678431 1
+aqua b1 n5 light textSecondary 0.37647 0.396078 0.372549 1
+aqua b1 n5 dark textSecondary 0.686274 0.709804 0.678431 1
 aqua b1 n5 light textDanger 0.733333 0.113725 0.133333 1
 aqua b1 n5 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
@@ -2391,7 +2391,7 @@ aqua b1 n6 dark surfaceControl 0.066667 0.066667 0.062745 1
 aqua b1 n6 light textPrimary 0.129412 0.12549 0.109804 1
 aqua b1 n6 dark textPrimary 0.933333 0.933333 0.92549 1
 aqua b1 n6 light textSecondary 0.388235 0.388235 0.368627 1
-aqua b1 n6 dark textSecondary 0.709804 0.701961 0.678431 1
+aqua b1 n6 dark textSecondary 0.709804 0.701961 0.678432 1
 aqua b1 n6 light textDanger 0.733333 0.113725 0.133333 1
 aqua b1 n6 dark textDanger 1 0.556863 0.513726 1
 aqua b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1
@@ -2534,8 +2534,8 @@ retro b1 n3 light surfaceControl 0.988235 0.988235 0.992157 1
 retro b1 n3 dark surfaceControl 0.066667 0.066667 0.07451 1
 retro b1 n3 light textPrimary 0.109804 0.12549 0.141176 1
 retro b1 n3 dark textPrimary 0.929412 0.933333 0.941176 1
-retro b1 n3 light textSecondary 0.376471 0.392157 0.423529 1
-retro b1 n3 dark textSecondary 0.690196 0.705882 0.729412 1
+retro b1 n3 light textSecondary 0.37647 0.392157 0.423529 1
+retro b1 n3 dark textSecondary 0.690197 0.705882 0.729412 1
 retro b1 n3 light textDanger 0.733333 0.113725 0.133333 1
 retro b1 n3 dark textDanger 1 0.556863 0.513726 1
 retro b1 n3 light borderSubtle 0.909804 0.909804 0.92549 1
@@ -2607,7 +2607,7 @@ retro b1 n4 dark surfaceControl 0.062745 0.070588 0.066667 1
 retro b1 n4 light textPrimary 0.101961 0.129412 0.117647 1
 retro b1 n4 dark textPrimary 0.92549 0.933333 0.929412 1
 retro b1 n4 light textSecondary 0.372549 0.396078 0.388235 1
-retro b1 n4 dark textSecondary 0.678431 0.709804 0.698039 1
+retro b1 n4 dark textSecondary 0.678432 0.709804 0.698039 1
 retro b1 n4 light textDanger 0.733333 0.113725 0.133333 1
 retro b1 n4 dark textDanger 1 0.556863 0.513726 1
 retro b1 n4 light borderSubtle 0.901961 0.913725 0.909804 1
@@ -2678,8 +2678,8 @@ retro b1 n5 light surfaceControl 0.988235 0.992157 0.988235 1
 retro b1 n5 dark surfaceControl 0.066667 0.070588 0.062745 1
 retro b1 n5 light textPrimary 0.113725 0.129412 0.109804 1
 retro b1 n5 dark textPrimary 0.92549 0.933333 0.92549 1
-retro b1 n5 light textSecondary 0.376471 0.396078 0.372549 1
-retro b1 n5 dark textSecondary 0.686275 0.709804 0.678431 1
+retro b1 n5 light textSecondary 0.37647 0.396078 0.372549 1
+retro b1 n5 dark textSecondary 0.686274 0.709804 0.678431 1
 retro b1 n5 light textDanger 0.733333 0.113725 0.133333 1
 retro b1 n5 dark textDanger 1 0.556863 0.513726 1
 retro b1 n5 light borderSubtle 0.905882 0.913726 0.905882 1
@@ -2751,7 +2751,7 @@ retro b1 n6 dark surfaceControl 0.066667 0.066667 0.062745 1
 retro b1 n6 light textPrimary 0.129412 0.12549 0.109804 1
 retro b1 n6 dark textPrimary 0.933333 0.933333 0.92549 1
 retro b1 n6 light textSecondary 0.388235 0.388235 0.368627 1
-retro b1 n6 dark textSecondary 0.709804 0.701961 0.678431 1
+retro b1 n6 dark textSecondary 0.709804 0.701961 0.678432 1
 retro b1 n6 light textDanger 0.733333 0.113725 0.133333 1
 retro b1 n6 dark textDanger 1 0.556863 0.513726 1
 retro b1 n6 light borderSubtle 0.913725 0.909804 0.901961 1

@@ -7,13 +7,21 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or
 // end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also
 // takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill
-// with primary text, accent the opt-in primary wash with accent text.
+// with primary text, accent the opt-in primary wash with accent text. Sorting is controlled and
+// data-agnostic: Table takes sort and onSortChange, and a TableHead with a sortKey renders a button
+// with a direction icon and carries aria-sort while its column is sorted; the caller sorts the rows.
 
 export const tableVariants = ['default', 'plain'] as const
 export const tableSizes = ['md', 'sm'] as const
 export const tableTones = ['neutral', 'accent'] as const
 export const tableStickyEdges = ['start', 'end'] as const
-export const tableStates = ['rest', 'row-hover', 'row-selected'] as const
+export const tableStates = [
+  'rest',
+  'row-hover',
+  'row-selected',
+  'sort-ascending',
+  'sort-descending',
+] as const
 export const tableSlots = [
   'table-container',
   'table',
@@ -24,6 +32,7 @@ export const tableSlots = [
   'table-head',
   'table-cell',
   'table-caption',
+  'table-sort-button',
 ] as const
 export const tableVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 

@@ -1,6 +1,17 @@
-import { Badge, Button } from '@atom63/ui-react'
+import {
+  Badge,
+  Button,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+  type TableSort,
+} from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Ellipsis } from 'lucide-react'
+import { useState } from 'react'
 
 import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
 import { type DataTableColumn, DataTableSection } from './data-table-section'
@@ -74,3 +85,56 @@ export const Themes: Story = {
     </ThemeMatrix>
   ),
 }
+
+const amount = (row: Order) => Number(row.total.replace(/[^0-9.]/g, ''))
+
+function SortedAndPagedDemo() {
+  const [sort, setSort] = useState<TableSort | null>({ column: 'total', direction: 'descending' })
+  const sign = sort?.direction === 'ascending' ? 1 : -1
+  const sorted = [...rows].sort((a, b) =>
+    sort?.column === 'customer'
+      ? a.customer.localeCompare(b.customer) * sign
+      : sort?.column === 'total'
+        ? (amount(a) - amount(b)) * sign
+        : 0
+  )
+  return (
+    <DataTableSection
+      {...args}
+      columns={columns.map(column =>
+        column.key === 'customer'
+          ? { ...column, sortable: true }
+          : column.key === 'total'
+            ? { ...column, firstSortDirection: 'descending', sortable: true }
+            : column
+      )}
+      onSortChange={setSort}
+      pagination={
+        <Pagination aria-label="Order pages">
+          <PaginationContent>
+            <PaginationItem>
+              <PaginationPrevious disabled />
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#page-1" isActive>
+                1
+              </PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationLink href="#page-2">2</PaginationLink>
+            </PaginationItem>
+            <PaginationItem>
+              <PaginationNext href="#page-2" />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      }
+      rows={sorted}
+      sort={sort}
+      summary="3 of 6 orders"
+    />
+  )
+}
+
+/* Sortable columns and a pagination slot: the caller owns the sort and the page. */
+export const SortedAndPaged: Story = { args, render: () => <SortedAndPagedDemo /> }

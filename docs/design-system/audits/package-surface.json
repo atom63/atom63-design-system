@@ -25,7 +25,7 @@
       "directory": "packages/styles",
       "manifestPath": "packages/styles/package.json",
       "name": "@atom63/styles",
-      "version": "0.1.0-beta.9",
+      "version": "0.1.0-beta.11",
       "private": false,
       "exports": {
         ".": "./src/index.css",
@@ -179,7 +179,7 @@
       "directory": "packages/ui-foundation",
       "manifestPath": "packages/ui-foundation/package.json",
       "name": "@atom63/ui-foundation",
-      "version": "0.2.0-beta.7",
+      "version": "0.2.0-beta.9",
       "private": false,
       "exports": {
         ".": {
@@ -207,7 +207,7 @@
       "directory": "packages/ui-react",
       "manifestPath": "packages/ui-react/package.json",
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.14",
+      "version": "0.2.0-beta.16",
       "private": false,
       "exports": {
         ".": {
@@ -219,6 +219,11 @@
           "@atom63/source": "./src/calendar/index.ts",
           "types": "./dist/calendar/index.d.ts",
           "import": "./dist/calendar/index.js"
+        },
+        "./chart": {
+          "@atom63/source": "./src/chart/index.ts",
+          "types": "./dist/chart/index.d.ts",
+          "import": "./dist/chart/index.js"
         },
         "./layout": {
           "@atom63/source": "./src/layout/index.ts",
@@ -244,10 +249,12 @@
         "./recipes/amount.css": "./src/components/amount/amount.css",
         "./recipes/app-view.css": "./src/components/app-view/app-view.css",
         "./recipes/art-plate.css": "./src/components/art-plate/art-plate.css",
+        "./recipes/chart.css": "./src/components/chart/chart.css",
         "./recipes/chat-composer.css": "./src/components/chat-composer/chat-composer.css",
         "./recipes/chat-message.css": "./src/components/chat-message/chat-message.css",
         "./recipes/chat-steps.css": "./src/components/chat-steps/chat-steps.css",
         "./recipes/chat-typing-indicator.css": "./src/components/chat-typing-indicator/chat-typing-indicator.css",
+        "./recipes/layered-scene.css": "./src/components/layered-scene/layered-scene.css",
         "./recipes/media-lightbox.css": "./src/media/media-lightbox/media-lightbox.css",
         "./recipes/accordion.css": "./src/components/accordion/accordion.css",
         "./recipes/alert-dialog.css": "./src/components/alert-dialog/alert-dialog.css",
@@ -325,6 +332,7 @@
       "exportKeys": [
         ".",
         "./calendar",
+        "./chart",
         "./layout",
         "./media",
         "./media/lightbox",
@@ -345,6 +353,7 @@
         "./recipes/calendar.css",
         "./recipes/card.css",
         "./recipes/carousel.css",
+        "./recipes/chart.css",
         "./recipes/chat-composer.css",
         "./recipes/chat-message.css",
         "./recipes/chat-steps.css",
@@ -370,6 +379,7 @@
         "./recipes/item.css",
         "./recipes/kbd.css",
         "./recipes/label.css",
+        "./recipes/layered-scene.css",
         "./recipes/load-more-trigger.css",
         "./recipes/marquee.css",
         "./recipes/media-lightbox.css",
@@ -431,7 +441,7 @@
       "directory": "packages/mdx",
       "manifestPath": "packages/mdx/package.json",
       "name": "@atom63/mdx",
-      "version": "0.4.0-beta.5",
+      "version": "0.4.0-beta.7",
       "private": false,
       "exports": {
         ".": {
@@ -539,7 +549,7 @@
       "directory": "packages/inform",
       "manifestPath": "packages/inform/package.json",
       "name": "@atom63/inform",
-      "version": "0.2.0-beta.5",
+      "version": "0.2.0-beta.7",
       "private": false,
       "exports": {
         ".": {
@@ -628,7 +638,7 @@
       "directory": "packages/widgets",
       "manifestPath": "packages/widgets/package.json",
       "name": "@atom63/widgets",
-      "version": "0.1.0-beta.5",
+      "version": "0.1.0-beta.7",
       "private": false,
       "exports": {
         ".": {
@@ -683,7 +693,7 @@
       "directory": "packages/cli",
       "manifestPath": "packages/cli/package.json",
       "name": "@atom63/cli",
-      "version": "0.1.0-beta.3",
+      "version": "0.1.0-beta.5",
       "private": false,
       "exports": {
         ".": "./src/core.mjs",

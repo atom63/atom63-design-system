@@ -354,6 +354,24 @@ export type {
   CalendarVisualArchetype,
 } from './components/calendar'
 export {
+  chartColors,
+  chartContract,
+  chartSizes,
+  chartSlots,
+  chartStates,
+  chartTypes,
+  chartVisualArchetypes,
+} from './components/chart/chart-contract'
+export type {
+  ChartColor,
+  ChartContract,
+  ChartSize,
+  ChartSlot,
+  ChartState,
+  ChartType,
+  ChartVisualArchetype,
+} from './components/chart/chart-contract'
+export {
   chatComposerContract,
   chatComposerLayouts,
   chatComposerSlots,
@@ -738,6 +756,22 @@ export type {
   LabelState,
   LabelVisualArchetype,
 } from './components/label/label-contract'
+export {
+  layeredSceneContract,
+  layeredScenePlacements,
+  layeredSceneSlots,
+  layeredSceneStates,
+  layeredSceneVisualArchetypes,
+  layeredSceneWidths,
+} from './components/layered-scene/layered-scene-contract'
+export type {
+  LayeredSceneContract,
+  LayeredScenePlacement,
+  LayeredSceneSlot,
+  LayeredSceneState,
+  LayeredSceneVisualArchetype,
+  LayeredSceneWidth,
+} from './components/layered-scene/layered-scene-contract'
 export {
   loadMoreTriggerContract,
   loadMoreTriggerSlots,

@@ -1280,6 +1280,74 @@ export type CarouselVisualArchetype = (typeof carouselVisualArchetypes)[number];
 export const carouselVisualArchetypes: readonly ["surface", "overlay", "action"];
 
 // @public (undocumented)
+export type ChartColor = (typeof chartColors)[number];
+
+// @public (undocumented)
+export const chartColors: readonly [1, 2, 3, 4, 5];
+
+// @public (undocumented)
+export interface ChartContract {
+    // (undocumented)
+    colors: readonly ChartColor[];
+    // (undocumented)
+    defaultSize: ChartSize;
+    // (undocumented)
+    defaultType: ChartType;
+    // (undocumented)
+    sizes: readonly ChartSize[];
+    // (undocumented)
+    slots: readonly ChartSlot[];
+    // (undocumented)
+    states: readonly ChartState[];
+    // (undocumented)
+    types: readonly ChartType[];
+    // (undocumented)
+    visualArchetypes: readonly ChartVisualArchetype[];
+}
+
+// @public (undocumented)
+export const chartContract: {
+    defaultType: "line";
+    defaultSize: "md";
+    types: readonly ["line", "area", "bar"];
+    sizes: readonly ["sm", "md"];
+    colors: readonly [1, 2, 3, 4, 5];
+    slots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle"];
+    states: readonly ["rest", "current"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type ChartSize = (typeof chartSizes)[number];
+
+// @public (undocumented)
+export const chartSizes: readonly ["sm", "md"];
+
+// @public (undocumented)
+export type ChartSlot = (typeof chartSlots)[number];
+
+// @public (undocumented)
+export const chartSlots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle"];
+
+// @public (undocumented)
+export type ChartState = (typeof chartStates)[number];
+
+// @public (undocumented)
+export const chartStates: readonly ["rest", "current"];
+
+// @public (undocumented)
+export type ChartType = (typeof chartTypes)[number];
+
+// @public (undocumented)
+export const chartTypes: readonly ["line", "area", "bar"];
+
+// @public (undocumented)
+export type ChartVisualArchetype = (typeof chartVisualArchetypes)[number];
+
+// @public (undocumented)
+export const chartVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
 export interface ChatComposerContract {
     // (undocumented)
     defaultLayout: ChatComposerLayout;
@@ -3388,6 +3456,65 @@ export type LabelVisualArchetype = (typeof labelVisualArchetypes)[number];
 export const labelVisualArchetypes: readonly ["field"];
 
 // @public (undocumented)
+export interface LayeredSceneContract {
+    // (undocumented)
+    defaultPlacement: LayeredScenePlacement;
+    // (undocumented)
+    defaultWidth: LayeredSceneWidth;
+    // (undocumented)
+    placements: readonly LayeredScenePlacement[];
+    // (undocumented)
+    slots: readonly LayeredSceneSlot[];
+    // (undocumented)
+    states: readonly LayeredSceneState[];
+    // (undocumented)
+    visualArchetypes: readonly LayeredSceneVisualArchetype[];
+    // (undocumented)
+    widths: readonly LayeredSceneWidth[];
+}
+
+// @public (undocumented)
+export const layeredSceneContract: {
+    defaultPlacement: "center-bottom";
+    defaultWidth: "wide";
+    placements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+    widths: readonly ["wide", "half"];
+    slots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type LayeredScenePlacement = (typeof layeredScenePlacements)[number];
+
+// @public (undocumented)
+export const layeredScenePlacements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+
+// @public (undocumented)
+export type LayeredSceneSlot = (typeof layeredSceneSlots)[number];
+
+// @public (undocumented)
+export const layeredSceneSlots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+
+// @public (undocumented)
+export type LayeredSceneState = (typeof layeredSceneStates)[number];
+
+// @public (undocumented)
+export const layeredSceneStates: readonly ["rest"];
+
+// @public (undocumented)
+export type LayeredSceneVisualArchetype = (typeof layeredSceneVisualArchetypes)[number];
+
+// @public (undocumented)
+export const layeredSceneVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
+export type LayeredSceneWidth = (typeof layeredSceneWidths)[number];
+
+// @public (undocumented)
+export const layeredSceneWidths: readonly ["wide", "half"];
+
+// @public (undocumented)
 export interface LoadMoreTriggerContract {
     // (undocumented)
     defaultVariant: LoadMoreTriggerVariant;
@@ -3720,7 +3847,7 @@ export const paginationContract: {
     defaultLinkSize: "icon";
     linkSizes: readonly ["xs", "sm", "md", "lg", "xl", "tile", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
     slots: readonly ["pagination", "pagination-content", "pagination-item", "pagination-link", "pagination-ellipsis"];
-    states: readonly ["rest", "current"];
+    states: readonly ["rest", "current", "disabled"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -3734,7 +3861,7 @@ export const paginationSlots: readonly ["pagination", "pagination-content", "pag
 export type PaginationState = (typeof paginationStates)[number];
 
 // @public (undocumented)
-export const paginationStates: readonly ["rest", "current"];
+export const paginationStates: readonly ["rest", "current", "disabled"];
 
 // @public (undocumented)
 export type PaginationVisualArchetype = (typeof paginationVisualArchetypes)[number];
@@ -5301,8 +5428,8 @@ export const tableContract: {
     variants: readonly ["default", "plain"];
     sizes: readonly ["md", "sm"];
     stickyEdges: readonly ["start", "end"];
-    states: readonly ["rest", "row-hover", "row-selected"];
-    slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
+    states: readonly ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"];
+    slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption", "table-sort-button"];
     visualArchetypes: readonly ["surface"];
     tones: readonly ["neutral", "accent"];
 };
@@ -5325,13 +5452,13 @@ export const tableSizes: readonly ["md", "sm"];
 export type TableSlot = (typeof tableSlots)[number];
 
 // @public (undocumented)
-export const tableSlots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
+export const tableSlots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption", "table-sort-button"];
 
 // @public (undocumented)
 export type TableState = (typeof tableStates)[number];
 
 // @public (undocumented)
-export const tableStates: readonly ["rest", "row-hover", "row-selected"];
+export const tableStates: readonly ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"];
 
 // @public (undocumented)
 export type TableStickyEdge = (typeof tableStickyEdges)[number];
@@ -5963,7 +6090,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate", "LayeredScene", "Chart"];
         readonly contracts: readonly ["surface"];
     };
 };

@@ -1,5 +1,25 @@
 # @atom63/cli
 
+## 0.1.0-beta.5
+
+### Patch Changes
+
+- [#336](https://github.com/atom63/atom63-design-system/pull/336) [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de) Thanks [@atom63](https://github.com/atom63)! - `--a63-chart-2` to `--a63-chart-5` now turn the hue of `--a63-chart-1` (the brand) by fixed steps at a set lightness and chroma, instead of fixed teal, amber, violet and rose, so no series lands on the brand on any brand, the violet brand and wallpaper brands included. Every series reaches 3:1 against the page and the panel in every theme and mode, and in dark mode `--a63-chart-1` is the brand's 400 step. `@atom63/styles/compat/a63-from-shadcn` maps the chart tokens from shadcn's `--chart-1..5`. The content-colour rule now points chart series at the chart tokens and the Chart component.
+
+- [#333](https://github.com/atom63/atom63-design-system/pull/333) [`c34905e`](https://github.com/atom63/atom63-design-system/commit/c34905ecea5f1a3c288a887db369cd8c150cc229) Thanks [@atom63](https://github.com/atom63)! - `atom63 build` answers a reading idea (an article, a blog post, a docs page) with the new `reading-page` template and a "Reading page" section that shows Page, Container, Section and ReaderLayout, and no longer offers app-shell pages or blocks for it. The templates it hands out keep one `variant="primary"` Button per file and give every `variant="ghost"` Button `tone="muted"`.
+
+- [#331](https://github.com/atom63/atom63-design-system/pull/331) [`986777c`](https://github.com/atom63/atom63-design-system/commit/986777cf20470248992e09e56ad89a3aa40fc149) Thanks [@atom63](https://github.com/atom63)! - `SheetPopup` and a modal `DrawerContent` set `aria-modal="true"`, as `DialogPopup` does; `Sheet modal={false}` and `Drawer modal={false}` leave it off. `CommandDialogPopup` gets a default accessible name from a visually hidden title, "Command palette", which the new `title` prop replaces; passing `aria-label` or `aria-labelledby` skips it. `CommandDialogPopupProps` is exported.
+
+## 0.1.0-beta.4
+
+### Patch Changes
+
+- [#314](https://github.com/atom63/atom63-design-system/pull/314) [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd) Thanks [@atom63](https://github.com/atom63)! - SegmentedControl is a radio group instead of a tab list: the root has `role="radiogroup"` and takes `aria-label` or `aria-labelledby`, each segment is a `radio`, Tab enters at the selected segment and the arrow keys move and select. The selected segment carries `data-checked` (it was `data-active`), and the indicator is placed by `--segment-indicator-*` (it was Base UI's `--active-tab-*`). `SegmentedControlProps` now extends Base UI's RadioGroup props instead of the Tabs root props. The look is unchanged. Use Tabs when the choices switch content panels.
+  
+  Rating draws on stars filled in `--a63-status-warning` and off stars as outlines in `--a63-border-input`, so the two differ by shape as well as colour and both reach 3:1 against the page and the panel in every theme and mode.
+
+- [#310](https://github.com/atom63/atom63-design-system/pull/310) [`4b4c105`](https://github.com/atom63/atom63-design-system/commit/4b4c105e0b96f8040da19b067e6222142845be7d) Thanks [@atom63](https://github.com/atom63)! - Button's contract slots are now the `data-slot` values the React Button renders: `button`, `button-label`, `button-spinner` and `button-indicator` (they were `root`, `label`, `icon`, `spinner` and `indicator`; no `icon` slot is rendered). Search Field's input slot is `input` (it was `search-field-input`). `buttonSlots`, `searchFieldSlots` and their `ButtonSlot` and `SearchFieldSlot` types change with them, and `atom63 component button` lists the new names. Rendered `data-slot` values are unchanged.
+
 ## 0.1.0-beta.3
 
 ### Patch Changes

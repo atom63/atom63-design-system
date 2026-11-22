@@ -178,7 +178,7 @@ export {
   CommandSeparator,
   CommandShortcut,
 } from './components/command'
-export type { CommandInputProps } from './components/command'
+export type { CommandDialogPopupProps, CommandInputProps } from './components/command'
 export {
   ConnectedPanel,
   ConnectedPanelBody,
@@ -396,6 +396,18 @@ export { Kbd, KbdGroup } from './components/kbd'
 export type { KbdProps } from './components/kbd'
 export { Label } from './components/label'
 export type { LabelProps } from './components/label'
+export {
+  LayeredScene,
+  LayeredSceneContent,
+  LayeredSceneForeground,
+  LayeredScenePlate,
+  LayeredSceneStage,
+} from './components/layered-scene'
+export type {
+  LayeredSceneForegroundProps,
+  LayeredScenePlateProps,
+  LayeredSceneProps,
+} from './components/layered-scene'
 export { LoadMoreTrigger } from './components/load-more-trigger'
 export type {
   LoadMoreTriggerProps,
@@ -620,6 +632,8 @@ export type {
   TableHeaderProps,
   TableProps,
   TableRowProps,
+  TableSort,
+  TableSortDirection,
 } from './components/table'
 export { Tabs, TabsContent, TabsList, TabsPanel, TabsTab, TabsTrigger } from './components/tabs'
 export type { TabsListProps, TabsPanelProps, TabsTabProps } from './components/tabs'

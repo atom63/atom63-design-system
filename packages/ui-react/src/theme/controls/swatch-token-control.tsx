@@ -7,6 +7,8 @@ import type { PersonalizationOption } from '../core/types'
 
 export interface SwatchTokenControlProps<T extends string> {
   className?: string
+  /** The group's accessible name, for example the section title it sits under. */
+  label?: string
   onChange: (value: T) => void
   options: readonly PersonalizationOption<T>[]
   /** Resolve an option id to a CSS color/gradient for its swatch. */
@@ -20,6 +22,7 @@ export interface SwatchTokenControlProps<T extends string> {
  */
 export function SwatchTokenControl<T extends string>({
   className,
+  label,
   onChange,
   options,
   swatch,
@@ -39,6 +42,7 @@ export function SwatchTokenControl<T extends string>({
   }))
   return (
     <SegmentedControl
+      aria-label={label}
       className={cn('w-full', className)}
       fullWidth
       items={items}

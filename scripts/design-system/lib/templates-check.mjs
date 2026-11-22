@@ -1,5 +1,7 @@
 import path from 'node:path'
 
+import { findWarnings } from './vibe-measure.mjs'
+
 /**
  * Pure checks for packages/templates (T5 in docs/design-system/template-library-plan.md).
  * check-templates.mjs reads the files; these functions only look at their text.
@@ -93,6 +95,8 @@ export const baselineName = (dir, title, story) =>
  * file is `<id>.tsx`; every other non-story file in its folder is support code
  * held to the same import rule. `baselines`, when given, is the set of visual
  * baseline names: a `ready` template needs one for each required story.
+ * Every .tsx file must pass the vibe measures' Button warnings (findWarnings):
+ * a template copied into a product must not make its case study warn.
  */
 export function checkTemplates(entries, catalogSource, baselines) {
   const problems = []
@@ -121,6 +125,11 @@ export function checkTemplates(entries, catalogSource, baselines) {
         }
         const block = specifier.match(/\/blocks\/([^/]+)\//)
         if (entry.dir === 'pages' && block) usedBlocks.add(block[1])
+      }
+      if (file.path.endsWith('.tsx')) {
+        for (const warning of findWarnings(file.source, file.path)) {
+          report(entry, `${file.path}:${warning.line} has the vibe warning ${warning.rule}`)
+        }
       }
     }
     for (const message of storyProblems(entry.storySource)) report(entry, message)

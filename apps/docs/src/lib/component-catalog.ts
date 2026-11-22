@@ -17,7 +17,11 @@ export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
   axisGuidance?: ComponentAxisGuidance
   category: string
-  importPath: '@atom63/ui-react' | '@atom63/ui-react/calendar' | '@atom63/ui-react/layout'
+  importPath:
+    | '@atom63/ui-react'
+    | '@atom63/ui-react/calendar'
+    | '@atom63/ui-react/chart'
+    | '@atom63/ui-react/layout'
   previewProfile: ComponentPreviewProfile
   relatedSlugs: readonly string[]
   slug: string
@@ -208,6 +212,26 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
       'CarouselNext',
     ],
   },
+  chart: {
+    importPath: '@atom63/ui-react/chart',
+    axisGuidance: {
+      size: {
+        md: 'A 240px plot with five y-axis ticks, for a chart that leads a section.',
+        sm: 'A 160px plot with three ticks, for a compact card.',
+      },
+      state: {
+        current:
+          'A category picked by the pointer or the arrow keys; the tooltip shows its values.',
+        rest: 'No category picked; only the marks, axes and legend show.',
+      },
+    },
+    relatedSlugs: ['table', 'progress', 'card'],
+    summary:
+      'Chart draws a small line, area or bar chart (grouped or stacked) of a few series over a categorical axis, with a tooltip, a legend and a data table for screen readers.',
+    usage:
+      'Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `stacked` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip. Every chart carries a data table of the same numbers, visually hidden unless `table="toggle"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero, use a charting library; when the exact numbers matter more than the shape, use a Table.',
+    usageExports: ['Chart'],
+  },
   'chat-composer': {
     relatedSlugs: ['textarea', 'input', 'button'],
     summary:
@@ -394,6 +418,20 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary: 'Label provides the styled native labeling primitive for form controls.',
     usage: 'Connect htmlFor to the control id; placeholder text is not a label.',
     usageExports: ['Label'],
+  },
+  'layered-scene': {
+    relatedSlugs: ['art-plate', 'frame', 'card'],
+    summary:
+      'Layered Scene stacks a plate, a stage of product UI and an inert foreground cut-out so the interface sits inside the picture.',
+    usage:
+      'Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.',
+    usageExports: [
+      'LayeredScene',
+      'LayeredScenePlate',
+      'LayeredSceneContent',
+      'LayeredSceneStage',
+      'LayeredSceneForeground',
+    ],
   },
   'load-more-trigger': {
     relatedSlugs: ['scrollable-list', 'spinner', 'progress'],
@@ -842,6 +880,7 @@ export const componentCatalogGroups = [
       'badge',
       'card',
       'carousel',
+      'chart',
       'chat-message',
       'chat-steps',
       'collapsible',
@@ -850,6 +889,7 @@ export const componentCatalogGroups = [
       'feedback-state',
       'frame',
       'item',
+      'layered-scene',
       'message',
       'scroll-area',
       'scrollable-list',

@@ -4,10 +4,10 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1151,
-    "aliasValues": 808,
+    "variables": 1159,
+    "aliasValues": 804,
     "skipped": 412,
-    "computed": 64
+    "computed": 68
   },
   "collections": [
     {
@@ -4470,6 +4470,46 @@
           ]
         },
         {
+          "name": "type/display/hero/font/weight",
+          "token": "--a63-type-display-hero-font-weight",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 600
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/font/weight/strong",
+          "token": "--a63-type-display-hero-font-weight-strong",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 700
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight-strong)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/letter/spacing",
+          "token": "--a63-type-display-hero-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.045em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/font/size",
           "token": "--a63-type-display-large-font-size",
           "type": "FLOAT",
@@ -4512,6 +4552,18 @@
           ]
         },
         {
+          "name": "type/display/large/letter/spacing",
+          "token": "--a63-type-display-large-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.04em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/line/height",
           "token": "--a63-type-display-large-line-height",
           "type": "FLOAT",
@@ -4524,6 +4576,18 @@
           "scopes": [
             "LINE_HEIGHT"
           ]
+        },
+        {
+          "name": "type/display/letter/spacing",
+          "token": "--a63-type-display-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.03em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-letter-spacing)",
+          "scopes": []
         },
         {
           "name": "type/display/line/height",
@@ -16698,7 +16762,7 @@
               "alias": "--a63-action-primary"
             },
             "dark": {
-              "alias": "--a63-action-primary"
+              "alias": "--a63-brand-400"
             }
           },
           "codeSyntax": "var(--a63-chart-1)",
@@ -16713,10 +16777,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-teal-500"
+              "value": {
+                "r": 0.780881,
+                "g": 0.3618,
+                "b": 0.167442,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-teal-400"
+              "value": {
+                "r": 0.992936,
+                "g": 0.551494,
+                "b": 0.478817,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-2)",
@@ -16731,10 +16805,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-amber-500"
+              "value": {
+                "r": 0,
+                "g": 0.523292,
+                "b": 0.484518,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-amber-400"
+              "value": {
+                "r": 0.072759,
+                "g": 0.722045,
+                "b": 0.599749,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-3)",
@@ -16749,10 +16833,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-violet-500"
+              "value": {
+                "r": 0.471677,
+                "g": 0.513338,
+                "b": 0,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-violet-400"
+              "value": {
+                "r": 0.832528,
+                "g": 0.78138,
+                "b": 0.357068,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-4)",
@@ -16767,10 +16861,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-500"
+              "value": {
+                "r": 0.579664,
+                "g": 0.220036,
+                "b": 0.548836,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-rose-400"
+              "value": {
+                "r": 0.747757,
+                "g": 0.468924,
+                "b": 0.827728,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-5)",
@@ -20063,6 +20167,52 @@
           ]
         },
         {
+          "name": "type/display/hero/font/size",
+          "token": "--a63-type-display-hero-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 67.5156
+            },
+            "compact": {
+              "value": 64.7969
+            },
+            "comfortable": {
+              "value": 67.5156
+            },
+            "large": {
+              "value": 67.5156
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "type/display/hero/line/height",
+          "token": "--a63-type-display-hero-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 70.8906
+            },
+            "compact": {
+              "value": 68.0312
+            },
+            "comfortable": {
+              "value": 70.8906
+            },
+            "large": {
+              "value": 70.8906
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
+          ]
+        },
+        {
           "name": "typography/10xl/font/size",
           "token": "--typography-10xl-font-size",
           "type": "FLOAT",
@@ -20389,6 +20539,29 @@
             }
           },
           "codeSyntax": "var(--a63-font-app)",
+          "scopes": [
+            "FONT_FAMILY"
+          ]
+        },
+        {
+          "name": "font/display",
+          "token": "--a63-font-display",
+          "type": "STRING",
+          "values": {
+            "sans": {
+              "alias": "--a63-font-app"
+            },
+            "serif": {
+              "alias": "--a63-font-app"
+            },
+            "mono": {
+              "alias": "--a63-font-app"
+            },
+            "pixel": {
+              "alias": "--a63-font-app"
+            }
+          },
+          "codeSyntax": "var(--a63-font-display)",
           "scopes": [
             "FONT_FAMILY"
           ]
@@ -22522,6 +22695,42 @@
       "expression": "color-mix( in oklab, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) )"
     },
     {
+      "token": "--a63-chart-2",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144))"
+    },
+    {
+      "token": "--a63-chart-3",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288))"
+    },
+    {
+      "token": "--a63-chart-4",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216))"
+    },
+    {
+      "token": "--a63-chart-5",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72))"
+    },
+    {
       "token": "--a63-choice-box-shadow",
       "collection": "Theme",
       "variesOn": [
@@ -22781,7 +22990,7 @@
         "surface",
         "theme"
       ],
-      "expression": "var(--surface-dark-11)"
+      "expression": "color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-text-tertiary",
@@ -22792,7 +23001,7 @@
         "surface",
         "theme"
       ],
-      "expression": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))"
+      "expression": "color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-track-shadow",

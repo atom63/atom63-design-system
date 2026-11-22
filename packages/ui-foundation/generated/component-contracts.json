@@ -1193,6 +1193,30 @@
         }
       }
     },
+    "chart": {
+      "source": "packages/ui-foundation/contracts/components/chart.json",
+      "exportName": "chartContract",
+      "maturity": "preview",
+      "description": "A small dashboard chart: a line, area or bar chart of a few numeric series over a categorical axis. The series take their colours from --a63-chart-1..5, which keep apart from the brand on every brand.",
+      "axes": [
+        { "name": "types", "values": ["line", "area", "bar"], "default": "line" },
+        { "name": "sizes", "values": ["sm", "md"], "default": "md" },
+        { "name": "colors", "values": ["1", "2", "3", "4", "5"] }
+      ],
+      "slots": [
+        "chart",
+        "chart-legend",
+        "chart-plot",
+        "chart-y-axis",
+        "chart-x-axis",
+        "chart-tooltip",
+        "chart-table",
+        "chart-table-toggle"
+      ],
+      "states": ["rest", "current"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
     "chat-composer": {
       "source": "packages/ui-foundation/contracts/components/chat-composer.json",
       "exportName": "chatComposerContract",
@@ -2161,6 +2185,29 @@
       "tokenSlots": [],
       "visualArchetypes": ["field"]
     },
+    "layered-scene": {
+      "source": "packages/ui-foundation/contracts/components/layered-scene.json",
+      "exportName": "layeredSceneContract",
+      "maturity": "preview",
+      "description": "Three fixed layers in one box: the plate at the back (an ArtPlate), the copy and a stage of live product UI in the middle, and an optional foreground cut-out of the plate at the front. The scene is a two-row grid: the copy takes the first row and the stage the second, at the bottom, so the stage never covers the headline and the plate grows when the content needs more room. The foreground is aria-hidden, takes no pointer events and covers the same box as the plate, so the cut-out lines up when it gets the plate's focal points; it is hidden below the medium breakpoint unless asked. Layers use the in-context z band (--z-layer-below, --z-layer-default, --z-layer-raised). Keep text and controls out from under the cut-out; scripts/design-system/lib/foreground-occlusion.mjs checks it. Preview until its stable evidence is recorded.",
+      "axes": [
+        {
+          "name": "placements",
+          "values": ["center-bottom", "end-bottom", "start-bottom"],
+          "default": "center-bottom"
+        },
+        { "name": "widths", "values": ["wide", "half"], "default": "wide" }
+      ],
+      "slots": [
+        "layered-scene",
+        "layered-scene-content",
+        "layered-scene-stage",
+        "layered-scene-foreground"
+      ],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
     "load-more-trigger": {
       "source": "packages/ui-foundation/contracts/components/load-more-trigger.json",
       "exportName": "loadMoreTriggerContract",
@@ -2477,7 +2524,7 @@
         "pagination-link",
         "pagination-ellipsis"
       ],
-      "states": ["rest", "current"],
+      "states": ["rest", "current", "disabled"],
       "tokenSlots": [],
       "visualArchetypes": ["action"]
     },
@@ -3299,7 +3346,7 @@
       "source": "packages/ui-foundation/contracts/components/table.json",
       "exportName": "tableContract",
       "maturity": "stable",
-      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text.",
+      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text. Sorting is controlled and data-agnostic: Table takes sort and onSortChange, and a TableHead with a sortKey renders a button with a direction icon and carries aria-sort while its column is sorted; the caller sorts the rows.",
       "axes": [
         { "name": "variants", "values": ["default", "plain"], "default": "default" },
         {
@@ -3320,9 +3367,10 @@
         "table-row",
         "table-head",
         "table-cell",
-        "table-caption"
+        "table-caption",
+        "table-sort-button"
       ],
-      "states": ["rest", "row-hover", "row-selected"],
+      "states": ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },

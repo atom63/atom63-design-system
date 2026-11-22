@@ -1,5 +1,8 @@
 import { paginationContract } from '@atom63/ui-foundation'
+import { mergeProps } from '@base-ui/react/merge-props'
+import type { useRender } from '@base-ui/react/use-render'
 import { ChevronLeft, ChevronRight, Ellipsis } from 'lucide-react'
+import { cloneElement, isValidElement } from 'react'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -15,7 +18,7 @@ export type PaginationProps = React.ComponentProps<'nav'>
 export function Pagination({ className, ...props }: PaginationProps): React.ReactElement {
   return (
     <nav
-      aria-label="pagination"
+      aria-label="Pagination"
       className={cn('a63-Pagination', className)}
       data-slot="pagination"
       {...props}
@@ -46,23 +49,55 @@ export function PaginationItem(props: PaginationItemProps): React.ReactElement {
 
 export type PaginationLinkProps = {
   isActive?: boolean
+  /** Marks the control as unavailable (Previous on the first page, Next on the last): the
+   *  link loses its href and click handler, leaves the tab order and is announced as disabled. */
+  disabled?: boolean
+  /** Replaces the rendered `<a>`, such as with a router link (`render={<Link to="/page/2" />}`)
+   *  or a function of the merged props. The element must spread the props it receives and
+   *  forward its ref. Ignored while `disabled`, which always renders an `<a>` without an href. */
+  render?: useRender.RenderProp
 } & Pick<ButtonProps, 'size'> &
   React.ComponentProps<'a'>
 
 export function PaginationLink({
   children,
   className,
+  disabled = false,
   isActive,
+  render,
   size = paginationContract.defaultLinkSize,
   ...props
 }: PaginationLinkProps): React.ReactElement {
+  // A link without an href is not focusable; role="link" with aria-disabled keeps it
+  // announced as an unavailable link rather than as plain text.
+  const anchorProps: React.ComponentProps<'a'> = disabled
+    ? { ...props, 'aria-disabled': true, href: undefined, onClick: undefined, role: 'link' }
+    : props
+  const renderLink: useRender.RenderProp = (buttonProps, state) => {
+    // Button's own <button> attributes do not belong on a link.
+    const {
+      disabled: _disabled,
+      type: _type,
+      ...rest
+    } = buttonProps as React.ComponentProps<'button'>
+    const merged = {
+      ...mergeProps<'a'>(rest as React.ComponentProps<'a'>, anchorProps),
+      children,
+      'data-disabled': disabled ? '' : undefined,
+    }
+    if (typeof render === 'function' && !disabled) return render(merged, state)
+    if (isValidElement<Record<string, unknown>>(render) && !disabled) {
+      return cloneElement(render, mergeProps(merged, render.props))
+    }
+    return <a {...merged}>{merged.children}</a>
+  }
   return (
     <Button
       aria-current={isActive ? 'page' : undefined}
       className={cn('a63-Pagination-link', className)}
       data-active={isActive}
       data-slot="pagination-link"
-      render={<a {...props}>{children}</a>}
+      render={renderLink}
       size={size}
       variant={isActive ? 'outline' : 'ghost'}
     />

@@ -65,6 +65,11 @@
   white-space: nowrap;
   color: var(--a63-text-secondary);
 }
+/* A sortable head's button pulls out by its own padding, so its label lines up
+   with the column's text at either edge. */
+.a63-Table-sort-button {
+  margin-inline: calc(-1 * var(--button-padding-inline, 0px));
+}
 .a63-Table-head:has([role='checkbox']) {
   width: 1px;
   padding-inline-end: 0;

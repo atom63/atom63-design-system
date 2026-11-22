@@ -50,6 +50,11 @@ describe('FeedbackState', () => {
 
     rerender(<FeedbackState level={2} state="not-found" />)
     expect(getByRole('heading', { level: 2, name: 'Nothing found' })).toBeInTheDocument()
+
+    rerender(<FeedbackState level={1} state="not-found" />)
+    const h1 = getByRole('heading', { level: 1, name: 'Nothing found' })
+    expect(h1.tagName).toBe('H1')
+    expect(h1).not.toHaveAttribute('role')
   })
 
   it('falls back to the state config title + description', () => {

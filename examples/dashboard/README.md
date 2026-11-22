@@ -19,9 +19,10 @@ page with `?state=loading`, `?state=empty` or `?state=error`.
 
 ## Charts
 
-The system has chart colour tokens (`--a63-chart-1` to `--a63-chart-5`) but no chart component,
-so `src/components/charts.tsx` draws small SVG charts with those tokens, keeps the labels in HTML
-and gives each chart a visually hidden data table.
+The MRR and MRR movement charts are the system's `Chart` (an area chart and a grouped bar chart),
+each with a visually hidden data table. The plan mix is a share bar, not a chart over an axis, so
+`src/components/charts.tsx` draws it with the chart colour tokens (`--a63-chart-1` to
+`--a63-chart-5`).
 
 ## Run and check
 

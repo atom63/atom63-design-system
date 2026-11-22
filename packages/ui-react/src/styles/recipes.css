@@ -76,6 +76,8 @@
 @import '../components/app-view/app-view.css' layer(components);
 @import '../components/message/message.css' layer(components);
 @import '../components/art-plate/art-plate.css' layer(components);
+@import '../components/layered-scene/layered-scene.css' layer(components);
+@import '../components/chart/chart.css' layer(components);
 /* Document-level ::view-transition pseudos — deliberately unlayered so they are
    not outranked by an app's own transition rules. */
 @import '../media/media-lightbox/media-lightbox.css';

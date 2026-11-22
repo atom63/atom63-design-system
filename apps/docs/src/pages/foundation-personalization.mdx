@@ -62,6 +62,20 @@ Brand and surface are separate axes because color personality has two jobs: acce
 
 The implementation mixes a small set of semantic surface and border roles rather than every raw ramp stop. That is the practical tradeoff: fewer computed colors, more predictable UI, and enough expressiveness for product-level personalization.
 
+## Plate scopes: a palette from a picture
+
+An art landing page or a portfolio project takes its palette from its main picture, the plate. `pnpm plate:palette <image> --id <plate-id> --out <file.css>` reads the plate in headless Chromium, picks three roles (the page tone from the calm area where the headline sits, `--safe-area top` by default; the deep ink on the far side of it; the most chromatic cluster as the accent), checks WCAG AA, and writes one stylesheet for `[data-a63-plate='<plate-id>']`. It moves the ink and the secondary text along lightness until they pass, and refuses, writing nothing, when the primary action on the page tone or the text on that action fails.
+
+```html
+<link rel="stylesheet" href="/plates/plate-01.css" />
+<main data-a63-plate="plate-01" data-a63-brand="auto">
+  …
+  <section data-a63-mode="dark">the dark band: page tone and ink swap</section>
+</main>
+```
+
+The stylesheet stays inside the semantic layer. It writes the accent's ramp to `--color-auto-50…950`, which `data-a63-brand="auto"` maps onto the brand ramp, so the primary action and every role derived from the ramp recompute on the scope like any nested `[data-a63-brand]`. It overrides only `--a63-surface-page`, `--a63-text-primary` and `--a63-text-secondary`, keyed to the `--a63-if-light` / `--a63-if-dark` switch of the nearest mode scope, so a nested `[data-a63-mode="dark"]` section takes the ink as its surface and the page tone as its text. Everything else (panels, borders, status colours) stays on the theme's neutrals. Set the mode the script suggests on the scope or an ancestor. A plate with no chromatic cluster keeps the theme brand; drop `data-a63-brand="auto"` then.
+
 ## OS is not a theme
 
 Theme is material character. OS is platform structure. I split them because "Windows" should not imply one permanent visual skin, and "Terminal" should not dictate where caption controls live.
