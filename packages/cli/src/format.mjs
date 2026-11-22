@@ -200,7 +200,7 @@ function buildKit(data) {
     ...section(
       'Foundation',
       data.foundation,
-      entry => `- ${entry.name} (${entry.from}): ${entry.use}`
+      entry => `- ${entry.name} (${entry.from}): ${entry.use}\n  → ${entry.next}`
     ),
     ...section('Rules', data.rules, rule => `- ${rule}`),
   ]
@@ -213,7 +213,9 @@ function buildPlaybook(data) {
     ...data.steps.map((step, position) => `${position + 1}. ${step}`),
     '',
     'Foundation:',
-    ...data.foundation.map(entry => `- ${entry.name} (${entry.from}): ${entry.use}`),
+    ...data.foundation.map(
+      entry => `- ${entry.name} (${entry.from}): ${entry.use} (${entry.next})`
+    ),
   ].join('\n')
 }
 

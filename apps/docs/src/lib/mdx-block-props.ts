@@ -56,7 +56,7 @@ function rowMarkdown(row: MdxBlockPropRow): string {
 export function mdxBlockPropsMarkdown(index: MdxBlockPropsIndex, name: string): string {
   const sections = mdxBlockPropsSections(index, name)
   if (!sections) {
-    throw new Error(`No props for ${name}: it is not a component @atom63/mdx/blocks exports.`)
+    throw new Error(`No props for ${name}: it is not a documented component.`)
   }
   const lines =
     sections.rows.length > 0

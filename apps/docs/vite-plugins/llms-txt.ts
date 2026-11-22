@@ -31,7 +31,7 @@ import {
 import { mdxBlockPropsMarkdown } from '../src/lib/mdx-block-props'
 import { mdxToMarkdown } from '../src/lib/mdx-to-markdown'
 import { buildChangelogMarkdown } from './changelog-data'
-import { readMdxBlockProps } from './mdx-block-props'
+import { readLayoutProps, readMdxBlockProps } from './mdx-block-props'
 
 const SITE_TITLE = 'ATOM63 Design System'
 const SITE_SUMMARY =
@@ -151,9 +151,13 @@ function expandCraftCriteria(source: string): string {
 
 /** The MDX blocks page renders props tables from the blocks' types; spell them out for the Markdown twin. */
 function expandMdxBlockProps(source: string): string {
-  return source.replace(/^<MdxBlockProps name="([^"]+)" \/>$/gm, (_tag, name: string) =>
-    mdxBlockPropsMarkdown(readMdxBlockProps(), name)
-  )
+  return source
+    .replace(/^<MdxBlockProps name="([^"]+)" \/>$/gm, (_tag, name: string) =>
+      mdxBlockPropsMarkdown(readMdxBlockProps(), name)
+    )
+    .replace(/^<LayoutProps name="([^"]+)" \/>$/gm, (_tag, name: string) =>
+      mdxBlockPropsMarkdown(readLayoutProps(), name)
+    )
 }
 
 /** Authored component pages render catalog text through components; spell it out for the Markdown twin. */

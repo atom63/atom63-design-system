@@ -404,6 +404,18 @@ export function search(index, query, { kind, limit = 10 } = {}) {
 function findComponent(index, slug) {
   const component = index.components.find(candidate => candidate.slug === slug)
   if (!component) {
+    // Layout primitives (`page`, `section-header`) are exports, not catalog components.
+    const exportName = slug.replace(/(^|-)([a-z])/g, (_match, _dash, letter) =>
+      letter.toUpperCase()
+    )
+    const exported = index.api.web.find(entry => entry.values.includes(exportName))
+    if (exported) {
+      throw new AtomError(
+        'component.not_found',
+        `No component "${slug}": ${exportName} is an export of ${exported.module}, not a catalog component. Read it with: atom63 api ${exportName}`,
+        [`atom63 api ${exportName}`]
+      )
+    }
     throw new AtomError(
       'component.not_found',
       `No component "${slug}".`,
