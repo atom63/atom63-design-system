@@ -390,3 +390,49 @@ describe('nested brand-only and surface-only scopes', () => {
     expect(failures, failures.join('\n')).toEqual([])
   })
 })
+
+/* The surface-tint slider (0-100%) bends the page, panel and muted surfaces toward
+   the brand. The second and third text greys keep 4.5:1 on all three at every
+   tint, on every brand, theme and mode. */
+const tints = ['0%', '50%', '100%'] as const
+const tintTextPairs = [
+  ['--a63-text-secondary', '--a63-surface-page'],
+  ['--a63-text-secondary', '--a63-surface-panel'],
+  ['--a63-text-secondary', '--a63-surface-muted'],
+  ['--a63-text-tertiary', '--a63-surface-page'],
+  ['--a63-text-tertiary', '--a63-surface-panel'],
+  ['--a63-text-tertiary', '--a63-surface-muted'],
+] as const
+
+describe('surface tint contrast (WCAG AA)', () => {
+  afterEach(() => {
+    root().removeAttribute('data-a63-brand')
+    root().style.removeProperty('--a63-surface-tint')
+  })
+
+  it('keeps the secondary and tertiary text at 4.5:1 on tinted surfaces', () => {
+    const failures: string[] = []
+    for (const tint of tints) {
+      root().style.setProperty('--a63-surface-tint', tint)
+      for (const brand of brands) {
+        root().setAttribute('data-a63-brand', brand)
+        for (const theme of themes) {
+          for (const mode of modes) {
+            applyThemeMode(theme, mode)
+            for (const [fg, bg] of tintTextPairs) {
+              const fgCss = resolvePaintedColor(fg, 'color')
+              const bgCss = resolvePaintedColor(bg, 'background')
+              const ratio = contrastRatio(parseCssColor(fgCss), parseCssColor(bgCss))
+              if (ratio < AA_TEXT) {
+                failures.push(
+                  `tint ${tint} ${brand} ${theme}/${mode} ${fg} on ${bg}: ${ratio.toFixed(2)}:1 < ${AA_TEXT}:1`
+                )
+              }
+            }
+          }
+        }
+      }
+    }
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+})

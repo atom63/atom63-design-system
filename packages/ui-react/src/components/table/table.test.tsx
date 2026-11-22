@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   Table,
@@ -127,5 +127,59 @@ describe('Table', () => {
     expect(heads[1]).not.toHaveAttribute('data-sticky')
     expect(cells[0]).not.toHaveAttribute('data-sticky')
     expect(cells[1]).toHaveAttribute('data-sticky', 'end')
+  })
+
+  it('sortable heads: a button in the cell, aria-sort on the sorted column, controlled sort', () => {
+    const onSortChange = vi.fn()
+    const view = (sort: { column: string; direction: 'ascending' | 'descending' } | null) => (
+      <Table onSortChange={onSortChange} sort={sort}>
+        <TableHeader>
+          <TableRow>
+            <TableHead sortKey="name">Name</TableHead>
+            <TableHead firstSortDirection="descending" sortKey="mrr">
+              MRR
+            </TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+      </Table>
+    )
+    const { container, getByRole, rerender } = render(
+      view({ column: 'name', direction: 'ascending' })
+    )
+    const heads = container.querySelectorAll('th')
+    expect(heads[0]).toHaveAttribute('aria-sort', 'ascending')
+    expect(heads[1]).not.toHaveAttribute('aria-sort')
+    expect(heads[2]).not.toHaveAttribute('aria-sort')
+    expect(heads[2].querySelector('button')).toBeNull()
+    expect(heads[0].querySelector('[data-trigger-slot="table-sort-button"]')).toHaveClass(
+      'a63-Table-sort-button'
+    )
+
+    fireEvent.click(getByRole('button', { name: 'Name' }))
+    expect(onSortChange).toHaveBeenLastCalledWith({ column: 'name', direction: 'descending' })
+    fireEvent.click(getByRole('button', { name: 'MRR' }))
+    expect(onSortChange).toHaveBeenLastCalledWith({ column: 'mrr', direction: 'descending' })
+
+    rerender(view({ column: 'mrr', direction: 'descending' }))
+    expect(heads[0]).not.toHaveAttribute('aria-sort')
+    expect(heads[1]).toHaveAttribute('aria-sort', 'descending')
+    fireEvent.click(getByRole('button', { name: 'MRR' }))
+    expect(onSortChange).toHaveBeenLastCalledWith({ column: 'mrr', direction: 'ascending' })
+  })
+
+  it('lets the caller replace the sort icon', () => {
+    const { container } = render(
+      <Table sort={null}>
+        <TableHeader>
+          <TableRow>
+            <TableHead sortIcon={direction => <i data-icon={direction} />} sortKey="name">
+              Name
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+      </Table>
+    )
+    expect(container.querySelector('[data-icon="none"]')).not.toBeNull()
   })
 })

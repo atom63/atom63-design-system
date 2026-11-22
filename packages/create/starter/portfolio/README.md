@@ -123,9 +123,9 @@ Project covers work the same way: the `cover` in each project's frontmatter.
 ### MDX blocks
 
 Projects and posts are MDX: Markdown that can hold components. Every file can use the
-[`@atom63/mdx` blocks](https://system.atom63.io/patterns/pattern-mdx-blocks) (`Callout`, `Steps`,
-`StatGrid` and `StatCard`, `FigureBlock`, `Timeline`, `Tabs`, `CodeBlock` and more), plus
-`KeyIdea` and the site's own `Quote`, without importing them.
+[`@atom63/mdx` blocks](https://system.atom63.io/patterns/pattern-mdx-blocks) (`Callout`, `KeyIdea`,
+`Steps`, `StatGrid` and `StatCard`, `FigureBlock`, `Timeline`, `Tabs`, `CodeBlock` and more), plus
+the site's own `Quote`, without importing them.
 
 To add a block of your own, write a component in `src/components/mdx-components.tsx` and add it to
 the `createMdxComponents({ … })` call there. `Quote` is the example.

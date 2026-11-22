@@ -32,19 +32,11 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  type TableSort,
 } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
 import { useNavigate, useRouter } from '@tanstack/react-router'
-import {
-  ArrowDown,
-  ArrowUp,
-  ArrowUpDown,
-  Building2,
-  ChevronRight,
-  Ellipsis,
-  Plus,
-  SearchX,
-} from 'lucide-react'
+import { Building2, ChevronRight, Ellipsis, Plus, SearchX } from 'lucide-react'
 import { type MouseEvent, type ReactNode, useId, useState } from 'react'
 
 import { AccountFormDialog } from '../components/account-form-dialog'
@@ -64,7 +56,7 @@ import { useAccounts, useDataState } from '../store'
 const pageSize = 10
 
 type SortKey = 'name' | 'plan' | 'mrr' | 'seats' | 'lastActive'
-type Sort = { direction: 'asc' | 'desc'; key: SortKey }
+type Sort = TableSort & { column: SortKey }
 
 const planOrder = { starter: 0, growth: 1, scale: 2, enterprise: 3 } as const
 const compare: Record<SortKey, (a: Account, b: Account) => number> = {
@@ -76,11 +68,11 @@ const compare: Record<SortKey, (a: Account, b: Account) => number> = {
 }
 
 const sortOptions = [
-  { label: 'Name, A to Z', value: 'name:asc' },
-  { label: 'MRR, highest first', value: 'mrr:desc' },
-  { label: 'Seats, most first', value: 'seats:desc' },
-  { label: 'Plan, largest first', value: 'plan:desc' },
-  { label: 'Last active, recent first', value: 'lastActive:desc' },
+  { label: 'Name, A to Z', value: 'name:ascending' },
+  { label: 'MRR, highest first', value: 'mrr:descending' },
+  { label: 'Seats, most first', value: 'seats:descending' },
+  { label: 'Plan, largest first', value: 'plan:descending' },
+  { label: 'Last active, recent first', value: 'lastActive:descending' },
 ]
 
 const statusOptions = [{ label: 'All statuses', value: 'all' }, ...statuses]
@@ -103,41 +95,6 @@ const initials = (name: string) =>
     .map(part => part[0]?.toUpperCase() ?? '')
     .join('')
 
-/* A column header that sorts the table; `aria-sort` sits on the header cell. */
-function SortableHead({
-  align = 'start',
-  children,
-  column,
-  onSort,
-  sort,
-}: {
-  align?: 'start' | 'end'
-  children: ReactNode
-  column: SortKey
-  onSort: (key: SortKey) => void
-  sort: Sort
-}) {
-  const active = sort.key === column
-  const Icon = active ? (sort.direction === 'asc' ? ArrowUp : ArrowDown) : ArrowUpDown
-  return (
-    <TableHead
-      aria-sort={active ? (sort.direction === 'asc' ? 'ascending' : 'descending') : 'none'}
-      className={align === 'end' ? 'text-end' : 'text-start'}
-    >
-      <Button
-        className={align === 'end' ? '-me-2' : '-ms-2'}
-        onClick={() => onSort(column)}
-        size="xs"
-        tone="muted"
-        variant="ghost"
-      >
-        {children}
-        <Icon aria-hidden />
-      </Button>
-    </TableHead>
-  )
-}
-
 export function AccountsPage() {
   const state = useDataState()
   const { accounts: allAccounts } = useAccounts()
@@ -149,7 +106,7 @@ export function AccountsPage() {
 
   const [query, setQuery] = useState('')
   const [status, setStatus] = useState('all')
-  const [sort, setSort] = useState<Sort>({ direction: 'desc', key: 'mrr' })
+  const [sort, setSort] = useState<Sort>({ column: 'mrr', direction: 'descending' })
   const [form, setForm] = useState<{ account?: Account; open: boolean }>({ open: false })
 
   const go = (next: { account?: string; page?: number }) =>
@@ -165,7 +122,7 @@ export function AccountsPage() {
           account.email.toLowerCase().includes(needle) ||
           account.owner.toLowerCase().includes(needle))
     )
-    .sort((a, b) => compare[sort.key](a, b) * (sort.direction === 'asc' ? 1 : -1))
+    .sort((a, b) => compare[sort.column](a, b) * (sort.direction === 'ascending' ? 1 : -1))
   const pageCount = Math.max(1, Math.ceil(visible.length / pageSize))
   const page = Math.min(search.page ?? 1, pageCount)
   const rows = visible.slice((page - 1) * pageSize, page * pageSize)
@@ -180,12 +137,8 @@ export function AccountsPage() {
     setStatus('all')
     resetPage()
   }
-  const sortBy = (key: SortKey) => {
-    setSort(current =>
-      current.key === key
-        ? { direction: current.direction === 'asc' ? 'desc' : 'asc', key }
-        : { direction: key === 'name' ? 'asc' : 'desc', key }
-    )
+  const sortBy = (next: TableSort) => {
+    setSort(next as Sort)
     resetPage()
   }
 
@@ -277,11 +230,13 @@ export function AccountsPage() {
               <Select
                 items={sortOptions}
                 onValueChange={next => {
-                  const [key, direction] = String(next).split(':') as [SortKey, Sort['direction']]
-                  setSort({ direction, key })
-                  resetPage()
+                  const [column, direction] = String(next).split(':') as [
+                    SortKey,
+                    Sort['direction'],
+                  ]
+                  sortBy({ column, direction })
                 }}
-                value={`${sort.key}:${sort.direction}`}
+                value={`${sort.column}:${sort.direction}`}
               >
                 <SelectTrigger aria-labelledby={sortLabelId}>
                   <SelectValue placeholder="Custom order" />
@@ -310,26 +265,28 @@ export function AccountsPage() {
           ) : (
             <>
               <div className="hidden sm:block" data-slot="frame">
-                <Table aria-label="Accounts" size="sm">
+                <Table aria-label="Accounts" onSortChange={sortBy} size="sm" sort={sort}>
                   <TableHeader>
                     <TableRow>
-                      <SortableHead column="name" onSort={sortBy} sort={sort}>
-                        Account
-                      </SortableHead>
-                      <SortableHead column="plan" onSort={sortBy} sort={sort}>
+                      <TableHead sortKey="name">Account</TableHead>
+                      <TableHead firstSortDirection="descending" sortKey="plan">
                         Plan
-                      </SortableHead>
+                      </TableHead>
                       <TableHead>Status</TableHead>
-                      <SortableHead align="end" column="mrr" onSort={sortBy} sort={sort}>
+                      <TableHead className="text-end" firstSortDirection="descending" sortKey="mrr">
                         MRR
-                      </SortableHead>
-                      <SortableHead align="end" column="seats" onSort={sortBy} sort={sort}>
+                      </TableHead>
+                      <TableHead
+                        className="text-end"
+                        firstSortDirection="descending"
+                        sortKey="seats"
+                      >
                         Seats
-                      </SortableHead>
+                      </TableHead>
                       <TableHead className="hidden lg:table-cell">Owner</TableHead>
-                      <SortableHead column="lastActive" onSort={sortBy} sort={sort}>
+                      <TableHead firstSortDirection="descending" sortKey="lastActive">
                         Last active
-                      </SortableHead>
+                      </TableHead>
                       <TableHead className="w-0">
                         <span className="sr-only">Actions</span>
                       </TableHead>
@@ -407,10 +364,9 @@ export function AccountsPage() {
                   <PaginationContent>
                     <PaginationItem>
                       <PaginationPrevious
-                        aria-disabled={page === 1 || undefined}
-                        role={page === 1 ? 'link' : undefined}
-                        href={page === 1 ? undefined : pageHref(page - 1)}
-                        onClick={page === 1 ? undefined : toPage(page - 1)}
+                        disabled={page === 1}
+                        href={pageHref(page - 1)}
+                        onClick={toPage(page - 1)}
                       />
                     </PaginationItem>
                     {Array.from({ length: pageCount }, (_, index) => index + 1).map(number => (
@@ -427,10 +383,9 @@ export function AccountsPage() {
                     ))}
                     <PaginationItem>
                       <PaginationNext
-                        aria-disabled={page === pageCount || undefined}
-                        role={page === pageCount ? 'link' : undefined}
-                        href={page === pageCount ? undefined : pageHref(page + 1)}
-                        onClick={page === pageCount ? undefined : toPage(page + 1)}
+                        disabled={page === pageCount}
+                        href={pageHref(page + 1)}
+                        onClick={toPage(page + 1)}
                       />
                     </PaginationItem>
                   </PaginationContent>

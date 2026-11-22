@@ -1,5 +1,6 @@
 import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import type * as React from 'react'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   Pagination,
@@ -25,7 +26,7 @@ describe('Pagination', () => {
     const nav = container.querySelector('.a63-Pagination')
     expect(nav?.tagName.toLowerCase()).toBe('nav')
     expect(nav).toHaveAttribute('data-slot', 'pagination')
-    expect(nav).toHaveAttribute('aria-label', 'pagination')
+    expect(nav).toHaveAttribute('aria-label', 'Pagination')
     expect(container.querySelector('[data-slot="pagination-content"]')?.tagName.toLowerCase()).toBe(
       'ul'
     )
@@ -66,6 +67,68 @@ describe('Pagination', () => {
     expect(getByLabelText('Go to previous page')).toBeInTheDocument()
     expect(getByLabelText('Go to next page')).toBeInTheDocument()
     expect(container.querySelectorAll('.a63-Pagination-nav-label')).toHaveLength(2)
+  })
+
+  it('renders through a render element such as a router link', () => {
+    function RouterLink({ to, ...props }: React.ComponentProps<'a'> & { to: string }) {
+      return (
+        <a data-router="" href={`/app${to}`} {...props}>
+          {props.children}
+        </a>
+      )
+    }
+    const { container } = render(
+      <PaginationLink isActive render={<RouterLink to="/page/2" />}>
+        2
+      </PaginationLink>
+    )
+    const link = container.querySelector('[data-trigger-slot="pagination-link"]')
+    expect(link).toHaveAttribute('data-router')
+    expect(link).toHaveAttribute('href', '/app/page/2')
+    expect(link).toHaveAttribute('aria-current', 'page')
+    expect(link).toHaveClass('a63-Pagination-link')
+    expect(link).toHaveTextContent('2')
+    expect(link).not.toHaveAttribute('type')
+  })
+
+  it('renders through a render function', () => {
+    const { container } = render(
+      <PaginationLink
+        href="#4"
+        render={props => (
+          <a {...props} data-fn="">
+            {props.children}
+          </a>
+        )}
+      >
+        4
+      </PaginationLink>
+    )
+    const link = container.querySelector('[data-trigger-slot="pagination-link"]')
+    expect(link).toHaveAttribute('data-fn')
+    expect(link).toHaveAttribute('href', '#4')
+  })
+
+  it('disables previous / next: no href, not focusable, announced as disabled', () => {
+    const onClick = vi.fn()
+    const { getByLabelText } = render(
+      <>
+        <PaginationPrevious disabled href="#p" onClick={onClick} />
+        <PaginationNext href="#n" />
+      </>
+    )
+    const previous = getByLabelText('Go to previous page')
+    expect(previous.tagName.toLowerCase()).toBe('a')
+    expect(previous).not.toHaveAttribute('href')
+    expect(previous).toHaveAttribute('role', 'link')
+    expect(previous).toHaveAttribute('aria-disabled', 'true')
+    expect(previous).toHaveAttribute('data-disabled')
+    previous.focus()
+    expect(previous).not.toHaveFocus()
+    previous.click()
+    expect(onClick).not.toHaveBeenCalled()
+    expect(getByLabelText('Go to next page')).toHaveAttribute('href', '#n')
+    expect(getByLabelText('Go to next page')).not.toHaveAttribute('aria-disabled')
   })
 
   it('renders the ellipsis slot', () => {

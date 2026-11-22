@@ -867,7 +867,12 @@ export const CommandDialog: typeof Dialog_2.Root;
 export function CommandDialogBackdrop(input: Dialog_2.Backdrop.Props): React$1.ReactElement;
 
 // @public (undocumented)
-export function CommandDialogPopup(input: Dialog_2.Popup.Props): React$1.ReactElement;
+export function CommandDialogPopup(input: CommandDialogPopupProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type CommandDialogPopupProps = Omit<Dialog_2.Popup.Props, 'title'> & {
+    title?: React$1.ReactNode;
+};
 
 // @public (undocumented)
 export function CommandDialogPortal(props: Dialog_2.Portal.Props): React$1.ReactElement;
@@ -2015,6 +2020,8 @@ export function PaginationLink(input: PaginationLinkProps): React$1.ReactElement
 // @public (undocumented)
 export type PaginationLinkProps = {
     isActive?: boolean;
+    disabled?: boolean;
+    render?: useRender.RenderProp;
 } & Pick<ButtonProps, 'size'> & React$1.ComponentProps<'a'>;
 
 // @public (undocumented)
@@ -2761,6 +2768,9 @@ export type TableHeaderProps = React$1.ComponentProps<'thead'>;
 // @public (undocumented)
 export type TableHeadProps = React$1.ComponentProps<'th'> & {
     sticky?: TableStickyEdge;
+    sortKey?: string;
+    firstSortDirection?: TableSortDirection;
+    sortIcon?: (direction: TableSortDirection | 'none') => React$1.ReactNode;
 };
 
 // @public (undocumented)
@@ -2768,6 +2778,8 @@ export type TableProps = React$1.ComponentProps<'table'> & {
     size?: TableSize | TableSizeAlias;
     tone?: TableTone;
     variant?: TableVariant;
+    sort?: TableSort | null;
+    onSortChange?: (sort: TableSort) => void;
 };
 
 // @public (undocumented)
@@ -2775,6 +2787,17 @@ export function TableRow(input: TableRowProps): React$1.ReactElement;
 
 // @public (undocumented)
 export type TableRowProps = React$1.ComponentProps<'tr'>;
+
+// @public
+export interface TableSort {
+    // (undocumented)
+    column: string;
+    // (undocumented)
+    direction: TableSortDirection;
+}
+
+// @public
+export type TableSortDirection = 'ascending' | 'descending';
 
 // @public (undocumented)
 export function Tabs(input: Tabs_2.Root.Props): React$1.ReactElement;
@@ -2999,6 +3022,7 @@ export const useFormField: () => {
     isValidating: boolean;
     error?: react_hook_form.FieldError | undefined;
     id: string;
+    hasDescription: boolean;
     name: string;
     formItemId: string;
     formDescriptionId: string;

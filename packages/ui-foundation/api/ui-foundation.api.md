@@ -3847,7 +3847,7 @@ export const paginationContract: {
     defaultLinkSize: "icon";
     linkSizes: readonly ["xs", "sm", "md", "lg", "xl", "tile", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
     slots: readonly ["pagination", "pagination-content", "pagination-item", "pagination-link", "pagination-ellipsis"];
-    states: readonly ["rest", "current"];
+    states: readonly ["rest", "current", "disabled"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -3861,7 +3861,7 @@ export const paginationSlots: readonly ["pagination", "pagination-content", "pag
 export type PaginationState = (typeof paginationStates)[number];
 
 // @public (undocumented)
-export const paginationStates: readonly ["rest", "current"];
+export const paginationStates: readonly ["rest", "current", "disabled"];
 
 // @public (undocumented)
 export type PaginationVisualArchetype = (typeof paginationVisualArchetypes)[number];
@@ -5428,8 +5428,8 @@ export const tableContract: {
     variants: readonly ["default", "plain"];
     sizes: readonly ["md", "sm"];
     stickyEdges: readonly ["start", "end"];
-    states: readonly ["rest", "row-hover", "row-selected"];
-    slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
+    states: readonly ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"];
+    slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption", "table-sort-button"];
     visualArchetypes: readonly ["surface"];
     tones: readonly ["neutral", "accent"];
 };
@@ -5452,13 +5452,13 @@ export const tableSizes: readonly ["md", "sm"];
 export type TableSlot = (typeof tableSlots)[number];
 
 // @public (undocumented)
-export const tableSlots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
+export const tableSlots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption", "table-sort-button"];
 
 // @public (undocumented)
 export type TableState = (typeof tableStates)[number];
 
 // @public (undocumented)
-export const tableStates: readonly ["rest", "row-hover", "row-selected"];
+export const tableStates: readonly ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"];
 
 // @public (undocumented)
 export type TableStickyEdge = (typeof tableStickyEdges)[number];

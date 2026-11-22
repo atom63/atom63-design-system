@@ -12,6 +12,10 @@
   width: 100%;
   color: var(--a63-text-primary);
   font-family: var(--a63-control-font-family);
+  --autocomplete-adornment-size: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
 }
 .a63-Autocomplete-input-group:has(:disabled) {
   opacity: 0.64;
@@ -79,6 +83,13 @@
 .a63-Autocomplete-input-group:has(.a63-Autocomplete-adornment) .a63-Autocomplete-input {
   padding-inline-end: 2rem;
 }
+/* trigger and clear together: room for both, side by side */
+.a63-Autocomplete-input-group:has([data-slot='autocomplete-trigger']):has(
+    [data-slot='autocomplete-clear']
+  )
+  .a63-Autocomplete-input {
+  padding-inline-end: calc(2 * var(--autocomplete-adornment-size) + 0.125rem);
+}
 
 .a63-Autocomplete-input-group[data-size='sm'] .a63-Autocomplete-input {
   --autocomplete-content-lh: var(--typography-xs-line-height);
@@ -127,14 +138,8 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: max(
-    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
-  );
-  height: max(
-    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
-  );
+  width: var(--autocomplete-adornment-size);
+  height: var(--autocomplete-adornment-size);
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   background: transparent;
@@ -145,6 +150,11 @@
   transition:
     color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+/* With a trigger present, the clear button sits to its inline start, not on top of it. */
+.a63-Autocomplete-input-group:has([data-slot='autocomplete-trigger'])
+  [data-slot='autocomplete-clear'] {
+  inset-inline-end: calc(0.125rem + var(--autocomplete-adornment-size));
 }
 .a63-Autocomplete-adornment:hover {
   opacity: 1;

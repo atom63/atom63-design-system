@@ -3,7 +3,7 @@
   "component": "pagination",
   "maturity": "stable",
   "lists": {
-    "states": ["rest", "current"],
+    "states": ["rest", "current", "disabled"],
     "slots": [
       "pagination",
       "pagination-content",

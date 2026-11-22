@@ -34,7 +34,7 @@ export function NoticeBlock(props: NoticeBlockProps) {
   if (props.mode === 'insight') {
     const { body, className, label = 'Key idea', title } = props
     return (
-      <MdxFrame as="aside" className={className} frameClassName="mdx-insight-frame">
+      <MdxFrame as="aside" border="off" className={className} frameClassName="mdx-insight-frame">
         <MdxFrameHeader>
           <MdxFrameDescription className="mdx-insight-eyebrow font-mono text-xs tracking-wider uppercase">
             {label}
@@ -45,7 +45,7 @@ export function NoticeBlock(props: NoticeBlockProps) {
             </MdxFrameTitle>
           ) : null}
         </MdxFrameHeader>
-        <MdxFramePanel className="mdx-insight-panel">
+        <MdxFramePanel className="mdx-frame-panel-flat">
           <div className="mdx-insight-body max-w-prose text-base leading-relaxed text-pretty [&_p]:mt-3 [&_strong]:font-semibold [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
             {body}
           </div>

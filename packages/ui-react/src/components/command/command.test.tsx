@@ -134,11 +134,32 @@ describe('Command', () => {
     )
     const trigger = screen.getByRole('button', { name: 'Open palette' })
     await user.click(trigger)
-    expect(await screen.findByRole('dialog')).toBeInTheDocument()
+    expect(await screen.findByRole('dialog', { name: 'Command palette' })).toBeInTheDocument()
     await waitFor(() => expect(screen.getByRole('combobox')).toHaveFocus())
 
     await user.keyboard('{Escape}')
     await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
     expect(trigger).toHaveFocus()
+  })
+
+  it('names the dialog with `title`, or leaves the name to aria-label', async () => {
+    const { unmount } = render(
+      <CommandDialog open>
+        <CommandDialogPopup title="Search the docs">
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    expect(await screen.findByRole('dialog', { name: 'Search the docs' })).toBeInTheDocument()
+    unmount()
+    render(
+      <CommandDialog open>
+        <CommandDialogPopup aria-label="Jump to">
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    const dialog = await screen.findByRole('dialog', { name: 'Jump to' })
+    expect(dialog).not.toHaveAttribute('aria-labelledby')
   })
 })

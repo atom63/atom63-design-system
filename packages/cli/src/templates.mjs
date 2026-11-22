@@ -192,6 +192,51 @@ const phoneScreen = {
   next: 'atom63 template app-view',
 }
 
+/* Words that mark an idea as a page to read: an article, a blog post, a docs page. */
+const readingWords = new Set([
+  'article',
+  'articles',
+  'blog',
+  'blogs',
+  'docs',
+  'documentation',
+  'essay',
+  'essays',
+  'guide',
+  'guides',
+  'longform',
+  'reader',
+  'reading',
+])
+
+/** Whether an idea is a page to read (an article, a blog post, a docs page), not a phone screen. */
+export function isReadingIdea(idea) {
+  if (isPhoneIdea(idea)) return false
+  return (
+    queryTerms(idea).some(({ term, weight }) => weight === 1 && readingWords.has(term)) ||
+    /\blong-form\b/i.test(idea)
+  )
+}
+
+/* What a reading idea is told to build on: Page, Container, Section and ReaderLayout. */
+const readingPage = {
+  template: 'reading-page',
+  use: 'Build a page to read (an article, a blog post, a docs page) on ReaderLayout, not an app shell: Page owns the main landmark, Container the width, Section the space around the document, and ReaderLayout a centred reading column with a rail beside it on wide screens for the table of contents. Pass reserveAside on pages with no rail so the column keeps its width. Inside an app shell, give Page render={<div />} so the document keeps one main landmark.',
+  imports: ["import { Container, Page, ReaderLayout, Section } from '@atom63/ui-react/layout'"],
+  snippet: [
+    '<Page noPadding>',
+    '  <Container maxWidth="widest" padding="none">',
+    '    <Section gap={false} removeTopSpacing={false} spacing="tight">',
+    '      <ReaderLayout aside={<nav aria-label="On this page">…</nav>}>',
+    '        <h1>…</h1>',
+    '      </ReaderLayout>',
+    '    </Section>',
+    '  </Container>',
+    '</Page>',
+  ].join('\n'),
+  next: 'atom63 template reading-page',
+}
+
 /* Words that mark an idea as showing a money amount as its hero number. */
 const amountWords = new Set([
   'amount',
@@ -306,8 +351,14 @@ export function build(index, idea) {
       { ...summaryOf(findTemplate(index, id)), next: `atom63 copy ${id} <dir>` },
       ...pick(kind, limit).filter(entry => entry.id !== id),
     ].slice(0, limit)
-  const pages = phone ? lead('page', 3, 'app-view') : pick('page', 3)
-  const blocks = phone ? lead('block', 5, 'tab-bar') : pick('block', 5)
+  // A reading idea gets the reading page alone: no app-shell page or block fits it.
+  const reading = isReadingIdea(idea)
+  const pages = phone
+    ? lead('page', 3, 'app-view')
+    : reading
+      ? lead('page', 1, readingPage.template)
+      : pick('page', 3)
+  const blocks = phone ? lead('block', 5, 'tab-bar') : reading ? [] : pick('block', 5)
   // What the closest templates are built from comes first, then what the idea names.
   const bySlug = new Map(index.components.map(entry => [entry.slug, entry]))
   const used = [pages[0], ...blocks]
@@ -334,6 +385,7 @@ export function build(index, idea) {
     data: {
       idea,
       ...(phone ? { phone: phoneScreen } : {}),
+      ...(reading ? { reading: readingPage } : {}),
       ...(isAmountIdea(idea) ? { amount: displayAmount } : {}),
       ...(isDenseIdea(idea) ? { density: compactDensity } : {}),
       pages,

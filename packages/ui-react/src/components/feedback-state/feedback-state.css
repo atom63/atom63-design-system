@@ -104,6 +104,7 @@
 
 /* ── Title ─────────────────────────────────────────────────────────────── */
 .a63-FeedbackState-title {
+  margin: 0;
   color: var(--a63-text-primary);
   font-size: var(--typography-base-font-size);
   font-weight: 600;

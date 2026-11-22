@@ -17,4 +17,6 @@ export type {
   TableHeaderProps,
   TableProps,
   TableRowProps,
+  TableSort,
+  TableSortDirection,
 } from './table'

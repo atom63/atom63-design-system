@@ -70,6 +70,11 @@ export { DashboardContent, DashboardPage } from './pages/dashboard-page/dashboar
 export { ListContent, ListPage, type ListPageProps } from './pages/list-page/list-page'
 export { OnboardingContent, OnboardingPage } from './pages/onboarding-page/onboarding-page'
 export {
+  ReadingPage,
+  type ReadingPageProps,
+  type ReadingSection,
+} from './pages/reading-page/reading-page'
+export {
   SettingsContent,
   type SettingsContentProps,
   SettingsPage,

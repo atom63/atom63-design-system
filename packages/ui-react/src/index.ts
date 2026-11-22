@@ -178,7 +178,7 @@ export {
   CommandSeparator,
   CommandShortcut,
 } from './components/command'
-export type { CommandInputProps } from './components/command'
+export type { CommandDialogPopupProps, CommandInputProps } from './components/command'
 export {
   ConnectedPanel,
   ConnectedPanelBody,
@@ -632,6 +632,8 @@ export type {
   TableHeaderProps,
   TableProps,
   TableRowProps,
+  TableSort,
+  TableSortDirection,
 } from './components/table'
 export { Tabs, TabsContent, TabsList, TabsPanel, TabsTab, TabsTrigger } from './components/tabs'
 export type { TabsListProps, TabsPanelProps, TabsTabProps } from './components/tabs'

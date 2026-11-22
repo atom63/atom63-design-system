@@ -8,8 +8,8 @@
 
 ## Summary
 
-- Root export symbols: **648** across **82** source families.
-- Package export-map subpaths: **86**.
+- Root export symbols: **651** across **82** source families.
+- Package export-map subpaths: **84**.
 - P0 root/source families: **30**.
 - P1 root/source families: **12**.
 - P0 package subpaths: **4**.
@@ -27,8 +27,8 @@
 
 ### Root export tier counts
 
-- `beta-supported-composition-conditional`: 184
-- `beta-supported-core`: 354
+- `beta-supported-composition-conditional`: 185
+- `beta-supported-core`: 356
 - `monitor-high-risk`: 79
 - `preview-experimental-candidate`: 31
 
@@ -54,7 +54,7 @@
 | `components/alert-dialog`         | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      18 | `beta-supported-core`: 16<br>`preview-experimental-candidate`: 2                           | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/avatar`               | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |       9 | `beta-supported-core`: 8<br>`preview-experimental-candidate`: 1                            | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/button-group`         | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |       7 | `beta-supported-core`: 5<br>`preview-experimental-candidate`: 2                            | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
-| `components/command`              | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      20 | `beta-supported-composition-conditional`: 19<br>`preview-experimental-candidate`: 1        | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
+| `components/command`              | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      21 | `beta-supported-composition-conditional`: 20<br>`preview-experimental-candidate`: 1        | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/dialog`               | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      19 | `beta-supported-core`: 17<br>`preview-experimental-candidate`: 2                           | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/input`                | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      17 | `beta-supported-core`: 16<br>`preview-experimental-candidate`: 1                           | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/navigation-menu`      | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      12 | `beta-supported-composition-conditional`: 11<br>`preview-experimental-candidate`: 1        | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |

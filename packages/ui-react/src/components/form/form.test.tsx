@@ -13,7 +13,7 @@ import {
   FormMessage,
 } from './form'
 
-function DemoForm({ error }: { error?: string }) {
+function DemoForm({ description = true, error }: { description?: boolean; error?: string }) {
   const methods = useForm<{ username: string }>({
     defaultValues: { username: '' },
     errors: error ? { username: { type: 'manual', message: error } } : undefined,
@@ -31,7 +31,7 @@ function DemoForm({ error }: { error?: string }) {
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormDescription>Your public handle.</FormDescription>
+              {description ? <FormDescription>Your public handle.</FormDescription> : null}
               <FormMessage />
             </FormItem>
           )}
@@ -85,5 +85,19 @@ describe('Form', () => {
       'aria-invalid',
       'true'
     )
+  })
+
+  it('references only the parts that render', () => {
+    const { container, rerender } = render(<DemoForm description={false} />)
+    const control = () => container.querySelector('[data-slot="form-control"]')
+    expect(control()).not.toHaveAttribute('aria-describedby')
+
+    rerender(<DemoForm description={false} error="Username is taken" />)
+    const message = container.querySelector('[data-slot="form-message"]')
+    expect(control()?.getAttribute('aria-describedby')).toBe(message?.getAttribute('id'))
+
+    rerender(<DemoForm />)
+    const description = container.querySelector('[data-slot="form-description"]')
+    expect(control()?.getAttribute('aria-describedby')).toBe(description?.getAttribute('id'))
   })
 })
