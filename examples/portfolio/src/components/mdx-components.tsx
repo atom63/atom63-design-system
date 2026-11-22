@@ -1,5 +1,4 @@
 import { createMdxComponents } from '@atom63/mdx/article'
-import { KeyIdea } from '@atom63/mdx/blocks'
 import type { ReactNode } from 'react'
 
 /**
@@ -20,7 +19,7 @@ function Quote({ by, children }: { by: string; children: ReactNode }) {
 
 /**
  * Every MDX file renders with these: the core prose, the default @atom63/mdx
- * blocks (Callout, Steps, StatGrid, FigureBlock, Timeline, …), KeyIdea, which
- * is not on the default map, and the site's own Quote.
+ * blocks (Callout, KeyIdea, Steps, StatGrid, FigureBlock, Timeline, …) and the
+ * site's own Quote.
  */
-export const mdxComponents = createMdxComponents({ KeyIdea, Quote })
+export const mdxComponents = createMdxComponents({ Quote })
