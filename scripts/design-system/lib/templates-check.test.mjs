@@ -24,7 +24,8 @@ const metadata = (fields = {}) =>
     2
   )} as const\n`
 
-const stories = 'export const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\n'
+const stories =
+  'const meta = { parameters: landmarkParameters }\nexport const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\n'
 
 const block = (source, extra = {}) => ({
   dir: 'blocks',
@@ -106,6 +107,15 @@ test('fails missing stories', () => {
     checkTemplates([block(metadata(), { storySource: null }), page()]).join('\n'),
     /no stories file/
   )
+})
+
+test('fails stories that do not turn on the landmark rules', () => {
+  const problems = checkTemplates([
+    block(metadata(), { storySource: stories.replace('landmarkParameters', '{}') }),
+    page(),
+  ]).join('\n')
+  assert.match(problems, /blocks\/page-header: stories file does not pass `landmarkParameters`/)
+  assert.doesNotMatch(problems, /list-page: stories file does not pass/)
 })
 
 test('fails a template missing from the catalog', () => {
