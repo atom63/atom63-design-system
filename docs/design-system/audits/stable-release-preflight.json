@@ -10,7 +10,7 @@
   "packages": [
     {
       "name": "@atom63/styles",
-      "version": "0.1.0-beta.11",
+      "version": "0.1.0-beta.12",
       "prerelease": true,
       "private": false
     },
@@ -22,7 +22,7 @@
     },
     {
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.16",
+      "version": "0.2.0-beta.17",
       "prerelease": true,
       "private": false
     }
