@@ -143,7 +143,9 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // `@atom63/ui-react/chart`, like `./calendar`; this total counts every entry,
 // so the subpath does not lower it. A consumer that does not import Chart
 // drops it.
-const gzipBudgetBytes = 104 * 1024
+// Merged with Table sorting (#335), which Chart reuses, the total is 104.0 kB; the
+// budget keeps about 2% headroom at 106.
+const gzipBudgetBytes = 106 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
@@ -240,13 +242,13 @@ for (const [name, budgetKB] of Object.entries(importBudgets)) {
 }
 
 // Chart ships on its own entry, `@atom63/ui-react/chart` (like `./calendar`), so it is
-// measured from there: 13.6 kB, mostly the Button and Table it reuses. 15.5 kB leaves
-// about 14% headroom.
+// measured from there: 15.6 kB after Table sorting (#335), mostly the Button and Table
+// it reuses. 18 kB leaves about 15% headroom.
 await checkImport(
   'import { Chart } from @atom63/ui-react/chart',
   path.join(distDirectory, 'chart/index.js'),
   'Chart',
-  15.5
+  18
 )
 
 // The same per-import check for @atom63/mdx. Its entries were built into
