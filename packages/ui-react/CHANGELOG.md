@@ -1,5 +1,26 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.15
+
+### Minor Changes
+
+- [#322](https://github.com/atom63/atom63-design-system/pull/322) [`2720544`](https://github.com/atom63/atom63-design-system/commit/2720544eec4f8bf4701366ccff064f015815e987) Thanks [@atom63](https://github.com/atom63)! - Add ArtPlate, a full-bleed picture that owns its crop and keeps a safe area for headline and product UI: art-directed phone source, focal point per breakpoint, `size` (viewport, band, card), `safeArea`, `tone`, `veil`, eager loading with `priority`, and a CSS scroll-driven `parallax` that is off under reduced motion. `Image` from `@atom63/ui-react/media` takes `srcSet`, `sizes` and art-directed `sources`, which render a native `<picture>` with native lazy loading, and `aspectRatio="fill"` for a box sized by its parent.
+
+- [#325](https://github.com/atom63/atom63-design-system/pull/325) [`dc9e86d`](https://github.com/atom63/atom63-design-system/commit/dc9e86d5a8ffd8aeec63c082589e8c02334a6994) Thanks [@atom63](https://github.com/atom63)! - Add LayeredScene: a plate (`LayeredScenePlate`, an ArtPlate), the copy (`LayeredSceneContent`) and live product UI (`LayeredSceneStage`) in a two-row grid, with an optional inert foreground cut-out of the plate in front (`LayeredSceneForeground`, aria-hidden, no pointer events, hidden on phones unless `showOnPhone`). `placement` (center-bottom, end-bottom, start-bottom) and `width` (wide, half) place the stage. Layers use the in-context z band.
+
+- [#314](https://github.com/atom63/atom63-design-system/pull/314) [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd) Thanks [@atom63](https://github.com/atom63)! - SegmentedControl is a radio group instead of a tab list: the root has `role="radiogroup"` and takes `aria-label` or `aria-labelledby`, each segment is a `radio`, Tab enters at the selected segment and the arrow keys move and select. The selected segment carries `data-checked` (it was `data-active`), and the indicator is placed by `--segment-indicator-*` (it was Base UI's `--active-tab-*`). `SegmentedControlProps` now extends Base UI's RadioGroup props instead of the Tabs root props. The look is unchanged. Use Tabs when the choices switch content panels.
+  
+  Rating draws on stars filled in `--a63-status-warning` and off stars as outlines in `--a63-border-input`, so the two differ by shape as well as colour and both reach 3:1 against the page and the panel in every theme and mode.
+
+### Patch Changes
+
+- [#329](https://github.com/atom63/atom63-design-system/pull/329) [`593d783`](https://github.com/atom63/atom63-design-system/commit/593d783b1d730f1eabb94039036767fbd8e54996) Thanks [@atom63](https://github.com/atom63)! - Name the AppearancePanel's segmented and swatch choice groups after their sections. `SegmentedTokenControl` and `SwatchTokenControl` take an optional `label`, passed to the group as its accessible name.
+
+- [#315](https://github.com/atom63/atom63-design-system/pull/315) [`a63a96a`](https://github.com/atom63/atom63-design-system/commit/a63a96a1cd37311aeaa313dc1fa951d3ae008c9d) Thanks [@atom63](https://github.com/atom63)! - A nested `[data-a63-brand]` or `[data-a63-surface]` scope without a mode (a `UIProvider` that passes only `brand` or `surface`) now re-declares the mode roles that read the brand or neutral ramp: the surfaces, text, borders, `--a63-text-accent`, `--a63-focus-ring`, `--a63-selected-accent-*`, `--a63-choice-card-checked-*`, the badge, skeleton, toggle and widget mode tokens, and the Aqua and Terminal mode overrides. They follow the nearest mode scope through the new `--a63-if-light` / `--a63-if-dark` switch. Add `--a63-border-danger` for invalid control borders (step 600 at 62% in light mode, step 500 in dark mode). Input, Textarea, Select, Autocomplete, InputOTP, Checkbox and Radio draw invalid borders with it and a focused invalid border and ring with `--a63-status-danger`; LoadMoreTrigger's Retry label uses `--a63-text-danger`, and its error icon, FeedbackState's error accent and AlertDialog's destructive accent use `--a63-status-danger`.
+- Updated dependencies [[`2720544`](https://github.com/atom63/atom63-design-system/commit/2720544eec4f8bf4701366ccff064f015815e987), [`dc9e86d`](https://github.com/atom63/atom63-design-system/commit/dc9e86d5a8ffd8aeec63c082589e8c02334a6994), [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd), [`4b4c105`](https://github.com/atom63/atom63-design-system/commit/4b4c105e0b96f8040da19b067e6222142845be7d), [`b496558`](https://github.com/atom63/atom63-design-system/commit/b496558edfb8fed1fe7a4cf89a89a56da978b5f1), [`a63a96a`](https://github.com/atom63/atom63-design-system/commit/a63a96a1cd37311aeaa313dc1fa951d3ae008c9d)]:
+  - @atom63/ui-foundation@0.2.0-beta.8
+  - @atom63/styles@0.1.0-beta.10
+
 ## 0.2.0-beta.14
 
 ### Minor Changes

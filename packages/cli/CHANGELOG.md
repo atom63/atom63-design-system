@@ -1,5 +1,15 @@
 # @atom63/cli
 
+## 0.1.0-beta.4
+
+### Patch Changes
+
+- [#314](https://github.com/atom63/atom63-design-system/pull/314) [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd) Thanks [@atom63](https://github.com/atom63)! - SegmentedControl is a radio group instead of a tab list: the root has `role="radiogroup"` and takes `aria-label` or `aria-labelledby`, each segment is a `radio`, Tab enters at the selected segment and the arrow keys move and select. The selected segment carries `data-checked` (it was `data-active`), and the indicator is placed by `--segment-indicator-*` (it was Base UI's `--active-tab-*`). `SegmentedControlProps` now extends Base UI's RadioGroup props instead of the Tabs root props. The look is unchanged. Use Tabs when the choices switch content panels.
+  
+  Rating draws on stars filled in `--a63-status-warning` and off stars as outlines in `--a63-border-input`, so the two differ by shape as well as colour and both reach 3:1 against the page and the panel in every theme and mode.
+
+- [#310](https://github.com/atom63/atom63-design-system/pull/310) [`4b4c105`](https://github.com/atom63/atom63-design-system/commit/4b4c105e0b96f8040da19b067e6222142845be7d) Thanks [@atom63](https://github.com/atom63)! - Button's contract slots are now the `data-slot` values the React Button renders: `button`, `button-label`, `button-spinner` and `button-indicator` (they were `root`, `label`, `icon`, `spinner` and `indicator`; no `icon` slot is rendered). Search Field's input slot is `input` (it was `search-field-input`). `buttonSlots`, `searchFieldSlots` and their `ButtonSlot` and `SearchFieldSlot` types change with them, and `atom63 component button` lists the new names. Rendered `data-slot` values are unchanged.
+
 ## 0.1.0-beta.3
 
 ### Patch Changes
