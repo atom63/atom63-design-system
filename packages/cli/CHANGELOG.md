@@ -1,5 +1,13 @@
 # @atom63/cli
 
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- [#345](https://github.com/atom63/atom63-design-system/pull/345) [`a4ff444`](https://github.com/atom63/atom63-design-system/commit/a4ff444ae401d612979f81e145e274d11882097e) Thanks [@atom63](https://github.com/atom63)! - The app-shell block takes an optional `user` (name, an email or role line, an avatar image and account menu items) and shows it at the foot of the sidebar in an "Account" landmark; in the icon rail only the avatar shows, and the name stays the accessible name. The page templates and the app starter pass a sample user. The Sidebar's icon rail keeps an Avatar in a menu button visible instead of hiding it with the label text.
+
+- [#340](https://github.com/atom63/atom63-design-system/pull/340) [`84c3d08`](https://github.com/atom63/atom63-design-system/commit/84c3d085c8d2449e14d88628d4beaab21e087dc2) Thanks [@atom63](https://github.com/atom63)! - `CommandDialogPopup` sets `aria-modal="true"`, as `DialogPopup` does; `CommandDialog modal={false}` leaves it off. `CommandInput` gets a default accessible name, "Search commands", which the new `label` prop replaces; passing `aria-label` or `aria-labelledby` skips it.
+
 ## 0.1.0-beta.5
 
 ### Patch Changes

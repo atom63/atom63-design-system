@@ -1,5 +1,11 @@
 # @atom63/styles
 
+## 0.1.0-beta.12
+
+### Patch Changes
+
+- [#341](https://github.com/atom63/atom63-design-system/pull/341) [`866802a`](https://github.com/atom63/atom63-design-system/commit/866802aaca193d28791737d9d0be959ce014e514) Thanks [@atom63](https://github.com/atom63)! - The Figma sync model carries each brand's chart series. `--a63-chart-2` to `--a63-chart-5` vary on brand and mode together, so each now has a hidden Brand variable per mode (`chart/2/light`, `chart/2/dark`) with the browser's value for every brand, and the token's Mode variable aliases the one for its mode. In Figma the series follow the layer's Brand and Mode modes instead of showing the default brand's colours. The four tokens leave `computed` and `atom63.computed-values.json`.
+
 ## 0.1.0-beta.11
 
 ### Minor Changes

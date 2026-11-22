@@ -1,5 +1,19 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.17
+
+### Minor Changes
+
+- [#340](https://github.com/atom63/atom63-design-system/pull/340) [`84c3d08`](https://github.com/atom63/atom63-design-system/commit/84c3d085c8d2449e14d88628d4beaab21e087dc2) Thanks [@atom63](https://github.com/atom63)! - `CommandDialogPopup` sets `aria-modal="true"`, as `DialogPopup` does; `CommandDialog modal={false}` leaves it off. `CommandInput` gets a default accessible name, "Search commands", which the new `label` prop replaces; passing `aria-label` or `aria-labelledby` skips it.
+
+### Patch Changes
+
+- [#345](https://github.com/atom63/atom63-design-system/pull/345) [`a4ff444`](https://github.com/atom63/atom63-design-system/commit/a4ff444ae401d612979f81e145e274d11882097e) Thanks [@atom63](https://github.com/atom63)! - The app-shell block takes an optional `user` (name, an email or role line, an avatar image and account menu items) and shows it at the foot of the sidebar in an "Account" landmark; in the icon rail only the avatar shows, and the name stays the accessible name. The page templates and the app starter pass a sample user. The Sidebar's icon rail keeps an Avatar in a menu button visible instead of hiding it with the label text.
+
+- [#344](https://github.com/atom63/atom63-design-system/pull/344) [`98bb017`](https://github.com/atom63/atom63-design-system/commit/98bb01790dade54585dc348509940c70a478ff92) Thanks [@atom63](https://github.com/atom63)! - Built files keep `'use client'`. A post-build step puts the directive back at the top of every built file that holds a `'use client'` source module, including the `provider`, `atom63-theme` and lightbox parts entries, so React Server Components bundlers see the client boundary. Three ui-react files that also carry server-safe exports (the `theme` and `media` entries and the lightbox internals) stay unmarked.
+- Updated dependencies [[`866802a`](https://github.com/atom63/atom63-design-system/commit/866802aaca193d28791737d9d0be959ce014e514)]:
+  - @atom63/styles@0.1.0-beta.12
+
 ## 0.2.0-beta.16
 
 ### Minor Changes

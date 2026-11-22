@@ -1,5 +1,13 @@
 # @atom63/widgets
 
+## 0.1.0-beta.8
+
+### Patch Changes
+
+- [#344](https://github.com/atom63/atom63-design-system/pull/344) [`98bb017`](https://github.com/atom63/atom63-design-system/commit/98bb01790dade54585dc348509940c70a478ff92) Thanks [@atom63](https://github.com/atom63)! - Danger text, edges and accents no longer read the danger button fill. The inform danger border uses `--a63-border-danger` and its danger text `--a63-text-danger`; the widget error badge draws its border in `--a63-border-danger` and its tint from `--a63-status-danger`; the ComparisonPair "before" dot uses `--a63-status-danger`.
+- Updated dependencies [[`a4ff444`](https://github.com/atom63/atom63-design-system/commit/a4ff444ae401d612979f81e145e274d11882097e), [`84c3d08`](https://github.com/atom63/atom63-design-system/commit/84c3d085c8d2449e14d88628d4beaab21e087dc2), [`98bb017`](https://github.com/atom63/atom63-design-system/commit/98bb01790dade54585dc348509940c70a478ff92)]:
+  - @atom63/ui-react@0.2.0-beta.17
+
 ## 0.1.0-beta.7
 
 ### Patch Changes
