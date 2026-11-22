@@ -2,7 +2,8 @@ import type { BrowserCommand } from 'vitest/node'
 
 /*
  * Moves the pointer to the bottom of the outer test page, below the story
- * iframe, so no story is captured in a hover state. Without it the pointer
+ * iframe, so no story is captured in a hover state unless it asks for one with
+ * `parameters.visualState` (.storybook/visual.setup.ts). Without it the pointer
  * rests at the page origin, which hovers whatever a story draws in its top-left
  * corner (widgets/Avatar Shuffle reveals its shuffle control there).
  */
