@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Sample cover art. Replace with your own image. -->
+  <rect width="1600" height="900" fill="#141b33"/>
+  <g fill="none" stroke="#3a4a7a" stroke-width="10" stroke-linecap="round" stroke-linejoin="round" opacity="0.7">
+    <path d="M-40 220 H 420 L 620 420 H 1640"/>
+    <path d="M180 -40 V 300 L 380 500 V 940"/>
+    <path d="M900 -40 V 260 L 1100 460 V 940"/>
+    <path d="M-40 700 H 560 L 760 560 H 1640"/>
+    <path d="M1320 -40 L 1120 160 H 700"/>
+  </g>
+  <path d="M120 760 L 380 500 L 620 420 H 1000 L 1100 460 L 1380 300" fill="none" stroke="#f2b36b" stroke-width="16" stroke-linecap="round" stroke-linejoin="round"/>
+  <g fill="#141b33" stroke="#f2b36b" stroke-width="8">
+    <circle cx="120" cy="760" r="22"/>
+    <circle cx="620" cy="420" r="18"/>
+    <circle cx="1000" cy="420" r="18"/>
+    <circle cx="1380" cy="300" r="26"/>
+  </g>
+  <circle cx="1380" cy="300" r="70" fill="#f2b36b" opacity="0.15"/>
+</svg>

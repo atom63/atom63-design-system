@@ -1,0 +1,49 @@
+@import 'tailwindcss';
+
+/* The Atom63 token stack. --a63-* tokens are the source of truth; the Tailwind
+   theme maps utilities onto them (bg-background, text-muted-foreground, …), and
+   the shadcn bridge gives components added with `npx shadcn add` the same
+   colors, radius and modes. */
+@import '@atom63/styles';
+@import '@atom63/styles/tailwind';
+@import '@atom63/styles/compat/shadcn';
+
+/* Component recipes, the MDX prose styles and the widget surfaces. */
+@import '@atom63/ui-react/reset.css';
+@import '@atom63/ui-react/recipes.css';
+@import '@atom63/mdx/styles/a63.css';
+@import '@atom63/widgets/styles.css';
+
+/* Generate the utilities the Atom63 components use. */
+@source '../node_modules/@atom63/ui-react/dist';
+
+/* Atom63Theme puts the mode on a class, so `dark:` and `light:` utilities
+   (including those in shadcn components) follow it, not the OS setting. */
+@custom-variant light (&:not(.dark *));
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background-color: var(--a63-surface-page);
+    color: var(--a63-text-primary);
+  }
+}
+
+/* The site frame stamps data-a63-font (portfolio.config.ts); this applies it. */
+.portfolio-root {
+  font-family: var(--a63-font-app);
+  /* One boundary per element: framed blocks (KeyIdea, Steps, Timeline) draw a
+     tray around a panel, each with its own ring, fill and shadow. Drop the
+     rings here, through the frame's border-width lever… */
+  --a63-frame-border-width: 0;
+}
+
+/* …and flatten the inner panel, so the tray's fill and shadow are the one
+   boundary and the content sits straight on it. */
+.portfolio-root .a63-Frame-panel {
+  --a63-surface-shadow: none;
+  background-color: transparent;
+}

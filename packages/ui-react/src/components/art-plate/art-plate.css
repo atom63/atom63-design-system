@@ -1,0 +1,172 @@
+/*
+ * ArtPlate recipe — the SURFACE archetype. Levers: `data-size` (block size and
+ * shape), `data-safe-area` (where the content region sits), `data-tone` (theme
+ * text or on-media text), `data-veil` (gradient behind the safe area),
+ * `data-parallax` (scroll-driven drift). The focal point arrives as
+ * `--a63-art-plate-focus` / `--a63-art-plate-focus-mobile` from the component.
+ * Tokens only: no literal colors, logical directions, and focus styles on
+ * :focus-visible (`pnpm check:craft`).
+ */
+
+.a63-ArtPlate {
+  --a63-art-plate-veil-color: var(--a63-surface-page);
+  --a63-art-plate-veil-strength: 0%;
+
+  position: relative;
+  isolation: isolate;
+  box-sizing: border-box;
+  display: grid;
+  overflow: clip;
+  min-block-size: 100svh;
+  background-color: var(--a63-surface-page);
+  color: var(--a63-text-primary);
+}
+
+.a63-ArtPlate[data-size='band'] {
+  min-block-size: 75svh;
+}
+
+.a63-ArtPlate[data-size='card'] {
+  min-block-size: 0;
+  aspect-ratio: 4 / 5;
+  border-radius: var(--radius-3xl);
+}
+
+@media (min-width: 768px) {
+  .a63-ArtPlate[data-size='card'] {
+    aspect-ratio: 16 / 9;
+  }
+}
+
+.a63-ArtPlate[data-tone='media'] {
+  --a63-art-plate-veil-color: var(--a63-media-scrim);
+
+  background-color: var(--a63-media-stage);
+  color: var(--a63-on-media-foreground);
+}
+
+/* Picture */
+
+.a63-ArtPlate-image {
+  position: absolute;
+  inset: 0;
+  z-index: var(--z-layer-below);
+}
+
+.a63-ArtPlate-image img {
+  object-position: var(--a63-art-plate-focus, 50% 50%);
+}
+
+@media (max-width: 767px) {
+  .a63-ArtPlate-image img {
+    object-position: var(--a63-art-plate-focus-mobile, var(--a63-art-plate-focus, 50% 50%));
+  }
+}
+
+/* Veil: a gradient from the safe-area edge, under the content. */
+
+.a63-ArtPlate[data-veil='soft'] {
+  --a63-art-plate-veil-strength: 55%;
+}
+
+.a63-ArtPlate[data-veil='strong'] {
+  --a63-art-plate-veil-strength: 85%;
+}
+
+.a63-ArtPlate:not([data-veil='none'])::before {
+  --a63-art-plate-veil: color-mix(
+    in oklch,
+    var(--a63-art-plate-veil-color) var(--a63-art-plate-veil-strength),
+    transparent
+  );
+
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to bottom, var(--a63-art-plate-veil), transparent 60%);
+}
+
+.a63-ArtPlate[data-safe-area='bottom']:not([data-veil='none'])::before {
+  background-image: linear-gradient(to top, var(--a63-art-plate-veil), transparent 60%);
+}
+
+.a63-ArtPlate[data-safe-area='center']:not([data-veil='none'])::before {
+  background-image: radial-gradient(closest-side, var(--a63-art-plate-veil), transparent);
+}
+
+.a63-ArtPlate[data-safe-area='start']:not([data-veil='none'])::before {
+  background-image: linear-gradient(to right, var(--a63-art-plate-veil), transparent 70%);
+}
+
+.a63-ArtPlate[data-safe-area='end']:not([data-veil='none'])::before {
+  background-image: linear-gradient(to left, var(--a63-art-plate-veil), transparent 70%);
+}
+
+.a63-ArtPlate[data-safe-area='start']:dir(rtl):not([data-veil='none'])::before {
+  background-image: linear-gradient(to left, var(--a63-art-plate-veil), transparent 70%);
+}
+
+.a63-ArtPlate[data-safe-area='end']:dir(rtl):not([data-veil='none'])::before {
+  background-image: linear-gradient(to right, var(--a63-art-plate-veil), transparent 70%);
+}
+
+/* Content region, placed in the safe area. */
+
+.a63-ArtPlate-content {
+  position: relative;
+  box-sizing: border-box;
+  display: grid;
+  align-content: start;
+  inline-size: 100%;
+  padding-block: var(--spacing-24) var(--spacing-16);
+  padding-inline: var(--a63-space-6);
+}
+
+.a63-ArtPlate[data-size='card'] .a63-ArtPlate-content {
+  padding: var(--spacing-10);
+}
+
+.a63-ArtPlate[data-safe-area='bottom'] .a63-ArtPlate-content {
+  align-content: end;
+}
+
+.a63-ArtPlate[data-safe-area='center'] .a63-ArtPlate-content {
+  align-content: center;
+  justify-items: center;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .a63-ArtPlate[data-safe-area='start'] .a63-ArtPlate-content,
+  .a63-ArtPlate[data-safe-area='end'] .a63-ArtPlate-content {
+    align-content: center;
+    inline-size: 50%;
+  }
+
+  .a63-ArtPlate[data-safe-area='end'] .a63-ArtPlate-content {
+    justify-self: end;
+  }
+}
+
+/* Parallax: the picture drifts slower than the page, about 5% of the scroll. */
+
+@keyframes a63-art-plate-drift {
+  from {
+    translate: 0 -5%;
+  }
+
+  to {
+    translate: 0 5%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .a63-ArtPlate[data-parallax] .a63-ArtPlate-image {
+      inset-block: -6%;
+      animation: a63-art-plate-drift linear both;
+      animation-timeline: view();
+    }
+  }
+}

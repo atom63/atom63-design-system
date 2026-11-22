@@ -3472,6 +3472,14 @@
      "appViewSlots",
      "appViewTopBarSpans",
      "appViewVisualArchetypes",
+     "artPlateContract",
+     "artPlateSafeAreas",
+     "artPlateSizes",
+     "artPlateSlots",
+     "artPlateStates",
+     "artPlateTones",
+     "artPlateVeils",
+     "artPlateVisualArchetypes",
      "autocompleteContract",
      "autocompleteSizeAliases",
      "autocompleteSizes",
@@ -3703,6 +3711,12 @@
      "labelSlots",
      "labelStates",
      "labelVisualArchetypes",
+     "layeredSceneContract",
+     "layeredScenePlacements",
+     "layeredSceneSlots",
+     "layeredSceneStates",
+     "layeredSceneVisualArchetypes",
+     "layeredSceneWidths",
      "loadMoreTriggerContract",
      "loadMoreTriggerSlots",
      "loadMoreTriggerStates",
@@ -3981,6 +3995,7 @@
      "AlertTitle",
      "Amount",
      "AnimatedCheck",
+     "ArtPlate",
      "Atom63Theme",
      "Autocomplete",
      "AutocompleteClear",
@@ -4200,6 +4215,11 @@
      "Kbd",
      "KbdGroup",
      "Label",
+     "LayeredScene",
+     "LayeredSceneContent",
+     "LayeredSceneForeground",
+     "LayeredScenePlate",
+     "LayeredSceneStage",
      "LoadMoreTrigger",
      "Marquee",
      "Menubar",
@@ -10859,6 +10879,113 @@
    "contract": {
     "archetypes": [
      {
+      "description": "In-flow containers and content surfaces that do not inherently manipulate state.",
+      "id": "surface",
+      "label": "Static content surfaces"
+     }
+    ],
+    "axes": [
+     {
+      "name": "sizes",
+      "values": [
+       "viewport",
+       "band",
+       "card"
+      ],
+      "default": "viewport"
+     },
+     {
+      "name": "safeAreas",
+      "values": [
+       "top",
+       "bottom",
+       "center",
+       "start",
+       "end"
+      ],
+      "default": "top"
+     },
+     {
+      "name": "tones",
+      "values": [
+       "page",
+       "media"
+      ],
+      "default": "page"
+     },
+     {
+      "name": "veils",
+      "values": [
+       "none",
+       "soft",
+       "strong"
+      ],
+      "default": "none"
+     }
+    ],
+    "exportName": "artPlateContract",
+    "slots": [
+     "art-plate",
+     "art-plate-image",
+     "art-plate-content"
+    ],
+    "source": "packages/ui-foundation/contracts/components/art-plate.json",
+    "states": [
+     "rest"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "ArtPlateFocus",
+     "ArtPlateProps"
+    ],
+    "values": [
+     "ArtPlate"
+    ]
+   },
+   "group": {
+    "id": "content-and-surfaces",
+    "title": "Content and surfaces"
+   },
+   "guidance": [
+    "Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.",
+    "Keep product data and fetching outside the presentational component.",
+    "Test long, empty, and narrow content before adding local layout overrides."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Art Plate",
+   "markdown": "# Art Plate\n\nArt Plate shows a full-bleed picture that owns its crop and keeps a safe area for headline and product UI.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { ArtPlate } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `ArtPlate`\n\n**Types:** `ArtPlateFocus`, `ArtPlateProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/art-plate.json` (`artPlateContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `sizes` | `viewport`, `band`, `card` | `viewport` |\n| `safeAreas` | `top`, `bottom`, `center`, `start`, `end` | `top` |\n| `tones` | `page`, `media` | `page` |\n| `veils` | `none`, `soft`, `strong` | `none` |\n\n**Slots:** `art-plate`, `art-plate-image`, `art-plate-content`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Card](/components/component-card)\n- [Frame](/components/component-frame)\n- [Progressive Blur](/components/component-progressive-blur)\n",
+   "related": [
+    "card",
+    "frame",
+    "progressive-blur"
+   ],
+   "route": "/components/component-art-plate",
+   "slug": "art-plate",
+   "status": "preview",
+   "stories": {
+    "file": "packages/ui-react/src/components/art-plate/art-plate.stories.tsx",
+    "names": [
+     "Playground",
+     "Viewport",
+     "SafeAreas",
+     "Card",
+     "Themes"
+    ],
+    "source": "import {\n  artPlateSafeAreas,\n  artPlateSizes,\n  artPlateTones,\n  artPlateVeils,\n  themes,\n} from '@atom63/ui-foundation'\nimport { ArtPlate, Button, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\n// Remote pictures are pinned to one placeholder in the visual and craft runs.\nconst PLATE = 'https://picsum.photos/id/1018/1920/1080'\n\nconst meta = {\n  title: 'UI React/ArtPlate',\n  component: ArtPlate,\n  parameters: { layout: 'fullscreen' },\n  argTypes: {\n    safeArea: { control: 'inline-radio', options: artPlateSafeAreas },\n    size: { control: 'inline-radio', options: artPlateSizes },\n    tone: { control: 'inline-radio', options: artPlateTones },\n    veil: { control: 'inline-radio', options: artPlateVeils },\n  },\n  args: {\n    alt: '',\n    focus: { x: 0.5, y: 0.7 },\n    safeArea: 'top',\n    size: 'band',\n    src: PLATE,\n    tone: 'media',\n    veil: 'soft',\n  },\n} satisfies Meta<typeof ArtPlate>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nfunction HeroCopy() {\n  return (\n    <div style={{ display: 'grid', gap: 'var(--a63-space-4)', maxInlineSize: '36rem' }}>\n      <h1\n        style={{\n          margin: 0,\n          fontSize: 'var(--a63-type-display-large-font-size)',\n          lineHeight: 'var(--a63-type-display-large-line-height)',\n        }}\n      >\n        Render at the speed of thought\n      </h1>\n      <p style={{ margin: 0 }}>A motion timeline that renders in the browser.</p>\n      <div style={{ display: 'flex', gap: 'var(--a63-space-2)' }}>\n        <Button>Start free</Button>\n        <Button variant=\"outline\">Read the docs</Button>\n      </div>\n    </div>\n  )\n}\n\nexport const Playground: Story = {\n  render: args => (\n    <ArtPlate {...args}>\n      <HeroCopy />\n    </ArtPlate>\n  ),\n}\n\nexport const Viewport: Story = {\n  args: { priority: true, size: 'viewport', safeArea: 'center' },\n  render: args => (\n    <ArtPlate {...args}>\n      <HeroCopy />\n    </ArtPlate>\n  ),\n}\n\nexport const SafeAreas: Story = {\n  render: args => (\n    <div style={{ display: 'grid', gap: 'var(--a63-space-4)' }}>\n      {artPlateSafeAreas.map(safeArea => (\n        <ArtPlate key={safeArea} {...args} safeArea={safeArea}>\n          <p style={{ margin: 0 }}>safeArea=&quot;{safeArea}&quot;</p>\n        </ArtPlate>\n      ))}\n    </div>\n  ),\n}\n\nexport const Card: Story = {\n  args: { size: 'card', safeArea: 'bottom', veil: 'strong' },\n  render: args => (\n    <div style={{ padding: 'var(--a63-space-6)' }}>\n      <ArtPlate {...args}>\n        <p style={{ margin: 0 }}>Ship your next render tonight.</p>\n      </ArtPlate>\n    </div>\n  ),\n}\n\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 'var(--a63-space-3)' }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div style={{ background: 'var(--a63-surface-page)', padding: 'var(--a63-space-3)' }}>\n              <ArtPlate alt=\"\" safeArea=\"start\" size=\"card\" src={PLATE} tone=\"page\" veil=\"strong\">\n                <p style={{ margin: 0 }}>\n                  {theme} / {mode}\n                </p>\n              </ArtPlate>\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n"
+   },
+   "summary": "Art Plate shows a full-bleed picture that owns its crop and keeps a safe area for headline and product UI.",
+   "usage": "Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.",
+   "usageExports": [
+    "ArtPlate"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
       "description": "Compact presentational labels, statuses, and keyboard hints.",
       "id": "marker",
       "label": "Markers and keycaps"
@@ -12449,6 +12576,101 @@
     "ItemContent",
     "ItemTitle",
     "ItemActions"
+   ]
+  },
+  {
+   "axisGuidance": null,
+   "contract": {
+    "archetypes": [
+     {
+      "description": "In-flow containers and content surfaces that do not inherently manipulate state.",
+      "id": "surface",
+      "label": "Static content surfaces"
+     }
+    ],
+    "axes": [
+     {
+      "name": "placements",
+      "values": [
+       "center-bottom",
+       "end-bottom",
+       "start-bottom"
+      ],
+      "default": "center-bottom"
+     },
+     {
+      "name": "widths",
+      "values": [
+       "wide",
+       "half"
+      ],
+      "default": "wide"
+     }
+    ],
+    "exportName": "layeredSceneContract",
+    "slots": [
+     "layered-scene",
+     "layered-scene-content",
+     "layered-scene-stage",
+     "layered-scene-foreground"
+    ],
+    "source": "packages/ui-foundation/contracts/components/layered-scene.json",
+    "states": [
+     "rest"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "LayeredSceneForegroundProps",
+     "LayeredScenePlateProps",
+     "LayeredSceneProps"
+    ],
+    "values": [
+     "LayeredScene",
+     "LayeredSceneContent",
+     "LayeredSceneForeground",
+     "LayeredScenePlate",
+     "LayeredSceneStage"
+    ]
+   },
+   "group": {
+    "id": "content-and-surfaces",
+    "title": "Content and surfaces"
+   },
+   "guidance": [
+    "Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.",
+    "Keep product data and fetching outside the presentational component.",
+    "Test long, empty, and narrow content before adding local layout overrides."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Layered Scene",
+   "markdown": "# Layered Scene\n\nLayered Scene stacks a plate, a stage of product UI and an inert foreground cut-out so the interface sits inside the picture.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Usage\n\n```tsx\nimport { LayeredScene, LayeredScenePlate, LayeredSceneContent, LayeredSceneStage, LayeredSceneForeground } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `LayeredScene`, `LayeredSceneContent`, `LayeredSceneForeground`, `LayeredScenePlate`, `LayeredSceneStage`\n\n**Types:** `LayeredSceneForegroundProps`, `LayeredScenePlateProps`, `LayeredSceneProps`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/layered-scene.json` (`layeredSceneContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `placements` | `center-bottom`, `end-bottom`, `start-bottom` | `center-bottom` |\n| `widths` | `wide`, `half` | `wide` |\n\n**Slots:** `layered-scene`, `layered-scene-content`, `layered-scene-stage`, `layered-scene-foreground`\n\n**States:** `rest`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Art Plate](/components/component-art-plate)\n- [Frame](/components/component-frame)\n- [Card](/components/component-card)\n",
+   "related": [
+    "art-plate",
+    "frame",
+    "card"
+   ],
+   "route": "/components/component-layered-scene",
+   "slug": "layered-scene",
+   "status": "preview",
+   "stories": {
+    "file": "packages/ui-react/src/components/layered-scene/layered-scene.stories.tsx",
+    "names": [
+     "Playground",
+     "EndPlacement",
+     "WithoutForeground"
+    ],
+    "source": "import { layeredScenePlacements, layeredSceneWidths } from '@atom63/ui-foundation'\nimport {\n  Badge,\n  Button,\n  Frame,\n  FrameDescription,\n  FrameHeader,\n  FramePanel,\n  FrameTitle,\n  LayeredScene,\n  LayeredSceneContent,\n  LayeredSceneForeground,\n  LayeredScenePlate,\n  LayeredSceneStage,\n} from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\n// Remote pictures are pinned to one placeholder in the visual and craft runs.\nconst PLATE = 'https://picsum.photos/id/1018/1920/1080'\nconst FOCUS = { x: 0.5, y: 0.7 }\n\n// A stand-in cut-out: a ridge across the bottom eighth of the plate, transparent\n// above it. A real scene uses a cut-out of its own plate.\nconst RIDGE =\n  'data:image/svg+xml,' +\n  encodeURIComponent(\n    '<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 1920 1080\" preserveAspectRatio=\"xMidYMid slice\"><path fill-opacity=\"0.9\" d=\"M0 1000 L180 960 L360 990 L560 945 L760 985 L980 950 L1180 990 L1400 955 L1620 985 L1920 960 L1920 1080 L0 1080 Z\"/></svg>'\n  )\n\nconst meta = {\n  title: 'UI React/LayeredScene',\n  component: LayeredScene,\n  parameters: { layout: 'fullscreen' },\n  argTypes: {\n    placement: { control: 'inline-radio', options: layeredScenePlacements },\n    width: { control: 'inline-radio', options: layeredSceneWidths },\n  },\n  args: { placement: 'center-bottom', width: 'wide' },\n} satisfies Meta<typeof LayeredScene>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nfunction ProductWindow() {\n  return (\n    <Frame>\n      <FrameHeader>\n        <FrameTitle>Render queue</FrameTitle>\n        <FrameDescription>3 jobs running on 4 workers</FrameDescription>\n      </FrameHeader>\n      <FramePanel>\n        <div style={{ display: 'grid', gap: 'var(--a63-space-2)' }}>\n          <span>title-sequence.mov · 72%</span>\n          <span>logo-sting.mov · 40%</span>\n          <span>lower-thirds.mov · queued</span>\n        </div>\n        {/* Empty room at the bottom of the window: the only part the cut-out may cover. */}\n        <div style={{ blockSize: 'var(--spacing-24)' }} />\n      </FramePanel>\n    </Frame>\n  )\n}\n\nfunction Copy() {\n  return (\n    <>\n      <Badge variant=\"secondary\">Browser-native rendering</Badge>\n      <h1\n        style={{\n          margin: 0,\n          fontSize: 'var(--a63-type-display-large-font-size)',\n          lineHeight: 'var(--a63-type-display-large-line-height)',\n          maxInlineSize: '18ch',\n        }}\n      >\n        Render at the speed of thought\n      </h1>\n      <p style={{ margin: 0 }}>A motion timeline that renders in the browser.</p>\n      <div style={{ display: 'flex', gap: 'var(--a63-space-2)' }}>\n        <Button>Start free</Button>\n        <Button variant=\"outline\">Take a tour</Button>\n      </div>\n    </>\n  )\n}\n\nexport const Playground: Story = {\n  render: args => (\n    <LayeredScene {...args}>\n      <LayeredScenePlate alt=\"\" focus={FOCUS} priority src={PLATE} />\n      <LayeredSceneContent>\n        <Copy />\n      </LayeredSceneContent>\n      <LayeredSceneStage>\n        <ProductWindow />\n      </LayeredSceneStage>\n      <LayeredSceneForeground focus={FOCUS} priority src={RIDGE} />\n    </LayeredScene>\n  ),\n}\n\nexport const EndPlacement: Story = {\n  args: { placement: 'end-bottom', width: 'half' },\n  render: Playground.render,\n}\n\nexport const WithoutForeground: Story = {\n  render: args => (\n    <LayeredScene {...args}>\n      <LayeredScenePlate alt=\"\" focus={FOCUS} src={PLATE} />\n      <LayeredSceneContent>\n        <Copy />\n      </LayeredSceneContent>\n      <LayeredSceneStage>\n        <ProductWindow />\n      </LayeredSceneStage>\n    </LayeredScene>\n  ),\n}\n"
+   },
+   "summary": "Layered Scene stacks a plate, a stage of product UI and an inert foreground cut-out so the interface sits inside the picture.",
+   "usage": "Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.",
+   "usageExports": [
+    "LayeredScene",
+    "LayeredScenePlate",
+    "LayeredSceneContent",
+    "LayeredSceneStage",
+    "LayeredSceneForeground"
    ]
   },
   {
@@ -14213,7 +14435,7 @@
   {
    "area": "foundations",
    "label": "Typography",
-   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nSixteen steps from `2xs` (11px) to `11xl` (56px). Up to `9xl` (39px at mobile, 49px at `768px+`) the scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows; the two display steps, `10xl` (40px) and `11xl` (56px), stay the same at every width.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\nText without a size class takes the body role too, not the browser's 16px. `@atom63/styles` sets `--a63-type-body-font-size` and `--a63-type-body-line-height` (15/23) on `body` and on a phone scope (17/22 there), and the `@atom63/ui-react` reset sets them on `Atom63Theme` and `UIProvider`. `html` keeps the browser size, so `1rem` stays 16px and every rem-based token is unchanged. Set a size class or a text role where text should be smaller, such as `text-sm` in a dense table.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Text roles\n\nText roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.resolver.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.\n\n| Role | Web step | iOS text style |\n|------|----------|----------------|\n| `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |\n| `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |\n| `large-title` | `6xl` | `largeTitle` |\n| `title-1` | `5xl` | `title` |\n| `title-2` | `3xl` | `title2` |\n| `title-3` | `2xl` | `title3` |\n| `headline` | `base`, weight 600 | `headline` |\n| `body` | `base` | `body` |\n| `callout` | `base` | `callout` |\n| `subhead` | `sm` | `subheadline` |\n| `footnote` | `xs` | `footnote` |\n| `caption-1` | `xs` | `caption` |\n| `caption-2` | `2xs` | `caption2` |\n\n`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, use `Amount` from `@atom63/ui-react` (`<Amount value={13.25} currency=\"USD\" />`, `size=\"lg\"` for `display-large`): it formats the value for the locale with `Intl.NumberFormat`, draws the fraction at half size and raised with tabular figures, and reads as one label. `fraction=\"baseline\"` keeps the half-size fraction on the baseline of the integer digits instead, as some banking apps draw a balance; `raised` is the default. Without the component, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it, or in `amount-fraction-baseline`, which sets it at half size on the baseline. On iOS, `AtomAmountText(13.25, currencyCode: \"USD\", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label, and `fraction: .baseline` keeps it on the baseline; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.\n\n## Phone screens\n\nThe web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor=\"phone\"]` gives a subtree the type steps and control sizing of a phone. `AppView layout=\"phone\"` (from `@atom63/ui-react/layout`) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.\n\n| Role | Web, under 640px | Phone (`data-a63-form-factor=\"phone\"`) | iOS text style |\n|------|------------------|-----------------------------------------|----------------|\n| `body`, `headline`, `callout` | 15px | 17px | `body` 17pt |\n| `subhead` | 13px | 15px | `subheadline` 15pt |\n| `footnote`, `caption-1` | 12px | 13px | `footnote` 13pt |\n| `caption-2` | 11px | 11px | `caption2` 11pt |\n| `title-3` | 19px | 20px | `title3` 20pt |\n| `title-2` | 21px | 22px | `title2` 22pt |\n| `title-1` | 26px | 28px | `title` 28pt |\n| `large-title` | 28px | 34px | `largeTitle` 34pt |\n| `display`, `display-large` | 40px, 56px | 40px, 56px | `AtomDisplayRole` |\n\nThe scope sets the steps themselves (`text-sm` is 15px and `text-base` 17px inside it), redeclares the text roles, and sizes controls the iOS way: heights of 36, 40, 44, 48 and 52px, and every standard control label (buttons, rows, fields, menus) at body size, with `xs` at footnote size for badges, shortcuts and initials. A Switch takes the iOS 26 shape: a pill knob 1.6 times as wide as it is tall (`--a63-switch-thumb-aspect`) on a track of about 63 by 28px. A grouped list (`ItemGroup variant=\"inset\"`) takes the iOS 26 Settings rows: its default and `sm` rows, static or interactive, are at least 52px tall (`--a63-inset-row-min-size`), so a 17px label sits in about 15px of space above and below, and the card has the `2xl` corner, 18px at defaults (`--a63-inset-group-radius`). Outside the phone scope neither variable is declared, and the group keeps its control-height rows and `--radius-lg` corner. The secondary line under a title or label (an Item, Field or Form description, a Frame or ConnectedPanel description) reads `--a63-control-font-size-secondary`, which the phone scope sets to subhead size (15px) so it stays below its 17px title; elsewhere it falls back to the control `sm` size. The type scale preference still multiplies the phone steps. Inside a phone screen, keep rows and labels on the component defaults or the text roles; shrinking them with `text-sm` or `text-xs` brings back the desktop sizes.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n<aside className=\"w-80\">\n  <h2 className=\"text-5xl\">Settings</h2>\n</aside>\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n<aside className=\"w-80\">\n  <h2 className=\"text-lg font-semibold\">Settings</h2>\n</aside>\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
+   "markdown": "# Typography\n\nThe type system targets dense information interfaces rather than marketing pages. Body text starts at 15px—between compact 14px UI conventions and the browser's 16px default—to balance information density with sustained reading.\n\n## Design intent\n\nI wanted a scale that serves three very different surfaces from the same tokens: portfolio pages with expressive display type, documentation with dense readable prose, and app panels with compact controls. The solution is one responsive scale plus an independent `--typography-scale` multiplier that any subtree can adjust.\n\nThe shipped scale is deliberately not fluid. It uses viewport breakpoints for pages and `data-window-size` overrides for OS windows, so a constrained window can use its own size band even on a wide viewport. The separate `data-a63-type-scale` axis adjusts the whole ramp for user preference.\n\n## Font families\n\n| CSS variable | Tailwind | Stack |\n|--------------|----------|-------|\n| `--font-family-sans` | `font-sans` | Geist, system UI |\n| `--font-family-serif` | `font-serif` | Brawler, Georgia |\n| `--font-family-mono` | `font-mono` | Geist Mono, monospace |\n\nI chose Geist because it's optimized for interfaces — generous x-height, clear at small sizes, and a mono companion that shares the same metrics. Brawler is reserved for rare editorial moments in the portfolio; the system defaults to sans everywhere.\n\n## How the scale works\n\nSixteen steps from `2xs` (11px) to `11xl` (56px). Up to `9xl` (39px at mobile, 49px at `768px+`) the scale grows at `640px` and `768px`, and `[data-window-size='xs'|'sm'|'md'|'lg'|'xl']` applies the same bands inside OS windows; the two display steps, `10xl` (40px) and `11xl` (56px), stay the same at every width.\n\n## Mental model\n\nTypography has three separate jobs:\n\n| Job | What it controls | Examples |\n|-----|------------------|----------|\n| Reading | Long-form comfort | Prose, docs, descriptions |\n| Hierarchy | Relative importance | Page titles, section headers, labels |\n| Density | How much interface fits | Sidebars, tables, controls, OS windows |\n\nDo not solve all three with one heading scale. A docs page, a compact sidebar, and a portfolio hero need different hierarchy even when they share the same tokens.\n\n### Line-height strategy\n\nBody text (`xs` through `lg`) uses a ~1.5× ratio for comfortable reading. Display sizes (`xl` and above) compress to ~1.25× — tighter line-height at large sizes prevents headings from floating away from their content.\n\n### The scale multiplier\n\n`--typography-scale` defaults to `1`. The shipped `data-a63-type-scale` values map to `0.9` (`compact`), `1` (`normal`), `1.1` (`comfortable`), and `1.2` (`large`). OS window width is handled separately by `data-window-size`; the multiplier is a personalization control, not the window breakpoint mechanism.\n\n## Decisions worth knowing\n\n### 15px base, not 16px\n\nMost systems use 16px because browsers default to it. I chose 15px after testing information-dense layouts — docs tables, prop references, sidebar navigation. At 16px, content felt loose and wasted space. At 14px, extended reading got fatiguing. 15px is the sweet spot for my use cases: dense enough for tool interfaces, comfortable enough for documentation prose.\n\nText without a size class takes the body role too, not the browser's 16px. `@atom63/styles` sets `--a63-type-body-font-size` and `--a63-type-body-line-height` (15/23) on `body` and on a phone scope (17/22 there), and the `@atom63/ui-react` reset sets them on `Atom63Theme` and `UIProvider`. `html` keeps the browser size, so `1rem` stays 16px and every rem-based token is unchanged. Set a size class or a text role where text should be smaller, such as `text-sm` in a dense table.\n\n### Breakpoints over fluid\n\nFluid typography (`clamp()`) assumes the viewport is the right proxy for text size. In the OS metaphor, multiple windows have arbitrary widths on one screen. Breakpoint jumps plus `data-window-size` attributes let window content follow its container band instead of the outer viewport.\n\n### No heading-element-to-scale mapping in CSS\n\nI don't automatically map `h1` to `9xl` or `h2` to `8xl` in the base tokens. Different surfaces need different heading scales — a docs `h2` should be smaller than a portfolio `h2`. The MDX variants handle heading sizing per context, and the raw scale stays available for explicit use via `text-*` utilities.\n\n### Visual hierarchy and semantics are separate\n\nA semantic `h2` does not always need to look like the second-largest text on the page. The `SectionHeader` pattern follows this rule: `variant` controls visual scale, while `level` can control document outline. That keeps accessibility and visual rhythm from fighting each other.\n\n## Text roles\n\nText roles name what text is for, after the Apple HIG text styles, so one intent works on every platform. Each role picks a step of the scale on the web and a `Font.TextStyle` (with Dynamic Type) on iOS. The source is `packages/styles/src/tokens/type-roles.resolver.json`; each role has `--a63-type-<role>-font-size`, `-line-height`, `-font-weight` and `-font-weight-strong`, and the Tailwind utilities `text-<role>` and `text-<role>-strong` set all three at once.\n\n| Role | Web step | iOS text style |\n|------|----------|----------------|\n| `display-hero` | fluid, `10xl` (40px) to 72px, weight 600 | none (web only; iOS uses `display-large`) |\n| `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |\n| `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |\n| `large-title` | `6xl` | `largeTitle` |\n| `title-1` | `5xl` | `title` |\n| `title-2` | `3xl` | `title2` |\n| `title-3` | `2xl` | `title3` |\n| `headline` | `base`, weight 600 | `headline` |\n| `body` | `base` | `body` |\n| `callout` | `base` | `callout` |\n| `subhead` | `sm` | `subheadline` |\n| `footnote` | `xs` | `footnote` |\n| `caption-1` | `xs` | `caption` |\n| `caption-2` | `2xs` | `caption2` |\n\n`-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, use `Amount` from `@atom63/ui-react` (`<Amount value={13.25} currency=\"USD\" />`, `size=\"lg\"` for `display-large`): it formats the value for the locale with `Intl.NumberFormat`, draws the fraction at half size and raised with tabular figures, and reads as one label. `fraction=\"baseline\"` keeps the half-size fraction on the baseline of the integer digits instead, as some banking apps draw a balance; `raised` is the default. Without the component, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it, or in `amount-fraction-baseline`, which sets it at half size on the baseline. On iOS, `AtomAmountText(13.25, currencyCode: \"USD\", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label, and `fraction: .baseline` keeps it on the baseline; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.\n\n`display-hero` is for one marketing headline per page, such as a landing hero over an `ArtPlate`. It grows with the viewport from the `10xl` step on phones to 72px on wide screens (`clamp()`), with a line height of 1.05 times its size. The three display roles also carry `--a63-type-<role>-letter-spacing` (−0.03em for `display`, −0.04em for `display-large`, −0.045em for `display-hero`); set it with `letter-spacing` where the role is used, since the `text-<role>` utilities do not include it. Headlines take their face from `--a63-font-display`, which defaults to `--a63-font-app`; set it to `var(--font-family-serif)` on a page or a section for serif headlines over sans UI, and loosen the tracking towards −0.025em for the serif.\n\n## Phone screens\n\nThe web scale is set for pages and desktop apps: body is 15px and compact control labels are 12–13px. A phone app screen reads at the iOS sizes instead, so `[data-a63-form-factor=\"phone\"]` gives a subtree the type steps and control sizing of a phone. `AppView layout=\"phone\"` (from `@atom63/ui-react/layout`) stamps it on the screen; stamp it yourself on the root of a phone-only web app. Viewport width does not apply it, so a docs page or a marketing page on a phone keeps the web sizes.\n\n| Role | Web, under 640px | Phone (`data-a63-form-factor=\"phone\"`) | iOS text style |\n|------|------------------|-----------------------------------------|----------------|\n| `body`, `headline`, `callout` | 15px | 17px | `body` 17pt |\n| `subhead` | 13px | 15px | `subheadline` 15pt |\n| `footnote`, `caption-1` | 12px | 13px | `footnote` 13pt |\n| `caption-2` | 11px | 11px | `caption2` 11pt |\n| `title-3` | 19px | 20px | `title3` 20pt |\n| `title-2` | 21px | 22px | `title2` 22pt |\n| `title-1` | 26px | 28px | `title` 28pt |\n| `large-title` | 28px | 34px | `largeTitle` 34pt |\n| `display`, `display-large` | 40px, 56px | 40px, 56px | `AtomDisplayRole` |\n\nThe scope sets the steps themselves (`text-sm` is 15px and `text-base` 17px inside it), redeclares the text roles, and sizes controls the iOS way: heights of 36, 40, 44, 48 and 52px, and every standard control label (buttons, rows, fields, menus) at body size, with `xs` at footnote size for badges, shortcuts and initials. A Switch takes the iOS 26 shape: a pill knob 1.6 times as wide as it is tall (`--a63-switch-thumb-aspect`) on a track of about 63 by 28px. A grouped list (`ItemGroup variant=\"inset\"`) takes the iOS 26 Settings rows: its default and `sm` rows, static or interactive, are at least 52px tall (`--a63-inset-row-min-size`), so a 17px label sits in about 15px of space above and below, and the card has the `2xl` corner, 18px at defaults (`--a63-inset-group-radius`). Outside the phone scope neither variable is declared, and the group keeps its control-height rows and `--radius-lg` corner. The secondary line under a title or label (an Item, Field or Form description, a Frame or ConnectedPanel description) reads `--a63-control-font-size-secondary`, which the phone scope sets to subhead size (15px) so it stays below its 17px title; elsewhere it falls back to the control `sm` size. The type scale preference still multiplies the phone steps. Inside a phone screen, keep rows and labels on the component defaults or the text roles; shrinking them with `text-sm` or `text-xs` brings back the desktop sizes.\n\n## Usage guidance\n\n| Surface | Typical range | Scale multiplier |\n|---------|---------------|------------------|\n| Portfolio hero | `4xl`–`9xl` | Usually `normal`; user preference still applies |\n| Documentation prose | `sm`–`xl` | `1` |\n| App panels / OS windows | `xs`–`lg` | Window-size band + active type-scale axis |\n| Code blocks | `sm` mono | `1` |\n\n## Anti-patterns\n\n```tsx\n// Avoid: viewport-sized type inside a constrained panel.\n<aside className=\"w-80\">\n  <h2 className=\"text-5xl\">Settings</h2>\n</aside>\n```\n\nThe panel is narrow even if the viewport is wide. The text should respond to the container's role, not the browser width.\n\n```tsx\n// Prefer: choose a scale for the surface.\n<aside className=\"w-80\">\n  <h2 className=\"text-lg font-semibold\">Settings</h2>\n</aside>\n```\n\n## Review checklist\n\nWhen reviewing typography, ask:\n\n1. Is this text sized for its container, not only the viewport?\n2. Does the hierarchy still work if the content wraps?\n3. Is the line-height comfortable for the amount of reading?\n4. Are semantic heading levels valid independent of visual size?\n5. Is display type reserved for display moments?",
    "route": "/foundations/foundation-typography",
    "slug": "foundation-typography"
   },
@@ -20155,6 +20377,38 @@
    ]
   },
   {
+   "cssVar": "--a63-font-display",
+   "figma": {
+    "collection": "Semantic",
+    "path": "font/display"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root",
+     "value": "var(--a63-font-app)"
+    },
+    {
+     "scope": "[data-a63-font='mono']",
+     "value": "var(--a63-font-app)"
+    },
+    {
+     "scope": "[data-a63-font='pixel']",
+     "value": "var(--a63-font-app)"
+    },
+    {
+     "scope": "[data-a63-font='sans']",
+     "value": "var(--a63-font-app)"
+    },
+    {
+     "scope": "[data-a63-font='serif']",
+     "value": "var(--a63-font-app)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-gradient-brand",
    "figma": {
     "collection": "Semantic",
@@ -23948,6 +24202,86 @@
    ]
   },
   {
+   "cssVar": "--a63-type-display-hero-font-size",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/font/size"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "clamp( var(--typography-10xl-font-size), calc(1.5rem + 3.4vw), calc(72px * var(--typography-scale, 1)) )"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-font-weight",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/font/weight"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "600"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-font-weight-strong",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/font/weight/strong"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "700"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-letter-spacing",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/letter/spacing"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "-0.045em"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-hero-line-height",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/hero/line/height"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "calc(var(--a63-type-display-hero-font-size) * 1.05)"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-type-display-large-font-size",
    "figma": {
     "collection": "Semantic",
@@ -23996,6 +24330,22 @@
    ]
   },
   {
+   "cssVar": "--a63-type-display-large-letter-spacing",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/large/letter/spacing"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "-0.04em"
+    }
+   ]
+  },
+  {
    "cssVar": "--a63-type-display-large-line-height",
    "figma": {
     "collection": "Semantic",
@@ -24008,6 +24358,22 @@
     {
      "scope": ":root, [data-window-size], [data-a63-form-factor]",
      "value": "var(--typography-11xl-line-height)"
+    }
+   ]
+  },
+  {
+   "cssVar": "--a63-type-display-letter-spacing",
+   "figma": {
+    "collection": "Semantic",
+    "path": "type/display/letter/spacing"
+   },
+   "layer": "semantic",
+   "swift": null,
+   "type": "typography",
+   "values": [
+    {
+     "scope": ":root, [data-window-size], [data-a63-form-factor]",
+     "value": "-0.03em"
     }
    ]
   },

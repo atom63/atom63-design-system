@@ -31,6 +31,8 @@ export { Amount } from './components/amount'
 export type { AmountProps } from './components/amount'
 export { AnimatedCheck } from './components/animated-check'
 export type { AnimatedCheckProps } from './components/animated-check'
+export { ArtPlate } from './components/art-plate'
+export type { ArtPlateFocus, ArtPlateProps } from './components/art-plate'
 export {
   Autocomplete,
   AutocompleteClear,
@@ -394,6 +396,18 @@ export { Kbd, KbdGroup } from './components/kbd'
 export type { KbdProps } from './components/kbd'
 export { Label } from './components/label'
 export type { LabelProps } from './components/label'
+export {
+  LayeredScene,
+  LayeredSceneContent,
+  LayeredSceneForeground,
+  LayeredScenePlate,
+  LayeredSceneStage,
+} from './components/layered-scene'
+export type {
+  LayeredSceneForegroundProps,
+  LayeredScenePlateProps,
+  LayeredSceneProps,
+} from './components/layered-scene'
 export { LoadMoreTrigger } from './components/load-more-trigger'
 export type {
   LoadMoreTriggerProps,

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet">
+  <!-- Sample figure: a day calendar with a draft booking. Replace with your own image. -->
+  <rect width="1600" height="900" fill="#faf6f0"/>
+  <rect x="120" y="90" width="1360" height="720" rx="28" fill="#ffffff" stroke="#e6dccd" stroke-width="4"/>
+  <rect x="160" y="130" width="420" height="56" rx="28" fill="#f2ebe1"/>
+  <rect x="190" y="150" width="200" height="16" rx="8" fill="#b9a993"/>
+  <g stroke="#efe6d9" stroke-width="3">
+    <path d="M160 240 H 1440"/>
+    <path d="M160 340 H 1440"/>
+    <path d="M160 440 H 1440"/>
+    <path d="M160 540 H 1440"/>
+    <path d="M160 640 H 1440"/>
+    <path d="M160 740 H 1440"/>
+  </g>
+  <g fill="#c4b6a2" font-family="system-ui, sans-serif" font-size="24">
+    <text x="170" y="290">09:00</text>
+    <text x="170" y="390">10:00</text>
+    <text x="170" y="490">11:00</text>
+    <text x="170" y="590">12:00</text>
+    <text x="170" y="690">13:00</text>
+  </g>
+  <rect x="300" y="250" width="340" height="80" rx="16" fill="#e8eef7"/>
+  <rect x="680" y="250" width="340" height="180" rx="16" fill="#e8eef7"/>
+  <rect x="1060" y="350" width="340" height="80" rx="16" fill="#e8eef7"/>
+  <rect x="300" y="450" width="340" height="80" rx="16" fill="#e8eef7"/>
+  <rect x="680" y="550" width="340" height="80" rx="16" fill="#fbe9df" stroke="#c9634a" stroke-width="4" stroke-dasharray="14 10"/>
+  <rect x="704" y="574" width="160" height="16" rx="8" fill="#c9634a"/>
+  <rect x="704" y="600" width="220" height="12" rx="6" fill="#efb9a6"/>
+  <rect x="1060" y="650" width="340" height="80" rx="16" fill="#e8eef7"/>
+</svg>

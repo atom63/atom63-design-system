@@ -14,6 +14,10 @@ import { AlertVariant } from '@atom63/ui-foundation';
 import { AmountFraction } from '@atom63/ui-foundation';
 import { AmountSize } from '@atom63/ui-foundation';
 import { AnimatedCheckVariant } from '@atom63/ui-foundation';
+import { ArtPlateSafeArea } from '@atom63/ui-foundation';
+import { ArtPlateSize } from '@atom63/ui-foundation';
+import { ArtPlateTone } from '@atom63/ui-foundation';
+import { ArtPlateVeil } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
 import { AutocompleteSize } from '@atom63/ui-foundation';
 import { AutocompleteSizeAlias } from '@atom63/ui-foundation';
@@ -90,6 +94,8 @@ import { ItemSizeAlias } from '@atom63/ui-foundation';
 import { ItemTone } from '@atom63/ui-foundation';
 import { ItemVariant } from '@atom63/ui-foundation';
 import { KbdSize } from '@atom63/ui-foundation';
+import { LayeredScenePlacement } from '@atom63/ui-foundation';
+import { LayeredSceneWidth } from '@atom63/ui-foundation';
 import { LoadMoreTriggerState } from '@atom63/ui-foundation';
 import { LoadMoreTriggerVariant } from '@atom63/ui-foundation';
 import * as lucide_react from 'lucide-react';
@@ -297,6 +303,35 @@ export interface AnimatedCheckProps extends Omit<React$1.ComponentProps<'svg'>, 
     animate?: boolean;
     variant?: AnimatedCheckVariant;
 }
+
+// @public
+export function ArtPlate(input: ArtPlateProps): React$1.ReactElement;
+
+// @public
+export interface ArtPlateFocus {
+    // (undocumented)
+    x: number;
+    // (undocumented)
+    y: number;
+}
+
+// @public (undocumented)
+export type ArtPlateProps = Omit<React$1.ComponentProps<'div'>, 'children'> & {
+    alt: string;
+    children?: React$1.ReactNode;
+    focus?: ArtPlateFocus;
+    focusMobile?: ArtPlateFocus;
+    parallax?: boolean;
+    priority?: boolean;
+    safeArea?: ArtPlateSafeArea;
+    size?: ArtPlateSize;
+    sizes?: string;
+    src: string;
+    srcSet?: string;
+    srcMobile?: string;
+    tone?: ArtPlateTone;
+    veil?: ArtPlateVeil;
+};
 
 // @public (undocumented)
 export const ATOM63_FLYOUT_TRANSITION: {
@@ -1728,6 +1763,41 @@ export function Label(input: LabelProps): React$1.ReactElement;
 
 // @public (undocumented)
 export type LabelProps = React$1.ComponentProps<'label'>;
+
+// @public
+export function LayeredScene(input: LayeredSceneProps): React$1.ReactElement;
+
+// @public
+export function LayeredSceneContent(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+
+// @public
+export function LayeredSceneForeground(input: LayeredSceneForegroundProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type LayeredSceneForegroundProps = Omit<React$1.ComponentProps<'div'>, 'aria-hidden' | 'children'> & {
+    focus?: ArtPlateFocus;
+    focusMobile?: ArtPlateFocus;
+    priority?: boolean;
+    showOnPhone?: boolean;
+    sizes?: string;
+    src: string;
+    srcSet?: string;
+};
+
+// @public
+export function LayeredScenePlate(input: LayeredScenePlateProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type LayeredScenePlateProps = Omit<ArtPlateProps, 'children'>;
+
+// @public (undocumented)
+export type LayeredSceneProps = React$1.ComponentProps<'div'> & {
+    placement?: LayeredScenePlacement;
+    width?: LayeredSceneWidth;
+};
+
+// @public
+export function LayeredSceneStage(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public
 export function loadAndExtractColor(imageUrl: string, options?: ExtractColorOptions & {
