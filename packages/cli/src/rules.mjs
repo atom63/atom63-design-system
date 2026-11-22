@@ -64,7 +64,7 @@ export const rules = [
   },
   {
     id: 'content-colors',
-    rule: 'Draw content that carries its own colours (illustrations, game pieces, map and chart series, story rings, category marks) with the `--a63-category-{hue}` palette: 18 hues, each with `-subtle` and `-subtle-foreground`, as utilities such as `bg-category-green` and `text-category-green-subtle-foreground`. For another shade, mix two tokens with `color-mix(in oklch, var(--a63-category-green) 75%, var(--a63-text-primary))`, never a colour keyword or value.',
+    rule: 'Draw content that carries its own colours (illustrations, game pieces, map series, story rings, category marks) with the `--a63-category-{hue}` palette: 18 hues, each with `-subtle` and `-subtle-foreground`, as utilities such as `bg-category-green` and `text-category-green-subtle-foreground`. Chart series take `--a63-chart-1` to `--a63-chart-5`, which keep apart from the brand; the `Chart` component reads them for you. For another shade, mix two tokens with `color-mix(in oklch, var(--a63-category-green) 75%, var(--a63-text-primary))`, never a colour keyword or value.',
     why: 'The palette follows the theme and the mode, so content stays legible in dark mode. A literal colour, or a keyword such as `black` inside `color-mix()`, fails `raw-color` and makes a vibe case invalid.',
     check: ['raw-color'],
   },

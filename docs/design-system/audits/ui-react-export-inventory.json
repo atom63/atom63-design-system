@@ -46,10 +46,10 @@
     ]
   },
   "counts": {
-    "rootValueExports": 443,
-    "rootTypeExports": 205,
-    "packageExportKeys": 84,
-    "cssExportKeys": 77
+    "rootValueExports": 444,
+    "rootTypeExports": 208,
+    "packageExportKeys": 85,
+    "cssExportKeys": 78
   },
   "packageExportKeys": [
     ".",
@@ -74,6 +74,7 @@
     "./recipes/calendar.css",
     "./recipes/card.css",
     "./recipes/carousel.css",
+    "./recipes/chart.css",
     "./recipes/chat-composer.css",
     "./recipes/chat-message.css",
     "./recipes/chat-steps.css",
@@ -154,6 +155,7 @@
     "./recipes/calendar.css",
     "./recipes/card.css",
     "./recipes/carousel.css",
+    "./recipes/chart.css",
     "./recipes/chat-composer.css",
     "./recipes/chat-message.css",
     "./recipes/chat-steps.css",
@@ -350,6 +352,11 @@
       "subpath": "./recipes/carousel.css",
       "kind": "css",
       "target": "./src/components/carousel/carousel.css"
+    },
+    {
+      "subpath": "./recipes/chart.css",
+      "kind": "css",
+      "target": "./src/components/chart/chart.css"
     },
     {
       "subpath": "./recipes/chat-composer.css",
@@ -1288,6 +1295,29 @@
         {
           "name": "CarouselProps",
           "proposedTier": "monitor-high-risk"
+        }
+      ]
+    },
+    {
+      "source": "./components/chart",
+      "values": [
+        {
+          "name": "Chart",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ChartLabels",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ChartProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ChartSeries",
+          "proposedTier": "beta-supported-core"
         }
       ]
     },

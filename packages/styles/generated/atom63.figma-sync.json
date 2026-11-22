@@ -5,9 +5,9 @@
   "summary": {
     "collections": 14,
     "variables": 1159,
-    "aliasValues": 812,
+    "aliasValues": 804,
     "skipped": 412,
-    "computed": 64
+    "computed": 68
   },
   "collections": [
     {
@@ -16762,7 +16762,7 @@
               "alias": "--a63-action-primary"
             },
             "dark": {
-              "alias": "--a63-action-primary"
+              "alias": "--a63-brand-400"
             }
           },
           "codeSyntax": "var(--a63-chart-1)",
@@ -16777,10 +16777,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-teal-500"
+              "value": {
+                "r": 0.780881,
+                "g": 0.3618,
+                "b": 0.167442,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-teal-400"
+              "value": {
+                "r": 0.992936,
+                "g": 0.551494,
+                "b": 0.478817,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-2)",
@@ -16795,10 +16805,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-amber-500"
+              "value": {
+                "r": 0,
+                "g": 0.523292,
+                "b": 0.484518,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-amber-400"
+              "value": {
+                "r": 0.072759,
+                "g": 0.722045,
+                "b": 0.599749,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-3)",
@@ -16813,10 +16833,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-violet-500"
+              "value": {
+                "r": 0.471677,
+                "g": 0.513338,
+                "b": 0,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-violet-400"
+              "value": {
+                "r": 0.832528,
+                "g": 0.78138,
+                "b": 0.357068,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-4)",
@@ -16831,10 +16861,20 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-500"
+              "value": {
+                "r": 0.579664,
+                "g": 0.220036,
+                "b": 0.548836,
+                "a": 1
+              }
             },
             "dark": {
-              "alias": "--color-rose-400"
+              "value": {
+                "r": 0.747757,
+                "g": 0.468924,
+                "b": 0.827728,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-chart-5)",
@@ -22653,6 +22693,42 @@
         "theme"
       ],
       "expression": "color-mix( in oklab, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) )"
+    },
+    {
+      "token": "--a63-chart-2",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144))"
+    },
+    {
+      "token": "--a63-chart-3",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288))"
+    },
+    {
+      "token": "--a63-chart-4",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216))"
+    },
+    {
+      "token": "--a63-chart-5",
+      "collection": "Mode",
+      "variesOn": [
+        "brand",
+        "mode"
+      ],
+      "expression": "oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72))"
     },
     {
       "token": "--a63-choice-box-shadow",

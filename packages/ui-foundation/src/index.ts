@@ -354,6 +354,24 @@ export type {
   CalendarVisualArchetype,
 } from './components/calendar'
 export {
+  chartColors,
+  chartContract,
+  chartSizes,
+  chartSlots,
+  chartStates,
+  chartTypes,
+  chartVisualArchetypes,
+} from './components/chart/chart-contract'
+export type {
+  ChartColor,
+  ChartContract,
+  ChartSize,
+  ChartSlot,
+  ChartState,
+  ChartType,
+  ChartVisualArchetype,
+} from './components/chart/chart-contract'
+export {
   chatComposerContract,
   chatComposerLayouts,
   chatComposerSlots,

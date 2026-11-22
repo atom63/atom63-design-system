@@ -270,13 +270,16 @@
   );
   --a63-status-danger-subtle: color-mix(in oklab, var(--a63-status-danger) 14%, transparent);
   --a63-status-danger-subtle-foreground: var(--color-danger-700);
-  /* Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay
-     distinct from it and from each other (500 on light surfaces, 400 on dark). */
+  /* Chart series colors. Series 1 is the brand's primary; series 2 to 5 turn its hue
+     by fixed steps at a set lightness and chroma, so no series takes the brand's hue
+     whatever the brand (the wallpaper brand included), and each reaches 3:1 against
+     the page and the panel. The plain value is the default (blue) brand's result, for
+     tools that cannot run the derivation. */
   --a63-chart-1: var(--a63-action-primary);
-  --a63-chart-2: var(--color-teal-500);
-  --a63-chart-3: var(--color-amber-500);
-  --a63-chart-4: var(--color-violet-500);
-  --a63-chart-5: var(--color-rose-500);
+  --a63-chart-2: oklch(from var(--a63-chart-1) 0.6 0.15 calc(h + 144));
+  --a63-chart-3: oklch(from var(--a63-chart-1) 0.54 0.13 calc(h + 288));
+  --a63-chart-4: oklch(from var(--a63-chart-1) 0.58 0.14 calc(h + 216));
+  --a63-chart-5: oklch(from var(--a63-chart-1) 0.5 0.16 calc(h + 72));
   --a63-category-red-subtle-foreground: var(--color-red-700);
   --a63-category-orange-subtle-foreground: var(--color-orange-800);
   --a63-category-amber-subtle-foreground: var(--color-warning-800);
@@ -423,11 +426,13 @@
   --a63-status-danger: var(--color-danger-500);
   --a63-status-danger-subtle: color-mix(in oklab, var(--a63-status-danger) 14%, transparent);
   --a63-status-danger-subtle-foreground: var(--color-danger-400);
-  --a63-chart-1: var(--a63-action-primary);
-  --a63-chart-2: var(--color-teal-400);
-  --a63-chart-3: var(--color-amber-400);
-  --a63-chart-4: var(--color-violet-400);
-  --a63-chart-5: var(--color-rose-400);
+  /* On dark surfaces series 1 is the brand's 400 step and 2 to 5 are lighter, for 3:1
+     against the dark page. */
+  --a63-chart-1: var(--a63-brand-400);
+  --a63-chart-2: oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144));
+  --a63-chart-3: oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288));
+  --a63-chart-4: oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216));
+  --a63-chart-5: oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72));
   --a63-category-red-subtle-foreground: var(--color-red-400);
   --a63-category-orange-subtle-foreground: var(--color-orange-400);
   --a63-category-amber-subtle-foreground: var(--color-warning-400);
@@ -714,15 +719,16 @@
   --a63-status-danger-subtle: color-mix(in oklab, var(--a63-status-danger) 14%, transparent);
   --a63-status-danger-subtle-foreground: var(--a63-if-light, var(--color-danger-700))
     var(--a63-if-dark, var(--color-danger-400));
-  --a63-chart-1: var(--a63-action-primary);
-  --a63-chart-2: var(--a63-if-light, var(--color-teal-500))
-    var(--a63-if-dark, var(--color-teal-400));
-  --a63-chart-3: var(--a63-if-light, var(--color-amber-500))
-    var(--a63-if-dark, var(--color-amber-400));
-  --a63-chart-4: var(--a63-if-light, var(--color-violet-500))
-    var(--a63-if-dark, var(--color-violet-400));
-  --a63-chart-5: var(--a63-if-light, var(--color-rose-500))
-    var(--a63-if-dark, var(--color-rose-400));
+  --a63-chart-1: var(--a63-if-light, var(--a63-action-primary))
+    var(--a63-if-dark, var(--a63-brand-400));
+  --a63-chart-2: var(--a63-if-light, oklch(from var(--a63-chart-1) 0.6 0.15 calc(h + 144)))
+    var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144)));
+  --a63-chart-3: var(--a63-if-light, oklch(from var(--a63-chart-1) 0.54 0.13 calc(h + 288)))
+    var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288)));
+  --a63-chart-4: var(--a63-if-light, oklch(from var(--a63-chart-1) 0.58 0.14 calc(h + 216)))
+    var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216)));
+  --a63-chart-5: var(--a63-if-light, oklch(from var(--a63-chart-1) 0.5 0.16 calc(h + 72)))
+    var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72)));
   --a63-category-red-subtle-foreground: var(--a63-if-light, var(--color-red-700))
     var(--a63-if-dark, var(--color-red-400));
   --a63-category-orange-subtle-foreground: var(--a63-if-light, var(--color-orange-800))

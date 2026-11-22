@@ -3550,6 +3550,13 @@
      "carouselSlots",
      "carouselStates",
      "carouselVisualArchetypes",
+     "chartColors",
+     "chartContract",
+     "chartSizes",
+     "chartSlots",
+     "chartStates",
+     "chartTypes",
+     "chartVisualArchetypes",
      "chatComposerContract",
      "chatComposerLayouts",
      "chatComposerSlots",
@@ -4056,6 +4063,7 @@
      "CarouselItem",
      "CarouselNext",
      "CarouselPrevious",
+     "Chart",
      "ChatComposer",
      "ChatMessage",
      "ChatMessageList",
@@ -11661,6 +11669,122 @@
    ]
   },
   {
+   "axisGuidance": {
+    "size": {
+     "md": "A 240px plot with five y-axis ticks, for a chart that leads a section.",
+     "sm": "A 160px plot with three ticks, for a compact card."
+    },
+    "state": {
+     "current": "A category picked by the pointer or the arrow keys; the tooltip shows its values.",
+     "rest": "No category picked; only the marks, axes and legend show."
+    }
+   },
+   "contract": {
+    "archetypes": [
+     {
+      "description": "In-flow containers and content surfaces that do not inherently manipulate state.",
+      "id": "surface",
+      "label": "Static content surfaces"
+     }
+    ],
+    "axes": [
+     {
+      "name": "types",
+      "values": [
+       "line",
+       "area",
+       "bar"
+      ],
+      "default": "line"
+     },
+     {
+      "name": "sizes",
+      "values": [
+       "sm",
+       "md"
+      ],
+      "default": "md"
+     },
+     {
+      "name": "colors",
+      "values": [
+       "1",
+       "2",
+       "3",
+       "4",
+       "5"
+      ]
+     }
+    ],
+    "exportName": "chartContract",
+    "slots": [
+     "chart",
+     "chart-legend",
+     "chart-plot",
+     "chart-y-axis",
+     "chart-x-axis",
+     "chart-tooltip",
+     "chart-table",
+     "chart-table-toggle"
+    ],
+    "source": "packages/ui-foundation/contracts/components/chart.json",
+    "states": [
+     "rest",
+     "current"
+    ],
+    "tokenSlots": []
+   },
+   "exports": {
+    "types": [
+     "ChartLabels",
+     "ChartProps",
+     "ChartSeries"
+    ],
+    "values": [
+     "Chart"
+    ]
+   },
+   "group": {
+    "id": "content-and-surfaces",
+    "title": "Content and surfaces"
+   },
+   "guidance": [
+    "Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `stacked` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip. Every chart carries a data table of the same numbers, visually hidden unless `table=\"toggle\"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero, use a charting library; when the exact numbers matter more than the shape, use a Table.",
+    "Keep product data and fetching outside the presentational component.",
+    "Test long, empty, and narrow content before adding local layout overrides."
+   ],
+   "importPath": "@atom63/ui-react",
+   "label": "Chart",
+   "markdown": "# Chart\n\nChart draws a small line, area or bar chart (grouped or stacked) of a few series over a categorical axis, with a tooltip, a legend and a data table for screen readers.\n\n**Status:** Preview\n\n## Preview\n\nThe live documentation page renders the `Playground` story maintained with the component.\n\n## Guidance\n\n- Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `stacked` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip. Every chart carries a data table of the same numbers, visually hidden unless `table=\"toggle\"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero, use a charting library; when the exact numbers matter more than the shape, use a Table.\n- Keep product data and fetching outside the presentational component.\n- Test long, empty, and narrow content before adding local layout overrides.\n\n## Variants, sizes and states\n\n| Axis | Value | Guidance |\n| --- | --- | --- |\n| Size | `md` | A 240px plot with five y-axis ticks, for a chart that leads a section. |\n| Size | `sm` | A 160px plot with three ticks, for a compact card. |\n| State | `current` | A category picked by the pointer or the arrow keys; the tooltip shows its values. |\n| State | `rest` | No category picked; only the marks, axes and legend show. |\n\n## Usage\n\n```tsx\nimport { Chart } from '@atom63/ui-react'\n```\n\n## API surface\n\n**Values:** `Chart`\n\n**Types:** `ChartLabels`, `ChartProps`, `ChartSeries`\n\nTypeScript remains the source of truth for complete prop contracts.\n\n## Contract\n\nSource: `packages/ui-foundation/contracts/components/chart.json` (`chartContract` in `@atom63/ui-foundation`).\n\n| Axis | Values | Default |\n| --- | --- | --- |\n| `types` | `line`, `area`, `bar` | `line` |\n| `sizes` | `sm`, `md` | `md` |\n| `colors` | `1`, `2`, `3`, `4`, `5` | — |\n\n**Slots:** `chart`, `chart-legend`, `chart-plot`, `chart-y-axis`, `chart-x-axis`, `chart-tooltip`, `chart-table`, `chart-table-toggle`\n\n**States:** `rest`, `current`\n\n**Visual archetype:** Static content surfaces — In-flow containers and content surfaces that do not inherently manipulate state.\n\n## Related components\n\n- [Table](/components/component-table)\n- [Progress](/components/component-progress)\n- [Card](/components/component-card)\n",
+   "related": [
+    "table",
+    "progress",
+    "card"
+   ],
+   "route": "/components/component-chart",
+   "slug": "chart",
+   "status": "preview",
+   "stories": {
+    "file": "packages/ui-react/src/components/chart/chart.stories.tsx",
+    "names": [
+     "Playground",
+     "Types",
+     "Keyboard",
+     "DataTable",
+     "Brands",
+     "Themes",
+     "ForcedColors",
+     "RightToLeft"
+    ],
+    "source": "import { chartSizes, chartTypes, themes } from '@atom63/ui-foundation'\nimport { Chart, UIProvider } from '@atom63/ui-react'\nimport '@atom63/ui-react/styles.css'\nimport type { Meta, StoryObj } from '@storybook/react-vite'\n\nconst months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']\nconst usd = new Intl.NumberFormat('en-US', {\n  currency: 'USD',\n  maximumFractionDigits: 0,\n  style: 'currency',\n})\nconst compact = new Intl.NumberFormat('en-US', {\n  currency: 'USD',\n  maximumFractionDigits: 1,\n  notation: 'compact',\n  style: 'currency',\n})\n\nconst mrr = [42, 44, 47, 46, 51, 55, 58, 61, 60, 66, 71, 74].map(value => value * 1000)\nconst movement = [\n  { label: 'New', values: [6, 5, 7, 4, 8, 7, 6, 8, 5, 9, 8, 7].map(value => value * 1000) },\n  { label: 'Expansion', values: [2, 3, 2, 3, 3, 4, 3, 2, 4, 3, 4, 5].map(value => value * 1000) },\n  { label: 'Churned', values: [3, 2, 4, 5, 3, 3, 3, 2, 6, 3, 3, 4].map(value => value * 1000) },\n]\nconst plans = [\n  { label: 'Starter', values: [8, 9, 9, 10] },\n  { label: 'Growth', values: [12, 13, 15, 16] },\n  { label: 'Scale', values: [9, 10, 10, 12] },\n  { label: 'Enterprise', values: [14, 14, 16, 19] },\n  { label: 'Partner', values: [3, 4, 4, 5] },\n]\n\nconst meta = {\n  title: 'UI React/Chart',\n  component: Chart,\n  argTypes: {\n    size: { control: 'inline-radio', options: chartSizes },\n    type: { control: 'inline-radio', options: chartTypes },\n    stacked: { control: 'boolean' },\n    table: { control: 'inline-radio', options: ['hidden', 'toggle'] },\n  },\n  args: {\n    categories: months,\n    categoryLabel: 'Month',\n    description: 'New revenue outpaces churn in every month but September.',\n    formatTick: compact.format,\n    formatValue: usd.format,\n    label: 'MRR movement by month',\n    series: movement,\n    size: 'md',\n    type: 'bar',\n  },\n  decorators: [\n    Story => (\n      <div style={{ maxWidth: 640 }}>\n        <Story />\n      </div>\n    ),\n  ],\n} satisfies Meta<typeof Chart>\n\nexport default meta\ntype Story = StoryObj<typeof meta>\n\nexport const Playground: Story = {}\n\n/* Line, area, grouped bars and stacked bars, each from the same contract. */\nexport const Types: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 32 }}>\n      <Chart\n        categories={months}\n        formatTick={compact.format}\n        formatValue={usd.format}\n        label=\"MRR by month\"\n        series={[{ label: 'MRR', values: mrr }]}\n        type=\"line\"\n      />\n      <Chart\n        categories={months}\n        formatTick={compact.format}\n        formatValue={usd.format}\n        label=\"MRR by month, as an area\"\n        series={[{ label: 'MRR', values: mrr }]}\n        type=\"area\"\n      />\n      <Chart\n        categories={months}\n        formatTick={compact.format}\n        formatValue={usd.format}\n        label=\"MRR movement by month\"\n        series={movement}\n        type=\"bar\"\n      />\n      <Chart\n        categories={['Q1', 'Q2', 'Q3', 'Q4']}\n        label=\"Accounts by plan and quarter\"\n        series={plans}\n        size=\"sm\"\n        stacked\n        type=\"bar\"\n      />\n    </div>\n  ),\n}\n\n/* Pressing an arrow key on the plot picks a category and shows its tooltip. */\nexport const Keyboard: Story = {\n  args: { type: 'line', series: movement.slice(0, 2) },\n  play: ({ canvasElement }) => {\n    const plot = canvasElement.querySelector<HTMLElement>('[data-slot=\"chart-plot\"]')\n    if (!plot) throw new Error('The chart has no plot')\n    plot.focus()\n    plot.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'End' }))\n    return new Promise<void>(resolve => requestAnimationFrame(() => resolve())).then(() => {\n      const tooltip = canvasElement.querySelector('[data-slot=\"chart-tooltip\"]')\n      if (!tooltip?.textContent?.includes('Dec')) {\n        throw new Error(`Expected the tooltip to show Dec, got \"${tooltip?.textContent ?? ''}\"`)\n      }\n    })\n  },\n}\n\n/* The data table, shown with the toggle. */\nexport const DataTable: Story = {\n  args: { categories: months.slice(0, 4), series: movement, table: 'toggle' },\n}\n\n/* Five series on each brand: series 2 to 5 turn from the brand's hue, so none\n   of them lands on it, the violet brand (b5) included. */\nexport const Brands: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {(['b1', 'b2', 'b3', 'b4', 'b5', 'b6'] as const).map(brand => (\n        <UIProvider brand={brand} key={brand}>\n          <div style={{ background: 'var(--a63-surface-panel)', padding: '0.75rem' }}>\n            <Chart\n              categories={['Q1', 'Q2', 'Q3', 'Q4']}\n              label={`Accounts by plan, brand ${brand}`}\n              series={plans}\n              size=\"sm\"\n              type=\"bar\"\n            />\n          </div>\n        </UIProvider>\n      ))}\n    </div>\n  ),\n}\n\nexport const Themes: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 12 }}>\n      {themes.map(theme =>\n        (['light', 'dark'] as const).map(mode => (\n          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>\n            <div style={{ background: 'var(--a63-surface-panel)', padding: '0.75rem' }}>\n              <Chart\n                categories={months.slice(0, 6)}\n                label={`MRR movement, ${theme} ${mode}`}\n                series={movement}\n                size=\"sm\"\n                type=\"bar\"\n              />\n              <Chart\n                categories={months.slice(0, 6)}\n                label={`MRR, ${theme} ${mode}`}\n                series={[{ label: 'MRR', values: mrr.slice(0, 6) }, movement[0]!]}\n                size=\"sm\"\n                type=\"area\"\n              />\n            </div>\n          </UIProvider>\n        ))\n      )}\n    </div>\n  ),\n}\n\n/* Forced colours drop the series colours; lines dash and bars outline in a\n   different pattern per series, and the legend keys follow. */\nexport const ForcedColors: Story = {\n  render: () => (\n    <div style={{ display: 'grid', gap: 24 }}>\n      <Chart\n        categories={months.slice(0, 6)}\n        label=\"MRR movement\"\n        series={movement}\n        size=\"sm\"\n        type=\"line\"\n      />\n      <Chart\n        categories={['Q1', 'Q2', 'Q3', 'Q4']}\n        label=\"Accounts by plan\"\n        series={plans}\n        size=\"sm\"\n        type=\"bar\"\n      />\n    </div>\n  ),\n}\n\n/* Right to left: the categories run from the right, and the arrow keys follow. */\nexport const RightToLeft: Story = {\n  render: args => (\n    <UIProvider dir=\"rtl\">\n      <Chart {...args} />\n    </UIProvider>\n  ),\n}\n"
+   },
+   "summary": "Chart draws a small line, area or bar chart (grouped or stacked) of a few series over a categorical axis, with a tooltip, a legend and a data table for screen readers.",
+   "usage": "Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `stacked` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip. Every chart carries a data table of the same numbers, visually hidden unless `table=\"toggle\"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero, use a charting library; when the exact numbers matter more than the shape, use a Table.",
+   "usageExports": [
+    "Chart"
+   ]
+  },
+  {
    "axisGuidance": null,
    "contract": {
     "archetypes": [
@@ -14372,7 +14496,7 @@
   {
    "area": "foundations",
    "label": "Colors",
-   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n### Gradients\n\nFour gradient tokens follow the theme, brand and mode, so a hero or banner never needs a hand-written gradient:\n\n| Token | Draws | Use |\n|-------|-------|-----|\n| `--a63-gradient-brand` | Brand 500 to 700 at 135° | A saturated brand banner or card |\n| `--a63-gradient-brand-subtle` | Brand 50 to 100 at 135° | A quiet illustration or card background |\n| `--a63-gradient-brand-fade` | Brand 800 at the top, brand 700 at the end of the dark zone, then `--a63-surface-page` at the bottom | A hero that runs into the page, such as a banking home or a shop header |\n| `--a63-gradient-scrim` | Transparent to 60% black, top to bottom | Text laid over the foot of a photo |\n\n`--a63-gradient-brand-fade` has a **dark zone**: the top `--a63-gradient-brand-fade-dark-zone` (50%) of the hero, which stays at brand 700 or darker. White on-media text and overlay controls reach WCAG AA there on every brand, so the balance, its label and the row of round `overlay` buttons with their labels go in that zone. Below it the hero fades into the page: content there uses the page tokens (`--a63-text-primary`, `--a63-surface-panel`) and the default button variants, on its own `--a63-surface-panel` card while the fade is still running, since text straight on the mid-fade has neither the page's contrast nor the dark zone's. An `overlay` button or `--a63-on-media-foreground` label on the faded part becomes white on near white and disappears. Size the hero with a definite height so the zone lines up with its content, for example a grid with `grid-template-rows: var(--a63-gradient-brand-fade-dark-zone) 1fr`. The Button story `RoundOnBrandFade` shows the pattern. On iOS, `AtomThemeColors.brandFadeGradient(for:)` draws the same gradient and `AtomTokens.Gradient.brandFadeDarkZone` holds the zone.\n\nOverlay and on-media controls belong over dark or busy media (photos, video, `--a63-gradient-brand`, the dark zone of the fade), never over a light or faded background.\n\nThe gradient tokens hold whole `linear-gradient()` values, so they go in `background-image`\n(`bg-(image:--a63-gradient-brand)` in Tailwind), never in `background-color`. Text over a photo with\nthe scrim takes `--a63-on-media-foreground`. For a large amount on a hero, pair a gradient with the\ndisplay text roles on the Typography page.\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\nBoth the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground` (the neutral selection) and `selected-accent` with `-foreground` (the opt-in accent selection), and `chart-1`–`chart-5`. Tinted chips use the `-subtle` pairs: `destructive-subtle`, `info-subtle`, `success-subtle` and `warning-subtle`, each with `-subtle-foreground`, and `category-<hue>` with `-subtle` and `-subtle-foreground` for the 22 palette hues (amber shares the warning ramp). Every tint is the same 14% wash. Media chrome uses `media-stage`, `media-surface` (an opaque dark neutral that does not follow the mode), `media-scrim` and the `on-media-*` roles, so controls over images need no arbitrary `bg-(--…)` classes. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground`, `text-(--a63-text-tertiary)` | `--a63-text-primary`, `--a63-text-secondary`, `--a63-text-tertiary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n| Hero fading into the page | `bg-(image:--a63-gradient-brand-fade)` | `--a63-gradient-brand-fade`, controls in its dark zone |\n\nThere are three text greys. `--a63-text-primary` is for content, `--a63-text-secondary` for supporting text that is still content (descriptions, labels), and `--a63-text-tertiary` for placeholders, meta and timestamps. Tertiary keeps WCAG AA 4.5:1 on the page, the panel, the field fill and the muted fill in every theme and mode; every field placeholder uses it.\n\nFor a warm paper or document product (docs, notes, an editor), pick the warm `n6` neutral (`data-a63-surface=\"n6\"`) and put the content on a white page (`--a63-surface-panel` as the page ground) instead of the default grey `--a63-surface-page`.\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n<Button style={{ backgroundColor: 'var(--color-b1-500)' }} />\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n<Button style={{ backgroundColor: 'var(--a63-action-primary)', color: 'var(--a63-action-primary-foreground)' }} />\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
+   "markdown": "# Colors\n\nThe color system is built around executable indirection. **Foundation** owns the literal palette (`tokens/foundation/*`). **Semantics** (`--a63-*`) name UI jobs. **App JSX** may sketch with Tailwind/shadcn role utilities (`bg-background`, `text-muted-foreground`) because those adapters re-reference `--a63-*`. **Shared package recipes** consume `--a63-*` (and family contracts), not primitives and not raw shadcn CSS variables.\n\nAuthoring lanes: `docs/design-system/authoring-surfaces.md`.\n\nThe goal is simple: components describe the job a color performs, while `@atom63/styles` owns how that job resolves across mode, brand, neutral-surface, surface-tint, and theme axes.\n\n## Design intent\n\nThe Atom63-specific palette has six brand hues, six neutral families, and four status families. Foundation also carries the Tailwind named palette for fixed-hue cases. Both sit behind enough structure that changing an appearance axis does not require auditing every component:\n\n- **Foundation primitives** define stable palette material (the only place for new color dictionaries).\n- **Aliases** (brand / surface axes) select which primitive families a mood uses.\n- **Semantic roles** expose stable UI decisions through `--a63-*` variables.\n- **Themes** remap material/role resolution; they do not invent new palette ramps.\n- **Component recipes** consume those roles in React and CSS.\n\n## Layer stack\n\nImported in order from `@atom63/styles`:\n\n## Mental model\n\nColor moves from stable to contextual:\n\n```txt\nfoundation palette -> brand/surface alias -> a63 semantic role -> component recipe\n     (values)              (which family)         (UI job)              (wiring)\n```\n\nProduct theme skins (`modern` / `aqua` / …) sit beside this chain: they remap contract/semantic knobs, they are not a second palette dictionary.\n\nEach layer answers a different question:\n\n| Layer | Question | Example |\n|-------|----------|---------|\n| Foundation | What raw color exists? | `--color-b1-500`, `--color-n1-light-3` |\n| Alias | Which palette family does this mood use? | brand and surface aliases |\n| Semantic | What UI job does this color perform? | `--a63-surface-panel`, `--a63-action-primary`, `--a63-border-control` |\n| Component | How does the role appear in context? | button fill, input border, dialog surface |\n\nThis is the reason component code should feel boring. A component should say \"I need the primary action color\" or \"I need the subtle border color\", not \"I need this exact blue.\"\n\n## How the scale works\n\n### Semantic roles\n\nComponents use the `--a63-*` semantic layer. These variables are the design-system API for product UI.\n\n### Surface scale\n\n12-step neutral ramps (`surface-light-*` / `surface-dark-*`) form the backbone of the UI. Semantic tokens like `--a63-surface-page`, `--a63-surface-panel`, and `--a63-border-subtle` reference the appropriate steps. The default surface family is `n1`, a true neutral gray with no color cast.\n\n### Brand primitives\n\nSix brand hues (`b1`–`b6`), each with steps `50`–`950`, provide enough range for product accents, visualization, and expressive surfaces. The default primary action resolves through the brand alias layer rather than hardcoding a primitive in a component.\n\n### Neutral families\n\nSix neutral palettes (`n1`–`n6`) give the system different neutral personalities without creating one-off product palettes. The `data-a63-surface` axis remaps the aliases; components keep consuming the same semantic roles. Themes may separately re-skin semantic surfaces when material character requires it.\n\n### Status primitives\n\n`danger`, `success`, `warning`, and `info` carry fixed meaning. They can be tuned for contrast across modes, but they should not be repurposed as decorative brand colors.\n\n  {STATUS_PRIMITIVES.map(({ id, utility }) => (\n  ))}\n\n### Chart series\n\n`--a63-chart-1` to `--a63-chart-5` colour the series of a chart (the `Chart` component reads them in order). Series 1 is the brand: the primary on light surfaces, the brand's 400 step on dark ones. Series 2 to 5 turn the brand's hue by fixed steps at a set lightness and chroma, so none of them lands on the brand whatever it is, a violet brand or a wallpaper (`auto`) brand included. Each series reaches 3:1 against the page and the panel in every theme and mode; `chart-palette.browser.test.ts` checks that, and that every pair of series and every series and the brand stay apart, across brands × themes × modes.\n\n### Gradients\n\nFour gradient tokens follow the theme, brand and mode, so a hero or banner never needs a hand-written gradient:\n\n| Token | Draws | Use |\n|-------|-------|-----|\n| `--a63-gradient-brand` | Brand 500 to 700 at 135° | A saturated brand banner or card |\n| `--a63-gradient-brand-subtle` | Brand 50 to 100 at 135° | A quiet illustration or card background |\n| `--a63-gradient-brand-fade` | Brand 800 at the top, brand 700 at the end of the dark zone, then `--a63-surface-page` at the bottom | A hero that runs into the page, such as a banking home or a shop header |\n| `--a63-gradient-scrim` | Transparent to 60% black, top to bottom | Text laid over the foot of a photo |\n\n`--a63-gradient-brand-fade` has a **dark zone**: the top `--a63-gradient-brand-fade-dark-zone` (50%) of the hero, which stays at brand 700 or darker. White on-media text and overlay controls reach WCAG AA there on every brand, so the balance, its label and the row of round `overlay` buttons with their labels go in that zone. Below it the hero fades into the page: content there uses the page tokens (`--a63-text-primary`, `--a63-surface-panel`) and the default button variants, on its own `--a63-surface-panel` card while the fade is still running, since text straight on the mid-fade has neither the page's contrast nor the dark zone's. An `overlay` button or `--a63-on-media-foreground` label on the faded part becomes white on near white and disappears. Size the hero with a definite height so the zone lines up with its content, for example a grid with `grid-template-rows: var(--a63-gradient-brand-fade-dark-zone) 1fr`. The Button story `RoundOnBrandFade` shows the pattern. On iOS, `AtomThemeColors.brandFadeGradient(for:)` draws the same gradient and `AtomTokens.Gradient.brandFadeDarkZone` holds the zone.\n\nOverlay and on-media controls belong over dark or busy media (photos, video, `--a63-gradient-brand`, the dark zone of the fade), never over a light or faded background.\n\nThe gradient tokens hold whole `linear-gradient()` values, so they go in `background-image`\n(`bg-(image:--a63-gradient-brand)` in Tailwind), never in `background-color`. Text over a photo with\nthe scrim takes `--a63-on-media-foreground`. For a large amount on a hero, pair a gradient with the\ndisplay text roles on the Typography page.\n\n## Compatibility\n\nThe shadcn vocabulary (`background`, `primary`, `muted-foreground`, …) is an **opt-in adapter** (`@atom63/styles/compat/shadcn` + Tailwind theme keys). It re-references `--a63-*`; it does not own values (mirror rule).\n\nBoth the Tailwind theme keys and the compat variables are generated from one role table, `packages/styles/src/tailwind/roles.json` (`pnpm --filter @atom63/styles generate:roles`). Beyond the shadcn defaults it adds `destructive-foreground`, `info`/`success`/`warning` with `-foreground`, `surface-sunken`, `selected` with `-foreground` (the neutral selection) and `selected-accent` with `-foreground` (the opt-in accent selection), and `chart-1`–`chart-5`. Tinted chips use the `-subtle` pairs: `destructive-subtle`, `info-subtle`, `success-subtle` and `warning-subtle`, each with `-subtle-foreground`, and `category-<hue>` with `-subtle` and `-subtle-foreground` for the 22 palette hues (amber shares the warning ramp). Every tint is the same 14% wash. Media chrome uses `media-stage`, `media-surface` (an opaque dark neutral that does not follow the mode), `media-scrim` and the `on-media-*` roles, so controls over images need no arbitrary `bg-(--…)` classes. `accent` is the neutral hover and highlight plate, not the brand color; use `primary` for the brand.\n\n| Surface | Prefer | Avoid |\n|---------|--------|-------|\n| App / page JSX | Tailwind utilities: `bg-background`, `text-foreground`, `bg-primary`, … | Hardcoded hex; reaching into `--a63-control-*` for sketching |\n| Shared package recipes (`ui-react`, widgets, …) | `--a63-*` roles (+ family contracts) | Baking `var(--background)` / `var(--primary)` into package CSS |\n| Third-party / copy-pasted shadcn CSS | Compat aliases OK at the consumer boundary | Treating `--primary` as the system SSOT |\n\nCanonical design-system contract for shared UI is `--a63-*`. Tailwind/shadcn names are the **human design dialect** for product screens — not “legacy only.” See Designing in code and `docs/design-system/authoring-surfaces.md`.\n\n## Decisions worth knowing\n\n### Semantic-first, not palette-first\n\nShared components never use primitive color values directly. Not `--color-b1-500`, not `--color-n1-light-3`, and not one-off hex values. Shared UI consumes semantic roles such as `--a63-action-primary`, `--a63-text-primary`, `--a63-border-subtle`, and `--a63-surface-panel`. App JSX may use the equivalent Tailwind role utilities.\n\nThe exception is deliberate brand or visualization work that needs a fixed hue regardless of theme. Those cases should be explicit and rare. **Adding** a new hue step still happens in foundation.\n\n### Six neutrals, not one\n\nMost systems ship one neutral ramp. Atom63 has six because portfolio, docs, OS, and learning surfaces can need different neutral personalities. Having six families pre-built makes theme creation alias reassignment rather than palette generation.\n\n### Contrast as a contract\n\nEvery semantic foreground/background pair is designed together. `--a63-action-primary` and `--a63-action-primary-foreground` are a pair. Text roles and surface roles are reviewed together. If a component introduces a new semantic pair, the pair needs contrast review before it becomes part of the shared system.\n\n### Color should express role before personality\n\nThe palette can be expressive, but role comes first. A primary button is primary because it is the main action, not because blue looks good in that location. A muted panel is muted because it is secondary to the current task, not because the screen needs another shade.\n\n## Usage guidance\n\n| Need | In app JSX | In package recipes |\n|------|------------|--------------------|\n| App surfaces | `bg-background`, `bg-card`, `bg-muted` | `--a63-surface-page`, `--a63-surface-panel`, `--a63-surface-muted` |\n| Text | `text-foreground`, `text-muted-foreground`, `text-(--a63-text-tertiary)` | `--a63-text-primary`, `--a63-text-secondary`, `--a63-text-tertiary` |\n| Borders | `border-border` | `--a63-border-subtle`, `--a63-border-control` |\n| Primary actions | `bg-primary`, `text-primary-foreground` | `--a63-action-primary`, `--a63-action-primary-foreground` |\n| Feedback states | `text-destructive`, status utilities | `--a63-status-*`, `--a63-action-danger` |\n| Brand moments (fixed hue) | `bg-b1-500`, … | foundation `--color-b*` only when intentional |\n| Hero fading into the page | `bg-(image:--a63-gradient-brand-fade)` | `--a63-gradient-brand-fade`, controls in its dark zone |\n\nThere are three text greys. `--a63-text-primary` is for content, `--a63-text-secondary` for supporting text that is still content (descriptions, labels), and `--a63-text-tertiary` for placeholders, meta and timestamps. Tertiary keeps WCAG AA 4.5:1 on the page, the panel, the field fill and the muted fill in every theme and mode; every field placeholder uses it.\n\nFor a warm paper or document product (docs, notes, an editor), pick the warm `n6` neutral (`data-a63-surface=\"n6\"`) and put the content on a white page (`--a63-surface-panel` as the page ground) instead of the default grey `--a63-surface-page`.\n\n## Anti-patterns\n\n```tsx\n// Avoid: component owns a palette decision.\n<Button style={{ backgroundColor: 'var(--color-b1-500)' }} />\n```\n\nThe button now depends on one theme's brand hue and one foreground assumption.\n\n```tsx\n// Prefer: component owns a semantic role.\n<Button style={{ backgroundColor: 'var(--a63-action-primary)', color: 'var(--a63-action-primary-foreground)' }} />\n```\n\nThe component can survive theme changes because the semantic pair owns contrast.\n\n## Review checklist\n\nWhen reviewing color usage, ask:\n\n1. Is this a semantic role (Tailwind/shadcn utility or `--a63-*`), or a foundation palette value?\n2. If adding a new literal color, does it live in `tokens/foundation/*`?\n3. Does the foreground/background pair have a contrast contract?\n4. Would this still work if the brand hue changed?\n5. Is a status color being used for real status meaning?\n6. Is color the only cue for the state?",
    "route": "/foundations/foundation-colors",
    "slug": "foundation-colors"
   },
@@ -18648,7 +18772,7 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--a63-action-primary)"
+     "value": "var(--a63-brand-400)"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
@@ -18656,7 +18780,7 @@
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-action-primary)"
+     "value": "var(--a63-if-light, var(--a63-action-primary)) var(--a63-if-dark, var(--a63-brand-400))"
     }
    ]
   },
@@ -18672,15 +18796,15 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-teal-400)"
+     "value": "oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144))"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-teal-500)"
+     "value": "oklch(from var(--a63-chart-1) 0.6 0.15 calc(h + 144))"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-if-light, var(--color-teal-500)) var(--a63-if-dark, var(--color-teal-400))"
+     "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.6 0.15 calc(h + 144))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144)))"
     }
    ]
   },
@@ -18696,15 +18820,15 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-amber-400)"
+     "value": "oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288))"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-amber-500)"
+     "value": "oklch(from var(--a63-chart-1) 0.54 0.13 calc(h + 288))"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-if-light, var(--color-amber-500)) var(--a63-if-dark, var(--color-amber-400))"
+     "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.54 0.13 calc(h + 288))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288)))"
     }
    ]
   },
@@ -18720,15 +18844,15 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-violet-400)"
+     "value": "oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216))"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-violet-500)"
+     "value": "oklch(from var(--a63-chart-1) 0.58 0.14 calc(h + 216))"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-if-light, var(--color-violet-500)) var(--a63-if-dark, var(--color-violet-400))"
+     "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.58 0.14 calc(h + 216))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216)))"
     }
    ]
   },
@@ -18744,15 +18868,15 @@
    "values": [
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--color-rose-400)"
+     "value": "oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72))"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-500)"
+     "value": "oklch(from var(--a63-chart-1) 0.5 0.16 calc(h + 72))"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-if-light, var(--color-rose-500)) var(--a63-if-dark, var(--color-rose-400))"
+     "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.5 0.16 calc(h + 72))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72)))"
     }
    ]
   },

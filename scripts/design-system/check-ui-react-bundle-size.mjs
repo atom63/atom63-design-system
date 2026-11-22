@@ -134,7 +134,14 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // art-directed sources) add 1.2 kB; LayeredScene, its copy, stage and inert
 // foreground cut-out add 0.4 kB. They are what a plate-first landing page or a
 // portfolio hero needs, and a consumer that does not import them drops them.
-const gzipBudgetBytes = 102 * 1024
+//
+// 102 kB held 100.1 kB. Chart takes it to 103.0, so it moves to 104. The
+// +2.9 kB is a dependency-free SVG chart: line, area and bar marks with a tick
+// scale, the pointer and arrow-key category picker, the tooltip and live
+// readout, and the data table and its toggle. A charting library would have
+// cost far more (a scale and shape package alone is larger than the whole
+// chart), and a consumer that does not import Chart drops it.
+const gzipBudgetBytes = 104 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
@@ -171,13 +178,16 @@ console.log(`all files: ${kB(gzipBytes)} gzip / ${kB(gzipBudgetBytes)} budget`)
 // Base UI parts of any shared chunk. Measured after the split: Kbd 8.6 kB
 // (nearly all of it tailwind-merge behind `cn`), Button 11.1, Separator 10.6,
 // Dialog 22.2 and Toaster 20.4 (sonner itself). Each budget leaves about 12-16%
-// headroom; the regression this guards against costs 25 kB or more.
+// headroom; the regression this guards against costs 25 kB or more. Chart
+// measured 13.6 kB when it landed, most of it the Button its table toggle uses
+// and the Table parts; the chart itself is about 2.5 kB and imports no library.
 const importBudgets = {
   Kbd: 10,
   Button: 12.5,
   Separator: 12,
   Dialog: 25,
   Toaster: 23,
+  Chart: 15.5,
 }
 const rootEntry = path.join(distDirectory, 'index.js')
 for (const [name, budgetKB] of Object.entries(importBudgets)) {

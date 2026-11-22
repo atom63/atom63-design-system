@@ -42,6 +42,9 @@ import { CardPadding } from '@atom63/ui-foundation';
 import { CardVariant } from '@atom63/ui-foundation';
 import { CarouselDotShape } from '@atom63/ui-foundation';
 import { CarouselDotTone } from '@atom63/ui-foundation';
+import { ChartColor } from '@atom63/ui-foundation';
+import { ChartSize } from '@atom63/ui-foundation';
+import { ChartType } from '@atom63/ui-foundation';
 import { ChatComposerLayout } from '@atom63/ui-foundation';
 import { ChatComposerStatus } from '@atom63/ui-foundation';
 import { ChatMessageAppearance } from '@atom63/ui-foundation';
@@ -736,6 +739,40 @@ export type CarouselProps = {
     setApi?: (api: CarouselApi) => void;
     cursorIndicator?: boolean;
 };
+
+// @public (undocumented)
+export function Chart(input: ChartProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface ChartLabels {
+    hideTable?: string;
+    keyboardHint?: string;
+    showTable?: string;
+}
+
+// @public (undocumented)
+export type ChartProps = Omit<React$1.ComponentProps<'figure'>, 'children'> & {
+    label: string;
+    description?: string;
+    categories: readonly string[];
+    series: readonly ChartSeries[];
+    type?: ChartType;
+    stacked?: boolean;
+    size?: ChartSize;
+    formatValue?: (value: number) => string;
+    formatTick?: (value: number) => string;
+    categoryLabel?: string;
+    legend?: boolean;
+    table?: 'hidden' | 'toggle';
+    labels?: ChartLabels;
+};
+
+// @public (undocumented)
+export interface ChartSeries {
+    color?: ChartColor;
+    label: string;
+    values: readonly number[];
+}
 
 // @public (undocumented)
 export function ChatComposer(input: ChatComposerProps): React$1.ReactElement;
