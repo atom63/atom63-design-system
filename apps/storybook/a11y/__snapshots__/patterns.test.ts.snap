@@ -21,6 +21,23 @@ exports[`checkboxContract implements Checkbox > Playground > accessibility tree 
 - checkbox "Example checkbox" [checked]
 `;
 
+exports[`commandContract implements Dialog (Modal) > Dialog > accessibility tree under dialog 1`] = `
+- dialog "Command palette":
+  - heading "Command palette" [level=2]
+  - combobox "Search commands" [expanded]
+  - status
+  - listbox:
+    - group "Navigate":
+      - text: Navigate
+      - option "Home"
+      - option "Blog"
+      - option "Timeline"
+    - group "Actions":
+      - text: Actions
+      - option "Preferences ⌘,"
+  - text: ↑↓ Navigate ⌘K
+`;
+
 exports[`dialogContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
 - dialog "Rename project":
   - heading "Rename project" [level=2]

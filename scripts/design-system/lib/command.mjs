@@ -37,11 +37,55 @@ export function spawnCommand(command, args, options = {}) {
 }
 
 /**
- * Stop a child from `spawnCommand`. On Windows the child is the shell, so
+ * `spawnCommand` for a long-running child that `stopCommand` will end, such as
+ * a `vite preview` server. Off Windows the child leads its own process group,
+ * so stopping it also reaches the real server behind the `pnpm` wrapper.
+ */
+export function spawnServer(command, args, options = {}) {
+  return spawnCommand(command, args, windows ? options : { ...options, detached: true })
+}
+
+const STOP_GRACE_MS = 5000
+
+/** Whether the process group led by `pid` still has a member. */
+function groupAlive(pid) {
+  try {
+    process.kill(-pid, 0)
+    return true
+  } catch {
+    return false
+  }
+}
+
+/**
+ * Stop a child from `spawnServer`. On Windows the child is the shell, so
  * killing it alone would leave the real process (a `vite preview` server, say)
- * running; `taskkill /T` ends the whole tree.
+ * running; `taskkill /T` ends the whole tree. Elsewhere the child's process
+ * group gets SIGTERM, then SIGKILL if any of it is still there after
+ * `STOP_GRACE_MS`; a child that leads no group just gets SIGTERM.
  */
 export function stopCommand(child) {
-  if (windows) spawnSync('taskkill', ['/pid', String(child.pid), '/T', '/F'], { stdio: 'ignore' })
-  else child.kill('SIGTERM')
+  if (windows) {
+    spawnSync('taskkill', ['/pid', String(child.pid), '/T', '/F'], { stdio: 'ignore' })
+    return
+  }
+  const { pid } = child
+  if (!groupAlive(pid)) {
+    child.kill('SIGTERM')
+    return
+  }
+  process.kill(-pid, 'SIGTERM')
+  const deadline = Date.now() + STOP_GRACE_MS
+  const poll = setInterval(() => {
+    if (!groupAlive(pid)) {
+      clearInterval(poll)
+    } else if (Date.now() > deadline) {
+      clearInterval(poll)
+      try {
+        process.kill(-pid, 'SIGKILL')
+      } catch {
+        // gone in the meantime
+      }
+    }
+  }, 100)
 }
