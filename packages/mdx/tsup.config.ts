@@ -33,6 +33,8 @@ const moduleEntries = publicEntries.flatMap(entry =>
 export default defineConfig({
   entry: [...new Set([...publicEntries, ...moduleEntries])],
   format: ['esm'],
+  // Read by scripts/design-system/preserve-use-client.mjs, which deletes it.
+  metafile: true,
   dts: { entry: publicEntries },
   clean: true,
   sourcemap: true,

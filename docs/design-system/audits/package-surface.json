@@ -425,7 +425,7 @@
         "react-hook-form": "^7.81.0"
       },
       "qualityScripts": {
-        "build": "tsup",
+        "build": "tsup && node ../../scripts/design-system/preserve-use-client.mjs",
         "lint": "eslint . --cache --max-warnings 11",
         "test": "vitest run",
         "test:watch": "vitest",
@@ -518,7 +518,7 @@
         "react-dom": "^19.1.0"
       },
       "qualityScripts": {
-        "build": "tsup",
+        "build": "tsup && node ../../scripts/design-system/preserve-use-client.mjs",
         "lint": "eslint . --cache --max-warnings 0",
         "test": "vitest run",
         "test:watch": "vitest",

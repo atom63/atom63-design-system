@@ -34,6 +34,8 @@ export default defineConfig({
   entry: [...new Set([...publicEntries, ...rootModuleEntries])],
   external: ['react', 'react-dom', 'motion', 'motion/react'],
   format: ['esm'],
+  // Read by scripts/design-system/preserve-use-client.mjs, which deletes it.
+  metafile: true,
   sourcemap: true,
   treeshake: true,
 })
