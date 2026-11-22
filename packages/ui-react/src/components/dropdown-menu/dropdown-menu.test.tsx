@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   DropdownMenu,
@@ -7,6 +8,8 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
   DropdownMenuSeparator,
   DropdownMenuShortcut,
   DropdownMenuSub,
@@ -81,5 +84,78 @@ describe('DropdownMenu', () => {
     ).not.toBeNull()
     expect(portalContainer).toHaveTextContent('Email')
     portalContainer.remove()
+  })
+
+  it('portals into portalProps.container when no portalContainer is given', () => {
+    const host = document.createElement('div')
+    document.body.append(host)
+
+    render(
+      <DropdownMenu defaultOpen>
+        <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+        <DropdownMenuContent portalProps={{ container: host }}>
+          <DropdownMenuItem>Email</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+
+    expect(host.querySelector('[data-slot="dropdown-menu-content"]')).not.toBeNull()
+    host.remove()
+  })
+
+  it('marks the checked checkbox and the selected radio item', () => {
+    render(
+      <DropdownMenu defaultOpen>
+        <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuCheckboxItem defaultChecked>Grid</DropdownMenuCheckboxItem>
+          <DropdownMenuCheckboxItem>Rulers</DropdownMenuCheckboxItem>
+          <DropdownMenuRadioGroup defaultValue="name">
+            <DropdownMenuRadioItem value="name">Name</DropdownMenuRadioItem>
+            <DropdownMenuRadioItem value="date">Date</DropdownMenuRadioItem>
+          </DropdownMenuRadioGroup>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+
+    expect(screen.getByRole('menuitemcheckbox', { name: 'Grid' })).toHaveAttribute(
+      'aria-checked',
+      'true'
+    )
+    expect(screen.getByRole('menuitemcheckbox', { name: 'Rulers' })).toHaveAttribute(
+      'aria-checked',
+      'false'
+    )
+    expect(screen.getByRole('menuitemradio', { name: 'Name' })).toHaveAttribute(
+      'aria-checked',
+      'true'
+    )
+    expect(screen.getByRole('menuitemradio', { name: 'Date' })).toHaveAttribute(
+      'aria-checked',
+      'false'
+    )
+  })
+
+  it('does not fire onClick on a disabled item', async () => {
+    const user = userEvent.setup()
+    const onDisabled = vi.fn()
+    const onEnabled = vi.fn()
+
+    render(
+      <DropdownMenu defaultOpen modal={false}>
+        <DropdownMenuTrigger>Open</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuItem disabled onClick={onDisabled}>
+            Duplicate
+          </DropdownMenuItem>
+          <DropdownMenuItem onClick={onEnabled}>Copy</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    )
+
+    await user.click(screen.getByText('Duplicate'))
+    expect(onDisabled).not.toHaveBeenCalled()
+    await user.click(screen.getByText('Copy'))
+    expect(onEnabled).toHaveBeenCalledTimes(1)
   })
 })

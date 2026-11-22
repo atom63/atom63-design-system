@@ -70,6 +70,7 @@ import { DialogSizeAlias } from '@atom63/ui-foundation';
 import { Drawer as Drawer_2 } from '@base-ui/react/drawer';
 import { DrawerDirection } from '@atom63/ui-foundation';
 import { DrawerFooterVariant } from '@atom63/ui-foundation';
+import { DropdownMenuItemVariant } from '@atom63/ui-foundation';
 import { EmptyMediaVariant } from '@atom63/ui-foundation';
 import { FeedbackStateKind } from '@atom63/ui-foundation';
 import { FeedbackStateSize } from '@atom63/ui-foundation';
@@ -1293,10 +1294,9 @@ export function DropdownMenuItem(input: DropdownMenuItemProps): React$1.ReactEle
 
 // @public (undocumented)
 export interface DropdownMenuItemProps extends Menu.Item.Props {
-    // (undocumented)
     inset?: boolean;
     // (undocumented)
-    variant?: 'default' | 'destructive';
+    variant?: DropdownMenuItemVariant;
 }
 
 // @public (undocumented)
@@ -2056,7 +2056,7 @@ export { PointerInput }
 // @public (undocumented)
 export function Popover(props: Popover_2.Root.Props): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export function PopoverAnchor(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -2069,6 +2069,11 @@ export function PopoverContent(input: PopoverContentProps): React$1.ReactElement
 export interface PopoverContentProps extends Popover_2.Popup.Props {
     // (undocumented)
     align?: Popover_2.Positioner.Props['align'];
+    // (undocumented)
+    alignOffset?: Popover_2.Positioner.Props['alignOffset'];
+    anchor?: Popover_2.Positioner.Props['anchor'];
+    // (undocumented)
+    collisionPadding?: Popover_2.Positioner.Props['collisionPadding'];
     // (undocumented)
     portalContainer?: Popover_2.Portal.Props['container'];
     // (undocumented)
@@ -2084,7 +2089,7 @@ export function PopoverDescription(input: Popover_2.Description.Props): React$1.
 export function PopoverHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function PopoverPortal(props: Popover_2.Portal.Props): React$1.ReactElement;
+export function PopoverPortal(input: Popover_2.Portal.Props): React$1.ReactElement;
 
 // @public (undocumented)
 export function PopoverTitle(input: Popover_2.Title.Props): React$1.ReactElement;
@@ -2874,7 +2879,7 @@ export const TINT_MAX_LUMINANCE = 0.015;
 export { toast }
 
 // @public (undocumented)
-export function Toaster(input: ToasterProps): React$1.ReactElement;
+export function Toaster(input: ToasterProps): React$1.ReactElement | null;
 
 // @public (undocumented)
 export interface ToasterProps extends ToasterProps_2 {

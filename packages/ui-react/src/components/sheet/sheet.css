@@ -149,6 +149,17 @@
   gap: var(--a63-space-2);
   padding: var(--a63-space-6);
 }
+/* Reserve the close button's corner so a long title wraps before it instead of
+   running under it. The button is a Button size="icon" inset by space-2. */
+[data-slot='sheet-popup']:has(> .a63-Sheet-close-button) .a63-Sheet-header {
+  padding-inline-end: calc(
+    var(--a63-space-4) +
+      max(
+        calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+        var(--a63-control-min-size)
+      )
+  );
+}
 /* Tighten the header's bottom padding when a panel follows it. */
 [data-slot='sheet-popup']:has([data-slot='sheet-panel']) .a63-Sheet-header {
   padding-bottom: var(--a63-space-3);

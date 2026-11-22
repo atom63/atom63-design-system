@@ -7,7 +7,7 @@ import {
   OctagonXIcon,
   TriangleAlertIcon,
 } from 'lucide-react'
-import type * as React from 'react'
+import * as React from 'react'
 import { createPortal } from 'react-dom'
 import { Toaster as Sonner, type ToasterProps as SonnerToasterProps } from 'sonner'
 
@@ -53,6 +53,43 @@ const inverseToastStyle: React.CSSProperties = {
   paddingInline: 'var(--a63-space-4)',
 }
 
+/* Sonner renders each toast, its icon and its title itself and takes no data
+   attributes for them, so the host stamps the contract slots on them. */
+const partSlots = [
+  ['[data-sonner-toast]', { 'data-slot': toasterContract.slots[1] }],
+  ['[data-sonner-toast] [data-icon]', { 'data-slot': toasterContract.slots[2] }],
+  ['[data-sonner-toast] [data-title]', { 'data-slot': toasterContract.slots[3] }],
+] as const
+
+function stampPartSlots(root: Element) {
+  for (const [selector, attributes] of partSlots) {
+    for (const part of root.querySelectorAll(selector)) {
+      part.setAttribute('data-slot', attributes['data-slot'])
+    }
+  }
+}
+
+/* Sonner reads the direction from <html> only. A host inside a UIProvider
+   dir="rtl" region takes that region's direction instead. */
+function directionOf(container: HTMLElement | ShadowRoot): ToasterProps['dir'] {
+  const element = 'host' in container ? container.host : container
+  const dir = element.closest('[dir]')?.getAttribute('dir')
+  return dir === 'rtl' || dir === 'ltr' ? dir : undefined
+}
+
+/* Sonner's default 24px (16px below 600px) offsets, plus the safe-area insets,
+   so a toast clears a notch or a home indicator. */
+const safeAreaOffset = (space: string) => ({
+  bottom: `calc(${space} + var(--a63-safe-area-bottom, 0px))`,
+  left: `calc(${space} + var(--a63-safe-area-left, 0px))`,
+  right: `calc(${space} + var(--a63-safe-area-right, 0px))`,
+  top: `calc(${space} + var(--a63-safe-area-top, 0px))`,
+})
+const subscribeToNothing = () => () => {}
+
+const defaultOffset = safeAreaOffset('var(--a63-space-6)')
+const defaultMobileOffset = safeAreaOffset('var(--a63-space-4)')
+
 /*
  * Toaster — the sonner host that renders toasts raised inside this package
  * (CopyButton being the main one). It ships here so consuming apps do not need
@@ -61,19 +98,49 @@ const inverseToastStyle: React.CSSProperties = {
  * Colors and font resolve from the theme contract rather than sonner's built-in
  * palette and system stack. PortalContainerProvider keeps a host inside a
  * nested theme region; without one, the host keeps its document-body fallback.
+ * Raise toasts with `toast()` and its tones `toast.info`, `toast.success`,
+ * `toast.warning`, `toast.error` and `toast.loading`. The English labels are
+ * props: `containerAriaLabel` names the region ("Notifications") and
+ * `toastOptions.closeButtonAriaLabel` the close button ("Close toast").
  */
 export function Toaster({
+  className,
+  dir,
+  mobileOffset = defaultMobileOffset,
+  offset = defaultOffset,
   style,
   toastOptions,
   variant = toasterContract.defaultVariant,
   ...props
-}: ToasterProps): React.ReactElement {
+}: ToasterProps): React.ReactElement | null {
   const inverse = variant === 'inverse'
   const portalContainer = usePortalContainer()
+  const [section, setSection] = React.useState<HTMLElement | null>(null)
+
+  React.useEffect(() => {
+    if (!section) return
+    stampPartSlots(section)
+    const observer = new MutationObserver(() => stampPartSlots(section))
+    observer.observe(section, { childList: true, subtree: true })
+    return () => observer.disconnect()
+  }, [section])
+
+  // The host portals on the client only, so the server and the hydrating client
+  // both render nothing and the portal mounts after hydration.
+  const mounted = React.useSyncExternalStore(
+    subscribeToNothing,
+    () => true,
+    () => false
+  )
+  const container = mounted ? (portalContainer ?? document.body) : null
   const toaster = (
     <Sonner
-      className="toaster group"
+      className={cn('a63-Toaster toaster group', className)}
       data-slot={toasterContract.slots[0]}
+      dir={dir ?? (container ? directionOf(container) : undefined)}
+      mobileOffset={mobileOffset}
+      offset={offset}
+      ref={setSection}
       icons={{
         error: <OctagonXIcon className="size-4" />,
         info: <InfoIcon className="size-4" />,
@@ -103,9 +170,5 @@ export function Toaster({
     />
   )
 
-  if (typeof document === 'undefined') {
-    return toaster
-  }
-
-  return createPortal(toaster, portalContainer ?? document.body)
+  return container ? createPortal(toaster, container) : null
 }
