@@ -62,7 +62,12 @@ export {
   AvatarImage,
   AvatarPrimitive,
 } from './components/avatar'
-export type { AvatarProps, AvatarSize } from './components/avatar'
+export type {
+  AvatarBadgeProps,
+  AvatarGroupCountProps,
+  AvatarProps,
+  AvatarSize,
+} from './components/avatar'
 export { Badge } from './components/badge'
 export type { BadgeProps } from './components/badge'
 export {

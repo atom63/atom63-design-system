@@ -30,6 +30,25 @@ const LONG_ITEMS = [
   { value: 'integrations', label: 'Connected integrations' },
 ]
 
+const DISABLED_ITEMS = [
+  { value: 'list', label: 'List' },
+  { value: 'grid', label: 'Grid' },
+  { value: 'tree', label: 'Tree', disabled: true },
+]
+
+const ARABIC_ITEMS = [
+  { value: 'list', label: 'قائمة' },
+  { value: 'grid', label: 'شبكة' },
+  { value: 'tree', label: 'شجرة' },
+]
+
+const ARABIC_LONG_ITEMS = [
+  { value: 'overview', label: 'نظرة عامة على المشروع' },
+  { value: 'activity', label: 'النشاط الأخير' },
+  { value: 'permissions', label: 'أذونات الوصول' },
+  { value: 'integrations', label: 'التكاملات المتصلة' },
+]
+
 function Demo({
   animateBackplate,
   initialValue = 'list',
@@ -41,7 +60,7 @@ function Demo({
 }: {
   animateBackplate?: boolean
   initialValue?: string
-  items?: typeof ITEMS
+  items?: { disabled?: boolean; label: string; value: string }[]
   size?: (typeof segmentedControlSizes)[number]
   tabClassName?: string
   tone?: (typeof segmentedControlTones)[number]
@@ -133,6 +152,112 @@ export const MobileOverflow: Story = {
       </div>
     </UIProvider>
   ),
+}
+
+/* Rest, selected and a disabled segment (Tree) in light and dark. The Hover and
+   FocusVisible stories capture the same rows with the first row's state forced
+   (parameters.visualState, see apps/storybook/README.md). */
+function StateRows() {
+  return (
+    <div style={{ display: 'grid', gap: 12 }}>
+      {(['light', 'dark'] as const).map(mode => (
+        <UIProvider key={mode} mode={mode}>
+          <div
+            data-mode-row={mode}
+            style={{
+              alignItems: 'center',
+              background: 'var(--a63-surface-page)',
+              display: 'flex',
+              gap: 16,
+              padding: 12,
+            }}
+          >
+            <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12, width: 48 }}>
+              {mode}
+            </span>
+            <Demo items={DISABLED_ITEMS} />
+            <Demo items={DISABLED_ITEMS} tone="accent" />
+          </div>
+        </UIProvider>
+      ))}
+    </div>
+  )
+}
+
+export const States: Story = {
+  render: () => <StateRows />,
+  play: async ({ canvasElement }) => {
+    const disabled = canvasElement.querySelector(
+      '[data-slot="segmented-control-item"][data-disabled]'
+    )
+    if (!disabled) throw new Error('No disabled segment rendered')
+    if (!disabled.matches(':disabled') && disabled.getAttribute('aria-disabled') !== 'true')
+      throw new Error('The disabled segment is not disabled for assistive technology')
+  },
+}
+
+/* The visual project hovers Grid, the first unselected segment, with the real pointer. */
+export const Hover: Story = {
+  render: () => <StateRows />,
+  parameters: {
+    visualState: { hover: '[data-slot="segmented-control-item"]:not([data-checked])' },
+  },
+}
+
+/* The visual project tabs into the first group, which focuses its selected segment. */
+export const FocusVisible: Story = {
+  render: () => <StateRows />,
+  parameters: {
+    visualState: { focusVisible: '[data-slot="segmented-control-item"][data-checked]' },
+  },
+}
+
+/* Right to left, in a track that fits and in one that scrolls: the sliding plate
+   covers the selected segment in both, at rest and after the track scrolls. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl">
+      <div style={{ display: 'grid', gap: 16, justifyItems: 'start' }}>
+        <Demo initialValue="grid" items={ARABIC_ITEMS} />
+        <div data-testid="rtl-overflow" style={{ maxWidth: 240 }}>
+          <Demo initialValue="permissions" items={ARABIC_LONG_ITEMS} />
+        </div>
+      </div>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const frame = () => new Promise(resolve => requestAnimationFrame(() => resolve(null)))
+    const expectCovered = (when: string) => {
+      const controls = canvasElement.querySelectorAll('[data-slot="segmented-control"]')
+      if (controls.length !== 2) throw new Error(`Expected 2 controls, found ${controls.length}`)
+      for (const control of controls) {
+        const selected = control.querySelector('[data-slot="segmented-control-item"][data-checked]')
+        const plate = control.querySelector<HTMLElement>(
+          '[data-slot="segmented-control-indicator"]'
+        )
+        if (!selected || !plate || plate.hidden)
+          throw new Error(`${when}: no selected segment or plate`)
+        const a = selected.getBoundingClientRect()
+        const b = plate.getBoundingClientRect()
+        if (Math.abs(a.left - b.left) > 1 || Math.abs(a.width - b.width) > 1)
+          throw new Error(
+            `${when}: the plate (${b.left}, ${b.width}) does not cover the selected segment (${a.left}, ${a.width})`
+          )
+      }
+    }
+    await frame()
+    expectCovered('At rest')
+    const track = canvasElement.querySelector<HTMLElement>(
+      '[data-testid="rtl-overflow"] [data-slot="segmented-control-track"]'
+    )
+    if (!track || track.scrollWidth <= track.clientWidth)
+      throw new Error('The RTL overflow track does not scroll')
+    track.scrollLeft = -(track.scrollWidth - track.clientWidth)
+    await frame()
+    expectCovered('Scrolled to the end')
+    track.scrollLeft = 0
+    await frame()
+  },
 }
 
 export const Variants: Story = {

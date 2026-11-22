@@ -90,4 +90,20 @@ describe('Avatar', () => {
     expect(ring('seen')).toBe('seen')
     expect(ring(false)).toBeNull()
   })
+
+  it('names a status badge and spells out the group count for assistive technology', () => {
+    const { container } = render(
+      <AvatarGroup>
+        <Avatar>
+          <AvatarBadge label="Online" />
+        </Avatar>
+        <AvatarGroupCount label="5 more people">+5</AvatarGroupCount>
+      </AvatarGroup>
+    )
+    const badge = container.querySelector('[data-slot="avatar-badge"]')
+    expect(badge).toHaveTextContent('Online')
+    const count = container.querySelector('[data-slot="avatar-group-count"]')
+    expect(count?.querySelector('[aria-hidden]')).toHaveTextContent('+5')
+    expect(count?.querySelector('.a63-Avatar-sr-only')).toHaveTextContent('5 more people')
+  })
 })

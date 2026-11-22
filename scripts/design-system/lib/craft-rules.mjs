@@ -9,10 +9,11 @@
  *   inside `color-mix()`), and Tailwind palette or arbitrary color utilities in
  *   TS/TSX. `#0000` (the transparent "no shadow" idiom), `transparent` and
  *   `currentColor` pass, and so do masks, where a color only carries alpha.
- * - `physical-properties`: spacing, text alignment, side borders and corner
- *   radii use logical directions so layouts mirror in right-to-left scripts.
- *   `left`/`right` positioning is out of scope for now. Padding that follows a
- *   physical safe-area inset (`env(safe-area-inset-left)`) passes.
+ * - `physical-properties`: spacing, text alignment, side borders, corner
+ *   radii and `left`/`right` insets use logical directions
+ *   (`inset-inline-start`/`-end`) so layouts mirror in right-to-left scripts.
+ *   `top`/`bottom` do not mirror and pass. Padding that follows a physical
+ *   safe-area inset (`env(safe-area-inset-left)`) passes.
  * - `focus-visible`: focus styles follow `:focus-visible`, so a pointer press
  *   does not draw a keyboard focus ring. `:focus-within` passes, and so does a
  *   `:focus` rule or `focus:` utility that only removes the outline.
@@ -87,7 +88,7 @@ const CSS_LITERAL_COLOR = new RegExp(
   'gi'
 )
 const CSS_PHYSICAL_PROPERTY =
-  /^(?:margin|padding|scroll-margin|scroll-padding)-(?:left|right)$|^border-(?:left|right)(?:-(?:width|style|color))?$|^border-(?:top|bottom)-(?:left|right)-radius$/
+  /^(?:left|right)$|^(?:margin|padding|scroll-margin|scroll-padding)-(?:left|right)$|^border-(?:left|right)(?:-(?:width|style|color))?$|^border-(?:top|bottom)-(?:left|right)-radius$/
 const CSS_FOCUS = /:focus(?![-\w])/
 const CSS_FOCUS_RESET = /^(?:outline(?:-style)?\s*:\s*(?:none|0)|box-shadow\s*:\s*none)$/
 const CSS_MASK_PROPERTY = /^(?:-webkit-)?mask(?:-image)?$/

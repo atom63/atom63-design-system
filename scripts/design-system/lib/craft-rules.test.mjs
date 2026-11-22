@@ -51,7 +51,7 @@ describe('scanCss', () => {
     ])
   })
 
-  it('flags physical spacing, side borders, corner radii and text alignment', () => {
+  it('flags physical spacing, side borders, corner radii, text alignment and insets', () => {
     const css = `.a {
   margin-left: 1px;
   padding-inline-start: 1px;
@@ -60,6 +60,8 @@ describe('scanCss', () => {
   text-align: right;
   text-align: start;
   left: 0;
+  inset-inline-end: 0;
+  top: 0;
 }`
     assert.deepEqual(
       rules(scanCss(css)).filter(line => line.includes('physical')),
@@ -68,6 +70,7 @@ describe('scanCss', () => {
         '4 physical-properties border-right-color',
         '5 physical-properties border-top-left-radius',
         '6 physical-properties text-align: right',
+        '8 physical-properties left',
       ]
     )
   })

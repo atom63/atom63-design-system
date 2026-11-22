@@ -2,7 +2,7 @@ import type { BadgeDotColor, BadgeSize, BadgeVariant } from '@atom63/ui-foundati
 import { badgeContract } from '@atom63/ui-foundation'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
-import type * as React from 'react'
+import * as React from 'react'
 
 import { cn } from '../../lib/cn'
 
@@ -11,6 +11,20 @@ export type BadgeProps = useRender.ComponentProps<'span'> & {
   size?: BadgeSize
   /** A leading dot: `true` draws it in the text color, a palette hue in that hue. */
   dot?: boolean | BadgeDotColor
+}
+
+/* Text goes in `.a63-Badge-label`, which truncates with an ellipsis when the
+   badge is capped at its container's width. */
+function wrapText(children: React.ReactNode): React.ReactNode {
+  return React.Children.map(children, child =>
+    typeof child === 'string' || typeof child === 'number' ? (
+      <span className="a63-Badge-label" data-slot="badge-label">
+        {child}
+      </span>
+    ) : (
+      child
+    )
+  )
 }
 
 /* A small labeled chip — the marker archetype. Renders a <span> by default;
@@ -37,10 +51,10 @@ export function Badge({
           data-color={dot === true ? undefined : dot}
           data-slot="badge-dot"
         />
-        {children}
+        {wrapText(children)}
       </>
     ) : (
-      children
+      wrapText(children)
     ),
   }
   return useRender({

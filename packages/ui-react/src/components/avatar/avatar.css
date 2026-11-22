@@ -113,11 +113,11 @@
   block-size: var(--a63-control-icon-size-lg);
 }
 
-/* ── Status badge (pinned to the bottom-right, ringed against the page) ──── */
+/* ── Status badge (pinned to the bottom end corner, ringed against the page) ── */
 .a63-Avatar-badge {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  inset-block-end: 0;
+  inset-inline-end: 0;
   z-index: 1;
   display: inline-flex;
   align-items: center;
@@ -200,4 +200,22 @@
 .a63-Avatar-group:has([data-size='lg']) .a63-Avatar-group-count > svg {
   width: var(--a63-space-5);
   height: var(--a63-space-5);
+}
+
+/* The badge label and the spelled-out group count: read, not seen. */
+.a63-Avatar-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+/* Forced colors replace the badge fill with the page colour, so the dot would
+   vanish; draw it in the text colour instead. */
+@media (forced-colors: active) {
+  .a63-Avatar-badge {
+    background-color: CanvasText;
+  }
 }

@@ -163,6 +163,13 @@ Secondary actions in toolbars, list rows and card headers are ghost buttons with
 
 I make the safe form behavior explicit. A shared Button should not accidentally submit a form because it was mounted inside one.
 
+When `render` swaps the element (a router `Link`), the button is not native: it gets no `type` and no native `disabled`, and `disabled` sets `aria-disabled` and blocks the click. Pass `nativeButton` when `render` is itself a `<button>`.
+
+```tsx
+<Button render={<Link to="/blog" />}>Read the blog</Button>
+<Button nativeButton render={<button type="submit" />}>Send</Button>
+```
+
 ### Loading preserves layout
 
 Loading hides the label visually and overlays a spinner rather than swapping content. That keeps button width stable and avoids a small but very noticeable layout jump.
@@ -185,6 +192,16 @@ Loading hides the label visually and overlays a spinner rather than swapping con
 </DocExample>
 
 Compare the loading and resting buttons above: the label reserves its width, so the row never reflows when a request starts.
+
+A loading button stays focusable: it sets `aria-busy` and `aria-disabled` instead of the native `disabled` attribute, and blocks clicks and form submission while it works. A submit button that starts loading keeps keyboard focus, so a keyboard user is not dropped back to the top of the page. `disabled` still sets the native attribute.
+
+### Long labels truncate
+
+Labels never wrap. A button is at most as wide as its container, and a label longer than that truncates with an ellipsis; the full text stays the accessible name. Keep labels short, and test translated labels (German and Russian run long) in the narrowest container they appear in. Tile buttons are the exception: their caption wraps.
+
+### Indicator text in other languages
+
+The indicator adds "New" or "{n} new" to the accessible name. In another language, pass `indicatorLabel` with the translated text (`indicatorLabel="4 جديدة"`); include the drawn count in it.
 
 ### Themes change material, not intent
 

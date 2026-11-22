@@ -184,7 +184,7 @@ export const WithBadge: Story = {
     <Avatar>
       <AvatarImage src={SRC} alt="Ada" />
       <AvatarFallback>AL</AvatarFallback>
-      <AvatarBadge />
+      <AvatarBadge label="Online" />
     </Avatar>
   ),
 }
@@ -205,9 +205,44 @@ export const Group: Story = {
         <AvatarImage src="https://i.pravatar.cc/80?img=3" alt="Three" />
         <AvatarFallback>3</AvatarFallback>
       </Avatar>
-      <AvatarGroupCount>+5</AvatarGroupCount>
+      <AvatarGroupCount label="5 more people">+5</AvatarGroupCount>
     </AvatarGroup>
   ),
+}
+
+/* Right to left: the status badge pins to the bottom-start corner (the bottom
+   left) and the group stacks from the right. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl">
+      <div style={{ alignItems: 'center', display: 'flex', gap: 24 }}>
+        <Avatar size="lg">
+          <AvatarFallback>عل</AvatarFallback>
+          <AvatarBadge label="متصل" />
+        </Avatar>
+        <AvatarGroup>
+          <Avatar>
+            <AvatarFallback>سم</AvatarFallback>
+          </Avatar>
+          <Avatar>
+            <AvatarFallback>نو</AvatarFallback>
+          </Avatar>
+          <AvatarGroupCount label="5 أشخاص آخرين">+5</AvatarGroupCount>
+        </AvatarGroup>
+      </div>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const avatar = canvasElement.querySelector<HTMLElement>('[data-slot="avatar"]')
+    const badge = avatar?.querySelector<HTMLElement>('[data-slot="avatar-badge"]')
+    if (!avatar || !badge) throw new Error('Missing the avatar or its badge')
+    const a = avatar.getBoundingClientRect()
+    const b = badge.getBoundingClientRect()
+    if (Math.abs(b.left - a.left) > 1)
+      throw new Error(
+        `The badge does not pin to the inline end (left) in RTL: ${b.left} vs ${a.left}`
+      )
+  },
 }
 
 /* The avatar frame, fallback chip and status badge across all 4 DS themes × light/dark. */
@@ -234,7 +269,7 @@ export const Themes: Story = {
               <Avatar>
                 <AvatarImage src={SRC} alt="Ada" />
                 <AvatarFallback>AL</AvatarFallback>
-                <AvatarBadge />
+                <AvatarBadge label="Online" />
               </Avatar>
               <Avatar>
                 <AvatarFallback>YZ</AvatarFallback>
@@ -285,7 +320,7 @@ export const Endpoints: Story = {
               <Avatar>
                 <AvatarFallback>YZ</AvatarFallback>
               </Avatar>
-              <AvatarGroupCount>+3</AvatarGroupCount>
+              <AvatarGroupCount label="3 more people">+3</AvatarGroupCount>
             </AvatarGroup>
           </div>
         </UIProvider>
