@@ -134,7 +134,7 @@ the docs page [MDX blocks](https://system.atom63.io/patterns/pattern-mdx-blocks)
 and from the terminal with `atom63 api <Block>` (for example `atom63 api KeyIdea`) or
 `atom63 docs pattern-mdx-blocks`.
 
-Registered on `mdxComponents` / `blockMdxComponents`:
+Every name in `portableBlockNames` is registered on `mdxComponents` / `blockMdxComponents`, among them:
 
 | Component | Purpose |
 |-----------|---------|
