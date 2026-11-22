@@ -77,12 +77,12 @@
   },
   "summary": {
     "sourceFamilies": 82,
-    "sourceExports": 651,
+    "sourceExports": 652,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
       "beta-supported-core": 356,
-      "beta-supported-composition-conditional": 185
+      "beta-supported-composition-conditional": 186
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
@@ -1422,11 +1422,11 @@
       "source": "./components/sidebar",
       "family": "components/sidebar",
       "kind": "component-family",
-      "totalExports": 29,
+      "totalExports": 30,
       "valueExports": 24,
-      "typeExports": 5,
+      "typeExports": 6,
       "tierCounts": {
-        "beta-supported-composition-conditional": 29
+        "beta-supported-composition-conditional": 30
       },
       "dominantTier": "beta-supported-composition-conditional",
       "blockingTier": "beta-supported-composition-conditional",

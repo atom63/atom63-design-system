@@ -48,7 +48,7 @@
   },
   "counts": {
     "rootValueExports": 443,
-    "rootTypeExports": 208,
+    "rootTypeExports": 209,
     "packageExportKeys": 86,
     "cssExportKeys": 78
   },
@@ -3318,6 +3318,10 @@
         },
         {
           "name": "SidebarProviderProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarTriggerProps",
           "proposedTier": "beta-supported-composition-conditional"
         }
       ]

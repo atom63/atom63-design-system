@@ -1,4 +1,4 @@
-import { Button } from '@atom63/ui-react'
+import { Button, UIProvider } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Download, Plus } from 'lucide-react'
 
@@ -40,6 +40,78 @@ const args = {
 }
 
 export const Desktop: Story = { args }
+
+/* Checks that the actions keep their width and stay on the title's row. */
+const checkActionsBeside = (canvasElement: HTMLElement) => {
+  const header = canvasElement.querySelector('header')
+  const title = header?.querySelector('h1')
+  const actions = header?.lastElementChild
+  if (!header || !title || !(actions instanceof HTMLElement))
+    throw new Error('Expected a header with a title and actions')
+  const headerBox = header.getBoundingClientRect()
+  const actionsBox = actions.getBoundingClientRect()
+  if (actionsBox.right > headerBox.right + 1 || actionsBox.left < headerBox.left - 1)
+    throw new Error('The actions overflow the header')
+  if (actions.scrollWidth > actions.clientWidth + 1) throw new Error('The actions are squeezed')
+}
+
+/* A long title and description wrap in their column; the actions keep their size. */
+export const LongTitle: Story = {
+  args: {
+    ...args,
+    description:
+      'Every invoice sent to customers in the Northwind, Summit and Contoso regions this quarter, with what is still owed and what has been paid in full.',
+    title: 'Invoices for every customer in every region this quarter',
+  },
+  play: ({ canvasElement }) => checkActionsBeside(canvasElement),
+}
+
+export const NoDescription: Story = { args: { ...args, description: undefined } }
+
+/* Right-to-left with Arabic, then Chinese: the actions sit at the inline end. */
+export const RightToLeft: Story = {
+  args,
+  render: () => (
+    <div className="flex flex-col gap-10">
+      <UIProvider dir="rtl" lang="ar">
+        <PageHeader
+          actions={
+            <>
+              <Button variant="outline">
+                <Download aria-hidden />
+                تصدير
+              </Button>
+              <Button variant="primary">
+                <Plus aria-hidden />
+                فاتورة جديدة
+              </Button>
+            </>
+          }
+          description="تابع ما يدين به العملاء وما تم دفعه."
+          title="الفواتير"
+        />
+      </UIProvider>
+      <UIProvider lang="zh-CN">
+        <PageHeader
+          actions={<Button variant="primary">新建发票</Button>}
+          description="跟踪客户欠款和已付款项。"
+          title="发票"
+        />
+      </UIProvider>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    const header = canvasElement.querySelector('[dir="rtl"] header')
+    const title = header?.querySelector('h1')
+    const actions = header?.lastElementChild
+    if (!header || !title || !actions) throw new Error('Expected the RTL header')
+    if (
+      window.innerWidth >= 640 &&
+      actions.getBoundingClientRect().right > title.getBoundingClientRect().left
+    )
+      throw new Error('Under RTL the actions should sit to the left of the title')
+  },
+}
 
 export const Phone: Story = { args, globals: phoneGlobals }
 

@@ -1,4 +1,11 @@
-import { Badge, Button, DropdownMenuItem, DropdownMenuSeparator } from '@atom63/ui-react'
+import {
+  Badge,
+  Button,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  FeedbackState,
+  Skeleton,
+} from '@atom63/ui-react'
 import { Container, SectionHeader } from '@atom63/ui-react/layout'
 import { FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
 
@@ -17,7 +24,7 @@ export const template = {
   kind: 'page',
   title: 'Dashboard page',
   description:
-    'An overview inside the app shell: headline numbers, the most recent records and an activity feed, with one primary action.',
+    'An overview inside the app shell: headline numbers, the most recent records and an activity feed, with one primary action, and its loading, error and new-workspace states.',
   category: 'data',
   tags: ['dashboard', 'overview', 'home', 'stats', 'metrics', 'activity', 'app shell'],
   readiness: 'ready',
@@ -108,7 +115,47 @@ const columns: readonly DataTableColumn<Invoice>[] = [
 
 const recent = [...invoices].sort((a, b) => b.issued.localeCompare(a.issued)).slice(0, 4)
 
-export function DashboardContent() {
+/** What the overview shows: the data, placeholders, a failed load, or a new workspace. */
+export type DashboardState = 'ready' | 'loading' | 'error' | 'empty'
+
+export interface DashboardContentProps {
+  /** Called by the error state's "Try again". */
+  onRetry?: () => void
+  /** The headline numbers; the sample ones by default. */
+  stats?: readonly Stat[]
+  /** `ready` by default. */
+  state?: DashboardState
+}
+
+/* Placeholder rows shaped like a list, announced once as busy. */
+function LoadingBlock({ label, rows }: { label: string; rows: number }) {
+  return (
+    <div aria-busy="true" aria-label={label} className="flex flex-col gap-3" role="status">
+      {Array.from({ length: rows }, (_, index) => (
+        <Skeleton className="h-10 w-full rounded-md" key={index} />
+      ))}
+    </div>
+  )
+}
+
+/*
+ * A new workspace has no numbers yet: the stats read zero rather than
+ * disappearing, the recent invoices show their empty state with the way in,
+ * and the feed says nothing has happened.
+ */
+const emptyStats: readonly Stat[] = [
+  { label: 'Revenue', value: '$0' },
+  { label: 'Open invoices', value: '0' },
+  { label: 'Overdue', value: '0' },
+  { label: 'Customers', value: '0' },
+]
+
+export function DashboardContent({
+  onRetry,
+  stats: statsProp = stats,
+  state = 'ready',
+}: DashboardContentProps) {
+  const rows = state === 'empty' ? [] : recent
   return (
     <Container maxWidth="wide" padding="none">
       <PageHeader
@@ -121,39 +168,67 @@ export function DashboardContent() {
         description="September 2026 at a glance."
         title="Overview"
       />
-      <StatRow comparison="vs. August" stats={stats} />
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-        <section className="flex flex-col gap-4">
-          <SectionHeader level={2} title="Recent invoices" variant="muted" />
-          <DataTableSection
-            columns={columns}
-            empty={{
-              action: <Button variant="outline">New invoice</Button>,
-              description: 'Invoices you create appear here.',
-              title: 'No invoices yet',
-            }}
-            getRowKey={invoice => invoice.id}
-            headingLevel={3}
-            label="Recent invoices"
-            rows={recent}
-            summary={`The ${recent.length} most recent of ${invoices.length}`}
+      {state === 'error' ? (
+        <FeedbackState
+          actions={[{ label: 'Try again', onClick: onRetry, variant: 'outline' }]}
+          description="We couldn't load the overview. Check your connection and try again; nothing you saved is lost."
+          level={2}
+          state="error"
+          title="Couldn't load the overview"
+        />
+      ) : (
+        <>
+          <StatRow
+            comparison={state === 'ready' ? 'vs. August' : undefined}
+            loading={state === 'loading'}
+            stats={state === 'empty' ? emptyStats : statsProp}
           />
-        </section>
-        <section className="flex flex-col gap-4">
-          <SectionHeader level={2} title="Activity" variant="muted" />
-          <ActivityList items={activity} label="Recent activity" />
-        </section>
-      </div>
+          <div className="grid gap-8 lg:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <section className="flex flex-col gap-4">
+              <SectionHeader level={2} title="Recent invoices" variant="muted" />
+              {state === 'loading' ? (
+                <LoadingBlock label="Loading recent invoices" rows={4} />
+              ) : (
+                <DataTableSection
+                  columns={columns}
+                  empty={{
+                    action: <Button variant="outline">New invoice</Button>,
+                    description: 'Invoices you create appear here.',
+                    title: 'No invoices yet',
+                  }}
+                  getRowKey={invoice => invoice.id}
+                  headingLevel={3}
+                  label="Recent invoices"
+                  rows={rows}
+                  summary={`The ${rows.length} most recent of ${state === 'empty' ? 0 : invoices.length}`}
+                />
+              )}
+            </section>
+            <section className="flex flex-col gap-4">
+              <SectionHeader level={2} title="Activity" variant="muted" />
+              {state === 'loading' ? (
+                <LoadingBlock label="Loading activity" rows={4} />
+              ) : state === 'empty' ? (
+                <p className="text-muted-foreground text-sm">
+                  Nothing has happened yet. Sending your first invoice starts the feed.
+                </p>
+              ) : (
+                <ActivityList items={activity} label="Recent activity" />
+              )}
+            </section>
+          </div>
+        </>
+      )}
     </Container>
   )
 }
 
 /* The page in its app shell. An app that renders the shell once, around its
    routes, renders `DashboardContent` inside it instead. */
-export function DashboardPage() {
+export function DashboardPage(props: DashboardContentProps) {
   return (
     <AppShell navItems={nav} productName="Tally" user={user}>
-      <DashboardContent />
+      <DashboardContent {...props} />
     </AppShell>
   )
 }
