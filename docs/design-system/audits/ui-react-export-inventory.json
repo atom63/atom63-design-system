@@ -3946,6 +3946,10 @@
               "proposedTier": "beta-supported-core"
             },
             {
+              "name": "ContainerGap",
+              "proposedTier": "beta-supported-core"
+            },
+            {
               "name": "ContainerMaxWidth",
               "proposedTier": "beta-supported-core"
             },
@@ -4133,6 +4137,10 @@
             }
           ],
           "types": [
+            {
+              "name": "SectionHeaderAlign",
+              "proposedTier": "beta-supported-core"
+            },
             {
               "name": "SectionHeaderLevel",
               "proposedTier": "beta-supported-core"

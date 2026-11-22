@@ -1,4 +1,6 @@
 import {
+  FeedbackState,
+  Skeleton,
   Table,
   TableBody,
   TableCell,
@@ -46,12 +48,31 @@ export interface DataTableEmpty {
   title: string
 }
 
+export interface DataTableError {
+  description: string
+  /** Shows a retry button that calls it. */
+  onRetry?: () => void
+  /** @default 'Try again' */
+  retryLabel?: string
+  title: string
+}
+
 export interface DataTableSectionProps<Row> {
+  /** The visually hidden header of the row-actions column. */
+  actionsLabel?: string
   /** Names the table and the phone list for assistive technology. */
   label: string
+  /** Replaces the rows with placeholder rows, announced with `loadingLabel`. */
+  loading?: boolean
+  /** @default 'Loading' */
+  loadingLabel?: string
   /** The first column is the row's title in the phone layout. */
   columns: readonly DataTableColumn<Row>[]
   empty: DataTableEmpty
+  /** The empty state's icon, a lucide element marked `aria-hidden`. Defaults to `SearchX`. */
+  emptyIcon?: ReactNode
+  /** Replaces the rows with an error and an optional retry; it wins over `loading`. */
+  error?: DataTableError
   getRowKey: (row: Row) => string
   /** Heading level of the empty state's title: one below the heading above the section. */
   headingLevel?: 2 | 3 | 4
@@ -91,11 +112,16 @@ const columnClass = <Row,>(column: DataTableColumn<Row>) =>
  * accessibility tree.
  */
 export function DataTableSection<Row>({
+  actionsLabel = 'Actions',
   columns,
   empty,
+  emptyIcon = <SearchX aria-hidden />,
+  error,
   getRowKey,
   headingLevel = 2,
   label,
+  loading = false,
+  loadingLabel = 'Loading',
   onSortChange,
   pagination,
   renderPhoneRow,
@@ -111,12 +137,46 @@ export function DataTableSection<Row>({
       <p aria-live="polite" className="text-muted-foreground text-sm">
         {summary}
       </p>
-      {rows.length === 0 ? (
+      {error ? (
+        <FeedbackState
+          actions={
+            error.onRetry
+              ? [
+                  {
+                    icon: 'refreshCw',
+                    label: error.retryLabel ?? 'Try again',
+                    onClick: error.onRetry,
+                    variant: 'outline',
+                  },
+                ]
+              : undefined
+          }
+          description={error.description}
+          level={headingLevel}
+          state="error"
+          title={error.title}
+        />
+      ) : loading ? (
+        <div
+          aria-label={loadingLabel}
+          className="divide-border border-border flex flex-col divide-y rounded-lg border"
+          data-slot="data-table-loading"
+          role="status"
+        >
+          {[0, 1, 2, 3, 4].map(index => (
+            <div className="flex items-center gap-4 p-4" key={index}>
+              <Skeleton className="h-4 min-w-0 flex-1" />
+              <Skeleton className="hidden h-4 w-24 sm:block" />
+              <Skeleton className="h-4 w-16" />
+            </div>
+          ))}
+        </div>
+      ) : rows.length === 0 ? (
         <EmptyState
           action={empty.action}
           description={empty.description}
           headingLevel={headingLevel}
-          icon={<SearchX aria-hidden />}
+          icon={emptyIcon}
           title={empty.title}
         />
       ) : (
@@ -138,7 +198,7 @@ export function DataTableSection<Row>({
                   ))}
                   {rowActions ? (
                     <TableHead className="w-0">
-                      <span className="sr-only">Actions</span>
+                      <span className="sr-only">{actionsLabel}</span>
                     </TableHead>
                   ) : null}
                 </TableRow>
@@ -146,7 +206,7 @@ export function DataTableSection<Row>({
               <TableBody>
                 {rows.map(row => (
                   <TableRow
-                    data-selected={getRowKey(row) === selectedRowKey ? '' : undefined}
+                    data-state={getRowKey(row) === selectedRowKey ? 'selected' : undefined}
                     key={getRowKey(row)}
                   >
                     {columns.map(column => (
@@ -164,11 +224,16 @@ export function DataTableSection<Row>({
           </div>
           <ul
             aria-label={label}
-            className="divide-border border-border flex flex-col divide-y rounded-lg border sm:hidden"
+            className="divide-border border-border flex flex-col divide-y overflow-hidden rounded-lg border sm:hidden"
           >
             {rows.map(row => (
               <li
-                className={renderPhoneRow ? undefined : 'flex items-start gap-3 p-4'}
+                className={
+                  renderPhoneRow
+                    ? undefined
+                    : 'flex items-start gap-3 p-4 data-[selected]:bg-[var(--a63-selected-background)] data-[selected]:text-[var(--a63-selected-foreground)]'
+                }
+                data-selected={getRowKey(row) === selectedRowKey ? '' : undefined}
                 key={getRowKey(row)}
               >
                 {renderPhoneRow ? (

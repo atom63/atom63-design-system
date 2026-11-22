@@ -133,7 +133,7 @@ const foundation = [
   {
     name: 'Page',
     from: '@atom63/ui-react/layout',
-    use: 'The main landmark, when no app shell owns it.',
+    use: 'The main landmark and the safe-area insets, when no app shell owns them.',
   },
   { name: 'Container', from: '@atom63/ui-react/layout', use: 'The content width and inset.' },
   { name: 'Section', from: '@atom63/ui-react/layout', use: 'Rhythm between page regions.' },
@@ -142,7 +142,7 @@ const foundation = [
     from: '@atom63/ui-react/layout',
     use: 'Headings with their descriptions.',
   },
-]
+].map(entry => ({ ...entry, next: `atom63 api ${entry.name}` }))
 
 const playbook = [
   'Search for the closest page: `atom63 build <idea>` or `atom63 template --kind page`.',
