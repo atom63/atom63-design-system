@@ -17,6 +17,7 @@
     "build:example:dashboard": "pnpm --filter atom63-dashboard-example build",
     "build:example:vite-basic": "pnpm --filter atom63-vite-basic-example build",
     "changeset": "changeset",
+    "plate:palette": "node scripts/design-system/plate-palette.mjs",
     "check:agent-index": "pnpm --filter @atom63/cli check:index",
     "check:agents-md": "pnpm --filter @atom63/cli check:agents-md",
     "check:api-report": "node scripts/design-system/api-report.mjs --check",
