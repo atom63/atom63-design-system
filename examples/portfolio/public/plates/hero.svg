@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 2100 900" preserveAspectRatio="xMidYMid slice">
+  <!-- The sample hero plate. Replace this file, or point portfolio.config.ts at your own image. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1d2540"/>
+      <stop offset="0.55" stop-color="#34406b"/>
+      <stop offset="1" stop-color="#6b5a7e"/>
+    </linearGradient>
+    <radialGradient id="sun" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffd9a8"/>
+      <stop offset="0.6" stop-color="#f2a477"/>
+      <stop offset="1" stop-color="#d9735f"/>
+    </radialGradient>
+    <linearGradient id="hill" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#26304f"/>
+      <stop offset="1" stop-color="#141a2e"/>
+    </linearGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.07 0"/>
+    </filter>
+  </defs>
+  <rect width="2100" height="900" fill="url(#sky)"/>
+  <g fill="none" stroke="#c9b8d8" stroke-opacity="0.18" stroke-width="2">
+    <circle cx="1420" cy="430" r="250"/>
+    <circle cx="1420" cy="430" r="330"/>
+    <circle cx="1420" cy="430" r="420"/>
+    <circle cx="1420" cy="430" r="520"/>
+  </g>
+  <circle cx="1420" cy="430" r="180" fill="url(#sun)"/>
+  <path d="M0 640 C 320 560 560 600 820 650 S 1360 720 1620 640 S 1960 560 2100 600 V 900 H 0 Z" fill="#2c3760" opacity="0.9"/>
+  <path d="M0 720 C 280 680 600 700 900 760 S 1500 820 1800 760 S 2040 720 2100 730 V 900 H 0 Z" fill="url(#hill)"/>
+  <g fill="#ffd9a8" opacity="0.85">
+    <circle cx="380" cy="742" r="5"/>
+    <circle cx="640" cy="752" r="4"/>
+    <circle cx="1010" cy="788" r="5"/>
+    <circle cx="1690" cy="774" r="4"/>
+  </g>
+  <rect width="2100" height="900" filter="url(#grain)"/>
+</svg>

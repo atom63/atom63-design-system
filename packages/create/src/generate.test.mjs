@@ -121,6 +121,43 @@ describe('planProject', () => {
     }
   })
 
+  it('writes the portfolio kind with its modules and the chat panel', () => {
+    const portfolio = planProject({ name: 'my-portfolio', kind: 'portfolio', date: '2026-09-25' })
+    const portfolioManifest = JSON.parse(portfolio.get('package.json'))
+    for (const file of [
+      'src/router.tsx',
+      'src/portfolio.config.ts',
+      'src/pages/project-page.tsx',
+      'src/pages/timeline.tsx',
+      'src/pages/resume.tsx',
+      'src/content/projects/night-trip-planner.mdx',
+      'src/content/writing/designing-for-interruptions.mdx',
+      'src/modules/assistant/transport.ts',
+      'src/modules/slides/slides-pages.tsx',
+      'src/modules/widgets/widget-board.tsx',
+      'src/modules/dock/dock.tsx',
+      'src/templates/blocks/chat-panel/chat-panel.tsx',
+      'public/plates/hero.svg',
+    ]) {
+      assert.ok(portfolio.has(file), file)
+    }
+    assert.ok(!portfolio.has('src/content/posts.ts'))
+    assert.match(portfolio.get('src/portfolio.config.ts'), /title: 'My portfolio'/)
+    // The assistant is on by default; every other module is off.
+    assert.match(portfolio.get('src/portfolio.config.ts'), /assistant: true,/)
+    for (const module of ['slides', 'widgetBoard', 'dock']) {
+      assert.match(portfolio.get('src/portfolio.config.ts'), new RegExp(`${module}: false,`))
+    }
+    assert.equal(
+      portfolioManifest.dependencies['@atom63/agent'],
+      resolveVersions()['@atom63/agent']
+    )
+    assert.ok(portfolioManifest.dependencies['@atom63/widgets'])
+    assert.ok(portfolioManifest.dependencies['@atom63/mdx'])
+    assert.match(portfolio.get('README.md'), /## Modules/)
+    assert.match(portfolio.get('README.md'), /## The creative layer/)
+  })
+
   it('refuses an unknown kind', () => {
     assert.throws(() => planProject({ name: 'x', kind: 'shop' }), /Unknown kind "shop"/)
   })

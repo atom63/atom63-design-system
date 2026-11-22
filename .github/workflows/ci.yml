@@ -154,6 +154,8 @@ jobs:
       - name: Build the Vite example
         run: pnpm build:example:vite-basic
 
+      - name: Build the portfolio example
+        run: pnpm build:example:portfolio
       - name: Typecheck and build the dashboard example
         run: |
           pnpm --filter atom63-dashboard-example typecheck

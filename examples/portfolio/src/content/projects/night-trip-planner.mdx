@@ -1,0 +1,51 @@
+---
+title: A trip planner for the night network
+summary: Kelpline Transit's night riders could not tell which buses still ran. A planner built around the last departure cut missed connections by a third.
+date: '2026-03-12'
+featured: true
+role: Lead product designer
+timeline: Sep 2025 to Mar 2026
+team: 2 designers, 4 engineers, 1 researcher
+tools: [Figma, React, Atom63, Mapbox]
+cover: /projects/night-trip-planner/cover.svg
+coverAlt: Abstract map lines in deep blue with a highlighted night route
+---
+
+## Problem
+
+Kelpline Transit runs 14 night routes in a mid-sized coastal city. Its app showed the day timetable all night, so riders planned trips on buses that had stopped hours before. Support tickets about missed connections tripled every winter.
+
+<KeyIdea title="The question riders actually ask">
+  Not "when is the next bus" but "can I still get home, and when must I leave".
+</KeyIdea>
+
+## Role
+
+I led design from research to launch: I ran the ride-alongs with the researcher, owned the flows and the interface, and paired with two engineers on the timetable model so the design and the data agreed.
+
+## Process
+
+<Steps>
+  <Steps.Step title="Ride along">Eight night shifts on four routes, with riders and drivers. The pattern: people plan backwards from the last bus.</Steps.Step>
+  <Steps.Step title="Plan backwards">A planner that starts from "home by" and shows the latest safe departure, with the walk included.</Steps.Step>
+  <Steps.Step title="Test on real nights">Three rounds with 40 riders, on the routes they ride, after 11 pm.</Steps.Step>
+</Steps>
+
+<FigureBlock
+  alt="Three phone screens: the home-by picker, the latest departure and the walk"
+  aspectRatio="16/9"
+  caption="The planner works backwards from when you want to be home."
+  src="/projects/night-trip-planner/flow.svg"
+/>
+
+## Outcome
+
+<StatGrid>
+  <StatCard change="34% fewer" label="Missed connections" trend="up" value="1 in 9 trips" />
+  <StatCard label="Night trips planned" value="48k / month" />
+  <StatCard change="+1.1" label="App store rating" trend="up" value="4.6" />
+</StatGrid>
+
+<Quote by="Night route driver, depot interview">
+  People used to run for a bus that was never coming. Now they are at the stop early.
+</Quote>
