@@ -95,6 +95,29 @@ describe('Sheet', () => {
     expect(document.body).not.toHaveAttribute('data-sheet-open')
   })
 
+  it('marks the popup aria-modal unless modal={false}', () => {
+    const { unmount } = render(
+      <Sheet open>
+        <SheetContent>
+          <SheetTitle>Menu</SheetTitle>
+        </SheetContent>
+      </Sheet>
+    )
+    expect(document.querySelector('[data-slot="sheet-popup"]')).toHaveAttribute(
+      'aria-modal',
+      'true'
+    )
+    unmount()
+    render(
+      <Sheet modal={false} open>
+        <SheetContent>
+          <SheetTitle>Menu</SheetTitle>
+        </SheetContent>
+      </Sheet>
+    )
+    expect(document.querySelector('[data-slot="sheet-popup"]')).not.toHaveAttribute('aria-modal')
+  })
+
   it('lets closeProps replace the close icon', () => {
     render(
       <Sheet open>
