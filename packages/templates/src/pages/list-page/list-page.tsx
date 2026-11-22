@@ -122,7 +122,12 @@ export function ListContent({
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button aria-label={`Actions for ${invoice.id}`} size="icon-sm" variant="ghost">
+          <Button
+            aria-label={`Actions for ${invoice.id}`}
+            size="icon-sm"
+            tone="muted"
+            variant="ghost"
+          >
             <Ellipsis aria-hidden />
           </Button>
         }
@@ -167,7 +172,7 @@ export function ListContent({
           empty={
             invoices.length === 0
               ? {
-                  action: <Button variant="primary">New invoice</Button>,
+                  action: <Button variant="outline">New invoice</Button>,
                   description: 'Invoices you create appear here, with their status and amount.',
                   title: 'No invoices yet',
                 }
@@ -202,6 +207,7 @@ export function ListContent({
                   aria-label={`View ${invoice.id}`}
                   onClick={() => setOpenId(invoice.id)}
                   size="icon-sm"
+                  tone="muted"
                   variant="ghost"
                 >
                   <ChevronRight aria-hidden />
@@ -224,7 +230,7 @@ export function ListContent({
         actions={
           <>
             <Button variant="outline">Download PDF</Button>
-            {open?.status === 'paid' ? null : <Button variant="primary">Mark as paid</Button>}
+            {open?.status === 'paid' ? null : <Button variant="default">Mark as paid</Button>}
           </>
         }
         description={open?.customer}

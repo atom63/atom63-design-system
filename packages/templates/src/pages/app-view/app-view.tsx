@@ -101,7 +101,7 @@ export function AppViewPage() {
               <Toggle aria-label="Shuffle" size="sm">
                 <Shuffle aria-hidden />
               </Toggle>
-              <Button aria-label="Previous track" size="icon-sm" variant="ghost">
+              <Button aria-label="Previous track" size="icon-sm" tone="muted" variant="ghost">
                 <SkipBack aria-hidden />
               </Button>
               <Button
@@ -112,7 +112,7 @@ export function AppViewPage() {
               >
                 {playing ? <Pause aria-hidden /> : <Play aria-hidden />}
               </Button>
-              <Button aria-label="Next track" size="icon-sm" variant="ghost">
+              <Button aria-label="Next track" size="icon-sm" tone="muted" variant="ghost">
                 <SkipForward aria-hidden />
               </Button>
               <Toggle aria-label="Repeat" size="sm">
@@ -176,7 +176,7 @@ export function AppViewPage() {
       }
       topBar={
         <>
-          <Button aria-label="Home" size="icon" variant="ghost">
+          <Button aria-label="Home" size="icon" tone="muted" variant="ghost">
             <House aria-hidden />
           </Button>
           <form
@@ -192,7 +192,7 @@ export function AppViewPage() {
             />
           </form>
           <div className="ms-auto flex items-center gap-2">
-            <Button aria-label="Notifications" size="icon" variant="ghost">
+            <Button aria-label="Notifications" size="icon" tone="muted" variant="ghost">
               <Bell aria-hidden />
             </Button>
             <Avatar>
@@ -252,11 +252,11 @@ export function AppViewPhonePage() {
             aria-label={playing ? 'Pause' : 'Play'}
             onClick={() => setPlaying(!playing)}
             size="icon"
-            variant="primary"
+            variant="default"
           >
             {playing ? <Pause aria-hidden /> : <Play aria-hidden />}
           </Button>
-          <Button aria-label="Next track" size="icon" variant="ghost">
+          <Button aria-label="Next track" size="icon" tone="muted" variant="ghost">
             <SkipForward aria-hidden />
           </Button>
         </>

@@ -122,8 +122,17 @@ export const SuccessTablet: Story = { args: successArgs, globals: tabletGlobals 
 
 export const SuccessPhone: Story = { args: successArgs, globals: responsivePhoneGlobals }
 
-/* Nothing to list yet: the empty state offers the page's primary action. */
-export const NoInvoices: Story = { args: { invoices: [] } }
+/* Nothing to list yet: the empty state repeats the header's action as an outline button, so the view keeps one primary. */
+export const NoInvoices: Story = {
+  args: { invoices: [] },
+  play: async ({ canvas, canvasElement }) => {
+    await canvas.findByText('No invoices yet')
+    const primaries = canvasElement.querySelectorAll('[data-slot="button"][data-variant="primary"]')
+    if (primaries.length !== 1) {
+      throw new Error(`Expected one primary Button in the view, found ${primaries.length}`)
+    }
+  },
+}
 
 export const Themes: Story = {
   parameters: themeMatrixParameters,

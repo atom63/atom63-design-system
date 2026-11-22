@@ -129,3 +129,25 @@ test('fails a ready template without its visual baselines', () => {
   // A draft needs none.
   assert.deepEqual(checkTemplates([block(metadata()), page()], undefined, new Set()), [])
 })
+
+test('fails a template that trips a vibe Button warning', () => {
+  const buttons =
+    "import { Button } from '@atom63/ui-react'\n" +
+    'export const A = () => (\n' +
+    '  <>\n' +
+    '    <Button variant="primary">New</Button>\n' +
+    '    <Button variant="primary">New</Button>\n' +
+    '    <Button variant="ghost">More</Button>\n' +
+    '  </>\n' +
+    ')\n'
+  const problems = checkTemplates([block(buttons + metadata()), page()]).join('\n')
+  assert.match(problems, /page-header\.tsx:5 has the vibe warning multiple-primary/)
+  assert.match(problems, /page-header\.tsx:6 has the vibe warning ghost-without-tone/)
+  const calm = buttons
+    .replace(
+      'variant="primary">New</Button>\n    <Button variant="primary"',
+      'variant="primary">New</Button>\n    <Button variant="outline"'
+    )
+    .replace('variant="ghost"', 'tone="muted" variant="ghost"')
+  assert.deepEqual(checkTemplates([block(calm + metadata()), page()]), [])
+})
