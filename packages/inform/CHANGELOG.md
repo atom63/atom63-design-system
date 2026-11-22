@@ -1,5 +1,12 @@
 # @atom63/inform
 
+## 0.2.0-beta.7
+
+### Patch Changes
+
+- Updated dependencies [[`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de), [`986777c`](https://github.com/atom63/atom63-design-system/commit/986777cf20470248992e09e56ad89a3aa40fc149), [`567dbbf`](https://github.com/atom63/atom63-design-system/commit/567dbbf9a706f3bddfb839600eac069e30ec5baa)]:
+  - @atom63/ui-react@0.2.0-beta.16
+
 ## 0.2.0-beta.6
 
 ### Patch Changes
