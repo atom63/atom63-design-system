@@ -162,4 +162,45 @@ describe('Command', () => {
     const dialog = await screen.findByRole('dialog', { name: 'Jump to' })
     expect(dialog).not.toHaveAttribute('aria-labelledby')
   })
+
+  it('marks a modal dialog aria-modal, and a non-modal one not', async () => {
+    const { unmount } = render(
+      <CommandDialog open>
+        <CommandDialogPopup>
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    expect(await screen.findByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+    unmount()
+    render(
+      <CommandDialog modal={false} open>
+        <CommandDialogPopup>
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    expect(await screen.findByRole('dialog')).not.toHaveAttribute('aria-modal')
+  })
+
+  it('names the input by default, by `label`, or by aria-label', () => {
+    const { unmount } = render(<Fixture />)
+    expect(screen.getByRole('combobox', { name: 'Search commands' })).toBeInTheDocument()
+    unmount()
+    const { unmount: unmountLabel } = render(
+      <Command items={[]}>
+        <CommandInput label="Find a page" placeholder="Search…" />
+      </Command>
+    )
+    expect(screen.getByRole('combobox', { name: 'Find a page' })).toBeInTheDocument()
+    unmountLabel()
+    render(
+      <Command items={[]}>
+        <span id="palette-label">Jump to</span>
+        <CommandInput aria-labelledby="palette-label" placeholder="Search…" />
+      </Command>
+    )
+    const input = screen.getByRole('combobox', { name: 'Jump to' })
+    expect(input).not.toHaveAttribute('aria-label')
+  })
 })

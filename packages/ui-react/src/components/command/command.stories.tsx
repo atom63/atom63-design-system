@@ -156,16 +156,12 @@ export const Dialog: Story = {
     function Demo() {
       const [open, setOpen] = useState(false)
       return (
-        <>
-          <button onClick={() => setOpen(true)} style={triggerStyle} type="button">
-            Open command palette
-          </button>
-          <CommandDialog onOpenChange={setOpen} open={open}>
-            <CommandDialogPopup>
-              <Palette />
-            </CommandDialogPopup>
-          </CommandDialog>
-        </>
+        <CommandDialog onOpenChange={setOpen} open={open}>
+          <CommandDialogTrigger style={triggerStyle}>Open command palette</CommandDialogTrigger>
+          <CommandDialogPopup>
+            <Palette />
+          </CommandDialogPopup>
+        </CommandDialog>
       )
     }
     return <Demo />
