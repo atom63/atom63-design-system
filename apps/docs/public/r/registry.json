@@ -381,9 +381,10 @@
       "name": "app-shell",
       "type": "registry:block",
       "title": "App shell",
-      "description": "The frame of a product: a sidebar with the product name and main navigation, a top bar with the menu toggle, and the page as the main landmark.",
+      "description": "The frame of a product: a sidebar with the product name, the main navigation and the signed-in user at its foot (avatar, name, email or role, and an account menu), a top bar with the menu toggle, and the page as the main landmark.",
       "dependencies": [
-        "@atom63/ui-react"
+        "@atom63/ui-react",
+        "lucide-react"
       ],
       "registryDependencies": [],
       "categories": [
@@ -398,7 +399,11 @@
           "layout",
           "frame",
           "top bar",
-          "dashboard"
+          "dashboard",
+          "user",
+          "profile",
+          "account menu",
+          "avatar"
         ]
       },
       "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",

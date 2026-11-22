@@ -43,6 +43,19 @@ const nav = [
   { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
 
+/* The signed-in user at the foot of the sidebar, with the account menu. */
+const user = {
+  detail: 'ada@tally.app',
+  menu: (
+    <>
+      <DropdownMenuItem>Profile</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>Sign out</DropdownMenuItem>
+    </>
+  ),
+  name: 'Ada Park',
+}
+
 const statusOptions = [
   { label: 'All statuses', value: 'all' },
   { label: 'Paid', value: 'paid' },
@@ -258,7 +271,7 @@ export function ListContent({
    routes, renders `ListContent` inside it instead. */
 export function ListPage(props: ListPageProps) {
   return (
-    <AppShell navItems={nav} productName="Tally">
+    <AppShell navItems={nav} productName="Tally" user={user}>
       <ListContent {...props} />
     </AppShell>
   )
