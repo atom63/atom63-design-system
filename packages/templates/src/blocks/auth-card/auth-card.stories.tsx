@@ -2,7 +2,13 @@ import { Button, Field, FieldGroup, FieldLabel, Input } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useId } from 'react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { AuthCard } from './auth-card'
 
 function Demo() {
@@ -29,6 +35,8 @@ function Demo() {
 const meta = {
   title: 'Templates/Blocks/Auth card',
   component: Demo,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof Demo>
 
 export default meta

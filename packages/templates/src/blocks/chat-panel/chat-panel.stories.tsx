@@ -4,13 +4,18 @@ import { useOwnedAgentRuntime } from '@atom63/agent/react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useSyncExternalStore } from 'react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { ChatPanel, type ChatPanelMessage } from './chat-panel'
 
 const meta = {
   title: 'Templates/Blocks/Chat panel',
   component: ChatPanel,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...landmarkParameters },
 } satisfies Meta<typeof ChatPanel>
 
 export default meta
@@ -46,7 +51,7 @@ const args = {
 /* The layout places the panel; here it sits beside a stand-in for the product. */
 const beside = (children: React.ReactNode) => (
   <div className="bg-background text-foreground flex h-[40rem]">
-    <div className="text-muted-foreground flex-1 p-6 text-sm">Product content</div>
+    <main className="text-muted-foreground flex-1 p-6 text-sm">Product content</main>
     <div className="border-border w-full max-w-sm border-s">{children}</div>
   </div>
 )

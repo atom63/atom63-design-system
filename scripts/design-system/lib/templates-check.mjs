@@ -76,11 +76,20 @@ export function metadataProblems(metadata, { dir, id }) {
   return problems
 }
 
+/*
+ * Every stories file passes `landmarkParameters` (story-matrix.tsx), which
+ * turns on axe's `region` and `label-content-name-mismatch` rules, so page
+ * chrome a product copies must sit in landmarks and keep its visible labels.
+ */
 export function storyProblems(storySource) {
   if (storySource === null) return ['has no stories file']
-  return REQUIRED_STORIES.filter(
+  const problems = REQUIRED_STORIES.filter(
     name => !new RegExp(`export const ${name}\\b`).test(storySource)
   ).map(name => `stories file has no \`${name}\` story`)
+  if (!/\blandmarkParameters\b/.test(storySource)) {
+    problems.push('stories file does not pass `landmarkParameters` from story-matrix')
+  }
+  return problems
 }
 
 /** The visual baseline name of a template story, as the visual project writes it. */

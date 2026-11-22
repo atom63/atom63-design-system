@@ -1,7 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { FilterBar } from './filter-bar'
 
 const options = [
@@ -35,6 +41,8 @@ function Demo({ initialQuery = '' }: { initialQuery?: string }) {
 const meta = {
   title: 'Templates/Blocks/Filter bar',
   component: Demo,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof Demo>
 
 export default meta

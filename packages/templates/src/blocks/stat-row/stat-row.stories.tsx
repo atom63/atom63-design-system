@@ -1,11 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { StatRow } from './stat-row'
 
 const meta = {
   title: 'Templates/Blocks/Stat row',
   component: StatRow,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof StatRow>
 
 export default meta

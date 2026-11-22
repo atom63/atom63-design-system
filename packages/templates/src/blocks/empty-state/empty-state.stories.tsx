@@ -2,12 +2,20 @@ import { Button } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FolderPlus } from 'lucide-react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { EmptyState } from './empty-state'
 
 const meta = {
   title: 'Templates/Blocks/Empty state',
   component: EmptyState,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof EmptyState>
 
 export default meta

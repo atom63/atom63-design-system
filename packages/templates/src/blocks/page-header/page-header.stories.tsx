@@ -2,12 +2,20 @@ import { Button } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Download, Plus } from 'lucide-react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { PageHeader } from './page-header'
 
 const meta = {
   title: 'Templates/Blocks/Page header',
   component: PageHeader,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof PageHeader>
 
 export default meta

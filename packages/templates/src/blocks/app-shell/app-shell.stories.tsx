@@ -2,7 +2,13 @@ import { Button } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { FileText, LayoutDashboard, Settings } from 'lucide-react'
 
-import { checkSafeArea, phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  checkSafeArea,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { AppShell } from './app-shell'
 
 const args = {
@@ -23,7 +29,7 @@ const args = {
 const meta = {
   title: 'Templates/Blocks/App shell',
   component: AppShell,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...landmarkParameters },
 } satisfies Meta<typeof AppShell>
 
 export default meta

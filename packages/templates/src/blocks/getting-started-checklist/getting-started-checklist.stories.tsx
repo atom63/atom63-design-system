@@ -1,14 +1,21 @@
 import { Button } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { GettingStartedChecklist } from './getting-started-checklist'
 
 const meta = {
   title: 'Templates/Blocks/Getting started checklist',
   component: GettingStartedChecklist,
+  decorators: [inMain],
   // The card sizes to its container, so the story gives it the canvas width.
-  parameters: { layout: 'padded' },
+  parameters: { ...landmarkParameters, layout: 'padded' },
 } satisfies Meta<typeof GettingStartedChecklist>
 
 export default meta
