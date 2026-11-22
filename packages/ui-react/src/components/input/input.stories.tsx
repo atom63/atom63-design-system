@@ -8,6 +8,7 @@ import {
 import { Search, X } from 'lucide-react'
 import {
   Input,
+  type InputProps,
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
@@ -169,6 +170,83 @@ export const States: Story = {
         />
       </div>
     </EnvironmentShell>
+  ),
+}
+
+/* Rest, hover and keyboard focus side by side for one chrome. The visual project
+   hovers the second field and tabs to the third (parameters.visualState, see
+   apps/storybook/README.md "Visual states"). */
+function InteractionStates({ variant }: { variant: NonNullable<InputProps['variant']> }) {
+  const rows = [
+    ['Rest', 'rest'],
+    ['Hover', 'hover'],
+    ['Focus visible', 'focus'],
+  ] as const
+  return (
+    <UIProvider designLanguage="web" input="pointer" mode="light">
+      <PreviewCard label={`web / light / pointer / ${variant}`} style={{ maxWidth: '22rem' }}>
+        {rows.map(([label, target]) => (
+          <div key={target} style={{ display: 'grid', gap: '0.375rem' }}>
+            <span style={{ color: 'var(--a63-text-secondary)', fontSize: '0.75rem' }}>{label}</span>
+            <Input
+              aria-label={`${label} field`}
+              data-state-target={target}
+              defaultValue="Filled value"
+              style={{ width: '100%' }}
+              variant={variant}
+            />
+          </div>
+        ))}
+      </PreviewCard>
+    </UIProvider>
+  )
+}
+
+const interactionStates = {
+  visualState: {
+    hover: 'input[data-state-target="hover"]',
+    focusVisible: 'input[data-state-target="focus"]',
+  },
+}
+
+export const InteractionDefault: Story = {
+  render: () => <InteractionStates variant="default" />,
+  parameters: interactionStates,
+}
+
+export const InteractionFilled: Story = {
+  render: () => <InteractionStates variant="filled" />,
+  parameters: interactionStates,
+}
+
+export const InteractionPlain: Story = {
+  render: () => <InteractionStates variant="plain" />,
+  parameters: interactionStates,
+}
+
+/* A coarse web pointer: the field keeps the 32px control ramp and takes a 44px
+   tap through its hit strip (input.css; check:control-alignment measures it). */
+export const WebTouch: Story = {
+  render: () => (
+    <div
+      style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(2, minmax(0, 18rem))' }}
+    >
+      {(['pointer', 'touch'] as const).map(input => (
+        <UIProvider designLanguage="web" input={input} key={input} mode="light">
+          <PreviewCard label={`web / light / ${input}`}>
+            {inputSizes.map(size => (
+              <Input
+                aria-label={`Example text field, ${size}`}
+                defaultValue={size}
+                key={size}
+                size={size}
+                style={{ width: '100%' }}
+              />
+            ))}
+          </PreviewCard>
+        </UIProvider>
+      ))}
+    </div>
   ),
 }
 
@@ -340,7 +418,7 @@ export const Themes: Story = {
                 />
                 <Input
                   aria-label="Example text field, invalid"
-                  defaultValue="focused-look"
+                  defaultValue="Invalid entry"
                   invalid
                   style={{ width: '100%' }}
                 />

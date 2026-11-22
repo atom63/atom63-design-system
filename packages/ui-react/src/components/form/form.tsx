@@ -122,10 +122,12 @@ function FormControl({
 
   return useRender({
     defaultTagName: 'div',
+    // The wrapped control keeps its own data-slot (input, select-trigger...);
+    // data-form-control marks it as the item's control instead.
     props: {
       'aria-describedby': describedBy,
-      'aria-invalid': !!error,
-      'data-slot': 'form-control',
+      'aria-invalid': error ? true : undefined,
+      'data-form-control': '',
       id: formItemId,
       ...props,
     },
@@ -160,12 +162,12 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
   }
 
   return (
+    // An error is announced as an alert; a static message is plain text.
     <p
-      aria-live="polite"
       className={cn('a63-FormMessage', className)}
       data-slot="form-message"
       id={formMessageId}
-      role="alert"
+      role={error ? 'alert' : undefined}
       {...props}
     >
       {body}

@@ -49,6 +49,12 @@ export type { FieldOrientation }
 
 export type FieldProps = React.ComponentProps<'div'> & {
   orientation?: FieldOrientation
+  /** Tints the label and marks the control `aria-invalid`. A rendered
+   *  `FieldError` sets the same state, so you do not need both. */
+  invalid?: boolean
+  /** Dims the label and title. Set `disabled` on the control as well; Field
+   *  does not disable what it wraps. */
+  disabled?: boolean
 }
 
 type FieldPartKind = 'description' | 'error'
@@ -85,6 +91,8 @@ function useFieldPart(kind: FieldPartKind, idProp: string | undefined, active: b
 
 export function Field({
   className,
+  disabled = false,
+  invalid = false,
   orientation = 'vertical',
   ref,
   ...props
@@ -101,19 +109,22 @@ export function Field({
     []
   )
 
+  const isInvalid = invalid || parts.some(part => part.kind === 'error')
+
   // Field wraps any control (Input, Select, Checkbox...), so it links the
   // description and error to the control through the DOM, keeping any
-  // aria-describedby the control already has.
+  // aria-describedby the control already has, and marks it invalid.
   React.useLayoutEffect(() => {
     const control = rootRef.current ? findControl(rootRef.current) : null
-    if (!control || parts.length === 0) {
+    if (!control || (parts.length === 0 && !isInvalid)) {
       return undefined
     }
     const existing = (control.getAttribute('aria-describedby') ?? '').split(/\s+/).filter(Boolean)
     const added = parts.map(part => part.id).filter(id => !existing.includes(id))
-    control.setAttribute('aria-describedby', [...existing, ...added].join(' '))
-    const markInvalid =
-      parts.some(part => part.kind === 'error') && !control.hasAttribute('aria-invalid')
+    if (existing.length + added.length > 0) {
+      control.setAttribute('aria-describedby', [...existing, ...added].join(' '))
+    }
+    const markInvalid = isInvalid && !control.hasAttribute('aria-invalid')
     if (markInvalid) {
       control.setAttribute('aria-invalid', 'true')
     }
@@ -130,7 +141,7 @@ export function Field({
         control.removeAttribute('aria-invalid')
       }
     }
-  }, [parts])
+  }, [isInvalid, parts])
 
   return (
     <FieldContext.Provider value={context}>
@@ -138,6 +149,8 @@ export function Field({
         className={cn('a63-Field', className)}
         data-slot="field"
         data-orientation={orientation}
+        data-invalid={isInvalid ? 'true' : undefined}
+        data-disabled={disabled ? 'true' : undefined}
         ref={React.useMemo(() => mergeRefs(rootRef, ref), [ref])}
         {...props}
       />

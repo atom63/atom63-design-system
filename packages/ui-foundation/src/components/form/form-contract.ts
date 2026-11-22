@@ -3,13 +3,7 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const formSlots = [
-  'form-item',
-  'form-label',
-  'form-control',
-  'form-description',
-  'form-message',
-] as const
+export const formSlots = ['form-item', 'form-label', 'form-description', 'form-message'] as const
 export const formStates = ['rest', 'invalid'] as const
 export const formVisualArchetypes = ['field'] as const satisfies readonly VisualArchetypeId[]
 

@@ -114,30 +114,35 @@ const targets = [
     markup: `<span class="a63-Slider"><span class="a63-Slider-control"><span class="a63-Slider-track"></span><span class="a63-Slider-thumb" data-pick></span></span></span>`,
   },
   { name: 'Badge (link)', markup: `<a href="#" class="a63-Badge" data-pick>A</a>` },
+  {
+    name: 'Input sm',
+    markup: `<span class="a63-Input" data-size="sm" data-pick><input class="a63-Input-field" /></span>`,
+    axis: 'height',
+  },
+  {
+    name: 'Select trigger sm',
+    markup: `<button class="a63-Select-trigger" data-size="sm"><span class="a63-Select-value">A</span></button>`,
+    axis: 'height',
+  },
+  {
+    name: 'Select item',
+    markup: `<div class="a63-Menu-item a63-Select-item"><span class="a63-Select-item-text">A</span></div>`,
+    axis: 'height',
+  },
 
   /* ── Declared exceptions ──────────────────────────────────────────────
-   * These three sit inside a scrolling container (`overflow-x: auto` on the Tabs
-   * list and the SegmentedControl track, which computes overflow-y to auto too),
-   * or are a bare field, so a hit-area pseudo-element is clipped or absent and
-   * cannot deliver the target. Reaching 44 would mean raising their RENDERED
+   * These sit inside a scrolling container (`overflow-x: auto` on the Tabs list
+   * and the SegmentedControl track, which computes overflow-y to auto too), so a
+   * hit-area pseudo-element is clipped and cannot deliver the target. Reaching 44 would mean raising their RENDERED
    * height on touch.
    *
    * That is deliberate, not a backlog item. Our own measurement of shipping iOS
    * apps (docs/design-system/web-ios-token-parity.md) finds compact controls at
    * 31.5pt sitting INSIDE a 44pt tappable row, and Apple's own segmented control
    * is 32pt — so a blanket 44 here would be wrong. Tabs and segments stay on the
-   * rendered ramp. Fields measured 39.3–39.8pt, above our 32, but raising Input
-   * alone would break the rung-alignment rows above, which require Button,
-   * Toggle and Input to share a height.
+   * rendered ramp.
    *
    * Lower these numbers only by making the target bigger. */
-  {
-    name: 'Input sm',
-    markup: `<input class="a63-Input" data-size="sm" />`,
-    axis: 'height',
-    expected: 32,
-    why: 'field; no interaction floor declared yet',
-  },
   {
     name: 'Tabs tab',
     markup: `<div class="a63-Tabs"><div class="a63-Tabs-list"><button class="a63-Tabs-tab" data-pick>A</button><button class="a63-Tabs-tab">B</button></div></div>`,

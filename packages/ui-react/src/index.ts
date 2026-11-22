@@ -593,6 +593,7 @@ export type {
   SidebarMenuSubButtonProps,
   SidebarProps,
   SidebarProviderProps,
+  SidebarTriggerProps,
 } from './components/sidebar'
 export {
   SidebarNavCollapsibleItem,
