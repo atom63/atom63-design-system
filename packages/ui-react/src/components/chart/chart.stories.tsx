@@ -1,5 +1,6 @@
 import { chartSizes, chartTypes, themes } from '@atom63/ui-foundation'
-import { Chart, UIProvider } from '@atom63/ui-react'
+import { UIProvider } from '@atom63/ui-react'
+import { Chart } from '@atom63/ui-react/chart'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 

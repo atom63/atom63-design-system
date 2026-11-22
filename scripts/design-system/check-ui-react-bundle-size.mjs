@@ -135,12 +135,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // foreground cut-out add 0.4 kB. They are what a plate-first landing page or a
 // portfolio hero needs, and a consumer that does not import them drops them.
 //
-// 102 kB held 100.1 kB. Chart takes it to 103.0, so it moves to 104. The
-// +2.9 kB is a dependency-free SVG chart: line, area and bar marks with a tick
+// 102 kB held 100.1 kB. Chart takes it to 103.1, so it moves to 104. The
+// +3.0 kB is a dependency-free SVG chart: line, area and bar marks with a tick
 // scale, the pointer and arrow-key category picker, the tooltip and live
-// readout, and the data table and its toggle. A charting library would have
-// cost far more (a scale and shape package alone is larger than the whole
-// chart), and a consumer that does not import Chart drops it.
+// readout, and the data table and its toggle. It ships on its own entry,
+// `@atom63/ui-react/chart`, like `./calendar`; this total counts every entry,
+// so the subpath does not lower it. A consumer that does not import Chart
+// drops it.
 const gzipBudgetBytes = 104 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
@@ -178,22 +179,23 @@ console.log(`all files: ${kB(gzipBytes)} gzip / ${kB(gzipBudgetBytes)} budget`)
 // Base UI parts of any shared chunk. Measured after the split: Kbd 8.6 kB
 // (nearly all of it tailwind-merge behind `cn`), Button 11.1, Separator 10.6,
 // Dialog 22.2 and Toaster 20.4 (sonner itself). Each budget leaves about 12-16%
-// headroom; the regression this guards against costs 25 kB or more. Chart
-// measured 13.6 kB when it landed, most of it the Button its table toggle uses
-// and the Table parts; the chart itself is about 2.5 kB and imports no library.
+// headroom; the regression this guards against costs 25 kB or more. Chart is
+// measured from its own entry, `@atom63/ui-react/chart`: 13.6 kB when it
+// landed, most of it the Button its table toggle uses and the Table parts; the
+// chart itself is about 2.5 kB and imports no library.
 const importBudgets = {
   Kbd: 10,
   Button: 12.5,
   Separator: 12,
   Dialog: 25,
   Toaster: 23,
-  Chart: 15.5,
+  Chart: [15.5, 'chart/index.js'],
 }
-const rootEntry = path.join(distDirectory, 'index.js')
-for (const [name, budgetKB] of Object.entries(importBudgets)) {
+for (const [name, budget] of Object.entries(importBudgets)) {
+  const [budgetKB, entry] = Array.isArray(budget) ? budget : [budget, 'index.js']
   const result = await build({
     stdin: {
-      contents: `export { ${name} } from ${JSON.stringify(rootEntry)}`,
+      contents: `export { ${name} } from ${JSON.stringify(path.join(distDirectory, entry))}`,
       resolveDir: distDirectory,
       loader: 'js',
     },

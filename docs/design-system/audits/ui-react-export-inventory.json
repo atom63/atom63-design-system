@@ -3,6 +3,7 @@
   "inputs": [
     "packages/ui-react/src/index.ts",
     "packages/ui-react/src/calendar/index.ts",
+    "packages/ui-react/src/chart/index.ts",
     "packages/ui-react/src/layout/index.ts",
     "packages/ui-react/package.json",
     "docs/design-system/ui-react-support-policy.json"
@@ -46,14 +47,15 @@
     ]
   },
   "counts": {
-    "rootValueExports": 444,
-    "rootTypeExports": 208,
-    "packageExportKeys": 85,
+    "rootValueExports": 443,
+    "rootTypeExports": 205,
+    "packageExportKeys": 86,
     "cssExportKeys": 78
   },
   "packageExportKeys": [
     ".",
     "./calendar",
+    "./chart",
     "./layout",
     "./media",
     "./media/lightbox",
@@ -235,6 +237,15 @@
         "@atom63/source": "./src/calendar/index.ts",
         "import": "./dist/calendar/index.js",
         "types": "./dist/calendar/index.d.ts"
+      }
+    },
+    {
+      "subpath": "./chart",
+      "kind": "module",
+      "target": {
+        "@atom63/source": "./src/chart/index.ts",
+        "import": "./dist/chart/index.js",
+        "types": "./dist/chart/index.d.ts"
       }
     },
     {
@@ -1295,29 +1306,6 @@
         {
           "name": "CarouselProps",
           "proposedTier": "monitor-high-risk"
-        }
-      ]
-    },
-    {
-      "source": "./components/chart",
-      "values": [
-        {
-          "name": "Chart",
-          "proposedTier": "beta-supported-core"
-        }
-      ],
-      "types": [
-        {
-          "name": "ChartLabels",
-          "proposedTier": "beta-supported-core"
-        },
-        {
-          "name": "ChartProps",
-          "proposedTier": "beta-supported-core"
-        },
-        {
-          "name": "ChartSeries",
-          "proposedTier": "beta-supported-core"
         }
       ]
     },
@@ -3875,6 +3863,35 @@
             {
               "name": "CalendarProps",
               "proposedTier": "monitor-high-risk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subpath": "./chart",
+      "source": "packages/ui-react/src/chart/index.ts",
+      "exports": [
+        {
+          "source": "./components/chart",
+          "values": [
+            {
+              "name": "Chart",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "ChartLabels",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ChartProps",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ChartSeries",
+              "proposedTier": "beta-supported-core"
             }
           ]
         }

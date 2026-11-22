@@ -14,9 +14,9 @@ import {
   CardContent,
   CardDescription,
   CardTitle,
-  Chart,
   SegmentedControl,
 } from '@atom63/ui-react'
+import { Chart } from '@atom63/ui-react/chart'
 import { Container, SectionHeader } from '@atom63/ui-react/layout'
 import { Link } from '@tanstack/react-router'
 import { ChartNoAxesCombined } from 'lucide-react'

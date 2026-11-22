@@ -220,6 +220,11 @@
           "types": "./dist/calendar/index.d.ts",
           "import": "./dist/calendar/index.js"
         },
+        "./chart": {
+          "@atom63/source": "./src/chart/index.ts",
+          "types": "./dist/chart/index.d.ts",
+          "import": "./dist/chart/index.js"
+        },
         "./layout": {
           "@atom63/source": "./src/layout/index.ts",
           "types": "./dist/layout/index.d.ts",
@@ -327,6 +332,7 @@
       "exportKeys": [
         ".",
         "./calendar",
+        "./chart",
         "./layout",
         "./media",
         "./media/lightbox",

@@ -17,7 +17,11 @@ export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
   axisGuidance?: ComponentAxisGuidance
   category: string
-  importPath: '@atom63/ui-react' | '@atom63/ui-react/calendar' | '@atom63/ui-react/layout'
+  importPath:
+    | '@atom63/ui-react'
+    | '@atom63/ui-react/calendar'
+    | '@atom63/ui-react/chart'
+    | '@atom63/ui-react/layout'
   previewProfile: ComponentPreviewProfile
   relatedSlugs: readonly string[]
   slug: string
@@ -209,6 +213,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     ],
   },
   chart: {
+    importPath: '@atom63/ui-react/chart',
     axisGuidance: {
       size: {
         md: 'A 240px plot with five y-axis ticks, for a chart that leads a section.',

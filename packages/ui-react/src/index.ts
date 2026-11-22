@@ -136,8 +136,6 @@ export type {
   CarouselPlugin,
   CarouselProps,
 } from './components/carousel'
-export { Chart } from './components/chart'
-export type { ChartLabels, ChartProps, ChartSeries } from './components/chart'
 export { ChatComposer } from './components/chat-composer'
 export type { ChatComposerProps } from './components/chat-composer'
 export { ChatMessage, ChatMessageList } from './components/chat-message'
