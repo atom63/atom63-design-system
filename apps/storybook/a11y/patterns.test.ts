@@ -29,6 +29,7 @@ import { describe, expect, it } from 'vitest'
 import * as accordionStories from '../../../packages/ui-react/src/components/accordion/accordion.stories'
 import * as alertDialogStories from '../../../packages/ui-react/src/components/alert-dialog/alert-dialog.stories'
 import * as checkboxStories from '../../../packages/ui-react/src/components/checkbox/checkbox.stories'
+import * as commandStories from '../../../packages/ui-react/src/components/command/command.stories'
 import * as dialogStories from '../../../packages/ui-react/src/components/dialog/dialog.stories'
 import * as drawerStories from '../../../packages/ui-react/src/components/drawer/drawer.stories'
 import * as dropdownMenuStories from '../../../packages/ui-react/src/components/dropdown-menu/dropdown-menu.stories'
@@ -126,6 +127,14 @@ const bindings: Binding[] = [
     exportName: 'drawerContract',
     contract: { accessibility: { pattern: 'dialog-modal' } },
     stories: [{ module: drawerStories, name: 'Playground', names: { trigger: 'Open drawer' } }],
+    webOnly: true,
+  },
+  {
+    exportName: 'commandContract',
+    contract: { accessibility: { pattern: 'dialog-modal' } },
+    stories: [
+      { module: commandStories, name: 'Dialog', names: { trigger: 'Open command palette' } },
+    ],
     webOnly: true,
   },
 ]

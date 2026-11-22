@@ -4,10 +4,10 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1159,
-    "aliasValues": 804,
+    "variables": 1167,
+    "aliasValues": 812,
     "skipped": 412,
-    "computed": 68
+    "computed": 64
   },
   "collections": [
     {
@@ -16777,20 +16777,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "value": {
-                "r": 0.780881,
-                "g": 0.3618,
-                "b": 0.167442,
-                "a": 1
-              }
+              "alias": "--a63-chart-2-light"
             },
             "dark": {
-              "value": {
-                "r": 0.992936,
-                "g": 0.551494,
-                "b": 0.478817,
-                "a": 1
-              }
+              "alias": "--a63-chart-2-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-2)",
@@ -16805,20 +16795,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "value": {
-                "r": 0,
-                "g": 0.523292,
-                "b": 0.484518,
-                "a": 1
-              }
+              "alias": "--a63-chart-3-light"
             },
             "dark": {
-              "value": {
-                "r": 0.072759,
-                "g": 0.722045,
-                "b": 0.599749,
-                "a": 1
-              }
+              "alias": "--a63-chart-3-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-3)",
@@ -16833,20 +16813,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "value": {
-                "r": 0.471677,
-                "g": 0.513338,
-                "b": 0,
-                "a": 1
-              }
+              "alias": "--a63-chart-4-light"
             },
             "dark": {
-              "value": {
-                "r": 0.832528,
-                "g": 0.78138,
-                "b": 0.357068,
-                "a": 1
-              }
+              "alias": "--a63-chart-4-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-4)",
@@ -16861,20 +16831,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "value": {
-                "r": 0.579664,
-                "g": 0.220036,
-                "b": 0.548836,
-                "a": 1
-              }
+              "alias": "--a63-chart-5-light"
             },
             "dark": {
-              "value": {
-                "r": 0.747757,
-                "g": 0.468924,
-                "b": 0.827728,
-                "a": 1
-              }
+              "alias": "--a63-chart-5-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-5)",
@@ -18283,6 +18243,462 @@
           "scopes": [
             "TEXT_FILL"
           ]
+        },
+        {
+          "name": "chart/2/dark",
+          "token": "--a63-chart-2-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.992936,
+                "g": 0.551494,
+                "b": 0.478817,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0,
+                "g": 0.797889,
+                "b": 0.812537,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.766095,
+                "g": 0.603233,
+                "b": 0.979379,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.544963,
+                "g": 0.76983,
+                "b": 0.39639,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.864192,
+                "g": 0.656796,
+                "b": 0.201777,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.324825,
+                "g": 0.798665,
+                "b": 0.562192,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-2-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/2/light",
+          "token": "--a63-chart-2-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.780881,
+                "g": 0.3618,
+                "b": 0.167442,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0,
+                "g": 0.609357,
+                "b": 0.537774,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.554055,
+                "g": 0.409566,
+                "b": 0.801153,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.274445,
+                "g": 0.585413,
+                "b": 0.225632,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.700969,
+                "g": 0.437772,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0,
+                "g": 0.606109,
+                "b": 0.390199,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-2-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/3/dark",
+          "token": "--a63-chart-3-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.072759,
+                "g": 0.722045,
+                "b": 0.599749,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.831034,
+                "g": 0.487879,
+                "b": 0.716205,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.756473,
+                "g": 0.59724,
+                "b": 0.16407,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.54988,
+                "g": 0.584596,
+                "b": 0.933061,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.10297,
+                "g": 0.681128,
+                "b": 0.863754,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.683214,
+                "g": 0.539224,
+                "b": 0.882425,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-3-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/3/light",
+          "token": "--a63-chart-3-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0,
+                "g": 0.523292,
+                "b": 0.484518,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.58599,
+                "g": 0.314541,
+                "b": 0.58522,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.575979,
+                "g": 0.397192,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.409007,
+                "g": 0.380633,
+                "b": 0.714861,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0,
+                "g": 0.495619,
+                "b": 0.6333,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.507598,
+                "g": 0.344975,
+                "b": 0.666036,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-3-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/4/dark",
+          "token": "--a63-chart-4-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.832528,
+                "g": 0.78138,
+                "b": 0.357068,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.632415,
+                "g": 0.753465,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 1,
+                "g": 0.626893,
+                "b": 0.661276,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.214169,
+                "g": 0.860963,
+                "b": 0.931303,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.476741,
+                "g": 0.866277,
+                "b": 0.620124,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.357488,
+                "g": 0.827703,
+                "b": 1,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-4-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/4/light",
+          "token": "--a63-chart-4-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.471677,
+                "g": 0.513338,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.229815,
+                "g": 0.482037,
+                "b": 0.79602,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.743103,
+                "g": 0.319112,
+                "b": 0.39931,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0,
+                "g": 0.555526,
+                "b": 0.671396,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.202434,
+                "g": 0.563794,
+                "b": 0.273179,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0,
+                "g": 0.523374,
+                "b": 0.751205,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-4-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/5/dark",
+          "token": "--a63-chart-5-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.747757,
+                "g": 0.468924,
+                "b": 0.827728,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.51617,
+                "g": 0.65643,
+                "b": 0.18496,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0,
+                "g": 0.65358,
+                "b": 0.891284,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.847859,
+                "g": 0.500736,
+                "b": 0.092241,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.894691,
+                "g": 0.424182,
+                "b": 0.509651,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.754674,
+                "g": 0.564361,
+                "b": 0,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-5-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/5/light",
+          "token": "--a63-chart-5-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.579664,
+                "g": 0.220036,
+                "b": 0.548836,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.40991,
+                "g": 0.412532,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0,
+                "g": 0.442503,
+                "b": 0.660313,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.607169,
+                "g": 0.294441,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.656922,
+                "g": 0.182188,
+                "b": 0.353105,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.527365,
+                "g": 0.356048,
+                "b": 0,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-5-light)",
+          "scopes": []
         }
       ]
     },
@@ -22693,42 +23109,6 @@
         "theme"
       ],
       "expression": "color-mix( in oklab, var(--surface-dark-6) calc(100% - var(--a63-surface-tint)), var(--a63-brand-600) var(--a63-surface-tint) )"
-    },
-    {
-      "token": "--a63-chart-2",
-      "collection": "Mode",
-      "variesOn": [
-        "brand",
-        "mode"
-      ],
-      "expression": "oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144))"
-    },
-    {
-      "token": "--a63-chart-3",
-      "collection": "Mode",
-      "variesOn": [
-        "brand",
-        "mode"
-      ],
-      "expression": "oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288))"
-    },
-    {
-      "token": "--a63-chart-4",
-      "collection": "Mode",
-      "variesOn": [
-        "brand",
-        "mode"
-      ],
-      "expression": "oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216))"
-    },
-    {
-      "token": "--a63-chart-5",
-      "collection": "Mode",
-      "variesOn": [
-        "brand",
-        "mode"
-      ],
-      "expression": "oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72))"
     },
     {
       "token": "--a63-choice-box-shadow",

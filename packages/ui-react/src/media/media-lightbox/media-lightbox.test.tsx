@@ -706,14 +706,16 @@ describe('MediaLightbox', () => {
     const restore = vi.spyOn(trigger, 'focus')
     await user.keyboard('{Escape}')
     // AnimatePresence keeps the overlay mounted until the exit animation ends,
-    // which is longer than the default wait once the machine is busy.
+    // which is longer than the default wait once the machine is busy. Focus
+    // comes back in the content's effect cleanup, which React runs after it
+    // has already removed the dialog, so the two are awaited together.
     await waitFor(
       () => {
         expect(screen.queryByRole('dialog')).toBeNull()
+        expect(trigger).toHaveFocus()
       },
       { timeout: 4000 }
     )
-    expect(trigger).toHaveFocus()
     expect(restore).toHaveBeenCalledWith({ preventScroll: true })
   })
 

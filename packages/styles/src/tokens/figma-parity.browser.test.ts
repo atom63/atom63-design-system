@@ -267,4 +267,14 @@ describe('Figma/web parity', () => {
     const differences = colorContexts.flatMap(context => compare(context, colorVariables))
     expect(summarize(differences)).toEqual({})
   })
+
+  // The chart series derive from the brand hue in CSS; Figma must carry each
+  // brand's value, not the default brand's, so none of them may be `computed`.
+  it('carries every brand’s chart series across theme × brand × surface × mode', () => {
+    const chart = [1, 2, 3, 4, 5].map(step => `--a63-chart-${step}`)
+    expect(chart.filter(token => !byToken.has(token) || computedTokens.has(token))).toEqual([])
+    const variables = chart.map(token => byToken.get(token)!.variable)
+    const differences = colorContexts.flatMap(context => compare(context, variables))
+    expect(summarize(differences)).toEqual({})
+  })
 })

@@ -11,7 +11,7 @@ import { createServer } from 'node:net'
 import axe from 'axe-core'
 import { chromium } from 'playwright'
 
-import { spawnCommand, stopCommand } from './command.mjs'
+import { spawnServer, stopCommand } from './command.mjs'
 
 const VIEWPORTS = {
   desktop: { width: 1280, height: 800 },
@@ -31,7 +31,7 @@ const freePort = () =>
 
 async function preview(appDir) {
   const port = await freePort()
-  const child = spawnCommand(
+  const child = spawnServer(
     'pnpm',
     ['exec', 'vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'],
     { cwd: appDir, stdio: 'ignore' }
