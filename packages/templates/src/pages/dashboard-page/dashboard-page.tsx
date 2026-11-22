@@ -115,7 +115,7 @@ export function DashboardContent() {
           <DataTableSection
             columns={columns}
             empty={{
-              action: <Button variant="primary">New invoice</Button>,
+              action: <Button variant="outline">New invoice</Button>,
               description: 'Invoices you create appear here.',
               title: 'No invoices yet',
             }}
