@@ -2,7 +2,7 @@ import fs from 'node:fs/promises'
 import path from 'node:path'
 import { describe, expect, it } from 'vitest'
 import { readEntries, readEntryMarkdown } from './llms-txt'
-import { readMdxBlockProps } from './mdx-block-props'
+import { layoutComponents, readLayoutProps, readMdxBlockProps } from './mdx-block-props'
 
 const pagesDir = path.resolve(process.cwd(), 'src/pages')
 
@@ -49,5 +49,37 @@ describe('MDX block props', () => {
     expect(markdown).toContain("- `label`: `ReactNode` (default `'Key idea'`)")
     expect(markdown).toContain('Props of `Steps.Step`:')
     expect(markdown).toContain('<KeyIdea title="One token architecture">')
+  })
+})
+
+describe('Layout props', () => {
+  const props = readLayoutProps()
+
+  it('reads the layout primitives from @atom63/ui-react/layout', () => {
+    expect(Object.keys(props)).toEqual([...layoutComponents].sort())
+    expect(props.Container).toContainEqual(
+      expect.objectContaining({
+        defaultValue: '8',
+        name: 'gap',
+        type: '0 | 2 | 4 | 6 | 8 | 10 | 12',
+      })
+    )
+    expect(props.SectionHeader?.find(row => row.name === 'title')).toMatchObject({
+      required: true,
+      type: 'ReactNode',
+    })
+    // DOM attributes Section passes through are not listed as its props.
+    expect(props.Section?.some(row => row.name === 'onClick')).toBe(false)
+  })
+
+  it('documents every primitive on the Page layout page and in its Markdown twin', async () => {
+    const entry = (await readEntries(pagesDir)).find(item => item.slug === 'pattern-layout')
+    expect(entry).toBeDefined()
+    const markdown = await readEntryMarkdown(pagesDir, entry!, '')
+    expect(markdown).not.toContain('<LayoutProps')
+    for (const name of layoutComponents) {
+      expect(markdown, name).toContain(`\n### ${name}\n`)
+      expect(markdown, name).toContain(`Props of \`${name}\`:`)
+    }
   })
 })

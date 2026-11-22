@@ -1,6 +1,7 @@
 export { Container } from './container'
 export type {
   ContainerChrome,
+  ContainerGap,
   ContainerMaxWidth,
   ContainerPadding,
   ContainerProps,
@@ -45,7 +46,12 @@ export {
   pageIndexHeroDescriptionClassName,
   pageIndexHeroTitleClassName,
 } from './section-header'
-export type { SectionHeaderLevel, SectionHeaderProps, SectionHeaderVariant } from './section-header'
+export type {
+  SectionHeaderAlign,
+  SectionHeaderLevel,
+  SectionHeaderProps,
+  SectionHeaderVariant,
+} from './section-header'
 
 export { AppView } from '../components/app-view'
 export type { AppViewProps } from '../components/app-view'

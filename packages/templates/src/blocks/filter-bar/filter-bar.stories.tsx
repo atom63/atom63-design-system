@@ -1,3 +1,4 @@
+import { UIProvider } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
@@ -16,13 +17,28 @@ const options = [
   { label: 'Open', value: 'open' },
 ]
 
-function Demo({ initialQuery = '' }: { initialQuery?: string }) {
+function Demo({
+  clearLabel,
+  filterLabel = 'Status',
+  filterOptions = options,
+  initialQuery = '',
+  searchLabel = 'Search invoices',
+  searchPlaceholder = 'Invoice number or customer',
+}: {
+  clearLabel?: string
+  filterLabel?: string
+  filterOptions?: typeof options
+  initialQuery?: string
+  searchLabel?: string
+  searchPlaceholder?: string
+}) {
   const [query, setQuery] = useState(initialQuery)
   const [status, setStatus] = useState('all')
   return (
     <FilterBar
-      filterLabel="Status"
-      filterOptions={options}
+      clearLabel={clearLabel}
+      filterLabel={filterLabel}
+      filterOptions={filterOptions}
       filterValue={status}
       onClear={() => {
         setQuery('')
@@ -31,8 +47,8 @@ function Demo({ initialQuery = '' }: { initialQuery?: string }) {
       onFilterChange={setStatus}
       onQueryChange={setQuery}
       query={query}
-      searchLabel="Search invoices"
-      searchPlaceholder="Invoice number or customer"
+      searchLabel={searchLabel}
+      searchPlaceholder={searchPlaceholder}
       showClear={query !== '' || status !== 'all'}
     />
   )
@@ -63,4 +79,52 @@ export const Themes: Story = {
       <Demo initialQuery="Northwind" />
     </ThemeMatrix>
   ),
+}
+
+/* Clearing with the keyboard: the clear button leaves, and focus moves to the search field. */
+export const ClearWithKeyboard: Story = {
+  args: { initialQuery: 'Northwind' },
+  play: async ({ canvas, userEvent }) => {
+    const clear = canvas.getByRole('button', { name: 'Clear filters' })
+    clear.focus()
+    await userEvent.keyboard('{Enter}')
+    const search = canvas.getByRole('searchbox', { name: 'Search invoices' })
+    if (canvas.queryByRole('button', { name: 'Clear filters' })) {
+      throw new Error('Expected the clear button to leave once nothing is filtered')
+    }
+    if (search.ownerDocument.activeElement !== search) {
+      throw new Error('Expected focus on the search field after clearing')
+    }
+  },
+}
+
+const arabicOptions = [
+  { label: 'كل الحالات', value: 'all' },
+  { label: 'مدفوعة', value: 'paid' },
+  { label: 'مفتوحة', value: 'open' },
+]
+
+/* Right to left, with every string localised, the clear label included. */
+export const RightToLeft: Story = {
+  args: {
+    clearLabel: 'مسح عوامل التصفية',
+    filterLabel: 'الحالة',
+    filterOptions: arabicOptions,
+    initialQuery: 'نورثويند',
+    searchLabel: 'البحث في الفواتير',
+    searchPlaceholder: 'رقم الفاتورة أو العميل',
+  },
+  decorators: [
+    Story => (
+      <UIProvider dir="rtl" lang="ar">
+        <Story />
+      </UIProvider>
+    ),
+  ],
+  play: async ({ canvas }) => {
+    canvas.getByRole('button', { name: 'مسح عوامل التصفية' })
+    const search = canvas.getByRole('searchbox').getBoundingClientRect()
+    const clear = canvas.getByRole('button', { name: 'مسح عوامل التصفية' }).getBoundingClientRect()
+    if (search.left < clear.left) throw new Error('Expected the search field at the right edge')
+  },
 }
