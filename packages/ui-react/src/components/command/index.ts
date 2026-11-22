@@ -19,4 +19,4 @@ export {
   CommandSeparator,
   CommandShortcut,
 } from './command'
-export type { CommandInputProps } from './command'
+export type { CommandDialogPopupProps, CommandInputProps } from './command'
