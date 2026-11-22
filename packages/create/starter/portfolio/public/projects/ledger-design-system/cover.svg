@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Sample cover art. Replace with your own image. -->
+  <rect width="1600" height="900" fill="#e4eee4"/>
+  <g transform="translate(800 470)">
+    <path d="M0 140 L 420 -20 L 0 -180 L -420 -20 Z" fill="#1f5c45" transform="translate(0 160)"/>
+    <path d="M0 140 L 420 -20 L 0 -180 L -420 -20 Z" fill="#3f8a66" transform="translate(0 40)"/>
+    <path d="M0 140 L 420 -20 L 0 -180 L -420 -20 Z" fill="#8cc49e" transform="translate(0 -80)"/>
+    <g fill="#e4eee4" opacity="0.8" transform="translate(0 -80)">
+      <rect x="-150" y="-60" width="120" height="40" rx="20" transform="skewY(-21)"/>
+      <rect x="10" y="-60" width="160" height="40" rx="20" transform="skewY(-21)"/>
+    </g>
+  </g>
+</svg>

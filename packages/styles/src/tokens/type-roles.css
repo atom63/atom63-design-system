@@ -18,16 +18,29 @@
 :root,
 [data-window-size],
 [data-a63-form-factor] {
+  /* Marketing hero headline, above display-large: fluid from the display step on phones to 72px on wide screens. Web only; iOS keeps display-large. */
+  --a63-type-display-hero-font-size: clamp(
+    var(--typography-10xl-font-size),
+    calc(1.5rem + 3.4vw),
+    calc(72px * var(--typography-scale, 1))
+  );
+  --a63-type-display-hero-line-height: calc(var(--a63-type-display-hero-font-size) * 1.05);
+  --a63-type-display-hero-font-weight: 600;
+  --a63-type-display-hero-font-weight-strong: 700;
+  --a63-type-display-hero-letter-spacing: -0.045em;
   /* Display numbers and hero headlines: balances, prices, a score. Above Apple's text styles, so iOS draws the same size scaled like largeTitle: AtomDisplayRole.displayLarge. */
   --a63-type-display-large-font-size: var(--typography-11xl-font-size);
   --a63-type-display-large-line-height: var(--typography-11xl-line-height);
   --a63-type-display-large-font-weight: 600;
   --a63-type-display-large-font-weight-strong: 700;
+  /* Display tracking, tighter than text: about −0.04em for the sans display; a serif display (--a63-font-display) reads better near −0.025em. */
+  --a63-type-display-large-letter-spacing: -0.04em;
   /* Display numbers and short headlines one step below display-large. iOS draws the same size scaled like largeTitle: AtomDisplayRole.display. */
   --a63-type-display-font-size: var(--typography-10xl-font-size);
   --a63-type-display-line-height: var(--typography-10xl-line-height);
   --a63-type-display-font-weight: 600;
   --a63-type-display-font-weight-strong: 700;
+  --a63-type-display-letter-spacing: -0.03em;
   --a63-type-large-title-font-size: var(--typography-6xl-font-size);
   --a63-type-large-title-line-height: var(--typography-6xl-line-height);
   --a63-type-large-title-font-weight: 400;

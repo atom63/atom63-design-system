@@ -1,0 +1,40 @@
+---
+title: One design system for web and iOS
+summary: Orchard Ledger's web and iOS apps had drifted apart. A shared token and component contract brought them back together and cut UI review time.
+date: '2025-09-04'
+featured: false
+role: Design systems lead
+timeline: Jan to Sep 2025
+team: 2 designers, 3 engineers
+tools: [Figma, SwiftUI, React, Atom63]
+cover: /projects/ledger-design-system/cover.svg
+coverAlt: Abstract stacked layers in green, one per platform
+---
+
+## Problem
+
+Orchard Ledger makes accounting software for small businesses. Its web and iOS apps were built by separate teams, and the same invoice looked different on each: three greys, two date formats, and buttons of four heights.
+
+## Role
+
+I led the system: the token architecture, the component contracts and the rollout plan, working with one designer and three engineers across both platforms.
+
+## Process
+
+<Steps>
+  <Steps.Step title="Audit">Every screen of both apps on one board, grouped by component. 212 variants of 31 components.</Steps.Step>
+  <Steps.Step title="Tokens first">One token source for colour, space and type, generated for CSS and Swift.</Steps.Step>
+  <Steps.Step title="Contracts">Each component's sizes, variants and states defined once, and checked in both renderers.</Steps.Step>
+</Steps>
+
+<Callout type="info">
+  The system is built on the Atom63 design system, the same one this portfolio uses.
+</Callout>
+
+## Outcome
+
+<StatGrid>
+  <StatCard change="from 212" label="Component variants" trend="up" value="64" />
+  <StatCard change="40% shorter" label="UI review time" trend="up" value="2 days" />
+  <StatCard label="Screens migrated" value="180" />
+</StatGrid>

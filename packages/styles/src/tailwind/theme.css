@@ -621,6 +621,12 @@
 
 /* Text roles — generated from src/tokens/type-roles.resolver.json by scripts/generate-role-bridges.mjs; do not edit. */
 @theme inline {
+  --text-display-hero: var(--a63-type-display-hero-font-size);
+  --text-display-hero--line-height: var(--a63-type-display-hero-line-height);
+  --text-display-hero--font-weight: var(--a63-type-display-hero-font-weight);
+  --text-display-hero-strong: var(--a63-type-display-hero-font-size);
+  --text-display-hero-strong--line-height: var(--a63-type-display-hero-line-height);
+  --text-display-hero-strong--font-weight: var(--a63-type-display-hero-font-weight-strong);
   --text-display-large: var(--a63-type-display-large-font-size);
   --text-display-large--line-height: var(--a63-type-display-large-line-height);
   --text-display-large--font-weight: var(--a63-type-display-large-font-weight);
