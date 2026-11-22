@@ -13,10 +13,9 @@ import { GettingStartedChecklist } from './getting-started-checklist'
 const meta = {
   title: 'Templates/Blocks/Getting started checklist',
   component: GettingStartedChecklist,
-  parameters: landmarkParameters,
   decorators: [inMain],
   // The card sizes to its container, so the story gives it the canvas width.
-  parameters: { layout: 'padded' },
+  parameters: { ...landmarkParameters, layout: 'padded' },
 } satisfies Meta<typeof GettingStartedChecklist>
 
 export default meta
