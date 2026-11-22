@@ -157,7 +157,7 @@
     "src/**/*.css"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node ../../scripts/design-system/preserve-use-client.mjs",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 11",
