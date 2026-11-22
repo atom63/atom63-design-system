@@ -1,5 +1,13 @@
 # @atom63/styles
 
+## 0.1.0-beta.10
+
+### Minor Changes
+
+- [#323](https://github.com/atom63/atom63-design-system/pull/323) [`b496558`](https://github.com/atom63/atom63-design-system/commit/b496558edfb8fed1fe7a4cf89a89a56da978b5f1) Thanks [@atom63](https://github.com/atom63)! - Add the optional `display-hero` text role (`--a63-type-display-hero-*`, `text-display-hero`): a fluid marketing headline from the `10xl` step to 72px. The display roles gain `--a63-type-<role>-letter-spacing`, and `--a63-font-display` names the headline font (it defaults to `--a63-font-app`). Existing role values are unchanged.
+
+- [#315](https://github.com/atom63/atom63-design-system/pull/315) [`a63a96a`](https://github.com/atom63/atom63-design-system/commit/a63a96a1cd37311aeaa313dc1fa951d3ae008c9d) Thanks [@atom63](https://github.com/atom63)! - A nested `[data-a63-brand]` or `[data-a63-surface]` scope without a mode (a `UIProvider` that passes only `brand` or `surface`) now re-declares the mode roles that read the brand or neutral ramp: the surfaces, text, borders, `--a63-text-accent`, `--a63-focus-ring`, `--a63-selected-accent-*`, `--a63-choice-card-checked-*`, the badge, skeleton, toggle and widget mode tokens, and the Aqua and Terminal mode overrides. They follow the nearest mode scope through the new `--a63-if-light` / `--a63-if-dark` switch. Add `--a63-border-danger` for invalid control borders (step 600 at 62% in light mode, step 500 in dark mode). Input, Textarea, Select, Autocomplete, InputOTP, Checkbox and Radio draw invalid borders with it and a focused invalid border and ring with `--a63-status-danger`; LoadMoreTrigger's Retry label uses `--a63-text-danger`, and its error icon, FeedbackState's error accent and AlertDialog's destructive accent use `--a63-status-danger`.
+
 ## 0.1.0-beta.9
 
 ### Minor Changes
