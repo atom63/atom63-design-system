@@ -1,3 +1,4 @@
+import { DropdownMenuItem, DropdownMenuSeparator } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
 import { FileText, LayoutDashboard, Settings } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
@@ -30,6 +31,19 @@ const nav = [
   { href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
   { current: true, href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
+
+/* The signed-in user at the foot of the sidebar, with the account menu. */
+const user = {
+  detail: 'ada@tally.app',
+  menu: (
+    <>
+      <DropdownMenuItem>Profile</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>Sign out</DropdownMenuItem>
+    </>
+  ),
+  name: 'Ada Park',
+}
 
 export interface SettingsContentProps {
   /** More sections, after the built-in ones: the product's own settings. */
@@ -89,7 +103,7 @@ export function SettingsContent({ children }: SettingsContentProps) {
    routes, renders `SettingsContent` inside it instead. */
 export function SettingsPage() {
   return (
-    <AppShell navItems={nav} productName="Tally">
+    <AppShell navItems={nav} productName="Tally" user={user}>
       <SettingsContent />
     </AppShell>
   )

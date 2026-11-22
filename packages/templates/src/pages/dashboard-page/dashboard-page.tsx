@@ -1,4 +1,4 @@
-import { Badge, Button } from '@atom63/ui-react'
+import { Badge, Button, DropdownMenuItem, DropdownMenuSeparator } from '@atom63/ui-react'
 import { Container, SectionHeader } from '@atom63/ui-react/layout'
 import { FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
 
@@ -28,6 +28,19 @@ const nav = [
   { href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
   { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
+
+/* The signed-in user at the foot of the sidebar, with the account menu. */
+const user = {
+  detail: 'ada@tally.app',
+  menu: (
+    <>
+      <DropdownMenuItem>Profile</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>Sign out</DropdownMenuItem>
+    </>
+  ),
+  name: 'Ada Park',
+}
 
 const stats: readonly Stat[] = [
   { change: { direction: 'up', text: '12%', tone: 'good' }, label: 'Revenue', value: '$48,200' },
@@ -139,7 +152,7 @@ export function DashboardContent() {
    routes, renders `DashboardContent` inside it instead. */
 export function DashboardPage() {
   return (
-    <AppShell navItems={nav} productName="Tally">
+    <AppShell navItems={nav} productName="Tally" user={user}>
       <DashboardContent />
     </AppShell>
   )

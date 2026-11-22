@@ -525,7 +525,8 @@
   box-shadow: 0 0 0 1px var(--sidebar-accent);
 }
 /* collapsed icon rail: square the button + hide labels visually (they stay
-   the button's accessible name) */
+   the button's accessible name). An avatar stays: in a `size="lg"` button
+   (a user row) it is what the rail shows. */
 .a63-Sidebar-root[data-collapsible='icon'] .a63-Sidebar-menu-button {
   margin-inline: auto;
   width: max(
@@ -545,7 +546,7 @@
 }
 .a63-Sidebar-root[data-collapsible='icon']
   .a63-Sidebar-menu-button
-  > span:not(.a63-Sidebar-sr-only) {
+  > span:not(.a63-Sidebar-sr-only, .a63-Avatar) {
   position: absolute;
   width: 1px;
   height: 1px;
