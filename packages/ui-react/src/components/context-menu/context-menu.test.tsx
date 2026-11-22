@@ -152,8 +152,10 @@ describe('ContextMenu', () => {
     await user.tab()
     await openMenu()
     await user.keyboard('{Escape}')
-    await waitFor(() => expect(menu()).toBeNull())
-    expect(screen.getByText('Target')).toHaveFocus()
+    await waitFor(() => {
+      expect(menu()).toBeNull()
+      expect(screen.getByText('Target')).toHaveFocus()
+    })
   })
 
   it('dismisses on an outside click', async () => {
