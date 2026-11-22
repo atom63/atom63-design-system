@@ -549,6 +549,33 @@ export const States: Story = {
   },
 }
 
+/* A target button beside one at rest. The visual project puts the target in the
+   story's interaction state (parameters.visualState, see apps/storybook/README.md). */
+function InteractionStatePair() {
+  return (
+    <UIProvider designLanguage="web" input="pointer" mode="light">
+      <PreviewCard label="web / light / pointer">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <Button>Target</Button>
+          <Button>At rest</Button>
+        </div>
+      </PreviewCard>
+    </UIProvider>
+  )
+}
+
+/* The visual project hovers the target with the real pointer. */
+export const Hover: Story = {
+  render: () => <InteractionStatePair />,
+  parameters: { visualState: { hover: 'button' } },
+}
+
+/* The visual project tabs to the first button, so it shows the focus-visible ring. */
+export const FocusVisible: Story = {
+  render: () => <InteractionStatePair />,
+  parameters: { visualState: { focusVisible: 'button' } },
+}
+
 /* Loading treatment across every variant. */
 export const Loading: Story = {
   render: () => (

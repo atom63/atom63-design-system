@@ -2,7 +2,7 @@
 // committed baseline. Baselines are generated and compared only on CI's Linux
 // runner; see apps/storybook/README.md.
 import { afterEach, beforeEach, expect } from 'vitest'
-import { commands, page } from 'vitest/browser'
+import { commands, page, userEvent } from 'vitest/browser'
 
 import { freezeMotion, pinRemoteImages, settleMedia } from './stable-media'
 
@@ -38,16 +38,69 @@ const viewportForStory = (storyId: string | undefined) => {
 const isForcedColorsStory = (storyId: string | undefined) =>
   storyId?.endsWith('--forced-colors') ?? false
 
+/*
+ * `parameters.visualState` captures a story in an interaction state that only a
+ * real pointer or keyboard produces. Each value is a CSS selector, resolved in
+ * the story's document; the first visible match gets the state. See
+ * apps/storybook/README.md, "Visual states".
+ */
+interface VisualStateParameters {
+  /** Hover this element with the real pointer, so `:hover` matches. */
+  hover?: string
+  /** Tab to this element with the real keyboard, so `:focus-visible` matches. */
+  focusVisible?: string
+}
+
+/* The most Tab presses spent reaching a `focusVisible` target. */
+const MAX_TAB_STOPS = 50
+
+const visualTarget = (selector: string) => {
+  // The test page also holds hidden elements that are not the story's, so take
+  // the first match that is rendered.
+  const element = [...document.querySelectorAll<HTMLElement>(selector)].find(match =>
+    match.checkVisibility()
+  )
+  if (!element) throw new Error(`parameters.visualState: no visible element matches "${selector}"`)
+  return element
+}
+
+const applyVisualState = async (state: VisualStateParameters) => {
+  if (state.hover) {
+    const target = visualTarget(state.hover)
+    await userEvent.hover(page.elementLocator(target))
+    if (!target.matches(':hover'))
+      throw new Error(`parameters.visualState: "${state.hover}" does not match :hover`)
+  }
+  if (!state.focusVisible) return
+  // Programmatic focus does not always match :focus-visible after a pointer
+  // event, so walk to the target with Tab from the top of the document.
+  const target = visualTarget(state.focusVisible)
+  ;(document.activeElement as HTMLElement | null)?.blur()
+  for (let stop = 0; stop < MAX_TAB_STOPS && document.activeElement !== target; stop++) {
+    await userEvent.tab()
+  }
+  if (document.activeElement !== target || !target.matches(':focus-visible')) {
+    throw new Error(
+      `parameters.visualState: Tab did not give "${state.focusVisible}" :focus-visible`
+    )
+  }
+}
+
 beforeEach(async ({ task }) => {
   const viewport = viewportForStory(task.meta.storyId)
   await page.viewport(viewport.width, viewport.height)
   await commands.emulateForcedColors(isForcedColorsStory(task.meta.storyId))
 })
 
-afterEach(async ({ task }) => {
+afterEach(async context => {
+  const { task } = context
   const storyId = task.meta.storyId
   if (!storyId || task.result?.state === 'fail') return
-  // No story is captured in a hover state; see visual/commands.ts.
+  const story = (context as { story?: { parameters?: { visualState?: VisualStateParameters } } })
+    .story
+  const visualState = story?.parameters?.visualState
+  // No story is captured in a hover state unless visualState asks for one; see
+  // visual/commands.ts.
   await commands.movePointerAway()
   await settleMedia()
   // Only the viewport is painted in the capture, so a story taller than the
@@ -62,6 +115,7 @@ afterEach(async ({ task }) => {
     // Let the page lay out at the new size before capturing.
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))
   }
+  if (visualState) await applyVisualState(visualState)
   // The body, not the story root, so portalled overlays (dialogs, menus,
   // tooltips) are part of the image.
   await expect.element(page.elementLocator(document.body)).toMatchScreenshot(storyId, {
