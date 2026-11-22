@@ -14769,7 +14769,7 @@
       "name": "a63-text-secondary",
       "cssVar": "--a63-text-secondary",
       "type": "color",
-      "value": "var(--surface-dark-11)",
+      "value": "color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -14778,14 +14778,14 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--surface-dark-11"],
+      "aliases": ["--a63-brand-100", "--a63-surface-tint", "--surface-dark-11"],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-text-secondary",
       "cssVar": "--a63-text-secondary",
       "type": "color",
-      "value": "var(--surface-light-11)",
+      "value": "color-mix( in oklab, var(--surface-light-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -14794,14 +14794,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--surface-light-11"],
+      "aliases": ["--a63-brand-800", "--a63-surface-tint", "--surface-light-11"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-text-secondary",
       "cssVar": "--a63-text-secondary",
       "type": "color",
-      "value": "var(--a63-if-light, var(--surface-light-11)) var(--a63-if-dark, var(--surface-dark-11))",
+      "value": "var( --a63-if-light, color-mix( in oklab, var(--surface-light-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) ) ) var( --a63-if-dark, color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -14809,7 +14809,15 @@
         "path": "text/secondary"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-if-dark", "--a63-if-light", "--surface-dark-11", "--surface-light-11"],
+      "aliases": [
+        "--a63-brand-100",
+        "--a63-brand-800",
+        "--a63-if-dark",
+        "--a63-if-light",
+        "--a63-surface-tint",
+        "--surface-dark-11",
+        "--surface-light-11"
+      ],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {
@@ -14832,7 +14840,7 @@
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10))",
+      "value": "color-mix( in oklab, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -14841,14 +14849,19 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-text-accent", "--surface-dark-10"],
+      "aliases": [
+        "--a63-brand-100",
+        "--a63-surface-tint",
+        "--a63-text-accent",
+        "--surface-dark-10"
+      ],
       "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "var( --a63-if-light, color-mix(in oklch, var(--a63-action-primary) 80%, black) ) var(--a63-if-dark, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)))",
+      "value": "var( --a63-if-light, color-mix(in oklch, var(--a63-action-primary) 80%, black) ) var( --a63-if-dark, color-mix( in oklab, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -14859,8 +14872,10 @@
       "lifecycle": "preview",
       "aliases": [
         "--a63-action-primary",
+        "--a63-brand-100",
         "--a63-if-dark",
         "--a63-if-light",
+        "--a63-surface-tint",
         "--a63-text-accent",
         "--surface-dark-10"
       ],
@@ -14870,7 +14885,7 @@
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))",
+      "value": "color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -14879,14 +14894,19 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--surface-dark-10", "--surface-dark-11"],
+      "aliases": [
+        "--a63-brand-100",
+        "--a63-surface-tint",
+        "--surface-dark-10",
+        "--surface-dark-11"
+      ],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10))",
+      "value": "color-mix( in oklab, color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -14895,14 +14915,19 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--surface-light-10", "--surface-light-11"],
+      "aliases": [
+        "--a63-brand-800",
+        "--a63-surface-tint",
+        "--surface-light-10",
+        "--surface-light-11"
+      ],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "var( --a63-if-light, color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10)) ) var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)))",
+      "value": "var( --a63-if-light, color-mix( in oklab, color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) ) ) var( --a63-if-dark, color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -14911,8 +14936,11 @@
       },
       "lifecycle": "preview",
       "aliases": [
+        "--a63-brand-100",
+        "--a63-brand-800",
         "--a63-if-dark",
         "--a63-if-light",
+        "--a63-surface-tint",
         "--surface-dark-10",
         "--surface-dark-11",
         "--surface-light-10",

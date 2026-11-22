@@ -528,15 +528,19 @@
                 },
                 "secondary": {
                   "$type": "color",
-                  "$value": "{surface.light.11}"
+                  "$value": "{surface.light.11}",
+                  "$description": "The second text grey. It darkens toward brand 800 by three tenths of\n--a63-surface-tint, so it keeps WCAG AA 4.5:1 on the page, the panel and the muted fill\nas they tint toward the brand.",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.11} calc(100% - {a63.surface.tint} * 0.3), {a63.brand.800} calc({a63.surface.tint} * 0.3) )"
+                  }
                 },
                 "tertiary": {
                   "$type": "color",
                   "$value": "{surface.light.11}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklab, {surface.light.11} 70%, {surface.light.10})"
+                    "io.atom63.derive": "color-mix( in oklab, color-mix(in oklab, {surface.light.11} 70%, {surface.light.10}) calc(100% - {a63.surface.tint} * 0.3), {a63.brand.800} calc({a63.surface.tint} * 0.3) )"
                   },
-                  "$description": "The third text grey, lighter than secondary: placeholders, meta and timestamps.\nSeven parts step 11 to three parts step 10, so it keeps WCAG AA 4.5:1 on the page,\nthe panel, the field fill and the muted fill of a filled field."
+                  "$description": "The third text grey, lighter than secondary: placeholders, meta and timestamps.\nSeven parts step 11 to three parts step 10, so it keeps WCAG AA 4.5:1 on the page,\nthe panel, the field fill and the muted fill of a filled field. Like secondary, it darkens\ntoward brand 800 by three tenths of --a63-surface-tint, so it keeps 4.5:1 as the surfaces tint."
                 },
                 "accent": {
                   "$type": "color",
@@ -1122,15 +1126,19 @@
                 },
                 "secondary": {
                   "$type": "color",
-                  "$value": "{surface.dark.11}"
+                  "$value": "{surface.dark.11}",
+                  "$description": "It lightens toward brand 100 by three tenths of --a63-surface-tint,\nas the dark surfaces tint toward the brand.",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.11} calc(100% - {a63.surface.tint} * 0.3), {a63.brand.100} calc({a63.surface.tint} * 0.3) )"
+                  }
                 },
                 "tertiary": {
                   "$type": "color",
                   "$value": "{surface.dark.10}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklab, {surface.dark.11} 30%, {surface.dark.10})"
+                    "io.atom63.derive": "color-mix( in oklab, color-mix(in oklab, {surface.dark.11} 30%, {surface.dark.10}) calc(100% - {a63.surface.tint} * 0.3), {a63.brand.100} calc({a63.surface.tint} * 0.3) )"
                   },
-                  "$description": "Three parts step 11 to seven parts step 10: WCAG AA 4.5:1 on the page, the panel,\nthe field fill and the muted fill."
+                  "$description": "Three parts step 11 to seven parts step 10: WCAG AA 4.5:1 on the page, the panel,\nthe field fill and the muted fill. Like secondary, it lightens toward brand 100 by three\ntenths of --a63-surface-tint."
                 },
                 "accent": {
                   "$type": "color",
