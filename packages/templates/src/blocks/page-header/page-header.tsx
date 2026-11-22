@@ -21,13 +21,17 @@ export interface PageHeaderProps {
 
 /*
  * The one h1 of a page. Actions wrap under the title on a phone rather than
- * squeezing it, and stay on the title's start edge so nothing floats.
+ * squeezing it, and stay on the title's start edge so nothing floats. On wider
+ * screens the title column takes the room left by the actions and wraps a
+ * long title there, so it never pushes the actions out.
  */
 export function PageHeader({ actions, description, title }: PageHeaderProps) {
   return (
     <header className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-      <SectionHeader description={description} level={1} title={title} variant="secondary" />
-      {actions ? <div className="flex flex-wrap items-center gap-2">{actions}</div> : null}
+      <div className="min-w-0 flex-1">
+        <SectionHeader description={description} level={1} title={title} variant="secondary" />
+      </div>
+      {actions ? <div className="flex shrink-0 flex-wrap items-center gap-2">{actions}</div> : null}
     </header>
   )
 }
