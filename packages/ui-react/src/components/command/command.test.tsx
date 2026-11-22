@@ -138,8 +138,10 @@ describe('Command', () => {
     await waitFor(() => expect(screen.getByRole('combobox')).toHaveFocus())
 
     await user.keyboard('{Escape}')
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
-    expect(trigger).toHaveFocus()
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(trigger).toHaveFocus()
+    })
   })
 
   it('names the dialog with `title`, or leaves the name to aria-label', async () => {
