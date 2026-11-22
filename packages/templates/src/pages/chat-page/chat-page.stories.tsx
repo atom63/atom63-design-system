@@ -1,13 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
 import type { ChatPanelMessage } from '../../blocks/chat-panel/chat-panel'
-import { checkSafeArea, phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  checkSafeArea,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { ChatPage } from './chat-page'
 
 const meta = {
   title: 'Templates/Pages/Chat page',
   component: ChatPage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...landmarkParameters },
 } satisfies Meta<typeof ChatPage>
 
 export default meta

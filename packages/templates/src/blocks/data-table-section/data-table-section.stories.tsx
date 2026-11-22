@@ -13,7 +13,13 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Ellipsis } from 'lucide-react'
 import { useState } from 'react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { type DataTableColumn, DataTableSection } from './data-table-section'
 
 interface Order {
@@ -63,6 +69,8 @@ const args = {
 const meta = {
   title: 'Templates/Blocks/Data table section',
   component: DataTableSection<Order>,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof DataTableSection<Order>>
 
 export default meta

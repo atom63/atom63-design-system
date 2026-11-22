@@ -5,6 +5,7 @@ import { within } from 'storybook/test'
 
 import {
   compactGlobals,
+  landmarkParameters,
   responsivePhoneGlobals,
   tabletGlobals,
   ThemeMatrix,
@@ -16,7 +17,7 @@ import { ListPage } from './list-page'
 const meta = {
   title: 'Templates/Pages/List page',
   component: ListPage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...landmarkParameters },
 } satisfies Meta<typeof ListPage>
 
 export default meta

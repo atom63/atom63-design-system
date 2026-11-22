@@ -1,7 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { SettingsSection, SettingsSwitchRow } from './settings-section'
 
 function Demo() {
@@ -37,6 +43,8 @@ function Demo() {
 const meta = {
   title: 'Templates/Blocks/Settings section',
   component: Demo,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof Demo>
 
 export default meta
