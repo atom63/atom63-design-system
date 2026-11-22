@@ -151,11 +151,24 @@
   );
   /* Text */
   --a63-text-primary: var(--surface-light-12);
-  --a63-text-secondary: var(--surface-light-11);
+  /* The second text grey. It darkens toward brand 800 by three tenths of
+     --a63-surface-tint, so it keeps WCAG AA 4.5:1 on the page, the panel and the muted fill
+     as they tint toward the brand. */
+  --a63-text-secondary: color-mix(
+    in oklab,
+    var(--surface-light-11) calc(100% - var(--a63-surface-tint) * 0.3),
+    var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3)
+  );
   /* The third text grey, lighter than secondary: placeholders, meta and timestamps.
      Seven parts step 11 to three parts step 10, so it keeps WCAG AA 4.5:1 on the page,
-     the panel, the field fill and the muted fill of a filled field. */
-  --a63-text-tertiary: color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10));
+     the panel, the field fill and the muted fill of a filled field. Like secondary, it darkens
+     toward brand 800 by three tenths of --a63-surface-tint, so it keeps 4.5:1 as the surfaces tint. */
+  --a63-text-tertiary: color-mix(
+    in oklab,
+    color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10))
+      calc(100% - var(--a63-surface-tint) * 0.3),
+    var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3)
+  );
   /* The brand as text (links, accents) on light surfaces; brand.css picks the
      ramp step per brand. Use --a63-action-primary for fills. */
   --a63-text-accent: var(--a63-brand-text);
@@ -360,10 +373,22 @@
     var(--a63-surface-page)
   );
   --a63-text-primary: var(--surface-dark-12);
-  --a63-text-secondary: var(--surface-dark-11);
+  /* It lightens toward brand 100 by three tenths of --a63-surface-tint,
+     as the dark surfaces tint toward the brand. */
+  --a63-text-secondary: color-mix(
+    in oklab,
+    var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3),
+    var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3)
+  );
   /* Three parts step 11 to seven parts step 10: WCAG AA 4.5:1 on the page, the panel,
-     the field fill and the muted fill. */
-  --a63-text-tertiary: color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10));
+     the field fill and the muted fill. Like secondary, it lightens toward brand 100 by three
+     tenths of --a63-surface-tint. */
+  --a63-text-tertiary: color-mix(
+    in oklab,
+    color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))
+      calc(100% - var(--a63-surface-tint) * 0.3),
+    var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3)
+  );
   /* The primary fill is too dark to read as text on dark surfaces. */
   --a63-text-accent: var(--a63-brand-400);
   /* Danger text on dark surfaces: step 400 reaches WCAG AA 4.5:1 on every theme's
@@ -577,13 +602,40 @@
   );
   --a63-text-primary: var(--a63-if-light, var(--surface-light-12))
     var(--a63-if-dark, var(--surface-dark-12));
-  --a63-text-secondary: var(--a63-if-light, var(--surface-light-11))
-    var(--a63-if-dark, var(--surface-dark-11));
+  --a63-text-secondary: var(
+      --a63-if-light,
+      color-mix(
+        in oklab,
+        var(--surface-light-11) calc(100% - var(--a63-surface-tint) * 0.3),
+        var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3)
+      )
+    )
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3),
+        var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3)
+      )
+    );
   --a63-text-tertiary: var(
       --a63-if-light,
-      color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10))
+      color-mix(
+        in oklab,
+        color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10))
+          calc(100% - var(--a63-surface-tint) * 0.3),
+        var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3)
+      )
     )
-    var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)));
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))
+          calc(100% - var(--a63-surface-tint) * 0.3),
+        var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3)
+      )
+    );
   --a63-text-accent: var(--a63-if-light, var(--a63-brand-text))
     var(--a63-if-dark, var(--a63-brand-400));
   --a63-text-danger: var(--a63-if-light, var(--color-danger-600))

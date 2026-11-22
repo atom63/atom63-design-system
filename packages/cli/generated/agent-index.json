@@ -23469,15 +23469,15 @@
     },
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "var(--surface-dark-11)"
+     "value": "color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--surface-light-11)"
+     "value": "color-mix( in oklab, var(--surface-light-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-if-light, var(--surface-light-11)) var(--a63-if-dark, var(--surface-dark-11))"
+     "value": "var( --a63-if-light, color-mix( in oklab, var(--surface-light-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) ) ) var( --a63-if-dark, color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )"
     }
    ]
   },
@@ -23497,23 +23497,23 @@
     },
     {
      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])",
-     "value": "color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10))"
+     "value": "color-mix( in oklab, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
      "scope": "[data-a63-theme='terminal']:is([data-a63-brand], [data-a63-surface]), [data-a63-theme='terminal'] :is([data-a63-brand], [data-a63-surface])",
-     "value": "var( --a63-if-light, color-mix(in oklch, var(--a63-action-primary) 80%, black) ) var(--a63-if-dark, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)))"
+     "value": "var( --a63-if-light, color-mix(in oklch, var(--a63-action-primary) 80%, black) ) var( --a63-if-dark, color-mix( in oklab, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )"
     },
     {
      "scope": ":is(.dark, [data-a63-mode='dark'])",
-     "value": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))"
+     "value": "color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10))"
+     "value": "color-mix( in oklab, color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var( --a63-if-light, color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10)) ) var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)))"
+     "value": "var( --a63-if-light, color-mix( in oklab, color-mix(in oklab, var(--surface-light-11) 70%, var(--surface-light-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-800) calc(var(--a63-surface-tint) * 0.3) ) ) var( --a63-if-dark, color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )"
     }
    ]
   },
