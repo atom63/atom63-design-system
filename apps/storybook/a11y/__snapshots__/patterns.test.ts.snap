@@ -31,6 +31,14 @@ exports[`dialogContract implements Dialog (Modal) > Playground > accessibility t
   - button "Close"
 `;
 
+exports[`drawerContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
+- dialog "Appearance":
+  - heading "Appearance" [level=2]
+  - paragraph: Drag the handle down to dismiss.
+  - text: The sheet is a raised overlay surface. Content scrolls inside.
+  - button "Done"
+`;
+
 exports[`dropdownMenuContract implements Menu Button > Playground > accessibility tree under menu 1`] = `
 - menu "Open menu":
   - text: Actions
@@ -67,6 +75,16 @@ exports[`selectContract implements Select-Only Combobox > Playground > accessibi
   - option "Article"
   - option "Video"
   - option "Talk"
+`;
+
+exports[`sheetContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
+- dialog "Appearance":
+  - heading "Appearance" [level=2]
+  - paragraph: Slides in from the edge. Press Esc to dismiss.
+  - paragraph: The sheet is a raised overlay surface. Content scrolls inside the panel.
+  - button "Cancel"
+  - button "Save"
+  - button "Close"
 `;
 
 exports[`switchContract implements Switch > Playground > accessibility tree under switch 1`] = `
