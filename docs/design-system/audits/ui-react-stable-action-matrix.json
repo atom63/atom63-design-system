@@ -95,18 +95,18 @@
       "P1": 12,
       "P2": 40
     },
-    "packageSubpaths": 84,
+    "packageSubpaths": 86,
     "subpathActionCounts": {
       "assign-owner-and-evidence": 1,
       "keep-preview-subpath-or-add-evidence": 2,
       "keep-preview-labeled": 1,
       "document-subpath-contract": 2,
-      "keep-import-path-stable": 78
+      "keep-import-path-stable": 80
     },
     "subpathPriorityCounts": {
       "P0": 4,
       "P1": 2,
-      "P2": 78
+      "P2": 80
     }
   },
   "sourceActions": [
@@ -2828,6 +2828,15 @@
       "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
     },
     {
+      "subpath": "./recipes/chart.css",
+      "kind": "css",
+      "target": "./src/components/chart/chart.css",
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Every package export-map CSS entry is API. Removing, renaming, or consolidating a CSS path is an API change."
+    },
+    {
       "subpath": "./recipes/chat-composer.css",
       "kind": "css",
       "target": "./src/components/chat-composer/chat-composer.css",
@@ -3383,6 +3392,19 @@
         "@atom63/source": "./src/index.ts",
         "import": "./dist/index.js",
         "types": "./dist/index.d.ts"
+      },
+      "recommendedAction": "keep-import-path-stable",
+      "priority": "P2",
+      "stableDecision": "Keep public import path stable; treat removal/rename as an API change.",
+      "policyNote": "Root package API or public JavaScript subpath."
+    },
+    {
+      "subpath": "./chart",
+      "kind": "module",
+      "target": {
+        "@atom63/source": "./src/chart/index.ts",
+        "import": "./dist/chart/index.js",
+        "types": "./dist/chart/index.d.ts"
       },
       "recommendedAction": "keep-import-path-stable",
       "priority": "P2",

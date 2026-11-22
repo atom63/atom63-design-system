@@ -16,12 +16,13 @@ import {
   CardTitle,
   SegmentedControl,
 } from '@atom63/ui-react'
+import { Chart } from '@atom63/ui-react/chart'
 import { Container, SectionHeader } from '@atom63/ui-react/layout'
 import { Link } from '@tanstack/react-router'
 import { ChartNoAxesCombined } from 'lucide-react'
 import { type ReactNode, useState } from 'react'
 
-import { AreaChart, BarChart, type ChartSeries, Legend, ShareBar } from '../components/charts'
+import { type ChartSeries, ShareBar } from '../components/charts'
 import { LoadError, LoadingBlock, LoadingStats } from '../components/states'
 import {
   type Account,
@@ -41,7 +42,7 @@ const periods = [
   { label: '12 months', value: '12' },
 ]
 
-const planSeries: Record<Plan, ChartSeries> = { enterprise: 1, growth: 2, scale: 3, starter: 5 }
+const planSeries: Record<Plan, ChartSeries> = { enterprise: 1, growth: 2, scale: 3, starter: 4 }
 const percent = (value: number) => `${(value * 100).toFixed(1)}%`
 
 function change(now: number, before: number, goodWhenUp = true): Stat['change'] {
@@ -57,12 +58,10 @@ function change(now: number, before: number, goodWhenUp = true): Stat['change'] 
 function ChartCard({
   children,
   description,
-  legend,
   title,
 }: {
   children: ReactNode
   description: string
-  legend?: ReactNode
   title: string
 }) {
   return (
@@ -72,7 +71,6 @@ function ChartCard({
           <CardTitle render={<h2 />}>{title}</CardTitle>
           <CardDescription>{description}</CardDescription>
         </div>
-        {legend}
         {children}
       </CardContent>
     </Card>
@@ -176,37 +174,31 @@ export function OverviewPage() {
         <StatRow comparison={`vs. ${first.label}`} stats={stats} />
         <div className="grid gap-6 lg:grid-cols-2">
           <ChartCard description="Monthly recurring revenue at the end of each month." title="MRR">
-            <AreaChart
-              caption="MRR by month"
-              format={currency.format}
+            <Chart
+              categories={range.map(month => month.label)}
+              categoryLabel="Month"
               formatTick={compactCurrency.format}
-              points={range.map(month => ({ label: month.label, value: month.mrr }))}
+              formatValue={currency.format}
+              label="MRR by month"
+              series={[{ label: 'MRR', values: range.map(month => month.mrr) }]}
+              type="area"
             />
           </ChartCard>
           <ChartCard
             description="Revenue won from new and expanding accounts, and lost to churn."
-            legend={
-              <Legend
-                items={[
-                  { label: 'New', series: 2 },
-                  { label: 'Churned', series: 5 },
-                ]}
-              />
-            }
             title="MRR movement"
           >
-            <BarChart
-              caption="New and churned MRR by month"
-              format={currency.format}
+            <Chart
+              categories={range.map(month => month.label)}
+              categoryLabel="Month"
               formatTick={compactCurrency.format}
-              groups={range.map(month => ({
-                label: month.label,
-                values: [month.newMrr, month.churnedMrr],
-              }))}
+              formatValue={currency.format}
+              label="New and churned MRR by month"
               series={[
-                { label: 'New', series: 2 },
-                { label: 'Churned', series: 5 },
+                { color: 2, label: 'New', values: range.map(month => month.newMrr) },
+                { color: 5, label: 'Churned', values: range.map(month => month.churnedMrr) },
               ]}
+              type="bar"
             />
           </ChartCard>
         </div>

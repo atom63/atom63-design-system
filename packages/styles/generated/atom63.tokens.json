@@ -6270,7 +6270,7 @@
       "name": "a63-chart-1",
       "cssVar": "--a63-chart-1",
       "type": "color",
-      "value": "var(--a63-action-primary)",
+      "value": "var(--a63-brand-400)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6279,7 +6279,7 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-action-primary"],
+      "aliases": ["--a63-brand-400"],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
@@ -6302,7 +6302,7 @@
       "name": "a63-chart-1",
       "cssVar": "--a63-chart-1",
       "type": "color",
-      "value": "var(--a63-action-primary)",
+      "value": "var(--a63-if-light, var(--a63-action-primary)) var(--a63-if-dark, var(--a63-brand-400))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6310,14 +6310,14 @@
         "path": "chart/1"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-action-primary"],
+      "aliases": ["--a63-action-primary", "--a63-brand-400", "--a63-if-dark", "--a63-if-light"],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {
       "name": "a63-chart-2",
       "cssVar": "--a63-chart-2",
       "type": "color",
-      "value": "var(--color-teal-400)",
+      "value": "oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6326,14 +6326,14 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-teal-400"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-chart-2",
       "cssVar": "--a63-chart-2",
       "type": "color",
-      "value": "var(--color-teal-500)",
+      "value": "oklch(from var(--a63-chart-1) 0.6 0.15 calc(h + 144))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6342,14 +6342,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-teal-500"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-chart-2",
       "cssVar": "--a63-chart-2",
       "type": "color",
-      "value": "var(--a63-if-light, var(--color-teal-500)) var(--a63-if-dark, var(--color-teal-400))",
+      "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.6 0.15 calc(h + 144))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.76 0.14 calc(h + 144)))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6357,14 +6357,14 @@
         "path": "chart/2"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-teal-400", "--color-teal-500"],
+      "aliases": ["--a63-chart-1", "--a63-if-dark", "--a63-if-light"],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {
       "name": "a63-chart-3",
       "cssVar": "--a63-chart-3",
       "type": "color",
-      "value": "var(--color-amber-400)",
+      "value": "oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6373,14 +6373,14 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-amber-400"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-chart-3",
       "cssVar": "--a63-chart-3",
       "type": "color",
-      "value": "var(--color-amber-500)",
+      "value": "oklch(from var(--a63-chart-1) 0.54 0.13 calc(h + 288))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6389,14 +6389,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-amber-500"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-chart-3",
       "cssVar": "--a63-chart-3",
       "type": "color",
-      "value": "var(--a63-if-light, var(--color-amber-500)) var(--a63-if-dark, var(--color-amber-400))",
+      "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.54 0.13 calc(h + 288))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.7 0.13 calc(h + 288)))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6404,14 +6404,14 @@
         "path": "chart/3"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-amber-400", "--color-amber-500"],
+      "aliases": ["--a63-chart-1", "--a63-if-dark", "--a63-if-light"],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {
       "name": "a63-chart-4",
       "cssVar": "--a63-chart-4",
       "type": "color",
-      "value": "var(--color-violet-400)",
+      "value": "oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6420,14 +6420,14 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-violet-400"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-chart-4",
       "cssVar": "--a63-chart-4",
       "type": "color",
-      "value": "var(--color-violet-500)",
+      "value": "oklch(from var(--a63-chart-1) 0.58 0.14 calc(h + 216))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6436,14 +6436,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-violet-500"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-chart-4",
       "cssVar": "--a63-chart-4",
       "type": "color",
-      "value": "var(--a63-if-light, var(--color-violet-500)) var(--a63-if-dark, var(--color-violet-400))",
+      "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.58 0.14 calc(h + 216))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.82 0.13 calc(h + 216)))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6451,14 +6451,14 @@
         "path": "chart/4"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-violet-400", "--color-violet-500"],
+      "aliases": ["--a63-chart-1", "--a63-if-dark", "--a63-if-light"],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {
       "name": "a63-chart-5",
       "cssVar": "--a63-chart-5",
       "type": "color",
-      "value": "var(--color-rose-400)",
+      "value": "oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6467,14 +6467,14 @@
         "mode": "Dark"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-rose-400"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":is(.dark, [data-a63-mode='dark'])"
     },
     {
       "name": "a63-chart-5",
       "cssVar": "--a63-chart-5",
       "type": "color",
-      "value": "var(--color-rose-500)",
+      "value": "oklch(from var(--a63-chart-1) 0.5 0.16 calc(h + 72))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6483,14 +6483,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-rose-500"],
+      "aliases": ["--a63-chart-1"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-chart-5",
       "cssVar": "--a63-chart-5",
       "type": "color",
-      "value": "var(--a63-if-light, var(--color-rose-500)) var(--a63-if-dark, var(--color-rose-400))",
+      "value": "var(--a63-if-light, oklch(from var(--a63-chart-1) 0.5 0.16 calc(h + 72))) var(--a63-if-dark, oklch(from var(--a63-chart-1) 0.68 0.15 calc(h + 72)))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -6498,7 +6498,7 @@
         "path": "chart/5"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-rose-400", "--color-rose-500"],
+      "aliases": ["--a63-chart-1", "--a63-if-dark", "--a63-if-light"],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {

@@ -136,7 +136,16 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // art-directed sources) add 1.2 kB; LayeredScene, its copy, stage and inert
 // foreground cut-out add 0.4 kB. They are what a plate-first landing page or a
 // portfolio hero needs, and a consumer that does not import them drops them.
-const gzipBudgetBytes = 102 * 1024
+// 102 kB held 100.1 kB. Chart takes it to 103.1, so it moves to 104. The
+// +3.0 kB is a dependency-free SVG chart: line, area and bar marks with a tick
+// scale, the pointer and arrow-key category picker, the tooltip and live
+// readout, and the data table and its toggle. It ships on its own entry,
+// `@atom63/ui-react/chart`, like `./calendar`; this total counts every entry,
+// so the subpath does not lower it. A consumer that does not import Chart
+// drops it.
+// Merged with Table sorting (#335), which Chart reuses, the total is 104.0 kB; the
+// budget keeps about 2% headroom at 106.
+const gzipBudgetBytes = 106 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
@@ -231,6 +240,16 @@ const rootEntry = path.join(distDirectory, 'index.js')
 for (const [name, budgetKB] of Object.entries(importBudgets)) {
   await checkImport(`import { ${name} }`, rootEntry, name, budgetKB)
 }
+
+// Chart ships on its own entry, `@atom63/ui-react/chart` (like `./calendar`), so it is
+// measured from there: 15.6 kB after Table sorting (#335), mostly the Button and Table
+// it reuses. 18 kB leaves about 15% headroom.
+await checkImport(
+  'import { Chart } from @atom63/ui-react/chart',
+  path.join(distDirectory, 'chart/index.js'),
+  'Chart',
+  18
+)
 
 // The same per-import check for @atom63/mdx. Its entries were built into
 // shared chunks until they moved to one build file per module, as ui-react did

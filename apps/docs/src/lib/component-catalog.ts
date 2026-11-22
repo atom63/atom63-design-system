@@ -17,7 +17,11 @@ export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
   axisGuidance?: ComponentAxisGuidance
   category: string
-  importPath: '@atom63/ui-react' | '@atom63/ui-react/calendar' | '@atom63/ui-react/layout'
+  importPath:
+    | '@atom63/ui-react'
+    | '@atom63/ui-react/calendar'
+    | '@atom63/ui-react/chart'
+    | '@atom63/ui-react/layout'
   previewProfile: ComponentPreviewProfile
   relatedSlugs: readonly string[]
   slug: string
@@ -207,6 +211,26 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
       'CarouselPrevious',
       'CarouselNext',
     ],
+  },
+  chart: {
+    importPath: '@atom63/ui-react/chart',
+    axisGuidance: {
+      size: {
+        md: 'A 240px plot with five y-axis ticks, for a chart that leads a section.',
+        sm: 'A 160px plot with three ticks, for a compact card.',
+      },
+      state: {
+        current:
+          'A category picked by the pointer or the arrow keys; the tooltip shows its values.',
+        rest: 'No category picked; only the marks, axes and legend show.',
+      },
+    },
+    relatedSlugs: ['table', 'progress', 'card'],
+    summary:
+      'Chart draws a small line, area or bar chart (grouped or stacked) of a few series over a categorical axis, with a tooltip, a legend and a data table for screen readers.',
+    usage:
+      'Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `stacked` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip. Every chart carries a data table of the same numbers, visually hidden unless `table="toggle"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero, use a charting library; when the exact numbers matter more than the shape, use a Table.',
+    usageExports: ['Chart'],
   },
   'chat-composer': {
     relatedSlugs: ['textarea', 'input', 'button'],
@@ -856,6 +880,7 @@ export const componentCatalogGroups = [
       'badge',
       'card',
       'carousel',
+      'chart',
       'chat-message',
       'chat-steps',
       'collapsible',

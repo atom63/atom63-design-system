@@ -47,6 +47,12 @@
   --a63-status-danger-foreground: var(--destructive-foreground, white);
   --a63-text-danger: var(--destructive);
   --a63-border-danger: var(--destructive);
+  /* Chart series (the Chart recipe) from shadcn's chart palette. */
+  --a63-chart-1: var(--chart-1);
+  --a63-chart-2: var(--chart-2);
+  --a63-chart-3: var(--chart-3);
+  --a63-chart-4: var(--chart-4);
+  --a63-chart-5: var(--chart-5);
 
   --a63-scrim: color-mix(in oklch, black 40%, transparent);
   /* Shadow, media and on-media colors hold in every theme; same values as semantics.css. */

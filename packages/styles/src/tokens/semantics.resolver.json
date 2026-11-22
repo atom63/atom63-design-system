@@ -821,23 +821,35 @@
                 "1": {
                   "$type": "color",
                   "$value": "{a63.action.primary}",
-                  "$description": "Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay\ndistinct from it and from each other (500 on light surfaces, 400 on dark)."
+                  "$description": "Chart series colors. Series 1 is the brand's primary; series 2 to 5 turn its hue\nby fixed steps at a set lightness and chroma, so no series takes the brand's hue\nwhatever the brand (the wallpaper brand included), and each reaches 3:1 against\nthe page and the panel. The plain value is the default (blue) brand's result, for\ntools that cannot run the derivation."
                 },
                 "2": {
                   "$type": "color",
-                  "$value": "{color.teal.500}"
+                  "$value": "{color.orange.600}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.6 0.15 calc(h + 144))"
+                  }
                 },
                 "3": {
                   "$type": "color",
-                  "$value": "{color.amber.500}"
+                  "$value": "{color.teal.600}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.54 0.13 calc(h + 288))"
+                  }
                 },
                 "4": {
                   "$type": "color",
-                  "$value": "{color.violet.500}"
+                  "$value": "{color.lime.700}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.58 0.14 calc(h + 216))"
+                  }
                 },
                 "5": {
                   "$type": "color",
-                  "$value": "{color.rose.500}"
+                  "$value": "{color.fuchsia.700}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.5 0.16 calc(h + 72))"
+                  }
                 }
               },
               "category": {
@@ -1361,23 +1373,36 @@
               "chart": {
                 "1": {
                   "$type": "color",
-                  "$value": "{a63.action.primary}"
+                  "$value": "{a63.brand.400}",
+                  "$description": "On dark surfaces series 1 is the brand's 400 step and 2 to 5 are lighter, for 3:1\nagainst the dark page."
                 },
                 "2": {
                   "$type": "color",
-                  "$value": "{color.teal.400}"
+                  "$value": "{color.orange.300}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.76 0.14 calc(h + 144))"
+                  }
                 },
                 "3": {
                   "$type": "color",
-                  "$value": "{color.amber.400}"
+                  "$value": "{color.teal.400}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.7 0.13 calc(h + 288))"
+                  }
                 },
                 "4": {
                   "$type": "color",
-                  "$value": "{color.violet.400}"
+                  "$value": "{color.lime.300}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.82 0.13 calc(h + 216))"
+                  }
                 },
                 "5": {
                   "$type": "color",
-                  "$value": "{color.rose.400}"
+                  "$value": "{color.purple.400}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.68 0.15 calc(h + 72))"
+                  }
                 }
               },
               "category": {

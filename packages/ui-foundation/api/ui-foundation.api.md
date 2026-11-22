@@ -1280,6 +1280,74 @@ export type CarouselVisualArchetype = (typeof carouselVisualArchetypes)[number];
 export const carouselVisualArchetypes: readonly ["surface", "overlay", "action"];
 
 // @public (undocumented)
+export type ChartColor = (typeof chartColors)[number];
+
+// @public (undocumented)
+export const chartColors: readonly [1, 2, 3, 4, 5];
+
+// @public (undocumented)
+export interface ChartContract {
+    // (undocumented)
+    colors: readonly ChartColor[];
+    // (undocumented)
+    defaultSize: ChartSize;
+    // (undocumented)
+    defaultType: ChartType;
+    // (undocumented)
+    sizes: readonly ChartSize[];
+    // (undocumented)
+    slots: readonly ChartSlot[];
+    // (undocumented)
+    states: readonly ChartState[];
+    // (undocumented)
+    types: readonly ChartType[];
+    // (undocumented)
+    visualArchetypes: readonly ChartVisualArchetype[];
+}
+
+// @public (undocumented)
+export const chartContract: {
+    defaultType: "line";
+    defaultSize: "md";
+    types: readonly ["line", "area", "bar"];
+    sizes: readonly ["sm", "md"];
+    colors: readonly [1, 2, 3, 4, 5];
+    slots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle"];
+    states: readonly ["rest", "current"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type ChartSize = (typeof chartSizes)[number];
+
+// @public (undocumented)
+export const chartSizes: readonly ["sm", "md"];
+
+// @public (undocumented)
+export type ChartSlot = (typeof chartSlots)[number];
+
+// @public (undocumented)
+export const chartSlots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle"];
+
+// @public (undocumented)
+export type ChartState = (typeof chartStates)[number];
+
+// @public (undocumented)
+export const chartStates: readonly ["rest", "current"];
+
+// @public (undocumented)
+export type ChartType = (typeof chartTypes)[number];
+
+// @public (undocumented)
+export const chartTypes: readonly ["line", "area", "bar"];
+
+// @public (undocumented)
+export type ChartVisualArchetype = (typeof chartVisualArchetypes)[number];
+
+// @public (undocumented)
+export const chartVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
 export interface ChatComposerContract {
     // (undocumented)
     defaultLayout: ChatComposerLayout;
@@ -6022,7 +6090,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate", "LayeredScene"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate", "LayeredScene", "Chart"];
         readonly contracts: readonly ["surface"];
     };
 };

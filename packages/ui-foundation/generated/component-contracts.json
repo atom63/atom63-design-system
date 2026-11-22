@@ -1193,6 +1193,30 @@
         }
       }
     },
+    "chart": {
+      "source": "packages/ui-foundation/contracts/components/chart.json",
+      "exportName": "chartContract",
+      "maturity": "preview",
+      "description": "A small dashboard chart: a line, area or bar chart of a few numeric series over a categorical axis. The series take their colours from --a63-chart-1..5, which keep apart from the brand on every brand.",
+      "axes": [
+        { "name": "types", "values": ["line", "area", "bar"], "default": "line" },
+        { "name": "sizes", "values": ["sm", "md"], "default": "md" },
+        { "name": "colors", "values": ["1", "2", "3", "4", "5"] }
+      ],
+      "slots": [
+        "chart",
+        "chart-legend",
+        "chart-plot",
+        "chart-y-axis",
+        "chart-x-axis",
+        "chart-tooltip",
+        "chart-table",
+        "chart-table-toggle"
+      ],
+      "states": ["rest", "current"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
     "chat-composer": {
       "source": "packages/ui-foundation/contracts/components/chat-composer.json",
       "exportName": "chatComposerContract",
