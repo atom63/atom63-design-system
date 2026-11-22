@@ -145,8 +145,12 @@
     color: var(--a63-text-primary);
   }
 
-  .mdx-insight-panel {
-    background-color: color-mix(in oklab, var(--a63-surface-page) 72%, transparent);
+  /* One boundary per element: frame blocks whose tray holds a single panel
+     (KeyIdea, Steps, Timeline) keep the tray's fill and shadow and draw the
+     panel flat, with no ring (the block passes border="off"), fill or shadow. */
+  .mdx-frame .a63-Frame-panel.mdx-frame-panel-flat {
+    --a63-surface-shadow: none;
+    background-color: transparent;
   }
 
   .mdx-insight-body {

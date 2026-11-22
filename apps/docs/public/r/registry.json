@@ -228,6 +228,48 @@
     },
     {
       "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+      "name": "reading-page",
+      "type": "registry:page",
+      "title": "Reading page",
+      "description": "A long-form reading page for an article, a blog post or a docs page, built on ReaderLayout from @atom63/ui-react/layout: Page owns the main landmark, Container the width, Section the space around the document, and ReaderLayout a centred reading column with a table-of-contents rail beside it on wide screens. reserveAside keeps the column the same width on pages with no rail. Inside an app shell, give Page render={<div />} so the document keeps one main landmark.",
+      "dependencies": [
+        "@atom63/ui-react"
+      ],
+      "registryDependencies": [],
+      "categories": [
+        "layout"
+      ],
+      "meta": {
+        "readiness": "draft",
+        "tags": [
+          "reading",
+          "reader",
+          "article",
+          "blog",
+          "blog post",
+          "post",
+          "docs",
+          "documentation",
+          "guide",
+          "long-form",
+          "essay",
+          "table of contents",
+          "rail",
+          "reader layout",
+          "prose"
+        ]
+      },
+      "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
+      "files": [
+        {
+          "path": "templates/pages/reading-page/reading-page.tsx",
+          "type": "registry:page",
+          "target": "@components/atom63/pages/reading-page/reading-page.tsx"
+        }
+      ]
+    },
+    {
+      "$schema": "https://ui.shadcn.com/schema/registry-item.json",
       "name": "settings-page",
       "type": "registry:page",
       "title": "Settings page",

@@ -109,6 +109,7 @@ function Reply({
                   aria-label="Good reply"
                   onClick={() => onFeedback(message.id, 'up')}
                   size="icon-xs"
+                  tone="muted"
                   variant="ghost"
                 >
                   <ThumbsUp aria-hidden />
@@ -117,6 +118,7 @@ function Reply({
                   aria-label="Bad reply"
                   onClick={() => onFeedback(message.id, 'down')}
                   size="icon-xs"
+                  tone="muted"
                   variant="ghost"
                 >
                   <ThumbsDown aria-hidden />
@@ -187,7 +189,13 @@ export function ChatThread({
     <ChatComposer
       attach={
         attach ?? (
-          <Button aria-label="Attach a file" shape="round" size="icon-sm" variant="ghost">
+          <Button
+            aria-label="Attach a file"
+            shape="round"
+            size="icon-sm"
+            tone="muted"
+            variant="ghost"
+          >
             <Plus aria-hidden />
           </Button>
         )
@@ -285,12 +293,24 @@ export function ChatPanel({ onClose, onNewChat, title = 'Assistant', ...thread }
         <h2 className="text-foreground text-sm font-semibold">{title}</h2>
         <div className="ms-auto flex items-center gap-1">
           {onNewChat ? (
-            <Button aria-label="New chat" onClick={onNewChat} size="icon-sm" variant="ghost">
+            <Button
+              aria-label="New chat"
+              onClick={onNewChat}
+              size="icon-sm"
+              tone="muted"
+              variant="ghost"
+            >
               <SquarePen aria-hidden />
             </Button>
           ) : null}
           {onClose ? (
-            <Button aria-label="Close assistant" onClick={onClose} size="icon-sm" variant="ghost">
+            <Button
+              aria-label="Close assistant"
+              onClick={onClose}
+              size="icon-sm"
+              tone="muted"
+              variant="ghost"
+            >
               <X aria-hidden />
             </Button>
           ) : null}

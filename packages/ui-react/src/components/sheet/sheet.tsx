@@ -36,6 +36,14 @@ export type SheetVariant = FoundationSheetVariant
 
 let openSheetCount = 0
 
+/*
+ * Base UI hides the rest of the page with aria-hidden while a modal sheet is
+ * open, but does not set aria-modal, which the APG requires; and its Popup
+ * does not expose the root's `modal` prop. The root passes it down here, as
+ * Dialog does. Base UI treats `true` and 'trap-focus' as modal.
+ */
+const SheetModalContext = React.createContext<SheetPrimitive.Root.Props['modal']>(true)
+
 function setSheetBodyState(open: boolean) {
   openSheetCount = Math.max(0, openSheetCount + (open ? 1 : -1))
   document.body.toggleAttribute('data-sheet-open', openSheetCount > 0)
@@ -66,13 +74,15 @@ export function Sheet({ onOpenChange, open, defaultOpen, ...props }: SheetPrimit
   }
 
   return (
-    <SheetPrimitive.Root
-      data-slot="sheet"
-      defaultOpen={defaultOpen}
-      onOpenChange={handleOpenChange}
-      open={open}
-      {...props}
-    />
+    <SheetModalContext.Provider value={props.modal ?? true}>
+      <SheetPrimitive.Root
+        data-slot="sheet"
+        defaultOpen={defaultOpen}
+        onOpenChange={handleOpenChange}
+        open={open}
+        {...props}
+      />
+    </SheetModalContext.Provider>
   )
 }
 
@@ -155,11 +165,13 @@ export function SheetPopup({
   portalProps,
   ...props
 }: SheetPopupProps): React.ReactElement {
+  const modal = React.useContext(SheetModalContext)
   return (
     <SheetPortal {...portalProps}>
       <SheetBackdrop />
       <SheetViewport side={side} variant={variant}>
         <SheetPrimitive.Popup
+          aria-modal={modal === false ? undefined : true}
           className={cn('a63-Sheet-popup', className)}
           data-side={side}
           data-slot="sheet-popup"

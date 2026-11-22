@@ -95,7 +95,7 @@ export function FilterBar({
         </Select>
       </Field>
       {showClear ? (
-        <Button onClick={onClear} variant="ghost">
+        <Button onClick={onClear} tone="muted" variant="ghost">
           Clear filters
         </Button>
       ) : null}

@@ -22914,7 +22914,7 @@
         "surface",
         "theme"
       ],
-      "expression": "var(--surface-dark-11)"
+      "expression": "color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-text-tertiary",
@@ -22925,7 +22925,7 @@
         "surface",
         "theme"
       ],
-      "expression": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))"
+      "expression": "color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-track-shadow",

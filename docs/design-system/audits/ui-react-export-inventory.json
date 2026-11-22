@@ -47,7 +47,7 @@
   },
   "counts": {
     "rootValueExports": 443,
-    "rootTypeExports": 207,
+    "rootTypeExports": 208,
     "packageExportKeys": 84,
     "cssExportKeys": 77
   },
@@ -1498,6 +1498,10 @@
         }
       ],
       "types": [
+        {
+          "name": "CommandDialogPopupProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
         {
           "name": "CommandInputProps",
           "proposedTier": "beta-supported-composition-conditional"

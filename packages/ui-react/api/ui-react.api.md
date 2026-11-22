@@ -867,7 +867,12 @@ export const CommandDialog: typeof Dialog_2.Root;
 export function CommandDialogBackdrop(input: Dialog_2.Backdrop.Props): React$1.ReactElement;
 
 // @public (undocumented)
-export function CommandDialogPopup(input: Dialog_2.Popup.Props): React$1.ReactElement;
+export function CommandDialogPopup(input: CommandDialogPopupProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type CommandDialogPopupProps = Omit<Dialog_2.Popup.Props, 'title'> & {
+    title?: React$1.ReactNode;
+};
 
 // @public (undocumented)
 export function CommandDialogPortal(props: Dialog_2.Portal.Props): React$1.ReactElement;

@@ -139,7 +139,7 @@ jobs:
       - name: Check package correctness
         run: pnpm check:package-correctness
 
-      - name: Check React UI bundle size
+      - name: Check React UI and MDX bundle size
         run: pnpm check:ui-react-size
 
       - name: Check React UI root entry dependencies

@@ -172,8 +172,19 @@ export const Dialog: Story = {
   },
 }
 
+/** The modal palette open as an app shows it, so axe and the visual test cover the dialog. */
+export const DialogOpen: Story = {
+  render: () => (
+    <CommandDialog defaultOpen>
+      <CommandDialogPopup>
+        <Palette />
+      </CommandDialogPopup>
+    </CommandDialog>
+  ),
+}
+
 /*
- * Programmatic handle — CommandCreateHandle() builds a detached DialogHandle you
+ * Programmatic handle —CommandCreateHandle() builds a detached DialogHandle you
  * pass to CommandDialog via `handle`. Any button can then call handle.open(null)
  * imperatively (no open state to thread), and a detached CommandDialogTrigger wired
  * to the same handle stays in sync.
