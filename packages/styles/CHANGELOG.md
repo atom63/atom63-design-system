@@ -1,5 +1,15 @@
 # @atom63/styles
 
+## 0.1.0-beta.11
+
+### Minor Changes
+
+- [#336](https://github.com/atom63/atom63-design-system/pull/336) [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de) Thanks [@atom63](https://github.com/atom63)! - `--a63-chart-2` to `--a63-chart-5` now turn the hue of `--a63-chart-1` (the brand) by fixed steps at a set lightness and chroma, instead of fixed teal, amber, violet and rose, so no series lands on the brand on any brand, the violet brand and wallpaper brands included. Every series reaches 3:1 against the page and the panel in every theme and mode, and in dark mode `--a63-chart-1` is the brand's 400 step. `@atom63/styles/compat/a63-from-shadcn` maps the chart tokens from shadcn's `--chart-1..5`. The content-colour rule now points chart series at the chart tokens and the Chart component.
+
+### Patch Changes
+
+- [#332](https://github.com/atom63/atom63-design-system/pull/332) [`a5e997e`](https://github.com/atom63/atom63-design-system/commit/a5e997ec97a7dca091e32beb86f8b7a9c6ab00bc) Thanks [@atom63](https://github.com/atom63)! - `--a63-text-secondary` and `--a63-text-tertiary` now follow `--a63-surface-tint`: they mix toward brand 800 in light mode and brand 100 in dark mode by three tenths of the tint (the terminal theme's dark tertiary text lightens toward brand 100 the same way). At tint 0 they are unchanged. At 50% and 100% tint they keep WCAG AA 4.5:1 on the page, the panel and the muted surface for every brand, theme and mode; before, the tertiary text fell to 3.64:1 and the secondary text to 4.17:1 on the muted surface.
+
 ## 0.1.0-beta.10
 
 ### Minor Changes

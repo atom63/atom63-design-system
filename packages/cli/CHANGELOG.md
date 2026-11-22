@@ -1,5 +1,15 @@
 # @atom63/cli
 
+## 0.1.0-beta.5
+
+### Patch Changes
+
+- [#336](https://github.com/atom63/atom63-design-system/pull/336) [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de) Thanks [@atom63](https://github.com/atom63)! - `--a63-chart-2` to `--a63-chart-5` now turn the hue of `--a63-chart-1` (the brand) by fixed steps at a set lightness and chroma, instead of fixed teal, amber, violet and rose, so no series lands on the brand on any brand, the violet brand and wallpaper brands included. Every series reaches 3:1 against the page and the panel in every theme and mode, and in dark mode `--a63-chart-1` is the brand's 400 step. `@atom63/styles/compat/a63-from-shadcn` maps the chart tokens from shadcn's `--chart-1..5`. The content-colour rule now points chart series at the chart tokens and the Chart component.
+
+- [#333](https://github.com/atom63/atom63-design-system/pull/333) [`c34905e`](https://github.com/atom63/atom63-design-system/commit/c34905ecea5f1a3c288a887db369cd8c150cc229) Thanks [@atom63](https://github.com/atom63)! - `atom63 build` answers a reading idea (an article, a blog post, a docs page) with the new `reading-page` template and a "Reading page" section that shows Page, Container, Section and ReaderLayout, and no longer offers app-shell pages or blocks for it. The templates it hands out keep one `variant="primary"` Button per file and give every `variant="ghost"` Button `tone="muted"`.
+
+- [#331](https://github.com/atom63/atom63-design-system/pull/331) [`986777c`](https://github.com/atom63/atom63-design-system/commit/986777cf20470248992e09e56ad89a3aa40fc149) Thanks [@atom63](https://github.com/atom63)! - `SheetPopup` and a modal `DrawerContent` set `aria-modal="true"`, as `DialogPopup` does; `Sheet modal={false}` and `Drawer modal={false}` leave it off. `CommandDialogPopup` gets a default accessible name from a visually hidden title, "Command palette", which the new `title` prop replaces; passing `aria-label` or `aria-labelledby` skips it. `CommandDialogPopupProps` is exported.
+
 ## 0.1.0-beta.4
 
 ### Patch Changes

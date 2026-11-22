@@ -1,5 +1,18 @@
 # @atom63/mdx
 
+## 0.4.0-beta.7
+
+### Patch Changes
+
+- [#334](https://github.com/atom63/atom63-design-system/pull/334) [`380497a`](https://github.com/atom63/atom63-design-system/commit/380497abd2b9a06bce66fe6488dcf6e7b2dd9cc2) Thanks [@atom63](https://github.com/atom63)! - The `@atom63/mdx` entries now tree-shake. Each module a public entry re-exports is built as its own file, and the entries are lists of re-exports over them, so a bundler drops the blocks an app does not import. One import now costs a consumer bundle 0.8 kB gzip for `isExternalMdxHref` (was 160.9 kB) and 19.7 kB for `Accordion` from `./blocks` (was 100.8 kB). The public exports are unchanged.
+  
+  `createMdxComponents`, `mdxComponents` and `blockMdxComponents` now register every name in `portableBlockNames`: `KeyIdea`, `Compare`, `ImageCompare`, `LayerStack` and `MdxPageSkeleton` work in MDX without being passed in.
+  
+  `KeyIdea`, `Steps` and `Timeline` draw one boundary: the tray keeps its fill and shadow, and the panel inside it has no ring, fill or shadow.
+- Updated dependencies [[`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de), [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de), [`986777c`](https://github.com/atom63/atom63-design-system/commit/986777cf20470248992e09e56ad89a3aa40fc149), [`567dbbf`](https://github.com/atom63/atom63-design-system/commit/567dbbf9a706f3bddfb839600eac069e30ec5baa), [`a5e997e`](https://github.com/atom63/atom63-design-system/commit/a5e997ec97a7dca091e32beb86f8b7a9c6ab00bc)]:
+  - @atom63/ui-react@0.2.0-beta.16
+  - @atom63/styles@0.1.0-beta.11
+
 ## 0.4.0-beta.6
 
 ### Patch Changes

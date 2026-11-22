@@ -1,5 +1,13 @@
 # @atom63/ui-foundation
 
+## 0.2.0-beta.9
+
+### Minor Changes
+
+- [#336](https://github.com/atom63/atom63-design-system/pull/336) [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de) Thanks [@atom63](https://github.com/atom63)! - Add Chart on its own entry, `import { Chart } from '@atom63/ui-react/chart'`: a small SVG line, area or bar chart (grouped or stacked) of up to five series over a categorical axis. It draws gridlines and axis labels from tokens, follows the container's width, shows a tooltip on hover and on the arrow keys, has a legend, mirrors in right-to-left text, keeps series apart by dash pattern in forced colours, and carries a data table of the same numbers that is visually hidden or shown with a toggle. It uses no charting library. The contract adds `chartTypes`, `chartSizes`, `chartColors`, `chartStates` and `chartSlots`.
+
+- [#335](https://github.com/atom63/atom63-design-system/pull/335) [`567dbbf`](https://github.com/atom63/atom63-design-system/commit/567dbbf9a706f3bddfb839600eac069e30ec5baa) Thanks [@atom63](https://github.com/atom63)! - Add sortable table heads: `Table` takes a controlled `sort` and `onSortChange`, and a `TableHead` with a `sortKey` renders a sort button with a direction icon (replaceable through `sortIcon`) and carries `aria-sort` while its column is sorted. `PaginationLink`, `PaginationPrevious` and `PaginationNext` take `render` (such as a router link) and `disabled`, which drops the href and click handler, leaves the tab order and sets `aria-disabled`. Pagination's default name is now "Pagination". Autocomplete's clear button sits beside the trigger instead of on top of it. `FeedbackState` renders its title as a real `h1`–`h6`. `FormControl` lists the description id in `aria-describedby` only while a `FormDescription` renders. The table contract adds the `table-sort-button` slot and the `sort-ascending` and `sort-descending` states; the pagination contract adds the `disabled` state.
+
 ## 0.2.0-beta.8
 
 ### Minor Changes
