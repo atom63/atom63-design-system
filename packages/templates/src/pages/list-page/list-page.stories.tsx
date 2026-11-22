@@ -1,4 +1,11 @@
-import { Alert, AlertDescription, AlertIcon, AlertTitle, Progress } from '@atom63/ui-react'
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Progress,
+  UIProvider,
+} from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { CheckCircle2, Upload } from 'lucide-react'
 import { within } from 'storybook/test'
@@ -38,7 +45,7 @@ function OperationStatus({
   const Icon = variant === 'success' ? CheckCircle2 : Upload
   return (
     <Alert
-      className="fixed end-4 bottom-4 z-[var(--z-layer-popover)] w-[min(24rem,calc(100vw-2rem))] bg-[var(--a63-surface-overlay)]"
+      className="fixed end-4 bottom-[calc(--spacing(4)+var(--a63-safe-area-bottom))] z-[var(--z-layer-popover)] w-[min(24rem,calc(100vw-2rem))] bg-[var(--a63-surface-overlay)]"
       role="status"
       variant={variant}
     >
@@ -64,7 +71,27 @@ export const Compact: Story = { globals: compactGlobals }
 
 export const Tablet: Story = { globals: tabletGlobals }
 
-export const Phone: Story = { globals: responsivePhoneGlobals }
+/* On touch, the phone row's two 32px icon buttons sit far enough apart that their 44px targets
+   do not overlap. */
+export const Phone: Story = {
+  globals: responsivePhoneGlobals,
+  play: async ({ canvas, canvasElement }) => {
+    const viewButton = await canvas.findByRole('button', { name: 'View INV-1044' })
+    const menuButton = canvas.getByRole('button', { name: 'Actions for INV-1044' })
+    // Touch input sizes, as on a phone: 32px buttons with 44px targets.
+    canvasElement.setAttribute('data-a63-input', 'touch')
+    try {
+      const view = viewButton.getBoundingClientRect()
+      const menu = menuButton.getBoundingClientRect()
+      if (Math.round(view.width) !== 32)
+        throw new Error(`Expected a 32px button, got ${view.width}`)
+      const apart = Math.abs(menu.left + menu.width / 2 - (view.left + view.width / 2))
+      if (apart < 44) throw new Error(`Expected the button centres >= 44px apart, got ${apart}px`)
+    } finally {
+      canvasElement.removeAttribute('data-a63-input')
+    }
+  },
+}
 
 const selectedArgs = { defaultOpenId: 'INV-1044' }
 
@@ -103,7 +130,23 @@ export const ProgressCompact: Story = { args: progressArgs, globals: compactGlob
 
 export const ProgressTablet: Story = { args: progressArgs, globals: tabletGlobals }
 
-export const ProgressPhone: Story = { args: progressArgs, globals: responsivePhoneGlobals }
+/* The overlay clears the bottom safe-area inset as well as its 16px margin. */
+export const ProgressPhone: Story = {
+  args: progressArgs,
+  globals: responsivePhoneGlobals,
+  play: async ({ canvasElement }) => {
+    const overlay = canvasElement.querySelector<HTMLElement>('[role="status"][data-slot="alert"]')
+    if (!overlay) throw new Error('Expected the operation status')
+    overlay.style.setProperty('--a63-safe-area-bottom', '31px')
+    try {
+      const bottom = getComputedStyle(overlay).bottom
+      if (bottom !== '47px')
+        throw new Error(`Expected bottom 47px with a 31px inset, got ${bottom}`)
+    } finally {
+      overlay.style.removeProperty('--a63-safe-area-bottom')
+    }
+  },
+}
 
 const successArgs = {
   operationStatus: (
@@ -152,5 +195,82 @@ export const Detail: Story = {
     await userEvent.click(canvas.getByRole('button', { name: 'Actions for INV-1044' }))
     await userEvent.click(await body.findByRole('menuitem', { name: 'View invoice' }))
     await body.findByRole('dialog', { name: 'INV-1044' })
+  },
+}
+
+const loadingArgs = { loading: true }
+
+export const LoadingWide: Story = { args: loadingArgs, globals: wideGlobals }
+
+export const LoadingCompact: Story = { args: loadingArgs, globals: compactGlobals }
+
+export const LoadingTablet: Story = { args: loadingArgs, globals: tabletGlobals }
+
+/* While loading, placeholder rows stand in for the table and are announced as a status. */
+export const LoadingPhone: Story = {
+  args: loadingArgs,
+  globals: responsivePhoneGlobals,
+  play: async ({ canvas }) => {
+    await canvas.findByRole('status', { name: 'Loading' })
+  },
+}
+
+const errorArgs = {
+  error: {
+    description: 'The invoices could not be loaded. Check your connection and try again.',
+    onRetry: () => {},
+    title: 'Invoices did not load',
+  },
+}
+
+export const ErrorWide: Story = { args: errorArgs, globals: wideGlobals }
+
+export const ErrorCompact: Story = { args: errorArgs, globals: compactGlobals }
+
+export const ErrorTablet: Story = { args: errorArgs, globals: tabletGlobals }
+
+/* A failed load replaces the rows with an alert and a retry. */
+export const ErrorPhone: Story = {
+  args: errorArgs,
+  globals: responsivePhoneGlobals,
+  play: async ({ canvas }) => {
+    const alert = await canvas.findByRole('alert')
+    within(alert).getByRole('button', { name: 'Try again' })
+  },
+}
+
+/* The empty state's "Clear filters" leaves with the filters, so focus moves to the search field. */
+export const ClearFromEmpty: Story = {
+  args: emptyArgs,
+  play: async ({ canvas, userEvent }) => {
+    const empty = await canvas.findByText('No matching invoices')
+    const clear = within(empty.closest('[data-slot="empty"]') as HTMLElement).getByRole('button', {
+      name: 'Clear filters',
+    })
+    clear.focus()
+    await userEvent.keyboard('{Enter}')
+    const search = canvas.getByRole('searchbox', { name: 'Search invoices' })
+    if (search.ownerDocument.activeElement !== search) {
+      throw new Error('Expected focus on the search field after clearing')
+    }
+  },
+}
+
+/* Right to left on a phone, where the sidebar is a sheet: the row's view chevron points to the
+   inline end, which is the left. */
+export const RightToLeftPhone: Story = {
+  globals: responsivePhoneGlobals,
+  render: args => (
+    <UIProvider dir="rtl" lang="ar">
+      <ListPage {...args} />
+    </UIProvider>
+  ),
+  play: async ({ canvas }) => {
+    const view = await canvas.findByRole('button', { name: 'View INV-1044' })
+    const icon = view.querySelector('svg')
+    if (!icon) throw new Error('Expected the chevron')
+    if (!getComputedStyle(icon).scale.startsWith('-1')) {
+      throw new Error(`Expected the chevron mirrored, got scale ${getComputedStyle(icon).scale}`)
+    }
   },
 }

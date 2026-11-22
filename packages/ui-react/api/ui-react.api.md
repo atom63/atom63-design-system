@@ -2668,6 +2668,8 @@ export type SidebarProps = React$1.ComponentProps<'div'> & {
     variant?: SidebarVariant;
     collapsible?: SidebarCollapsible;
     dir?: React$1.ComponentProps<typeof SheetPopup>['dir'];
+    mobileTitle?: string;
+    mobileDescription?: string;
 };
 
 // @public (undocumented)
@@ -2688,7 +2690,12 @@ export function SidebarRail(input: React$1.ComponentProps<'button'>): React$1.Re
 export function SidebarSeparator(input: React$1.ComponentProps<typeof Separator>): React$1.ReactElement;
 
 // @public (undocumented)
-export function SidebarTrigger(input: React$1.ComponentProps<typeof Button>): React$1.ReactElement;
+export function SidebarTrigger(input: SidebarTriggerProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type SidebarTriggerProps = React$1.ComponentProps<typeof Button> & {
+    label?: string;
+};
 
 // @public (undocumented)
 export function Skeleton(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
