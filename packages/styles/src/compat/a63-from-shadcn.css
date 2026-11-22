@@ -46,6 +46,7 @@
   --a63-status-danger: var(--destructive);
   --a63-status-danger-foreground: var(--destructive-foreground, white);
   --a63-text-danger: var(--destructive);
+  --a63-border-danger: var(--destructive);
 
   --a63-scrim: color-mix(in oklch, black 40%, transparent);
   /* Shadow, media and on-media colors hold in every theme; same values as semantics.css. */

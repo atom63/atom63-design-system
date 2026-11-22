@@ -1,0 +1,947 @@
+{
+  "scope": "k02-choice",
+  "layer": "3 (components, K1-K10)",
+  "batch": "2. Choice and range: checkbox, radio, switch, segmented-control, slider, rating, progress, spinner (+ iOS AtomToggle, AtomProgressView, native Picker/Slider counterparts)",
+  "reviewedAt": "2026-11-18",
+  "reviewer": "k02-choice reviewer (workflow agent)",
+  "verifiedBy": null,
+  "method": "Read-only. Read sources, recipes, stories, tests, contracts and docs; ran `pnpm -s atom63 component <slug>` for all 8 and `atom63 example` / `atom63 token` spot checks; opened visual baselines (checkbox/radio/switch/segmentedcontrol/slider/rating/progress themes, checkbox states, spinner sizes) and iOS snapshots (progress.light, toggle.large-type). No tests, builds or browsers were run, so forced-colors and RTL findings are derived from CSS and Base UI 1.6.0 source, not observed at runtime. K3 scores are provisional until YZ sees the contact sheet.",
+  "notes": [
+    "Sweep: summary.tsv lists check:control-alignment and check:craft as passing, but check-control-alignment.mjs only exercises Button, Toggle and Input (lines 40-61, 92-104); no subject in this batch is covered by it.",
+    "The craft baseline's token-role entries for progress.css and slider.css (background-color: var(--a63-text-primary)) are judged in k02-choice-37.",
+    "contract-consistency-baseline.json has no entries for this batch; state naming still differs (checkbox lists no focus-visible/hover while radio, rating and segmented-control do) — a layer-2 C1/C2 concern, noted here only.",
+    "All 8 contracts say maturity 'stable' while no subject meets the bar (C5 cross-check, k02-choice-36)."
+  ],
+  "subjects": [
+    {
+      "subject": "checkbox",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/checkbox/checkbox.tsx:9-62: props = Base UI Checkbox.Root.Props + size/indicator enums from the contract; rest props (incl. React 19 ref) spread onto the root; controlled/uncontrolled come from Base UI (checked/defaultChecked). CLI `atom63 component checkbox` matches contract (sizes sm/md, indicators visible/hidden)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG checkbox pattern bound and played in apps/storybook/a11y/patterns.test.ts:89-93 (snapshot patterns.test.ts.snap:20-21). Reduced motion: checkbox.css:122-126. Forced colors: no rule, but the check/dash are SVG strokes in currentColor (checkbox.tsx:16-31), so state survives forced colors; only the accent fill is lost. P3 k02-choice-38."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-checkbox-themes-chromium-linux.png: unchecked/checked/indeterminate/disabled in 4 themes x 2 modes; retro draws a heavier border, terminal a blue border; checked fill legible in all 8."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states include `invalid` (CLI output), and the recipe styles it (checkbox.css:109-111), but no checkbox story sets aria-invalid (grep 'invalid' in checkbox.stories.tsx: no match) and ui-react-checkbox-states-chromium-linux.png shows only 5 boxes (unchecked, checked, indeterminate, disabled checked, disabled). Hover/focus-visible not captured. k02-choice-9."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Only sm/md (checkbox.css:113-120). 44px coarse target via ::after sized to --a63-control-min-target (checkbox.css:52-59; min-target 2.75rem on pointer:coarse, packages/styles/src/contracts/environment.css:128-137). Extra layout margin on touch: P3 k02-choice-39. Not covered by check:control-alignment."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No directional glyphs; symmetric margin shorthand; WithLabel story baseline exists. No RTL or long-label story (grep dir=/rtl in stories: only amount, carousel, chat-*, scrollable-list)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Coarse-pointer target via token (checkbox.css:56-57). No phone story (P3, folded into k02-choice-39)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Storybook docs page checkbox/checkbox.mdx (34 lines: anatomy, contract, tokens); generated docs page from apps/docs/src/lib/component-catalog.ts; CLI answer correct; `atom63 example checkbox <story>` available. mdx token list is stale (omits --a63-choice-box-shadow / -indicator-gloss used at checkbox.css:14-16): P3 k02-choice-40."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "6 unit tests (checkbox.test.tsx:7-38), APG keyboard/tree tests (patterns.test.ts:89-93), 8 visual baselines, SSR via glob of all stories (apps/storybook/ssr/ssr.test.tsx:16). No click-to-toggle unit test (keyboard covered by APG)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: checkbox.json has no crossRenderer block; iOS uses Toggle (AtomToggle) for booleans."
+        }
+      ]
+    },
+    {
+      "subject": "radio",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/radio/radio.tsx:10-56: RadioGroup and Radio wrap Base UI, spread rest props, contract size/indicator enums; RadioGroupItem alias; controlled/uncontrolled via Base UI value/defaultValue."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "APG radio pattern bound (patterns.test.ts:99-103). But the checked state is drawn only with background-color: indicator fill (radio.css:91-94) and the dot (radio.css:78-84, a ::before with background-color). No @media (forced-colors) rule in radio.css (grep: none; only button.css has one). In forced-colors mode background-color is forced to Canvas, so a checked radio renders as an empty ring, identical to unchecked. k02-choice-1."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. ui-react-radio-themes-chromium-linux.png: retro heavier ring, terminal blue ring, aqua gloss; checked dot legible in all 8."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "States story includes invalid (radio.stories.tsx:116), disabled, checked; ChoiceCards and SummaryTiles stories. focus-visible listed in contract but not captured in any baseline: P3 k02-choice-41."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "sm/md only (radio.css:115-122); ::after 44px coarse target (radio.css:58-65). Same touch margin as checkbox (radio.css:32): k02-choice-39."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Symmetric geometry; no physical properties. ui-react never mounts Base UI DirectionProvider (grep 'DirectionProvider' in packages/ui-react/src: none), so arrow-key direction in RTL follows Base UI's 'ltr' default — see k02-choice-3."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Coarse target via token (radio.css:62-63). No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "radio/radio.mdx (34 lines); generated docs page; CLI answer includes Web and iOS mapping and APG link."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "6 unit tests (radio.test.tsx:7-59) incl. invalid forwarding; APG tests; 8 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "crossRenderer: Picker(.inline) / AtomSelectionRow (radio.json); conformance entry packages/ui-ios/Sources/Atom63UI/AtomRendererConformance.swift:179; snapshots examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/radioGroup.{light,dark,large-type}.png. Snapshots cover only the default theme: P3 k02-choice-44."
+        }
+      ]
+    },
+    {
+      "subject": "switch",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/switch/switch.tsx:9-43: Base UI Switch.Root props + size; children decorate the thumb; rest spread; controlled/uncontrolled via Base UI."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG switch pattern bound (patterns.test.ts:84-88). Reduced motion switch.css:147-153. Forced colors: thumb keeps a 1px border (switch.css:83) so its position still shows state. Hover is not gated by @media (hover: hover) (switch.css:122-124): P3 k02-choice-42."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. ui-react-switch-themes-chromium-linux.png: aqua gloss on the checked track, terminal blue outline, retro heavier border; on/off legible in 8 cells."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "States, Sizes, WithThumbIcon(+ColorOverride), BrandRamps baselines. Pressed squash (switch.css:126-128) and focus-visible not captured: P3 k02-choice-41."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "sm/md (switch.css:143-145); 44px coarse target via ::after (switch.css:65-72); geometry from --a63-switch-thumb-size."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "switch.css:43-45,74-120: the track is inline-flex and the checked thumb moves with transform: translateX(var(--switch-thumb)), transform-origin left. No [dir=rtl] / :dir() rule anywhere in the batch or packages/styles (grep). Under dir=rtl the off thumb starts at the inline-start (right) edge and checking translates it a further thumb-width to the right, outside the track. No RTL story. k02-choice-2."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "PhoneFormFactor story + baseline ui-react-switch-phone-form-factor-chromium-linux.png (iOS 26 pill via --a63-switch-thumb-aspect, switch.css:25)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "switch/switch.mdx (31 lines); CLI answer lists token slots, Web and iOS mapping, APG link."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 unit tests (switch.test.tsx:8-26), APG tests, 10 baselines, SSR glob. No RTL test."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomToggle.swift:26-58: native Toggle, Dynamic Type accessibility layout with accessibilityRepresentation (lines 28-43), 44pt row floor (line 56); snapshots toggle.{light,dark,large-type}.png (large-type viewed: stacks label above the toggle). Web size axis sm/md has no iOS mapping; default theme only: P3 k02-choice-44."
+        }
+      ]
+    },
+    {
+      "subject": "segmented-control",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 1,
+          "evidence": "packages/ui-react/src/components/segmented-control/segmented-control.tsx:21-54: SegmentedControlProps is a closed interface; no rest props are spread, so no ref, id, aria-label/aria-labelledby, data-* or event props reach the root. value and onValueChange are required (lines 28,33): no uncontrolled mode. Items are a config array, not composable parts; tabClassName is the only per-item hook. k02-choice-4."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Built on Base UI Tabs (segmented-control.tsx:9,56-105) with no Tabs.Panel, so each segment is role=tab pointing at no tabpanel; Base UI Tabs.List activateOnFocus defaults to false (node_modules/@base-ui/react/tabs/list/TabsList.d.ts:15-18), so arrows move focus without selecting, unlike a radio group or native segmented control. The tablist cannot be given an accessible name (no prop passthrough). Contract has no accessibility pattern (segmented-control.json contract.accessibility = null) and no APG test in patterns.test.ts. k02-choice-5."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. ui-react-segmentedcontrol-themes-chromium-linux.png: retro bevelled plate, terminal monospace, aqua gloss; accent tone legible. terminal/dark neutral plate separates weakly from the track (cropped and enlarged in review): P3 k02-choice-43."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract requiredStates include disabled, but no story renders a disabled item (grep 'disabled' in segmented-control.stories.tsx: none); only the unit test covers it (segmented-control.test.tsx:69). Hover/focus-visible not captured. k02-choice-10."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Item width floors at min-target (segmented-control.css:68) but height does not: track height = max(control-height-md (32px), min-size (2rem on coarse)) (css:18-22, environment.css:128-131); item = track minus 2x3px inset minus borders, and ::after extends only by --segment-inset (css:87-92). Derived coarse-pointer target height about 30px (md) and 26px (sm), under 44px. Derived from CSS, not measured. k02-choice-11."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Indicator uses physical left:0 + translateX(--active-tab-left) (css:164-181), which Base UI measures from offsetLeft (TabsIndicator.mjs:83), so it likely tracks in RTL; but keyboard direction follows Base UI's 'ltr' default with no DirectionProvider (k02-choice-3). Label ellipsis (css:156-160) never triggers because items are flex:none outside fullWidth (css:64); long labels overflow the scrolling track instead. title={item.label} duplicates the visible label as a tooltip (tsx:79). k02-choice-12."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "MobileOverflow story + baseline ui-react-segmentedcontrol-mobile-overflow-chromium-linux.png; track scrolls inline with snap (css:42-46)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Hand-written docs page apps/docs/src/pages/component-segmented-control.mdx (80 lines) plus segmented-control.mdx; CLI answer has Web and iOS mapping. Docs do not say it exposes tab semantics."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "6 unit tests (segmented-control.test.tsx:15-69: render, active, click change, icon/accent, slots, disabled). No keyboard test, no a11y pattern test, no RTL test. k02-choice-13."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "Picker(.segmented) (segmented-control.json crossRenderer), conformance AtomRendererConformance.swift:164, snapshots segmentedControl.{light,dark,large-type}.png. Web tones/variants/sizes axes have no iOS mapping: P3 k02-choice-44."
+        }
+      ]
+    },
+    {
+      "subject": "slider",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 1,
+          "evidence": "packages/ui-react/src/components/slider/slider.tsx:19-44,81-83: SliderProps omits Base UI's onValueChange and replaces it with (value: number) => void that forwards only next[0] for ranges. Contract modes include `range`, but a controlled ranged slider (value=[a,b]) can never learn the second thumb's value while dragging; the Ranged story is uncontrolled only (slider.stories.tsx:35-41). `render` is omitted, so no composition. k02-choice-6."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Base UI slider semantics (range input per thumb). Thumb name falls back to undefined without aria-label/getThumbAriaLabel (slider.tsx:98-104). No APG binding (slider.json contract.accessibility = null; not in patterns.test.ts). Forced colors: track and indicator are background-color only with no border (slider.css:33-47), so the rail and filled range disappear; only the bordered thumb remains. Focus ring also shows while dragging by pointer (slider.css:84-87). k02-choice-14."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. ui-react-slider-themes-chromium-linux.png: in modern/dark, aqua/dark and terminal/dark the unfilled rail (--a63-surface-muted on the dark surface) is nearly invisible, so the range end is not readable; theme expression is limited to the thumb. k02-choice-15."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states rest, focus-visible, dragging, disabled; no story renders disabled or dragging (grep 'disabled' in slider.stories.tsx: none); no thumb hover style in slider.css. k02-choice-16."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Thumb ::after 44px coarse target (slider.css:73-80); root min-height min-target (slider.css:19); vertical min-width (slider.css:106-111)."
+        },
+        {
+          "criterion": "K6",
+          "score": 1,
+          "evidence": "No DirectionProvider anywhere in packages/ui-react/src (grep). Base UI defaults direction to 'ltr' (node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs:14), and SliderControl/SliderThumb read it for pointer and keyboard math, while the thumb is positioned with CSS insetInlineStart (SliderThumb.mjs:194), which flips under dir=rtl. Under an RTL page the thumb renders mirrored but drag and arrow keys act left-to-right. Not run at runtime. k02-choice-3."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "touch-action: none on the root (slider.css:20), full-width by default, coarse target via token."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "No slider.mdx; docs page is the generated one-liner from component-catalog.ts:586-592. The range onValueChange limitation is only in a JSDoc comment (slider.tsx:30-33). Contract default tone is accent while AGENTS.md rule 5 says selection is neutral by default and accent is set on a Slider only when it is a cue. k02-choice-17."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "6 unit tests (slider.test.tsx:7-51) incl. keyboard step and vertical/range labels; controlled range and onValueCommitted untested; no APG test. k02-choice-18."
+        },
+        {
+          "criterion": "K10",
+          "score": 3,
+          "evidence": "Native SwiftUI Slider + atomSliderTone (packages/ui-ios/Sources/Atom63UI/AtomTrackTone.swift:34), conformance AtomRendererConformance.swift:194, snapshots slider.{light,dark,large-type}.png. No range on iOS, documented as a platform adaptation."
+        }
+      ]
+    },
+    {
+      "subject": "rating",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/rating/rating.tsx:10-23: value is required; the input form has no defaultValue, so it is controlled only. Input mode casts div props onto RadioGroup (line 86). No name/form prop documented for form submission. k02-choice-19."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Read-only = role=img with a score name (rating.tsx:47-57); input = Base UI radio group with per-star names (lines 77-101). But on and off stars differ only by color (rating.css:11-12,62,80-81; glyph fill/stroke currentColor, css:48-53). In forced-colors mode color is forced to one system color, so filled and empty stars look the same and the score / selected value disappears visually. No forced-colors rule. No APG binding (rating.json accessibility null). The empty star is text-secondary at 35% alpha (css:12), likely under 3:1 non-text contrast (not measured). k02-choice-7."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. ui-react-rating-themes-chromium-linux.png: the 8 cells are identical apart from background — same amber star, same size, no theme or archetype expression; the story also omits the theme labels other batches show. k02-choice-20."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Input, Sizes, Variations (10-point scale, heart glyph, disabled input at rating.stories.tsx:48-54) baselines. Hover preview and focus-visible not captured: P3 k02-choice-41."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "sm/md (rating.css:26-28); input stars floor at min-target (rating.css:72-79)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Half-star clip mirrors via inset-inline-start (rating.css:56-63). But the accessible strings are hard-coded English: `${value} out of ${max}` (rating.tsx:50) and '1 star' / `${star} stars` (rating.tsx:90), with no prop to localize the per-star names. k02-choice-21."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Input stars at 44px on coarse pointers (rating.css:75-76). Hover rule not gated by @media (hover: hover) (rating.css:83-88): P3 k02-choice-42."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "No rating.mdx; generated docs page only (component-catalog.ts:491-497); CLI answer lists no accessibility pattern and no Web and iOS section. k02-choice-22."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "3 unit tests (rating.test.tsx:9-27): read-only name, scale/label, radio group. No keyboard, hover, disabled or half-value tests; no APG test. k02-choice-23."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: rating.json has no crossRenderer block and no iOS counterpart exists."
+        }
+      ]
+    },
+    {
+      "subject": "progress",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/progress/progress.tsx:14-96: Base UI Progress parts (Label, Track, Indicator, Value) each spread props; default Track+Indicator when childless; tone from contract."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Base UI gives role=progressbar with value. But the value is drawn only as background-color on .a63-Progress-indicator (progress.css:35-50) and no forced-colors rule exists; in forced-colors mode the fill becomes Canvas and only the track border remains, so a determinate bar without a ProgressValue shows no progress. Under reduced motion the indeterminate bar becomes a static 40% fill (progress.css:52-55,73-78), visually the same as value=40. k02-choice-8."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. ui-react-progress-themes-chromium-linux.png: terminal/dark and retro/dark tracks are barely visible against the surface, so the remaining portion cannot be read; retro track is a hairline. k02-choice-24."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract outcome 'Completion is distinguishable' (CLI), but complete has no design beyond a full bar (Steps story values 0-100, progress.stories.tsx:50); reduced-motion indeterminate is indistinguishable from 40% (see K2). k02-choice-25."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Non-interactive; track height 0.375rem (progress.css:27), label/value use control font tokens (css:17-22,57-62)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Determinate fill uses Base UI insetInlineStart (ProgressIndicator.mjs:29-31) and mirrors. The indeterminate keyframes are physical translateX(-100%) to translateX(250%) (progress.css:64-71): under RTL the inline-start-anchored 40% bar sweeps from the middle out of the right edge. k02-choice-26."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Full width (progress.css:12), no touch interaction."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "No progress.mdx; generated docs page only (component-catalog.ts:470-476). Default tone accent conflicts with AGENTS.md rule 5. k02-choice-17."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "5 unit tests (progress.test.tsx:13-59) incl. indeterminate; 8 baselines; SSR glob."
+        },
+        {
+          "criterion": "K10",
+          "score": 2,
+          "evidence": "packages/ui-ios/Sources/Atom63UI/AtomProgressView.swift:3-82: native ProgressView, tone, combined accessibility element; snapshot progress.light.png viewed. accessibilityValue returns the literal String \"In progress\" (line 70), not localized; complete has no distinct treatment on iOS either. k02-choice-27."
+        }
+      ]
+    },
+    {
+      "subject": "spinner",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/spinner/spinner.tsx:27-49: props are React.ComponentProps<'svg'> with no exported SpinnerProps (CLI: 'Types: None'); no size axis; every instance injects its own <style> block (lines 5-25,39) instead of a spinner.css recipe, so check:craft never scans its CSS. k02-choice-28."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "role=status with aria-label=\"Loading\" on an empty svg (spinner.tsx:30-34): a live region with no text content is usually not announced on mount, and its label is fixed English unless overridden. Reduced motion stops rotation (lines 20-24). No a11y pattern or test. k02-choice-29."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. Only Playground, Sizes and Dark baselines (ui-react-spinner-{playground,sizes,dark}-chromium-linux.png); no themes matrix, contract visualArchetypes is empty (spinner.json), and the glyph is identical in every theme. k02-choice-30."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states loading and reduced-motion; no story captures reduced-motion (spinner.stories.tsx:13-34). k02-choice-31."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Fixed 1rem (spinner.tsx:15-16); the Sizes story resizes with inline style 12/20/32px (spinner.stories.tsx:25-27), off the token scale and outside any contract axis. k02-choice-32."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Rotation is direction-neutral; default label overridable via props spread after it (spinner.tsx:30,37)."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: an inline, non-interactive glyph with no layout of its own."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "No spinner.mdx; generated docs page only (component-catalog.ts:593-598); CLI answer shows no axes, no archetype, no types. k02-choice-33."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "2 unit tests (spinner.test.tsx:7-17): render and className merge. No reduced-motion test. k02-choice-34."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: spinner.json has no crossRenderer block (iOS uses ProgressView inside AtomProgressView)."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "k02-choice-1",
+      "subject": "radio",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "In forced-colors mode a checked radio looks the same as an unchecked one.",
+      "evidence": "radio.css:78-84 (dot is a ::before with background-color) and radio.css:91-94 (fill is background-color); no @media (forced-colors) rule in radio.css (grep across the batch: only button.css has one). Forced colors replace background-color with Canvas. Derived from CSS, not observed at runtime.",
+      "fix": "Add @media (forced-colors: active) { .a63-Radio-indicator::before { background-color: CanvasText; forced-color-adjust: none } .a63-Radio[data-checked] { border-color: Highlight } } (or draw the dot with a border), and capture a forced-colors story.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "radio.css shows the checked state only through background-color (indicator fill, ::before dot at 78-84 and 91-94) and border-color. The repo has no forced-colors rule except in button.css. Base UI Radio is a span, not a native input. Under forced colors both backgrounds become Canvas and the border becomes the system color, so checked and unchecked look the same. Not run in a browser, but the CSS reasoning holds."
+      }
+    },
+    {
+      "id": "k02-choice-2",
+      "subject": "switch",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "Under dir=rtl the checked thumb slides out of the track.",
+      "evidence": "switch.css:43-45 (inline-flex track), 88-89 (transform: translateX(var(--thumb-x)), transform-origin: left), 116-120 (--thumb-x: var(--switch-thumb) when checked). No :dir()/[dir=rtl] rule in the batch or packages/styles (grep). In RTL the off thumb sits at the right edge and a positive translateX pushes it a thumb-width past it. No RTL story or test.",
+      "fix": "Negate the travel in RTL (e.g. .a63-Switch:dir(rtl) .a63-Switch-thumb { --thumb-x-sign: -1 } and translateX(calc(var(--thumb-x) * var(--thumb-x-sign, 1))), transform-origin inline-start/end), and add an RTL story with a baseline.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "switch.css uses an inline-flex track, so in RTL the thumb starts at the right edge. Checked adds translateX(+thumb), a physical shift to the right, with transform-origin left/right. No :dir() or [dir=rtl] rule touches the switch; the repo only has RTL rules for calendar, carousel, breadcrumb and scrollable-list. In RTL the checked thumb moves past the track's right edge."
+      }
+    },
+    {
+      "id": "k02-choice-3",
+      "subject": "slider",
+      "criterion": "K6",
+      "severity": "P1",
+      "summary": "ui-react never provides Base UI's DirectionProvider, so in RTL the slider renders mirrored but drags and steps left-to-right.",
+      "evidence": "grep 'DirectionProvider' in packages/ui-react/src: no match. node_modules/@base-ui/react/direction-provider/DirectionProvider.mjs:14 defaults direction to 'ltr'; slider/control/SliderControl.mjs and slider/thumb/SliderThumb.mjs read it, while SliderThumb.mjs:194 positions with CSS insetInlineStart. The same missing provider affects arrow-key direction in RadioGroup and the SegmentedControl tabs. Not run in a browser.",
+      "fix": "Have UIProvider accept or detect dir and render <DirectionProvider direction={dir}>; add an RTL story for slider, radio and segmented-control and an interaction test that ArrowRight decreases in RTL.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Nothing in packages or docs mentions DirectionProvider. Base UI's useDirection returns 'ltr' when no provider is present (DirectionContext.mjs). SliderControl uses it for pointer math (line 169) and SliderThumb for key steps (110-114), but the thumb is placed with insetInlineStart (194), so under dir=rtl the slider renders mirrored while pointer and key math stay LTR. Composite (RadioGroup, Tabs) also reads direction. Nothing documents that consumers must add the provider themselves."
+      }
+    },
+    {
+      "id": "k02-choice-4",
+      "subject": "segmented-control",
+      "criterion": "K1",
+      "severity": "P1",
+      "summary": "SegmentedControl accepts no pass-through props or ref and works only controlled.",
+      "evidence": "segmented-control.tsx:21-35 (closed props interface: no ...rest, no ref, no aria-*/id/data-*), 28 and 33 (onValueChange and value required, no defaultValue), 56-70 (nothing spread onto Tabs.Root).",
+      "fix": "Type props as Omit<Tabs.Root.Props, 'onValueChange'|'value'|'defaultValue'> plus the contract axes, spread rest onto the root, add defaultValue (uncontrolled), and make value/onValueChange optional.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "SegmentedControlProps (segmented-control.tsx:21-35) is a closed interface: no rest spread, no ref, no aria-*, id or data-*. value and onValueChange are required, with no defaultValue, and nothing is spread onto Tabs.Root. K1 requires spread props, a forwarded ref, and both controlled and uncontrolled modes."
+      }
+    },
+    {
+      "id": "k02-choice-5",
+      "subject": "segmented-control",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "SegmentedControl exposes tabs with no panels and an unnameable tablist, and selection does not follow arrow keys.",
+      "evidence": "segmented-control.tsx:9,56-105 (Base UI Tabs, no Tabs.Panel); TabsList.d.ts:15-18 (activateOnFocus default false, not set); no way to pass aria-label to the tablist (k02-choice-4); segmented-control.json has no accessibility pattern and patterns.test.ts binds none for it. Contract promises 'Preserves single selection semantics'.",
+      "fix": "Rebuild on Base UI RadioGroup (or ToggleGroup with single selection) so it is a named radiogroup whose arrow keys move selection, keep the sliding indicator, bind the APG radio pattern in the contract and patterns.test.ts.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "The code matches: Base UI Tabs with no Tabs.Panel, activateOnFocus not set, and no way to name the tablist. The severity is inflated, though. aria-selected keeps single-selection semantics (the contract outcome holds), and manual activation is allowed by the APG tabs pattern. The tablist naming gap comes from k02-choice-4. What is left is a role mismatch (tabs without panels, where radiogroup or toggle-group semantics fit better), which is a quality gap rather than an inaccessible control."
+      }
+    },
+    {
+      "id": "k02-choice-6",
+      "subject": "slider",
+      "criterion": "K1",
+      "severity": "P1",
+      "summary": "A controlled range slider is impossible: onValueChange reports only the first thumb.",
+      "evidence": "slider.tsx:19-22 (Base UI onValueChange omitted), 30-34 and 81-83 (handler forwards next[0] for arrays). Contract modes include 'range' (CLI). Ranged story is uncontrolled (slider.stories.tsx:35-41); no test for controlled range.",
+      "fix": "Type onValueChange as (value: number | number[], details) like Base UI, or add onValuesChange(values: number[]); add a controlled Ranged story and test.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "slider.tsx omits Base UI's onValueChange (19-22) and forwards only next[0] for arrays (81-83). A consumer passing value=[a,b] never receives the second thumb's value, so a live controlled range slider cannot work; onValueCommitted via rest props only fires on commit. The range story is uncontrolled. Confirmed from source."
+      }
+    },
+    {
+      "id": "k02-choice-7",
+      "subject": "rating",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "In forced-colors mode filled and empty stars look the same, so the score and the selected value disappear.",
+      "evidence": "rating.css:11-12 (on = amber, off = text-secondary 35%), 48-53 (glyph fill/stroke currentColor), 62 and 80-81 (state = color only); no forced-colors rule. Forced colors map every color to one system color. Empty-star contrast (35% alpha secondary text) also likely below 3:1; not measured.",
+      "fix": "In @media (forced-colors: active) draw off stars as outline only (fill: none; stroke: CanvasText) and on stars filled with Highlight (forced-color-adjust: none); raise --rating-off to a token that meets 3:1.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "rating.css draws on and off stars only through color (11-12, 62, 80-81), with the SVG fill and stroke set to currentColor (48-53), and it has no forced-colors rule. Forced colors map color to a system color, so on and off stars render identically. A read-only score disappears visually, and so does the selected value. Not run in a browser, but the CSS reasoning holds."
+      }
+    },
+    {
+      "id": "k02-choice-8",
+      "subject": "progress",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "In forced-colors mode the progress fill disappears; with reduced motion the indeterminate bar reads as 40% done.",
+      "evidence": "progress.css:35-50 (fill = background-color only), no forced-colors rule; progress.css:52-55 and 73-78 (indeterminate = width 40%, animation removed under reduced motion).",
+      "fix": "Forced colors: .a63-Progress-indicator { background-color: Highlight; forced-color-adjust: none }. Reduced motion: give the indeterminate state a distinct static treatment (e.g. full-width striped or pulsing-opacity-free dashed fill) instead of a 40% bar.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "The progress fill is background-color only (35-50) with no forced-colors rule, so under forced colors the fill and track both become Canvas and the progress is lost. Under reduced motion the indeterminate indicator keeps width:40% with the animation removed (52-55, 73-78), so it reads as a static 40% bar. Both confirmed from the CSS."
+      }
+    },
+    {
+      "id": "k02-choice-9",
+      "subject": "checkbox",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The invalid state is styled and listed in the contract but no story or baseline shows it.",
+      "evidence": "checkbox.css:109-111; contract states include invalid (CLI); grep 'invalid' checkbox.stories.tsx: none; ui-react-checkbox-states-chromium-linux.png shows 5 boxes, none invalid.",
+      "fix": "Add an invalid checkbox (aria-invalid) to the States story, as radio.stories.tsx:116 does.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-10",
+      "subject": "segmented-control",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The required disabled state has no story or baseline.",
+      "evidence": "segmented-control.json requiredStates [rest, selected, disabled]; grep 'disabled' segmented-control.stories.tsx: none; disabled only in segmented-control.test.tsx:69; css:112-115.",
+      "fix": "Add a story with one disabled segment (and the accent tone) so it is captured in the visual baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-11",
+      "subject": "segmented-control",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Segments are shorter than 44px on coarse pointers.",
+      "evidence": "segmented-control.css:18-22 (height floors at --a63-control-min-size, 2rem on coarse per environment.css:130), 68 (only min-width uses min-target), 87-92 (::after extends by --segment-inset only). Derived target about 30px (md) / 26px (sm); not measured; check:control-alignment does not cover SegmentedControl.",
+      "fix": "Extend each item's ::after block-size to max(100% + 2*inset, --a63-control-min-target) like Button's ::before, and add SegmentedControl to check-control-alignment.mjs.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-12",
+      "subject": "segmented-control",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Long labels overflow instead of truncating, and every segment repeats its visible label as a native tooltip.",
+      "evidence": "segmented-control.css:64 (items flex: none) makes the ellipsis rule at css:156-160 inert outside fullWidth; segmented-control.tsx:74,79 (aria-label and title always set to item.label). Keyboard direction in RTL: k02-choice-3.",
+      "fix": "Allow items to shrink (min-width: 0 with a max inline size) so ellipsis applies, set title only for the icon variant or truncated labels, and drop aria-label when the label is visible.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-13",
+      "subject": "segmented-control",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Keyboard behaviour and accessibility semantics are untested.",
+      "evidence": "segmented-control.test.tsx:15-69 covers render, click, variants, disabled; no arrow-key test; no binding in apps/storybook/a11y/patterns.test.ts.",
+      "fix": "After k02-choice-5, bind the radio pattern in patterns.test.ts and add an arrow-key selection test.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-14",
+      "subject": "slider",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Slider has no bound APG pattern, can render an unnamed thumb, and loses its rail in forced colors.",
+      "evidence": "slider.json contract.accessibility null; not in patterns.test.ts; slider.tsx:98-104 (getAriaLabel undefined without aria-label/getThumbAriaLabel); slider.css:33-47 (track/indicator background-color only, no border); slider.css:84-87 (focus ring also on pointer drag).",
+      "fix": "Bind the APG slider pattern and test it; require or warn on a missing label; add forced-colors rules (track border CanvasText, indicator Highlight); ring only on :focus-visible.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-15",
+      "subject": "slider",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "In dark modes the unfilled rail is nearly invisible, so the end of the range cannot be read.",
+      "evidence": "ui-react-slider-themes-chromium-linux.png rows modern/dark, aqua/dark, terminal/dark; slider.css:38 (rail = --a63-surface-muted). Provisional (taste); not contrast-measured.",
+      "fix": "Use a rail token with at least 3:1 against the surface in dark mode (or add a border), and recheck the themes baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-16",
+      "subject": "slider",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Disabled and dragging states are listed but never captured, and the thumb has no hover state.",
+      "evidence": "slider.json states [rest, focus-visible, dragging, disabled]; grep 'disabled' slider.stories.tsx: none; slider.css has no :hover rule.",
+      "fix": "Add a disabled story and a hover style for the thumb; capture both in baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-17",
+      "subject": "slider",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Slider and Progress default to the accent tone, which contradicts AGENTS.md rule 5; their docs pages are one-line generated stubs.",
+      "evidence": "CLI: slider tones default accent, progress tones default accent; AGENTS.md rule 5: 'Selection is neutral by default; set tone=\"accent\" on a selection, Slider or Progress only when it is one of those cues.' No slider.mdx or progress.mdx; generated pages from component-catalog.ts:470-476,586-592. The range onValueChange caveat lives only in slider.tsx:30-33. Applies equally to progress.",
+      "fix": "YZ decides which is right: change both contract defaults to neutral, or reword rule 5. Then add docs pages for slider and progress with usage, the range API and the tone rule.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k02-choice-18",
+      "subject": "slider",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Controlled and ranged change handling is untested.",
+      "evidence": "slider.test.tsx:7-51: no controlled-range test, no onValueCommitted test, no APG test.",
+      "fix": "Add tests for controlled single and range values, pointer drag commit, and the APG slider pattern.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-19",
+      "subject": "rating",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The input Rating works only controlled.",
+      "evidence": "rating.tsx:12 (value required), 77-87 (value forced, no defaultValue); props are cast onto RadioGroup (line 86).",
+      "fix": "Add defaultValue for the input form (uncontrolled via RadioGroup defaultValue) and type the input-mode props as RadioGroupProps.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-20",
+      "subject": "rating",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Rating looks the same in all 4 themes and both modes.",
+      "evidence": "ui-react-rating-themes-chromium-linux.png: 8 identical star rows; rating.css uses only --a63-category-amber and text-secondary for every theme. Provisional.",
+      "fix": "Decide whether the choice archetype should show per theme (e.g. retro outline weight, terminal glyph), and label the theme rows like the other Themes stories.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k02-choice-21",
+      "subject": "rating",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Rating's accessible names are hard-coded English.",
+      "evidence": "rating.tsx:50 (`${value} out of ${max}`), rating.tsx:90 ('1 star' / `${star} stars`); only the group label is a prop.",
+      "fix": "Add a getItemLabel(star) prop (and a formatter for the read-only name), defaulting to the current English.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-22",
+      "subject": "rating",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Rating has no docs page beyond the generated stub, and its contract names no accessibility pattern.",
+      "evidence": "No rating.mdx; component-catalog.ts:491-497; CLI answer for rating has no 'Accessibility pattern' line; rating.json contract.accessibility null.",
+      "fix": "Bind the radio pattern for the input form in rating.json, and write a docs page covering read-only versus input use.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-23",
+      "subject": "rating",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Rating's keyboard, hover, disabled and half-value behaviour is untested.",
+      "evidence": "rating.test.tsx:9-27: three tests only.",
+      "fix": "Add tests for arrow keys, disabled input, and the 4.5 read-only fill width.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-24",
+      "subject": "progress",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Progress tracks are nearly invisible in terminal/dark and retro/dark.",
+      "evidence": "ui-react-progress-themes-chromium-linux.png rows retro/dark and terminal/dark; progress.css:29-32 (track = --a63-field-background with border-subtle). Provisional; not measured.",
+      "fix": "Give the track a token with at least 3:1 against the surface (or a stronger border) in those themes.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-25",
+      "subject": "progress",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Complete has no distinct design, and reduced-motion indeterminate looks like 40%.",
+      "evidence": "Contract outcome 'Completion is distinguishable' (CLI); progress.css has no data-complete rule; Steps story only shows a full bar at 100 (progress.stories.tsx:50); progress.css:52-55,73-78.",
+      "fix": "Style [data-complete] (e.g. success tone or check) and a distinct static indeterminate; capture both.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-26",
+      "subject": "progress",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The indeterminate sweep runs the wrong way in RTL.",
+      "evidence": "progress.css:64-71 (physical translateX keyframes) while Base UI anchors the bar at insetInlineStart (ProgressIndicator.mjs:29).",
+      "fix": "Flip the keyframes under :dir(rtl), or animate inset-inline-start instead of translateX.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-27",
+      "subject": "progress",
+      "criterion": "K10",
+      "severity": "P2",
+      "summary": "AtomProgressView announces a hard-coded English 'In progress'.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomProgressView.swift:69-72 (return \"In progress\" as String, not LocalizedStringKey/String(localized:)); no distinct complete treatment.",
+      "fix": "Use String(localized:) with a bundle-resolved key, and add a complete state to match the contract.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-28",
+      "subject": "spinner",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Spinner exports no props type, has no size axis, and injects a <style> per instance.",
+      "evidence": "spinner.tsx:5-25,27,39; CLI 'Types: None'; spinner.json has no axes; no spinner.css, so check:craft never sees its CSS.",
+      "fix": "Move the CSS to spinner.css, export SpinnerProps, add a sizes axis (sm/md/lg on the control icon sizes) to spinner.json.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-29",
+      "subject": "spinner",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Spinner's role=status has no text, so loading is usually not announced.",
+      "evidence": "spinner.tsx:30-34 (role=status + aria-label on an empty svg); the Playground pairs it with visible text that is outside the live region (spinner.stories.tsx:14-19).",
+      "fix": "Default the svg to aria-hidden and let the caller own the status text, or render visually hidden text inside a status wrapper; document which.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-30",
+      "subject": "spinner",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Spinner has no themes matrix and no archetype.",
+      "evidence": "Baselines: only spinner playground, sizes, dark; spinner.json visualArchetypes []. Provisional.",
+      "fix": "Add a Themes story; YZ decides whether the spinner should vary per theme.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k02-choice-31",
+      "subject": "spinner",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The reduced-motion state is listed but never captured.",
+      "evidence": "spinner.json states [loading, reduced-motion]; spinner.stories.tsx:13-34 has no reduced-motion story.",
+      "fix": "Add a reduced-motion story (prefers-reduced-motion emulation) with a baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-32",
+      "subject": "spinner",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Spinner sizes are set with inline pixels, off the token scale.",
+      "evidence": "spinner.tsx:15-16 (fixed 1rem); spinner.stories.tsx:25-27 (style 12/20/32px).",
+      "fix": "Covered by the sizes axis in k02-choice-28; switch the story to it.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-33",
+      "subject": "spinner",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Spinner has only the generated docs stub and an almost empty CLI answer.",
+      "evidence": "No spinner.mdx; component-catalog.ts:593-598; CLI shows no axes, archetype or types.",
+      "fix": "Write a docs page (when to use Spinner versus Progress or Skeleton, labelling) after k02-choice-28/29.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-34",
+      "subject": "spinner",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Spinner tests check only render and className.",
+      "evidence": "spinner.test.tsx:7-17.",
+      "fix": "Add tests for the accessible contract chosen in k02-choice-29 and for the reduced-motion rule.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-35",
+      "subject": "segmented-control",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "No subject in this batch is covered by check:control-alignment, so their 44px targets are unguarded.",
+      "evidence": "scripts/design-system/check-control-alignment.mjs:40-61,92-104 lists only Button, Toggle and Input markup; sweep control-alignment.log 'passed (3 rungs × 8 axis combinations)'.",
+      "fix": "Add checkbox, radio, switch, slider thumb, rating input and segmented items to the coarse-pointer target assertions.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-36",
+      "subject": "batch",
+      "criterion": "C5 (cross-check)",
+      "severity": "P2",
+      "summary": "All 8 components are marked stable but none meets the readiness bar.",
+      "evidence": "maturity 'stable' in packages/ui-foundation/contracts/components/{checkbox,radio,switch,segmented-control,slider,rating,progress,spinner}.json; every subject above has a criterion at 2 or lower.",
+      "fix": "Either fix the P1/P2 findings or lower maturity until the scorecards are ready (layer-2 reviewer to reconcile).",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k02-choice-37",
+      "subject": "slider",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Neutral tone fills with a text token (baseline token-role debt), and Slider ignores the shared selection accent.",
+      "evidence": "craft-baseline.json:18-19 (progress.css and slider.css background-color: var(--a63-text-primary)); slider.css:46 and progress.css:37 use --a63-action-primary directly while checkbox/radio/switch use --a63-selection-accent (checkbox.css:11).",
+      "fix": "Add a fill token for the neutral track tone (e.g. --a63-track-fill-neutral) and route accent through --a63-selection-accent; remove the two baseline entries.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-38",
+      "subject": "checkbox",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "No forced-colors rule; the checked fill is lost even though the check survives.",
+      "evidence": "checkbox.css:86-89 (fill is background-color); no forced-colors block.",
+      "fix": "Add a forced-colors block (checked border/fill Highlight) together with k02-choice-1.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-39",
+      "subject": "checkbox",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "Checkbox and radio add a 13px margin around the box on touch, on top of the ::after target, so layout shifts between pointer types.",
+      "evidence": "checkbox.css:26 and radio.css:32: margin max(0, (min-target - size) / 2) = (44 - 18) / 2 = 13px on coarse; the ::after already provides the target. No phone story for either.",
+      "fix": "Drop the margin and rely on the ::after target (as Switch and Slider do), or document the reserved space; add a phone story.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-40",
+      "subject": "checkbox",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "checkbox.mdx says there is no per-theme code and lists tokens that are out of date.",
+      "evidence": "checkbox.mdx 'Theme sheet' and 'Tokens it reads' omit --a63-choice-box-shadow, -shadow-checked and -indicator-gloss (checkbox.css:14-16).",
+      "fix": "Update the mdx token list and theme note.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-41",
+      "subject": "radio",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "Focus-visible, hover and pressed states are designed but never captured in this batch's baselines.",
+      "evidence": "All baselines are static rest states (e.g. ui-react-radio-states, ui-react-switch-states, ui-react-rating-input); radio contract lists focus-visible; switch press squash at switch.css:126-128.",
+      "fix": "Add play-function stories that focus or hover one control per component so baselines capture the ring.",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-42",
+      "subject": "switch",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "Switch and Rating hover styles are not gated by @media (hover: hover), so they stick after a tap.",
+      "evidence": "switch.css:122-124; rating.css:83-88 (checkbox.css:94-98 and radio.css:96-100 gate correctly).",
+      "fix": "Wrap both rules in @media (hover: hover).",
+      "kind": "fix"
+    },
+    {
+      "id": "k02-choice-43",
+      "subject": "segmented-control",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "In terminal/dark the neutral selected plate barely separates from the track.",
+      "evidence": "ui-react-segmentedcontrol-themes-chromium-linux.png terminal/dark left control (cropped and enlarged); tokens: segment-selected-background terminal = surface-muted, segment-track-background terminal = field-background (atom63 token). Provisional.",
+      "fix": "Raise the terminal selected background or add a border for the neutral plate.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "k02-choice-44",
+      "subject": "switch",
+      "criterion": "K10",
+      "severity": "P3",
+      "summary": "iOS counterparts are snapshotted only in the default theme, and web axes (switch size, segmented tone/variant/size) have no iOS mapping.",
+      "evidence": "examples/ios-demo/Atom63DemoTests/__Snapshots__/iPhone-17-Pro_iOS-26.2/{toggle,radioGroup,segmentedControl,slider,progress}.{light,dark,large-type}.png only; AtomToggle.swift takes no size; segmented-control crossRenderer maps Picker(.segmented) only.",
+      "fix": "Add theme snapshots (aqua/retro/terminal) and state the unmapped axes as platform adaptations in the contracts.",
+      "kind": "fix"
+    }
+  ]
+}

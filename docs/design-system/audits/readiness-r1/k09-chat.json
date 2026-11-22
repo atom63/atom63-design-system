@@ -1,0 +1,474 @@
+{
+  "scope": "k09-chat",
+  "reviewedAt": "2026-11-19",
+  "round": 1,
+  "subjects": [
+    {
+      "subject": "chat-composer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/chat-composer/chat-composer.tsx:20-79 props match contract axes (status idle|submitted|streaming, layout inline|stacked; contracts/components/chat-composer.json:6-12); controlled and uncontrolled both covered (chat-composer.test.tsx:7-19, 58-68); React 19 ref reaches the form via ...props (tsx:166), textarea ref via textareaProps (tsx:71-75). Polish: the inline 'wrapped' heuristic only re-measures in onChange (tsx:178-185), so a host-set controlled value or a container resize never flips data-multiline."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Textarea named by aria-label (tsx:170), icon buttons named (tsx:209,222,235), IME composition respected (tsx:191; test:21-26). Gap: clicking the send button in idle state clears the value (tsx:150-154), which sets disabled={!canSend} on the focused send button (tsx:240) so keyboard focus is stranded on a disabled control; the footnote (tsx:252-256) is not tied to the field with aria-describedby. No forced-colors rule in chat-composer.css (grep forced-colors: none)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-chatcomposer-themes-chromium-linux.png: pill row, streaming stop and stacked block in 4 themes x 2 modes; retro bevel/square and terminal mono/tinted fill visibly expressed."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines for idle (playground), voice, streaming, with-text (multiline), stacked, disabled, controlled, rtl (ui-react-chatcomposer-*-chromium-linux.png). Polish: contract state focus-visible (chat-composer.json:19) has no captured baseline; submitted and streaming render identically (tsx:204-216)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Send/stop/voice are Button size=icon-sm (tsx:212-214) which gets the 44px coarse hit-area pseudo (button.css:630-640); field heights from tokens (chat-composer.css:42); check:control-alignment passes (sweep-r1/summary.tsv). Polish: max-height 40vh (css:43) uses vh, not dvh, under an on-screen keyboard."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical grid areas and InputGroupAddon inline-start/end (tsx:197-203); RightToLeft story + baseline ui-react-chatcomposer-right-to-left-chromium-linux.png; check:craft physical-properties passes. Polish: no CJK/long-string story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No phone story for the component (chat-composer.stories.tsx: Playground..Themes, fixed 640px decorator at :22-27). Phone width only seen through the template baseline templates-blocks-chat-panel-phone-chromium-linux.png. Keyboard/safe-area behaviour of the bottom field is uncaptured and the 40vh cap (css:43) is viewport-unit based."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 component chat-composer` returns import, contract, slots, states and 9 examples; guidance line 1 is specific. Polish: guidance bullets 2-3 are generic boilerplate ('explain errors beside the affected field', 'invalid state') for a component that has no error/invalid state."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "chat-composer.test.tsx has 9 behaviour tests (Enter/Shift+Enter, IME, disabled send, stop, controlled, slots, layouts, voice); SSR covered by apps/storybook/ssr/ssr.test.tsx:15-33 (every story). Untested: the measured wrap path wraps() (tsx:81-87) and focus after send."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "chat-message",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "chat-message.tsx:29-45 props match contract roles/appearances; ...props spread on article (tsx:76). Polish: appearance is silently overridden to 'bubble' for from='user' (tsx:72) with no type-level signal."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "ChatMessageList is role=log (tsx:23), each turn an article named by role (tsx:70; test:8-20), streaming sets aria-busy (tsx:69). Gap: the user bubble is a background fill only (chat-message.css:64-68) with no border, and no forced-colors rule exists in any chat recipe (grep forced-colors in components/chat-*, message: no matches), so in forced-colors the bubble shape and the user/assistant distinction collapse to alignment only."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. ui-react-chatmessage-themes-chromium-linux.png: user bubble, plain assistant and assistant bubble across 4 themes x 2 modes; retro/terminal square, terminal tint visible."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Contract states are only rest and streaming (chat-message.json via CLI). A failed turn has no designed state: the docs pattern hand-rolls it with a text-destructive span and Retry button (apps/docs/src/pages/pattern-agent.mdx:71-79). The streaming state has no visual treatment: data-streaming (tsx:75) is never styled in chat-message.css."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Non-interactive; type from --typography-base-* (css:26-27), spacing from --a63-space-* tokens (css:12,23,43); check:control-alignment passes."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "row-reverse + flex-end on logical axes (css:30-49), overflow-wrap:anywhere (css:54); RightToLeft and LongContent baselines (ui-react-chatmessage-right-to-left / -long-content-chromium-linux.png)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Bubble max-inline-size min(85%,36rem) (css:65); seen at 390px in templates-blocks-chat-panel-phone-chromium-linux.png. Polish: no own phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component chat-message` gives import, contract, 6 examples and a specific first guidance line (48rem column, MDX narrow cap). Bullets 2-3 are generic boilerplate."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "chat-message.test.tsx:8-64 covers names, appearance defaults, slots, aria-busy; SSR via ssr.test.tsx. Untested: user-bubble override of appearance=plain is asserted (test:25-36), streaming visuals n/a."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "chat-steps",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "chat-steps.tsx:17-25 extends CollapsibleProps (open/defaultOpen/onOpenChange pass through, tsx:41); ChatStep spreads li props (tsx:101). Polish: per-step statusLabel string (tsx:66) differs from Message's statusLabels map (message.tsx:62) for the same translation job."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Disclosure button with aria-expanded from Collapsible (test:7-19); every status has text before the title (tsx:109; test:21-36); status icon and spinner aria-hidden (tsx:77-80,104); focus-visible outline (css:41-45)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. ui-react-chatsteps-themes-chromium-linux.png: statuses read in all 8 combinations, but the component looks nearly identical across modern/aqua/retro (only terminal recolours the running title); connector hairline is barely visible between later steps."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "pending/running/complete/error all captured open (ui-react-chatsteps-statuses-chromium-linux.png); closed state in playground baseline. Polish: trigger hover/focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Trigger floors at min-block-size: var(--a63-control-min-size) (chat-steps.css:25), the 32px rendered floor on coarse pointers (packages/styles/src/contracts/environment.css:45-55 distinguishes min-size from the 44px min-target), and it has no hit-area pseudo like Button (button.css:630-640). grep min-target in components/chat-*: no matches."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical insets for the connector (css:81-83); RightToLeft baseline ui-react-chatsteps-right-to-left-chromium-linux.png; description has overflow-wrap:anywhere (css:118). Polish: .a63-ChatStep-title has no overflow-wrap, so a long tool name or URL in the title is not broken."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Collapsed trigger at 390px in templates-blocks-chat-panel-phone-chromium-linux.png ('Used 2 tools'). Polish: no own phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component chat-steps` returns import, contract, slots, 5 examples; guidance line 1 specific (above answer, open while running)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "chat-steps.test.tsx: 3 tests (disclosure, status text, icon/description); SSR via ssr.test.tsx. Untested: controlled open/onOpenChange passthrough."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "chat-typing-indicator",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "chat-typing-indicator.tsx:5-8 span props minus children plus label; props spread (tsx:27). No contract axes to match (slots/rest only)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "The announcement and the visual both fail in practice. (a) tsx:22-28: role=status mounted together with its name and no text content; live regions announce content changes, not aria-label, and a region inserted already-populated is commonly not announced. (b) The documented usage nests it inside ChatMessage streaming, which sets aria-busy=true (chat-message.tsx:69): chat-typing-indicator.stories.tsx:22-24, templates chat-panel.tsx:131-146, pattern-agent.mdx:67-82, so assistive tech is told to wait. (c) The dots are drawn only with background-color: currentColor (css:22) and there is no forced-colors rule, so under forced colors the background is forced to Canvas and the indicator disappears. Reduced motion is handled (css:49-61)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. ui-react-chattypingindicator-themes-chromium-linux.png: three dots in text-secondary across 8 combinations, terminal tint applied; restrained and readable."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Single contract state rest; reduced-motion resting opacities designed (css:49-61) and captured in the themes baseline; in-message placement captured (ui-react-chattypingindicator-in-message-chromium-linux.png)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Non-interactive; dot size and gap from --a63-space-2/-1 (css:9,13), so it follows density."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Symmetric, nothing to mirror; inline-flex with logical gap (css:11-13)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline span sized by space tokens; no width dependence (css:8-16)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component chat-typing-indicator` correct; guidance line 1 specific. Bullets 2-3 are generic utility boilerplate ('Keep the utility's semantic purpose explicit')."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "chat-typing-indicator.test.tsx:7-18 checks role, name, hidden dots; SSR via ssr.test.tsx. Untested: that the announcement reaches AT in the in-message usage."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "message",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "message.tsx:40-63 props match contract directions/positions/deliveryStates; label required; statusLabels map for translation (test:19-38). Polish: status is rendered on incoming messages although documented for outgoing only (tsx:59,109-122); avatar is silently dropped on outgoing (tsx:95)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "MessageList role=log (tsx:26), article named by sender (tsx:87), status role=img with label (tsx:113-121). Gaps: bubbles are fill-only (message.css:66-74) with no forced-colors rule, so direction and bubble shape vanish in forced colors; .a63-Message-bubble overflow:hidden (css:61) clips the focus outline of a link inside the bubble."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. The Themes story (message.stories.tsx:161-180) wraps UIProvider directly instead of ThemeMatrix, so the per-theme default radius is never applied (story-probes.tsx:80-131 explains the frozen :root ramp). ui-react-message-themes-chromium-linux.png shows retro and terminal with fully rounded modern bubbles, while ChatMessage in the same themes renders square (ui-react-chatmessage-themes-chromium-linux.png). The baseline misrepresents two of four archetypes."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "ui-react-message-delivery-states-chromium-linux.png: delivered and read render the same CheckCheck glyph in the same colour (tsx:35-36; no data-status styling in message.css), so sighted readers cannot tell them apart; failed uses AlertCircle in the bubble foreground with no danger cue or retry affordance (tsx:37)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Non-interactive; type from --typography-base/xs (css:38-39,133-134), icon size --a63-control-icon-size-xs (css:148)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical corner radii and float:inline-end (css:77-106,128); LongContent baseline wraps a long URL (ui-react-message-long-content-chromium-linux.png). Polish: no RTL story or baseline despite the contract claiming the thread mirrors."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "All stories framed at 390px (message.stories.tsx:46-48); bubble max min(78%,32rem) (css:60)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component message` gives specific guidance (MessageList, direction, position, MessageEvent, when to use ChatMessage), shared outcomes and 6 examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "message.test.tsx: 7 tests (defaults, status names and translation, avatar rule, media, photo-only, log region, event icon); SSR via ssr.test.tsx."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r1-k09-chat-1",
+      "subject": "chat-typing-indicator",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "ChatTypingIndicator's announcement is unreliable and suppressed in its documented usage, and its dots vanish under forced colors.",
+      "evidence": "chat-typing-indicator.tsx:22-28 mounts role=status with only aria-label and no text, so there is no content change to announce; every documented placement nests it in ChatMessage streaming, which sets aria-busy=true (chat-message.tsx:69; chat-typing-indicator.stories.tsx:22-24; packages/templates/src/blocks/chat-panel/chat-panel.tsx:131-146; apps/docs/src/pages/pattern-agent.mdx:67-82); dots are background-color: currentColor only (chat-typing-indicator.css:22) with no forced-colors rule (grep forced-colors in components/chat-*: none).",
+      "fix": "Render the label as visually hidden text inside the status (not aria-label), and document or enforce that the status sits outside any aria-busy ancestor (or have ChatMessage not set aria-busy while it holds only the indicator). Add @media (forced-colors: active) { .a63-ChatTypingIndicator-dot { background-color: CanvasText; forced-color-adjust: none } } or draw the dots with a border. Add a test for the in-message placement.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "confirmed",
+        "reason": "Reproduced from source. chat-typing-indicator.tsx:22-37 renders role=status whose only children are aria-hidden dots, so the live region has no text content; its name comes only from aria-label. A live region that mounts already filled, with nothing changing inside it afterwards, is not reliably announced, so the comment at lines 12-14 ('announces it once') overstates what happens. Every documented usage nests it in ChatMessage with streaming: chat-message.tsx:69 sets aria-busy={streaming}. The InMessage story (stories.tsx:22-24), ChatPanel's assistant message (chat-panel.tsx:131 sets streaming, the indicator is at :145-146) and the docs pattern (pattern-agent.mdx ~66-80, getMessageText(message) || <ChatTypingIndicator/> inside ChatMessage streaming) all do this. aria-busy on an ancestor lets assistive technology hold back changes until the busy state ends, which makes the announcement even less likely. Forced colors: chat-typing-indicator.css:22 paints the dots with background-color: currentColor. Forced-colors mode replaces background-color with Canvas, the dots have no border or outline, and grep finds no forced-colors rule in components/chat-*. In that mode the component's only visible content disappears. Both are K2 gaps: wrong role/name behaviour and forced colors. The 'ready' blocker is the vanishing dots, so P1 stands rather than P0, because the message still arrives as text afterwards."
+      }
+    },
+    {
+      "id": "r1-k09-chat-2",
+      "subject": "chat-composer",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Sending with the send button strands keyboard focus on a now-disabled button, and the footnote is not described to the field.",
+      "evidence": "chat-composer.tsx:150-154 clears the own value after send; tsx:240 disabled={!canSend} then disables the focused button. Footnote at tsx:252-256 has no id/aria-describedby link to the textarea.",
+      "fix": "After a button-initiated send, return focus to the textarea (or keep the button focusable with aria-disabled); give the footnote an id and set aria-describedby on the field.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-3",
+      "subject": "chat-composer",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "ChatComposer has no phone story; its keyboard and safe-area behaviour at phone width is uncaptured.",
+      "evidence": "chat-composer.stories.tsx:22-27 fixes the decorator at 640px and no story sets a phone viewport; only templates-blocks-chat-panel-phone-chromium-linux.png shows it at 390px; field cap is max-height: 40vh (chat-composer.css:43).",
+      "fix": "Add a Phone story (AppView layout=phone or a 390px viewport, coarse pointer) with a baseline, and cap the field with dvh/svh.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-4",
+      "subject": "chat-message",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Chat bubbles and Message bubbles are fill-only with no forced-colors treatment, so they lose shape and direction in forced colors.",
+      "evidence": "chat-message.css:64-68 and message.css:66-74 draw bubbles with background-color only; no forced-colors rule in components/chat-* or message (grep). Applies to chat-message and message.",
+      "fix": "Add a forced-colors rule giving bubbles a 1px CanvasText border (or a transparent border at rest that forced colors makes visible).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-5",
+      "subject": "message",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Message bubble overflow:hidden clips the focus outline of links or buttons inside it, and its bubbles also lack forced-colors treatment (see r1-k09-chat-4).",
+      "evidence": "message.css:61 overflow:hidden on .a63-Message-bubble; contract guidance says content can be a link (message.tsx:66-68).",
+      "fix": "Clip only the media (overflow on .a63-Message-media with inherited radii) or inset focus outlines inside the bubble with negative outline-offset.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-6",
+      "subject": "chat-message",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "ChatMessage has no designed error/failed-turn state and no visual for streaming; hosts hand-roll the error.",
+      "evidence": "Contract states rest, streaming only (`atom63 component chat-message`); pattern-agent.mdx:71-79 builds the error with a text-destructive span and a Retry Button; data-streaming (chat-message.tsx:75) is unstyled in chat-message.css.",
+      "fix": "Add an error state (contract + recipe: danger text/icon and an actions-slot retry convention) with a story and baseline; decide whether streaming needs a visual cue.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-7",
+      "subject": "message",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Delivered and read are visually identical, and failed has no danger cue or retry affordance.",
+      "evidence": "message.tsx:35-37 maps delivered and read to the same CheckCheck icon; message.css has no data-status styling; ui-react-message-delivery-states-chromium-linux.png shows identical delivered/read rows and a failed row in the normal bubble foreground.",
+      "fix": "Distinguish read (e.g. accent-tinted or filled ticks via a --a63-message-status-read token) and give failed a danger-coloured icon plus a documented retry slot or pattern.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-8",
+      "subject": "message",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The Message Themes baseline bypasses ThemeMatrix, so retro and terminal render with modern rounded bubbles and the archetype is misrepresented.",
+      "evidence": "message.stories.tsx:161-180 uses UIProvider directly; story-probes.tsx:80-131 documents that per-theme radius needs the ThemeMatrix ramp; ui-react-message-themes-chromium-linux.png retro/terminal bubbles are pill-shaped while ui-react-chatmessage-themes-chromium-linux.png is square in the same themes.",
+      "fix": "Render the Themes story through ThemeMatrix (as the other four chat components do) and re-baseline; YZ then judges the retro/terminal bubble look.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-9",
+      "subject": "chat-steps",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The ChatSteps trigger is a 32px target on coarse pointers, with no 44px hit area.",
+      "evidence": "chat-steps.css:25 min-block-size: var(--a63-control-min-size); environment.css:45-55 defines min-size (rendered floor) vs min-target (44px touch); no hit-area pseudo, unlike button.css:630-640.",
+      "fix": "Expand the trigger's interactive area to --a63-control-min-target (hit-area pseudo-element, as Button does).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-10",
+      "subject": "chat-composer",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Inline-to-block switching only re-measures on typing, so a host-set value or a resize leaves the layout stale.",
+      "evidence": "chat-composer.tsx:139-143 and 178-185: wrappedAt is set only inside onChange via wraps().",
+      "fix": "Measure in a layout effect keyed on value and on a ResizeObserver of the field.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-11",
+      "subject": "chat-composer",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "The focus-visible state the contract lists has no baseline.",
+      "evidence": "chat-composer.json states include focus-visible; no ui-react-chatcomposer-*focus* screenshot exists in apps/storybook/visual/__screenshots__.",
+      "fix": "Add a focused story (play focuses the field) and baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-12",
+      "subject": "chat-composer",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Generated guidance bullets are generic boilerplate that does not fit the chat components.",
+      "evidence": "`atom63 component chat-composer` bullets 2-3 mention errors and an invalid state the composer does not have; chat-typing-indicator bullet 2 talks about a 'utility'; chat-message, chat-steps and message repeat 'Keep product data and fetching outside...'.",
+      "fix": "Replace the archetype boilerplate with component-specific guidance in apps/docs/src/lib/component-catalog.ts.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-13",
+      "subject": "chat-steps",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "Long step titles are not broken, unlike descriptions.",
+      "evidence": "chat-steps.css:117-120 sets overflow-wrap:anywhere on the description only; .a63-ChatStep-title has none.",
+      "fix": "Apply overflow-wrap:anywhere to .a63-ChatStep-body.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-14",
+      "subject": "chat-steps",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Status-label translation API differs between ChatStep (per-item statusLabel) and Message (statusLabels map).",
+      "evidence": "chat-steps.tsx:66 vs message.tsx:62.",
+      "fix": "Accept a statusLabels map on ChatSteps (or ChatStep) to match Message.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-15",
+      "subject": "chat-steps",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "ChatSteps barely changes across modern, aqua and retro, and the connector hairline is nearly invisible.",
+      "evidence": "ui-react-chatsteps-themes-chromium-linux.png.",
+      "fix": "YZ to judge whether the archetype needs per-theme expression and a stronger connector.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r1-k09-chat-16",
+      "subject": "message",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "Message has no RTL story or baseline, and no chat component has a CJK long-string story.",
+      "evidence": "message.stories.tsx exports Playground, Thread, DeliveryStates, Media, LongContent, Themes only; no CJK strings in any chat story.",
+      "fix": "Add a RightToLeft Message story and a CJK long-text case to the chat stories.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-17",
+      "subject": "message",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "status renders on incoming messages and avatar is silently dropped on outgoing.",
+      "evidence": "message.tsx:59 docs say outgoing only, but tsx:109-122 renders it for any direction; tsx:95 ignores avatar when outgoing.",
+      "fix": "Document both, or ignore status on incoming consistently with avatar.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-k09-chat-18",
+      "subject": "chat-message",
+      "criterion": "K7",
+      "severity": "P3",
+      "summary": "None of chat-message, chat-steps or chat-typing-indicator has its own phone story; phone width is seen only through templates.",
+      "evidence": "Story exports listed by `atom63 component <slug>`; templates-blocks-chat-panel-phone-chromium-linux.png is the only phone capture.",
+      "fix": "Add a phone-width story per component or a shared chat phone story.",
+      "kind": "fix"
+    }
+  ]
+}

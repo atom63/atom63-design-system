@@ -1,5 +1,5 @@
 export { Image, clearImageAnimationCache } from './image'
-export type { AspectRatio, ImageProps } from './image'
+export type { AspectRatio, ImageProps, ImageSource } from './image'
 export {
   DEFAULT_MEDIA_LIGHTBOX_LABELS,
   MediaLightbox,

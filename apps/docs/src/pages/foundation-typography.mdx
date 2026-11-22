@@ -72,6 +72,7 @@ Text roles name what text is for, after the Apple HIG text styles, so one intent
 
 | Role | Web step | iOS text style |
 |------|----------|----------------|
+| `display-hero` | fluid, `10xl` (40px) to 72px, weight 600 | none (web only; iOS uses `display-large`) |
 | `display-large` | `11xl`, weight 600 | 56pt, scaled like `largeTitle` |
 | `display` | `10xl`, weight 600 | 40pt, scaled like `largeTitle` |
 | `large-title` | `6xl` | `largeTitle` |
@@ -87,6 +88,8 @@ Text roles name what text is for, after the Apple HIG text styles, so one intent
 | `caption-2` | `2xs` | `caption2` |
 
 `-strong` is the emphasized weight: bold for the display roles, `large-title`, `title-1` and `title-2`, semibold for the rest. The display roles are for balances, prices and hero headlines; iOS has no larger text style, so `AtomDisplayRole` draws them at the web size and scales it with Dynamic Type like `largeTitle`. For an amount such as `$13.25`, use `Amount` from `@atom63/ui-react` (`<Amount value={13.25} currency="USD" />`, `size="lg"` for `display-large`): it formats the value for the locale with `Intl.NumberFormat`, draws the fraction at half size and raised with tabular figures, and reads as one label. `fraction="baseline"` keeps the half-size fraction on the baseline of the integer digits instead, as some banking apps draw a balance; `raised` is the default. Without the component, put the whole number in one `text-display tabular-nums` span and wrap the fraction in `amount-fraction`, which sets it at half size and raises it, or in `amount-fraction-baseline`, which sets it at half size on the baseline. On iOS, `AtomAmountText(13.25, currencyCode: "USD", role: .display)` formats the amount for the locale, draws the fraction the same way with monospaced digits and reads as one VoiceOver label, and `fraction: .baseline` keeps it on the baseline; `.atomDisplayFont()` sets a display role on any other text. Web sizes follow web conventions (body is 15px; iOS body is 17pt); the role is what stays the same. Size steps are fine while exploring; settled UI should use roles.
+
+`display-hero` is for one marketing headline per page, such as a landing hero over an `ArtPlate`. It grows with the viewport from the `10xl` step on phones to 72px on wide screens (`clamp()`), with a line height of 1.05 times its size. The three display roles also carry `--a63-type-<role>-letter-spacing` (−0.03em for `display`, −0.04em for `display-large`, −0.045em for `display-hero`); set it with `letter-spacing` where the role is used, since the `text-<role>` utilities do not include it. Headlines take their face from `--a63-font-display`, which defaults to `--a63-font-app`; set it to `var(--font-family-serif)` on a page or a section for serif headlines over sans UI, and loosen the tracking towards −0.025em for the serif.
 
 ## Phone screens
 

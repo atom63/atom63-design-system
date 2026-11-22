@@ -1,0 +1,28 @@
+@import 'tailwindcss';
+
+/* The Atom63 token stack: --a63-* tokens are the source of truth and the
+   Tailwind theme maps utilities onto them (bg-background, text-chart-2, …). */
+@import '@atom63/styles';
+@import '@atom63/styles/tailwind';
+
+/* Component recipes. */
+@import '@atom63/ui-react/reset.css';
+@import '@atom63/ui-react/recipes.css';
+
+/* Generate the utilities the components, the templates and this app use. */
+@source '../../../packages/ui-react/src';
+@source '../../../packages/templates/src';
+
+/* The mode sits on <html> as a class (src/appearance.tsx). */
+@custom-variant light (&:not(.dark *));
+@custom-variant dark (&:is(.dark *));
+
+@layer base {
+  html,
+  body,
+  #root {
+    min-height: 100%;
+    background-color: var(--a63-surface-page);
+    color: var(--a63-text-primary);
+  }
+}

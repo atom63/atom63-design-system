@@ -542,6 +542,89 @@ export type AppViewVisualArchetype = (typeof appViewVisualArchetypes)[number];
 export const appViewVisualArchetypes: readonly ["surface"];
 
 // @public (undocumented)
+export interface ArtPlateContract {
+    // (undocumented)
+    defaultSafeArea: ArtPlateSafeArea;
+    // (undocumented)
+    defaultSize: ArtPlateSize;
+    // (undocumented)
+    defaultTone: ArtPlateTone;
+    // (undocumented)
+    defaultVeil: ArtPlateVeil;
+    // (undocumented)
+    safeAreas: readonly ArtPlateSafeArea[];
+    // (undocumented)
+    sizes: readonly ArtPlateSize[];
+    // (undocumented)
+    slots: readonly ArtPlateSlot[];
+    // (undocumented)
+    states: readonly ArtPlateState[];
+    // (undocumented)
+    tones: readonly ArtPlateTone[];
+    // (undocumented)
+    veils: readonly ArtPlateVeil[];
+    // (undocumented)
+    visualArchetypes: readonly ArtPlateVisualArchetype[];
+}
+
+// @public (undocumented)
+export const artPlateContract: {
+    defaultSize: "viewport";
+    defaultSafeArea: "top";
+    defaultTone: "page";
+    defaultVeil: "none";
+    sizes: readonly ["viewport", "band", "card"];
+    safeAreas: readonly ["top", "bottom", "center", "start", "end"];
+    tones: readonly ["page", "media"];
+    veils: readonly ["none", "soft", "strong"];
+    slots: readonly ["art-plate", "art-plate-image", "art-plate-content"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type ArtPlateSafeArea = (typeof artPlateSafeAreas)[number];
+
+// @public (undocumented)
+export const artPlateSafeAreas: readonly ["top", "bottom", "center", "start", "end"];
+
+// @public (undocumented)
+export type ArtPlateSize = (typeof artPlateSizes)[number];
+
+// @public (undocumented)
+export const artPlateSizes: readonly ["viewport", "band", "card"];
+
+// @public (undocumented)
+export type ArtPlateSlot = (typeof artPlateSlots)[number];
+
+// @public (undocumented)
+export const artPlateSlots: readonly ["art-plate", "art-plate-image", "art-plate-content"];
+
+// @public (undocumented)
+export type ArtPlateState = (typeof artPlateStates)[number];
+
+// @public (undocumented)
+export const artPlateStates: readonly ["rest"];
+
+// @public (undocumented)
+export type ArtPlateTone = (typeof artPlateTones)[number];
+
+// @public (undocumented)
+export const artPlateTones: readonly ["page", "media"];
+
+// @public (undocumented)
+export type ArtPlateVeil = (typeof artPlateVeils)[number];
+
+// @public (undocumented)
+export const artPlateVeils: readonly ["none", "soft", "strong"];
+
+// @public (undocumented)
+export type ArtPlateVisualArchetype = (typeof artPlateVisualArchetypes)[number];
+
+// @public (undocumented)
+export const artPlateVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
 export interface AutocompleteContract {
     // (undocumented)
     defaultSize: AutocompleteSize;
@@ -1976,7 +2059,7 @@ export const crossRendererContracts: readonly [{
     readonly sharedOutcomes: readonly ["one-segment-is-selected-at-a-time", "activation-updates-the-selection-once", "disabled-segment-prevents-selection"];
     readonly accessibilityOutcomes: readonly ["exposes-each-segment-label", "exposes-selected-state", "preserves-single-selection-semantics"];
     readonly platformAdaptations: {
-        readonly react: readonly ["Uses a tab-backed segmented track with focus-visible feedback and an optional animated selection backplate."];
+        readonly react: readonly ["Uses radiogroup and radio semantics on a segmented track, named by aria-label or aria-labelledby, with arrow-key selection, focus-visible feedback and an optional animated selection backplate."];
         readonly swiftUI: readonly ["Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."];
     };
 }, {
@@ -3303,6 +3386,65 @@ export type LabelVisualArchetype = (typeof labelVisualArchetypes)[number];
 
 // @public (undocumented)
 export const labelVisualArchetypes: readonly ["field"];
+
+// @public (undocumented)
+export interface LayeredSceneContract {
+    // (undocumented)
+    defaultPlacement: LayeredScenePlacement;
+    // (undocumented)
+    defaultWidth: LayeredSceneWidth;
+    // (undocumented)
+    placements: readonly LayeredScenePlacement[];
+    // (undocumented)
+    slots: readonly LayeredSceneSlot[];
+    // (undocumented)
+    states: readonly LayeredSceneState[];
+    // (undocumented)
+    visualArchetypes: readonly LayeredSceneVisualArchetype[];
+    // (undocumented)
+    widths: readonly LayeredSceneWidth[];
+}
+
+// @public (undocumented)
+export const layeredSceneContract: {
+    defaultPlacement: "center-bottom";
+    defaultWidth: "wide";
+    placements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+    widths: readonly ["wide", "half"];
+    slots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type LayeredScenePlacement = (typeof layeredScenePlacements)[number];
+
+// @public (undocumented)
+export const layeredScenePlacements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+
+// @public (undocumented)
+export type LayeredSceneSlot = (typeof layeredSceneSlots)[number];
+
+// @public (undocumented)
+export const layeredSceneSlots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+
+// @public (undocumented)
+export type LayeredSceneState = (typeof layeredSceneStates)[number];
+
+// @public (undocumented)
+export const layeredSceneStates: readonly ["rest"];
+
+// @public (undocumented)
+export type LayeredSceneVisualArchetype = (typeof layeredSceneVisualArchetypes)[number];
+
+// @public (undocumented)
+export const layeredSceneVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
+export type LayeredSceneWidth = (typeof layeredSceneWidths)[number];
+
+// @public (undocumented)
+export const layeredSceneWidths: readonly ["wide", "half"];
 
 // @public (undocumented)
 export interface LoadMoreTriggerContract {
@@ -5880,7 +6022,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate", "LayeredScene"];
         readonly contracts: readonly ["surface"];
     };
 };

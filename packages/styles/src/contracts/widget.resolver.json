@@ -1098,7 +1098,13 @@
   ],
   "$extensions": {
     "io.atom63.css": {
-      "imports": ["./widget.native.css"]
+      "imports": ["./widget.native.css"],
+      "rescope": {
+        "selector": "[data-a63-brand], [data-a63-surface]",
+        "light": "02-root-light-data-a63-mode-light",
+        "dark": "03-is-dark-data-a63-mode-dark",
+        "base": "01-root"
+      }
     }
   }
 }

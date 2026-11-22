@@ -292,6 +292,26 @@
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },
+    "art-plate": {
+      "source": "packages/ui-foundation/contracts/components/art-plate.json",
+      "exportName": "artPlateContract",
+      "maturity": "preview",
+      "description": "A full-bleed picture that owns its crop: a responsive image (art-directed phone source, focal point per breakpoint) behind a content region placed in the picture's calm area. For a landing hero, a section band or a portfolio cover; not for inline figures (use Image) or cards (use Card media). Parallax is CSS scroll-driven, transform only, and off under reduced motion. Preview until its stable evidence is recorded.",
+      "axes": [
+        { "name": "sizes", "values": ["viewport", "band", "card"], "default": "viewport" },
+        {
+          "name": "safeAreas",
+          "values": ["top", "bottom", "center", "start", "end"],
+          "default": "top"
+        },
+        { "name": "tones", "values": ["page", "media"], "default": "page" },
+        { "name": "veils", "values": ["none", "soft", "strong"], "default": "none" }
+      ],
+      "slots": ["art-plate", "art-plate-image", "art-plate-content"],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
     "autocomplete": {
       "source": "packages/ui-foundation/contracts/components/autocomplete.json",
       "exportName": "autocompleteContract",
@@ -2141,6 +2161,29 @@
       "tokenSlots": [],
       "visualArchetypes": ["field"]
     },
+    "layered-scene": {
+      "source": "packages/ui-foundation/contracts/components/layered-scene.json",
+      "exportName": "layeredSceneContract",
+      "maturity": "preview",
+      "description": "Three fixed layers in one box: the plate at the back (an ArtPlate), the copy and a stage of live product UI in the middle, and an optional foreground cut-out of the plate at the front. The scene is a two-row grid: the copy takes the first row and the stage the second, at the bottom, so the stage never covers the headline and the plate grows when the content needs more room. The foreground is aria-hidden, takes no pointer events and covers the same box as the plate, so the cut-out lines up when it gets the plate's focal points; it is hidden below the medium breakpoint unless asked. Layers use the in-context z band (--z-layer-below, --z-layer-default, --z-layer-raised). Keep text and controls out from under the cut-out; scripts/design-system/lib/foreground-occlusion.mjs checks it. Preview until its stable evidence is recorded.",
+      "axes": [
+        {
+          "name": "placements",
+          "values": ["center-bottom", "end-bottom", "start-bottom"],
+          "default": "center-bottom"
+        },
+        { "name": "widths", "values": ["wide", "half"], "default": "wide" }
+      ],
+      "slots": [
+        "layered-scene",
+        "layered-scene-content",
+        "layered-scene-stage",
+        "layered-scene-foreground"
+      ],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
+    },
     "load-more-trigger": {
       "source": "packages/ui-foundation/contracts/components/load-more-trigger.json",
       "exportName": "loadMoreTriggerContract",
@@ -2842,7 +2885,7 @@
         ],
         "platformAdaptations": {
           "react": [
-            "Uses a tab-backed segmented track with focus-visible feedback and an optional animated selection backplate."
+            "Uses radiogroup and radio semantics on a segmented track, named by aria-label or aria-labelledby, with arrow-key selection, focus-visible feedback and an optional animated selection backplate."
           ],
           "swiftUI": [
             "Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."

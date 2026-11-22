@@ -156,9 +156,16 @@ jobs:
 
       - name: Build the portfolio example
         run: pnpm build:example:portfolio
+      - name: Typecheck and build the dashboard example
+        run: |
+          pnpm --filter atom63-dashboard-example typecheck
+          pnpm build:example:dashboard
 
       - name: Install Playwright browser
         run: pnpm exec playwright install --with-deps chromium
+
+      - name: Check the dashboard example's routes
+        run: pnpm check:example:dashboard
 
       - name: Test styles
         run: pnpm --filter @atom63/styles test

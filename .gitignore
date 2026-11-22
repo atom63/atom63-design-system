@@ -78,3 +78,6 @@ apps/storybook/a11y/__screenshots__/
 # iOS screenshot tests: only the pinned simulator's baselines are committed.
 examples/ios-demo/Atom63DemoTests/__Snapshots__/local/
 examples/ios-demo/snapshot-failures/
+
+# Third-party reference screenshots for research; never committed
+docs/research/art-landing/shots/

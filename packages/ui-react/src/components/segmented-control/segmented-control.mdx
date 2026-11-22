@@ -6,14 +6,14 @@ import * as SegmentedControlStories from './segmented-control.stories'
 
 <Title />
 
-A single-select segmented control — a recessed track with a raised pill that slides to the active segment (Base UI Tabs). Driven by an `items` array; the active pill and track read theme-overridden semantics, so the four themes restyle it for free.
+A single-select segmented control — a recessed track with a raised pill that slides to the selected segment. It is a radio group (Base UI RadioGroup): name it with `aria-label` or `aria-labelledby`; Tab enters at the selected segment and the arrow keys move and select. Use Tabs when the choices switch content panels. Driven by an `items` array; the active pill and track read theme-overridden semantics, so the four themes restyle it for free.
 
 ## Anatomy
 
-- Root `.a63-SegmentedControl` — `data-slot="segmented-control"`, carries `data-size`, `data-variant`, `data-tone`.
+- Root `.a63-SegmentedControl` — `role="radiogroup"`, `data-slot="segmented-control"`, carries `data-size`, `data-variant`, `data-tone`, and takes the group's `aria-label` / `aria-labelledby`.
 - Track `.a63-SegmentedControl-track` — the recessed well.
-- Item `.a63-SegmentedControl-item` — a segment; Base UI stamps `data-active` on the selected one, `data-disabled` on disabled items.
-- Indicator `.a63-SegmentedControl-indicator` — the sliding raised pill (Base UI `--active-tab-*`).
+- Item `.a63-SegmentedControl-item` — a segment, `role="radio"`; Base UI stamps `data-checked` on the selected one, `data-disabled` on disabled items.
+- Indicator `.a63-SegmentedControl-indicator` — the sliding raised pill, placed by the `--segment-indicator-*` vars the component measures.
 
 ## Contract
 
