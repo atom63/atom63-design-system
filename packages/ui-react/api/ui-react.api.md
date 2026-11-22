@@ -861,7 +861,7 @@ export function CommandCollection(input: React$1.ComponentProps<typeof Autocompl
 export const CommandCreateHandle: typeof Dialog_2.createHandle;
 
 // @public (undocumented)
-export const CommandDialog: typeof Dialog_2.Root;
+export function CommandDialog<Payload>(props: Dialog_2.Root.Props<Payload>): React$1.ReactElement;
 
 // @public (undocumented)
 export function CommandDialogBackdrop(input: Dialog_2.Backdrop.Props): React$1.ReactElement;
@@ -902,6 +902,7 @@ export function CommandInput(input: CommandInputProps): React$1.ReactElement;
 export type CommandInputProps = React$1.ComponentProps<typeof AutocompletePrimitive.Input> & {
     endAddon?: React$1.ReactNode;
     icon?: React$1.ReactNode;
+    label?: string;
 };
 
 // @public (undocumented)
