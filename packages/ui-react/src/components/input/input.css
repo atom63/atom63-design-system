@@ -60,6 +60,27 @@
   transition: border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
+/* Interaction floor without inflating the rendered box, as Button does: on a
+   coarse pointer the 32px field still takes a 44px tap. A tap on the strip
+   outside the text field lands on the wrapper, which focuses the field
+   (input.tsx). The field sits above the strip, so a tap on it places the caret. */
+.a63-Input:not([data-unstyled]) {
+  position: relative;
+}
+
+.a63-Input:not([data-unstyled])::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 50%;
+  min-height: var(--a63-control-min-target);
+  translate: 0 -50%;
+}
+
+.a63-Input:not([data-unstyled]) > .a63-Input-field {
+  position: relative;
+}
+
 /* Drop the recessed field shadow (shadow={false}) — for inputs on translucent
    or flat chrome (search bars, window toolbars). */
 .a63-Input[data-shadow='false'],
@@ -136,6 +157,7 @@
 }
 
 .a63-Input[data-invalid],
+.a63-Input:has(> .a63-Input-field[aria-invalid='true']),
 .a63-InputGroup[data-invalid] {
   /* Mix danger toward TRANSPARENT, not the neutral border: an oklch mix between
      danger (red) and the blue-ish neutral swings through magenta on the shortest
@@ -191,11 +213,13 @@
 
 /* An invalid filled or plain field keeps its danger edge at rest. */
 .a63-Input[data-variant='filled'][data-invalid]:not([data-unstyled]),
+.a63-Input[data-variant='filled']:not([data-unstyled]):has(> .a63-Input-field[aria-invalid='true']),
 .a63-InputGroup[data-variant='filled'][data-invalid] {
   border-color: var(--field-border);
 }
 
 .a63-Input[data-variant='plain'][data-invalid]:not([data-unstyled]),
+.a63-Input[data-variant='plain']:not([data-unstyled]):has(> .a63-Input-field[aria-invalid='true']),
 .a63-InputGroup[data-variant='plain'][data-invalid] {
   border-block-end-color: var(--field-border);
 }

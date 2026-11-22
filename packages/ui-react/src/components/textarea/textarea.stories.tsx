@@ -77,6 +77,58 @@ export const AutoSizing: Story = {
   ),
 }
 
+/* Long pasted text, Latin and CJK: the field grows to maxRows (12 by default,
+   4 here) and then scrolls instead of growing without bound. */
+const longText = Array.from(
+  { length: 6 },
+  (_, line) => `Line ${line + 1}: release notes pasted from the changelog, long enough to wrap.`
+).join('\n')
+const longCjkText = Array.from(
+  { length: 6 },
+  (_, line) => `第${line + 1}行：从更新日志粘贴的发布说明，内容足够长，会自动换行。`
+).join('\n')
+
+export const LongContent: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: '1rem', maxWidth: 320 }}>
+      <Textarea aria-label="Release notes" defaultValue={longText} maxRows={4} />
+      <Textarea aria-label="发布说明" defaultValue={longCjkText} lang="zh" maxRows={4} />
+    </div>
+  ),
+}
+
+/* Rest, hover and keyboard focus side by side. The visual project hovers the
+   second field and tabs to the third (parameters.visualState, see
+   apps/storybook/README.md "Visual states"). */
+export const InteractionStates: Story = {
+  render: () => (
+    <UIProvider designLanguage="web" input="pointer" mode="light">
+      <PreviewCard label="web / light / pointer">
+        {(
+          [
+            ['Rest', 'rest'],
+            ['Hover', 'hover'],
+            ['Focus visible', 'focus'],
+          ] as const
+        ).map(([label, target]) => (
+          <Textarea
+            aria-label={`${label} text area`}
+            data-state-target={target}
+            defaultValue={label}
+            key={target}
+          />
+        ))}
+      </PreviewCard>
+    </UIProvider>
+  ),
+  parameters: {
+    visualState: {
+      hover: 'textarea[data-state-target="hover"]',
+      focusVisible: 'textarea[data-state-target="focus"]',
+    },
+  },
+}
+
 /* Drops the field chrome so it can nest inside a parent that provides it. */
 export const Unstyled: Story = {
   // `unstyled` hands all field chrome, the focus ring included, to the parent

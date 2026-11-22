@@ -1,0 +1,128 @@
+# Form
+
+Form connects React Hook Form to labelled controls. `FormField` binds a field name to a `Controller`; `FormItem`, `FormLabel`, `FormControl`, `FormDescription` and `FormMessage` wire the label, the description and the validation message to the control from the form state. Install `react-hook-form` alongside `@atom63/ui-react`.
+
+```tsx
+import {
+  Button,
+  Checkbox,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Input,
+  Select,
+  SelectItem,
+  SelectPopup,
+  SelectTrigger,
+  SelectValue,
+} from '@atom63/ui-react'
+import { useForm } from 'react-hook-form'
+
+const plans = [
+  { value: 'free', label: 'Free' },
+  { value: 'team', label: 'Team' },
+]
+
+type Values = { email: string; plan: string; terms: boolean }
+
+export function SignupForm() {
+  const form = useForm<Values>({
+    defaultValues: { email: '', plan: '', terms: false },
+    mode: 'onTouched',
+  })
+
+  return (
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(values => save(values))}>
+        <FormField
+          control={form.control}
+          name="email"
+          rules={{ required: 'Enter your email address.' }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input type="email" {...field} />
+              </FormControl>
+              <FormDescription>We send release notes here.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="plan"
+          rules={{ required: 'Choose a plan.' }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Plan</FormLabel>
+              <Select items={plans} onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger onBlur={field.onBlur}>
+                    <SelectValue placeholder="Choose a plan" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectPopup>
+                  {plans.map(plan => (
+                    <SelectItem key={plan.value} value={plan.value}>
+                      {plan.label}
+                    </SelectItem>
+                  ))}
+                </SelectPopup>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="terms"
+          rules={{ required: 'Accept the terms to continue.' }}
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <FormLabel>Accept the terms</FormLabel>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button type="submit" variant="primary">
+          Create account
+        </Button>
+      </form>
+    </Form>
+  )
+}
+```
+
+## When to use
+
+Use Form when React Hook Form owns the values and the validation. For a form without it, use Field, which draws the same layout and wires the same relationships from what renders.
+
+## What each part does
+
+| Part | What it does |
+|------|--------------|
+| `Form` | `FormProvider`: pass the `useForm()` result to it. |
+| `FormField` | A `Controller` that also tells the parts below which field they belong to. |
+| `FormItem` | Gives the field its ids; the layout container for one field. |
+| `FormLabel` | A `Label` pointing at the control; `data-error` tints it while the field has an error. |
+| `FormControl` | Puts `id`, `aria-describedby` (the description, and the message while there is an error) and, on error, `aria-invalid="true"` onto its single child. The child keeps its own `data-slot`; `data-form-control` marks it. |
+| `FormDescription` | Help text; listed in the control's `aria-describedby` while it renders. |
+| `FormMessage` | The field's error message, as a `role="alert"` region so a new error is announced. With no error it renders its children as plain text, or nothing. |
+
+## Composing controls
+
+- Wrap the element the label should point at: `Input` and `Textarea` directly, the `SelectTrigger` (not the `Select` root), the `Checkbox` or `Switch`.
+- Controls take the error state from `aria-invalid`, so Input, Textarea and the Select trigger draw their danger edge without an `invalid` prop.
+- Do not add an `aria-label` to a control that has a `FormLabel`: it replaces the visible label as the accessible name.
+
+## Validation timing
+
+React Hook Form decides when errors appear. `mode: 'onTouched'` shows an error after a person leaves the field and then updates it as they type; the default, `onSubmit`, waits for the first submit. Avoid `onChange` for fields a person is still typing in: it shows an error before they have finished.
