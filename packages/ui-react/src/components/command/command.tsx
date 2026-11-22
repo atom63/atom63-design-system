@@ -75,11 +75,21 @@ export function CommandDialogViewport({
   )
 }
 
+export type CommandDialogPopupProps = Omit<CommandDialogPrimitive.Popup.Props, 'title'> & {
+  /**
+   * The dialog's accessible name, read by screen readers and not shown.
+   * Ignored when you pass `aria-label` or `aria-labelledby`.
+   */
+  title?: React.ReactNode
+}
+
 export function CommandDialogPopup({
   className,
   children,
+  title = 'Command palette',
   ...props
-}: CommandDialogPrimitive.Popup.Props): React.ReactElement {
+}: CommandDialogPopupProps): React.ReactElement {
+  const namedByCaller = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined
   return (
     <CommandDialogPortal>
       <CommandDialogBackdrop />
@@ -89,6 +99,14 @@ export function CommandDialogPopup({
           data-slot="command-dialog-popup"
           {...props}
         >
+          {namedByCaller ? null : (
+            <CommandDialogPrimitive.Title
+              className="a63-Command-sr-only"
+              data-slot="command-dialog-title"
+            >
+              {title}
+            </CommandDialogPrimitive.Title>
+          )}
           {children}
         </CommandDialogPrimitive.Popup>
       </CommandDialogViewport>
