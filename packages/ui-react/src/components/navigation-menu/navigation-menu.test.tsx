@@ -119,9 +119,11 @@ describe('NavigationMenu', () => {
     await user.click(trigger('Products'))
     await screen.findByText('Analytics')
     await user.keyboard('{Escape}')
-    await waitFor(() => expect(screen.queryByText('Analytics')).toBeNull())
+    await waitFor(() => {
+      expect(screen.queryByText('Analytics')).toBeNull()
+      expect(trigger('Products')).toHaveFocus()
+    })
     expect(trigger('Products')).toHaveAttribute('aria-expanded', 'false')
-    expect(trigger('Products')).toHaveFocus()
   })
 
   it('moves focus between triggers with ArrowRight and ArrowLeft', async () => {

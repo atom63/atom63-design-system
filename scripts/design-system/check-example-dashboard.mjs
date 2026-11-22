@@ -41,6 +41,5 @@ const failed = problems.length > 0
 const message = failed
   ? `The dashboard example fails its route check:\n  ${problems.join('\n  ')}\n`
   : `The dashboard example passes its route check (${summary}).\n`
-// On macOS `vite preview` can outlive the SIGTERM sent to its pnpm wrapper and
-// keep this process open, so exit once the result is written.
-;(failed ? process.stderr : process.stdout).write(message, () => process.exit(failed ? 1 : 0))
+;(failed ? process.stderr : process.stdout).write(message)
+process.exitCode = failed ? 1 : 0
