@@ -77,12 +77,12 @@
   },
   "summary": {
     "sourceFamilies": 82,
-    "sourceExports": 651,
+    "sourceExports": 654,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
       "beta-supported-core": 356,
-      "beta-supported-composition-conditional": 185
+      "beta-supported-composition-conditional": 188
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
@@ -1199,11 +1199,11 @@
       "source": "./components/empty",
       "family": "components/empty",
       "kind": "component-family",
-      "totalExports": 8,
+      "totalExports": 10,
       "valueExports": 7,
-      "typeExports": 1,
+      "typeExports": 3,
       "tierCounts": {
-        "beta-supported-composition-conditional": 8
+        "beta-supported-composition-conditional": 10
       },
       "dominantTier": "beta-supported-composition-conditional",
       "blockingTier": "beta-supported-composition-conditional",
@@ -1223,6 +1223,8 @@
         "EmptyHeader",
         "EmptyMedia",
         "EmptyTitle",
+        "EmptyErrorDetailLabels",
+        "EmptyErrorDetailProps",
         "EmptyMediaVariant"
       ],
       "policyNote": "Needs authored composition guidance or equivalent usage docs before stable."
@@ -1231,11 +1233,11 @@
       "source": "./components/feedback-state",
       "family": "components/feedback-state",
       "kind": "component-family",
-      "totalExports": 7,
+      "totalExports": 8,
       "valueExports": 1,
-      "typeExports": 6,
+      "typeExports": 7,
       "tierCounts": {
-        "beta-supported-composition-conditional": 7
+        "beta-supported-composition-conditional": 8
       },
       "dominantTier": "beta-supported-composition-conditional",
       "blockingTier": "beta-supported-composition-conditional",
@@ -1253,6 +1255,7 @@
         "FeedbackStateIcon",
         "FeedbackStateIconName",
         "FeedbackStateKind",
+        "FeedbackStateLabels",
         "FeedbackStateProps",
         "FeedbackStateSize"
       ],

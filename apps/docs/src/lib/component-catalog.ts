@@ -229,7 +229,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Chart draws a small line, area or bar chart (grouped or stacked) of a few series over a categorical axis, with a tooltip, a legend and a data table for screen readers.',
     usage:
-      'Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `stacked` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip. Every chart carries a data table of the same numbers, visually hidden unless `table="toggle"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero, use a charting library; when the exact numbers matter more than the shape, use a Table.',
+      'Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `layout="stacked"` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip; on a touchscreen a tap picks one and the reading stays until a tap outside. With no categories or series the plot shows `labels.empty`; while data loads, show a Skeleton the size of the plot and set aria-busy on the region. Every chart carries a data table of the same numbers, visually hidden unless `table="toggle"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero (they draw at zero, while the tooltip and table show the real value), use a charting library; when the exact numbers matter more than the shape, use a Table.',
     usageExports: ['Chart'],
   },
   'chat-composer': {
@@ -237,7 +237,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'ChatComposer is the message field of an assistant chat: by default one pill row with the attach slot, a growing textarea, the actions and a solid send button that turns into stop while a reply streams.',
     usage:
-      'Place it at the bottom of a chat surface, the same width as the transcript; Enter sends, Shift+Enter adds a line, and the footnote holds the AI disclaimer. Keep the default inline layout (it grows into a block when the text wraps); use layout="stacked" when several actions need their own row. Pass onVoice for a voice button while the field is empty.',
+      'Place it at the bottom of a chat surface, the same width as the transcript; Enter sends and Shift+Enter adds a line; on a touchscreen Enter adds a line and the send button sends (set submitOnEnter to choose). The footnote holds the AI disclaimer. Keep the default inline layout (it grows into a block when the text wraps); use layout="stacked" when several actions need their own row. Pass onVoice for a voice button while the field is empty.',
     usageExports: ['ChatComposer'],
   },
   'chat-message': {
@@ -345,13 +345,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['feedback-state', 'alert', 'button'],
     summary: 'Empty provides composable structure for empty collections and unavailable content.',
     usage:
-      'Explain why content is absent and offer an action only when there is a useful next step.',
+      'Use Empty to lay out your own empty or error message from parts (media, title, description, actions, EmptyErrorDetail); it announces nothing. Use FeedbackState instead when a data region switches between loading, empty, error or no results: it ships the copy and icons and announces each change. Explain why content is absent and offer an action only when there is a useful next step.',
     usageExports: ['Empty', 'EmptyHeader', 'EmptyTitle', 'EmptyDescription', 'EmptyContent'],
   },
   'feedback-state': {
     relatedSlugs: ['empty', 'alert', 'toaster'],
     summary: 'Feedback State packages common empty, error, and no-results messages with actions.',
-    usage: 'Choose the kind that matches the recovery path and keep technical detail secondary.',
+    usage:
+      'Use FeedbackState for the state of a data region (a table, a list, a widget): set state to loading, empty, error, not-found, no-results, offline or stale, and it supplies the icon and copy and announces each change (an error as an alert). For a one-off empty message you compose yourself, use Empty; for a whole page, the empty-state block. Keep the root mounted while the region loads, and keep technical detail secondary.',
     usageExports: ['FeedbackState'],
   },
   field: {
@@ -403,7 +404,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Item provides structured row regions for media, content, actions, and supporting detail.',
     usage:
-      'Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link. For a dense list (an inbox, a message list), pass size="sm" (12px block padding) or size="xs" (8px); the default is 16px.',
+      'Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link. For a dense list (an inbox, a message list), pass size="sm" (12px block padding) or size="xs" (8px); the default is 16px. Put rows in an ItemGroup: it is a list, so a screen reader hears the count.',
     usageExports: ['Item', 'ItemContent', 'ItemTitle', 'ItemActions'],
   },
   kbd: {
@@ -481,7 +482,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Pagination provides a navigation landmark and consistent previous, next, and page links.',
     usage:
-      'Expose the current page and real link destinations so navigation works without client state.',
+      'Give every page link a real href and mark the current page with isActive, so navigation works without client state. Window long ranges: show the first and last page, one or two pages either side of the current one, and PaginationEllipsis for the gaps. On the first page pass disabled to Previous, on the last to Next: the control stays in place, faded and out of the tab order. Pass children to replace the Previous, Next and More pages text (with a matching aria-label); the chevrons mirror under dir="rtl".',
     usageExports: ['Pagination', 'PaginationContent', 'PaginationItem', 'PaginationLink'],
   },
   'panel-setting-button': {
@@ -626,7 +627,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['spinner', 'progress', 'empty'],
     summary: 'Skeleton reserves content geometry while a known layout is loading.',
     usage:
-      'Match the expected content shape and avoid using skeletons for errors or genuinely empty results.',
+      'Match the expected content shape, set aria-busy="true" on the region being loaded (the skeleton itself is decorative) and remove it with the skeletons. Do not use skeletons for errors or genuinely empty results.',
     usageExports: ['Skeleton'],
   },
   slider: {
@@ -652,7 +653,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['pagination', 'scroll-area'],
     summary: 'Table provides semantic table regions with shared typography, spacing, and states.',
     usage:
-      'Keep header relationships intact and add horizontal containment for genuinely wide data. For a dense table (admin, payments, issues), pass size="sm": rows are 33px, and a row checkbox or a 24px row menu (size="icon-xs") keeps its hit area without making the row taller.',
+      'Keep header relationships intact and add horizontal containment for genuinely wide data. For a dense table (admin, payments, issues), pass size="sm": rows are 33px, and a row checkbox or a 24px row menu (size="icon-xs") keeps its hit area without making the row taller. Mark a selected row with TableRow selected; cells stay on one line unless TableCell wrap lets long text break.',
     usageExports: ['Table', 'TableHeader', 'TableBody', 'TableRow', 'TableHead', 'TableCell'],
   },
   tabs: {

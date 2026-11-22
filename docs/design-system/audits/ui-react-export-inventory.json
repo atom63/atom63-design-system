@@ -48,7 +48,7 @@
   },
   "counts": {
     "rootValueExports": 443,
-    "rootTypeExports": 208,
+    "rootTypeExports": 211,
     "packageExportKeys": 86,
     "cssExportKeys": 78
   },
@@ -1993,6 +1993,14 @@
       ],
       "types": [
         {
+          "name": "EmptyErrorDetailLabels",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyErrorDetailProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
           "name": "EmptyMediaVariant",
           "proposedTier": "beta-supported-composition-conditional"
         }
@@ -2021,6 +2029,10 @@
         },
         {
           "name": "FeedbackStateKind",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FeedbackStateLabels",
           "proposedTier": "beta-supported-composition-conditional"
         },
         {

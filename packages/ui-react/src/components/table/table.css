@@ -27,6 +27,11 @@
   overflow-x: auto;
   scrollbar-width: thin;
 }
+/* Focusable only while it overflows (role="region", tabindex="0"). */
+.a63-Table-container:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid var(--a63-focus-ring);
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+}
 .a63-Table-container::-webkit-scrollbar {
   display: block;
   height: 0.375rem;
@@ -56,8 +61,8 @@
 
 /* ── Head cells ────────────────────────────────────────────────────────── */
 .a63-Table-head {
-  height: 2.5rem;
-  padding-inline: 0.625rem;
+  height: calc(2.5rem * var(--a63-density-scale, 1));
+  padding-inline: calc(0.625rem * var(--a63-density-scale, 1));
   text-align: start;
   vertical-align: middle;
   font-weight: 500;
@@ -77,13 +82,22 @@
 
 /* ── Body cells ────────────────────────────────────────────────────────── */
 .a63-Table-cell {
-  padding: 0.625rem;
+  padding: calc(0.625rem * var(--a63-density-scale, 1));
   vertical-align: middle;
   line-height: 1;
   white-space: nowrap;
 }
 .a63-Table-cell:has([role='checkbox']) {
   padding-inline-end: 0;
+}
+/* wrap: long text breaks onto more lines inside a readable measure. */
+.a63-Table-head[data-wrap],
+.a63-Table-cell[data-wrap] {
+  min-width: 8rem;
+  max-width: 40ch;
+  line-height: var(--typography-sm-line-height);
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .a63-Table-body .a63-Table-row:last-child {

@@ -1,4 +1,4 @@
-import { fireEvent, render } from '@testing-library/react'
+import { act, fireEvent, render } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
 import {
@@ -181,5 +181,60 @@ describe('Table', () => {
       </Table>
     )
     expect(container.querySelector('[data-icon="none"]')).not.toBeNull()
+  })
+
+  it('marks a selected row and opts cells into wrapping', () => {
+    const { container } = render(
+      <Table>
+        <TableBody>
+          <TableRow selected>
+            <TableCell wrap>Long</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Short</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    )
+    const [selected, plain] = container.querySelectorAll('tr')
+    expect(selected).toHaveAttribute('data-state', 'selected')
+    expect(plain).not.toHaveAttribute('data-state')
+    expect(container.querySelector('td')).toHaveAttribute('data-wrap')
+    expect(plain?.querySelector('td')).not.toHaveAttribute('data-wrap')
+  })
+
+  it('makes the scroller a named, focusable region only while it overflows', () => {
+    let callback: ResizeObserverCallback = () => {}
+    const original = globalThis.ResizeObserver
+    globalThis.ResizeObserver = class {
+      constructor(cb: ResizeObserverCallback) {
+        callback = cb
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    } as unknown as typeof ResizeObserver
+    try {
+      const { container } = render(
+        <Table>
+          <TableCaption>Invoices</TableCaption>
+          <TableBody>
+            <TableRow>
+              <TableCell>INV001</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )
+      const scroller = container.querySelector<HTMLElement>('[data-slot="table-container"]')!
+      expect(scroller).not.toHaveAttribute('tabindex')
+      Object.defineProperty(scroller, 'scrollWidth', { configurable: true, value: 800 })
+      Object.defineProperty(scroller, 'clientWidth', { configurable: true, value: 400 })
+      act(() => callback([], {} as ResizeObserver))
+      expect(scroller).toHaveAttribute('tabindex', '0')
+      expect(scroller).toHaveAttribute('role', 'region')
+      expect(scroller).toHaveAttribute('aria-label', 'Invoices')
+    } finally {
+      globalThis.ResizeObserver = original
+    }
   })
 })

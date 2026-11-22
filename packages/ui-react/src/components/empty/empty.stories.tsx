@@ -164,6 +164,59 @@ export const ErrorState: Story = {
   ),
 }
 
+function ExpandedError({ rtl }: { rtl?: boolean }) {
+  return (
+    <Empty>
+      <EmptyHeader>
+        <EmptyTitle>{rtl ? 'حدث خطأ ما' : 'Something went wrong'}</EmptyTitle>
+      </EmptyHeader>
+      <EmptyContent>
+        <EmptyErrorDetail
+          error={'TypeError: Cannot read properties of undefined\n    at load (app.tsx:42)'}
+          labels={
+            rtl
+              ? { copy: 'الخطأ', hideDetails: 'إخفاء التفاصيل', showDetails: 'عرض التفاصيل' }
+              : undefined
+          }
+        />
+      </EmptyContent>
+    </Empty>
+  )
+}
+
+/* The expanded error detail: the error text with its copy button at the inline end,
+   in light, dark and right to left (where the button sits on the left). */
+export const ErrorExpanded: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16, maxWidth: 420 }}>
+      {(['light', 'dark'] as const).map(mode => (
+        <UIProvider key={mode} mode={mode}>
+          <div style={{ background: 'var(--a63-surface-page)', padding: 8 }}>
+            <ExpandedError />
+          </div>
+        </UIProvider>
+      ))}
+      <div dir="rtl" lang="ar">
+        <ExpandedError rtl />
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const toggle of canvasElement.querySelectorAll<HTMLElement>('.a63-Empty-errorToggle')) {
+      toggle.click()
+    }
+    await new Promise(resolve => setTimeout(resolve, 0))
+    const boxes = canvasElement.querySelectorAll<HTMLElement>('[data-slot="empty-error-box"]')
+    if (boxes.length !== 3) throw new Error(`Expected 3 expanded details, got ${boxes.length}`)
+    const rtlBox = boxes[2]
+    const copy = rtlBox?.querySelector<HTMLElement>('[data-slot="empty-error-copy"]')
+    if (!rtlBox || !copy) throw new Error('Expected the RTL copy button')
+    if (copy.getBoundingClientRect().left - rtlBox.getBoundingClientRect().left > 16) {
+      throw new Error('Expected the copy button at the inline end (left) in RTL')
+    }
+  },
+}
+
 /* The error state's details toggle across all 4 DS themes × light/dark. */
 export const ErrorThemes: Story = {
   play: ({ canvasElement }) => expectToggleContrast(canvasElement),

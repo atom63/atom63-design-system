@@ -356,6 +356,7 @@ export type {
 export {
   chartColors,
   chartContract,
+  chartLayouts,
   chartSizes,
   chartSlots,
   chartStates,
@@ -365,6 +366,7 @@ export {
 export type {
   ChartColor,
   ChartContract,
+  ChartLayout,
   ChartSize,
   ChartSlot,
   ChartState,
@@ -583,7 +585,6 @@ export {
   feedbackStateKinds,
   feedbackStateSizes,
   feedbackStateSlots,
-  feedbackStateStateAliases,
   feedbackStateStates,
   feedbackStateVisualArchetypes,
 } from './components/feedback-state/feedback-state-contract'
@@ -635,7 +636,6 @@ export type {
   FeedbackStateSize,
   FeedbackStateSlot,
   FeedbackStateState,
-  FeedbackStateStateAlias,
   FeedbackStateVisualArchetype,
 } from './components/feedback-state/feedback-state-contract'
 export {
@@ -861,12 +861,14 @@ export type {
 } from './components/navigation-menu/navigation-menu-contract'
 export {
   paginationContract,
+  paginationLinkSizes,
   paginationSlots,
   paginationStates,
   paginationVisualArchetypes,
 } from './components/pagination/pagination-contract'
 export type {
   PaginationContract,
+  PaginationLinkSize,
   PaginationSlot,
   PaginationState,
   PaginationVisualArchetype,

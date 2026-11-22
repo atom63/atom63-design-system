@@ -84,3 +84,8 @@
   white-space: nowrap;
   border-width: 0;
 }
+
+/* Previous points to the inline start: mirror the chevrons under dir="rtl". */
+:where([dir='rtl']) .a63-Pagination-nav-link svg {
+  transform: scaleX(-1);
+}

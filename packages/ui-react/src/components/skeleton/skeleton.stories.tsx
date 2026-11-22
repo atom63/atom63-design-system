@@ -93,3 +93,14 @@ export const ContractMetadata: Story = {
     </pre>
   ),
 }
+
+/* Forced colors drop the fill; each placeholder keeps a GrayText edge. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div aria-busy="true" style={{ display: 'grid', gap: 8, width: 240 }}>
+      <Skeleton style={{ height: 120 }} />
+      <Skeleton style={{ height: 16, width: '70%' }} />
+      <Skeleton style={{ height: 16, width: '40%' }} />
+    </div>
+  ),
+}

@@ -16,6 +16,10 @@
       "description": "The chart series colour a series takes, --a63-chart-<n>. Series take 1 to 5 in order unless a series names its own.",
       "values": [1, 2, 3, 4, 5]
     },
+    "layouts": {
+      "description": "How several bar or area series share a category: grouped draws them side by side (bar) or over each other (area); stacked piles them on each other. Line charts are always grouped.",
+      "values": ["grouped", "stacked"]
+    },
     "states": {
       "description": "current is a category picked by the pointer or the arrow keys, which shows its values in the tooltip.",
       "values": ["rest", "current"]
@@ -35,11 +39,15 @@
   "contract": {
     "defaultType": "line",
     "defaultSize": "md",
+    "defaultLayout": "grouped",
     "types": {
       "$ref": "#/lists/types"
     },
     "sizes": {
       "$ref": "#/lists/sizes"
+    },
+    "layouts": {
+      "$ref": "#/lists/layouts"
     },
     "colors": {
       "$ref": "#/lists/colors"

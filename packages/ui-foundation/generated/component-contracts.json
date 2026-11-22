@@ -1201,6 +1201,7 @@
       "axes": [
         { "name": "types", "values": ["line", "area", "bar"], "default": "line" },
         { "name": "sizes", "values": ["sm", "md"], "default": "md" },
+        { "name": "layouts", "values": ["grouped", "stacked"], "default": "grouped" },
         { "name": "colors", "values": ["1", "2", "3", "4", "5"] }
       ],
       "slots": [
@@ -1823,8 +1824,7 @@
         "feedback-state-description",
         "feedback-state-content"
       ],
-      "states": ["rest", "busy", "actionable"],
-      "stateAliases": { "idle": "rest" },
+      "states": ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"],
       "tokenSlots": [],
       "visualArchetypes": ["action"]
     },
@@ -2501,19 +2501,7 @@
       "axes": [
         {
           "name": "linkSizes",
-          "values": [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-            "tile",
-            "icon-xs",
-            "icon-sm",
-            "icon",
-            "icon-lg",
-            "icon-xl"
-          ],
+          "values": ["xs", "sm", "md", "icon-xs", "icon-sm", "icon"],
           "default": "icon"
         }
       ],
