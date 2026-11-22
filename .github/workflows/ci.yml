@@ -13,9 +13,13 @@ on:
 permissions:
   contents: read
 
-# A newer push to a pull request cancels the run it replaces; main keeps every run.
+# A newer run for the same pull request, or the same branch other than main,
+# cancels the run it replaces.
+# Each main commit gets a group of its own, so no main run is cancelled or, while
+# pending, replaced by a later one: the release preflight waits for ci-status on
+# that exact commit.
 concurrency:
-  group: ci-${{ github.event.pull_request.number || github.ref }}
+  group: ci-${{ github.event.pull_request.number || (github.ref == 'refs/heads/main' && github.sha) || github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
@@ -40,13 +44,9 @@ jobs:
           fi
           changed=$(git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}")
           echo "$changed"
-          # iOS reads the contracts, the token sources and generated models, and
-          # its own package; anything else cannot change what the iOS job checks.
-          if echo "$changed" | grep -qE '^(packages/ui-ios/|examples/ios-demo/|packages/ui-foundation/|packages/styles/(src|generated|scripts)/|scripts/generate-cross-renderer-contracts\.mjs|scripts/generate-component-contracts\.mjs|scripts/design-system/lib/component-contracts\.mjs|scripts/generate-a11y-ios-contracts\.mjs|Package\.swift|\.github/workflows/ci\.yml)'; then
-            echo "ios=true" >> "$GITHUB_OUTPUT"
-          else
-            echo "ios=false" >> "$GITHUB_OUTPUT"
-          fi
+          # The paths that can change what the iOS jobs check are listed, and
+          # tested, in scripts/design-system/lib/ios-impact.mjs.
+          echo "$changed" | node scripts/design-system/ios-impact.mjs | tee -a "$GITHUB_OUTPUT"
 
   verify:
     runs-on: ubuntu-latest
@@ -69,6 +69,42 @@ jobs:
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+
+      # Cheap checks first, so a missing changeset, generated drift, formatting or lint
+      # fails before the builds, browsers and consumer smoke tests below.
+
+      # A pull request that changes a published package needs a changeset. One
+      # that ships nothing to npm (tests, tooling, dev dependencies) adds an
+      # empty one with `pnpm changeset --empty`. Private apps are not checked.
+      # The Version Packages pull request is skipped: it consumes the changesets,
+      # and in prerelease mode status no longer counts consumed ones.
+      - name: Check for a changeset
+        if: github.event_name == 'pull_request' && github.head_ref != 'changeset-release/main'
+        run: pnpm changeset status --since="origin/${{ github.base_ref }}"
+
+      - name: Check DTCG token output
+        run: pnpm --filter @atom63/styles check:dtcg
+
+      - name: Check z-layer output
+        run: pnpm --filter @atom63/styles check:z-layers
+
+      - name: Check React UI utilities CSS
+        run: pnpm --filter @atom63/ui-react check:utilities
+
+      - name: Check formatting
+        run: pnpm format:check
+
+      - name: Lint packages
+        run: |
+          pnpm --filter @atom63/styles lint
+          pnpm --filter @atom63/ui-foundation lint
+          pnpm --filter @atom63/ui-react lint
+          pnpm --filter @atom63/mdx lint
+          pnpm --filter @atom63/brand lint
+          pnpm --filter @atom63/inform lint
+          pnpm --filter @atom63/agent lint
+          pnpm --filter @atom63/widgets lint
+          pnpm --filter @atom63/templates lint
 
       - name: Check dependency version policy
         run: pnpm check:dependency-version-policy
@@ -173,12 +209,6 @@ jobs:
       - name: Check Figma sync model
         run: pnpm --filter @atom63/styles check:figma
 
-      - name: Check DTCG token output
-        run: pnpm --filter @atom63/styles check:dtcg
-
-      - name: Check z-layer output
-        run: pnpm --filter @atom63/styles check:z-layers
-
       - name: Check control size alignment
         run: pnpm check:control-alignment
 
@@ -190,9 +220,6 @@ jobs:
 
       - name: Test React UI
         run: pnpm --filter @atom63/ui-react test
-
-      - name: Check React UI utilities CSS
-        run: pnpm --filter @atom63/ui-react check:utilities
 
       - name: Typecheck MDX
         run: pnpm --filter @atom63/mdx typecheck
@@ -225,30 +252,6 @@ jobs:
         run: |
           pnpm --filter @atom63/create test
           pnpm check:starter --shadcn
-
-      - name: Check formatting
-        run: pnpm format:check
-
-      - name: Lint packages
-        run: |
-          pnpm --filter @atom63/styles lint
-          pnpm --filter @atom63/ui-foundation lint
-          pnpm --filter @atom63/ui-react lint
-          pnpm --filter @atom63/mdx lint
-          pnpm --filter @atom63/brand lint
-          pnpm --filter @atom63/inform lint
-          pnpm --filter @atom63/agent lint
-          pnpm --filter @atom63/widgets lint
-          pnpm --filter @atom63/templates lint
-
-      # A pull request that changes a published package needs a changeset. One
-      # that ships nothing to npm (tests, tooling, dev dependencies) adds an
-      # empty one with `pnpm changeset --empty`. Private apps are not checked.
-      # The Version Packages pull request is skipped: it consumes the changesets,
-      # and in prerelease mode status no longer counts consumed ones.
-      - name: Check for a changeset
-        if: github.event_name == 'pull_request' && github.head_ref != 'changeset-release/main'
-        run: pnpm changeset status --since="origin/${{ github.base_ref }}"
 
   # Docs site and Figma plugin, in parallel with verify.
   docs:
@@ -315,14 +318,24 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Check Storybook
-        run: |
-          pnpm --filter @atom63/storybook typecheck
-          pnpm --filter @atom63/storybook build
-          pnpm --filter @atom63/storybook test
-          pnpm --filter @atom63/storybook test:craft
-          pnpm --filter @atom63/storybook test:ssr
-          pnpm --filter @atom63/storybook test:a11y
+      # One step per command, so each one's duration shows in the run.
+      - name: Typecheck Storybook
+        run: pnpm --filter @atom63/storybook typecheck
+
+      - name: Build Storybook
+        run: pnpm --filter @atom63/storybook build
+
+      - name: Render stories
+        run: pnpm --filter @atom63/storybook test
+
+      - name: Run runtime craft tests
+        run: pnpm --filter @atom63/storybook test:craft
+
+      - name: Run SSR tests
+        run: pnpm --filter @atom63/storybook test:ssr
+
+      - name: Run accessibility tests
+        run: pnpm --filter @atom63/storybook test:a11y
 
   # Every story renders in Firefox and WebKit. Render only: axe and visual
   # regression run in Chromium in the verify and visual jobs.
