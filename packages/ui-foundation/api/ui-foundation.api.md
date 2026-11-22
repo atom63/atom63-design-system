@@ -2911,7 +2911,7 @@ export interface FormContract {
 
 // @public (undocumented)
 export const formContract: {
-    slots: readonly ["form-item", "form-label", "form-control", "form-description", "form-message"];
+    slots: readonly ["form-item", "form-label", "form-description", "form-message"];
     states: readonly ["rest", "invalid"];
     visualArchetypes: readonly ["field"];
 };
@@ -2920,7 +2920,7 @@ export const formContract: {
 export type FormSlot = (typeof formSlots)[number];
 
 // @public (undocumented)
-export const formSlots: readonly ["form-item", "form-label", "form-control", "form-description", "form-message"];
+export const formSlots: readonly ["form-item", "form-label", "form-description", "form-message"];
 
 // @public (undocumented)
 export type FormState = (typeof formStates)[number];

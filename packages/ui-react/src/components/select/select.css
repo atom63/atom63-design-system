@@ -29,6 +29,7 @@
   --select-icon-size: var(--a63-control-icon-size-md);
   --select-gap: var(--a63-control-gap);
 
+  position: relative;
   box-sizing: border-box;
   display: inline-flex;
   align-items: center;
@@ -55,6 +56,17 @@
   user-select: none;
   outline: none;
   transition: border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+
+/* Interaction floor without inflating the rendered box, as Button and Input do:
+   on a coarse pointer the 32px trigger still takes a 44px tap. */
+.a63-Select-trigger::before {
+  content: '';
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 50%;
+  min-height: var(--a63-control-min-target);
+  translate: 0 -50%;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -160,6 +172,9 @@
   position: relative;
   max-height: var(--available-height);
   min-width: var(--anchor-width);
+  /* Grow past the trigger for longer options, up to 20rem and never past the
+     viewport; beyond that an option wraps (.a63-Select-item-text). */
+  max-width: min(var(--available-width), max(var(--anchor-width), 20rem));
   overflow: hidden;
 }
 
@@ -211,6 +226,12 @@
   gap: var(--a63-menu-item-gap, var(--a63-space-2));
   /* Menu-item uses flex; Select needs the indicator column. */
   align-items: center;
+  /* An option is a full-width row in a clipping list, so its own height is the
+     target: 44px on a coarse pointer, the menu-item floor elsewhere. */
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-row-min-size, var(--a63-control-min-size))
+  );
   padding-inline-end: var(--a63-space-4);
   cursor: pointer;
 }
@@ -238,9 +259,9 @@
 .a63-Select-item-text {
   grid-column: 2;
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  /* Long or translated options wrap so they read in full; the trigger value
+     still truncates to one line. */
+  overflow-wrap: anywhere;
 }
 
 .a63-Select-item[data-highlighted] .a63-Select-item-indicator,

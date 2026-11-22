@@ -1510,6 +1510,8 @@ export { FieldOrientation }
 // @public (undocumented)
 export type FieldProps = React$1.ComponentProps<'div'> & {
     orientation?: FieldOrientation;
+    invalid?: boolean;
+    disabled?: boolean;
 };
 
 // @public (undocumented)
@@ -2841,6 +2843,7 @@ export function Textarea(input: TextareaProps): React$1.ReactElement;
 export type TextareaProps = Omit<React$1.ComponentProps<'textarea'>, 'className'> & {
     className?: string;
     invalid?: boolean;
+    maxRows?: number;
     size?: TextareaSize;
     shadow?: boolean;
     textareaClassName?: string;

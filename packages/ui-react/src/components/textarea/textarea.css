@@ -50,6 +50,9 @@
   field-sizing: content;
   min-width: 0;
   min-height: var(--field-min-height);
+  /* Auto-grow stops at maxRows (12 by default); longer or pasted text scrolls
+     inside the field instead of pushing the page or a dialog's actions away. */
+  max-block-size: calc(var(--textarea-max-rows, 12) * 1lh);
   width: 100%;
   padding: 0;
   border: none;
@@ -78,7 +81,8 @@
   outline: var(--a63-control-focus-ring-width) solid var(--field-focus-ring);
 }
 
-.a63-Textarea[data-invalid] {
+.a63-Textarea[data-invalid],
+.a63-Textarea:has(> .a63-Textarea-field[aria-invalid='true']) {
   --field-border: var(--a63-border-danger);
   --field-focus-border: var(--a63-status-danger);
   --field-focus-ring: var(--a63-status-danger);

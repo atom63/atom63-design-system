@@ -1,0 +1,156 @@
+import { DocExample } from '@atom63/mdx/blocks'
+import {
+  Field,
+  FieldError,
+  FieldLabel,
+  Select,
+  SelectGroup,
+  SelectGroupLabel,
+  SelectItem,
+  SelectPopup,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from '@atom63/ui-react'
+
+export const plans = [
+  { value: 'free', label: 'Free' },
+  { value: 'team', label: 'Team' },
+  { value: 'business', label: 'Business' },
+  { value: 'enterprise', label: 'Enterprise' },
+]
+
+# Select
+
+Select picks one value from a fixed list. It is Base UI Select drawn with the field chrome: a trigger that matches Input, and a popup that uses the menu recipe.
+
+<DocExample
+  align="left"
+  title="Labelled select with items and groups"
+  code={`import {
+  Field,
+  FieldLabel,
+  Select,
+  SelectGroup,
+  SelectGroupLabel,
+  SelectItem,
+  SelectPopup,
+  SelectSeparator,
+  SelectTrigger,
+  SelectValue,
+} from '@atom63/ui-react'
+
+const plans = [
+  { value: 'free', label: 'Free' },
+  { value: 'team', label: 'Team' },
+  { value: 'business', label: 'Business' },
+  { value: 'enterprise', label: 'Enterprise' },
+]
+
+<Field>
+  <FieldLabel htmlFor="plan">Plan</FieldLabel>
+  <Select items={plans} defaultValue="team">
+    <SelectTrigger id="plan">
+      <SelectValue placeholder="Choose a plan" />
+    </SelectTrigger>
+    <SelectPopup>
+      <SelectGroup>
+        <SelectGroupLabel>Self-serve</SelectGroupLabel>
+        <SelectItem value="free">Free</SelectItem>
+        <SelectItem value="team">Team</SelectItem>
+      </SelectGroup>
+      <SelectSeparator />
+      <SelectGroup>
+        <SelectGroupLabel>Sales-led</SelectGroupLabel>
+        <SelectItem value="business">Business</SelectItem>
+        <SelectItem disabled value="enterprise">Enterprise</SelectItem>
+      </SelectGroup>
+    </SelectPopup>
+  </Select>
+</Field>`}
+>
+  <div className="w-full max-w-xs">
+    <Field>
+      <FieldLabel htmlFor="docs-select-plan">Plan</FieldLabel>
+      <Select defaultValue="team" items={plans}>
+        <SelectTrigger id="docs-select-plan">
+          <SelectValue placeholder="Choose a plan" />
+        </SelectTrigger>
+        <SelectPopup>
+          <SelectGroup>
+            <SelectGroupLabel>Self-serve</SelectGroupLabel>
+            <SelectItem value="free">Free</SelectItem>
+            <SelectItem value="team">Team</SelectItem>
+          </SelectGroup>
+          <SelectSeparator />
+          <SelectGroup>
+            <SelectGroupLabel>Sales-led</SelectGroupLabel>
+            <SelectItem value="business">Business</SelectItem>
+            <SelectItem disabled value="enterprise">
+              Enterprise
+            </SelectItem>
+          </SelectGroup>
+        </SelectPopup>
+      </Select>
+    </Field>
+  </div>
+</DocExample>
+
+## When to use
+
+Use Select when the value must come from a short, fixed list. Use RadioGroup when every option should stay visible, Autocomplete or Combobox when typing should filter a long list, and DropdownMenu for actions rather than a value.
+
+## Pass `items` to Select
+
+`SelectValue` shows the label of the selected value only when the root has `items`, an array of `{ value, label }` (or a value-to-label record). Without it, the trigger can show the raw value (`team`) instead of its label. Keep the `SelectItem` children and the `items` labels the same.
+
+## Invalid and disabled
+
+- `invalid` on `SelectTrigger`, or `aria-invalid`, draws the danger edge. Inside a Field, a rendered `FieldError` sets `aria-invalid` on the trigger for you; inside a Form, `FormControl` does.
+- `disabled` on `Select` disables the whole control; `disabled` on a `SelectItem` dims that option and skips it.
+
+<DocExample
+  align="left"
+  title="Invalid inside a Field"
+  code={`<Field>
+  <FieldLabel htmlFor="region">Region</FieldLabel>
+  <Select items={regions}>
+    <SelectTrigger id="region">
+      <SelectValue placeholder="Choose a region" />
+    </SelectTrigger>
+    <SelectPopup>…</SelectPopup>
+  </Select>
+  <FieldError>Choose a region.</FieldError>
+</Field>`}
+>
+  <div className="w-full max-w-xs">
+    <Field>
+      <FieldLabel htmlFor="docs-select-region">Region</FieldLabel>
+      <Select items={plans}>
+        <SelectTrigger id="docs-select-region">
+          <SelectValue placeholder="Choose a region" />
+        </SelectTrigger>
+        <SelectPopup>
+          {plans.map(plan => (
+            <SelectItem key={plan.value} value={plan.value}>
+              {plan.label}
+            </SelectItem>
+          ))}
+        </SelectPopup>
+      </Select>
+      <FieldError>Choose a region.</FieldError>
+    </Field>
+  </div>
+</DocExample>
+
+With React Hook Form, wrap the trigger, not the root, in `FormControl`, and pass `field.value` and `field.onChange` to `Select` as `value` and `onValueChange`.
+
+## Keyboard
+
+Select follows the APG select-only combobox. Enter, Space and the arrow keys open the list; Home and End open it at the first or last option; Up, Down, Home and End move through it; Enter, Space, Tab and Alt + Up Arrow select the focused option and close the list; Escape closes it without changing the value.
+
+One known gap remains: Base UI moves DOM focus onto the options instead of keeping it on the trigger with `aria-activedescendant`. Screen readers still announce the focused option. Home, End, Tab and Alt + Up Arrow are patched in `SelectTrigger` and `SelectPopup`, because Base UI 1.6 does not handle them.
+
+## Long options and touch
+
+Option text wraps, so long or translated options read in full; the trigger shows the selected label on one line. On a coarse pointer, options grow to the 44px row height and the 32px trigger takes a 44px tap.

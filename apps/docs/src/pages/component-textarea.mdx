@@ -1,0 +1,97 @@
+import { DocExample } from '@atom63/mdx/blocks'
+import {
+  Button,
+  Field,
+  FieldError,
+  FieldLabel,
+  InputGroup,
+  InputGroupAddon,
+  InputGroupTextarea,
+  Textarea,
+} from '@atom63/ui-react'
+
+# Textarea
+
+Textarea is the multi-line field: the same recessed chrome, focus ring and invalid edge as Input, around a native `<textarea>` that grows with its content up to a limit and then scrolls.
+
+<DocExample
+  align="left"
+  title="Auto-grow with a limit, and an invalid field"
+  code={`import { Field, FieldError, FieldLabel, Textarea } from '@atom63/ui-react'
+
+<Field>
+  <FieldLabel htmlFor="notes">Release notes</FieldLabel>
+  <Textarea id="notes" maxRows={6} placeholder="What changed?" />
+</Field>
+
+<Field>
+  <FieldLabel htmlFor="bio">Bio</FieldLabel>
+  <Textarea id="bio" />
+  <FieldError>Add a short bio.</FieldError>
+</Field>`}
+>
+  <div className="flex w-full max-w-sm flex-col gap-4">
+    <Field>
+      <FieldLabel htmlFor="docs-textarea-notes">Release notes</FieldLabel>
+      <Textarea id="docs-textarea-notes" maxRows={6} placeholder="What changed?" />
+    </Field>
+    <Field>
+      <FieldLabel htmlFor="docs-textarea-bio">Bio</FieldLabel>
+      <Textarea id="docs-textarea-bio" />
+      <FieldError>Add a short bio.</FieldError>
+    </Field>
+  </div>
+</DocExample>
+
+## When to use
+
+Use Textarea for text that can run to several lines: notes, descriptions, messages. Use Input for one line. Pair it with a persistent label (`Field` and `FieldLabel`, or `aria-label` when the context names it).
+
+## Props
+
+| Prop | Default | What it does |
+|------|---------|--------------|
+| `size` | `md` | `sm`, `md` or `lg`: padding, type size and minimum height from the control ramp. |
+| `maxRows` | `12` | Rows the field grows to with its content before it scrolls. |
+| `invalid` | `false` | Draws the danger edge and sets `aria-invalid`. Inside a Field, a rendered `FieldError` does the same. |
+| `unstyled` | `false` | Drops the chrome so the textarea nests inside a parent that draws it. |
+| `shadow` | `true` | `false` drops the recessed field shadow on flat or translucent surfaces. |
+| `className` / `textareaClassName` | | Classes for the chrome wrapper and the native textarea. |
+
+Every other prop goes to the native `<textarea>`.
+
+## Inside an InputGroup
+
+For a composer with actions above or below the text, use `InputGroupTextarea` in an `InputGroup`: the group draws the chrome and the textarea renders `unstyled`. Block addons stack above (`align="block-start"`) or below (`align="block-end"`) the text.
+
+<DocExample
+  align="left"
+  title="Composer"
+  code={`import { Button, InputGroup, InputGroupAddon, InputGroupTextarea } from '@atom63/ui-react'
+
+<InputGroup>
+  <InputGroupTextarea aria-label="Message" placeholder="Write a message" />
+  <InputGroupAddon align="block-end">
+    <Button size="sm">Send</Button>
+  </InputGroupAddon>
+</InputGroup>`}
+>
+  <div className="w-full max-w-sm">
+    <InputGroup>
+      <InputGroupTextarea aria-label="Message" placeholder="Write a message" />
+      <InputGroupAddon align="block-end">
+        <Button size="sm">Send</Button>
+      </InputGroupAddon>
+    </InputGroup>
+  </div>
+</DocExample>
+
+## Decisions worth knowing
+
+### Auto-grow stops at a limit
+
+The field sizes to its content (`field-sizing: content`) from a minimum of one control height plus padding. Without a ceiling, pasted text would push a dialog's actions off the screen, so growth stops at `maxRows` and the text scrolls inside the field. A person can still drag the field taller, up to the same limit.
+
+### A 16px floor on phones
+
+On narrow viewports the type size never drops below 16px, so iOS Safari does not zoom the page when the field takes focus.

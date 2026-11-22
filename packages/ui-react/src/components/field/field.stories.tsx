@@ -38,12 +38,14 @@ export const Playground: Story = {
   ),
 }
 
+/* A rendered FieldError is the whole invalid state: it tints the label, marks
+   the control aria-invalid (which draws its danger edge) and describes it. */
 export const Invalid: Story = {
   render: () => (
     <div style={{ maxWidth: 360, minWidth: 0, width: '100%' }}>
-      <Field data-invalid="true">
+      <Field>
         <FieldLabel htmlFor="fld-name">Name</FieldLabel>
-        <Input id="fld-name" invalid />
+        <Input id="fld-name" />
         <FieldError errors={[{ message: 'Name is required.' }]} />
       </Field>
     </div>
@@ -53,9 +55,9 @@ export const Invalid: Story = {
 export const MultipleErrors: Story = {
   render: () => (
     <div style={{ maxWidth: 360, minWidth: 0, width: '100%' }}>
-      <Field data-invalid="true">
+      <Field invalid>
         <FieldLabel htmlFor="fld-pw">Password</FieldLabel>
-        <Input id="fld-pw" invalid type="password" />
+        <Input id="fld-pw" type="password" />
         <FieldError
           errors={[
             { message: 'Must be at least 8 characters.' },
@@ -63,6 +65,27 @@ export const MultipleErrors: Story = {
           ]}
         />
       </Field>
+    </div>
+  ),
+}
+
+/* `disabled` dims the label and title; the control takes its own
+   `disabled`, since Field does not disable what it wraps. */
+export const Disabled: Story = {
+  render: () => (
+    <div style={{ maxWidth: 360, minWidth: 0, width: '100%' }}>
+      <FieldGroup>
+        <Field disabled>
+          <FieldLabel htmlFor="fld-disabled">Workspace URL</FieldLabel>
+          <Input defaultValue="atom63.io/team" disabled id="fld-disabled" />
+          <FieldDescription>Only an owner can change it.</FieldDescription>
+        </Field>
+        <Field>
+          <FieldLabel htmlFor="fld-enabled">Display name</FieldLabel>
+          <Input defaultValue="Atom63" id="fld-enabled" />
+          <FieldDescription>Shown to everyone in the workspace.</FieldDescription>
+        </Field>
+      </FieldGroup>
     </div>
   ),
 }
@@ -157,7 +180,7 @@ export const Themes: Story = {
               </span>
               <div style={{ maxWidth: 280, minWidth: 0, width: '100%' }}>
                 <FieldGroup>
-                  <Field data-invalid="true">
+                  <Field>
                     <FieldLabel htmlFor={`fld-${theme}-${mode}`}>Email</FieldLabel>
                     <Input id={`fld-${theme}-${mode}`} invalid placeholder="you@atom63.io" />
                     <FieldError errors={[{ message: 'Enter a valid email.' }]} />
