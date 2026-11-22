@@ -22,6 +22,6 @@
   }
 
   [data-side='before'] > .mdx-comparison-dot {
-    background-color: color-mix(in oklch, var(--a63-action-danger) 60%, transparent);
+    background-color: color-mix(in oklch, var(--a63-status-danger) 60%, transparent);
   }
 }

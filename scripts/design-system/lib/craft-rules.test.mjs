@@ -291,6 +291,30 @@ const c = 'text-(--a63-surface-page) text-[var(--a63-action-danger)] text-(--a63
     ])
   })
 
+  it('flags the danger action fill read as text, border or outline color, mixed or not', () => {
+    const css = `.a { color: color-mix(in oklab, var(--a63-action-danger) 70%, var(--a63-text-primary)); }
+.b { border-color: color-mix(in oklab, var(--a63-action-danger) 40%, transparent); }
+.c { border-block-end: 1px solid var(--a63-action-danger-hover); outline: 2px solid var(--a63-action-danger); }
+.d { background-color: var(--a63-action-danger); --button-border-color: var(--a63-action-danger); }
+.e { border-color: var(--a63-border-danger); color: var(--a63-text-danger); }`
+    assert.deepEqual(role(scanCss(css)), [
+      '1 token-role color: var(--a63-action-danger)',
+      '2 token-role border-color: var(--a63-action-danger)',
+      '3 token-role border-block-end: var(--a63-action-danger-hover)',
+      '3 token-role outline: var(--a63-action-danger)',
+    ])
+  })
+
+  it('flags border, outline and decoration utilities that map to the danger action fill', () => {
+    const dangerRoles = { ...roles, destructive: '--a63-action-danger' }
+    const source = `const a = 'border-destructive border-s-destructive/40 outline-(--a63-action-danger) bg-destructive border-primary border-2'`
+    assert.deepEqual(role(scanSource(source, { roles: dangerRoles })), [
+      '1 token-role border-destructive',
+      '1 token-role border-s-destructive/40',
+      '1 token-role outline-(--a63-action-danger)',
+    ])
+  })
+
   it('honours craft-allow', () => {
     const css = `.a { color: var(--a63-surface-page); /* craft-allow: token-role inverse label on the ink fill */ }`
     assert.deepEqual(role(scanCss(css)), [])
