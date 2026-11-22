@@ -47,7 +47,7 @@
   },
   "counts": {
     "rootValueExports": 443,
-    "rootTypeExports": 206,
+    "rootTypeExports": 208,
     "packageExportKeys": 84,
     "cssExportKeys": 77
   },
@@ -3476,6 +3476,14 @@
         },
         {
           "name": "TableRowProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableSort",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableSortDirection",
           "proposedTier": "beta-supported-core"
         }
       ]

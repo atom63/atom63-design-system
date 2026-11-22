@@ -54,6 +54,40 @@ export const Playground: Story = {
   render: () => <Demo />,
 }
 
+/** On the first page, Previous is disabled: no href, out of the tab order, announced as disabled. */
+export const FirstPage: Story = {
+  render: () => (
+    <Pagination>
+      <PaginationContent>
+        <PaginationItem>
+          <PaginationPrevious disabled />
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#page-1" isActive>
+            1
+          </PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationLink href="#page-2">2</PaginationLink>
+        </PaginationItem>
+        <PaginationItem>
+          <PaginationNext href="#next" />
+        </PaginationItem>
+      </PaginationContent>
+    </Pagination>
+  ),
+  play: async ({ canvasElement }) => {
+    const previous = canvasElement.querySelector<HTMLElement>('[aria-label="Go to previous page"]')
+    if (!previous) throw new Error('Expected the Previous control')
+    if (previous.hasAttribute('href')) throw new Error('Expected a disabled Previous without href')
+    if (previous.getAttribute('aria-disabled') !== 'true') {
+      throw new Error('Expected aria-disabled="true" on the disabled Previous')
+    }
+    previous.focus()
+    if (document.activeElement === previous) throw new Error('Expected Previous to be unfocusable')
+  },
+}
+
 export const Themes: Story = {
   parameters: repeatedLandmarks,
   render: () => (
