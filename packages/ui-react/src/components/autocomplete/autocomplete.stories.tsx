@@ -111,6 +111,45 @@ export const Playground: Story = {
   render: () => <Demo />,
 }
 
+/** With a typed value, the clear button sits beside the trigger: neither covers the other. */
+export const TriggerAndClearWithValue: Story = {
+  render: () => (
+    <Autocomplete defaultValue="Apple" items={fruits}>
+      <AutocompleteInput
+        aria-label="Search fruit"
+        placeholder="Search fruit…"
+        showClear
+        showTrigger
+      />
+      <AutocompletePopup>
+        <AutocompleteEmpty>No fruit found.</AutocompleteEmpty>
+        <AutocompleteList>
+          {(fruit: string) => <AutocompleteItem key={fruit}>{fruit}</AutocompleteItem>}
+        </AutocompleteList>
+      </AutocompletePopup>
+    </Autocomplete>
+  ),
+  play: async ({ canvasElement }) => {
+    const trigger = canvasElement.querySelector<HTMLElement>('[data-slot="autocomplete-trigger"]')
+    const clear = canvasElement.querySelector<HTMLElement>('[data-slot="autocomplete-clear"]')
+    const input = canvasElement.querySelector<HTMLInputElement>('[data-slot="autocomplete-input"]')
+    if (!trigger || !clear || !input)
+      throw new Error('Expected the input, trigger and clear button')
+    const a = trigger.getBoundingClientRect()
+    const b = clear.getBoundingClientRect()
+    if (a.left < b.right - 0.5 && b.left < a.right - 0.5) {
+      throw new Error(
+        `Expected the clear button beside the trigger (clear ${b.left}-${b.right}, trigger ${a.left}-${a.right})`
+      )
+    }
+    const hit = document.elementFromPoint(a.left + a.width / 2, a.top + a.height / 2)
+    if (!hit || !trigger.contains(hit)) throw new Error('Expected the trigger to take the pointer')
+    const text =
+      input.getBoundingClientRect().right - Number.parseFloat(getComputedStyle(input).paddingRight)
+    if (text > b.left + 0.5) throw new Error('Expected the input to reserve room for both buttons')
+  },
+}
+
 /** Open on load with the first item highlighted, so the visual and axe runs
  *  capture the popup, its groups and the highlighted row. */
 export const MenuAnatomy: Story = {

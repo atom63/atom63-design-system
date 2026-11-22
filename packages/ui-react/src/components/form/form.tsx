@@ -59,10 +59,11 @@ const useFormField = () => {
   const formState = useFormState({ name: fieldContext.name })
   const fieldState = getFieldState(fieldContext.name, formState)
 
-  const { id } = itemContext
+  const { hasDescription, id } = itemContext
 
   return {
     id,
+    hasDescription,
     name: fieldContext.name,
     formItemId: `${id}-form-item`,
     formDescriptionId: `${id}-form-item-description`,
@@ -72,16 +73,24 @@ const useFormField = () => {
 }
 
 type FormItemContextValue = {
+  /** Whether a FormDescription renders in the item, so the control lists its id. */
+  hasDescription: boolean
   id: string
+  setHasDescription: (value: boolean) => void
 }
 
 const FormItemContext = React.createContext<FormItemContextValue | null>(null)
 
 function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
   const id = React.useId()
+  const [hasDescription, setHasDescription] = React.useState(false)
+  const context = React.useMemo(
+    () => ({ hasDescription, id, setHasDescription }),
+    [hasDescription, id]
+  )
 
   return (
-    <FormItemContext.Provider value={{ id }}>
+    <FormItemContext.Provider value={context}>
       <div className={cn('a63-FormItem', className)} data-slot="form-item" {...props} />
     </FormItemContext.Provider>
   )
@@ -105,12 +114,16 @@ function FormControl({
   children,
   ...props
 }: React.ComponentProps<'div'> & { children: React.ReactElement }) {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
+  const { error, formItemId, formDescriptionId, formMessageId, hasDescription } = useFormField()
+  const describedBy =
+    [hasDescription ? formDescriptionId : null, error ? formMessageId : null]
+      .filter(Boolean)
+      .join(' ') || undefined
 
   return useRender({
     defaultTagName: 'div',
     props: {
-      'aria-describedby': !error ? `${formDescriptionId}` : `${formDescriptionId} ${formMessageId}`,
+      'aria-describedby': describedBy,
       'aria-invalid': !!error,
       'data-slot': 'form-control',
       id: formItemId,
@@ -122,6 +135,11 @@ function FormControl({
 
 function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
   const { formDescriptionId } = useFormField()
+  const setHasDescription = React.useContext(FormItemContext)?.setHasDescription
+  React.useLayoutEffect(() => {
+    setHasDescription?.(true)
+    return () => setHasDescription?.(false)
+  }, [setHasDescription])
 
   return (
     <p

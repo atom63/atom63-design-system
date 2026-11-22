@@ -1,4 +1,13 @@
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@atom63/ui-react'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+  type TableSort,
+  type TableSortDirection,
+} from '@atom63/ui-react'
 import { SearchX } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -21,6 +30,11 @@ export interface DataTableColumn<Row> {
   cell: (row: Row) => ReactNode
   header: string
   key: string
+  /** Makes the header a sort button. Its `key` is the `sort.column` it reports; the caller
+   *  sorts the rows. */
+  sortable?: boolean
+  /** The direction a first press sorts this column in, such as `descending` for amounts. */
+  firstSortDirection?: TableSortDirection
   /** The table width at which this column first appears. */
   showFrom?: 'sm' | 'md' | 'lg'
 }
@@ -49,6 +63,13 @@ export interface DataTableSectionProps<Row> {
   selectedRowKey?: string
   /** A short count such as "12 of 25 invoices", announced when it changes. */
   summary: string
+  /** The column the rows are sorted by (controlled). The caller sorts `rows`. */
+  sort?: TableSort | null
+  /** Called when a sortable header is pressed, with the sort to apply. */
+  onSortChange?: (sort: TableSort) => void
+  /** Shown under the rows in both layouts, usually a `Pagination`; the caller passes the page of
+   *  `rows` it shows. */
+  pagination?: ReactNode
 }
 
 const alignClass = (align: DataTableColumn<unknown>['align']) =>
@@ -75,10 +96,13 @@ export function DataTableSection<Row>({
   getRowKey,
   headingLevel = 2,
   label,
+  onSortChange,
+  pagination,
   renderPhoneRow,
   rowActions,
   rows,
   selectedRowKey,
+  sort,
   summary,
 }: DataTableSectionProps<Row>) {
   const [titleColumn, ...detailColumns] = columns
@@ -99,11 +123,16 @@ export function DataTableSection<Row>({
         <>
           {/* A `frame` ancestor draws the table as a bordered card, like the phone list. */}
           <div className="hidden sm:block" data-slot="frame">
-            <Table aria-label={label}>
+            <Table aria-label={label} onSortChange={onSortChange} sort={sort}>
               <TableHeader>
                 <TableRow>
                   {columns.map(column => (
-                    <TableHead className={columnClass(column)} key={column.key}>
+                    <TableHead
+                      className={columnClass(column)}
+                      firstSortDirection={column.firstSortDirection}
+                      key={column.key}
+                      sortKey={column.sortable ? column.key : undefined}
+                    >
                       {column.header}
                     </TableHead>
                   ))}
@@ -167,6 +196,7 @@ export function DataTableSection<Row>({
               </li>
             ))}
           </ul>
+          {pagination}
         </>
       )}
     </div>

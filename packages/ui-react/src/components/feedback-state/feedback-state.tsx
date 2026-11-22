@@ -176,6 +176,7 @@ export function FeedbackState({
   const finalDescription = getFeedbackDescription({ description, error, query, state })
   const finalTitle = title || config.defaultTitle
   const iconNode = renderFeedbackIcon(icon ?? config.icon)
+  const Heading = `h${level}` as const
 
   return (
     <div
@@ -193,14 +194,9 @@ export function FeedbackState({
           </div>
         ) : null}
 
-        <div
-          aria-level={level}
-          className="a63-FeedbackState-title"
-          data-slot="feedback-state-title"
-          role="heading"
-        >
+        <Heading className="a63-FeedbackState-title" data-slot="feedback-state-title">
           {finalTitle}
-        </div>
+        </Heading>
         <div className="a63-FeedbackState-description" data-slot="feedback-state-description">
           {finalDescription}
         </div>

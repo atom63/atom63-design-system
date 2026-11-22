@@ -2500,7 +2500,7 @@
         "pagination-link",
         "pagination-ellipsis"
       ],
-      "states": ["rest", "current"],
+      "states": ["rest", "current", "disabled"],
       "tokenSlots": [],
       "visualArchetypes": ["action"]
     },
@@ -3322,7 +3322,7 @@
       "source": "packages/ui-foundation/contracts/components/table.json",
       "exportName": "tableContract",
       "maturity": "stable",
-      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text.",
+      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text. Sorting is controlled and data-agnostic: Table takes sort and onSortChange, and a TableHead with a sortKey renders a button with a direction icon and carries aria-sort while its column is sorted; the caller sorts the rows.",
       "axes": [
         { "name": "variants", "values": ["default", "plain"], "default": "default" },
         {
@@ -3343,9 +3343,10 @@
         "table-row",
         "table-head",
         "table-cell",
-        "table-caption"
+        "table-caption",
+        "table-sort-button"
       ],
-      "states": ["rest", "row-hover", "row-selected"],
+      "states": ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },

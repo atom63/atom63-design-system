@@ -4,7 +4,7 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 import { type ButtonSize, buttonSizes } from '../button/button-contract'
 
-export const paginationStates = ['rest', 'current'] as const
+export const paginationStates = ['rest', 'current', 'disabled'] as const
 export const paginationSlots = [
   'pagination',
   'pagination-content',
