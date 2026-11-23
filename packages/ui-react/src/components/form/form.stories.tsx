@@ -48,12 +48,7 @@ function ProfileForm({ withError }: { withError?: boolean }) {
             <FormItem>
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  aria-label="Example text field"
-                  placeholder="you@atom63.io"
-                  type="email"
-                  {...field}
-                />
+                <Input placeholder="you@atom63.io" type="email" {...field} />
               </FormControl>
               <FormDescription>We use this to send release notes.</FormDescription>
               <FormMessage />

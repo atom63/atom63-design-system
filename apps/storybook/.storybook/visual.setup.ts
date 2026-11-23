@@ -14,7 +14,9 @@ const VIEWPORT = { width: 1280, height: 800 }
 /* The outer page height in vitest.config.ts; taller stories are cut here. */
 const MAX_HEIGHT = 10000
 /* A story whose id ends in `-phone` (a `Phone` export) renders and is captured
-   at a phone width, so layouts that change below `sm` get a baseline too. */
+   at a phone width, so layouts that change below `sm` get a baseline too. A
+   template story ending in `-wide`, `-compact` or `-tablet` is captured at
+   that width. */
 const STORY_VIEWPORTS = {
   wide: { width: 1440, height: 960 },
   compact: { width: 1024, height: 800 },
@@ -24,7 +26,7 @@ const STORY_VIEWPORTS = {
 
 const viewportForStory = (storyId: string | undefined) => {
   if (storyId?.endsWith('-phone')) return STORY_VIEWPORTS.phone
-  if (!storyId?.startsWith('templates-pages-list-page--')) return VIEWPORT
+  if (!storyId?.startsWith('templates-')) return VIEWPORT
 
   const entry = Object.entries(STORY_VIEWPORTS)
     .filter(([suffix]) => suffix !== 'phone')

@@ -66,11 +66,27 @@ export interface AppShellUser {
   name: string
 }
 
+/** The shell's own strings, for a product in another language. */
+export interface AppShellLabels {
+  /** Names the sidebar's user landmark; "Account" by default. */
+  account?: string
+  /** Names the main navigation landmark; "Main" by default. */
+  navigation?: string
+  /** The phone sheet's accessible description; "Displays the mobile sidebar." by default. */
+  sheetDescription?: string
+  /** The phone sheet's accessible title; "Sidebar" by default. */
+  sheetTitle?: string
+  /** The top-bar menu toggle's name; "Toggle Sidebar" by default. */
+  toggle?: string
+}
+
 export interface AppShellProps {
   /** The page. The shell renders the `main` landmark, so pages inside it do not add `Page`. */
   children: ReactNode
   /** Where the product name links; the first navigation item by default. */
   homeHref?: string
+  /** The shell's own strings; English by default. */
+  labels?: AppShellLabels
   navItems: readonly AppShellNavItem[]
   productName: string
   /**
@@ -153,11 +169,16 @@ function UserRow({ user }: { user: AppShellUser }) {
  *
  * Each safe-area inset has one owner, as in AppView: the top bar takes the top
  * inset, the page wrapper the bottom one, and both clear the inline insets
- * (the larger of the two, so the layout still mirrors).
+ * (the larger of the two, so the layout still mirrors). From `md` the sidebar
+ * rail sits at the inline start and owns that inset, so the top bar and the
+ * page clear only the end one.
+ *
+ * The layout is logical: under dir="rtl" the sidebar moves to the right.
  */
 export function AppShell({
   children,
   homeHref,
+  labels = {},
   navItems,
   productName,
   renderLink = anchor,
@@ -166,11 +187,15 @@ export function AppShell({
 }: AppShellProps) {
   return (
     <SidebarProvider className="[--app-shell-inset-inline:max(var(--a63-safe-area-left),var(--a63-safe-area-right))]">
-      <Sidebar collapsible="icon">
+      <Sidebar
+        collapsible="icon"
+        mobileDescription={labels.sheetDescription}
+        mobileTitle={labels.sheetTitle}
+      >
         {/* One navigation landmark holds the product name and the menu, so all
             sidebar content sits in a landmark; `contents` keeps the sidebar's
             own layout. */}
-        <nav aria-label="Main" className="contents">
+        <nav aria-label={labels.navigation ?? 'Main'} className="contents">
           <SidebarHeader>
             {renderLink({
               children: productName,
@@ -208,17 +233,17 @@ export function AppShell({
         </nav>
         {/* The account sits in its own landmark at the sidebar's foot. */}
         {user && (
-          <SidebarFooter aria-label="Account" role="region">
+          <SidebarFooter aria-label={labels.account ?? 'Account'} role="region">
             <UserRow user={user} />
           </SidebarFooter>
         )}
       </Sidebar>
       <SidebarInset>
-        <header className="border-border box-content flex h-14 items-center gap-2 border-b px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-[var(--a63-safe-area-top)]">
-          <SidebarTrigger />
+        <header className="border-border box-content flex h-14 items-center gap-2 border-b px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-[var(--a63-safe-area-top)] md:ps-4">
+          <SidebarTrigger label={labels.toggle} />
           <div className="ms-auto flex items-center gap-2">{topBarActions}</div>
         </header>
-        <div className="px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-8 pb-[calc(--spacing(8)+var(--a63-safe-area-bottom))] sm:px-[max(--spacing(6),var(--app-shell-inset-inline))]">
+        <div className="px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-8 pb-[calc(--spacing(8)+var(--a63-safe-area-bottom))] sm:px-[max(--spacing(6),var(--app-shell-inset-inline))] md:ps-6">
           {children}
         </div>
       </SidebarInset>

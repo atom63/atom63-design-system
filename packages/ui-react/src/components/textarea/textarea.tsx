@@ -10,6 +10,8 @@ export type TextareaProps = Omit<React.ComponentProps<'textarea'>, 'className'> 
   className?: string
   /** Marks the field invalid and switches focus feedback to the danger color. */
   invalid?: boolean
+  /** Rows the field grows to with its content before it scrolls. Defaults to 12. */
+  maxRows?: number
   /** Control-ramp size used for padding, type, and minimum height. */
   size?: TextareaSize
   /** Drop the recessed field shadow on flat or translucent parent surfaces. */
@@ -34,13 +36,19 @@ export function Textarea({
   className,
   disabled,
   invalid = false,
+  maxRows,
   shadow = true,
   size = textareaContract.defaultSize,
   textareaClassName,
   unstyled = false,
+  style,
   ...props
 }: TextareaProps): React.ReactElement {
   const isInvalid = invalid || ariaInvalid === true || ariaInvalid === 'true'
+  const fieldStyle =
+    maxRows === undefined
+      ? style
+      : ({ ...style, '--textarea-max-rows': maxRows } as React.CSSProperties)
 
   return (
     <span
@@ -57,6 +65,7 @@ export function Textarea({
         className={cn('a63-Textarea-field', textareaClassName)}
         data-slot="textarea"
         disabled={disabled}
+        style={fieldStyle}
         {...props}
       />
     </span>

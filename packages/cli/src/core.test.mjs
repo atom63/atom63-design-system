@@ -634,6 +634,30 @@ describe('component', () => {
       }
     )
   })
+
+  it('points a layout primitive at atom63 api, which prints its props', () => {
+    for (const [slug, name] of [
+      ['page', 'Page'],
+      ['container', 'Container'],
+      ['section', 'Section'],
+      ['section-header', 'SectionHeader'],
+    ]) {
+      assert.throws(
+        () => component(index, slug),
+        error => {
+          assert.deepEqual(error.suggestions, [`atom63 api ${name}`])
+          assert.match(error.message, /@atom63\/ui-react\/layout/)
+          return true
+        }
+      )
+      const text = formatEnvelope(api(index, name))
+      assert.match(text, new RegExp(`Props of \`${name}\`:`))
+    }
+    assert.match(
+      formatEnvelope(api(index, 'Container')),
+      /- `gap`: `0 \| 2 \| 4 \| 6 \| 8 \| 10 \| 12`/
+    )
+  })
 })
 
 describe('example', () => {

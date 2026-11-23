@@ -4,6 +4,12 @@
 import type { A11yPatternBinding } from '../../a11y/types'
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
+// Items take the `itemVariants` (default, destructive). Items, labels and submenu triggers also take
+// a boolean `inset` (web only), a layout aid rather than an axis: it indents the row to the checkbox
+// and radio indicator column so plain rows line up with checkable ones. Built-in icons are a check
+// mark for checked rows and a chevron toward the inline end for submenu triggers; it mirrors in
+// right-to-left.
+
 export const dropdownMenuItemVariants = ['default', 'destructive'] as const
 export const dropdownMenuStates = [
   'closed',

@@ -46,7 +46,16 @@ export interface FeedbackStateAction {
   variant?: ButtonProps['variant']
 }
 
-export interface FeedbackStateProps {
+export interface FeedbackStateLabels {
+  /** The no-results description when `query` is set. Defaults to `No results found for "{query}"`. */
+  noResults?: (query: string) => string
+}
+
+/** Native `div` attributes and `ref` reach the root (`title` is the heading text). */
+export interface FeedbackStateProps extends Omit<
+  React.ComponentProps<'div'>,
+  'children' | 'title'
+> {
   actions?: FeedbackStateAction[]
   className?: string
   description?: string
@@ -59,6 +68,7 @@ export interface FeedbackStateProps {
   size?: FeedbackStateSize
   state?: FeedbackStateKind
   title?: string
+  labels?: FeedbackStateLabels
 }
 
 const stateConfig = {
@@ -105,9 +115,10 @@ const stateConfig = {
 function getFeedbackDescription({
   description,
   error,
+  labels,
   query,
   state,
-}: Pick<FeedbackStateProps, 'description' | 'error' | 'query'> & {
+}: Pick<FeedbackStateProps, 'description' | 'error' | 'labels' | 'query'> & {
   state: FeedbackStateKind
 }) {
   if (description) {
@@ -119,7 +130,7 @@ function getFeedbackDescription({
   }
 
   if (state === 'no-results' && query) {
-    return `No results found for "${query}"`
+    return labels?.noResults ? labels.noResults(query) : `No results found for "${query}"`
   }
 
   return stateConfig[state].defaultDescription
@@ -156,24 +167,27 @@ function FeedbackStateActionButton({ action }: { action: FeedbackStateAction }) 
    `.a63-FeedbackState-*` elements so this pattern stays self-contained.
    The root is one live region that stays mounted across states, so a change of
    state only changes its text and screen readers announce it: polite
-   (role=status) for loading and the result states, assertive (role=alert) for
-   an error. It is never aria-busy, which would silence it; mark the content
-   being loaded busy instead. */
+   (role=status) for loading and the result states. An error mounts a fresh
+   role=alert root instead, since screen readers announce an alert when it is
+   inserted but not reliably when a live region changes its role. It is never
+   aria-busy, which would silence it; mark the content being loaded busy instead. */
 export function FeedbackState({
   actions,
   className,
   description,
   error,
   icon,
+  labels,
   level = 3,
   query,
   showIcon = true,
   size = feedbackStateContract.defaultSize,
   state = feedbackStateContract.defaultKind,
   title,
+  ...props
 }: FeedbackStateProps): React.ReactElement {
   const config = stateConfig[state]
-  const finalDescription = getFeedbackDescription({ description, error, query, state })
+  const finalDescription = getFeedbackDescription({ description, error, labels, query, state })
   const finalTitle = title || config.defaultTitle
   const iconNode = renderFeedbackIcon(icon ?? config.icon)
   const Heading = `h${level}` as const
@@ -185,7 +199,9 @@ export function FeedbackState({
       data-size={size}
       data-slot="feedback-state"
       data-state={state}
+      key={state === 'error' ? 'alert' : 'status'}
       role={state === 'error' ? 'alert' : 'status'}
+      {...props}
     >
       <div className="a63-FeedbackState-header" data-slot="feedback-state-header">
         {showIcon && iconNode ? (

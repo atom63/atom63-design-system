@@ -137,3 +137,22 @@ export const Themes: Story = {
     </ThemeMatrix>
   ),
 }
+
+/** On a phone the soft keyboard has no Shift+Enter, so Enter adds a line (its key reads
+ *  "return") and the send button sends. `submitOnEnter={false}` forces that here. */
+export const Phone: Story = {
+  args: { attach, submitOnEnter: false },
+  decorators: [
+    Story => (
+      <div style={{ inlineSize: 343 }}>
+        <Story />
+      </div>
+    ),
+  ],
+  play: async ({ canvasElement }) => {
+    const field = canvasElement.querySelector('textarea')
+    if (field?.getAttribute('enterkeyhint') !== 'enter') {
+      throw new Error('Expected Enter to add a line on a phone')
+    }
+  },
+}

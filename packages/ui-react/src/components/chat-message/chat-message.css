@@ -63,6 +63,8 @@
 
 .a63-ChatMessage[data-role='user'] .a63-ChatMessage-content {
   max-inline-size: min(85%, 36rem);
+  /* Transparent until forced colors paint it: the bubble keeps an edge there. */
+  border: var(--a63-control-border-width) solid transparent;
   background-color: var(--a63-surface-muted);
   white-space: pre-wrap;
 }

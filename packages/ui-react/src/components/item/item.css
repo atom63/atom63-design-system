@@ -36,10 +36,14 @@
   background-color: var(--a63-surface-muted);
 }
 .a63-ItemGroup[data-variant='inset'][data-surface='muted']
+  > :where(a, button, [role='button'], [role='link']).a63-Item:hover,
+.a63-ItemGroup[data-variant='inset'][data-surface='muted']
+  > .a63-ItemGroup-entry
   > :where(a, button, [role='button'], [role='link']).a63-Item:hover {
   background-color: color-mix(in oklch, var(--a63-surface-muted), var(--a63-text-primary) 6%);
 }
-.a63-ItemGroup[data-variant='inset'] > .a63-Item {
+.a63-ItemGroup[data-variant='inset'] > .a63-Item,
+.a63-ItemGroup[data-variant='inset'] > .a63-ItemGroup-entry > .a63-Item {
   position: relative;
   border-radius: 0;
 }
@@ -47,26 +51,39 @@
    row) for default and sm rows, static ones included. Elsewhere the variable is
    unset: the static rule then computes to no minimum, and the interactive rule
    keeps its control-height floor, so nothing changes outside a phone. */
-.a63-ItemGroup[data-variant='inset'] > .a63-Item:is([data-size='md'], [data-size='sm']) {
+.a63-ItemGroup[data-variant='inset'] > .a63-Item:is([data-size='md'], [data-size='sm']),
+.a63-ItemGroup[data-variant='inset']
+  > .a63-ItemGroup-entry
+  > .a63-Item:is([data-size='md'], [data-size='sm']) {
   min-height: calc(var(--a63-inset-row-min-size) * var(--a63-density-scale, 1));
 }
 .a63-ItemGroup[data-variant='inset']
+  > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='md'],
+.a63-ItemGroup[data-variant='inset']
+  > .a63-ItemGroup-entry
   > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='md'] {
   min-height: max(
     calc(var(--a63-inset-row-min-size, 0px) * var(--a63-density-scale, 1)),
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size)
   );
 }
 .a63-ItemGroup[data-variant='inset']
+  > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='sm'],
+.a63-ItemGroup[data-variant='inset']
+  > .a63-ItemGroup-entry
   > :where(a, button, [role='button'], [role='link']).a63-Item[data-size='sm'] {
   min-height: max(
     calc(var(--a63-inset-row-min-size, 0px) * var(--a63-density-scale, 1)),
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size)
   );
 }
-.a63-ItemGroup[data-variant='inset'] > .a63-Item + .a63-Item::before {
+.a63-ItemGroup[data-variant='inset'] > :is(.a63-Item, .a63-ItemGroup-entry) + .a63-Item::before,
+.a63-ItemGroup[data-variant='inset']
+  > :is(.a63-Item, .a63-ItemGroup-entry)
+  + .a63-ItemGroup-entry
+  > .a63-Item::before {
   content: '';
   position: absolute;
   inset-block-start: 0;
@@ -77,6 +94,11 @@
 
 .a63-ItemSeparator {
   margin-block: var(--a63-space-2);
+}
+
+/* The list item around a rendered link or button row adds no box of its own. */
+.a63-ItemGroup-entry {
+  display: contents;
 }
 
 /* ── Item container ─────────────────────────────────────────────────────── */
@@ -99,11 +121,12 @@
   outline: var(--a63-control-focus-ring-width) solid
     color-mix(in oklch, var(--a63-focus-ring) 50%, transparent);
 }
-/* Interaction belongs to the rendered semantic element, never to a static row. */
+/* Interaction belongs to the rendered semantic element, never to a static row.
+   Interactive rows floor at --a63-row-min-size: 44px on a touchscreen. */
 :where(a, button, [role='button'], [role='link']).a63-Item {
   min-height: max(
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size)
   );
   cursor: pointer;
 }
@@ -112,19 +135,28 @@
 :where(a, button, [role='button'], [role='link']).a63-Item[data-size='md'] {
   min-height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size)
   );
 }
 :where(a, button, [role='button'], [role='link']).a63-Item[data-size='xs'] {
   min-height: max(
     calc(var(--a63-control-height-xs) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size)
   );
 }
 /* Hover is half the neutral selected fill, so a selected row stays visibly
    stronger than a hovered one. */
-:where(a, button, [role='button'], [role='link']).a63-Item:hover {
+:where(a, button, [role='button'], [role='link']).a63-Item:where(
+    :not(:disabled, [aria-disabled='true'], [data-disabled])
+  ):hover {
   background-color: color-mix(in oklch, var(--a63-selected-background) 50%, transparent);
+}
+/* Disabled rows: no hover, no pointer, faded content. */
+.a63-Item:is(:disabled, [aria-disabled='true'], [data-disabled]) {
+  cursor: not-allowed;
+}
+.a63-Item:is(:disabled, [aria-disabled='true'], [data-disabled]) > * {
+  opacity: var(--a63-action-disabled-opacity);
 }
 
 /* Variants (border/fill only) */
@@ -222,7 +254,9 @@
 .a63-ItemContent {
   display: flex;
   flex: 1;
+  min-width: 0;
   flex-direction: column;
+  overflow-wrap: anywhere;
   gap: var(--a63-space-unit);
 }
 .a63-Item[data-size='xs'] .a63-ItemContent {
@@ -242,10 +276,15 @@
   font-weight: 500;
   line-height: 1.375;
   text-underline-offset: 4px;
+  overflow: hidden;
+}
+/* A plain-text title clamps to one line; a title with an icon or badge stays a
+   flex row (which cannot clamp) and keeps to its width. */
+.a63-ItemTitle:not(:has(> *)) {
+  display: -webkit-box;
   -webkit-line-clamp: 1;
   line-clamp: 1;
   -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 .a63-ItemDescription {
@@ -254,6 +293,7 @@
   font-weight: 400;
   line-height: 1.5;
   text-align: start;
+  display: -webkit-box;
   -webkit-line-clamp: 2;
   line-clamp: 2;
   -webkit-box-orient: vertical;
@@ -283,4 +323,13 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--a63-space-2);
+}
+
+/* Forced colors drop the selected fill, so a selected or current row draws a
+   Highlight border instead. */
+@media (forced-colors: active) {
+  .a63-Item[aria-current]:not([aria-current='false']),
+  .a63-Item[data-selected]:not([data-selected='false']) {
+    border-color: Highlight;
+  }
 }

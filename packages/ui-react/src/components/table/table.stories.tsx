@@ -47,7 +47,7 @@ export const Playground: Story = {
         </TableHeader>
         <TableBody>
           {rows.map(r => (
-            <TableRow key={r.invoice} data-state={r.invoice === 'INV002' ? 'selected' : undefined}>
+            <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
               <TableCell>{r.invoice}</TableCell>
               <TableCell>{r.status}</TableCell>
               <TableCell>{r.method}</TableCell>
@@ -137,6 +137,19 @@ export const SortableColumns: Story = {
   },
 }
 
+/** Row hover: the first row under the pointer takes half the selected fill, so the
+ *  selected row below it stays the stronger of the two. */
+export const RowHover: Story = {
+  render: () => <DemoTable />,
+  parameters: { visualState: { hover: 'tbody tr:first-child' } },
+}
+
+/** Keyboard focus on a sort button draws the Button focus ring inside the head. */
+export const SortFocusVisible: Story = {
+  render: () => <SortableTable />,
+  parameters: { visualState: { focusVisible: 'th button' } },
+}
+
 /* A compact three-row table reused by the theme matrix. */
 function DemoTable() {
   return (
@@ -150,7 +163,7 @@ function DemoTable() {
       </TableHeader>
       <TableBody>
         {rows.map(r => (
-          <TableRow key={r.invoice} data-state={r.invoice === 'INV002' ? 'selected' : undefined}>
+          <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
             <TableCell>{r.invoice}</TableCell>
             <TableCell>{r.status}</TableCell>
             <TableCell>{r.amount}</TableCell>
@@ -363,7 +376,7 @@ export const Tones: Story = {
           </TableHeader>
           <TableBody>
             {rows.slice(0, 3).map((r, index) => (
-              <TableRow data-state={index === 1 ? 'selected' : undefined} key={r.invoice}>
+              <TableRow selected={index === 1} key={r.invoice}>
                 <TableCell>{r.invoice}</TableCell>
                 <TableCell>{r.status}</TableCell>
                 <TableCell>{r.amount}</TableCell>
@@ -395,7 +408,7 @@ export const StickyColumns: Story = {
         </TableHeader>
         <TableBody>
           {rows.map(r => (
-            <TableRow key={r.invoice} data-state={r.invoice === 'INV002' ? 'selected' : undefined}>
+            <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
               <TableCell sticky="start">{r.invoice}</TableCell>
               {wideColumns.map(column => (
                 <TableCell key={column}>{column === 'Method' ? r.method : '—'}</TableCell>
@@ -411,6 +424,99 @@ export const StickyColumns: Story = {
       </Table>
     </div>
   ),
+}
+
+/** `wrap` lets a long cell (a description, an unbroken URL, CJK text) break onto more lines
+ *  instead of widening the table; the other cells stay on one line. */
+export const LongContent: Story = {
+  render: () => (
+    <div style={{ width: 560 }}>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Invoice</TableHead>
+            <TableHead wrap>Description of the work billed on this invoice</TableHead>
+            <TableHead>Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>INV001</TableCell>
+            <TableCell wrap>
+              Annual platform subscription, including priority support and the onboarding workshop
+            </TableCell>
+            <TableCell>$250.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>INV002</TableCell>
+            <TableCell wrap>
+              https://billing.example.com/invoices/INV002/receipt?download=1
+            </TableCell>
+            <TableCell>$150.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>INV003</TableCell>
+            <TableCell wrap>年度平台订阅费用，包含优先技术支持与入门培训课程的全部内容</TableCell>
+            <TableCell>$350.00</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const container = canvasElement.querySelector<HTMLElement>('.a63-Table-container')
+    if (!container || container.scrollWidth > container.clientWidth + 1) {
+      throw new Error('Expected wrapping cells to keep the table inside its container')
+    }
+  },
+}
+
+/** Under dir="rtl" the start column pins to the right edge and the end column to the left;
+ *  the overflowing scroller is a named, focusable region. */
+export const RightToLeft: Story = {
+  render: () => (
+    <div dir="rtl" lang="ar" style={{ width: 420 }}>
+      <Table aria-label="الفواتير" size="sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead sticky="start">الفاتورة</TableHead>
+            {['العميل', 'الطريقة', 'التاريخ', 'المبلغ المسترد', 'النزاع', 'السبب'].map(column => (
+              <TableHead key={column}>{column}</TableHead>
+            ))}
+            <TableHead sticky="end">إجراءات</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(r => (
+            <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
+              <TableCell sticky="start">{r.invoice}</TableCell>
+              {wideColumns.map(column => (
+                <TableCell key={column}>{column === 'Method' ? r.method : '—'}</TableCell>
+              ))}
+              <TableCell sticky="end">
+                <Button aria-label={`إجراءات ${r.invoice}`} size="icon-xs" variant="ghost">
+                  …
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    await new Promise(resolve => requestAnimationFrame(resolve))
+    const container = canvasElement.querySelector<HTMLElement>('.a63-Table-container')
+    if (container?.getAttribute('role') !== 'region' || container.tabIndex !== 0) {
+      throw new Error('Expected the overflowing scroller to be a focusable region')
+    }
+    const start = canvasElement.querySelector<HTMLElement>('th[data-sticky="start"]')
+    if (!start || !container) throw new Error('Expected a sticky start head')
+    const { right } = start.getBoundingClientRect()
+    if (Math.abs(right - container.getBoundingClientRect().right) > 1) {
+      throw new Error('Expected the start column pinned to the right edge in RTL')
+    }
+  },
 }
 
 export const Themes: Story = {

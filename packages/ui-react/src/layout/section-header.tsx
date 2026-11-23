@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import { cn } from '../lib/cn'
 
 /** Typography for index-style page heroes (projects, resources, …). */
@@ -10,10 +11,19 @@ export type SectionHeaderLevel = 1 | 2 | 3 | 4 | 5 | 6
 export type SectionHeaderVariant =
   'display' | 'primary' | 'secondary' | 'muted' | 'subtle' | 'label'
 
+/**
+ * Inline alignment. `start` and `end` follow the writing direction, so `end` is
+ * on the left under `dir="rtl"`. `left` and `right` are deprecated aliases of
+ * `start` and `end`.
+ */
+export type SectionHeaderAlign = 'start' | 'center' | 'end' | 'left' | 'right'
+
 export interface SectionHeaderProps {
-  align?: 'left' | 'center' | 'right'
+  /** @default 'start' */
+  align?: SectionHeaderAlign
   className?: string
-  description?: string
+  /** Text or inline content (a link, a count) under the title. */
+  description?: ReactNode
   descriptionClassName?: string
   /**
    * Semantic heading level for the title. Visual scale is still controlled by
@@ -21,8 +31,11 @@ export interface SectionHeaderProps {
    * heading level than the variant default.
    */
   level?: SectionHeaderLevel
-  title: string
+  /** Text or inline content (a badge, a count); the heading element stays the title's. */
+  title: ReactNode
   titleClassName?: string
+  /** The title element's id, for a `Section`'s `aria-labelledby`. */
+  titleId?: string
   variant?: SectionHeaderVariant
 }
 
@@ -49,8 +62,9 @@ export function SectionHeader({
   titleClassName,
   descriptionClassName,
   level,
+  titleId,
   variant = 'primary',
-  align = 'left',
+  align: alignProp = 'start',
 }: SectionHeaderProps) {
   const variantConfig = {
     display: {
@@ -87,7 +101,9 @@ export function SectionHeader({
     },
     label: {
       DescTag: 'p' as const,
-      titleClass: 'font-medium text-muted-foreground text-xs uppercase tracking-[0.16em]',
+      // Letter-spacing pulls CJK glyphs apart, so those languages keep normal tracking.
+      titleClass:
+        'font-medium text-muted-foreground text-xs uppercase tracking-[0.16em] [&:lang(ja)]:tracking-normal [&:lang(ko)]:tracking-normal [&:lang(zh)]:tracking-normal',
       descClass: 'mt-1 max-w-md text-balance text-muted-foreground text-sm leading-5',
       defaultLevel: undefined,
     },
@@ -97,26 +113,26 @@ export function SectionHeader({
   const titleLevel = level ?? defaultLevel
   const TitleTag = titleLevel ? headingTags[titleLevel] : 'p'
 
+  const align = alignProp === 'left' ? 'start' : alignProp === 'right' ? 'end' : alignProp
   const alignClasses = {
     center: 'mx-auto text-center',
-    right: 'ms-auto text-end',
-    left: '',
+    end: 'ms-auto text-end',
+    start: '',
   }
 
   return (
     <div
-      className={cn(
-        align === 'center' && 'text-center',
-        align === 'right' && 'text-end',
-        className
-      )}
+      className={cn(align === 'center' && 'text-center', align === 'end' && 'text-end', className)}
+      data-slot="section-header"
     >
-      <TitleTag className={cn(titleClass, alignClasses[align], titleClassName)}>{title}</TitleTag>
-      {description && (
+      <TitleTag className={cn(titleClass, alignClasses[align], titleClassName)} id={titleId}>
+        {title}
+      </TitleTag>
+      {description ? (
         <DescTag className={cn(descClass, alignClasses[align], descriptionClassName)}>
           {description}
         </DescTag>
-      )}
+      ) : null}
     </div>
   )
 }

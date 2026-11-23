@@ -41,4 +41,11 @@ describe('Textarea', () => {
     expect(container.querySelector('.a63-Textarea')).toHaveClass('control-class')
     expect(container.querySelector('textarea')).toHaveClass('field-class')
   })
+
+  it('caps auto-grow at maxRows', () => {
+    const { container } = render(<Textarea maxRows={4} style={{ color: 'inherit' }} />)
+    const field = container.querySelector<HTMLTextAreaElement>('textarea')
+    expect(field?.style.getPropertyValue('--textarea-max-rows')).toBe('4')
+    expect(field?.style.color).toBe('inherit')
+  })
 })

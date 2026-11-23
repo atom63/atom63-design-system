@@ -14,6 +14,7 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
+  ItemGroup,
   ItemTitle,
   Pagination,
   PaginationContent,
@@ -294,10 +295,7 @@ export function AccountsPage() {
                   </TableHeader>
                   <TableBody>
                     {rows.map(account => (
-                      <TableRow
-                        data-selected={account.id === search.account ? '' : undefined}
-                        key={account.id}
-                      >
+                      <TableRow selected={account.id === search.account} key={account.id}>
                         <TableCell>
                           <div className="flex min-w-0 items-center gap-2">
                             <Avatar shape="square" size="xs">
@@ -329,36 +327,31 @@ export function AccountsPage() {
                   </TableBody>
                 </Table>
               </div>
-              <ul
-                aria-label="Accounts"
-                className="divide-border border-border flex flex-col divide-y rounded-lg border sm:hidden"
-              >
+              <ItemGroup aria-label="Accounts" className="sm:hidden" variant="inset">
                 {rows.map(account => (
-                  <li key={account.id}>
-                    <Item className="rounded-none" size="sm">
-                      <ItemContent>
-                        <ItemTitle>{account.name}</ItemTitle>
-                        <ItemDescription>
-                          {planLabel(account.plan)} · {currency.format(account.mrr)} ·{' '}
-                          {account.seats} seats
-                        </ItemDescription>
-                      </ItemContent>
-                      <ItemActions className="gap-1">
-                        <StatusBadge status={account.status} />
-                        <Button
-                          aria-label={`View ${account.name}`}
-                          onClick={() => go({ account: account.id, page: search.page })}
-                          size="icon-sm"
-                          tone="muted"
-                          variant="ghost"
-                        >
-                          <ChevronRight aria-hidden />
-                        </Button>
-                      </ItemActions>
-                    </Item>
-                  </li>
+                  <Item key={account.id} size="sm">
+                    <ItemContent>
+                      <ItemTitle>{account.name}</ItemTitle>
+                      <ItemDescription>
+                        {planLabel(account.plan)} · {currency.format(account.mrr)} · {account.seats}{' '}
+                        seats
+                      </ItemDescription>
+                    </ItemContent>
+                    <ItemActions className="gap-1">
+                      <StatusBadge status={account.status} />
+                      <Button
+                        aria-label={`View ${account.name}`}
+                        onClick={() => go({ account: account.id, page: search.page })}
+                        size="icon-sm"
+                        tone="muted"
+                        variant="ghost"
+                      >
+                        <ChevronRight aria-hidden />
+                      </Button>
+                    </ItemActions>
+                  </Item>
                 ))}
-              </ul>
+              </ItemGroup>
               {pageCount > 1 ? (
                 <Pagination aria-label="Account pages">
                   <PaginationContent>
@@ -400,7 +393,7 @@ export function AccountsPage() {
 
   return (
     <>
-      <Container className="flex flex-col gap-6" maxWidth="wide" padding="none">
+      <Container gap={6} maxWidth="wide" padding="none">
         <PageHeader
           actions={
             <Button onClick={() => setForm({ open: true })} variant="primary">

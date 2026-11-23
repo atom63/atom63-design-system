@@ -123,6 +123,8 @@ describe('Pagination', () => {
     expect(previous).toHaveAttribute('role', 'link')
     expect(previous).toHaveAttribute('aria-disabled', 'true')
     expect(previous).toHaveAttribute('data-disabled')
+    // The content sits in Button's label span, which carries the ghost disabled fade.
+    expect(previous.querySelector(':scope > .a63-Button-label')).not.toBeNull()
     previous.focus()
     expect(previous).not.toHaveFocus()
     previous.click()
@@ -137,5 +139,22 @@ describe('Pagination', () => {
     expect(el).not.toBeNull()
     expect(el).not.toHaveAttribute('aria-hidden')
     expect(el).toHaveTextContent('More pages')
+  })
+  it('lets children replace the visible and hidden labels', () => {
+    const { container, getByLabelText } = render(
+      <>
+        <PaginationPrevious aria-label="Vorherige Seite" href="#p">
+          Zurück
+        </PaginationPrevious>
+        <PaginationNext href="#n">Weiter</PaginationNext>
+        <PaginationEllipsis>Weitere Seiten</PaginationEllipsis>
+      </>
+    )
+    expect(getByLabelText('Vorherige Seite')).toHaveTextContent('Zurück')
+    expect(getByLabelText('Go to next page')).toHaveTextContent('Weiter')
+    expect(container.querySelector('[data-slot="pagination-ellipsis"]')).toHaveTextContent(
+      'Weitere Seiten'
+    )
+    expect(container.textContent).not.toContain('Previous')
   })
 })

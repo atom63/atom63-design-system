@@ -1,5 +1,6 @@
 import {
   Badge,
+  UIProvider,
   Button,
   Pagination,
   PaginationContent,
@@ -146,3 +147,95 @@ function SortedAndPagedDemo() {
 
 /* Sortable columns and a pagination slot: the caller owns the sort and the page. */
 export const SortedAndPaged: Story = { args, render: () => <SortedAndPagedDemo /> }
+
+/* Sort header states for the visual baseline: Customer hovered, Total focused from the keyboard. */
+export const SortHeaderStates: Story = {
+  args,
+  parameters: {
+    visualState: {
+      focusVisible: 'th[aria-sort="descending"] button',
+      hover: 'th:nth-child(2) button',
+    },
+  },
+  render: () => <SortedAndPagedDemo />,
+}
+
+/* Loading: placeholder rows announced as a status, in place of the table and the phone list. */
+export const Loading: Story = {
+  args: { ...args, loading: true, summary: 'Loading orders' },
+  play: async ({ canvasElement }) => {
+    const status = canvasElement.querySelector('[role="status"][aria-label="Loading"]')
+    if (!status) throw new Error('Expected a status named "Loading"')
+    if (canvasElement.querySelector('table')) throw new Error('Expected no table while loading')
+  },
+}
+
+export const LoadingPhone: Story = { ...Loading, globals: phoneGlobals }
+
+/* A failed load: the error replaces the rows and offers a retry. */
+export const LoadError: Story = {
+  args: {
+    ...args,
+    error: {
+      description: 'The orders could not be loaded. Check your connection and try again.',
+      onRetry: () => {},
+      title: 'Orders did not load',
+    },
+    summary: 'Orders unavailable',
+  },
+  play: async ({ canvasElement }) => {
+    const alert = canvasElement.querySelector('[role="alert"]')
+    if (!alert?.textContent?.includes('Orders did not load')) throw new Error('Expected the error')
+    const retry = [...alert.querySelectorAll('button')].find(b => b.textContent === 'Try again')
+    if (!retry) throw new Error('Expected a "Try again" button')
+  },
+}
+
+export const LoadErrorPhone: Story = { ...LoadError, globals: phoneGlobals }
+
+/* The open record is marked in both layouts: the table row and the phone item. */
+export const SelectedPhone: Story = {
+  args: { ...args, selectedRowKey: 'SO-2202' },
+  globals: phoneGlobals,
+  play: async ({ canvasElement }) => {
+    const selected = canvasElement.querySelectorAll('ul > li[data-selected]')
+    if (selected.length !== 1 || !selected[0]?.textContent?.includes('SO-2202')) {
+      throw new Error('Expected the SO-2202 phone row marked selected')
+    }
+    const row = canvasElement.querySelector('tr[data-state="selected"]')
+    if (!row?.textContent?.includes('SO-2202')) throw new Error('Expected the SO-2202 table row')
+  },
+}
+
+const rtlColumns: readonly DataTableColumn<Order>[] = [
+  { cell: row => row.id, header: 'الطلب', key: 'id' },
+  { cell: row => row.customer, header: 'العميل', key: 'customer' },
+  { align: 'end', cell: row => row.total, header: 'الإجمالي', key: 'total' },
+]
+
+/* Right to left, with the row-actions header localised through actionsLabel. */
+export const RightToLeft: Story = {
+  args: {
+    ...args,
+    actionsLabel: 'الإجراءات',
+    columns: rtlColumns,
+    label: 'الطلبات',
+    summary: '3 طلبات',
+  },
+  render: props => (
+    <UIProvider dir="rtl" lang="ar">
+      <DataTableSection {...props} />
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const header = canvasElement.querySelector('th .sr-only')
+    if (header?.textContent !== 'الإجراءات')
+      throw new Error('Expected the localised actions header')
+    const cells = canvasElement.querySelectorAll<HTMLElement>('tbody tr:first-child td')
+    const first = cells[0]?.getBoundingClientRect()
+    const last = cells[cells.length - 1]?.getBoundingClientRect()
+    if (!first || !last || first.left < last.left) {
+      throw new Error('Expected the first column on the right under dir="rtl"')
+    }
+  },
+}

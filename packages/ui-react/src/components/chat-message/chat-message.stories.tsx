@@ -154,3 +154,13 @@ export const Themes: Story = {
     </ThemeMatrix>
   ),
 }
+
+/* Forced colors drop the user bubble's fill; its transparent border is painted instead. */
+export const ForcedColors: Story = {
+  render: () => (
+    <ChatMessageList aria-label="Conversation">
+      <ChatMessage from="user">Can I change my booking to Friday?</ChatMessage>
+      <ChatMessage from="assistant">Yes. Friday has two rooms left at the same rate.</ChatMessage>
+    </ChatMessageList>
+  ),
+}

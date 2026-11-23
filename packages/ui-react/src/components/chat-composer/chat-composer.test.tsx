@@ -117,4 +117,38 @@ describe('ChatComposer layout', () => {
     expect(screen.queryByRole('button', { name: 'Start voice mode' })).toBeNull()
     expect(screen.getByRole('button', { name: 'Send message' })).toBeEnabled()
   })
+
+  it('on a touchscreen lets Enter add a line and sends only with the button', () => {
+    const original = window.matchMedia
+    window.matchMedia = ((query: string) => ({
+      addEventListener: () => {},
+      matches: query === '(pointer: coarse)',
+      removeEventListener: () => {},
+    })) as unknown as typeof window.matchMedia
+    try {
+      const onSubmit = vi.fn()
+      render(<ChatComposer onSubmit={onSubmit} />)
+      const field = screen.getByRole('textbox', { name: 'Message' })
+      expect(field).toHaveAttribute('enterkeyhint', 'enter')
+      fireEvent.change(field, { target: { value: 'Line one' } })
+      fireEvent.keyDown(field, { key: 'Enter' })
+      expect(onSubmit).not.toHaveBeenCalled()
+      fireEvent.click(screen.getByRole('button', { name: 'Send message' }))
+      expect(onSubmit).toHaveBeenCalledWith('Line one')
+    } finally {
+      window.matchMedia = original
+    }
+  })
+
+  it('marks the Enter key as send while Enter sends, and honours submitOnEnter', () => {
+    const onSubmit = vi.fn()
+    const { rerender } = render(<ChatComposer onSubmit={onSubmit} />)
+    const field = screen.getByRole('textbox', { name: 'Message' })
+    expect(field).toHaveAttribute('enterkeyhint', 'send')
+    rerender(<ChatComposer onSubmit={onSubmit} submitOnEnter={false} />)
+    fireEvent.change(field, { target: { value: 'Hi' } })
+    fireEvent.keyDown(field, { key: 'Enter' })
+    expect(onSubmit).not.toHaveBeenCalled()
+    expect(field).toHaveAttribute('enterkeyhint', 'enter')
+  })
 })

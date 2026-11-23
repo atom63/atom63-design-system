@@ -10,13 +10,10 @@
   "physical-properties | packages/ui-react/src/components/calendar/calendar.css | left": 1,
   "physical-properties | packages/ui-react/src/components/card/card.css | left": 1,
   "physical-properties | packages/ui-react/src/components/carousel/carousel.css | left": 2,
-  "physical-properties | packages/ui-react/src/components/empty/empty.css | right": 1,
   "physical-properties | packages/ui-react/src/components/resizable/resizable.css | left": 2,
   "physical-properties | packages/ui-react/src/components/sidebar/sidebar.css | left": 2,
   "physical-properties | packages/ui-react/src/components/tabs/tabs.css | left": 2,
   "token-role | packages/mdx/src/blocks/timeline/timeline.css | background-color: var(--a63-text-primary)": 1,
-  "token-role | packages/ui-react/src/components/card/card.css | background-color: var(--a63-text-primary)": 1,
-  "token-role | packages/ui-react/src/components/card/card.css | color: var(--a63-surface-page)": 1,
   "token-role | packages/ui-react/src/components/input-otp/input-otp.css | background-color: var(--a63-text-primary)": 1,
   "token-role | packages/ui-react/src/components/kbd/kbd.css | color: var(--a63-surface-page)": 1,
   "token-role | packages/ui-react/src/components/slider/slider.css | background-color: var(--a63-text-primary)": 1

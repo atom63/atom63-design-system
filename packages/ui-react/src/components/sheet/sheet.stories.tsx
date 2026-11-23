@@ -46,9 +46,11 @@ const cellStyle: CSSProperties = {
 function OverlayStage({
   children,
   height = 360,
+  style,
 }: {
   children: (container: RefObject<HTMLDivElement | null>) => ReactNode
   height?: number
+  style?: CSSProperties
 }) {
   const containerRef = useRef<HTMLDivElement>(null)
   return (
@@ -56,6 +58,7 @@ function OverlayStage({
       ref={containerRef}
       style={
         {
+          ...style,
           '--a63-viewport-height': `${height}px`,
           background: 'var(--a63-surface-page)',
           blockSize: height,
@@ -73,33 +76,44 @@ function OverlayStage({
 }
 
 function StagedSheet({
+  cancelLabel = 'Cancel',
+  closeLabel,
+  description = 'A raised overlay surface tinted by this context.',
   footer = 'default',
   label,
+  saveLabel = 'Save',
   side = 'right',
+  stageStyle,
+  title = 'Appearance',
   variant = 'default',
 }: {
+  cancelLabel?: string
+  closeLabel?: string
+  description?: string
   footer?: 'default' | 'bare'
   label: string
+  saveLabel?: string
   side?: (typeof sides)[number]
+  stageStyle?: CSSProperties
+  title?: string
   variant?: 'default' | 'inset'
 }) {
   return (
     <div style={cellStyle}>
       <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12 }}>{label}</span>
-      <OverlayStage>
+      <OverlayStage style={stageStyle}>
         {container => (
           <Sheet defaultOpen modal={false}>
             <SheetContent
+              closeProps={closeLabel ? { 'aria-label': closeLabel } : undefined}
               initialFocus={false}
               portalProps={{ container }}
               side={side}
               variant={variant}
             >
               <SheetHeader>
-                <SheetTitle>Appearance</SheetTitle>
-                <SheetDescription>
-                  A raised overlay surface tinted by this context.
-                </SheetDescription>
+                <SheetTitle>{title}</SheetTitle>
+                <SheetDescription>{description}</SheetDescription>
               </SheetHeader>
               <SheetPanel>
                 <p style={{ color: 'var(--a63-text-secondary)' }}>
@@ -107,8 +121,8 @@ function StagedSheet({
                 </p>
               </SheetPanel>
               <SheetFooter variant={footer}>
-                <SheetClose render={<Button variant="secondary">Cancel</Button>} />
-                <SheetClose render={<Button variant="primary">Save</Button>} />
+                <SheetClose render={<Button variant="secondary">{cancelLabel}</Button>} />
+                <SheetClose render={<Button variant="primary">{saveLabel}</Button>} />
               </SheetFooter>
             </SheetContent>
           </Sheet>
@@ -201,7 +215,11 @@ export const RightToLeft: Story = {
       <UIProvider dir="rtl" lang="ar" ref={portalContainerRef}>
         <Sheet defaultOpen>
           <SheetTrigger render={<Button variant="secondary">فتح اللوحة</Button>} />
-          <SheetContent portalProps={{ container: portalContainerRef }} side="left">
+          <SheetContent
+            closeProps={{ 'aria-label': 'إغلاق' }}
+            portalProps={{ container: portalContainerRef }}
+            side="left"
+          >
             <SheetHeader>
               <SheetTitle>المظهر</SheetTitle>
               <SheetDescription>تثبت اللوحة على الحافة اليسرى.</SheetDescription>
@@ -220,6 +238,50 @@ export const RightToLeft: Story = {
       </UIProvider>
     )
   },
+}
+
+/* A long title in both directions: it wraps before the close button's corner
+   instead of running under it. */
+export const LongTitle: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12 }}>
+      <StagedSheet
+        label="ltr / long title"
+        title="Appearance and accessibility preferences for every workspace you belong to"
+      />
+      <UIProvider dir="rtl" lang="ar">
+        <StagedSheet
+          cancelLabel="إلغاء"
+          closeLabel="إغلاق"
+          description="سطح عائم مرتفع يتلون بحسب هذا السياق."
+          label="rtl / long title"
+          saveLabel="حفظ"
+          side="left"
+          title="تفضيلات المظهر وإمكانية الوصول لكل مساحة عمل تنتمي إليها"
+        />
+      </UIProvider>
+    </div>
+  ),
+}
+
+/* Phone safe-area insets (a notch and a home indicator), as an iPhone reports
+   them. */
+const phoneSafeArea = {
+  '--a63-safe-area-top': '47px',
+  '--a63-safe-area-bottom': '34px',
+} as CSSProperties
+
+/* At phone width on touch, the sheet's main use (a mobile nav menu): from the
+   bottom and from the right, with the safe-area insets applied. */
+export const OpenPhone: Story = {
+  render: () => (
+    <UIProvider designLanguage="ios" input="touch">
+      <div style={{ display: 'grid', gap: 12 }}>
+        <StagedSheet label="bottom" side="bottom" stageStyle={phoneSafeArea} />
+        <StagedSheet label="right" side="right" stageStyle={phoneSafeArea} />
+      </div>
+    </UIProvider>
+  ),
 }
 
 export const Inset: Story = {

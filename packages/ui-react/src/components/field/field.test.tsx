@@ -160,4 +160,40 @@ describe('Field', () => {
     expect(input).toHaveAttribute('aria-describedby', 'hint')
     expect(input).not.toHaveAttribute('aria-invalid')
   })
+
+  it('sets invalid and disabled from typed props', () => {
+    const { container } = render(
+      <Field disabled invalid>
+        <FieldLabel htmlFor="typed">Label</FieldLabel>
+        <Input id="typed" disabled />
+      </Field>
+    )
+    const field = container.querySelector('[data-slot="field"]')
+    expect(field).toHaveAttribute('data-invalid', 'true')
+    expect(field).toHaveAttribute('data-disabled', 'true')
+    expect(container.querySelector('#typed')).toHaveAttribute('aria-invalid', 'true')
+  })
+
+  it('derives the invalid state from a rendered FieldError', async () => {
+    const user = userEvent.setup()
+    function Toggle() {
+      const [error, setError] = useState(true)
+      return (
+        <Field>
+          <FieldLabel htmlFor="derived">Label</FieldLabel>
+          <Input id="derived" />
+          <FieldError>{error ? 'Required' : null}</FieldError>
+          <button onClick={() => setError(false)} type="button">
+            Clear
+          </button>
+        </Field>
+      )
+    }
+    const { container } = render(<Toggle />)
+    const field = container.querySelector('[data-slot="field"]')
+    expect(field).toHaveAttribute('data-invalid', 'true')
+    await user.click(screen.getByRole('button', { name: 'Clear' }))
+    expect(field).not.toHaveAttribute('data-invalid')
+    expect(container.querySelector('#derived')).not.toHaveAttribute('aria-invalid')
+  })
 })

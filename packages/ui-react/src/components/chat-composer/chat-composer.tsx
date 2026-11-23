@@ -65,6 +65,10 @@ export type ChatComposerProps = Omit<
   stopIcon?: React.ReactNode
   /** The stop button's accessible name. Defaults to "Stop response". */
   stopLabel?: string
+  /** Whether Enter sends (Shift+Enter adds a line). Defaults to true with a fine pointer and
+   *  false on a touchscreen, where the soft keyboard has no Shift+Enter: there Enter adds a
+   *  line and the send button sends. */
+  submitOnEnter?: boolean
   /** Props for the textarea, such as `ref`, `name`, `autoFocus` or `maxLength`. */
   textareaProps?: Omit<
     InputGroupTextareaProps,
@@ -76,6 +80,22 @@ export type ChatComposerProps = Omit<
   voiceIcon?: React.ReactNode
   /** The voice button's accessible name. Defaults to "Start voice mode". */
   voiceLabel?: string
+}
+
+const coarseQuery = '(pointer: coarse)'
+
+/* True on a touchscreen (a coarse primary pointer); false on the server. */
+function useCoarsePointer(): boolean {
+  return React.useSyncExternalStore(
+    onChange => {
+      if (typeof window === 'undefined' || !window.matchMedia) return () => {}
+      const query = window.matchMedia(coarseQuery)
+      query.addEventListener('change', onChange)
+      return () => query.removeEventListener('change', onChange)
+    },
+    () => typeof window !== 'undefined' && Boolean(window.matchMedia?.(coarseQuery).matches),
+    () => false
+  )
 }
 
 /* True when the text runs past one line of the field. */
@@ -94,7 +114,8 @@ function wraps(field: HTMLTextAreaElement): boolean {
  * row until the text wraps, then the field takes the full width and the
  * controls move to a row under it (back to one row once the text is shorter
  * than where it wrapped and has no line breaks). Enter sends and Shift+Enter
- * starts a new line (an input method's composition is left alone). While a
+ * starts a new line (an input method's composition is left alone); on a
+ * touchscreen Enter starts a new line and the send button sends. While a
  * reply is submitted or streaming, the send button becomes a stop button and
  * Enter does not send. The send, stop and voice buttons are neutral solid
  * circles. Built from InputGroup, Textarea and Button; it sends nothing
@@ -119,12 +140,15 @@ export function ChatComposer({
   status = 'idle',
   stopIcon,
   stopLabel = 'Stop response',
+  submitOnEnter: submitOnEnterProp,
   textareaProps,
   value: valueProp,
   voiceIcon,
   voiceLabel = 'Start voice mode',
   ...props
 }: ChatComposerProps): React.ReactElement {
+  const coarse = useCoarsePointer()
+  const submitOnEnter = submitOnEnterProp ?? !coarse
   const [ownValue, setOwnValue] = React.useState(defaultValue)
   const controlled = valueProp !== undefined
   const value = controlled ? valueProp : ownValue
@@ -172,6 +196,7 @@ export function ChatComposer({
           textareaClassName="a63-ChatComposer-field"
           {...fieldProps}
           disabled={disabled}
+          enterKeyHint={submitOnEnter ? 'send' : 'enter'}
           onChange={event => {
             const field = event.currentTarget
             if (layout === 'inline') {
@@ -185,6 +210,7 @@ export function ChatComposer({
           onKeyDown={event => {
             onKeyDown?.(event)
             if (event.defaultPrevented) return
+            if (!submitOnEnter) return
             if (event.key !== 'Enter' || event.shiftKey || event.nativeEvent.isComposing) return
             event.preventDefault()
             send()

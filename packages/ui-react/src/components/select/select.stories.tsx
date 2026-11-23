@@ -191,6 +191,159 @@ export const Scrollable: Story = {
   },
 }
 
+/**
+ * Trigger states: a placeholder (no value yet) beside a trigger the visual
+ * project tabs to, so its focus-visible ring is captured
+ * (parameters.visualState, see apps/storybook/README.md "Visual states").
+ */
+export const States: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, alignItems: 'start' }}>
+      {(['placeholder', 'focus'] as const).map(target => (
+        <div key={target} style={{ width: 220 }}>
+          <Select items={ITEMS}>
+            <SelectTrigger
+              aria-label={target === 'placeholder' ? 'Content type' : 'Content type, focused'}
+              data-state-target={target}
+            >
+              <SelectValue placeholder="Choose a type" />
+            </SelectTrigger>
+            <SelectPopup>
+              {ITEMS.map(i => (
+                <SelectItem key={i.value} value={i.value}>
+                  {i.label}
+                </SelectItem>
+              ))}
+            </SelectPopup>
+          </Select>
+        </div>
+      ))}
+    </div>
+  ),
+  parameters: { visualState: { focusVisible: '[data-state-target="focus"]' } },
+}
+
+/** An open list with a disabled option, which dims and cannot be chosen. */
+export const DisabledItem: Story = {
+  render: () => (
+    <div style={{ width: 220 }}>
+      <Select defaultOpen defaultValue="article" items={ITEMS}>
+        <SelectTrigger aria-label="Example select">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectPopup>
+          {ITEMS.map(i => (
+            <SelectItem disabled={i.value === 'video'} key={i.value} value={i.value}>
+              {i.label}
+            </SelectItem>
+          ))}
+        </SelectPopup>
+      </Select>
+    </div>
+  ),
+}
+
+const LONG_OPTIONS = [
+  { value: 'short', label: 'Weekly' },
+  {
+    value: 'long',
+    label: 'Every other Monday, after the release review and before the planning meeting',
+  },
+  { value: 'translated', label: 'Jeden zweiten Montag nach der Veröffentlichungsprüfung' },
+]
+
+const LONG_OPTIONS_RTL = [
+  { value: 'short', label: 'أسبوعيًا' },
+  {
+    value: 'long',
+    label: 'كل يوم اثنين آخر، بعد مراجعة الإصدار وقبل اجتماع التخطيط الأسبوعي مع فريق المنتج',
+  },
+  { value: 'translated', label: 'مرة في الشهر، في أول يوم عمل بعد نهاية الربع' },
+]
+
+/* An open-on-load popup renders in the first commit, before a ref is set, so the
+   container is held in state and the Select mounts once it exists. The popup then
+   portals inside the provider (and the dir) the story sets. */
+function usePortalHost() {
+  return useState<HTMLDivElement | null>(null)
+}
+
+function LongOptionsDemo({ dir, items }: { dir?: 'rtl'; items: typeof LONG_OPTIONS }) {
+  const [host, setHost] = usePortalHost()
+  return (
+    <div dir={dir} ref={setHost} style={{ width: 240 }}>
+      {host ? (
+        <Select defaultOpen defaultValue="short" items={items}>
+          <SelectTrigger aria-label={dir ? 'التكرار' : 'Repeat'}>
+            <SelectValue />
+          </SelectTrigger>
+          <SelectPopup portalContainer={host}>
+            {items.map(i => (
+              <SelectItem key={i.value} value={i.value}>
+                {i.label}
+              </SelectItem>
+            ))}
+          </SelectPopup>
+        </Select>
+      ) : null}
+    </div>
+  )
+}
+
+/** Long and translated options wrap so they read in full. */
+export const LongOptions: Story = {
+  render: () => <LongOptionsDemo items={LONG_OPTIONS} />,
+}
+
+/** Right to left: the check column sits at the inline start (the right). */
+export const LongOptionsRightToLeft: Story = {
+  render: () => <LongOptionsDemo dir="rtl" items={LONG_OPTIONS_RTL} />,
+}
+
+function OpenLongList() {
+  const [host, setHost] = usePortalHost()
+  return (
+    <div ref={setHost} style={{ width: '100%', maxWidth: 320 }}>
+      {host ? (
+        <Select defaultOpen defaultValue={LONG[0].value} items={LONG}>
+          <SelectTrigger aria-label="Example select">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectPopup portalContainer={host}>
+            {LONG.map(i => (
+              <SelectItem key={i.value} value={i.value}>
+                {i.label}
+              </SelectItem>
+            ))}
+          </SelectPopup>
+        </Select>
+      ) : null}
+    </div>
+  )
+}
+
+/** The open long list at phone width (captured at 390px): collision, scroll
+ *  arrows and the popup against the screen edges. */
+export const Phone: Story = {
+  render: () => (
+    <UIProvider designLanguage="web" input="touch">
+      <OpenLongList />
+    </UIProvider>
+  ),
+}
+
+/** A coarse web pointer: options grow to the 44px row floor; the 32px trigger
+ *  takes a 44px tap through its hit strip (check:control-alignment measures it). */
+export const WebTouch: Story = {
+  render: () => (
+    <UIProvider designLanguage="web" input="touch">
+      <div style={{ background: 'var(--a63-surface-panel)', padding: 12 }}>
+        <OpenLongList />
+      </div>
+    </UIProvider>
+  ),
+}
+
 type ProviderProps = Omit<ComponentProps<typeof UIProvider>, 'children'>
 
 function ReviewCell({ label, providerProps }: { label: string; providerProps: ProviderProps }) {

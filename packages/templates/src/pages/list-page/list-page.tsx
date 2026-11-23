@@ -14,11 +14,12 @@ import {
 } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
 import { ChevronRight, Ellipsis, FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 
 import { AppShell } from '../../blocks/app-shell/app-shell'
 import {
   type DataTableColumn,
+  type DataTableError,
   DataTableSection,
 } from '../../blocks/data-table-section/data-table-section'
 import { DetailPanel } from '../../blocks/detail-panel/detail-panel'
@@ -101,8 +102,12 @@ export interface ListPageProps {
   defaultOpenId?: string
   /** Initial search text, useful when the URL restores filter state. */
   defaultQuery?: string
+  /** A failed load: shown in place of the rows, with a retry when it has `onRetry`. */
+  error?: DataTableError
   /** The rows to list; the page filters them in memory. */
   invoices?: readonly Invoice[]
+  /** While the invoices load: placeholder rows in place of the table. */
+  loading?: boolean
   /** A transient operation surface such as import progress or completion. */
   operationStatus?: ReactNode
 }
@@ -110,9 +115,12 @@ export interface ListPageProps {
 export function ListContent({
   defaultOpenId,
   defaultQuery = '',
+  error,
   invoices = sampleInvoices,
+  loading = false,
   operationStatus,
 }: ListPageProps) {
+  const searchRef = useRef<HTMLInputElement>(null)
   const [query, setQuery] = useState(defaultQuery)
   const [status, setStatus] = useState('all')
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null)
@@ -178,6 +186,7 @@ export function ListContent({
           query={query}
           searchLabel="Search invoices"
           searchPlaceholder="Invoice number or customer"
+          searchRef={searchRef}
           showClear={filtered}
         />
         <DataTableSection
@@ -191,7 +200,14 @@ export function ListContent({
                 }
               : {
                   action: (
-                    <Button onClick={clear} variant="outline">
+                    <Button
+                      onClick={() => {
+                        clear()
+                        // The empty state leaves with the filters; focus the search instead.
+                        searchRef.current?.focus()
+                      }}
+                      variant="outline"
+                    >
                       Clear filters
                     </Button>
                   ),
@@ -200,8 +216,10 @@ export function ListContent({
                   title: 'No matching invoices',
                 }
           }
+          error={error}
           getRowKey={invoice => invoice.id}
           label="Invoices"
+          loading={loading}
           renderPhoneRow={invoice => (
             <Item
               className="rounded-none"
@@ -214,7 +232,8 @@ export function ListContent({
                   {invoice.id} · {date.format(new Date(invoice.issued))}
                 </ItemDescription>
               </ItemContent>
-              <ItemActions className="gap-1">
+              {/* gap-3 keeps the 44px touch targets of the two 32px buttons apart. */}
+              <ItemActions className="gap-3">
                 <StatusBadge status={invoice.status} />
                 <Button
                   aria-label={`View ${invoice.id}`}
@@ -223,7 +242,7 @@ export function ListContent({
                   tone="muted"
                   variant="ghost"
                 >
-                  <ChevronRight aria-hidden />
+                  <ChevronRight aria-hidden className="rtl:-scale-x-100" />
                 </Button>
                 {rowMenu(invoice)}
               </ItemActions>
@@ -233,9 +252,13 @@ export function ListContent({
           rows={visible}
           selectedRowKey={openId ?? undefined}
           summary={
-            filtered
-              ? `${visible.length} of ${invoices.length} invoices`
-              : `${invoices.length} invoices`
+            loading
+              ? 'Loading invoices'
+              : error
+                ? 'Invoices unavailable'
+                : filtered
+                  ? `${visible.length} of ${invoices.length} invoices`
+                  : `${invoices.length} invoices`
           }
         />
       </Container>

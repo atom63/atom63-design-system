@@ -80,11 +80,26 @@ export function EmptyContent({
   return <div className={cn('a63-Empty-content', className)} data-slot="empty-content" {...props} />
 }
 
+export interface EmptyErrorDetailLabels {
+  /** The toggle while the detail is hidden. Defaults to "Show details". */
+  showDetails?: string
+  /** The toggle while the detail shows. Defaults to "Hide details". */
+  hideDetails?: string
+  /** What the copy button copies, in its name ("Copy …"). Defaults to "Error". */
+  copy?: string
+}
+
+export type EmptyErrorDetailProps = React.ComponentProps<'div'> & {
+  error: string
+  labels?: EmptyErrorDetailLabels
+}
+
 export function EmptyErrorDetail({
   className,
   error,
+  labels,
   ...props
-}: React.ComponentProps<'div'> & { error: string }): React.ReactElement {
+}: EmptyErrorDetailProps): React.ReactElement {
   const [expanded, setExpanded] = useState(false)
   const detailId = useId()
 
@@ -106,7 +121,9 @@ export function EmptyErrorDetail({
         type="button"
         variant="ghost"
       >
-        {expanded ? 'Hide details' : 'Show details'}
+        {expanded
+          ? (labels?.hideDetails ?? 'Hide details')
+          : (labels?.showDetails ?? 'Show details')}
       </Button>
       {expanded && (
         <div className="a63-Empty-errorBox" data-slot="empty-error-box" id={detailId}>
@@ -114,7 +131,12 @@ export function EmptyErrorDetail({
             {error}
           </pre>
           <div className="a63-Empty-errorCopy" data-slot="empty-error-copy">
-            <CopyButton label="Error" size="icon-sm" value={error} variant="ghost" />
+            <CopyButton
+              label={labels?.copy ?? 'Error'}
+              size="icon-sm"
+              value={error}
+              variant="ghost"
+            />
           </div>
         </div>
       )}

@@ -5,7 +5,9 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // `default` is a card on the overlay surface with the icon before the message; `inverse` is a
 // compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after
-// the message, the macOS and iOS look for a short status such as Scheduling message….
+// the message, the macOS and iOS look for a short status such as Scheduling message…. The tones are
+// not a Toaster prop: each maps to the function that raises the toast, toast() for default and
+// toast.info, toast.success, toast.warning, toast.error and toast.loading for the rest.
 
 export const toasterVariants = ['default', 'inverse'] as const
 export const toasterStates = ['visible', 'dismissing', 'reduced-motion'] as const

@@ -1290,9 +1290,13 @@ export interface ChartContract {
     // (undocumented)
     colors: readonly ChartColor[];
     // (undocumented)
+    defaultLayout: ChartLayout;
+    // (undocumented)
     defaultSize: ChartSize;
     // (undocumented)
     defaultType: ChartType;
+    // (undocumented)
+    layouts: readonly ChartLayout[];
     // (undocumented)
     sizes: readonly ChartSize[];
     // (undocumented)
@@ -1309,13 +1313,21 @@ export interface ChartContract {
 export const chartContract: {
     defaultType: "line";
     defaultSize: "md";
+    defaultLayout: "grouped";
     types: readonly ["line", "area", "bar"];
     sizes: readonly ["sm", "md"];
+    layouts: readonly ["grouped", "stacked"];
     colors: readonly [1, 2, 3, 4, 5];
     slots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle"];
     states: readonly ["rest", "current"];
     visualArchetypes: readonly ["surface"];
 };
+
+// @public (undocumented)
+export type ChartLayout = (typeof chartLayouts)[number];
+
+// @public (undocumented)
+export const chartLayouts: readonly ["grouped", "stacked"];
 
 // @public (undocumented)
 export type ChartSize = (typeof chartSizes)[number];
@@ -2792,7 +2804,7 @@ export const feedbackStateContract: {
     kinds: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     sizes: readonly ["inline", "panel", "page", "widget"];
     slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
-    states: readonly ["rest", "busy", "actionable"];
+    states: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -2817,16 +2829,8 @@ export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-hea
 // @public (undocumented)
 export type FeedbackStateState = (typeof feedbackStateStates)[number];
 
-// @public @deprecated (undocumented)
-export type FeedbackStateStateAlias = keyof typeof feedbackStateStateAliases;
-
-// @public
-export const feedbackStateStateAliases: {
-    readonly idle: "rest";
-};
-
 // @public (undocumented)
-export const feedbackStateStates: readonly ["rest", "busy", "actionable"];
+export const feedbackStateStates: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
 
 // @public (undocumented)
 export type FeedbackStateVisualArchetype = (typeof feedbackStateVisualArchetypes)[number];
@@ -2911,7 +2915,7 @@ export interface FormContract {
 
 // @public (undocumented)
 export const formContract: {
-    slots: readonly ["form-item", "form-label", "form-control", "form-description", "form-message"];
+    slots: readonly ["form-item", "form-label", "form-description", "form-message"];
     states: readonly ["rest", "invalid"];
     visualArchetypes: readonly ["field"];
 };
@@ -2920,7 +2924,7 @@ export const formContract: {
 export type FormSlot = (typeof formSlots)[number];
 
 // @public (undocumented)
-export const formSlots: readonly ["form-item", "form-label", "form-control", "form-description", "form-message"];
+export const formSlots: readonly ["form-item", "form-label", "form-description", "form-message"];
 
 // @public (undocumented)
 export type FormState = (typeof formStates)[number];
@@ -3831,9 +3835,9 @@ export const osSystems: readonly ["macos", "windows"];
 // @public (undocumented)
 export interface PaginationContract {
     // (undocumented)
-    defaultLinkSize: ButtonSize;
+    defaultLinkSize: PaginationLinkSize;
     // (undocumented)
-    linkSizes: readonly ButtonSize[];
+    linkSizes: readonly PaginationLinkSize[];
     // (undocumented)
     slots: readonly PaginationSlot[];
     // (undocumented)
@@ -3845,11 +3849,17 @@ export interface PaginationContract {
 // @public (undocumented)
 export const paginationContract: {
     defaultLinkSize: "icon";
-    linkSizes: readonly ["xs", "sm", "md", "lg", "xl", "tile", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
+    linkSizes: readonly ["xs", "sm", "md", "icon-xs", "icon-sm", "icon"];
     slots: readonly ["pagination", "pagination-content", "pagination-item", "pagination-link", "pagination-ellipsis"];
     states: readonly ["rest", "current", "disabled"];
     visualArchetypes: readonly ["action"];
 };
+
+// @public (undocumented)
+export type PaginationLinkSize = (typeof paginationLinkSizes)[number];
+
+// @public (undocumented)
+export const paginationLinkSizes: readonly ["xs", "sm", "md", "icon-xs", "icon-sm", "icon"];
 
 // @public (undocumented)
 export type PaginationSlot = (typeof paginationSlots)[number];
