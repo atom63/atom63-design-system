@@ -103,6 +103,38 @@ export const LongAndCjk: Story = {
   },
 }
 
+/* At 390px an unbroken URL and a German compound wrap inside the frame instead of overflowing it. */
+export const LongTokensPhone: Story = {
+  globals: { viewport: { value: 'a63-phone', isRotated: false } },
+  render: () => (
+    <Container gap={10} maxWidth="wide">
+      <SectionHeader
+        description="https://billing.example.com/customers/northwind-traders/invoices/2026-000417/reminders"
+        title="Rechnungsempfängerverwaltungsübersicht"
+        variant="display"
+      />
+      <SectionHeader
+        description="Donaudampfschifffahrtsgesellschaftskapitänsmützenabrechnung 账户设置与通知偏好"
+        title="https://billing.example.com/customers/northwind-traders"
+        variant="primary"
+      />
+    </Container>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const header of canvasElement.querySelectorAll<HTMLElement>(
+      '[data-slot="section-header"]'
+    )) {
+      const frame = header.getBoundingClientRect()
+      for (const text of header.children) {
+        const box = text.getBoundingClientRect()
+        if (text.scrollWidth > text.clientWidth + 1 || box.right > frame.right + 1) {
+          throw new Error(`Expected "${text.textContent}" to wrap inside the header`)
+        }
+      }
+    }
+  },
+}
+
 /* Under dir="rtl", start is on the right and end on the left. */
 export const RightToLeft: Story = {
   render: () => (
