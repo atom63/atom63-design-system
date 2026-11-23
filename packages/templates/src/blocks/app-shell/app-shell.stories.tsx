@@ -231,9 +231,7 @@ export const TouchTablet: Story = {
     </UIProvider>
   ),
   play: ({ canvasElement }) => {
-    const rows = [
-      ...canvasElement.querySelectorAll<HTMLElement>('.a63-Sidebar-menu-button'),
-    ]
+    const rows = [...canvasElement.querySelectorAll<HTMLElement>('.a63-Sidebar-menu-button')]
     if (rows.length < 4)
       throw new Error(`Expected the nav rows and the user row, got ${rows.length}`)
     for (const row of rows) {
