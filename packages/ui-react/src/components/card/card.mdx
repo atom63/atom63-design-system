@@ -6,14 +6,15 @@ import * as CardStories from './card.stories'
 
 <Title />
 
-A static, in-flow container — the **surface** archetype. The anatomy is ported from the site's real `base-card`: a shell with `variant` (default / ghost / interactive / overlay) and a `padding` scale, plus a full slot family for media, text, tags, and actions. Every part is polymorphic via the Base UI `render` prop. App-coupled runtime (motion cursor-label, `Image`/`Video`, Tailwind) is intentionally NOT part of the foundation component — media slots are chrome-only containers you fill.
+A static, in-flow container — the **surface** archetype. The anatomy is ported from the site's real `base-card`: a shell with `variant` (default / filled / elevated / ghost / interactive / overlay) and a `padding` scale, plus a full slot family for media, text, tags, and actions. Every part is polymorphic via the Base UI `render` prop. App-coupled runtime (motion cursor-label, `Image`/`Video`, Tailwind) is intentionally NOT part of the foundation component — media slots are chrome-only containers you fill.
 
 ## Anatomy
 
 - `Card` → `<div class="a63-Card" data-slot="card" data-variant data-padding>` — the surface shell.
 - `CardHeader` · `CardLabel` — the top layout row + leading label.
 - `CardMedia` — an aspect-ratio media frame; its radius stays **concentric** with the card corner via `calc(card-radius − card-pad)`. Drop an `<img>`/`<video>` inside.
-- `CardMediaOverlay` (+ `Image` / `Scrim` / `TopRight` / `Bottom` / `IconButton`) — full-bleed media with a gradient scrim and absolutely-positioned slots.
+- `CardMediaOverlay` (+ `Image` / `Scrim` / `TopEnd` / `Bottom`) — full-bleed media with a gradient scrim and absolutely-positioned slots. `TopEnd` pins to the top inline-end corner (top left under `dir="rtl"`); `TopRight` is its deprecated old name.
+- `CardMediaOverlayIconButton` — a real round icon `Button` (`variant="overlay"`, `size="icon-sm"`) for an action over the media, with Button's focus ring and 44px touch target. Give it an `aria-label`, and keep it out of a card that is itself a link.
 - `CardContent` → `CardTitle` (`lineClamp`) + `CardDescription` (`lineClamp`) + `CardTags`.
 - `CardFooter` · `CardAction` — bottom row + right-pinned actions.
 - `CardCursorLabel` + `useCardCursor()` — base-card's link affordance, DS-style: the hook tracks the pointer (motion-free, no re-render — position written to `--a63-card-cursor-x/y`), `CardCursorLabel` is the pill shown while `[data-cursor-active]`. Pass `onMove` to the hook to wire your own motion lib (spring smoothing) — the DS stays motion-free.

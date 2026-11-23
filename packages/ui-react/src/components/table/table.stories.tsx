@@ -590,6 +590,92 @@ export const Endpoints: Story = {
   ),
 }
 
+/** Forced colors drop the selected fill, so a selected row takes the system selection
+ *  colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ width: 480 }}>
+      <DemoTable />
+    </div>
+  ),
+}
+
+/* Throws unless a tap just outside a control's rendered box, inside its 44px touch target,
+   still lands on the control: a scroller clips in both axes, which would cut the target off. */
+function expectTouchTargetPastEdge(control: HTMLElement, edge: 'top' | 'bottom', name: string) {
+  const rect = control.getBoundingClientRect()
+  const y = edge === 'top' ? rect.top - 3 : rect.bottom + 3
+  const hit = document.elementFromPoint(rect.left + rect.width / 2, y)
+  if (!hit || !control.contains(hit)) {
+    throw new Error(`Expected a tap 3px past the ${edge} of ${name} to reach it`)
+  }
+}
+
+/** On a phone with touch input: a dense table with a sortable head, pinned first and last columns,
+ *  end-aligned amounts in tabular figures and a row menu. The container pads its edges, so
+ *  the 44px touch targets of the head's sort button and the last row's menu are not cut
+ *  off by the scroller. */
+export const Phone: Story = {
+  render: () => {
+    const [sort, setSort] = useState<TableSort | null>(null)
+    return (
+      <UIProvider input="touch">
+        <div data-a63-form-factor="phone" style={{ maxWidth: 358, paddingBlock: 16 }}>
+          <Table aria-label="Recent invoices" onSortChange={setSort} size="sm" sort={sort}>
+            <TableHeader>
+              <TableRow>
+                <TableHead sortKey="invoice" sticky="start">
+                  Invoice
+                </TableHead>
+                <TableHead>Method</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead align="end">Amount</TableHead>
+                <TableHead sticky="end">
+                  <span className="sr-only">Actions</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map(r => (
+                <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
+                  <TableCell sticky="start">{r.invoice}</TableCell>
+                  <TableCell>{r.method}</TableCell>
+                  <TableCell>{r.status}</TableCell>
+                  <TableCell align="end">{r.amount}</TableCell>
+                  <TableCell sticky="end">
+                    <Button
+                      aria-label={`More actions for ${r.invoice}`}
+                      size="icon-xs"
+                      tone="muted"
+                      variant="ghost"
+                    >
+                      <Ellipsis />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </UIProvider>
+    )
+  },
+  play: ({ canvasElement }) => {
+    const sortButton = canvasElement.querySelector<HTMLElement>('th button')
+    const menus = canvasElement.querySelectorAll<HTMLElement>('button[aria-label^="More actions"]')
+    const lastMenu = menus[menus.length - 1]
+    if (!sortButton || !lastMenu) throw new Error('Expected a sort button and row menus')
+    expectTouchTargetPastEdge(sortButton, 'top', 'the sort button')
+    expectTouchTargetPastEdge(lastMenu, 'bottom', 'the last row menu')
+    const amount = canvasElement.querySelector<HTMLElement>('td[data-align="end"]')
+    if (!amount) throw new Error('Expected an end-aligned amount cell')
+    const style = getComputedStyle(amount)
+    if (style.textAlign !== 'end' || style.fontVariantNumeric !== 'tabular-nums') {
+      throw new Error('Expected align="end" to end-align the amount in tabular figures')
+    }
+  },
+}
+
 export const ContractMetadata: Story = {
   render: () => (
     <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>

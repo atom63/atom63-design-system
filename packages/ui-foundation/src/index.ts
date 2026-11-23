@@ -1205,6 +1205,7 @@ export {
   switchVisualArchetypes,
 } from './components/switch/switch-contract'
 export {
+  tableAligns,
   tableContract,
   tableSizeAliases,
   tableSizes,
@@ -1216,6 +1217,7 @@ export {
   tableVisualArchetypes,
 } from './components/table'
 export type {
+  TableAlign,
   TableContract,
   TableSize,
   TableSizeAlias,

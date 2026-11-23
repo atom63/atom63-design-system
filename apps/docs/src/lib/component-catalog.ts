@@ -196,7 +196,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['item', 'frame', 'preview-card'],
     summary: 'Card composes media, metadata, actions, and content into a reusable surface.',
     usage:
-      'Put CardTitle and CardDescription inside CardContent. Unlike shadcn, CardHeader is a single row for a CardLabel and a CardAction, so a title placed there is squeezed and truncated. Do not make the whole card clickable when it also contains independent interactive controls.',
+      'Put CardTitle and CardDescription inside CardContent. Unlike shadcn, CardHeader is a single row for a CardLabel and a CardAction, so a title placed there is squeezed and truncated. Do not make the whole card clickable when it also contains independent interactive controls. Pin an action over media with CardMediaOverlayTopEnd and CardMediaOverlayIconButton, a real overlay Button that needs an aria-label.',
     usageExports: ['Card', 'CardHeader', 'CardTitle', 'CardContent'],
   },
   carousel: {
@@ -482,7 +482,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Pagination provides a navigation landmark and consistent previous, next, and page links.',
     usage:
-      'Give every page link a real href and mark the current page with isActive, so navigation works without client state. Window long ranges: show the first and last page, one or two pages either side of the current one, and PaginationEllipsis for the gaps. On the first page pass disabled to Previous, on the last to Next: the control stays in place, faded and out of the tab order. Pass children to replace the Previous, Next and More pages text (with a matching aria-label); the chevrons mirror under dir="rtl".',
+      'Give every page link a real href and mark the current page with isActive, so navigation works without client state. Window long ranges: show the first and last page, one or two pages either side of the current one, and PaginationEllipsis for the gaps. On the first page pass disabled to Previous, on the last to Next: the control stays in place, faded and out of the tab order. Pass children to replace the Previous, Next and More pages text; translated Previous and Next children also name the links, so no English aria-label is left. The chevrons mirror under dir="rtl".',
     usageExports: ['Pagination', 'PaginationContent', 'PaginationItem', 'PaginationLink'],
   },
   'panel-setting-button': {
@@ -653,7 +653,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['pagination', 'scroll-area'],
     summary: 'Table provides semantic table regions with shared typography, spacing, and states.',
     usage:
-      'Keep header relationships intact and add horizontal containment for genuinely wide data. For a dense table (admin, payments, issues), pass size="sm": rows are 33px, and a row checkbox or a 24px row menu (size="icon-xs") keeps its hit area without making the row taller. Mark a selected row with TableRow selected; cells stay on one line unless TableCell wrap lets long text break.',
+      'Keep header relationships intact and add horizontal containment for genuinely wide data. For a dense table (admin, payments, issues), pass size="sm": rows are 33px, and a row checkbox or a 24px row menu (size="icon-xs") keeps its hit area without making the row taller. Mark a selected row with TableRow selected; cells stay on one line unless TableCell wrap lets long text break. Give a column of numbers or money align="end" on its TableHead and TableCells: it ends the column at the inline end in tabular figures. Name an overflowing table with a TableCaption or aria-label, which also names its scroll region.',
     usageExports: ['Table', 'TableHeader', 'TableBody', 'TableRow', 'TableHead', 'TableCell'],
   },
   tabs: {

@@ -203,6 +203,29 @@ describe('Table', () => {
     expect(plain?.querySelector('td')).not.toHaveAttribute('data-wrap')
   })
 
+  it('end-aligns a numeric head and cell with align="end", not the native align attribute', () => {
+    const { container } = render(
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead align="end">Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell align="end">$250.00</TableCell>
+            <TableCell>Paid</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    )
+    expect(container.querySelector('th')).toHaveAttribute('data-align', 'end')
+    expect(container.querySelector('th')).not.toHaveAttribute('align')
+    const [amount, status] = container.querySelectorAll('td')
+    expect(amount).toHaveAttribute('data-align', 'end')
+    expect(status).not.toHaveAttribute('data-align')
+  })
+
   it('makes the scroller a named, focusable region only while it overflows', () => {
     let callback: ResizeObserverCallback = () => {}
     const original = globalThis.ResizeObserver
@@ -233,6 +256,39 @@ describe('Table', () => {
       expect(scroller).toHaveAttribute('tabindex', '0')
       expect(scroller).toHaveAttribute('role', 'region')
       expect(scroller).toHaveAttribute('aria-label', 'Invoices')
+    } finally {
+      globalThis.ResizeObserver = original
+    }
+  })
+
+  it('gives an unnamed overflowing scroller no built-in English name', () => {
+    let callback: ResizeObserverCallback = () => {}
+    const original = globalThis.ResizeObserver
+    globalThis.ResizeObserver = class {
+      constructor(cb: ResizeObserverCallback) {
+        callback = cb
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    } as unknown as typeof ResizeObserver
+    try {
+      const { container } = render(
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>INV001</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )
+      const scroller = container.querySelector<HTMLElement>('[data-slot="table-container"]')!
+      Object.defineProperty(scroller, 'scrollWidth', { configurable: true, value: 800 })
+      Object.defineProperty(scroller, 'clientWidth', { configurable: true, value: 400 })
+      act(() => callback([], {} as ResizeObserver))
+      expect(scroller).toHaveAttribute('tabindex', '0')
+      expect(scroller).not.toHaveAttribute('role')
+      expect(scroller).not.toHaveAttribute('aria-label')
     } finally {
       globalThis.ResizeObserver = original
     }

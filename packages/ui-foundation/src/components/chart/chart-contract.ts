@@ -20,8 +20,9 @@ export const chartColors = [1, 2, 3, 4, 5] as const
 // each other (area); stacked piles them on each other. Line charts are always grouped.
 export const chartLayouts = ['grouped', 'stacked'] as const
 // current is a category picked by the pointer or the arrow keys, which shows its values in the
-// tooltip.
-export const chartStates = ['rest', 'current'] as const
+// tooltip; empty is a chart with no categories or no series, which shows the empty message instead
+// of a plot.
+export const chartStates = ['rest', 'current', 'empty'] as const
 export const chartSlots = [
   'chart',
   'chart-legend',
@@ -31,6 +32,7 @@ export const chartSlots = [
   'chart-tooltip',
   'chart-table',
   'chart-table-toggle',
+  'chart-empty',
 ] as const
 export const chartVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 

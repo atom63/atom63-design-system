@@ -30,7 +30,6 @@ export type ChartProps = Omit<React_2.ComponentProps<'figure'>, 'children'> & {
     series: readonly ChartSeries[];
     type?: ChartType;
     layout?: ChartLayout;
-    stacked?: boolean;
     size?: ChartSize;
     formatValue?: (value: number) => string;
     formatTick?: (value: number) => string;
