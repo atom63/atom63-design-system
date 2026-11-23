@@ -73,6 +73,7 @@
   font-weight: 600;
   letter-spacing: 0;
   line-height: var(--typography-base-line-height);
+  overflow-wrap: anywhere;
 }
 
 /* ── Description ───────────────────────────────────────────────────────── */
@@ -80,6 +81,7 @@
   color: var(--a63-text-secondary);
   font-size: var(--typography-sm-font-size);
   line-height: var(--typography-sm-line-height);
+  overflow-wrap: anywhere;
 }
 .a63-Empty-description a {
   text-decoration: underline;

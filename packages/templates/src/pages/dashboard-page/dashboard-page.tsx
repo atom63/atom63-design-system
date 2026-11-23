@@ -10,7 +10,7 @@ import { Container, SectionHeader } from '@atom63/ui-react/layout'
 import { FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
 
 import { type ActivityItem, ActivityList } from '../../blocks/activity-list/activity-list'
-import { AppShell } from '../../blocks/app-shell/app-shell'
+import { AppShell, type AppShellLabels } from '../../blocks/app-shell/app-shell'
 import {
   type DataTableColumn,
   DataTableSection,
@@ -200,7 +200,11 @@ export function DashboardContent({
                   headingLevel={3}
                   label="Recent invoices"
                   rows={rows}
-                  summary={`The ${rows.length} most recent of ${state === 'empty' ? 0 : invoices.length}`}
+                  summary={
+                    rows.length === 0
+                      ? 'No invoices yet'
+                      : `The ${rows.length} most recent of ${invoices.length}`
+                  }
                 />
               )}
             </section>
@@ -225,9 +229,14 @@ export function DashboardContent({
 
 /* The page in its app shell. An app that renders the shell once, around its
    routes, renders `DashboardContent` inside it instead. */
-export function DashboardPage(props: DashboardContentProps) {
+export interface DashboardPageProps extends DashboardContentProps {
+  /** The shell's own strings, for a product in another language; English by default. */
+  shellLabels?: AppShellLabels
+}
+
+export function DashboardPage({ shellLabels, ...props }: DashboardPageProps) {
   return (
-    <AppShell navItems={nav} productName="Tally" user={user}>
+    <AppShell labels={shellLabels} navItems={nav} productName="Tally" user={user}>
       <DashboardContent {...props} />
     </AppShell>
   )

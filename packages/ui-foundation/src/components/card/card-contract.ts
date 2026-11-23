@@ -22,6 +22,7 @@ export const cardSlots = [
   'card-media-overlay',
   'card-media-overlay-image',
   'card-media-overlay-scrim',
+  'card-media-overlay-top-end',
   'card-media-overlay-top-right',
   'card-media-overlay-bottom',
   'card-media-overlay-icon-button',
@@ -36,6 +37,7 @@ export const cardSlots = [
 export const cardStates = [
   'rest',
   'hover',
+  'pressed',
   'focus-visible',
   'interactive',
   'cursor-active',

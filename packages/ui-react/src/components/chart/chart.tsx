@@ -70,8 +70,6 @@ export type ChartProps = Omit<React.ComponentProps<'figure'>, 'children'> & {
   /** `stacked` piles the series on each other instead of drawing them side by side (bar) or
    *  over each other (area). Ignored for line. */
   layout?: ChartLayout
-  /** @deprecated Use `layout="stacked"`. */
-  stacked?: boolean
   size?: ChartSize
   /** Formats a value in the tooltip and the table. */
   formatValue?: (value: number) => string
@@ -117,8 +115,7 @@ export function Chart({
   categories,
   series,
   type = chartContract.defaultType,
-  layout,
-  stacked = false,
+  layout = chartContract.defaultLayout,
   size = chartContract.defaultSize,
   formatValue = defaultFormat,
   formatTick = formatValue,
@@ -138,8 +135,7 @@ export function Chart({
 
   const empty = categories.length === 0 || series.length === 0
   const count = empty ? 0 : categories.length
-  const stacks =
-    (layout ?? (stacked ? 'stacked' : chartContract.defaultLayout)) === 'stacked' && type !== 'line'
+  const stacks = layout === 'stacked' && type !== 'line'
   const colors = series.map((item, index) => item.color ?? chartColors[index % chartColors.length])
   // The value as given, for the tooltip, the readout and the table.
   const raw = (seriesIndex: number, category: number) => series[seriesIndex]?.values[category] ?? 0

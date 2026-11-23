@@ -85,7 +85,8 @@ export function FilterBar({
           value={query}
         />
       </Field>
-      <Field className="sm:w-48">
+      {/* At least 12rem, growing with a long option up to 20rem before it truncates. */}
+      <Field className="sm:w-auto sm:max-w-xs sm:min-w-48">
         <FieldLabel id={filterLabelId}>{filterLabel}</FieldLabel>
         <Select
           items={filterOptions}

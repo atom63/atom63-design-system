@@ -79,8 +79,8 @@ export function Container({
       style={
         showGridBorder
           ? {
-              borderLeftWidth: 'var(--a63-grid-hairline-width, 1px)',
-              borderRightWidth: 'var(--a63-grid-hairline-width, 1px)',
+              borderInlineEndWidth: 'var(--a63-grid-hairline-width, 1px)',
+              borderInlineStartWidth: 'var(--a63-grid-hairline-width, 1px)',
             }
           : undefined
       }

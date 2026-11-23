@@ -107,45 +107,47 @@ export function PaginationLink({
   )
 }
 
-/** `children` replaces the visible "Previous" label, such as with a translation; pass a
- *  matching `aria-label` too. The chevron mirrors under `dir="rtl"`. */
+/** `children` replaces the visible "Previous" label, such as with a translation, and then
+ *  names the link (the label stays readable when it is hidden on narrow screens). Without
+ *  children the link is named "Go to previous page". The chevron mirrors under `dir="rtl"`. */
 export type PaginationPreviousProps = React.ComponentProps<typeof PaginationLink>
 
 export function PaginationPrevious({
-  children = 'Previous',
+  children,
   className,
   ...props
 }: PaginationPreviousProps): React.ReactElement {
   return (
     <PaginationLink
-      aria-label="Go to previous page"
+      aria-label={children === undefined ? 'Go to previous page' : undefined}
       className={cn('a63-Pagination-nav-link', className)}
       size="md"
       {...props}
     >
       <ChevronLeft aria-hidden />
-      <span className="a63-Pagination-nav-label">{children}</span>
+      <span className="a63-Pagination-nav-label">{children ?? 'Previous'}</span>
     </PaginationLink>
   )
 }
 
-/** `children` replaces the visible "Next" label, such as with a translation; pass a
- *  matching `aria-label` too. The chevron mirrors under `dir="rtl"`. */
+/** `children` replaces the visible "Next" label, such as with a translation, and then names
+ *  the link (the label stays readable when it is hidden on narrow screens). Without children
+ *  the link is named "Go to next page". The chevron mirrors under `dir="rtl"`. */
 export type PaginationNextProps = React.ComponentProps<typeof PaginationLink>
 
 export function PaginationNext({
-  children = 'Next',
+  children,
   className,
   ...props
 }: PaginationNextProps): React.ReactElement {
   return (
     <PaginationLink
-      aria-label="Go to next page"
+      aria-label={children === undefined ? 'Go to next page' : undefined}
       className={cn('a63-Pagination-nav-link', className)}
       size="md"
       {...props}
     >
-      <span className="a63-Pagination-nav-label">{children}</span>
+      <span className="a63-Pagination-nav-label">{children ?? 'Next'}</span>
       <ChevronRight aria-hidden />
     </PaginationLink>
   )

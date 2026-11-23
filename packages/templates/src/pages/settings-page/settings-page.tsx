@@ -136,10 +136,15 @@ export function SettingsContent({
         <SettingsRow
           description="Deletes every invoice, customer and payment record."
           label="Delete workspace"
+          labelFor={false}
         >
-          {({ descriptionId }) => (
-            <Button aria-describedby={descriptionId} variant="destructive-outline">
-              Delete workspace
+          {({ descriptionId, labelId }) => (
+            <Button
+              aria-describedby={descriptionId}
+              aria-labelledby={labelId}
+              variant="destructive-outline"
+            >
+              Delete
             </Button>
           )}
         </SettingsRow>

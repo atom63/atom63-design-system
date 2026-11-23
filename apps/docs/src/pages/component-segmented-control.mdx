@@ -37,7 +37,7 @@ Click between segments to watch the backplate travel. `tone="accent"` is the sec
 
 ## When to use
 
-Use Segmented Control for a small set of peer choices with one active value. In constrained containers, the default track stays on one line and scrolls horizontally while each item preserves its minimum target width. Set `fullWidth` when the track should fill its container and divide space equally; labels may then truncate. Use Tabs when the choices switch content panels.
+Use Segmented Control for a small set of peer choices with one active value. In constrained containers, the default track stays on one line and scrolls horizontally while each item preserves its minimum target width; the selected segment is scrolled fully into view when the control mounts and when the selection changes. Set `fullWidth` when the track should fill its container and divide space equally; labels may then truncate. Use Tabs when the choices switch content panels.
 
 Segmented Control is a radio group: the root has `role="radiogroup"` and each segment is a `radio` named by its label. Name the group with `aria-label`, or with `aria-labelledby` pointing at a visible label. Tab moves focus to the selected segment, and the arrow keys move between segments and select as they go, as in the [APG Radio Group pattern](https://www.w3.org/WAI/ARIA/apg/patterns/radio/). It has no tab panels; when the choices switch content panels, use Tabs.
 

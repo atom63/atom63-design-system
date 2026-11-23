@@ -22,6 +22,7 @@ export const feedbackStateSlots = [
   'feedback-state-media',
   'feedback-state-title',
   'feedback-state-description',
+  'feedback-state-detail',
   'feedback-state-content',
 ] as const
 // The state a FeedbackState shows, set by its state prop: the same values as kinds.

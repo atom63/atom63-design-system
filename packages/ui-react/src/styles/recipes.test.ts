@@ -183,6 +183,21 @@ describe('recipes.css cascade layering', () => {
       }
     )
 
+    it('segmented-control dips a pressed segment content, not the measured segment box', () => {
+      const recipe = readRecipe('segmented-control')
+      expect(recipe).toMatch(
+        /\.a63-SegmentedControl-item:active:not\(\[data-disabled\]\) > span \{\s*transform:/
+      )
+      expect(recipe).not.toMatch(
+        /\.a63-SegmentedControl-item:active(?![^{]*> span)[^{]*\{[^}]*transform/
+      )
+    })
+
+    it.each(['filled', 'plain'])('textarea draws the %s variant as Input does', variant => {
+      expect(readRecipe('input')).toContain(`.a63-Input[data-variant='${variant}']`)
+      expect(readRecipe('textarea')).toContain(`.a63-Textarea[data-variant='${variant}']`)
+    })
+
     it('never floors a rendered height ramp with the interaction target', () => {
       // The regression this guards: max(height, min-target) as RENDERED geometry
       // collapses xs/sm/md to one 44px rung on every phone, because

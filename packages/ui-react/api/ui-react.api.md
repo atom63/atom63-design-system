@@ -152,6 +152,7 @@ import { Slider as Slider_2 } from '@base-ui/react/slider';
 import { SliderTone } from '@atom63/ui-foundation';
 import { Switch as Switch_2 } from '@base-ui/react/switch';
 import { SwitchSize } from '@atom63/ui-foundation';
+import { TableAlign } from '@atom63/ui-foundation';
 import { TableSize } from '@atom63/ui-foundation';
 import { TableSizeAlias } from '@atom63/ui-foundation';
 import { TableStickyEdge } from '@atom63/ui-foundation';
@@ -162,6 +163,7 @@ import { TabsSize } from '@atom63/ui-foundation';
 import { TabsSizeAlias } from '@atom63/ui-foundation';
 import { TabsVariant } from '@atom63/ui-foundation';
 import { TextareaSize } from '@atom63/ui-foundation';
+import { TextareaVariant } from '@atom63/ui-foundation';
 import { TextTickerVariant } from '@atom63/ui-foundation';
 import { Theme } from '@atom63/ui-foundation';
 import { toast } from 'sonner';
@@ -648,8 +650,8 @@ export function CardMediaOverlay(input: CardMediaOverlayProps): React$1.ReactEle
 // @public (undocumented)
 export function CardMediaOverlayBottom(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
-// @public (undocumented)
-export function CardMediaOverlayIconButton(input: useRender.ComponentProps<'span'>): React$1.ReactElement;
+// @public
+export function CardMediaOverlayIconButton(input: ButtonProps): React$1.ReactElement;
 
 // @public (undocumented)
 export function CardMediaOverlayImage(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
@@ -662,7 +664,10 @@ export type CardMediaOverlayProps = useRender.ComponentProps<'div'> & {
 // @public (undocumented)
 export function CardMediaOverlayScrim(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
+export function CardMediaOverlayTopEnd(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
+
+// @public @deprecated (undocumented)
 export function CardMediaOverlayTopRight(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -1401,7 +1406,9 @@ export function EmptyMedia(input: React$1.ComponentProps<'div'> & {
 export { EmptyMediaVariant }
 
 // @public (undocumented)
-export function EmptyTitle(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function EmptyTitle(input: React$1.ComponentProps<'div'> & {
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
+}): React$1.ReactElement;
 
 // @public
 export function extractColorFromImage(img: HTMLImageElement, options?: ExtractColorOptions): ExtractedColor;
@@ -1456,9 +1463,11 @@ export type FeedbackStateIconName = keyof typeof feedbackIcons;
 
 export { FeedbackStateKind }
 
-// @public (undocumented)
+// @public
 export interface FeedbackStateLabels {
+    descriptions?: Partial<Record<FeedbackStateKind, string>>;
     noResults?: (query: string) => string;
+    titles?: Partial<Record<FeedbackStateKind, string>>;
 }
 
 // @public
@@ -2792,7 +2801,8 @@ export type TableCaptionProps = React$1.ComponentProps<'caption'>;
 export function TableCell(input: TableCellProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableCellProps = React$1.ComponentProps<'td'> & {
+export type TableCellProps = Omit<React$1.ComponentProps<'td'>, 'align'> & {
+    align?: TableAlign;
     sticky?: TableStickyEdge;
     wrap?: boolean;
 };
@@ -2813,7 +2823,8 @@ export function TableHeader(input: TableHeaderProps): React$1.ReactElement;
 export type TableHeaderProps = React$1.ComponentProps<'thead'>;
 
 // @public (undocumented)
-export type TableHeadProps = React$1.ComponentProps<'th'> & {
+export type TableHeadProps = Omit<React$1.ComponentProps<'th'>, 'align'> & {
+    align?: TableAlign;
     sticky?: TableStickyEdge;
     wrap?: boolean;
     sortKey?: string;
@@ -2894,6 +2905,7 @@ export type TextareaProps = Omit<React$1.ComponentProps<'textarea'>, 'className'
     size?: TextareaSize;
     shadow?: boolean;
     textareaClassName?: string;
+    variant?: TextareaVariant;
     unstyled?: boolean;
 };
 

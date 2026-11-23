@@ -135,10 +135,15 @@ function AnyControlDemo() {
         <SettingsRow
           description="Deletes every invoice, customer and payment record."
           label="Delete workspace"
+          labelFor={false}
         >
-          {({ descriptionId }) => (
-            <Button aria-describedby={descriptionId} variant="destructive-outline">
-              Delete workspace
+          {({ descriptionId, labelId }) => (
+            <Button
+              aria-describedby={descriptionId}
+              aria-labelledby={labelId}
+              variant="destructive-outline"
+            >
+              Delete
             </Button>
           )}
         </SettingsRow>
@@ -175,7 +180,7 @@ export const ManyRows: Story = {
       />
       <SettingsSwitchRow
         checked
-        description="Saving…"
+        description="The morning after an invoice passes its due date."
         label="Invoice overdue"
         onCheckedChange={() => undefined}
         pending
@@ -204,6 +209,42 @@ export const ManyRows: Story = {
     for (const toggle of canvasElement.querySelectorAll<HTMLElement>('[role="switch"]')) {
       if (toggle.getBoundingClientRect().width === 0) throw new Error('A switch is squeezed out')
     }
+  },
+}
+
+/*
+ * A save in flight: the switch shows the new value, is busy, and the row shows
+ * a spinner and "Saving…" in place of its description until the save settles.
+ */
+export const Pending: Story = {
+  render: () => (
+    <SettingsSection
+      description="Choose which invoice events send you an email."
+      title="Notifications"
+    >
+      <SettingsSwitchRow
+        checked
+        description="When a customer pays an invoice in full."
+        label="Invoice paid"
+        onCheckedChange={() => undefined}
+        pending
+      />
+      <SettingsSwitchRow
+        checked={false}
+        description="A summary of the week's invoices every Monday."
+        label="Weekly digest"
+        onCheckedChange={() => undefined}
+      />
+    </SettingsSection>
+  ),
+  play: ({ canvasElement }) => {
+    const toggle = canvasElement.querySelector('[role="switch"][aria-busy="true"]')
+    if (!toggle) throw new Error('The saving switch is not busy')
+    const detail = document.getElementById(toggle.getAttribute('aria-describedby') ?? '')
+    if (!detail?.textContent?.endsWith('Saving…') || !detail.querySelector('[data-slot="spinner"]'))
+      throw new Error('The saving row does not show a spinner and "Saving…"')
+    if (canvasElement.querySelectorAll('[data-pending]').length !== 1)
+      throw new Error('Only the saving row shows the pending cue')
   },
 }
 

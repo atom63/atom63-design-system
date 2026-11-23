@@ -1,5 +1,11 @@
-import { textareaContract, textareaSizes, themes } from '@atom63/ui-foundation'
-import { Textarea, UIProvider } from '@atom63/ui-react'
+import {
+  inputVariants,
+  textareaContract,
+  textareaSizes,
+  textareaVariants,
+  themes,
+} from '@atom63/ui-foundation'
+import { Input, Textarea, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { ReactNode } from 'react'
@@ -13,12 +19,14 @@ const meta = {
     placeholder: 'Type something...',
     shadow: true,
     size: 'md',
+    variant: 'default',
   },
   argTypes: {
     disabled: { control: 'boolean' },
     invalid: { control: 'boolean' },
     shadow: { control: 'boolean' },
     size: { control: 'select', options: textareaSizes },
+    variant: { control: 'select', options: textareaVariants },
   },
 } satisfies Meta<typeof Textarea>
 
@@ -173,6 +181,49 @@ export const SizesAndStates: Story = {
       <Textarea aria-label="Example text area" defaultValue="Flat field shadow" shadow={false} />
     </div>
   ),
+}
+
+/* The variant axis matches Input's, so a filled or plain form keeps its
+   single-line and multi-line fields in the same chrome: each column pairs an
+   Input with a Textarea of the same variant, at rest and invalid. */
+export const Variants: Story = {
+  render: () => (
+    <div
+      style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(3, minmax(0, 14rem))' }}
+    >
+      {textareaVariants.map(variant => (
+        <PreviewCard key={variant} label={variant}>
+          <Input aria-label={`Title, ${variant}`} placeholder="Title" variant={variant} />
+          <Textarea aria-label={`Notes, ${variant}`} placeholder="Notes" variant={variant} />
+          <Textarea
+            aria-label={`Notes, ${variant}, invalid`}
+            defaultValue="Too short"
+            invalid
+            variant={variant}
+          />
+        </PreviewCard>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    if (textareaVariants.join() !== inputVariants.join())
+      throw new Error('Textarea and Input variants differ')
+    for (const variant of textareaVariants) {
+      const input = canvasElement.querySelector(
+        `[data-slot="input-control"][data-variant="${variant}"]`
+      )
+      const textarea = canvasElement.querySelector(
+        `[data-slot="textarea-control"][data-variant="${variant}"]`
+      )
+      if (!input || !textarea) throw new Error(`No ${variant} pair rendered`)
+      const a = getComputedStyle(input)
+      const b = getComputedStyle(textarea)
+      if (a.backgroundColor !== b.backgroundColor || a.borderTopColor !== b.borderTopColor)
+        throw new Error(
+          `${variant}: the Textarea chrome (${b.backgroundColor}, ${b.borderTopColor}) differs from Input's (${a.backgroundColor}, ${a.borderTopColor})`
+        )
+    }
+  },
 }
 
 export const Themes: Story = {

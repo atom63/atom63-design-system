@@ -154,4 +154,30 @@ describe('Select', () => {
     expect(separator).toHaveAttribute('role', 'none')
     expect(separator).not.toHaveAttribute('aria-orientation')
   })
+
+  it.each([
+    ['Home', 'All'],
+    ['End', 'Video'],
+  ])('opens a closed trigger on %s with focus on the edge option', async (key, label) => {
+    render(
+      <Select items={ITEMS} value="article">
+        <SelectTrigger aria-label="Type">
+          <SelectValue />
+        </SelectTrigger>
+        <SelectPopup>
+          {ITEMS.map(i => (
+            <SelectItem key={i.value} value={i.value}>
+              {i.label}
+            </SelectItem>
+          ))}
+        </SelectPopup>
+      </Select>
+    )
+    const trigger = screen.getByRole('combobox', { name: 'Type' })
+    trigger.focus()
+    await userEvent.keyboard(`{${key}}`)
+    expect(trigger).toHaveAttribute('aria-expanded', 'true')
+    const option = await screen.findByRole('option', { name: label })
+    await vi.waitFor(() => expect(document.activeElement).toBe(option))
+  })
 })

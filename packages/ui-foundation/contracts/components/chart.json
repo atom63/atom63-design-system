@@ -21,8 +21,8 @@
       "values": ["grouped", "stacked"]
     },
     "states": {
-      "description": "current is a category picked by the pointer or the arrow keys, which shows its values in the tooltip.",
-      "values": ["rest", "current"]
+      "description": "current is a category picked by the pointer or the arrow keys, which shows its values in the tooltip; empty is a chart with no categories or no series, which shows the empty message instead of a plot.",
+      "values": ["rest", "current", "empty"]
     },
     "slots": [
       "chart",
@@ -32,7 +32,8 @@
       "chart-x-axis",
       "chart-tooltip",
       "chart-table",
-      "chart-table-toggle"
+      "chart-table-toggle",
+      "chart-empty"
     ],
     "visualArchetypes": ["surface"]
   },

@@ -6,8 +6,10 @@ import {
   inMain,
   landmarkParameters,
   phoneGlobals,
+  tabletGlobals,
   ThemeMatrix,
   themeMatrixParameters,
+  wideGlobals,
 } from '../../story-matrix'
 import { PageHeader } from './page-header'
 
@@ -55,6 +57,17 @@ const checkActionsBeside = (canvasElement: HTMLElement) => {
   if (actions.scrollWidth > actions.clientWidth + 1) throw new Error('The actions are squeezed')
 }
 
+/* From 640px the actions share the title's row, at its inline end. */
+const checkActionsRow = (canvasElement: HTMLElement) => {
+  checkActionsBeside(canvasElement)
+  const header = canvasElement.querySelector('header')
+  const title = header?.querySelector('h1')
+  const actions = header?.lastElementChild
+  if (!title || !actions) throw new Error('Expected a title and actions')
+  if (actions.getBoundingClientRect().left < title.getBoundingClientRect().right)
+    throw new Error('Expected the actions beside the title, not under it')
+}
+
 /* A long title and description wrap in their column; the actions keep their size. */
 export const LongTitle: Story = {
   args: {
@@ -63,6 +76,13 @@ export const LongTitle: Story = {
       'Every invoice sent to customers in the Northwind, Summit and Contoso regions this quarter, with what is still owed and what has been paid in full.',
     title: 'Invoices for every customer in every region this quarter',
   },
+  play: ({ canvasElement }) => checkActionsBeside(canvasElement),
+}
+
+/* At 390px the long title takes the full width and the actions stack under it. */
+export const LongTitlePhone: Story = {
+  args: LongTitle.args,
+  globals: phoneGlobals,
   play: ({ canvasElement }) => checkActionsBeside(canvasElement),
 }
 
@@ -114,6 +134,19 @@ export const RightToLeft: Story = {
 }
 
 export const Phone: Story = { args, globals: phoneGlobals }
+
+/* 768px: past the 640px switch, so the actions sit on the title's row. */
+export const Tablet: Story = {
+  args,
+  globals: tabletGlobals,
+  play: ({ canvasElement }) => checkActionsRow(canvasElement),
+}
+
+export const Wide: Story = {
+  args,
+  globals: wideGlobals,
+  play: ({ canvasElement }) => checkActionsRow(canvasElement),
+}
 
 export const Themes: Story = {
   args,

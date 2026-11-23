@@ -192,18 +192,23 @@ export const Scrollable: Story = {
 }
 
 /**
- * Trigger states: a placeholder (no value yet) beside a trigger the visual
- * project tabs to, so its focus-visible ring is captured
- * (parameters.visualState, see apps/storybook/README.md "Visual states").
+ * Trigger states: a placeholder (no value yet) at rest, a trigger the visual
+ * project hovers with the real pointer, and one it tabs to, so the hover edge
+ * and the focus-visible ring are captured (parameters.visualState, see
+ * apps/storybook/README.md "Visual states").
  */
 export const States: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 16, alignItems: 'start' }}>
-      {(['placeholder', 'focus'] as const).map(target => (
+      {(['placeholder', 'hover', 'focus'] as const).map(target => (
         <div key={target} style={{ width: 220 }}>
           <Select items={ITEMS}>
             <SelectTrigger
-              aria-label={target === 'placeholder' ? 'Content type' : 'Content type, focused'}
+              aria-label={
+                target === 'placeholder'
+                  ? 'Content type'
+                  : `Content type, ${target === 'hover' ? 'hovered' : 'focused'}`
+              }
               data-state-target={target}
             >
               <SelectValue placeholder="Choose a type" />
@@ -220,7 +225,12 @@ export const States: Story = {
       ))}
     </div>
   ),
-  parameters: { visualState: { focusVisible: '[data-state-target="focus"]' } },
+  parameters: {
+    visualState: {
+      hover: '[data-state-target="hover"]',
+      focusVisible: '[data-state-target="focus"]',
+    },
+  },
 }
 
 /** An open list with a disabled option, which dims and cannot be chosen. */

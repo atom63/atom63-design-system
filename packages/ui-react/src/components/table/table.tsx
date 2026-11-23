@@ -1,6 +1,7 @@
 'use client'
 
 import {
+  type TableAlign,
   type TableSize,
   type TableSizeAlias,
   type TableStickyEdge,
@@ -82,15 +83,17 @@ export function Table({
     measure()
     return () => observer.disconnect()
   }, [])
-  // While the table is wider than its container, the scroller joins the tab order as a named
-  // region so a keyboard can scroll it (Safari does not make scrollers focusable).
+  // While the table is wider than its container, the scroller joins the tab order so a keyboard
+  // can scroll it (Safari does not make scrollers focusable). It is a region named like the
+  // table (aria-labelledby, aria-label or the caption); with no name it stays a plain scroller,
+  // so no English fallback name is announced.
+  const regionName = props['aria-labelledby'] ? undefined : (props['aria-label'] ?? captionText)
+  const named = Boolean(props['aria-labelledby'] || regionName)
   const scrollerProps: React.ComponentProps<'div'> = overflowing
     ? {
-        'aria-label': props['aria-labelledby']
-          ? undefined
-          : (props['aria-label'] ?? captionText ?? 'Table'),
+        'aria-label': regionName,
         'aria-labelledby': props['aria-labelledby'],
-        role: 'region',
+        role: named ? 'region' : undefined,
         tabIndex: 0,
       }
     : {}
@@ -146,7 +149,10 @@ export function TableRow({ className, selected, ...props }: TableRowProps): Reac
   )
 }
 
-export type TableHeadProps = React.ComponentProps<'th'> & {
+export type TableHeadProps = Omit<React.ComponentProps<'th'>, 'align'> & {
+  /** `end` aligns the head to the inline end with tabular figures, for a column of numbers.
+   *  Give the column's cells the same `align`. */
+  align?: TableAlign
   sticky?: TableStickyEdge
   /** Lets the head text wrap onto more lines instead of widening the column. */
   wrap?: boolean
@@ -167,6 +173,7 @@ function defaultSortIcon(direction: TableSortDirection | 'none'): React.ReactNod
 }
 
 export function TableHead({
+  align,
   children,
   className,
   firstSortDirection = 'ascending',
@@ -182,6 +189,7 @@ export function TableHead({
     <th
       aria-sort={direction}
       className={cn('a63-Table-head', className)}
+      data-align={align === 'end' ? 'end' : undefined}
       data-slot="table-head"
       data-sticky={sticky}
       data-wrap={wrap ? '' : undefined}
@@ -216,7 +224,10 @@ export function TableHead({
   )
 }
 
-export type TableCellProps = React.ComponentProps<'td'> & {
+export type TableCellProps = Omit<React.ComponentProps<'td'>, 'align'> & {
+  /** `end` aligns the cell to the inline end with tabular figures, so the digits of numbers
+   *  and money line up. */
+  align?: TableAlign
   sticky?: TableStickyEdge
   /** Lets long text (a description, a URL, CJK) wrap onto more lines, up to about 40
    *  characters wide, instead of widening the table. Cells stay on one line by default. */
@@ -224,6 +235,7 @@ export type TableCellProps = React.ComponentProps<'td'> & {
 }
 
 export function TableCell({
+  align,
   className,
   sticky,
   wrap,
@@ -232,6 +244,7 @@ export function TableCell({
   return (
     <td
       className={cn('a63-Table-cell', className)}
+      data-align={align === 'end' ? 'end' : undefined}
       data-slot="table-cell"
       data-sticky={sticky}
       data-wrap={wrap ? '' : undefined}

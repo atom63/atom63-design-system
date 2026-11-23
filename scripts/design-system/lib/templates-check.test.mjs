@@ -25,7 +25,7 @@ const metadata = (fields = {}) =>
   )} as const\n`
 
 const stories =
-  'const meta = { parameters: landmarkParameters }\nexport const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\n'
+  'const meta = { parameters: landmarkParameters }\nexport const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\nexport const Tablet = {}\nexport const DefaultWide = {}\n'
 
 const block = (source, extra = {}) => ({
   dir: 'blocks',
@@ -106,6 +106,23 @@ test('fails missing stories', () => {
   assert.match(
     checkTemplates([block(metadata(), { storySource: null }), page()]).join('\n'),
     /no stories file/
+  )
+})
+
+test('fails a flagship template without its tablet and wide stories', () => {
+  const problems = checkTemplates([
+    block(metadata(), { storySource: stories.replace('export const Tablet = {}\n', '') }),
+    page(),
+  ]).join('\n')
+  assert.match(problems, /blocks\/page-header: stories file has no `Tablet` story/)
+  assert.doesNotMatch(problems, /`Wide` story/)
+  const other = { ...block(metadata({ id: 'auth-card' })), id: 'auth-card' }
+  other.files = [{ path: 'blocks/auth-card/auth-card.tsx', source: metadata({ id: 'auth-card' }) }]
+  other.storySource =
+    'const meta = { parameters: landmarkParameters }\nexport const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\n'
+  assert.doesNotMatch(
+    checkTemplates([other, page('')]).join('\n'),
+    /auth-card: stories file has no/
   )
 })
 

@@ -141,7 +141,7 @@ describe('Pagination', () => {
     expect(el).toHaveTextContent('More pages')
   })
   it('lets children replace the visible and hidden labels', () => {
-    const { container, getByLabelText } = render(
+    const { container, getByLabelText, getByRole } = render(
       <>
         <PaginationPrevious aria-label="Vorherige Seite" href="#p">
           Zurück
@@ -151,7 +151,10 @@ describe('Pagination', () => {
       </>
     )
     expect(getByLabelText('Vorherige Seite')).toHaveTextContent('Zurück')
-    expect(getByLabelText('Go to next page')).toHaveTextContent('Weiter')
+    // A translated label names the link: no English aria-label overrides it.
+    const next = getByRole('link', { name: 'Weiter' })
+    expect(next).not.toHaveAttribute('aria-label')
+    expect(container.textContent).not.toContain('Next')
     expect(container.querySelector('[data-slot="pagination-ellipsis"]')).toHaveTextContent(
       'Weitere Seiten'
     )

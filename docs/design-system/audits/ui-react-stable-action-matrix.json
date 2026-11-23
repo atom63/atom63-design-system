@@ -77,11 +77,11 @@
   },
   "summary": {
     "sourceFamilies": 82,
-    "sourceExports": 657,
+    "sourceExports": 658,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 358,
+      "beta-supported-core": 359,
       "beta-supported-composition-conditional": 189
     },
     "sourceActionCounts": {
@@ -188,11 +188,11 @@
       "source": "./components/card",
       "family": "components/card",
       "kind": "component-family",
-      "totalExports": 30,
-      "valueExports": 19,
+      "totalExports": 31,
+      "valueExports": 20,
       "typeExports": 11,
       "tierCounts": {
-        "beta-supported-core": 25,
+        "beta-supported-core": 26,
         "monitor-high-risk": 4,
         "preview-experimental-candidate": 1
       },

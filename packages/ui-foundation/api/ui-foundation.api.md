@@ -1167,8 +1167,8 @@ export const cardContract: {
     paddings: readonly ["none", "sm", "md", "lg"];
     contentPaddings: readonly ["none", "xs", "sm", "md", "lg"];
     lineClamps: readonly [1, 2, 3];
-    slots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
-    states: readonly ["rest", "hover", "focus-visible", "interactive", "cursor-active"];
+    slots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-end", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
+    states: readonly ["rest", "hover", "pressed", "focus-visible", "interactive", "cursor-active"];
     visualArchetypes: readonly ["surface"];
 };
 
@@ -1188,13 +1188,13 @@ export const cardPaddings: readonly ["none", "sm", "md", "lg"];
 export type CardSlot = (typeof cardSlots)[number];
 
 // @public (undocumented)
-export const cardSlots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
+export const cardSlots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-end", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
 
 // @public (undocumented)
 export type CardState = (typeof cardStates)[number];
 
 // @public (undocumented)
-export const cardStates: readonly ["rest", "hover", "focus-visible", "interactive", "cursor-active"];
+export const cardStates: readonly ["rest", "hover", "pressed", "focus-visible", "interactive", "cursor-active"];
 
 // @public (undocumented)
 export type CardVariant = (typeof cardVariants)[number];
@@ -1318,8 +1318,8 @@ export const chartContract: {
     sizes: readonly ["sm", "md"];
     layouts: readonly ["grouped", "stacked"];
     colors: readonly [1, 2, 3, 4, 5];
-    slots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle"];
-    states: readonly ["rest", "current"];
+    slots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle", "chart-empty"];
+    states: readonly ["rest", "current", "empty"];
     visualArchetypes: readonly ["surface"];
 };
 
@@ -1339,13 +1339,13 @@ export const chartSizes: readonly ["sm", "md"];
 export type ChartSlot = (typeof chartSlots)[number];
 
 // @public (undocumented)
-export const chartSlots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle"];
+export const chartSlots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle", "chart-empty"];
 
 // @public (undocumented)
 export type ChartState = (typeof chartStates)[number];
 
 // @public (undocumented)
-export const chartStates: readonly ["rest", "current"];
+export const chartStates: readonly ["rest", "current", "empty"];
 
 // @public (undocumented)
 export type ChartType = (typeof chartTypes)[number];
@@ -2803,7 +2803,7 @@ export const feedbackStateContract: {
     defaultSize: "panel";
     kinds: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     sizes: readonly ["inline", "panel", "page", "widget"];
-    slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
+    slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-detail", "feedback-state-content"];
     states: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     visualArchetypes: readonly ["action"];
 };
@@ -2824,7 +2824,7 @@ export const feedbackStateSizes: readonly ["inline", "panel", "page", "widget"];
 export type FeedbackStateSlot = (typeof feedbackStateSlots)[number];
 
 // @public (undocumented)
-export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
+export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-detail", "feedback-state-content"];
 
 // @public (undocumented)
 export type FeedbackStateState = (typeof feedbackStateStates)[number];
@@ -5407,7 +5407,15 @@ export type SwitchVisualArchetype = (typeof switchVisualArchetypes)[number];
 export const switchVisualArchetypes: readonly ["choice"];
 
 // @public (undocumented)
+export type TableAlign = (typeof tableAligns)[number];
+
+// @public (undocumented)
+export const tableAligns: readonly ["start", "end"];
+
+// @public (undocumented)
 export interface TableContract {
+    // (undocumented)
+    aligns: readonly TableAlign[];
     // (undocumented)
     defaultSize: TableSize;
     // (undocumented)
@@ -5438,6 +5446,7 @@ export const tableContract: {
     variants: readonly ["default", "plain"];
     sizes: readonly ["md", "sm"];
     stickyEdges: readonly ["start", "end"];
+    aligns: readonly ["start", "end"];
     states: readonly ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"];
     slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption", "table-sort-button"];
     visualArchetypes: readonly ["surface"];
@@ -5585,6 +5594,8 @@ export interface TextareaContract {
     // (undocumented)
     defaultSize: TextareaSize;
     // (undocumented)
+    defaultVariant: TextareaVariant;
+    // (undocumented)
     sizes: readonly TextareaSize[];
     // (undocumented)
     slots: readonly TextareaSlot[];
@@ -5593,13 +5604,17 @@ export interface TextareaContract {
     // (undocumented)
     tokenSlots: readonly TextareaTokenSlot[];
     // (undocumented)
+    variants: readonly TextareaVariant[];
+    // (undocumented)
     visualArchetypes: readonly TextareaVisualArchetype[];
 }
 
 // @public (undocumented)
 export const textareaContract: {
     defaultSize: "md";
+    defaultVariant: "default";
     sizes: readonly ["sm", "md", "lg"];
+    variants: readonly ["default", "filled", "plain"];
     states: readonly ["rest", "hover", "focus", "disabled", "invalid"];
     slots: readonly ["textarea-control", "textarea"];
     tokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.paddingInline", "field.paddingBlock", "field.fontSize", "field.minHeight"];
@@ -5629,6 +5644,12 @@ export type TextareaTokenSlot = (typeof textareaTokenSlots)[number];
 
 // @public (undocumented)
 export const textareaTokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.paddingInline", "field.paddingBlock", "field.fontSize", "field.minHeight"];
+
+// @public (undocumented)
+export type TextareaVariant = (typeof textareaVariants)[number];
+
+// @public (undocumented)
+export const textareaVariants: readonly ["default", "filled", "plain"];
 
 // @public (undocumented)
 export type TextareaVisualArchetype = (typeof textareaVisualArchetypes)[number];
