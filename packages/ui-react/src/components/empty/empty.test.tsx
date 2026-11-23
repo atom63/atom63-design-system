@@ -40,6 +40,13 @@ describe('Empty', () => {
     )
   })
 
+  it('renders EmptyTitle as a heading, level 3 unless set', () => {
+    const { getByRole, rerender } = render(<EmptyTitle>Nothing here</EmptyTitle>)
+    expect(getByRole('heading', { level: 3, name: 'Nothing here' })).toBeInTheDocument()
+    rerender(<EmptyTitle level={2}>Nothing here</EmptyTitle>)
+    expect(getByRole('heading', { level: 2, name: 'Nothing here' })).toBeInTheDocument()
+  })
+
   it('defaults EmptyMedia to the default variant and honors the icon variant', () => {
     const { container, rerender } = render(<EmptyMedia />)
     expect(container.querySelector('.a63-Empty-media')).toHaveAttribute('data-variant', 'default')

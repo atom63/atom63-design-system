@@ -1401,7 +1401,9 @@ export function EmptyMedia(input: React$1.ComponentProps<'div'> & {
 export { EmptyMediaVariant }
 
 // @public (undocumented)
-export function EmptyTitle(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function EmptyTitle(input: React$1.ComponentProps<'div'> & {
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
+}): React$1.ReactElement;
 
 // @public
 export function extractColorFromImage(img: HTMLImageElement, options?: ExtractColorOptions): ExtractedColor;
@@ -1456,9 +1458,11 @@ export type FeedbackStateIconName = keyof typeof feedbackIcons;
 
 export { FeedbackStateKind }
 
-// @public (undocumented)
+// @public
 export interface FeedbackStateLabels {
+    descriptions?: Partial<Record<FeedbackStateKind, string>>;
     noResults?: (query: string) => string;
+    titles?: Partial<Record<FeedbackStateKind, string>>;
 }
 
 // @public
