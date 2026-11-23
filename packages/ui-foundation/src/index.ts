@@ -1263,6 +1263,7 @@ export {
   textareaSlots,
   textareaStates,
   textareaTokenSlots,
+  textareaVariants,
   textareaVisualArchetypes,
 } from './components/textarea'
 export type {
@@ -1271,6 +1272,7 @@ export type {
   TextareaSlot,
   TextareaState,
   TextareaTokenSlot,
+  TextareaVariant,
   TextareaVisualArchetype,
 } from './components/textarea'
 export type {

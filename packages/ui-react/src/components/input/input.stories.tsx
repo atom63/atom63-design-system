@@ -297,6 +297,81 @@ export const Group: Story = {
   ),
 }
 
+/* Right to left: Arabic value and placeholder, an icon addon at inline start
+   (the right edge) and a clear button at inline end (the left edge). */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl">
+      <div data-testid="rtl" style={{ display: 'grid', gap: '0.75rem', maxWidth: '22rem' }}>
+        <Input aria-label="البريد الإلكتروني" placeholder="أدخل بريدك الإلكتروني" />
+        <Input aria-label="الاسم" defaultValue="ليلى أحمد" />
+        <InputGroup data-testid="rtl-group" style={{ width: '100%' }}>
+          <InputGroupAddon>
+            <Search aria-hidden />
+          </InputGroupAddon>
+          <InputGroupInput aria-label="بحث" defaultValue="تقرير الربع الثالث" />
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton aria-label="مسح" size="icon-xs" type="button">
+              <X aria-hidden />
+            </InputGroupButton>
+          </InputGroupAddon>
+        </InputGroup>
+      </div>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const group = canvasElement.querySelector('[data-testid="rtl-group"]')
+    const field = group?.querySelector('input')
+    const [start, end] = Array.from(
+      group?.querySelectorAll('[data-slot="input-group-addon"]') ?? []
+    )
+    if (!field || !start || !end) throw new Error('The RTL group did not render its parts')
+    const box = field.getBoundingClientRect()
+    if (start.getBoundingClientRect().left < box.right - 1)
+      throw new Error('The inline-start addon is not on the right of the field in RTL')
+    if (end.getBoundingClientRect().right > box.left + 1)
+      throw new Error('The inline-end addon is not on the left of the field in RTL')
+  },
+}
+
+const LONG_PLACEHOLDER =
+  'Donaudampfschifffahrtsgesellschaftskapitänsmütze 设计系统长占位符文本 https://atom63.io/a/very/long/unbroken/path/that/keeps/going'
+
+/* Long strings: a German compound, CJK and an unbroken URL as placeholder and
+   value, in a field and a group. The field keeps its width and clips the text. */
+export const LongStrings: Story = {
+  render: () => (
+    <div data-testid="long" style={{ display: 'grid', gap: '0.75rem', maxWidth: '20rem' }}>
+      <Input aria-label="Long placeholder" placeholder={LONG_PLACEHOLDER} />
+      <Input aria-label="Long value" defaultValue={LONG_PLACEHOLDER} />
+      <InputGroup style={{ width: '100%' }}>
+        <InputGroupAddon>
+          <InputGroupText>https://</InputGroupText>
+        </InputGroupAddon>
+        <InputGroupInput aria-label="Long address" placeholder={LONG_PLACEHOLDER} />
+        <InputGroupAddon align="inline-end">
+          <InputGroupButton aria-label="Clear" size="icon-xs" type="button">
+            <X aria-hidden />
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector<HTMLElement>('[data-testid="long"]')
+    if (!frame) throw new Error('No frame')
+    const limit = frame.getBoundingClientRect().right + 1
+    for (const control of frame.querySelectorAll(
+      '[data-slot="input-control"], [data-slot="input-group"]'
+    )) {
+      if (control.getBoundingClientRect().right > limit)
+        throw new Error(
+          `A ${control.getAttribute('data-slot')} grows past its column with a long string`
+        )
+    }
+  },
+}
+
 /* Prod parity: a numeric `size` forwards to the native char-width attribute
    (`<input size={n}>`) while the visual ramp stays at the default step, so the
    field auto-sizes to N characters rather than filling its container. */

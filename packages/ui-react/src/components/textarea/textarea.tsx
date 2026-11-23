@@ -1,6 +1,6 @@
 'use client'
 
-import { type TextareaSize, textareaContract } from '@atom63/ui-foundation'
+import { type TextareaSize, type TextareaVariant, textareaContract } from '@atom63/ui-foundation'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -18,6 +18,9 @@ export type TextareaProps = Omit<React.ComponentProps<'textarea'>, 'className'> 
   shadow?: boolean
   /** Class applied directly to the native textarea element. */
   textareaClassName?: string
+  /** Field chrome, as on Input: `default` outlined, `filled` a muted well with
+   *  no resting border, `plain` no border or fill with a separator below. */
+  variant?: TextareaVariant
   /** Drop the field chrome (border/bg/shadow) so it can nest inside a parent
    *  that provides the chrome. The control wrapper collapses to `display:
    *  contents`. */
@@ -41,6 +44,7 @@ export function Textarea({
   size = textareaContract.defaultSize,
   textareaClassName,
   unstyled = false,
+  variant = textareaContract.defaultVariant,
   style,
   ...props
 }: TextareaProps): React.ReactElement {
@@ -59,6 +63,7 @@ export function Textarea({
       data-size={size}
       data-slot="textarea-control"
       data-unstyled={unstyled ? '' : undefined}
+      data-variant={variant}
     >
       <textarea
         aria-invalid={isInvalid ? true : ariaInvalid}

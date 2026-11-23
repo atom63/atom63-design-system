@@ -143,15 +143,43 @@ export const Sizes: Story = {
   ),
 }
 
+/* The selected segment of every scrolling track sits fully inside the track. */
+function expectSelectedInView(canvasElement: HTMLElement, when: string) {
+  for (const track of canvasElement.querySelectorAll<HTMLElement>(
+    '[data-slot="segmented-control-track"]'
+  )) {
+    const selected = track.querySelector('[data-slot="segmented-control-item"][data-checked]')
+    if (!selected) continue
+    const box = track.getBoundingClientRect()
+    const start = box.left + track.clientLeft
+    const end = start + track.clientWidth
+    const rect = selected.getBoundingClientRect()
+    if (rect.left < start - 1 || rect.right > end + 1)
+      throw new Error(
+        `${when}: the selected segment (${rect.left}-${rect.right}) is clipped by its track (${start}-${end})`
+      )
+  }
+}
+
+const frame = () => new Promise(resolve => requestAnimationFrame(() => resolve(null)))
+
 export const MobileOverflow: Story = {
   tags: ['!manifest'],
   render: () => (
     <UIProvider input="touch">
       <div style={{ maxWidth: 320, width: 'min(100%, calc(100vw - 2rem))' }}>
-        <Demo items={LONG_ITEMS} />
+        <Demo initialValue="integrations" items={LONG_ITEMS} />
       </div>
     </UIProvider>
   ),
+  /* The last segment starts selected, so the track scrolls it into view. */
+  play: async ({ canvasElement }) => {
+    await frame()
+    const track = canvasElement.querySelector<HTMLElement>('[data-slot="segmented-control-track"]')
+    if (!track || track.scrollWidth <= track.clientWidth)
+      throw new Error('The overflow track does not scroll')
+    expectSelectedInView(canvasElement, 'At rest')
+  },
 }
 
 /* Rest, selected and a disabled segment (Tree) in light and dark. The Hover and
@@ -226,7 +254,6 @@ export const RightToLeft: Story = {
     </UIProvider>
   ),
   play: async ({ canvasElement }) => {
-    const frame = () => new Promise(resolve => requestAnimationFrame(() => resolve(null)))
     const expectCovered = (when: string) => {
       const controls = canvasElement.querySelectorAll('[data-slot="segmented-control"]')
       if (controls.length !== 2) throw new Error(`Expected 2 controls, found ${controls.length}`)
@@ -247,15 +274,20 @@ export const RightToLeft: Story = {
     }
     await frame()
     expectCovered('At rest')
+    expectSelectedInView(canvasElement, 'At rest')
     const track = canvasElement.querySelector<HTMLElement>(
       '[data-testid="rtl-overflow"] [data-slot="segmented-control-track"]'
     )
     if (!track || track.scrollWidth <= track.clientWidth)
       throw new Error('The RTL overflow track does not scroll')
+    const rest = track.scrollLeft
     track.scrollLeft = -(track.scrollWidth - track.clientWidth)
     await frame()
     expectCovered('Scrolled to the end')
     track.scrollLeft = 0
+    await frame()
+    expectCovered('Scrolled to the start')
+    track.scrollLeft = rest
     await frame()
   },
 }

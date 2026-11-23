@@ -140,6 +140,125 @@ export const Endpoints: Story = {
   ),
 }
 
+const LONG_DESCRIPTION =
+  'Wir senden Ihnen Versionshinweise und Sicherheitsbenachrichtigungen 我们只会发送版本说明 https://atom63.io/notificationpreferencesreleasenotessecurityadvisoriesproductupdates'
+const LONG_ERROR =
+  'Diese E-Mail-Adresse ist ungültig oder bereits registriert 此邮箱无效 https://atom63.io/helpaccountswhywasmyemailaddressrejectedduringsignupflow'
+
+function MessageForm({
+  description,
+  error,
+  label,
+}: {
+  description: string
+  error: string
+  label: string
+}) {
+  const methods = useForm<Values>({
+    defaultValues: { email: '' },
+    errors: { email: { type: 'manual', message: error } },
+  })
+  return (
+    <Form {...methods}>
+      <form style={{ display: 'grid', gap: 20, maxWidth: 320 }}>
+        <FormField
+          control={methods.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{label}</FormLabel>
+              <FormControl>
+                <Input placeholder="you@atom63.io" type="email" {...field} />
+              </FormControl>
+              <FormDescription>{description}</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
+  )
+}
+
+/* Right to left, then a long German, CJK and unbroken-URL description and
+   error: the message wraps inside the column instead of widening the form. */
+export const RightToLeftAndLongText: Story = {
+  render: () => (
+    <div data-testid="long" style={{ display: 'grid', gap: 24, maxWidth: 320 }}>
+      <UIProvider dir="rtl">
+        <MessageForm
+          description="نستخدم هذا العنوان لإرسال ملاحظات الإصدار."
+          error="أدخل عنوان بريد إلكتروني صالحًا."
+          label="البريد الإلكتروني"
+        />
+      </UIProvider>
+      <MessageForm
+        description={LONG_DESCRIPTION}
+        error={LONG_ERROR}
+        label="E-Mail-Adresse für Benachrichtigungen 电子邮件"
+      />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector('[data-testid="long"]')
+    if (!frame) throw new Error('No frame')
+    const column = frame.getBoundingClientRect()
+    const parts = frame.querySelectorAll(
+      '[data-slot="form-description"], [data-slot="form-message"]'
+    )
+    if (parts.length !== 4) throw new Error(`Expected 4 messages, found ${parts.length}`)
+    for (const part of parts) {
+      const box = part.getBoundingClientRect()
+      if (
+        box.right > column.right + 1 ||
+        box.left < column.left - 1 ||
+        part.scrollWidth > part.clientWidth + 1
+      )
+        throw new Error(`${part.getAttribute('data-slot')} overflows the column`)
+    }
+  },
+}
+
+/* While the form submits: the fields are disabled and the submit Button shows
+   its loading state (it keeps focus and blocks a second submit). */
+function SubmittingForm() {
+  const methods = useForm<Values>({ defaultValues: { email: 'ada@atom63.io' } })
+  return (
+    <Form {...methods}>
+      <form aria-busy="true" style={{ display: 'grid', gap: 20, maxWidth: 360 }}>
+        <FormField
+          control={methods.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input disabled placeholder="you@atom63.io" type="email" {...field} />
+              </FormControl>
+              <FormDescription>We use this to send release notes.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <Button loading type="submit">
+          Save
+        </Button>
+      </form>
+    </Form>
+  )
+}
+
+export const Submitting: Story = {
+  render: () => <SubmittingForm />,
+  play: async ({ canvasElement }) => {
+    const input = canvasElement.querySelector('input')
+    const button = canvasElement.querySelector('button[type="submit"]')
+    if (!input?.disabled) throw new Error('The field is not disabled while submitting')
+    if (button?.getAttribute('aria-busy') !== 'true')
+      throw new Error('The submit button does not show its loading state')
+  },
+}
+
 export const ContractMetadata: Story = {
   render: () => (
     <pre style={{ fontSize: 12, margin: 0, whiteSpace: 'pre-wrap' }}>

@@ -106,6 +106,17 @@ export function SegmentedControl({
       )
     }
     measure()
+    /* When the track scrolls, bring the selected segment fully into view (on
+       mount and when the selection changes), without scrolling the page. */
+    const segment = segments()[selectedIndex]
+    if (segment && track.scrollWidth > track.clientWidth) {
+      const trackRect = track.getBoundingClientRect()
+      const rect = segment.getBoundingClientRect()
+      const start = trackRect.left + track.clientLeft
+      const end = start + track.clientWidth
+      const delta = rect.left < start ? rect.left - start : rect.right > end ? rect.right - end : 0
+      if (delta !== 0) track.scrollLeft += delta
+    }
     if (typeof ResizeObserver === 'undefined') return
     const observer = new ResizeObserver(measure)
     observer.observe(track)

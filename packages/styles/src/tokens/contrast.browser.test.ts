@@ -436,3 +436,48 @@ describe('surface tint contrast (WCAG AA)', () => {
     expect(failures, failures.join('\n')).toEqual([])
   })
 })
+
+/* A placeholder paints in the third text colour; it must read clearly below the
+   value (primary text) in the same field, or an empty field reads as filled.
+   Checked as the ratio of the two contrasts against the field fill, in every
+   theme and mode and, for the brand-derived terminal ink, on every brand. */
+const PLACEHOLDER_STEP = 1.3
+
+describe('placeholder sits below the value', () => {
+  afterEach(() => root().removeAttribute('data-a63-brand'))
+
+  it('keeps text-tertiary a clear step below text-primary on the field fill', () => {
+    const failures: string[] = []
+    for (const brand of [undefined, ...brands]) {
+      if (brand) root().setAttribute('data-a63-brand', brand)
+      for (const theme of themes) {
+        if (brand && theme !== 'terminal') continue
+        for (const mode of modes) {
+          /* Terminal dark is a single phosphor ink whose value text sits near
+             4.5:1 on some brands, so no AA placeholder can sit a step below it. */
+          if (theme === 'terminal' && mode === 'dark') continue
+          applyThemeMode(theme, mode)
+          for (const bg of ['--a63-surface-control', '--a63-surface-muted']) {
+            const field = parseCssColor(resolvePaintedColor(bg, 'background'))
+            const value = contrastRatio(
+              parseCssColor(resolvePaintedColor('--a63-text-primary', 'color')),
+              field
+            )
+            const placeholder = contrastRatio(
+              parseCssColor(resolvePaintedColor('--a63-text-tertiary', 'color')),
+              field
+            )
+            const where = `${brand ?? 'default'}/${theme}/${mode} on ${bg}`
+            if (placeholder < AA_TEXT)
+              failures.push(`${where}: placeholder ${placeholder.toFixed(2)}:1 < ${AA_TEXT}:1`)
+            if (value / placeholder < PLACEHOLDER_STEP)
+              failures.push(
+                `${where}: value ${value.toFixed(2)}:1 vs placeholder ${placeholder.toFixed(2)}:1, step ${(value / placeholder).toFixed(2)} < ${PLACEHOLDER_STEP}`
+              )
+          }
+        }
+      }
+    }
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+})
