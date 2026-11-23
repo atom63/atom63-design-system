@@ -16,6 +16,9 @@ export const chartSizes = ['sm', 'md'] as const
 // The chart series colour a series takes, --a63-chart-<n>. Series take 1 to 5 in order unless a
 // series names its own.
 export const chartColors = [1, 2, 3, 4, 5] as const
+// How several bar or area series share a category: grouped draws them side by side (bar) or over
+// each other (area); stacked piles them on each other. Line charts are always grouped.
+export const chartLayouts = ['grouped', 'stacked'] as const
 // current is a category picked by the pointer or the arrow keys, which shows its values in the
 // tooltip.
 export const chartStates = ['rest', 'current'] as const
@@ -34,6 +37,7 @@ export const chartVisualArchetypes = ['surface'] as const satisfies readonly Vis
 export type ChartType = (typeof chartTypes)[number]
 export type ChartSize = (typeof chartSizes)[number]
 export type ChartColor = (typeof chartColors)[number]
+export type ChartLayout = (typeof chartLayouts)[number]
 export type ChartState = (typeof chartStates)[number]
 export type ChartSlot = (typeof chartSlots)[number]
 export type ChartVisualArchetype = (typeof chartVisualArchetypes)[number]
@@ -41,8 +45,10 @@ export type ChartVisualArchetype = (typeof chartVisualArchetypes)[number]
 export interface ChartContract {
   defaultType: ChartType
   defaultSize: ChartSize
+  defaultLayout: ChartLayout
   types: readonly ChartType[]
   sizes: readonly ChartSize[]
+  layouts: readonly ChartLayout[]
   colors: readonly ChartColor[]
   slots: readonly ChartSlot[]
   states: readonly ChartState[]
@@ -52,8 +58,10 @@ export interface ChartContract {
 export const chartContract = {
   defaultType: 'line',
   defaultSize: 'md',
+  defaultLayout: 'grouped',
   types: chartTypes,
   sizes: chartSizes,
+  layouts: chartLayouts,
   colors: chartColors,
   slots: chartSlots,
   states: chartStates,

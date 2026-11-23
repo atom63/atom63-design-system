@@ -1,5 +1,6 @@
 import {
   type ChartColor,
+  type ChartLayout,
   type ChartSize,
   type ChartType,
   chartColors,
@@ -29,13 +30,15 @@ import {
  * unless `table="toggle"` lets a reader show it.
  *
  * Not for: big or live data, zooming, scatter or pie charts, or values below
- * zero. Use a Table when the exact numbers matter more than the shape.
+ * zero (they draw at zero; the tooltip and table show the real value). Use a
+ * Table when the exact numbers matter more than the shape.
  */
 
 export interface ChartSeries {
   /** The series name, in the legend, the tooltip and the table header. */
   label: string
-  /** One value per category, in the order of `categories`. Values are zero or more. */
+  /** One value per category, in the order of `categories`. Values are zero or more: a value
+   *  below zero draws at zero, while the tooltip and the table show it as it is. */
   values: readonly number[]
   /** The series colour, `--a63-chart-<n>`. Defaults to the series' position, 1 to 5. */
   color?: ChartColor
@@ -48,6 +51,10 @@ export interface ChartLabels {
   hideTable?: string
   /** Read after the plot's name: how to move between categories. */
   keyboardHint?: string
+  /** The plot's short name; the figure and the table caption carry the chart's `label`. */
+  plot?: string
+  /** Shown in place of the marks when there are no categories or no series. */
+  empty?: string
 }
 
 export type ChartProps = Omit<React.ComponentProps<'figure'>, 'children'> & {
@@ -60,7 +67,10 @@ export type ChartProps = Omit<React.ComponentProps<'figure'>, 'children'> & {
   /** The series to draw, up to five. */
   series: readonly ChartSeries[]
   type?: ChartType
-  /** Stack the series instead of drawing them side by side (bar) or over each other (area). Ignored for line. */
+  /** `stacked` piles the series on each other instead of drawing them side by side (bar) or
+   *  over each other (area). Ignored for line. */
+  layout?: ChartLayout
+  /** @deprecated Use `layout="stacked"`. */
   stacked?: boolean
   size?: ChartSize
   /** Formats a value in the tooltip and the table. */
@@ -80,13 +90,16 @@ const defaultLabels: Required<ChartLabels> = {
   showTable: 'Show data table',
   hideTable: 'Hide data table',
   keyboardHint: 'Use the arrow keys to read each value.',
+  plot: 'Plot',
+  empty: 'No data to show.',
 }
 
 const tickCounts: Record<ChartSize, number> = { sm: 3, md: 5 }
 
-/** Ticks from zero to a tidy maximum at or above `max`: 110,000 in 5 ticks → 0, 30,000 … 120,000. */
+/** Ticks from zero to a tidy maximum at or above `max`: 110,000 in 5 ticks → 0, 30,000 … 120,000.
+ *  With nothing above zero the ticks are whole numbers, 0 to `count - 1`. */
 export function chartTicks(max: number, count: number): number[] {
-  const top = max > 0 ? max : 1
+  const top = max > 0 ? max : count - 1
   const raw = top / (count - 1)
   const magnitude = 10 ** Math.floor(Math.log10(raw))
   const nice = [1, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10].find(step => step * magnitude >= raw) ?? 10
@@ -104,6 +117,7 @@ export function Chart({
   categories,
   series,
   type = chartContract.defaultType,
+  layout,
   stacked = false,
   size = chartContract.defaultSize,
   formatValue = defaultFormat,
@@ -120,12 +134,32 @@ export function Chart({
   const [active, setActive] = React.useState<number | null>(null)
   const [announce, setAnnounce] = React.useState(false)
   const [tableOpen, setTableOpen] = React.useState(false)
+  const plotRef = React.useRef<HTMLDivElement>(null)
 
-  const count = categories.length
-  const stacks = stacked && type !== 'line'
+  const empty = categories.length === 0 || series.length === 0
+  const count = empty ? 0 : categories.length
+  const stacks =
+    (layout ?? (stacked ? 'stacked' : chartContract.defaultLayout)) === 'stacked' && type !== 'line'
   const colors = series.map((item, index) => item.color ?? chartColors[index % chartColors.length])
-  const value = (seriesIndex: number, category: number) =>
-    Math.max(0, series[seriesIndex]?.values[category] ?? 0)
+  // The value as given, for the tooltip, the readout and the table.
+  const raw = (seriesIndex: number, category: number) => series[seriesIndex]?.values[category] ?? 0
+  // The value as drawn: the marks start at zero, so a value below zero draws at zero.
+  const value = (seriesIndex: number, category: number) => Math.max(0, raw(seriesIndex, category))
+  const hasNegative = series.some(item => item.values.some(amount => amount < 0))
+  React.useEffect(() => {
+    if (hasNegative) {
+      console.warn(`Chart "${label}": values below zero draw at zero; use a charting library.`)
+    }
+  }, [hasNegative, label])
+  // A touch reading stays after the finger lifts; a press outside the plot clears it.
+  React.useEffect(() => {
+    if (active === null) return
+    const clear = (event: PointerEvent) => {
+      if (!plotRef.current?.contains(event.target as Node)) setActive(null)
+    }
+    document.addEventListener('pointerdown', clear)
+    return () => document.removeEventListener('pointerdown', clear)
+  }, [active])
   const totals = categories.map((_, category) =>
     series.reduce((sum, _item, seriesIndex) => sum + value(seriesIndex, category), 0)
   )
@@ -205,12 +239,22 @@ export function Chart({
     setAnnounce(fromKeyboard && category !== null)
   }
 
-  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
-    if (count === 0) return
+  const categoryAt = (event: React.PointerEvent<HTMLDivElement>) => {
     const rect = event.currentTarget.getBoundingClientRect()
     let fraction = (event.clientX - rect.left) / rect.width
     if (getComputedStyle(event.currentTarget).direction === 'rtl') fraction = 1 - fraction
-    pick(Math.min(count - 1, Math.max(0, Math.floor(fraction * count))), false)
+    return Math.min(count - 1, Math.max(0, Math.floor(fraction * count)))
+  }
+
+  const onPointerMove = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (count === 0) return
+    pick(categoryAt(event), false)
+  }
+
+  // A tap fires no pointermove first, so a touch or pen press picks the category itself.
+  const onPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (count === 0 || event.pointerType === 'mouse') return
+    pick(categoryAt(event), false)
   }
 
   const onKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
@@ -238,7 +282,7 @@ export function Chart({
     active === null
       ? ''
       : `${categories[active]}: ${series
-          .map((item, seriesIndex) => `${item.label} ${formatValue(value(seriesIndex, active))}`)
+          .map((item, seriesIndex) => `${item.label} ${formatValue(raw(seriesIndex, active))}`)
           .join(', ')}`
 
   const descriptionId = description ? `${id}-description` : undefined
@@ -250,6 +294,8 @@ export function Chart({
       aria-describedby={descriptionId}
       aria-label={label}
       className={cn('a63-Chart', className)}
+      data-empty={empty || undefined}
+      data-layout={stacks ? 'stacked' : 'grouped'}
       data-size={size}
       data-slot="chart"
       data-stacked={stacks || undefined}
@@ -265,7 +311,7 @@ export function Chart({
       {legend ? (
         <ul className="a63-Chart-legend" data-slot="chart-legend">
           {series.map((item, seriesIndex) => (
-            <li className="a63-Chart-legend-item" key={item.label}>
+            <li className="a63-Chart-legend-item" key={seriesIndex}>
               <Swatch color={colors[seriesIndex]} type={type} />
               {item.label}
             </li>
@@ -284,14 +330,18 @@ export function Chart({
             the WAI chart guidance suggests; the data table carries the same numbers. */}
         {/* eslint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- the plot takes the arrow keys and the pointer to pick a category. */}
         <div
-          aria-describedby={`${id}-hint`}
-          aria-label={label}
+          aria-describedby={empty ? undefined : `${id}-hint`}
+          aria-label={text.plot}
           className="a63-Chart-plot"
           data-slot="chart-plot"
           onBlur={() => pick(null, false)}
           onKeyDown={onKeyDown}
-          onPointerLeave={() => pick(null, false)}
+          onPointerDown={onPointerDown}
+          onPointerLeave={event => {
+            if (event.pointerType === 'mouse') pick(null, false)
+          }}
           onPointerMove={onPointerMove}
+          ref={plotRef}
           role="group"
           tabIndex={count > 0 ? 0 : undefined}
         >
@@ -361,19 +411,25 @@ export function Chart({
             >
               <div className="a63-Chart-tooltip-title">{categories[active]}</div>
               {series.map((item, seriesIndex) => (
-                <div className="a63-Chart-tooltip-row" key={item.label}>
+                <div className="a63-Chart-tooltip-row" key={seriesIndex}>
                   <Swatch color={colors[seriesIndex]} type={type} />
                   <span className="a63-Chart-tooltip-label">{item.label}</span>
                   <span className="a63-Chart-tooltip-value">
-                    {formatValue(value(seriesIndex, active))}
+                    {formatValue(raw(seriesIndex, active))}
                   </span>
                 </div>
               ))}
             </div>
           ) : null}
-          <span className="a63-Chart-sr-only" id={`${id}-hint`}>
-            {text.keyboardHint}
-          </span>
+          {empty ? (
+            <p className="a63-Chart-empty" data-slot="chart-empty">
+              {text.empty}
+            </p>
+          ) : (
+            <span className="a63-Chart-sr-only" id={`${id}-hint`}>
+              {text.keyboardHint}
+            </span>
+          )}
         </div>
         <span />
         <div
@@ -382,8 +438,8 @@ export function Chart({
           data-dense={count > 6 || undefined}
           data-slot="chart-x-axis"
         >
-          {categories.map(category => (
-            <span className="a63-Chart-category" key={category}>
+          {categories.map((category, index) => (
+            <span className="a63-Chart-category" key={index}>
               {category}
             </span>
           ))}
@@ -417,8 +473,8 @@ export function Chart({
           <TableHeader>
             <TableRow>
               <TableHead scope="col">{categoryLabel}</TableHead>
-              {series.map(item => (
-                <TableHead key={item.label} scope="col">
+              {series.map((item, seriesIndex) => (
+                <TableHead key={seriesIndex} scope="col">
                   {item.label}
                 </TableHead>
               ))}
@@ -426,10 +482,10 @@ export function Chart({
           </TableHeader>
           <TableBody>
             {categories.map((category, index) => (
-              <TableRow key={category}>
+              <TableRow key={index}>
                 <TableHead scope="row">{category}</TableHead>
-                {series.map((item, seriesIndex) => (
-                  <TableCell key={item.label}>{formatValue(value(seriesIndex, index))}</TableCell>
+                {series.map((_item, seriesIndex) => (
+                  <TableCell key={seriesIndex}>{formatValue(raw(seriesIndex, index))}</TableCell>
                 ))}
               </TableRow>
             ))}

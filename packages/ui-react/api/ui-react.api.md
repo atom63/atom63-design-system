@@ -108,6 +108,7 @@ import { MessagePosition } from '@atom63/ui-foundation';
 import { Mode } from '@atom63/ui-foundation';
 import { NavigationMenu as NavigationMenu_2 } from '@base-ui/react/navigation-menu';
 import { OTPInput } from 'input-otp';
+import { PaginationLinkSize } from '@atom63/ui-foundation';
 import { PointerInput } from '@atom63/ui-foundation';
 import { Popover as Popover_2 } from '@base-ui/react/popover';
 import { PreviewCard as PreviewCard_2 } from '@base-ui/react/preview-card';
@@ -760,6 +761,7 @@ export type ChatComposerProps = Omit<React$1.ComponentProps<'form'>, 'children' 
     status?: ChatComposerStatus;
     stopIcon?: React$1.ReactNode;
     stopLabel?: string;
+    submitOnEnter?: boolean;
     textareaProps?: Omit<InputGroupTextareaProps, 'defaultValue' | 'disabled' | 'onChange' | 'placeholder' | 'value'>;
     value?: string;
     voiceIcon?: React$1.ReactNode;
@@ -1363,9 +1365,20 @@ export function EmptyContent(input: React$1.ComponentProps<'div'>): React$1.Reac
 export function EmptyDescription(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function EmptyErrorDetail(input: React$1.ComponentProps<'div'> & {
+export function EmptyErrorDetail(input: EmptyErrorDetailProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface EmptyErrorDetailLabels {
+    copy?: string;
+    hideDetails?: string;
+    showDetails?: string;
+}
+
+// @public (undocumented)
+export type EmptyErrorDetailProps = React$1.ComponentProps<'div'> & {
     error: string;
-}): React$1.ReactElement;
+    labels?: EmptyErrorDetailLabels;
+};
 
 // @public (undocumented)
 export function EmptyHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -1434,7 +1447,12 @@ export type FeedbackStateIconName = keyof typeof feedbackIcons;
 export { FeedbackStateKind }
 
 // @public (undocumented)
-export interface FeedbackStateProps {
+export interface FeedbackStateLabels {
+    noResults?: (query: string) => string;
+}
+
+// @public
+export interface FeedbackStateProps extends Omit<React$1.ComponentProps<'div'>, 'children' | 'title'> {
     // (undocumented)
     actions?: FeedbackStateAction[];
     // (undocumented)
@@ -1445,6 +1463,8 @@ export interface FeedbackStateProps {
     error?: unknown;
     // (undocumented)
     icon?: FeedbackStateIcon;
+    // (undocumented)
+    labels?: FeedbackStateLabels;
     level?: 1 | 2 | 3 | 4 | 5 | 6;
     // (undocumented)
     query?: string;
@@ -1722,7 +1742,7 @@ export function ItemFooter(input: React$1.ComponentProps<'div'>): React$1.ReactE
 // @public (undocumented)
 export function ItemGroup(input: ItemGroupProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type ItemGroupProps = React$1.ComponentProps<'div'> & {
     variant?: ItemGroupVariant;
     surface?: ItemGroupSurface;
@@ -2008,7 +2028,7 @@ export type PaginationContentProps = React$1.ComponentProps<'ul'>;
 // @public (undocumented)
 export function PaginationEllipsis(input: PaginationEllipsisProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationEllipsisProps = React$1.ComponentProps<'span'>;
 
 // @public (undocumented)
@@ -2025,18 +2045,19 @@ export type PaginationLinkProps = {
     isActive?: boolean;
     disabled?: boolean;
     render?: useRender.RenderProp;
-} & Pick<ButtonProps, 'size'> & React$1.ComponentProps<'a'>;
+    size?: PaginationLinkSize;
+} & React$1.ComponentProps<'a'>;
 
 // @public (undocumented)
 export function PaginationNext(input: PaginationNextProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationNextProps = React$1.ComponentProps<typeof PaginationLink>;
 
 // @public (undocumented)
 export function PaginationPrevious(input: PaginationPreviousProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationPreviousProps = React$1.ComponentProps<typeof PaginationLink>;
 
 // @public (undocumented)
@@ -2763,6 +2784,7 @@ export function TableCell(input: TableCellProps): React$1.ReactElement;
 // @public (undocumented)
 export type TableCellProps = React$1.ComponentProps<'td'> & {
     sticky?: TableStickyEdge;
+    wrap?: boolean;
 };
 
 // @public (undocumented)
@@ -2783,6 +2805,7 @@ export type TableHeaderProps = React$1.ComponentProps<'thead'>;
 // @public (undocumented)
 export type TableHeadProps = React$1.ComponentProps<'th'> & {
     sticky?: TableStickyEdge;
+    wrap?: boolean;
     sortKey?: string;
     firstSortDirection?: TableSortDirection;
     sortIcon?: (direction: TableSortDirection | 'none') => React$1.ReactNode;
@@ -2801,7 +2824,9 @@ export type TableProps = React$1.ComponentProps<'table'> & {
 export function TableRow(input: TableRowProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableRowProps = React$1.ComponentProps<'tr'>;
+export type TableRowProps = React$1.ComponentProps<'tr'> & {
+    selected?: boolean;
+};
 
 // @public
 export interface TableSort {

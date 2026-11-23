@@ -64,4 +64,16 @@ describe('Empty', () => {
     fireEvent.click(getByRole('button', { name: 'Hide details' }))
     expect(queryByText('Boom happened')).toBeNull()
   })
+
+  it('lets labels replace the toggle and copy strings', () => {
+    const { getByRole } = render(
+      <EmptyErrorDetail
+        error="Boom"
+        labels={{ copy: 'Fehler', hideDetails: 'Weniger', showDetails: 'Details' }}
+      />
+    )
+    fireEvent.click(getByRole('button', { name: 'Details' }))
+    expect(getByRole('button', { name: 'Weniger' })).toBeInTheDocument()
+    expect(getByRole('button', { name: /Fehler/ })).toBeInTheDocument()
+  })
 })

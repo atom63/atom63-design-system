@@ -296,13 +296,18 @@ export {
   EmptyMedia,
   EmptyTitle,
 } from './components/empty'
-export type { EmptyMediaVariant } from './components/empty'
+export type {
+  EmptyErrorDetailLabels,
+  EmptyErrorDetailProps,
+  EmptyMediaVariant,
+} from './components/empty'
 export { FeedbackState } from './components/feedback-state'
 export type {
   FeedbackStateAction,
   FeedbackStateIcon,
   FeedbackStateIconName,
   FeedbackStateKind,
+  FeedbackStateLabels,
   FeedbackStateProps,
   FeedbackStateSize,
 } from './components/feedback-state'

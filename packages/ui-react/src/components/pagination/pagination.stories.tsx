@@ -85,6 +85,50 @@ export const FirstPage: Story = {
     }
     previous.focus()
     if (document.activeElement === previous) throw new Error('Expected Previous to be unfocusable')
+    const label = previous.querySelector<HTMLElement>('.a63-Button-label')
+    if (!label || Number(getComputedStyle(label).opacity) >= 1) {
+      throw new Error('Expected the disabled Previous to be drawn faded')
+    }
+  },
+}
+
+/** Under dir="rtl" the list runs from the right and the chevrons mirror, so Previous points
+ *  to the inline start. Children replace the visible labels. */
+export const RightToLeft: Story = {
+  render: () => (
+    <div dir="rtl" lang="ar">
+      <Pagination aria-label="ترقيم الصفحات">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious aria-label="الصفحة السابقة" href="#previous">
+              السابق
+            </PaginationPrevious>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#page-1">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#page-2" isActive>
+              2
+            </PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis>صفحات أخرى</PaginationEllipsis>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext aria-label="الصفحة التالية" href="#next">
+              التالي
+            </PaginationNext>
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const icon = canvasElement.querySelector<SVGElement>('[aria-label="الصفحة السابقة"] svg')
+    if (!icon || getComputedStyle(icon).transform === 'none') {
+      throw new Error('Expected the Previous chevron to mirror under dir="rtl"')
+    }
   },
 }
 

@@ -8,7 +8,7 @@
 
 ## Summary
 
-- Root export symbols: **652** across **82** source families.
+- Root export symbols: **655** across **82** source families.
 - Package export-map subpaths: **86**.
 - P0 root/source families: **30**.
 - P1 root/source families: **12**.
@@ -27,7 +27,7 @@
 
 ### Root export tier counts
 
-- `beta-supported-composition-conditional`: 186
+- `beta-supported-composition-conditional`: 189
 - `beta-supported-core`: 356
 - `monitor-high-risk`: 79
 - `preview-experimental-candidate`: 31
@@ -83,8 +83,8 @@
 | `components/connected-panel`  | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      12 | `beta-supported-composition-conditional`: 12 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/context-menu`     | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      20 | `beta-supported-composition-conditional`: 20 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/dropdown-menu`    | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      20 | `beta-supported-composition-conditional`: 20 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
-| `components/empty`            | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |       8 | `beta-supported-composition-conditional`: 8  | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
-| `components/feedback-state`   | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |       7 | `beta-supported-composition-conditional`: 7  | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
+| `components/empty`            | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      10 | `beta-supported-composition-conditional`: 10 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
+| `components/feedback-state`   | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |       8 | `beta-supported-composition-conditional`: 8  | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/frame`            | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |       8 | `beta-supported-composition-conditional`: 8  | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/hover-card`       | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |       4 | `beta-supported-composition-conditional`: 4  | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |
 | `components/item`             | P1       | `document-before-stable` | `not-required`  | `matrix-action-only` |      14 | `beta-supported-composition-conditional`: 14 | Keep in root only if composition docs and focused coverage remain green; otherwise downgrade to monitor before stable. |

@@ -110,6 +110,7 @@
   --a63-control-min-target: 2.25rem;
   --a63-control-min-target-lg: var(--a63-control-min-target);
   --a63-control-min-target-xl: var(--a63-control-min-target);
+  --a63-row-min-size: var(--a63-control-min-size);
   --a63-density-scale: 1;
   --a63-editable-font-size-min: 0px;
   --a63-safe-area-top: env(safe-area-inset-top, 0px);
@@ -167,6 +168,7 @@
   --a63-action-disabled-background: var(--a63-surface-muted);
   --a63-action-disabled-border: var(--a63-border-subtle);
   --a63-action-disabled-foreground: var(--muted-foreground);
+  --a63-action-disabled-opacity: 0.56;
   --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
   --a63-action-danger-subtle-foreground: color-mix(
     in oklch,
@@ -406,6 +408,7 @@
     --a63-control-min-target: 2.75rem;
     --a63-control-min-target-lg: 3rem;
     --a63-control-min-target-xl: 3.25rem;
+    --a63-row-min-size: 2.75rem;
   }
 }
 

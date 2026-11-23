@@ -5,6 +5,7 @@
 ```ts
 
 import { ChartColor } from '@atom63/ui-foundation';
+import { ChartLayout } from '@atom63/ui-foundation';
 import { ChartSize } from '@atom63/ui-foundation';
 import { ChartType } from '@atom63/ui-foundation';
 import * as React_2 from 'react';
@@ -14,8 +15,10 @@ export function Chart(input: ChartProps): React_2.ReactElement;
 
 // @public (undocumented)
 export interface ChartLabels {
+    empty?: string;
     hideTable?: string;
     keyboardHint?: string;
+    plot?: string;
     showTable?: string;
 }
 
@@ -26,6 +29,7 @@ export type ChartProps = Omit<React_2.ComponentProps<'figure'>, 'children'> & {
     categories: readonly string[];
     series: readonly ChartSeries[];
     type?: ChartType;
+    layout?: ChartLayout;
     stacked?: boolean;
     size?: ChartSize;
     formatValue?: (value: number) => string;

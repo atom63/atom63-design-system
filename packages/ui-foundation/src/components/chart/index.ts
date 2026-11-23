@@ -2,6 +2,7 @@
 export {
   chartColors,
   chartContract,
+  chartLayouts,
   chartSizes,
   chartSlots,
   chartStates,
@@ -11,6 +12,7 @@ export {
 export type {
   ChartColor,
   ChartContract,
+  ChartLayout,
   ChartSize,
   ChartSlot,
   ChartState,

@@ -170,7 +170,7 @@ export const Compositions: Story = {
       {/* Full composable slots (the blog's "Header, tags, and footer" example):
           header carries a leading label + a trailing action, content holds
           title/desc/tags, footer sits flush (pt-0) with meta + its own action. */}
-      <Card style={{ width: 300 }} variant="interactive">
+      <Card style={{ width: 300 }}>
         <CardHeader padding="md">
           <CardLabel style={{ color: 'var(--a63-text-secondary)' }}>Case study</CardLabel>
           <CardAction>
@@ -201,7 +201,15 @@ export const Compositions: Story = {
       </Card>
 
       {/* Article / resource card: media + content + tags + footer action */}
-      <Card style={{ width: 260 }} variant="interactive">
+      <Card
+        render={({ children, ...props }) => (
+          <a {...props} href="#resource-article">
+            {children}
+          </a>
+        )}
+        style={{ width: 260 }}
+        variant="interactive"
+      >
         <CardMedia aspectRatio="16/9">
           <MediaFill />
         </CardMedia>
@@ -275,6 +283,11 @@ function LinkCard() {
       onPointerLeave={cursor.onPointerLeave}
       onPointerMove={cursor.onPointerMove}
       ref={cursor.ref}
+      render={({ children, ...props }) => (
+        <a {...props} href="#external-link">
+          {children}
+        </a>
+      )}
       style={{ width: 300 }}
       variant="interactive"
     >
@@ -292,6 +305,42 @@ function LinkCard() {
 
 export const CursorLabel: Story = {
   render: () => <LinkCard />,
+}
+
+function ActionCards() {
+  return (
+    <div style={{ display: 'flex', gap: 24, padding: 8 }}>
+      {['Hovered or focused', 'At rest'].map(title => (
+        <Card
+          key={title}
+          render={({ children, ...props }) => (
+            <a {...props} href={`#${title}`}>
+              {children}
+            </a>
+          )}
+          style={{ width: 220 }}
+          variant="interactive"
+        >
+          <CardContent>
+            <CardTitle>{title}</CardTitle>
+            <CardDescription>The whole card is the link.</CardDescription>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  )
+}
+
+/** An interactive card under a fine pointer lifts; the card beside it is at rest. */
+export const Hover: Story = {
+  render: () => <ActionCards />,
+  parameters: { visualState: { hover: 'a.a63-Card' } },
+}
+
+/** Keyboard focus on a card that is itself the link draws the focus ring and the same lift. */
+export const FocusVisible: Story = {
+  render: () => <ActionCards />,
+  parameters: { visualState: { focusVisible: 'a.a63-Card' } },
 }
 
 /* Surface theming: modern soft-flush · aqua lift · retro Win98 bevel · terminal

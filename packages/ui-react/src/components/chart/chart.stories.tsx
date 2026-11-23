@@ -1,5 +1,5 @@
-import { chartSizes, chartTypes, themes } from '@atom63/ui-foundation'
-import { UIProvider } from '@atom63/ui-react'
+import { chartLayouts, chartSizes, chartTypes, themes } from '@atom63/ui-foundation'
+import { Skeleton, UIProvider } from '@atom63/ui-react'
 import { Chart } from '@atom63/ui-react/chart'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
@@ -37,7 +37,7 @@ const meta = {
   argTypes: {
     size: { control: 'inline-radio', options: chartSizes },
     type: { control: 'inline-radio', options: chartTypes },
-    stacked: { control: 'boolean' },
+    layout: { control: 'inline-radio', options: chartLayouts },
     table: { control: 'inline-radio', options: ['hidden', 'toggle'] },
   },
   args: {
@@ -98,7 +98,7 @@ export const Types: Story = {
         label="Accounts by plan and quarter"
         series={plans}
         size="sm"
-        stacked
+        layout="stacked"
         type="bar"
       />
     </div>
@@ -208,4 +208,63 @@ export const RightToLeft: Story = {
       <Chart {...args} />
     </UIProvider>
   ),
+}
+
+/** No categories or no series: the plot shows `labels.empty` and leaves the tab order. */
+export const Empty: Story = {
+  args: { categories: [], labels: { empty: 'No revenue recorded yet.' } },
+  play: async ({ canvasElement }) => {
+    const empty = canvasElement.querySelector('[data-slot="chart-empty"]')
+    if (empty?.textContent !== 'No revenue recorded yet.') {
+      throw new Error('Expected the empty message in the plot')
+    }
+  },
+}
+
+/** While the data loads, hold the chart's place with a Skeleton the size of the plot and
+ *  set `aria-busy` on the region; render the Chart once the numbers arrive. */
+export const Loading: Story = {
+  render: () => (
+    <section
+      aria-busy="true"
+      aria-label="MRR movement by month"
+      style={{ display: 'grid', gap: 8 }}
+    >
+      <Skeleton style={{ height: 16, width: 160 }} />
+      <Skeleton style={{ height: 240 }} />
+    </section>
+  ),
+}
+
+/** On a phone a tap picks the category under the finger and the reading stays after the
+ *  finger lifts; a tap outside clears it. The table toggle gives the exact numbers. */
+export const Phone: Story = {
+  args: { categories: months.slice(0, 6), size: 'sm', table: 'toggle' },
+  decorators: [
+    Story => (
+      <UIProvider input="touch">
+        <div style={{ width: 343 }}>
+          <Story />
+        </div>
+      </UIProvider>
+    ),
+  ],
+  play: async ({ canvasElement }) => {
+    const plot = canvasElement.querySelector<HTMLElement>('[data-slot="chart-plot"]')
+    if (!plot) throw new Error('Expected the plot')
+    const rect = plot.getBoundingClientRect()
+    const init = {
+      bubbles: true,
+      clientX: rect.left + rect.width * 0.25,
+      clientY: rect.top + rect.height / 2,
+      pointerType: 'touch',
+    }
+    plot.dispatchEvent(new PointerEvent('pointerdown', init))
+    plot.dispatchEvent(new PointerEvent('pointerup', init))
+    plot.dispatchEvent(new PointerEvent('pointerleave', init))
+    await new Promise(resolve => setTimeout(resolve, 0))
+    if (!canvasElement.querySelector('[data-slot="chart-tooltip"]')) {
+      throw new Error('Expected a tap to keep the reading after the finger lifts')
+    }
+  },
 }

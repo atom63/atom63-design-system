@@ -1,4 +1,4 @@
-import { paginationContract } from '@atom63/ui-foundation'
+import { type PaginationLinkSize, paginationContract } from '@atom63/ui-foundation'
 import { mergeProps } from '@base-ui/react/merge-props'
 import type { useRender } from '@base-ui/react/use-render'
 import { ChevronLeft, ChevronRight, Ellipsis } from 'lucide-react'
@@ -6,7 +6,7 @@ import { cloneElement, isValidElement } from 'react'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
-import { Button, type ButtonProps } from '../button'
+import { Button } from '../button'
 
 /* Pagination — the page-navigation cluster. Faithful port of prod @atom63/ui
    Pagination: a <nav> wrapping a <ul> of items; each interactive control is a
@@ -56,8 +56,9 @@ export type PaginationLinkProps = {
    *  or a function of the merged props. The element must spread the props it receives and
    *  forward its ref. Ignored while `disabled`, which always renders an `<a>` without an href. */
   render?: useRender.RenderProp
-} & Pick<ButtonProps, 'size'> &
-  React.ComponentProps<'a'>
+  /** A Button size that fits a page link: the text sizes up to md and the icon sizes up to icon. */
+  size?: PaginationLinkSize
+} & React.ComponentProps<'a'>
 
 export function PaginationLink({
   children,
@@ -80,9 +81,9 @@ export function PaginationLink({
       type: _type,
       ...rest
     } = buttonProps as React.ComponentProps<'button'>
+    // Keep Button's own children: its label span carries the disabled fade.
     const merged = {
       ...mergeProps<'a'>(rest as React.ComponentProps<'a'>, anchorProps),
-      children,
       'data-disabled': disabled ? '' : undefined,
     }
     if (typeof render === 'function' && !disabled) return render(merged, state)
@@ -100,13 +101,18 @@ export function PaginationLink({
       render={renderLink}
       size={size}
       variant={isActive ? 'outline' : 'ghost'}
-    />
+    >
+      {children}
+    </Button>
   )
 }
 
+/** `children` replaces the visible "Previous" label, such as with a translation; pass a
+ *  matching `aria-label` too. The chevron mirrors under `dir="rtl"`. */
 export type PaginationPreviousProps = React.ComponentProps<typeof PaginationLink>
 
 export function PaginationPrevious({
+  children = 'Previous',
   className,
   ...props
 }: PaginationPreviousProps): React.ReactElement {
@@ -118,14 +124,20 @@ export function PaginationPrevious({
       {...props}
     >
       <ChevronLeft aria-hidden />
-      <span className="a63-Pagination-nav-label">Previous</span>
+      <span className="a63-Pagination-nav-label">{children}</span>
     </PaginationLink>
   )
 }
 
+/** `children` replaces the visible "Next" label, such as with a translation; pass a
+ *  matching `aria-label` too. The chevron mirrors under `dir="rtl"`. */
 export type PaginationNextProps = React.ComponentProps<typeof PaginationLink>
 
-export function PaginationNext({ className, ...props }: PaginationNextProps): React.ReactElement {
+export function PaginationNext({
+  children = 'Next',
+  className,
+  ...props
+}: PaginationNextProps): React.ReactElement {
   return (
     <PaginationLink
       aria-label="Go to next page"
@@ -133,15 +145,17 @@ export function PaginationNext({ className, ...props }: PaginationNextProps): Re
       size="md"
       {...props}
     >
-      <span className="a63-Pagination-nav-label">Next</span>
+      <span className="a63-Pagination-nav-label">{children}</span>
       <ChevronRight aria-hidden />
     </PaginationLink>
   )
 }
 
+/** `children` replaces the visually hidden "More pages" text. */
 export type PaginationEllipsisProps = React.ComponentProps<'span'>
 
 export function PaginationEllipsis({
+  children = 'More pages',
   className,
   ...props
 }: PaginationEllipsisProps): React.ReactElement {
@@ -152,7 +166,7 @@ export function PaginationEllipsis({
       {...props}
     >
       <Ellipsis aria-hidden className="a63-Pagination-ellipsis-icon" />
-      <span className="a63-Pagination-sr-only">More pages</span>
+      <span className="a63-Pagination-sr-only">{children}</span>
     </span>
   )
 }

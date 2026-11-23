@@ -244,6 +244,19 @@
   }
 }
 
+/* No categories or no series: a quiet message centred in the plot. */
+.a63-Chart-empty {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-sm-font-size);
+  text-align: center;
+}
+
 .a63-Chart-table-toggle {
   align-self: flex-start;
 }
@@ -313,4 +326,8 @@
   .a63-Chart-plot:focus-visible {
     outline-color: Highlight;
   }
+}
+
+.a63-Chart[data-empty] .a63-Chart-tick {
+  visibility: hidden;
 }

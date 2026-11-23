@@ -7,4 +7,4 @@ export {
   EmptyMedia,
   EmptyTitle,
 } from './empty'
-export type { EmptyMediaVariant } from './empty'
+export type { EmptyErrorDetailLabels, EmptyErrorDetailProps, EmptyMediaVariant } from './empty'

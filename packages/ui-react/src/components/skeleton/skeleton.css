@@ -35,6 +35,18 @@
   }
 }
 
+/* The shimmer sweeps toward the inline end. */
+.a63-Skeleton:dir(rtl)::after {
+  scale: -1 1;
+}
+
+/* Forced colors paint the fill as Canvas, so the placeholder keeps a faint edge. */
+@media (forced-colors: active) {
+  .a63-Skeleton {
+    border: 1px solid GrayText;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .a63-Skeleton::after {
     animation: none;
