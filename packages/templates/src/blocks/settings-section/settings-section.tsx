@@ -1,4 +1,4 @@
-import { Card, Switch } from '@atom63/ui-react'
+import { Card, Spinner, Switch } from '@atom63/ui-react'
 import { SectionHeader } from '@atom63/ui-react/layout'
 import { type ReactNode, useId } from 'react'
 
@@ -58,23 +58,35 @@ export interface SettingsRowProps {
   children: (ids: SettingsRowIds) => ReactNode
   description?: ReactNode
   label: string
+  /**
+   * `false` when the control names itself, such as a button: the label renders
+   * as text with `labelId`, not as a `<label>` pointing at `controlId`.
+   */
+  labelFor?: boolean
 }
 
 /*
  * One setting with any control beside its label: a field, a select, a link or
- * a destructive button. A button names itself, so pass it only
- * `descriptionId`. On a phone a wide control drops under the label.
+ * a destructive button. A button has no `<label>`: set `labelFor={false}`
+ * and name it with `labelId` (`aria-labelledby`), so its own text can stay
+ * short. On a phone a wide control drops under the label.
  */
-export function SettingsRow({ children, description, label }: SettingsRowProps) {
+export function SettingsRow({ children, description, label, labelFor = true }: SettingsRowProps) {
   const controlId = useId()
   const labelId = useId()
   const descriptionId = useId()
   return (
     <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 p-4">
       <div className="flex min-w-0 flex-[1_1_16rem] flex-col gap-1">
-        <label className="text-foreground text-sm font-medium" htmlFor={controlId} id={labelId}>
-          {label}
-        </label>
+        {labelFor ? (
+          <label className="text-foreground text-sm font-medium" htmlFor={controlId} id={labelId}>
+            {label}
+          </label>
+        ) : (
+          <span className="text-foreground text-sm font-medium" id={labelId}>
+            {label}
+          </span>
+        )}
         {description ? (
           <span className="text-muted-foreground text-sm" id={descriptionId}>
             {description}
@@ -99,6 +111,8 @@ export interface SettingsSwitchRowProps {
   onCheckedChange: (checked: boolean) => void
   /** The change is saving: the switch shows the new value and waits. */
   pending?: boolean
+  /** Shown with a spinner in place of the description while `pending`; "Saving…" by default. */
+  pendingLabel?: string
 }
 
 /*
@@ -113,11 +127,14 @@ export function SettingsSwitchRow({
   label,
   onCheckedChange,
   pending = false,
+  pendingLabel = 'Saving…',
 }: SettingsSwitchRowProps) {
   const switchId = useId()
   const labelId = useId()
   const descriptionId = useId()
-  const detail = disabledReason ?? error ?? description
+  const saving = pending && disabledReason === undefined
+  const failed = error !== undefined && !saving && disabledReason === undefined
+  const detail = disabledReason ?? (saving ? pendingLabel : (error ?? description))
   return (
     <div className="flex items-start justify-between gap-4 p-4">
       <div className="flex min-w-0 flex-col gap-1">
@@ -127,13 +144,17 @@ export function SettingsSwitchRow({
         {detail ? (
           <span
             className={
-              error && !disabledReason
+              failed
                 ? 'text-sm text-[var(--a63-text-danger)]'
-                : 'text-muted-foreground text-sm'
+                : 'text-muted-foreground flex items-center gap-1.5 text-sm'
             }
+            data-pending={saving || undefined}
             id={descriptionId}
-            role={error && !disabledReason ? 'alert' : undefined}
+            role={failed ? 'alert' : undefined}
           >
+            {saving && (
+              <Spinner aria-hidden aria-label={undefined} className="size-3.5" role={undefined} />
+            )}
             {detail}
           </span>
         ) : null}

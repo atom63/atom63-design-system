@@ -77,7 +77,7 @@ export const wideGlobals = { viewport: { value: 'a63-wide', isRotated: false } }
 export const compactGlobals = { viewport: { value: 'a63-compact', isRotated: false } }
 export const tabletGlobals = { viewport: { value: 'a63-tablet', isRotated: false } }
 export const responsivePhoneGlobals = { viewport: { value: 'a63-phone', isRotated: false } }
-export const phoneGlobals = { viewport: { value: 'mobile2', isRotated: false } }
+export const phoneGlobals = responsivePhoneGlobals
 
 /*
  * Checks a full-page template's safe-area owners with emulated insets, as on a
