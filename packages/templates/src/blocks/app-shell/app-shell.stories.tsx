@@ -77,7 +77,8 @@ export const WithUser: Story = {
     if (!menu?.textContent?.includes('Sign out')) throw new Error('The account menu did not open')
     // Close it again: the menu renders in a portal, outside the page's landmarks.
     menu.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, key: 'Escape' }))
-    await wait(300)
+    // The exit animation can run long on a loaded runner, so poll instead of one fixed wait.
+    for (let i = 0; i < 20 && document.querySelector('[role="menu"]'); i++) await wait(100)
     if (document.querySelector('[role="menu"]')) throw new Error('The account menu did not close')
   },
 }
