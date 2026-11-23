@@ -145,7 +145,11 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // drops it.
 // Merged with Table sorting (#335), which Chart reuses, the total is 104.0 kB; the
 // budget keeps about 2% headroom at 106.
-const gzipBudgetBytes = 106 * 1024
+// Readiness fix round 6 (#348-#353: Popover anchors, Toaster hydration and
+// slots, Select keyboard handling, Item list semantics, Chart empty, loading
+// and touch states) brings the total to 106.7-107.1 kB; the budget keeps about 1%
+// headroom at 108.
+const gzipBudgetBytes = 108 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
