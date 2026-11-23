@@ -21,9 +21,21 @@
   /* Row hover is half the neutral selected fill, so a selected row stays
      visibly stronger than a hovered one in either tone. */
   --table-row-hover: color-mix(in oklch, var(--a63-selected-background) 50%, transparent);
+  /* overflow-x: auto clips the block axis too, so the touch target of a control in the
+     first or last row (a sort button, a row checkbox or menu) and its focus ring would be cut
+     at the top and bottom edges. The container pads those edges by as much as a target
+     reaches past a control's rendered floor, or the ring width if that is more, and takes the
+     padding back with a negative margin, so the table stays where it was. The inline edges
+     stay flush: bleeding there would push a full-width table past the viewport. */
+  --table-bleed: max(
+    var(--a63-control-focus-ring-width),
+    calc((var(--a63-control-min-target) - var(--a63-control-min-size)) / 2)
+  );
 
   position: relative;
   width: 100%;
+  margin-block: calc(-1 * var(--table-bleed));
+  padding-block: var(--table-bleed);
   overflow-x: auto;
   scrollbar-width: thin;
 }
@@ -74,6 +86,12 @@
    with the column's text at either edge. */
 .a63-Table-sort-button {
   margin-inline: calc(-1 * var(--button-padding-inline, 0px));
+}
+/* align="end": numbers and money line up at the inline end, in tabular figures. */
+.a63-Table-head[data-align='end'],
+.a63-Table-cell[data-align='end'] {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
 }
 .a63-Table-head:has([role='checkbox']) {
   width: 1px;
@@ -312,5 +330,14 @@
 @media (prefers-reduced-motion: reduce) {
   .a63-Table-row {
     transition: none;
+  }
+}
+
+/* Forced colors drop the selected fill, so a selected row's cells take the system
+   selection colours instead. */
+@media (forced-colors: active) {
+  .a63-Table-row[data-state='selected'] > :is(.a63-Table-head, .a63-Table-cell) {
+    background-color: Highlight;
+    color: HighlightText;
   }
 }

@@ -1023,6 +1023,7 @@
         "card-media-overlay",
         "card-media-overlay-image",
         "card-media-overlay-scrim",
+        "card-media-overlay-top-end",
         "card-media-overlay-top-right",
         "card-media-overlay-bottom",
         "card-media-overlay-icon-button",
@@ -1034,7 +1035,7 @@
         "card-action",
         "card-cursor-label"
       ],
-      "states": ["rest", "hover", "focus-visible", "interactive", "cursor-active"],
+      "states": ["rest", "hover", "pressed", "focus-visible", "interactive", "cursor-active"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
       "intent": {
@@ -1212,9 +1213,10 @@
         "chart-x-axis",
         "chart-tooltip",
         "chart-table",
-        "chart-table-toggle"
+        "chart-table-toggle",
+        "chart-empty"
       ],
-      "states": ["rest", "current"],
+      "states": ["rest", "current", "empty"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },
@@ -3329,6 +3331,7 @@
           "default": "md"
         },
         { "name": "stickyEdges", "values": ["start", "end"] },
+        { "name": "aligns", "values": ["start", "end"] },
         { "name": "tones", "values": ["neutral", "accent"], "default": "neutral" }
       ],
       "slots": [

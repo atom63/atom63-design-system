@@ -13,6 +13,10 @@
     },
     "tones": ["neutral", "accent"],
     "stickyEdges": ["start", "end"],
+    "aligns": {
+      "description": "How a head or body cell aligns its content. start is the default; end aligns the content to the inline end with tabular figures, for numbers and money, so digits line up.",
+      "values": ["start", "end"]
+    },
     "states": ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"],
     "slots": [
       "table-container",
@@ -40,6 +44,9 @@
     },
     "stickyEdges": {
       "$ref": "#/lists/stickyEdges"
+    },
+    "aligns": {
+      "$ref": "#/lists/aligns"
     },
     "states": {
       "$ref": "#/lists/states"

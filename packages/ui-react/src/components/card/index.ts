@@ -13,6 +13,7 @@ export {
   CardMediaOverlayIconButton,
   CardMediaOverlayImage,
   CardMediaOverlayScrim,
+  CardMediaOverlayTopEnd,
   CardMediaOverlayTopRight,
   CardTags,
   CardTitle,

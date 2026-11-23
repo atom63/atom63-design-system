@@ -169,6 +169,9 @@ export const Endpoints: Story = {
       <UIProvider designLanguage="web" input="pointer">
         <EndpointPagination label="Web" />
       </UIProvider>
+      <UIProvider designLanguage="web" input="touch">
+        <EndpointPagination label="Web touch" />
+      </UIProvider>
       <UIProvider designLanguage="ios" input="touch">
         <EndpointPagination label="iOS touch" />
       </UIProvider>
@@ -177,6 +180,66 @@ export const Endpoints: Story = {
       </UIProvider>
     </div>
   ),
+}
+
+/** The pointer rests on page 3: the ghost link takes the Button hover fill. */
+export const Hover: Story = {
+  render: () => <Demo />,
+  parameters: { visualState: { hover: 'a[href="#page-3"]' } },
+}
+
+/** Keyboard focus on page 1 draws the Button ring, whole: the scrolling list pads its edges
+ *  by the ring width, so the list does not clip it. */
+export const FocusVisible: Story = {
+  render: () => <Demo />,
+  parameters: { visualState: { focusVisible: 'a[href="#page-1"]' } },
+}
+
+/* Page 5 of 10, windowed: first, last and the pages around the current one. */
+const phonePages = [1, 'start-gap', 4, 5, 6, 'end-gap', 10] as const
+
+/** At phone width with touch input: the Previous and Next labels are visually hidden and the
+ *  list scrolls if it runs out of room. The list pads its edges, so a page link's 44px touch
+ *  target reaches past its 32px box instead of being cut off by the scroller. */
+export const Phone: Story = {
+  render: () => (
+    <UIProvider designLanguage="web" input="touch" style={{ paddingBlock: 16 }}>
+      <Pagination>
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#previous" />
+          </PaginationItem>
+          {phonePages.map(page => (
+            <PaginationItem key={page}>
+              {typeof page === 'number' ? (
+                <PaginationLink href={`#page-${page}`} isActive={page === 5}>
+                  {page}
+                </PaginationLink>
+              ) : (
+                <PaginationEllipsis />
+              )}
+            </PaginationItem>
+          ))}
+          <PaginationItem>
+            <PaginationNext href="#next" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    </UIProvider>
+  ),
+  play: ({ canvasElement }) => {
+    const link = canvasElement.querySelector<HTMLElement>('a[href="#page-4"]')
+    if (!link) throw new Error('Expected the page 4 link')
+    const rect = link.getBoundingClientRect()
+    for (const y of [rect.top - 4, rect.bottom + 4]) {
+      const hit = document.elementFromPoint(rect.left + rect.width / 2, y)
+      if (!hit || !link.contains(hit)) {
+        throw new Error(
+          'Expected a tap 4px outside the page link, inside its touch target, to reach it'
+        )
+      }
+    }
+  },
 }
 
 export const ContractMetadata: Story = {

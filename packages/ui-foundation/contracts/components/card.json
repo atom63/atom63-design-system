@@ -15,6 +15,7 @@
       "card-media-overlay",
       "card-media-overlay-image",
       "card-media-overlay-scrim",
+      "card-media-overlay-top-end",
       "card-media-overlay-top-right",
       "card-media-overlay-bottom",
       "card-media-overlay-icon-button",
@@ -26,7 +27,7 @@
       "card-action",
       "card-cursor-label"
     ],
-    "states": ["rest", "hover", "focus-visible", "interactive", "cursor-active"],
+    "states": ["rest", "hover", "pressed", "focus-visible", "interactive", "cursor-active"],
     "visualArchetypes": ["surface"]
   },
   "contract": {

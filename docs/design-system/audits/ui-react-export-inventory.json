@@ -47,7 +47,7 @@
     ]
   },
   "counts": {
-    "rootValueExports": 443,
+    "rootValueExports": 444,
     "rootTypeExports": 214,
     "packageExportKeys": 86,
     "cssExportKeys": 78
@@ -1192,6 +1192,10 @@
         },
         {
           "name": "CardMediaOverlayScrim",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayTopEnd",
           "proposedTier": "beta-supported-core"
         },
         {

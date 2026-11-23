@@ -266,5 +266,9 @@ export const Phone: Story = {
     if (!canvasElement.querySelector('[data-slot="chart-tooltip"]')) {
       throw new Error('Expected a tap to keep the reading after the finger lifts')
     }
+    const category = canvasElement.querySelector<HTMLElement>('.a63-Chart-category')
+    if (!category || getComputedStyle(category).textOverflow !== 'ellipsis') {
+      throw new Error('Expected a cut category label to end in an ellipsis')
+    }
   },
 }

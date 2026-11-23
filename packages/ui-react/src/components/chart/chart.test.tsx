@@ -72,7 +72,7 @@ describe('Chart', () => {
 
   it('stacks bars on each other', () => {
     const { container } = render(
-      <Chart categories={categories} label="Stacked" series={series} stacked type="bar" />
+      <Chart categories={categories} label="Stacked" layout="stacked" series={series} type="bar" />
     )
     const [newBars, churnedBars] = [...container.querySelectorAll('.a63-Chart-series')]
     const top = (rect: Element | undefined) => Number(rect?.getAttribute('y'))
@@ -196,6 +196,31 @@ describe('Chart', () => {
     expect(screen.getByRole('figure')).toHaveAttribute('data-layout', 'stacked')
     expect(container.querySelectorAll('tbody tr')).toHaveLength(2)
     expect(container.querySelectorAll('[data-slot="chart-legend"] li')).toHaveLength(2)
+  })
+
+  it('names every slot and state it renders in its contract', () => {
+    const { container } = render(
+      <>
+        <Chart categories={categories} label="Slots" series={series} table="toggle" />
+        <Chart categories={[]} label="Empty" series={series} />
+      </>
+    )
+    const slots = new Set(
+      [...container.querySelectorAll('[data-slot^="chart"]')].map(node =>
+        node.getAttribute('data-slot')
+      )
+    )
+    for (const slot of slots) expect(chartContract.slots).toContain(slot)
+    expect(chartContract.states).toContain('empty')
+  })
+
+  it('takes layout, not the removed stacked boolean', () => {
+    // Type-level only: the typecheck fails if `stacked` comes back.
+    const old = () => (
+      // @ts-expect-error `stacked` was removed in favour of `layout="stacked"`.
+      <Chart categories={categories} label="Old" series={series} stacked type="bar" />
+    )
+    expect(typeof old).toBe('function')
   })
 
   it('shows the table with the toggle', () => {

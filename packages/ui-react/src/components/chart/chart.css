@@ -233,7 +233,7 @@
 
 .a63-Chart-category {
   overflow: hidden;
-  text-overflow: clip;
+  text-overflow: ellipsis;
   white-space: nowrap;
 }
 

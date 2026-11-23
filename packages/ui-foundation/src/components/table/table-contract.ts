@@ -15,6 +15,9 @@ export const tableVariants = ['default', 'plain'] as const
 export const tableSizes = ['md', 'sm'] as const
 export const tableTones = ['neutral', 'accent'] as const
 export const tableStickyEdges = ['start', 'end'] as const
+// How a head or body cell aligns its content. start is the default; end aligns the content to the
+// inline end with tabular figures, for numbers and money, so digits line up.
+export const tableAligns = ['start', 'end'] as const
 export const tableStates = [
   'rest',
   'row-hover',
@@ -40,6 +43,7 @@ export type TableVariant = (typeof tableVariants)[number]
 export type TableSize = (typeof tableSizes)[number]
 export type TableTone = (typeof tableTones)[number]
 export type TableStickyEdge = (typeof tableStickyEdges)[number]
+export type TableAlign = (typeof tableAligns)[number]
 export type TableState = (typeof tableStates)[number]
 export type TableSlot = (typeof tableSlots)[number]
 export type TableVisualArchetype = (typeof tableVisualArchetypes)[number]
@@ -57,6 +61,7 @@ export interface TableContract {
   variants: readonly TableVariant[]
   sizes: readonly TableSize[]
   stickyEdges: readonly TableStickyEdge[]
+  aligns: readonly TableAlign[]
   states: readonly TableState[]
   slots: readonly TableSlot[]
   visualArchetypes: readonly TableVisualArchetype[]
@@ -70,6 +75,7 @@ export const tableContract = {
   variants: tableVariants,
   sizes: tableSizes,
   stickyEdges: tableStickyEdges,
+  aligns: tableAligns,
   states: tableStates,
   slots: tableSlots,
   visualArchetypes: tableVisualArchetypes,
