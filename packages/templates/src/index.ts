@@ -74,6 +74,7 @@ export {
   DashboardContent,
   type DashboardContentProps,
   DashboardPage,
+  type DashboardPageProps,
   type DashboardState,
 } from './pages/dashboard-page/dashboard-page'
 export { ListContent, ListPage, type ListPageProps } from './pages/list-page/list-page'

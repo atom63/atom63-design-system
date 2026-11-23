@@ -456,6 +456,9 @@
 }
 
 /* ── Menu button ─────────────────────────────────────────────────────────── */
+/* Rows floor at --a63-row-min-size: 44px on a touchscreen (a touch tablet, the
+   phone sheet), equal to --a63-control-min-size on a fine pointer. The icon
+   rail keeps its square button. */
 .a63-Sidebar-menu-button {
   display: flex;
   width: 100%;
@@ -473,7 +476,7 @@
     padding 150ms;
   height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
 }
 .a63-Sidebar-menu-button:hover,
@@ -523,21 +526,21 @@
 .a63-Sidebar-menu-button[data-size='default'] {
   height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
   font-size: var(--a63-control-font-size-sm);
 }
 .a63-Sidebar-menu-button[data-size='sm'] {
   height: max(
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
   font-size: var(--a63-control-font-size-xs);
 }
 .a63-Sidebar-menu-button[data-size='lg'] {
   height: max(
     calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size-lg, var(--a63-control-min-size))
+    var(--a63-row-min-size, var(--a63-control-min-size-lg, var(--a63-control-min-size)))
   );
   font-size: var(--a63-control-font-size-sm);
 }
@@ -715,7 +718,7 @@
   display: flex;
   height: max(
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
   min-width: 0;
   translate: -1px;
