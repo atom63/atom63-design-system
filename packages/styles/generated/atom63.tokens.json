@@ -14824,7 +14824,7 @@
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "color-mix(in oklch, var(--a63-action-primary) 80%, black)",
+      "value": "color-mix(in oklch, var(--a63-action-primary) 90%, black)",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {
@@ -14861,7 +14861,7 @@
       "name": "a63-text-tertiary",
       "cssVar": "--a63-text-tertiary",
       "type": "color",
-      "value": "var( --a63-if-light, color-mix(in oklch, var(--a63-action-primary) 80%, black) ) var( --a63-if-dark, color-mix( in oklab, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )",
+      "value": "var( --a63-if-light, color-mix(in oklch, var(--a63-action-primary) 90%, black) ) var( --a63-if-dark, color-mix( in oklab, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) ) )",
       "sourceFile": "packages/styles/src/themes/terminal.css",
       "layer": "theme",
       "figma": {

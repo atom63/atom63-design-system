@@ -163,6 +163,7 @@ import { TabsSize } from '@atom63/ui-foundation';
 import { TabsSizeAlias } from '@atom63/ui-foundation';
 import { TabsVariant } from '@atom63/ui-foundation';
 import { TextareaSize } from '@atom63/ui-foundation';
+import { TextareaVariant } from '@atom63/ui-foundation';
 import { TextTickerVariant } from '@atom63/ui-foundation';
 import { Theme } from '@atom63/ui-foundation';
 import { toast } from 'sonner';
@@ -2904,6 +2905,7 @@ export type TextareaProps = Omit<React$1.ComponentProps<'textarea'>, 'className'
     size?: TextareaSize;
     shadow?: boolean;
     textareaClassName?: string;
+    variant?: TextareaVariant;
     unstyled?: boolean;
 };
 

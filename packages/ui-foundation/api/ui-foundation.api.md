@@ -5594,6 +5594,8 @@ export interface TextareaContract {
     // (undocumented)
     defaultSize: TextareaSize;
     // (undocumented)
+    defaultVariant: TextareaVariant;
+    // (undocumented)
     sizes: readonly TextareaSize[];
     // (undocumented)
     slots: readonly TextareaSlot[];
@@ -5602,13 +5604,17 @@ export interface TextareaContract {
     // (undocumented)
     tokenSlots: readonly TextareaTokenSlot[];
     // (undocumented)
+    variants: readonly TextareaVariant[];
+    // (undocumented)
     visualArchetypes: readonly TextareaVisualArchetype[];
 }
 
 // @public (undocumented)
 export const textareaContract: {
     defaultSize: "md";
+    defaultVariant: "default";
     sizes: readonly ["sm", "md", "lg"];
+    variants: readonly ["default", "filled", "plain"];
     states: readonly ["rest", "hover", "focus", "disabled", "invalid"];
     slots: readonly ["textarea-control", "textarea"];
     tokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.paddingInline", "field.paddingBlock", "field.fontSize", "field.minHeight"];
@@ -5638,6 +5644,12 @@ export type TextareaTokenSlot = (typeof textareaTokenSlots)[number];
 
 // @public (undocumented)
 export const textareaTokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.paddingInline", "field.paddingBlock", "field.fontSize", "field.minHeight"];
+
+// @public (undocumented)
+export type TextareaVariant = (typeof textareaVariants)[number];
+
+// @public (undocumented)
+export const textareaVariants: readonly ["default", "filled", "plain"];
 
 // @public (undocumented)
 export type TextareaVisualArchetype = (typeof textareaVisualArchetypes)[number];

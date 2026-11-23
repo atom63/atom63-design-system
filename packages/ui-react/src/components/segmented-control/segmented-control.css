@@ -101,6 +101,15 @@
   color: var(--a63-segment-selected-foreground, var(--a63-text-primary));
 }
 
+/* Press feedback: the segment's content dips, as Toggle's does. The segment box
+   itself does not scale, so the plate measures it at full size. */
+.a63-SegmentedControl-item > span {
+  transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+.a63-SegmentedControl-item:active:not([data-disabled]) > span {
+  transform: scale(0.96);
+}
+
 /* Drawn inside the segment: the track scrolls (overflow-x), or clips when
    full-width, which would cut an outer ring at its edges. */
 .a63-SegmentedControl-item:focus-visible {
@@ -251,7 +260,11 @@
 
 @media (prefers-reduced-motion: reduce) {
   .a63-SegmentedControl-item,
+  .a63-SegmentedControl-item > span,
   .a63-SegmentedControl-indicator {
     transition: none;
+  }
+  .a63-SegmentedControl-item:active:not([data-disabled]) > span {
+    transform: none;
   }
 }

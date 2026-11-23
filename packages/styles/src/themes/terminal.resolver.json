@@ -247,9 +247,9 @@
                 "$type": "color",
                 "$value": "{a63.action.primary}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 80%, black)"
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 90%, black)"
                 },
-                "$description": "Placeholders and meta: a lighter phosphor ink on paper, still AA 4.5:1."
+                "$description": "Placeholders and meta: a lighter phosphor ink on paper, clearly below the primary ink and still AA 4.5:1."
               }
             },
             "border": {

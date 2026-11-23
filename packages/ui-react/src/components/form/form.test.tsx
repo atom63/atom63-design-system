@@ -1,6 +1,7 @@
-import { render } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { useForm } from 'react-hook-form'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { Checkbox } from '../checkbox'
 import { Input } from '../input'
@@ -244,4 +245,90 @@ describe('Form composition', () => {
       expect(control?.getAttribute('aria-describedby')).toContain(message?.getAttribute('id'))
     })
   }
+})
+
+type SignupValues = { email: string; plan: string | null }
+
+const PLANS = [
+  { value: 'free', label: 'Free' },
+  { value: 'team', label: 'Team' },
+]
+
+function SignupForm({ onValid }: { onValid: (values: SignupValues) => void }) {
+  const methods = useForm<SignupValues>({ defaultValues: { email: '', plan: null } })
+  return (
+    <Form {...methods}>
+      <form onSubmit={methods.handleSubmit(onValid)}>
+        <FormField
+          control={methods.control}
+          name="email"
+          rules={{ required: 'Email is required.' }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={methods.control}
+          name="plan"
+          rules={{ required: 'Choose a plan.' }}
+          render={({ field: { onChange, ref, value, ...field } }) => (
+            <FormItem>
+              <FormLabel>Plan</FormLabel>
+              <Select items={PLANS} onValueChange={onChange} value={value}>
+                <FormControl>
+                  <SelectTrigger ref={ref} {...field}>
+                    <SelectValue placeholder="Choose a plan" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectPopup>
+                  {PLANS.map(plan => (
+                    <SelectItem key={plan.value} value={plan.value}>
+                      {plan.label}
+                    </SelectItem>
+                  ))}
+                </SelectPopup>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <button type="submit">Sign up</button>
+      </form>
+    </Form>
+  )
+}
+
+describe('Form validation', () => {
+  it('runs the rules on submit, focuses the first invalid control and clears on change', async () => {
+    const onValid = vi.fn()
+    render(<SignupForm onValid={onValid} />)
+    const email = screen.getByRole('textbox', { name: 'Email' })
+    const plan = screen.getByRole('combobox', { name: 'Plan' })
+
+    await userEvent.click(screen.getByRole('button', { name: 'Sign up' }))
+
+    const alerts = await screen.findAllByRole('alert')
+    expect(alerts.map(alert => alert.textContent)).toEqual(['Email is required.', 'Choose a plan.'])
+    expect(email).toHaveAttribute('aria-invalid', 'true')
+    expect(plan).toHaveAttribute('aria-invalid', 'true')
+    expect(email.getAttribute('aria-describedby')).toBe(alerts[0]?.id)
+    expect(document.activeElement).toBe(email)
+    expect(onValid).not.toHaveBeenCalled()
+
+    // After a submit, react-hook-form revalidates on change: the error clears.
+    await userEvent.type(email, 'a@atom63.io')
+    await waitFor(() => expect(email).not.toHaveAttribute('aria-invalid'))
+    expect(screen.getAllByRole('alert').map(alert => alert.textContent)).toEqual(['Choose a plan.'])
+
+    // The next submit focuses the first control still invalid: the Select trigger.
+    await userEvent.click(screen.getByRole('button', { name: 'Sign up' }))
+    await waitFor(() => expect(document.activeElement).toBe(plan))
+    expect(onValid).not.toHaveBeenCalled()
+  })
 })

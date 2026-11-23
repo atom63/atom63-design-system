@@ -4,6 +4,10 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const textareaSizes = ['sm', 'md', 'lg'] as const
+// Field chrome, the same axis as Input's so a form's multi-line field matches its single-line ones.
+// default: the outlined form field. filled: a muted fill with no resting border. plain: no border or
+// fill and a separator below, for a field inside a menu, popover or composer.
+export const textareaVariants = ['default', 'filled', 'plain'] as const
 export const textareaStates = ['rest', 'hover', 'focus', 'disabled', 'invalid'] as const
 export const textareaSlots = ['textarea-control', 'textarea'] as const
 export const textareaTokenSlots = [
@@ -21,6 +25,7 @@ export const textareaTokenSlots = [
 export const textareaVisualArchetypes = ['field'] as const satisfies readonly VisualArchetypeId[]
 
 export type TextareaSize = (typeof textareaSizes)[number]
+export type TextareaVariant = (typeof textareaVariants)[number]
 export type TextareaState = (typeof textareaStates)[number]
 export type TextareaSlot = (typeof textareaSlots)[number]
 export type TextareaTokenSlot = (typeof textareaTokenSlots)[number]
@@ -28,7 +33,9 @@ export type TextareaVisualArchetype = (typeof textareaVisualArchetypes)[number]
 
 export interface TextareaContract {
   defaultSize: TextareaSize
+  defaultVariant: TextareaVariant
   sizes: readonly TextareaSize[]
+  variants: readonly TextareaVariant[]
   states: readonly TextareaState[]
   slots: readonly TextareaSlot[]
   tokenSlots: readonly TextareaTokenSlot[]
@@ -37,7 +44,9 @@ export interface TextareaContract {
 
 export const textareaContract = {
   defaultSize: 'md',
+  defaultVariant: 'default',
   sizes: textareaSizes,
+  variants: textareaVariants,
   states: textareaStates,
   slots: textareaSlots,
   tokenSlots: textareaTokenSlots,
