@@ -352,7 +352,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['empty', 'alert', 'toaster'],
     summary: 'Feedback State packages common empty, error, and no-results messages with actions.',
     usage:
-      'Use FeedbackState for the state of a data region (a table, a list, a widget): set state to loading, empty, error, not-found, no-results, offline or stale, and it supplies the icon and copy and announces each change (an error as an alert). For a one-off empty message you compose yourself, use Empty; for a whole page, the empty-state block. Keep the root mounted while the region loads, and keep technical detail secondary.',
+      'Use FeedbackState for the state of a data region (a table, a list, a widget): set state to loading, empty, error, not-found, no-results, offline or stale, and it supplies the icon and copy and announces each change (an error as an alert). For a one-off empty message you compose yourself, use Empty; for a whole page, the empty-state block. Keep the root mounted while the region loads. With state error and an Error, the friendly description stays and error.message shows as a smaller detail line under it. To localize, pass labels.titles and labels.descriptions (per kind) and labels.noResults.',
     usageExports: ['FeedbackState'],
   },
   field: {

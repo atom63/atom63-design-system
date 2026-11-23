@@ -6,8 +6,8 @@ import { Link } from '@tanstack/react-router'
 /* Outside the app shell, so it owns the main landmark and the page's h1. */
 export function NotFoundPage() {
   return (
-    <Page className="px-4 sm:px-6">
-      <Container maxWidth="wide" padding="none">
+    <Page>
+      <Container maxWidth="wide" padding="x">
         <PageHeader
           actions={<Button render={<Link to="/" />}>Go to the overview</Button>}
           description="The page may have moved, or the link has a typo."

@@ -10,6 +10,24 @@ import { findWarnings } from './vibe-measure.mjs'
 export const KINDS = { blocks: 'block', pages: 'page' }
 export const READINESS = ['draft', 'ready']
 export const REQUIRED_STORIES = ['Desktop', 'Phone', 'Themes']
+/*
+ * The flagship templates also need a story at the 768px tablet and 1440px wide
+ * widths (an export named, or ending in, `Tablet` and `Wide`, which the visual
+ * project captures at that width), since their layouts switch between them.
+ */
+export const RESPONSIVE_TEMPLATES = new Set([
+  'app-shell',
+  'dashboard-page',
+  'data-table-section',
+  'empty-state',
+  'filter-bar',
+  'list-page',
+  'page-header',
+  'settings-page',
+  'settings-section',
+  'stat-row',
+])
+const RESPONSIVE_STORIES = ['Tablet', 'Wide']
 const METADATA_FIELDS = ['id', 'kind', 'title', 'description', 'category', 'tags', 'readiness']
 
 /** Read the `export const template = { … } as const` literal from a template source. */
@@ -81,11 +99,18 @@ export function metadataProblems(metadata, { dir, id }) {
  * turns on axe's `region` and `label-content-name-mismatch` rules, so page
  * chrome a product copies must sit in landmarks and keep its visible labels.
  */
-export function storyProblems(storySource) {
+export function storyProblems(storySource, { responsive = false } = {}) {
   if (storySource === null) return ['has no stories file']
   const problems = REQUIRED_STORIES.filter(
     name => !new RegExp(`export const ${name}\\b`).test(storySource)
   ).map(name => `stories file has no \`${name}\` story`)
+  if (responsive) {
+    for (const width of RESPONSIVE_STORIES) {
+      if (!new RegExp(`export const \\w*${width}\\b`).test(storySource)) {
+        problems.push(`stories file has no \`${width}\` story (a flagship template)`)
+      }
+    }
+  }
   if (!/\blandmarkParameters\b/.test(storySource)) {
     problems.push('stories file does not pass `landmarkParameters` from story-matrix')
   }
@@ -141,7 +166,8 @@ export function checkTemplates(entries, catalogSource, baselines) {
         }
       }
     }
-    for (const message of storyProblems(entry.storySource)) report(entry, message)
+    const responsive = RESPONSIVE_TEMPLATES.has(entry.id)
+    for (const message of storyProblems(entry.storySource, { responsive })) report(entry, message)
   }
   for (const entry of entries) {
     if (entry.dir === 'blocks' && !usedBlocks.has(entry.id)) {

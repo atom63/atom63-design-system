@@ -1825,6 +1825,7 @@
         "feedback-state-media",
         "feedback-state-title",
         "feedback-state-description",
+        "feedback-state-detail",
         "feedback-state-content"
       ],
       "states": ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"],

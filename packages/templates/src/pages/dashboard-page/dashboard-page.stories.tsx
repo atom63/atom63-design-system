@@ -73,6 +73,9 @@ export const Empty: Story = {
   play: ({ canvasElement }) => {
     if (!canvasElement.textContent?.includes('No invoices yet'))
       throw new Error('The empty table state is missing')
+    const summary = canvasElement.querySelector('p[aria-live="polite"]')
+    if (summary?.textContent !== 'No invoices yet')
+      throw new Error(`The empty summary reads "${summary?.textContent}"`)
   },
 }
 
@@ -97,11 +100,22 @@ export const LongValues: Story = {
   },
 }
 
-/* Right-to-left: the rail on the right, the content beside it. */
+/*
+ * Right-to-left: the rail on the right, the content beside it. The shell's own
+ * strings come from `shellLabels`; the page copy is the template's to translate.
+ */
 export const RightToLeft: Story = {
   render: () => (
     <UIProvider dir="rtl">
-      <DashboardPage />
+      <DashboardPage
+        shellLabels={{
+          account: 'الحساب',
+          navigation: 'الرئيسية',
+          sheetDescription: 'يعرض الشريط الجانبي',
+          sheetTitle: 'الشريط الجانبي',
+          toggle: 'تبديل الشريط الجانبي',
+        }}
+      />
     </UIProvider>
   ),
   play: ({ canvasElement }) => {
@@ -110,6 +124,8 @@ export const RightToLeft: Story = {
     if (!rail || !main) throw new Error('Expected the rail and the main landmark')
     if (main.getBoundingClientRect().right > rail.getBoundingClientRect().left + 1)
       throw new Error('The rail covers the content under RTL')
+    if (!canvasElement.querySelector('nav[aria-label="الرئيسية"]'))
+      throw new Error('The shell labels are not passed through')
   },
 }
 
