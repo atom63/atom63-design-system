@@ -69,6 +69,48 @@ export const SaveFailed: Story = {
   },
 }
 
+/*
+ * A save that has not settled: the switch shows the new value and the row
+ * shows a spinner and "Saving…" until saveSetting resolves (here, never).
+ */
+export const Saving: Story = {
+  args: { saveSetting: () => new Promise<void>(() => undefined) },
+  play: async ({ canvasElement }) => {
+    const label = [...canvasElement.querySelectorAll('label')].find(
+      element => element.textContent === 'Invoice paid'
+    )
+    const toggle = label ? canvasElement.querySelector(`[aria-labelledby="${label.id}"]`) : null
+    if (!(toggle instanceof HTMLElement)) throw new Error('Expected the Invoice paid switch')
+    toggle.click()
+    await new Promise(resolve => setTimeout(resolve, 100))
+    if (
+      toggle.getAttribute('aria-checked') !== 'true' ||
+      toggle.getAttribute('aria-busy') !== 'true'
+    )
+      throw new Error('The saving switch does not show the new value and wait')
+    const detail = document.getElementById(toggle.getAttribute('aria-describedby') ?? '')
+    if (!detail?.textContent?.endsWith('Saving…') || !detail.querySelector('[data-slot="spinner"]'))
+      throw new Error('The saving row does not show a spinner and "Saving…"')
+  },
+}
+
+/* A button names itself: the danger-zone row's label is text, not a <label> for nothing. */
+export const DangerZone: Story = {
+  play: ({ canvasElement }) => {
+    const button = [...canvasElement.querySelectorAll('button')].find(
+      element => element.textContent === 'Delete'
+    )
+    if (!button) throw new Error('Expected the Delete button')
+    const label = document.getElementById(button.getAttribute('aria-labelledby') ?? '')
+    if (label?.textContent !== 'Delete workspace' || label.tagName === 'LABEL')
+      throw new Error('The Delete button is not named by its row label as plain text')
+    for (const element of canvasElement.querySelectorAll('label[for]')) {
+      if (!document.getElementById(element.getAttribute('for') ?? ''))
+        throw new Error(`"${element.textContent}" is a <label> for no control`)
+    }
+  },
+}
+
 /* Right-to-left: the rail on the right, the content beside it. */
 export const RightToLeft: Story = {
   render: () => (
