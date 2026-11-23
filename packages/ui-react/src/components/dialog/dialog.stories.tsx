@@ -47,34 +47,45 @@ type Story = StoryObj<typeof meta>
 type OpenMode = 'modal' | 'inline'
 
 function RenameDialog({
+  cancelLabel = 'Cancel',
+  closeLabel,
+  description = 'Give this project a new, memorable name.',
   open,
   portalContainerRef,
+  saveLabel = 'Save',
   size = 'md',
+  title = 'Rename project',
   triggerLabel = 'Rename project',
 }: {
+  cancelLabel?: string
+  closeLabel?: string
+  description?: string
   open?: OpenMode
   portalContainerRef?: RefObject<HTMLDivElement | null>
+  saveLabel?: string
   size?: (typeof dialogSizes)[number]
+  title?: string
   triggerLabel?: string
 }) {
   return (
     <Dialog defaultOpen={open !== undefined} modal={open === 'inline' ? false : undefined}>
       {open ? null : <DialogTrigger render={<Button variant="outline">{triggerLabel}</Button>} />}
       <DialogPopup
+        closeProps={closeLabel ? { 'aria-label': closeLabel } : undefined}
         initialFocus={open === 'inline' ? false : undefined}
         portalProps={{ container: portalContainerRef }}
         size={size}
       >
         <DialogHeader>
-          <DialogTitle>Rename project</DialogTitle>
-          <DialogDescription>Give this project a new, memorable name.</DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogPanel>
           <p style={{ margin: 0 }}>Any content can live in the scrollable panel.</p>
         </DialogPanel>
         <DialogFooter>
-          <DialogClose render={<Button variant="ghost">Cancel</Button>} />
-          <DialogClose render={<Button variant="primary">Save</Button>} />
+          <DialogClose render={<Button variant="ghost">{cancelLabel}</Button>} />
+          <DialogClose render={<Button variant="primary">{saveLabel}</Button>} />
         </DialogFooter>
       </DialogPopup>
     </Dialog>
@@ -223,6 +234,69 @@ export const Endpoints: Story = {
           surface: 'n2',
         }}
       />
+    </div>
+  ),
+}
+
+/* Keyboard focus on the built-in close button, beside a dialog at rest. */
+export const FocusVisibleClose: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
+      <div style={cellStyle}>
+        <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>focused close</span>
+        <OverlayStage>
+          {container => <RenameDialog open="inline" portalContainerRef={container} />}
+        </OverlayStage>
+      </div>
+    </div>
+  ),
+  parameters: { visualState: { focusVisible: '.a63-Dialog-close-button' } },
+}
+
+/*
+ * Right-to-left with a long Arabic title, and a long CJK title: the close button
+ * sits at the inline end, the header leaves room for it, and the title wraps.
+ * The close button's name is passed through closeProps['aria-label'].
+ */
+export const RightToLeft: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
+      <UIProvider dir="rtl" lang="ar">
+        <div style={cellStyle}>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>rtl / ar</span>
+          <OverlayStage height={380}>
+            {container => (
+              <RenameDialog
+                cancelLabel="إلغاء"
+                closeLabel="إغلاق"
+                description="امنح هذا المشروع اسمًا جديدًا يسهل تذكره."
+                open="inline"
+                portalContainerRef={container}
+                saveLabel="حفظ"
+                title="إعادة تسمية مشروع المراجعة الربعية للفريق بأكمله قبل الاجتماع القادم"
+              />
+            )}
+          </OverlayStage>
+        </div>
+      </UIProvider>
+      <UIProvider lang="ja">
+        <div style={cellStyle}>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>ltr / ja</span>
+          <OverlayStage height={380}>
+            {container => (
+              <RenameDialog
+                cancelLabel="キャンセル"
+                closeLabel="閉じる"
+                description="このプロジェクトに覚えやすい新しい名前を付けてください。"
+                open="inline"
+                portalContainerRef={container}
+                saveLabel="保存"
+                title="チーム全体の四半期レビュープロジェクトの名前を次の会議の前に変更する"
+              />
+            )}
+          </OverlayStage>
+        </div>
+      </UIProvider>
     </div>
   ),
 }

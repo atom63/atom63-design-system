@@ -393,7 +393,7 @@ export function AccountsPage() {
 
   return (
     <>
-      <Container className="flex flex-col gap-6" maxWidth="wide" padding="none">
+      <Container gap={6} maxWidth="wide" padding="none">
         <PageHeader
           actions={
             <Button onClick={() => setForm({ open: true })} variant="primary">

@@ -1650,6 +1650,7 @@
       "source": "packages/ui-foundation/contracts/components/dropdown-menu.json",
       "exportName": "dropdownMenuContract",
       "maturity": "stable",
+      "description": "Items take the `itemVariants` (default, destructive). Items, labels and submenu triggers also take a boolean `inset` (web only), a layout aid rather than an axis: it indents the row to the checkbox and radio indicator column so plain rows line up with checkable ones. Built-in icons are a check mark for checked rows and a chevron toward the inline end for submenu triggers; it mirrors in right-to-left.",
       "axes": [
         { "name": "itemVariants", "values": ["default", "destructive"], "default": "default" }
       ],
@@ -1918,7 +1919,7 @@
       "exportName": "formContract",
       "maturity": "stable",
       "axes": [],
-      "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
+      "slots": ["form-item", "form-label", "form-description", "form-message"],
       "states": ["rest", "invalid"],
       "stateAliases": { "default": "rest" },
       "tokenSlots": [],
@@ -2958,22 +2959,6 @@
           {
             "check": "combobox-active-descendant",
             "reason": "Base UI Select moves DOM focus onto the options instead of keeping it on the combobox with aria-activedescendant, and has no option to change it. The APG Combobox pattern requires DOM focus to stay on the combobox (https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), so this is a gap, not a variant. Screen readers still announce the focused option."
-          },
-          {
-            "check": "home-opens-at-first",
-            "reason": "Base UI Select 1.6.0 does not open the listbox on Home; only Enter, Space and the arrow keys open it. See docs/design-system/audits/base-ui-issue-drafts.md."
-          },
-          {
-            "check": "end-opens-at-last",
-            "reason": "Base UI Select 1.6.0 does not open the listbox on End; only Enter, Space and the arrow keys open it. See docs/design-system/audits/base-ui-issue-drafts.md."
-          },
-          {
-            "check": "alt-up-arrow-selects",
-            "reason": "Base UI Select 1.6.0 treats Alt + Up Arrow as Up Arrow: it moves the highlight and keeps the listbox open. See docs/design-system/audits/base-ui-issue-drafts.md."
-          },
-          {
-            "check": "tab-selects",
-            "reason": "Base UI Select 1.6.0 closes the listbox on Tab without selecting the highlighted option. See docs/design-system/audits/base-ui-issue-drafts.md."
           }
         ]
       },
@@ -3093,7 +3078,7 @@
       "source": "packages/ui-foundation/contracts/components/sidebar.json",
       "exportName": "sidebarContract",
       "maturity": "stable",
-      "description": "Faithful to prod @atom63/ui sidebar.tsx: the Sidebar has three variant unions (side / variant / collapsible) plus the two menu-button ramps (variant + size) and the sub-button size ramp. The many structural parts each get a data-slot; these are enumerated as the contract's slots so consumers can target them. Menu buttons and sub-buttons take tone (neutral/accent) for their active state: neutral is the hover plate with primary text, accent the opt-in primary wash with accent text.",
+      "description": "Faithful to prod @atom63/ui sidebar.tsx: the Sidebar has three variant unions (side / variant / collapsible) plus the two menu-button ramps (variant + size) and the sub-button size ramp. The many structural parts each get a data-slot; these are enumerated as the contract's slots so consumers can target them. The side is logical: 'left' is the inline start, so the sidebar sits on the right under dir=\"rtl\" ('right' is the inline end). Menu buttons and sub-buttons take tone (neutral/accent) for their active state: neutral is the hover plate with primary text, accent the opt-in primary wash with accent text.",
       "axes": [
         { "name": "sides", "values": ["left", "right"], "default": "left" },
         { "name": "variants", "values": ["sidebar", "floating", "inset"], "default": "sidebar" },
@@ -3545,7 +3530,7 @@
       "source": "packages/ui-foundation/contracts/components/toaster.json",
       "exportName": "toasterContract",
       "maturity": "stable",
-      "description": "`default` is a card on the overlay surface with the icon before the message; `inverse` is a compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after the message, the macOS and iOS look for a short status such as Scheduling message….",
+      "description": "`default` is a card on the overlay surface with the icon before the message; `inverse` is a compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after the message, the macOS and iOS look for a short status such as Scheduling message…. The tones are not a Toaster prop: each maps to the function that raises the toast, toast() for default and toast.info, toast.success, toast.warning, toast.error and toast.loading for the rest.",
       "axes": [
         { "name": "variants", "values": ["default", "inverse"], "default": "default" },
         { "name": "tones", "values": ["default", "info", "success", "warning", "error", "loading"] }

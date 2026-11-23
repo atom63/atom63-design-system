@@ -230,7 +230,7 @@ export function OverviewPage() {
   }
 
   return (
-    <Container className="flex flex-col gap-8" maxWidth="wide" padding="none">
+    <Container maxWidth="wide" padding="none">
       <PageHeader
         actions={state === 'ready' ? periodControl : undefined}
         description="Revenue and accounts for Tidepool's workspace, November 2026."

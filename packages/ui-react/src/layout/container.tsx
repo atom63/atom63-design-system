@@ -9,6 +9,9 @@ export type ContainerPadding = 'all' | 'x' | 'none'
 
 export type ContainerChrome = 'none' | 'grid'
 
+/** Space between direct children, on the spacing scale (`gap-*`). */
+export type ContainerGap = 0 | 2 | 4 | 6 | 8 | 10 | 12
+
 export interface ContainerProps {
   children: ReactNode
   /**
@@ -18,8 +21,28 @@ export interface ContainerProps {
    */
   chrome?: ContainerChrome
   className?: string
+  /**
+   * Space between direct children, as a spacing-scale step.
+   * @default 8
+   */
+  gap?: ContainerGap
   maxWidth?: ContainerMaxWidth
+  /**
+   * Inline (and for `all`, block) padding. It does not add the safe-area
+   * insets: `Page` or the app shell owns those.
+   * @default 'all'
+   */
   padding?: ContainerPadding
+}
+
+const gapStyles: Record<ContainerGap, string> = {
+  0: 'gap-0',
+  2: 'gap-2',
+  4: 'gap-4',
+  6: 'gap-6',
+  8: 'gap-8',
+  10: 'gap-10',
+  12: 'gap-12',
 }
 
 const paddingStyles: Record<ContainerPadding, string> = {
@@ -31,6 +54,7 @@ const paddingStyles: Record<ContainerPadding, string> = {
 export function Container({
   children,
   chrome = 'none',
+  gap = 8,
   maxWidth = 'default',
   padding = 'all',
   className,
@@ -41,7 +65,8 @@ export function Container({
   return (
     <div
       className={cn(
-        'flex min-w-0 flex-col gap-8',
+        'flex min-w-0 flex-col',
+        gapStyles[gap],
         containerFrameClassName(maxWidth),
         paddingStyles[padding],
         showGridBorder &&

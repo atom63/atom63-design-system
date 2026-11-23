@@ -319,7 +319,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['alert-dialog', 'sheet', 'drawer'],
     summary: 'Dialog provides modal task structure, focus management, and responsive placement.',
     usage:
-      'Give every dialog a title and a deliberate close path; use Alert Dialog for confirmation.',
+      'Give every dialog a title and a deliberate close path; use Alert Dialog for confirmation. The built-in close button is named "Close" in English; pass a localized name as closeProps={{ \'aria-label\': … }}.',
     usageExports: ['Dialog', 'DialogTrigger', 'DialogContent'],
   },
   drawer: {
@@ -496,7 +496,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['tooltip', 'hover-card', 'dialog'],
     summary: 'Popover anchors non-modal interactive content to a trigger or custom anchor.',
     usage:
-      'Use it when focus may remain in the surrounding page; use Dialog when the task must be modal.',
+      'Use it when focus may remain in the surrounding page; use Dialog when the task must be modal. PopoverContent takes side (top, right, bottom, left, inline-start, inline-end; default bottom), align (default center), sideOffset (default 4), alignOffset, collisionPadding and portalContainer. It positions against its trigger, or against a PopoverAnchor placed inside the same Popover, or against an element passed as anchor.',
     usageExports: ['Popover', 'PopoverTrigger', 'PopoverContent'],
   },
   'portal-container': {
@@ -598,7 +598,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Sheet presents modal content from a chosen viewport side using dialog focus behavior.',
     usage:
-      'Use it for a side-oriented modal task; use Drawer when drag interaction is part of the experience.',
+      'Use it for a side-oriented modal task; use Drawer when drag interaction is part of the experience. The built-in close button is named "Close" in English; pass a localized name as closeProps={{ \'aria-label\': … }}.',
     usageExports: ['Sheet', 'SheetTrigger', 'SheetContent'],
   },
   sidebar: {
@@ -690,7 +690,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Toaster is the app-level host for transient messages raised through the exported toast API.',
     usage:
-      'Mount one host near the app root and keep messages concise, actionable, and non-essential. Inside a nested theme region, point PortalContainerProvider at an element in that scope so the toast inherits its tokens; otherwise it falls back to body. For a short status in a dark pill, as macOS and iOS draw it, use <Toaster variant="inverse" position="bottom-center" /> with toast.loading(…).',
+      'Mount one host near the app root and keep messages concise, actionable, and non-essential. Raise a toast with toast(message) for the default tone, or toast.info, toast.success, toast.warning, toast.error and toast.loading for the contract tones; toast.promise moves one toast from loading to success or error. Pass { description } for a second line and { action: { label, onClick } } for one action; set closeButton on the Toaster to give every toast a close button. The English labels are props: containerAriaLabel names the region and toastOptions.closeButtonAriaLabel the close button. Inside a nested theme region, point PortalContainerProvider at an element in that scope so the toast inherits its tokens and direction; otherwise it falls back to body. For a short status in a dark pill, as macOS and iOS draw it, use <Toaster variant="inverse" position="bottom-center" /> with toast.loading(…).',
     usageExports: ['Toaster', 'toast'],
   },
   toggle: {

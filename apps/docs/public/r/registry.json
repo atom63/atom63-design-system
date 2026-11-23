@@ -97,7 +97,7 @@
       "name": "dashboard-page",
       "type": "registry:page",
       "title": "Dashboard page",
-      "description": "An overview inside the app shell: headline numbers, the most recent records and an activity feed, with one primary action.",
+      "description": "An overview inside the app shell: headline numbers, the most recent records and an activity feed, with one primary action, and its loading, error and new-workspace states.",
       "dependencies": [
         "@atom63/ui-react",
         "lucide-react"
@@ -273,7 +273,7 @@
       "name": "settings-page",
       "type": "registry:page",
       "title": "Settings page",
-      "description": "Preferences inside the app shell, grouped into titled sections of labelled switches that apply at once, including a locked setting that explains why.",
+      "description": "Preferences inside the app shell, grouped into titled sections: a profile field, labelled switches that save at once and say when a save fails, a locked setting that explains why, and a danger zone.",
       "dependencies": [
         "@atom63/ui-react",
         "lucide-react"
@@ -295,6 +295,8 @@
           "security",
           "account",
           "switches",
+          "profile",
+          "danger zone",
           "app shell"
         ]
       },
@@ -694,7 +696,7 @@
       "name": "settings-section",
       "type": "registry:block",
       "title": "Settings section",
-      "description": "A titled group of settings: the heading and why the group matters on the start side, and labelled rows with their controls in a card beside it.",
+      "description": "A titled group of settings: the heading and why the group matters on the start side, and labelled rows with their controls in a card beside it: switches, or any control such as a field, a select or a destructive action.",
       "dependencies": [
         "@atom63/ui-react"
       ],
@@ -710,7 +712,9 @@
           "account",
           "notifications",
           "toggles",
-          "form"
+          "form",
+          "select",
+          "danger zone"
         ]
       },
       "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",
@@ -727,7 +731,7 @@
       "name": "stat-row",
       "type": "registry:block",
       "title": "Stat row",
-      "description": "A row of headline numbers, each with its label and an optional change against the previous period that does not rely on color alone.",
+      "description": "A row of headline numbers, each with its label and an optional change against the previous period that does not rely on color alone, with placeholder cards while they load.",
       "dependencies": [
         "@atom63/ui-react"
       ],
@@ -743,7 +747,8 @@
           "kpi",
           "dashboard",
           "numbers",
-          "summary"
+          "summary",
+          "loading"
         ]
       },
       "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates",

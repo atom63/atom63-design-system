@@ -70,6 +70,7 @@ import { DialogSizeAlias } from '@atom63/ui-foundation';
 import { Drawer as Drawer_2 } from '@base-ui/react/drawer';
 import { DrawerDirection } from '@atom63/ui-foundation';
 import { DrawerFooterVariant } from '@atom63/ui-foundation';
+import { DropdownMenuItemVariant } from '@atom63/ui-foundation';
 import { EmptyMediaVariant } from '@atom63/ui-foundation';
 import { FeedbackStateKind } from '@atom63/ui-foundation';
 import { FeedbackStateSize } from '@atom63/ui-foundation';
@@ -1295,10 +1296,9 @@ export function DropdownMenuItem(input: DropdownMenuItemProps): React$1.ReactEle
 
 // @public (undocumented)
 export interface DropdownMenuItemProps extends Menu.Item.Props {
-    // (undocumented)
     inset?: boolean;
     // (undocumented)
-    variant?: 'default' | 'destructive';
+    variant?: DropdownMenuItemVariant;
 }
 
 // @public (undocumented)
@@ -1530,6 +1530,8 @@ export { FieldOrientation }
 // @public (undocumented)
 export type FieldProps = React$1.ComponentProps<'div'> & {
     orientation?: FieldOrientation;
+    invalid?: boolean;
+    disabled?: boolean;
 };
 
 // @public (undocumented)
@@ -2077,7 +2079,7 @@ export { PointerInput }
 // @public (undocumented)
 export function Popover(props: Popover_2.Root.Props): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export function PopoverAnchor(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -2090,6 +2092,11 @@ export function PopoverContent(input: PopoverContentProps): React$1.ReactElement
 export interface PopoverContentProps extends Popover_2.Popup.Props {
     // (undocumented)
     align?: Popover_2.Positioner.Props['align'];
+    // (undocumented)
+    alignOffset?: Popover_2.Positioner.Props['alignOffset'];
+    anchor?: Popover_2.Positioner.Props['anchor'];
+    // (undocumented)
+    collisionPadding?: Popover_2.Positioner.Props['collisionPadding'];
     // (undocumented)
     portalContainer?: Popover_2.Portal.Props['container'];
     // (undocumented)
@@ -2105,7 +2112,7 @@ export function PopoverDescription(input: Popover_2.Description.Props): React$1.
 export function PopoverHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function PopoverPortal(props: Popover_2.Portal.Props): React$1.ReactElement;
+export function PopoverPortal(input: Popover_2.Portal.Props): React$1.ReactElement;
 
 // @public (undocumented)
 export function PopoverTitle(input: Popover_2.Title.Props): React$1.ReactElement;
@@ -2687,6 +2694,8 @@ export type SidebarProps = React$1.ComponentProps<'div'> & {
     variant?: SidebarVariant;
     collapsible?: SidebarCollapsible;
     dir?: React$1.ComponentProps<typeof SheetPopup>['dir'];
+    mobileTitle?: string;
+    mobileDescription?: string;
 };
 
 // @public (undocumented)
@@ -2707,7 +2716,12 @@ export function SidebarRail(input: React$1.ComponentProps<'button'>): React$1.Re
 export function SidebarSeparator(input: React$1.ComponentProps<typeof Separator>): React$1.ReactElement;
 
 // @public (undocumented)
-export function SidebarTrigger(input: React$1.ComponentProps<typeof Button>): React$1.ReactElement;
+export function SidebarTrigger(input: SidebarTriggerProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type SidebarTriggerProps = React$1.ComponentProps<typeof Button> & {
+    label?: string;
+};
 
 // @public (undocumented)
 export function Skeleton(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -2866,6 +2880,7 @@ export function Textarea(input: TextareaProps): React$1.ReactElement;
 export type TextareaProps = Omit<React$1.ComponentProps<'textarea'>, 'className'> & {
     className?: string;
     invalid?: boolean;
+    maxRows?: number;
     size?: TextareaSize;
     shadow?: boolean;
     textareaClassName?: string;
@@ -2899,7 +2914,7 @@ export const TINT_MAX_LUMINANCE = 0.015;
 export { toast }
 
 // @public (undocumented)
-export function Toaster(input: ToasterProps): React$1.ReactElement;
+export function Toaster(input: ToasterProps): React$1.ReactElement | null;
 
 // @public (undocumented)
 export interface ToasterProps extends ToasterProps_2 {

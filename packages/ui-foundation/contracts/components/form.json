@@ -3,7 +3,7 @@
   "component": "form",
   "maturity": "stable",
   "lists": {
-    "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
+    "slots": ["form-item", "form-label", "form-description", "form-message"],
     "states": {
       "values": ["rest", "invalid"],
       "deprecatedAliases": {

@@ -15,7 +15,13 @@ describe('Page', () => {
     expect(page.tagName).toBe('MAIN')
     expect(page).toHaveAttribute('data-slot', 'page')
     expect(page).toHaveAttribute('id', 'content')
-    expect(page).toHaveClass('min-h-full', 'pt-8', 'pb-20', 'custom')
+    expect(page).toHaveClass(
+      'min-h-full',
+      'pt-8',
+      'pb-[calc(--spacing(20)+var(--a63-safe-area-bottom))]',
+      'px-[max(var(--a63-safe-area-left),var(--a63-safe-area-right))]',
+      'custom'
+    )
     expect(page).toHaveTextContent('Content')
   })
 
@@ -32,6 +38,7 @@ describe('Page', () => {
     expect(page?.tagName).toBe('DIV')
     expect(page).toHaveClass('min-h-full')
     expect(page).not.toHaveClass('pt-8')
+    expect(page?.className).not.toContain('safe-area')
     expect(screen.getAllByRole('main')).toHaveLength(1)
   })
 })
