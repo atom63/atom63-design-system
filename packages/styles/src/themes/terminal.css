@@ -95,8 +95,8 @@
   /* Darker phosphor ink on paper — pure brand-500 fails AA on near-white page. */
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 70%, black);
   --a63-text-secondary: color-mix(in oklch, var(--a63-action-primary) 52%, black);
-  /* Placeholders and meta: a lighter phosphor ink on paper, still AA 4.5:1. */
-  --a63-text-tertiary: color-mix(in oklch, var(--a63-action-primary) 80%, black);
+  /* Placeholders and meta: a lighter phosphor ink on paper, clearly below the primary ink and still AA 4.5:1. */
+  --a63-text-tertiary: color-mix(in oklch, var(--a63-action-primary) 90%, black);
   --a63-border-control: color-mix(
     in oklab,
     var(--a63-action-primary) 26%,
@@ -201,7 +201,7 @@
     var(--a63-if-dark, color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11)));
   --a63-text-tertiary: var(
       --a63-if-light,
-      color-mix(in oklch, var(--a63-action-primary) 80%, black)
+      color-mix(in oklch, var(--a63-action-primary) 90%, black)
     )
     var(
       --a63-if-dark,

@@ -92,6 +92,57 @@
   --field-shadow: 0 0 #0000;
 }
 
+/* ── Variants (default is the outlined base rule above), as on Input ──── */
+
+/* filled: a muted well with no resting border; the border keeps its width
+   (transparent) so the field does not move, and shows on hover and focus. */
+.a63-Textarea[data-variant='filled']:not([data-unstyled]) {
+  --field-background: var(--a63-surface-muted);
+  --field-shadow: 0 0 #0000;
+
+  border-color: transparent;
+}
+
+.a63-Textarea[data-variant='filled']:not([data-unstyled]):hover {
+  border-color: var(--a63-border-control);
+}
+
+/* plain: no border or fill and a separator below, for a field inside a menu,
+   popover or composer. */
+.a63-Textarea[data-variant='plain']:not([data-unstyled]),
+.a63-Textarea[data-variant='plain']:not([data-unstyled]):is(:hover, :focus-within) {
+  --field-background: transparent;
+  --field-radius: 0;
+  --field-shadow: 0 0 #0000;
+
+  border-color: transparent;
+  border-block-end-color: var(--a63-border-subtle);
+}
+
+/* An invalid filled or plain field keeps its danger edge at rest. */
+.a63-Textarea[data-variant='filled']:not([data-unstyled]):is(
+    [data-invalid],
+    :has(> .a63-Textarea-field[aria-invalid='true'])
+  ) {
+  border-color: var(--field-border);
+}
+
+.a63-Textarea[data-variant='plain']:not([data-unstyled]):is(
+    [data-invalid],
+    :has(> .a63-Textarea-field[aria-invalid='true'])
+  ) {
+  border-block-end-color: var(--field-border);
+}
+
+.a63-Textarea[data-variant='filled']:not([data-unstyled]):focus-within {
+  border-color: var(--field-focus-border);
+}
+
+/* The plain ring is inset, as Input's is, so a menu or popover does not clip it. */
+.a63-Textarea[data-variant='plain']:not([data-unstyled]):focus-within {
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+}
+
 .a63-Textarea[data-disabled] {
   cursor: not-allowed;
   opacity: 0.56;

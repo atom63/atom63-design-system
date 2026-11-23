@@ -3464,7 +3464,10 @@
       "source": "packages/ui-foundation/contracts/components/textarea.json",
       "exportName": "textareaContract",
       "maturity": "stable",
-      "axes": [{ "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" }],
+      "axes": [
+        { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" },
+        { "name": "variants", "values": ["default", "filled", "plain"], "default": "default" }
+      ],
       "slots": ["textarea-control", "textarea"],
       "states": ["rest", "hover", "focus", "disabled", "invalid"],
       "tokenSlots": [
@@ -3481,7 +3484,7 @@
       ],
       "visualArchetypes": ["field"],
       "intent": {
-        "description": "What a multi-line text field is, independent of any platform: its size and its chrome. AtomTextEditor has no size axis (its height is minHeight); the web Textarea has no variant, which only AtomTextEditor takes so far.",
+        "description": "What a multi-line text field is, independent of any platform: its size and its chrome. AtomTextEditor has no size axis (its height is minHeight); the web Textarea takes Input's variant axis, of which AtomTextEditor takes default and filled.",
         "axes": { "size": ["sm", "md", "lg"], "variant": ["default", "filled"] },
         "platforms": {
           "web": {
@@ -3490,6 +3493,15 @@
                 "list": "sizes",
                 "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
                 "extensions": {}
+              },
+              "variant": {
+                "list": "variants",
+                "map": { "default": { "variant": "default" }, "filled": { "variant": "filled" } },
+                "extensions": {
+                  "plain": {
+                    "description": "No border or fill and a separator below, for a field inside a menu, popover or composer."
+                  }
+                }
               }
             }
           },
