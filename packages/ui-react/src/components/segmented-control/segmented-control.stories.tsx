@@ -280,6 +280,23 @@ export const RightToLeft: Story = {
     )
     if (!track || track.scrollWidth <= track.clientWidth)
       throw new Error('The RTL overflow track does not scroll')
+    /* Segments that resize after mount (a web font settling) keep the
+       selection in view: grow the labels, then put them back. */
+    const control = track.closest<HTMLElement>('[data-slot="segmented-control"]')
+    control?.style.setProperty('--segment-font-size', '1.25rem')
+    await frame()
+    await frame()
+    expectSelectedInView(canvasElement, 'After the segments grow')
+    control?.style.removeProperty('--segment-font-size')
+    await frame()
+    await frame()
+    expectSelectedInView(canvasElement, 'After the segments shrink back')
+    // Let the plate finish sliding back before checking it covers the segment.
+    await Promise.all(
+      Array.from(canvasElement.querySelectorAll('[data-slot="segmented-control-indicator"]'))
+        .flatMap(plate => plate.getAnimations())
+        .map(animation => animation.finished)
+    )
     const rest = track.scrollLeft
     track.scrollLeft = -(track.scrollWidth - track.clientWidth)
     await frame()

@@ -105,20 +105,30 @@ export function SegmentedControl({
           : { height: rect.height, left, width: rect.width }
       )
     }
-    measure()
-    /* When the track scrolls, bring the selected segment fully into view (on
-       mount and when the selection changes), without scrolling the page. */
-    const segment = segments()[selectedIndex]
-    if (segment && track.scrollWidth > track.clientWidth) {
+    /* When the track scrolls, keep the selected segment fully in view: on
+       mount, when the selection changes, and when the track or a segment
+       resizes (fonts and styles can settle after mount). Only the track
+       scrolls, never the page. A clipped segment is aligned to the track's
+       inline start, which is also its scroll-snap position, so snapping keeps
+       it there; the browser clamps the scroll at either end. */
+    const reveal = () => {
+      const segment = segments()[selectedIndex]
+      if (!segment || track.scrollWidth <= track.clientWidth) return
       const trackRect = track.getBoundingClientRect()
       const rect = segment.getBoundingClientRect()
       const start = trackRect.left + track.clientLeft
       const end = start + track.clientWidth
-      const delta = rect.left < start ? rect.left - start : rect.right > end ? rect.right - end : 0
-      if (delta !== 0) track.scrollLeft += delta
+      if (rect.left >= start - 0.5 && rect.right <= end + 0.5) return
+      const rtl = getComputedStyle(track).direction === 'rtl'
+      track.scrollBy({ behavior: 'instant', left: rtl ? rect.right - end : rect.left - start })
     }
+    const update = () => {
+      reveal()
+      measure()
+    }
+    update()
     if (typeof ResizeObserver === 'undefined') return
-    const observer = new ResizeObserver(measure)
+    const observer = new ResizeObserver(update)
     observer.observe(track)
     for (const segment of segments()) observer.observe(segment)
     return () => observer.disconnect()
