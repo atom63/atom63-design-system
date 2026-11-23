@@ -73,69 +73,72 @@ export function SignInPage({ onSignIn = demoSignIn }: SignInPageProps) {
   }
 
   return (
-    <Page className="flex items-center px-4">
-      <AuthCard
-        description="Sign in to manage your invoices."
-        footer={
-          <p>
-            No account yet?{' '}
-            <a className={linkClass} href="#sign-up">
-              Create one
-            </a>
-          </p>
-        }
-        title="Tally"
-      >
-        <form noValidate onSubmit={event => void submit(event)}>
-          <FieldGroup>
-            {formError ? (
-              <Alert variant="error">
-                <AlertIcon>
-                  <AlertCircle aria-hidden />
-                </AlertIcon>
-                <AlertTitle>That email and password do not match</AlertTitle>
-                <AlertDescription>
-                  Check them and try again, or reset your password.
-                </AlertDescription>
-              </Alert>
-            ) : null}
-            <Field data-invalid={emailError ? true : undefined}>
-              <FieldLabel htmlFor={emailId}>Email</FieldLabel>
-              <Input
-                aria-describedby={emailError ? emailErrorId : undefined}
-                aria-invalid={emailError ? true : undefined}
-                autoComplete="email"
-                id={emailId}
-                name="email"
-                ref={emailRef}
-                type="email"
-              />
-              {emailError ? <FieldError id={emailErrorId}>{emailError}</FieldError> : null}
-            </Field>
-            <Field>
-              <div className="flex items-baseline justify-between gap-4">
-                <FieldLabel htmlFor={passwordId}>Password</FieldLabel>
-                <a className={`${linkClass} text-sm`} href="#reset-password">
-                  Forgot password?
-                </a>
-              </div>
-              <Input
-                autoComplete="current-password"
-                id={passwordId}
-                name="password"
-                type="password"
-              />
-            </Field>
-            <Field orientation="horizontal">
-              <Checkbox id={rememberId} name="remember" />
-              <FieldLabel htmlFor={rememberId}>Keep me signed in</FieldLabel>
-            </Field>
-            <Button className="w-full" loading={pending} type="submit" variant="primary">
-              Sign in
-            </Button>
-          </FieldGroup>
-        </form>
-      </AuthCard>
+    <Page className="flex items-center">
+      {/* Content padding sits inside Page, so Page keeps the inline safe-area inset. */}
+      <div className="w-full px-4">
+        <AuthCard
+          description="Sign in to manage your invoices."
+          footer={
+            <p>
+              No account yet?{' '}
+              <a className={linkClass} href="#sign-up">
+                Create one
+              </a>
+            </p>
+          }
+          title="Tally"
+        >
+          <form noValidate onSubmit={event => void submit(event)}>
+            <FieldGroup>
+              {formError ? (
+                <Alert variant="error">
+                  <AlertIcon>
+                    <AlertCircle aria-hidden />
+                  </AlertIcon>
+                  <AlertTitle>That email and password do not match</AlertTitle>
+                  <AlertDescription>
+                    Check them and try again, or reset your password.
+                  </AlertDescription>
+                </Alert>
+              ) : null}
+              <Field data-invalid={emailError ? true : undefined}>
+                <FieldLabel htmlFor={emailId}>Email</FieldLabel>
+                <Input
+                  aria-describedby={emailError ? emailErrorId : undefined}
+                  aria-invalid={emailError ? true : undefined}
+                  autoComplete="email"
+                  id={emailId}
+                  name="email"
+                  ref={emailRef}
+                  type="email"
+                />
+                {emailError ? <FieldError id={emailErrorId}>{emailError}</FieldError> : null}
+              </Field>
+              <Field>
+                <div className="flex items-baseline justify-between gap-4">
+                  <FieldLabel htmlFor={passwordId}>Password</FieldLabel>
+                  <a className={`${linkClass} text-sm`} href="#reset-password">
+                    Forgot password?
+                  </a>
+                </div>
+                <Input
+                  autoComplete="current-password"
+                  id={passwordId}
+                  name="password"
+                  type="password"
+                />
+              </Field>
+              <Field orientation="horizontal">
+                <Checkbox id={rememberId} name="remember" />
+                <FieldLabel htmlFor={rememberId}>Keep me signed in</FieldLabel>
+              </Field>
+              <Button className="w-full" loading={pending} type="submit" variant="primary">
+                Sign in
+              </Button>
+            </FieldGroup>
+          </form>
+        </AuthCard>
+      </div>
     </Page>
   )
 }

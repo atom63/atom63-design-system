@@ -76,7 +76,7 @@ Nested containers are valid when a region intentionally changes measure. Otherwi
 
 ### Page
 
-The document landmark and the route's inset. Page owns the bottom and inline safe-area insets, which are 0 outside a notched or standalone screen; the top inset belongs to the header above it. Inside a shell that already renders `<main>`, pass `render={<div />}`; when the shell owns the inset too, add `noPadding`.
+The document landmark and the route's inset. Page owns the bottom and inline safe-area insets, which are 0 outside a notched or standalone screen; the top inset belongs to the header above it. Inside a shell that already renders `<main>`, pass `render={<div />}`; when the shell owns the inset too, add `noPadding`. Do not give Page inline padding through `className` (`px-4`): it replaces the inline safe-area inset. Put content padding on the `Container` inside it.
 
 ```tsx
 <Page>

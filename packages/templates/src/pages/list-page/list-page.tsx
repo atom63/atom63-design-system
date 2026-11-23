@@ -86,14 +86,16 @@ const columns: readonly DataTableColumn<Invoice>[] = [
     cell: invoice => date.format(new Date(invoice.issued)),
     header: 'Issued',
     key: 'issued',
-    showFrom: 'md',
+    showFrom: 'lg',
   },
+  /* The amount is the page's main datum, so it shows from the tablet width (and in the phone
+     row); the issue date gives way first. */
   {
     align: 'end',
     cell: invoice => currency.format(invoice.amount),
     header: 'Amount',
     key: 'amount',
-    showFrom: 'lg',
+    showFrom: 'md',
   },
 ]
 
@@ -234,6 +236,9 @@ export function ListContent({
               </ItemContent>
               {/* gap-3 keeps the 44px touch targets of the two 32px buttons apart. */}
               <ItemActions className="gap-3">
+                <span className="text-foreground text-sm font-medium tabular-nums">
+                  {currency.format(invoice.amount)}
+                </span>
                 <StatusBadge status={invoice.status} />
                 <Button
                   aria-label={`View ${invoice.id}`}

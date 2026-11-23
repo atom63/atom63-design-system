@@ -15,8 +15,8 @@ const VIEWPORT = { width: 1280, height: 800 }
 const MAX_HEIGHT = 10000
 /* A story whose id ends in `-phone` (a `Phone` export) renders and is captured
    at a phone width, so layouts that change below `sm` get a baseline too. A
-   template story ending in `-wide`, `-compact` or `-tablet` is captured at
-   that width. */
+   template or layout-primitive story ending in `-wide`, `-compact` or
+   `-tablet` is captured at that width. */
 const STORY_VIEWPORTS = {
   wide: { width: 1440, height: 960 },
   compact: { width: 1024, height: 800 },
@@ -24,9 +24,21 @@ const STORY_VIEWPORTS = {
   phone: { width: 390, height: 844 },
 } as const
 
+/* Story ids whose -wide, -compact and -tablet stories are viewport widths. Other
+   stories (an MDX block's `Wide` variant) use those names for their content. */
+const RESPONSIVE_STORY_PREFIXES = [
+  'templates-',
+  'ui-react-page--',
+  'ui-react-container--',
+  'ui-react-section--',
+  'ui-react-sectionheader--',
+]
+
 const viewportForStory = (storyId: string | undefined) => {
   if (storyId?.endsWith('-phone')) return STORY_VIEWPORTS.phone
-  if (!storyId?.startsWith('templates-')) return VIEWPORT
+  if (!storyId || !RESPONSIVE_STORY_PREFIXES.some(prefix => storyId.startsWith(prefix))) {
+    return VIEWPORT
+  }
 
   const entry = Object.entries(STORY_VIEWPORTS)
     .filter(([suffix]) => suffix !== 'phone')
@@ -98,16 +110,34 @@ afterEach(async context => {
   const { task } = context
   const storyId = task.meta.storyId
   if (!storyId || task.result?.state === 'fail') return
-  const story = (context as { story?: { parameters?: { visualState?: VisualStateParameters } } })
-    .story
+  const story = (
+    context as {
+      story?: {
+        globals?: { viewport?: { value?: unknown } }
+        parameters?: { visualState?: VisualStateParameters }
+      }
+    }
+  ).story
   const visualState = story?.parameters?.visualState
+  const viewport = viewportForStory(storyId)
+  // A story that renders at an Atom63 viewport must be captured at that width,
+  // or its baseline shows a layout the story never rendered.
+  const declared = story?.globals?.viewport?.value
+  const declaredSize =
+    typeof declared === 'string' && declared.startsWith('a63-')
+      ? STORY_VIEWPORTS[declared.slice(4) as keyof typeof STORY_VIEWPORTS]
+      : undefined
+  if (declaredSize && declaredSize.width !== viewport.width) {
+    throw new Error(
+      `${storyId} renders at ${declared} (${declaredSize.width}px) but would be captured at ${viewport.width}px; name the export after its width and list its id prefix in RESPONSIVE_STORY_PREFIXES`
+    )
+  }
   // No story is captured in a hover state unless visualState asks for one; see
   // visual/commands.ts.
   await commands.movePointerAway()
   await settleMedia()
   // Only the viewport is painted in the capture, so a story taller than the
   // viewport would come out blank below the fold. Grow the viewport to the page.
-  const viewport = viewportForStory(storyId)
   const height = Math.min(
     MAX_HEIGHT,
     Math.max(viewport.height, Math.ceil(document.documentElement.scrollHeight))
