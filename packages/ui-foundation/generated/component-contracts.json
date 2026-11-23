@@ -3027,7 +3027,11 @@
       "maturity": "stable",
       "axes": [
         { "name": "footerVariants", "values": ["default", "bare"], "default": "default" },
-        { "name": "sides", "values": ["right", "left", "top", "bottom"], "default": "right" },
+        {
+          "name": "sides",
+          "values": ["right", "left", "top", "bottom", "inline-start", "inline-end"],
+          "default": "right"
+        },
         { "name": "variants", "values": ["default", "inset"], "default": "default" }
       ],
       "slots": [
@@ -3045,7 +3049,7 @@
         "sheet-panel",
         "sheet-footer"
       ],
-      "states": ["closed", "open", "starting", "ending"],
+      "states": ["closed", "open", "starting", "ending", "focus-visible"],
       "tokenSlots": [],
       "visualArchetypes": ["overlay", "surface", "trigger", "action"]
     },

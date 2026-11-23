@@ -178,7 +178,8 @@ export const CheckboxAndRadio: Story = {
   ),
 }
 
-/* The open menu across all four themes x light/dark. */
+/* The open menu across all four themes x light/dark, the "Copy" row
+   highlighted in each so the highlight is captured per theme. */
 export const Themes: Story = {
   parameters: focusGuardA11y,
   render: () => (
@@ -194,6 +195,33 @@ export const Themes: Story = {
       )}
     </div>
   ),
+  play: async ({ canvasElement }) => {
+    await highlightFirstRows(canvasElement, themes.length * 2)
+  },
+}
+
+/* Moves a pointer over the first row of each open menu, the way Base UI
+   highlights a row under the pointer, and waits for every highlight. */
+async function highlightFirstRows(root: HTMLElement, count: number) {
+  for (let attempt = 0; attempt < 50; attempt += 1) {
+    const menus = [...root.querySelectorAll<HTMLElement>('.a63-Menu-popup')]
+    if (menus.length === count) {
+      for (const menu of menus) {
+        const row = menu.querySelector<HTMLElement>('.a63-Menu-item:not([data-disabled])')!
+        for (const type of ['pointerenter', 'pointermove', 'mouseenter', 'mousemove']) {
+          row.dispatchEvent(new MouseEvent(type, { bubbles: type.endsWith('move') }))
+        }
+      }
+      await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+      const highlighted = root.querySelectorAll('.a63-Menu-popup .a63-Menu-item[data-highlighted]')
+      if (highlighted.length !== count) {
+        throw new Error(`Expected ${count} highlighted rows, got ${highlighted.length}`)
+      }
+      return
+    }
+    await new Promise(resolve => setTimeout(resolve, 20))
+  }
+  throw new Error(`Expected ${count} open menus`)
 }
 
 /*
@@ -312,6 +340,35 @@ export const RightToLeft: Story = {
       <DropdownMenuItem variant="destructive">حذف</DropdownMenuItem>
     </ReviewCell>
   ),
+  play: async ({ canvasElement }) => {
+    await expectShortcutReadsLeftToRight(canvasElement)
+  },
+}
+
+/* The shortcut '⌘C' keeps its order in the right-to-left menu, and sits at the
+   row's inline end (its left side). */
+async function expectShortcutReadsLeftToRight(root: HTMLElement) {
+  for (let attempt = 0; attempt < 50; attempt += 1) {
+    const shortcut = root.querySelector<HTMLElement>('[dir="rtl"] .a63-Menu-shortcut')
+    const text = shortcut?.firstChild
+    if (shortcut && text) {
+      const glyph = (index: number) => {
+        const range = document.createRange()
+        range.setStart(text, index)
+        range.setEnd(text, index + 1)
+        return range.getBoundingClientRect()
+      }
+      if (glyph(0).left >= glyph(1).left) throw new Error('Expected ⌘C, got C⌘')
+      const row = shortcut.closest<HTMLElement>('.a63-Menu-item')!.getBoundingClientRect()
+      const box = shortcut.getBoundingClientRect()
+      if (box.left - row.left > row.right - box.right) {
+        throw new Error('Expected the shortcut at the inline end of the right-to-left row')
+      }
+      return
+    }
+    await new Promise(resolve => setTimeout(resolve, 20))
+  }
+  throw new Error('Expected the shortcut in the right-to-left menu')
 }
 
 /* The open menu at phone width on touch: every row reaches 44px. */

@@ -3,10 +3,10 @@
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
-export const sheetSides = ['right', 'left', 'top', 'bottom'] as const
+export const sheetSides = ['right', 'left', 'top', 'bottom', 'inline-start', 'inline-end'] as const
 export const sheetVariants = ['default', 'inset'] as const
 export const sheetFooterVariants = ['default', 'bare'] as const
-export const sheetStates = ['closed', 'open', 'starting', 'ending'] as const
+export const sheetStates = ['closed', 'open', 'starting', 'ending', 'focus-visible'] as const
 export const sheetSlots = [
   'sheet',
   'sheet-portal',

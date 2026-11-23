@@ -4988,9 +4988,9 @@ export const sheetContract: {
     defaultSide: "right";
     defaultVariant: "default";
     footerVariants: readonly ["default", "bare"];
-    sides: readonly ["right", "left", "top", "bottom"];
+    sides: readonly ["right", "left", "top", "bottom", "inline-start", "inline-end"];
     slots: readonly ["sheet", "sheet-portal", "sheet-trigger", "sheet-backdrop", "sheet-viewport", "sheet-popup", "sheet-close", "sheet-close-button", "sheet-header", "sheet-title", "sheet-description", "sheet-panel", "sheet-footer"];
-    states: readonly ["closed", "open", "starting", "ending"];
+    states: readonly ["closed", "open", "starting", "ending", "focus-visible"];
     variants: readonly ["default", "inset"];
     visualArchetypes: readonly ["overlay", "surface", "trigger", "action"];
 };
@@ -5005,7 +5005,7 @@ export const sheetFooterVariants: readonly ["default", "bare"];
 export type SheetSide = (typeof sheetSides)[number];
 
 // @public (undocumented)
-export const sheetSides: readonly ["right", "left", "top", "bottom"];
+export const sheetSides: readonly ["right", "left", "top", "bottom", "inline-start", "inline-end"];
 
 // @public (undocumented)
 export type SheetSlot = (typeof sheetSlots)[number];
@@ -5017,7 +5017,7 @@ export const sheetSlots: readonly ["sheet", "sheet-portal", "sheet-trigger", "sh
 export type SheetState = (typeof sheetStates)[number];
 
 // @public (undocumented)
-export const sheetStates: readonly ["closed", "open", "starting", "ending"];
+export const sheetStates: readonly ["closed", "open", "starting", "ending", "focus-visible"];
 
 // @public (undocumented)
 export type SheetVariant = (typeof sheetVariants)[number];

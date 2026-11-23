@@ -12,6 +12,7 @@ import {
   SheetTrigger,
   UIProvider,
 } from '@atom63/ui-react'
+import type { SheetSide } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import {
@@ -93,7 +94,7 @@ function StagedSheet({
   footer?: 'default' | 'bare'
   label: string
   saveLabel?: string
-  side?: (typeof sides)[number]
+  side?: SheetSide
   stageStyle?: CSSProperties
   title?: string
   variant?: 'default' | 'inset'
@@ -238,6 +239,75 @@ export const RightToLeft: Story = {
       </UIProvider>
     )
   },
+}
+
+/*
+ * The logical sides follow the text direction: `inline-start` docks to the left
+ * edge in left-to-right and to the right edge in right-to-left, and
+ * `inline-end` the other way round. The play function checks the edges.
+ */
+export const LogicalSides: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12 }}>
+      <StagedSheet label="ltr / inline-start" side="inline-start" />
+      <UIProvider dir="rtl" lang="ar">
+        <StagedSheet
+          cancelLabel="إلغاء"
+          closeLabel="إغلاق"
+          description="تفتح اللوحة من حافة بداية القراءة."
+          label="rtl / inline-start"
+          saveLabel="حفظ"
+          side="inline-start"
+          title="المظهر"
+        />
+      </UIProvider>
+      <UIProvider dir="rtl" lang="ar">
+        <StagedSheet
+          cancelLabel="إلغاء"
+          closeLabel="إغلاق"
+          description="تفتح اللوحة من حافة نهاية القراءة."
+          label="rtl / inline-end"
+          saveLabel="حفظ"
+          side="inline-end"
+          title="المظهر"
+        />
+      </UIProvider>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const popups = await waitForPopups(canvasElement, 3)
+    const expected = ['left', 'right', 'left'] as const
+    popups.forEach((popup, index) => {
+      const stage = popup.closest<HTMLElement>('[style*="translateZ"]')
+      if (!stage) throw new Error('Expected the overlay stage')
+      const box = popup.getBoundingClientRect()
+      const frame = stage.getBoundingClientRect()
+      const edge =
+        Math.abs(box.left - frame.left) < 1
+          ? 'left'
+          : Math.abs(box.right - frame.right) < 1
+            ? 'right'
+            : 'none'
+      if (edge !== expected[index]) {
+        throw new Error(`Expected sheet ${index + 1} at the ${expected[index]} edge, got ${edge}`)
+      }
+    })
+  },
+}
+
+async function waitForPopups(root: HTMLElement, count: number): Promise<HTMLElement[]> {
+  for (let attempt = 0; attempt < 50; attempt += 1) {
+    const popups = [...root.querySelectorAll<HTMLElement>('.a63-Sheet-popup')]
+    if (popups.length === count) return popups
+    await new Promise(resolve => setTimeout(resolve, 20))
+  }
+  throw new Error(`Expected ${count} open sheets`)
+}
+
+/* Keyboard focus on the built-in close button. */
+export const FocusVisibleClose: Story = {
+  render: () => <StagedSheet label="focused close" />,
+  parameters: { visualState: { focusVisible: '.a63-Sheet-close-button' } },
 }
 
 /* A long title in both directions: it wraps before the close button's corner
