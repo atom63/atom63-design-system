@@ -30,7 +30,7 @@ export interface ToasterProps extends SonnerToasterProps {
    `@atom63/ui-react/styles.css`, so a toast drawn from them has no fill. */
 const variantStyles: Record<ToasterVariant, React.CSSProperties> = {
   default: {
-    '--border-radius': 'var(--radius-lg)',
+    '--border-radius': 'var(--a63-overlay-radius, var(--radius-lg))',
     '--normal-bg': 'var(--a63-surface-overlay)',
     '--normal-border': 'var(--a63-border-subtle)',
     '--normal-text': 'var(--a63-text-primary)',
@@ -43,9 +43,21 @@ const variantStyles: Record<ToasterVariant, React.CSSProperties> = {
   } as React.CSSProperties,
 }
 
-/* Sonner's own sheet is unlayered, so the compact geometry goes on each toast's
-   inline style; the rest of the pill lives in toaster.css. Sonner's shadow stays:
-   its focus ring is drawn as part of it. */
+/* Sonner's own sheet is unlayered and paints the toast's background, border and
+   shadow, so the overlay contract (the theme's border, gloss, texture, backdrop
+   and elevation, as Dialog, Popover and Menu read it) goes on each default
+   toast's inline style. The focus ring is an outline (toaster.css). */
+const overlayToastStyle: React.CSSProperties = {
+  backdropFilter: 'var(--a63-overlay-backdrop)',
+  backgroundBlendMode: 'normal, var(--a63-overlay-texture-blend)',
+  backgroundImage: 'var(--a63-overlay-gloss), var(--a63-overlay-texture-image)',
+  borderStyle: 'var(--a63-overlay-border-style)',
+  borderWidth: 'var(--a63-overlay-border-width)',
+  boxShadow: 'var(--a63-overlay-inner-shadow, none), var(--a63-overlay-shadow)',
+}
+
+/* The compact geometry of the inverse pill goes on each toast's inline style for
+   the same reason; the rest of the pill lives in toaster.css. */
 const inverseToastStyle: React.CSSProperties = {
   fontSize: 'var(--a63-type-subhead-font-size)',
   gap: 'var(--a63-space-2)',
@@ -165,7 +177,7 @@ export function Toaster({
             toastOptions?.classNames?.toast
           ),
         },
-        style: inverse ? { ...inverseToastStyle, ...toastOptions?.style } : toastOptions?.style,
+        style: { ...(inverse ? inverseToastStyle : overlayToastStyle), ...toastOptions?.style },
       }}
     />
   )

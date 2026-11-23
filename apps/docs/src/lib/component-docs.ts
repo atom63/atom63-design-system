@@ -197,7 +197,7 @@ export function getComponentDoc(slug: string): ComponentDoc | null {
   }
 
   return {
-    guidance: [item.usage, ...(groupGuidance[group.id] ?? [])],
+    guidance: [item.usage, ...(item.guidance ?? groupGuidance[group.id] ?? [])],
     item,
     label: componentLabel(slug),
     path: componentDocPath(slug),

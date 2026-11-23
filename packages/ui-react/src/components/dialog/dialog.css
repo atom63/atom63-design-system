@@ -217,6 +217,57 @@
   overflow-y: auto;
   padding: var(--a63-space-5);
 }
+
+/* scrollFade: the panel's edge fades where more content is scrolled out of view,
+   as ScrollArea's mask does. The panel is its own scroller, so the fade sizes come
+   from a scroll-driven animation on it: the top fade grows over the first 1.5rem
+   of scroll and the bottom one shrinks over the last. A panel that does not
+   scroll has no active timeline and no fade; browsers without scroll timelines
+   draw no fade. */
+@property --a63-dialog-panel-fade-start {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@property --a63-dialog-panel-fade-end {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0px;
+}
+@keyframes a63-dialog-panel-fade-start {
+  from {
+    --a63-dialog-panel-fade-start: 0px;
+  }
+  to {
+    --a63-dialog-panel-fade-start: 1.5rem;
+  }
+}
+@keyframes a63-dialog-panel-fade-end {
+  from {
+    --a63-dialog-panel-fade-end: 1.5rem;
+  }
+  to {
+    --a63-dialog-panel-fade-end: 0px;
+  }
+}
+@supports (animation-timeline: scroll()) {
+  .a63-Dialog-panel[data-scroll-fade] {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 var(--a63-dialog-panel-fade-start),
+      #000 calc(100% - var(--a63-dialog-panel-fade-end)),
+      transparent 100%
+    );
+    animation:
+      a63-dialog-panel-fade-start linear both,
+      a63-dialog-panel-fade-end linear both;
+    animation-range:
+      0 1.5rem,
+      calc(100% - 1.5rem) 100%;
+    animation-timeline: scroll(self block);
+  }
+}
 /* When the panel is composed with a header and/or a borderless (bare) footer,
    collapse the abutting padding so sections don't double their gaps (prod
    in-[…:has([data-slot=dialog-header])]:pt-1 /

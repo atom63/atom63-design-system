@@ -235,6 +235,11 @@
   color: var(--a63-menu-shortcut-foreground, var(--a63-text-secondary));
   font-size: var(--a63-control-font-size-xs);
   letter-spacing: 0;
+  /* A shortcut reads in its own direction: '⌘C' stays '⌘C' in a right-to-left
+     menu. plaintext isolates it and takes the direction from its first strong
+     character, while `direction` (and so the logical margin and padding above)
+     still follows the menu. */
+  unicode-bidi: plaintext;
 }
 
 @media (prefers-reduced-motion: reduce) {

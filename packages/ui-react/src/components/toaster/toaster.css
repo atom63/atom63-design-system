@@ -36,12 +36,15 @@
 }
 
 /* Keyboard focus: an outline on the toast and its buttons. Sonner draws its ring
-   as a box-shadow, which forced-colors mode drops. */
+   as a box-shadow, which forced-colors mode drops, and its unlayered sheet sets
+   `outline: none` on the toast and the action. An unlayered rule beats this
+   layered one, so the outline is !important (a layered !important beats an
+   unlayered normal declaration). */
 .a63-Toaster [data-sonner-toast]:focus-visible,
 .a63-Toaster [data-sonner-toast] :is([data-button], [data-close-button]):focus-visible {
   outline: var(--a63-control-focus-ring-width) solid
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
-  outline-offset: 2px;
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring)) !important;
+  outline-offset: 2px !important;
 }
 
 /* Sonner's close (20px) and action (24px) buttons reach the control floor, and a

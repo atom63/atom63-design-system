@@ -30,6 +30,11 @@ function collectDefinedProperties(file: string, seen = new Set<string>()): Set<s
 }
 
 const documentedProperties = collectDefinedProperties(stylesEntry)
+
+/* The variables a style value reads with no fallback; a var() with a fallback
+   (an optional theme lever such as --a63-overlay-radius) may stay unset. */
+const requiredReads = (value: string) =>
+  [...value.matchAll(/var\((--[\w-]+)\s*(,)?/g)].filter(match => !match[2]).map(match => match[1])
 const SONNER_HOST_PROPERTIES = [
   '--normal-bg',
   '--normal-border',
@@ -56,11 +61,37 @@ describe('Toaster with only the documented styles', () => {
       for (const property of SONNER_HOST_PROPERTIES) {
         const value = list.style.getPropertyValue(property)
         expect(value, `${variant} ${property}`).not.toBe('')
-        for (const [, name] of value.matchAll(/var\((--[\w-]+)/g)) {
+        for (const name of requiredReads(value)) {
           expect(documentedProperties.has(name), `${variant} ${property} reads ${name}`).toBe(true)
         }
       }
       act(() => toast.dismiss(`documented-${variant}`))
     }
   )
+
+  it('paints the default toast from the overlay contract', async () => {
+    render(<Toaster />)
+    act(() => {
+      toast('Saved (overlay)', { id: 'documented-overlay' })
+    })
+
+    const message = await screen.findByText('Saved (overlay)')
+    const item = message.closest('[data-sonner-toast]') as HTMLElement
+    const list = message.closest('ol') as HTMLElement
+    const expected = {
+      'backdrop-filter': '--a63-overlay-backdrop',
+      'background-image': '--a63-overlay-gloss',
+      'border-style': '--a63-overlay-border-style',
+      'border-width': '--a63-overlay-border-width',
+      'box-shadow': '--a63-overlay-shadow',
+    }
+    for (const [property, token] of Object.entries(expected)) {
+      expect(item.style.getPropertyValue(property), property).toContain(token)
+    }
+    expect(list.style.getPropertyValue('--border-radius')).toContain('--a63-overlay-radius')
+    for (const name of requiredReads(item.getAttribute('style') ?? '')) {
+      expect(documentedProperties.has(name), `toast reads ${name}`).toBe(true)
+    }
+    act(() => toast.dismiss('documented-overlay'))
+  })
 })

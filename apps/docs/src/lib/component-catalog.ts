@@ -17,6 +17,8 @@ export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
   axisGuidance?: ComponentAxisGuidance
   category: string
+  /** Lines that replace the group's general guidance for this component. */
+  guidance?: readonly string[]
   importPath:
     | '@atom63/ui-react'
     | '@atom63/ui-react/calendar'
@@ -41,7 +43,13 @@ export type ComponentCatalogGroup = {
 
 type ComponentDefinition = Pick<
   ComponentCatalogItem,
-  'additionalValueExports' | 'axisGuidance' | 'relatedSlugs' | 'summary' | 'usage' | 'usageExports'
+  | 'additionalValueExports'
+  | 'axisGuidance'
+  | 'guidance'
+  | 'relatedSlugs'
+  | 'summary'
+  | 'usage'
+  | 'usageExports'
 > &
   Partial<Pick<ComponentCatalogItem, 'importPath'>>
 
@@ -598,7 +606,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Sheet presents modal content from a chosen viewport side using dialog focus behavior.',
     usage:
-      'Use it for a side-oriented modal task; use Drawer when drag interaction is part of the experience. The built-in close button is named "Close" in English; pass a localized name as closeProps={{ \'aria-label\': … }}.',
+      'Use it for a side-oriented modal task; use Drawer when drag interaction is part of the experience. side="inline-start" and side="inline-end" follow the text direction (a navigation sheet opens from the reading start in right-to-left pages too); left and right stay physical screen edges. The built-in close button is named "Close" in English; pass a localized name as closeProps={{ \'aria-label\': … }}.',
     usageExports: ['Sheet', 'SheetTrigger', 'SheetContent'],
   },
   sidebar: {
@@ -686,6 +694,10 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
           'A compact pill in the inverse colours, the icon after the message (a status with a spinner).',
       },
     },
+    guidance: [
+      'A toast is announced politely and never takes focus, so it cannot carry anything the user must act on: use Alert Dialog for a decision and an inline Alert for an error that blocks the task.',
+      'A toast closes itself after a few seconds; give one with an action duration: Infinity (or a longer duration) so a keyboard or screen-reader user can reach the action.',
+    ],
     relatedSlugs: ['alert', 'feedback-state', 'copy-button'],
     summary:
       'Toaster is the app-level host for transient messages raised through the exported toast API.',
