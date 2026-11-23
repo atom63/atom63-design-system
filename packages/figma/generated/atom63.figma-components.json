@@ -38129,12 +38129,12 @@
       "reason": "descendant"
     },
     {
-      "what": "[data-a63-theme='aqua'] .a63-Button[data-size^='icon']",
-      "reason": "context selector"
-    },
-    {
       "what": ".a63-Button[data-size^='icon']::after",
       "reason": "pseudo-element"
+    },
+    {
+      "what": ".a63-Button[data-size='tile'] .a63-Button-text",
+      "reason": "descendant"
     },
     {
       "what": ".a63-Button > span.a63-Button-indicator",
@@ -38143,10 +38143,6 @@
     {
       "what": ".a63-Button > span.a63-Button-indicator[data-count]",
       "reason": "descendant"
-    },
-    {
-      "what": "[data-a63-theme='aqua'] .a63-Button[data-size^='icon'] .a63-Button-indicator",
-      "reason": "context selector"
     },
     {
       "what": ".a63-Button > span.a63-Button-indicator-label",

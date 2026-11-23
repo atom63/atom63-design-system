@@ -41,8 +41,7 @@
     "baseline update ownership is recorded for every changed screenshot"
   ],
   "knownGaps": [
-    "No deterministic screenshot diff baseline is stored in this repo yet.",
-    "Component-level state coverage is not complete across all stable candidate controls.",
-    "Reduced-motion and focus-state captures need repeatable automation before stable/latest."
+    "Hover and focus-visible are captured only where a story sets the Storybook visualState parameter (apps/storybook/README.md, \"Visual states\"); not every stable candidate control has those captures yet.",
+    "Storybook screenshot baselines (apps/storybook/visual/__screenshots__, recorded on CI Linux) cover components; the product adopter routes in stableCandidateMatrix.routes have no stored screenshot baseline."
   ]
 }

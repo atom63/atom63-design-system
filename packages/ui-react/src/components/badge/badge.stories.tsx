@@ -134,6 +134,68 @@ export const Interactive: Story = {
 /* Marker theming: the keycap bevel (`--a63-marker-shadow`) varies per theme —
    retro Win98 bevel, aqua glass, modern/terminal flat — while variant fills
    recolor per brand + theme. */
+/* An interactive badge beside one at rest. The visual project puts the first
+   one in the story's state (parameters.visualState, see apps/storybook/README.md). */
+function InteractivePair() {
+  return (
+    <div style={{ alignItems: 'center', display: 'flex', gap: 8 }}>
+      <Badge render={<button type="button" />} variant="outline">
+        Target
+      </Badge>
+      <Badge render={<button type="button" />} variant="outline">
+        At rest
+      </Badge>
+    </div>
+  )
+}
+
+/* The visual project hovers the first interactive badge with the real pointer. */
+export const InteractiveHover: Story = {
+  render: () => <InteractivePair />,
+  parameters: { visualState: { hover: 'button.a63-Badge' } },
+}
+
+/* The visual project tabs to the first interactive badge: the focus-visible ring. */
+export const InteractiveFocusVisible: Story = {
+  render: () => <InteractivePair />,
+  parameters: { visualState: { focusVisible: 'button.a63-Badge' } },
+}
+
+/* Long, CJK and right-to-left labels in a narrow column: each badge stops at the
+   column edge and truncates with an ellipsis; the full text stays readable to AT. */
+export const LongLabels: Story = {
+  render: () => (
+    <div
+      data-testid="long-badges"
+      style={{ display: 'grid', gap: 8, justifyItems: 'start', width: 160 }}
+    >
+      <Badge>Short</Badge>
+      <Badge variant="info">Benachrichtigungseinstellungen aktualisiert</Badge>
+      <Badge dot="green" variant="outline">
+        通知设置已同步到所有设备
+      </Badge>
+      <div dir="rtl" style={{ display: 'grid', justifyItems: 'start', width: '100%' }}>
+        <Badge variant="success">تمت مزامنة الإعدادات مع جميع الأجهزة</Badge>
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const column = canvasElement.querySelector<HTMLElement>('[data-testid="long-badges"]')
+    if (!column) throw new Error('Missing the long-badges column')
+    const edge = column.getBoundingClientRect()
+    const labels = column.querySelectorAll<HTMLElement>('[data-slot="badge-label"]')
+    if (labels.length !== 4) throw new Error(`Expected 4 badge labels, found ${labels.length}`)
+    for (const label of [...labels].slice(1)) {
+      const badge = label.closest<HTMLElement>('[data-slot="badge"]')
+      const box = badge?.getBoundingClientRect()
+      if (!box || box.left < edge.left - 1 || box.right > edge.right + 1)
+        throw new Error(`A long badge overflows its column: "${label.textContent}"`)
+      if (label.scrollWidth <= label.clientWidth)
+        throw new Error(`A long badge label does not truncate: "${label.textContent}"`)
+    }
+  },
+}
+
 export const Themes: Story = {
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>

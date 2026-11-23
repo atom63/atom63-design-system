@@ -465,7 +465,12 @@ export function AutocompleteValue(input: AutocompletePrimitive.Value.Props): Rea
 export function Avatar(input: AvatarProps): React$1.ReactElement;
 
 // @public (undocumented)
-export function AvatarBadge(input: React$1.ComponentProps<'span'>): React$1.ReactElement;
+export function AvatarBadge(input: AvatarBadgeProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface AvatarBadgeProps extends React$1.ComponentProps<'span'> {
+    label?: string;
+}
 
 // @public (undocumented)
 export function AvatarFallback(input: AvatarPrimitive.Fallback.Props): React$1.ReactElement;
@@ -474,7 +479,12 @@ export function AvatarFallback(input: AvatarPrimitive.Fallback.Props): React$1.R
 export function AvatarGroup(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function AvatarGroupCount(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function AvatarGroupCount(input: AvatarGroupCountProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface AvatarGroupCountProps extends React$1.ComponentProps<'div'> {
+    label?: string;
+}
 
 // @public (undocumented)
 export function AvatarImage(input: AvatarPrimitive.Image.Props): React$1.ReactElement;
@@ -557,8 +567,8 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
     'data-slot'?: string;
     indicator?: boolean | number;
     indicatorLabel?: string;
-    // (undocumented)
     loading?: boolean;
+    nativeButton?: boolean;
     shape?: ButtonShape;
     // (undocumented)
     size?: ButtonSize;

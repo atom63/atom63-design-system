@@ -1,0 +1,116 @@
+import { DocExample } from '@atom63/mdx/blocks'
+import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from '@atom63/ui-react'
+import { ComponentGuidanceSection, ComponentUsage } from '../components/component-guidance'
+
+# Avatar
+
+Avatar shows a person or an entity: an image with a fallback, an optional status badge, a story ring, and a stacked group with an overflow count. It is built on Base UI's avatar, so the fallback shows while the image loads and when it fails.
+
+<DocExample
+  title="Image, fallback, status and group"
+  code={`import {
+  Avatar,
+  AvatarBadge,
+  AvatarFallback,
+  AvatarGroup,
+  AvatarGroupCount,
+  AvatarImage,
+} from '@atom63/ui-react'
+
+<Avatar>
+  <AvatarImage alt="Ada Lovelace" src={ada.photo} />
+  <AvatarFallback>AL</AvatarFallback>
+  <AvatarBadge label="Online" />
+</Avatar>
+
+<AvatarGroup>
+  <Avatar><AvatarFallback>AL</AvatarFallback></Avatar>
+  <Avatar><AvatarFallback>GH</AvatarFallback></Avatar>
+  <AvatarGroupCount label="5 more people">+5</AvatarGroupCount>
+</AvatarGroup>`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-6">
+    <Avatar>
+      <AvatarFallback>AL</AvatarFallback>
+      <AvatarBadge label="Online" />
+    </Avatar>
+    <AvatarGroup>
+      <Avatar>
+        <AvatarFallback>AL</AvatarFallback>
+      </Avatar>
+      <Avatar>
+        <AvatarFallback>GH</AvatarFallback>
+      </Avatar>
+      <AvatarGroupCount label="5 more people">+5</AvatarGroupCount>
+    </AvatarGroup>
+  </div>
+</DocExample>
+
+## When to use
+
+<ComponentUsage slug="avatar" />
+
+Use Avatar wherever a person, team, organisation or app is identified: comment authors, assignees, account menus, chat. Use `shape="square"` for organisations and apps; people stay circles.
+
+## Image and fallback
+
+Always give `AvatarImage` an `alt` with the person's name, and always add an `AvatarFallback` with their initials (or an icon). The fallback shows while the image loads and when it fails, so a broken or slow image never leaves an empty circle. When the name is already next to the avatar as text, the image is decorative: pass `alt=""`.
+
+```tsx
+<Avatar size="lg">
+  <AvatarImage alt="Grace Hopper" src={user.photo} />
+  <AvatarFallback>GH</AvatarFallback>
+</Avatar>
+```
+
+## Status badge
+
+`AvatarBadge` pins a dot to the bottom end corner (bottom right, or bottom left in right-to-left layouts). The dot shows status by colour only, so every status badge needs a `label`: it is read after the avatar's name and hidden from sight. Without a label, a screen reader user and a colour-blind user cannot tell Online from Busy.
+
+```tsx
+<Avatar>
+  <AvatarImage alt="Ada Lovelace" src={ada.photo} />
+  <AvatarFallback>AL</AvatarFallback>
+  <AvatarBadge label="Online" />
+</Avatar>
+```
+
+At `md` and `lg` the badge can hold an icon (a check, a camera); at `xs` and `sm` it is a plain dot. In forced-colors mode the dot is drawn in the text colour.
+
+## Group and count
+
+`AvatarGroup` overlaps its avatars from the inline start. End it with `AvatarGroupCount` for the people not shown. Its visible text is short ("+5"), so pass `label` with the count in words ("5 more people"): the visible text is then hidden from assistive technology and the label is read instead.
+
+```tsx
+<AvatarGroup>
+  {shown.map(user => (
+    <Avatar key={user.id}>
+      <AvatarImage alt={user.name} src={user.photo} />
+      <AvatarFallback>{user.initials}</AvatarFallback>
+    </Avatar>
+  ))}
+  <AvatarGroupCount label={`${hidden} more people`}>+{hidden}</AvatarGroupCount>
+</AvatarGroup>
+```
+
+## Story rings
+
+`ring="unseen"` draws a ring for a story or new activity, in `--a63-avatar-ring-fill` (the accent unless the product sets it, for example to a gradient of the category palette). `ring="seen"` draws a thin border-coloured ring once it is viewed. `ring={true}` is a deprecated alias of `ring="unseen"`.
+
+```tsx
+<Avatar ring="unseen" size="lg">
+  <AvatarImage alt="Ada Lovelace" src={ada.photo} />
+  <AvatarFallback>AL</AvatarFallback>
+</Avatar>
+```
+
+The ring is decorative. When it means something the reader needs (new story), say so in the surrounding control's name, for example the button that opens the story.
+
+<ComponentGuidanceSection slug="avatar" />

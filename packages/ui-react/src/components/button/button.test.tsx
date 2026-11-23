@@ -1,6 +1,7 @@
 import { buttonContract } from '@atom63/ui-foundation'
-import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { fireEvent, render, screen } from '@testing-library/react'
+import { createRef } from 'react'
+import { describe, expect, it, vi } from 'vitest'
 
 import { Button } from './button'
 
@@ -47,7 +48,78 @@ describe('Button', () => {
     const el = screen.getByRole('button', { name: 'Busy' })
     expect(el).toHaveAttribute('data-loading', '')
     expect(el).toHaveAttribute('aria-busy', 'true')
-    expect(el).toBeDisabled()
+    expect(el).toHaveAttribute('aria-disabled', 'true')
+    expect(el).not.toBeDisabled()
+  })
+
+  it('keeps keyboard focus when it starts loading, and blocks activation', () => {
+    const onClick = vi.fn()
+    const onSubmit = vi.fn((event: Event) => event.preventDefault())
+    const { rerender } = render(
+      <form onSubmit={e => onSubmit(e.nativeEvent)}>
+        <Button onClick={onClick} type="submit">
+          Save
+        </Button>
+      </form>
+    )
+    const el = screen.getByRole('button', { name: 'Save' })
+    el.focus()
+    rerender(
+      <form onSubmit={e => onSubmit(e.nativeEvent)}>
+        <Button loading onClick={onClick} type="submit">
+          Save
+        </Button>
+      </form>
+    )
+    expect(document.activeElement).toBe(el)
+    fireEvent.click(el)
+    expect(onClick).not.toHaveBeenCalled()
+    expect(onSubmit).not.toHaveBeenCalled()
+  })
+
+  it('calls onClick and forwards its ref', () => {
+    const onClick = vi.fn()
+    const ref = createRef<HTMLButtonElement>()
+    render(
+      <Button onClick={onClick} ref={ref}>
+        Go
+      </Button>
+    )
+    fireEvent.click(screen.getByRole('button', { name: 'Go' }))
+    expect(onClick).toHaveBeenCalledTimes(1)
+    expect(ref.current).toBe(screen.getByRole('button', { name: 'Go' }))
+  })
+
+  it('renders a link through render without button-only attributes', () => {
+    const onClick = vi.fn()
+    const { rerender } = render(
+      // eslint-disable-next-line jsx-a11y/anchor-has-content -- Button fills the anchor
+      <Button render={<a href="#next" />}>Next</Button>
+    )
+    const link = screen.getByRole('link', { name: 'Next' })
+    expect(link).toHaveAttribute('data-slot', 'button')
+    expect(link).not.toHaveAttribute('type')
+    expect(link).not.toHaveAttribute('disabled')
+    rerender(
+      // eslint-disable-next-line jsx-a11y/anchor-has-content -- Button fills the anchor
+      <Button disabled onClick={onClick} render={<a href="#next" />}>
+        Next
+      </Button>
+    )
+    expect(link).toHaveAttribute('aria-disabled', 'true')
+    fireEvent.click(link)
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  it('keeps the native disabled attribute for an explicitly disabled button', () => {
+    render(<Button disabled>Off</Button>)
+    expect(screen.getByRole('button', { name: 'Off' })).toBeDisabled()
+  })
+
+  it('wraps label text so a long label can truncate', () => {
+    render(<Button>Einstellungen speichern</Button>)
+    const text = screen.getByText('Einstellungen speichern')
+    expect(text).toHaveAttribute('data-slot', 'button-text')
   })
 
   it('sets data-button on the root', () => {

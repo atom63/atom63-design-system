@@ -18,7 +18,14 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
   indicator?: boolean | number
   /** What the indicator means, added to the accessible name. Defaults to "New" for a dot and "{n} new" for a count, with "99+" above 99 as drawn. Include the drawn count in your own label. */
   indicatorLabel?: string
+  /** Busy: shows a spinner and blocks activation, but keeps the button focusable (`aria-disabled`), so keyboard focus stays on a submit button while it works. */
   loading?: boolean
+  /**
+   * Whether the rendered element is a native `<button>`. Defaults to `true`, or `false` when
+   * `render` is set. A non-native element (a link) gets no `type` and no native `disabled`;
+   * `disabled` then sets `aria-disabled` and blocks activation.
+   */
+  nativeButton?: boolean
   /** `round` gives a full radius: a circle for icon sizes, a pill for labelled ones. */
   shape?: ButtonShape
   size?: ButtonSize
@@ -30,11 +37,27 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
 }
 
 /** Drop whitespace-only text nodes and trim label strings so JSX newlines
- *  don't inflate the icon↔label gap inside `.a63-Button-label`. */
+ *  don't inflate the icon↔label gap inside `.a63-Button-label`. Text goes in
+ *  `.a63-Button-text`, which truncates with an ellipsis when the button is
+ *  narrower than its label. */
 function compactButtonChildren(children: ReactNode): ReactNode {
   return Children.toArray(children)
     .filter(child => !(typeof child === 'string' && child.trim() === ''))
-    .map(child => (typeof child === 'string' ? child.trim() : child))
+    .map((child, index) =>
+      typeof child === 'string' || typeof child === 'number' ? (
+        <span className="a63-Button-text" data-slot="button-text" key={index}>
+          {typeof child === 'string' ? child.trim() : child}
+        </span>
+      ) : (
+        child
+      )
+    )
+}
+
+/* Cancel activation of a button that is busy or (when not native) disabled. */
+function blockActivation(event: React.SyntheticEvent) {
+  event.preventDefault()
+  event.stopPropagation()
 }
 
 export function Button({
@@ -44,6 +67,7 @@ export function Button({
   indicator,
   indicatorLabel,
   loading = false,
+  nativeButton,
   render,
   shape = buttonContract.defaultShape,
   size = buttonContract.defaultSize,
@@ -54,6 +78,11 @@ export function Button({
   ...props
 }: ButtonProps): React.ReactElement {
   const isDisabled = Boolean(disabled || loading)
+  const isNative = nativeButton ?? render === undefined
+  /* Only an explicitly disabled native button takes the `disabled` attribute.
+     A loading one stays focusable, so a focused submit button keeps focus. */
+  const nativeDisabled = isNative && Boolean(disabled)
+  const softDisabled = isDisabled && !nativeDisabled
   const hasIndicator = indicator === true || (typeof indicator === 'number' && indicator > 0)
   /* The count as drawn: above 99 it reads "99+". The default name uses the same
      text, so what a sighted voice-control user sees is part of the name (WCAG 2.5.3). */
@@ -67,6 +96,7 @@ export function Button({
   const ariaLabel = props['aria-label']
   const defaultProps = {
     'aria-busy': loading ? true : undefined,
+    'aria-disabled': softDisabled ? true : undefined,
     children: (
       <>
         <span className="a63-Button-label" data-slot="button-label">
@@ -100,15 +130,18 @@ export function Button({
     'data-tone': tone,
     'data-trigger-slot': triggerSlot,
     'data-variant': variant,
-    disabled: isDisabled,
-    type: type ?? 'button',
+    ...(isNative ? { disabled: nativeDisabled, type: type ?? 'button' } : type && { type }),
   }
   const ownProps =
     hasIndicator && ariaLabel ? { ...props, 'aria-label': `${ariaLabel}, ${indicatorText}` } : props
 
+  const merged = mergeProps<'button'>(defaultProps, ownProps)
+  /* The caller's onClick does not run, and a submit or a link does not fire. */
+  if (softDisabled) merged.onClick = blockActivation
+
   return useRender({
     defaultTagName: 'button',
-    props: mergeProps<'button'>(defaultProps, ownProps),
+    props: merged,
     render,
   })
 }

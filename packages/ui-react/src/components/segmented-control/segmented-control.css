@@ -164,6 +164,7 @@
 .a63-SegmentedControl-indicator {
   position: absolute;
   top: 50%;
+  /* craft-allow: physical-properties — the component measures the plate's offset from the track's physical left edge (rect.left), in either direction */
   left: 0;
   z-index: 0;
   box-sizing: border-box;

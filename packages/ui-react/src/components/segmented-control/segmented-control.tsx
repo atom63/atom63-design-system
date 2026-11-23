@@ -138,14 +138,14 @@ export function SegmentedControl({
       >
         {items.map(item => (
           <Radio.Root
-            aria-label={item.label}
+            aria-label={variant === 'icon' ? item.label : undefined}
             className={cn('a63-SegmentedControl-item', tabClassName)}
             data-slot="segmented-control-item"
             disabled={item.disabled}
             key={item.value}
             nativeButton
             render={<button type="button" />}
-            title={item.label}
+            title={variant === 'icon' ? item.label : undefined}
             value={item.value}
           >
             {variant === 'icon' ? (

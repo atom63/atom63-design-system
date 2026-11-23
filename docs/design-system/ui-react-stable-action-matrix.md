@@ -8,7 +8,7 @@
 
 ## Summary
 
-- Root export symbols: **655** across **82** source families.
+- Root export symbols: **657** across **82** source families.
 - Package export-map subpaths: **86**.
 - P0 root/source families: **30**.
 - P1 root/source families: **12**.
@@ -28,7 +28,7 @@
 ### Root export tier counts
 
 - `beta-supported-composition-conditional`: 189
-- `beta-supported-core`: 356
+- `beta-supported-core`: 358
 - `monitor-high-risk`: 79
 - `preview-experimental-candidate`: 31
 
@@ -52,7 +52,7 @@
 | `hooks/use-extract-color`         | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |       3 | `monitor-high-risk`: 3                                                                     | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `lib/extract-color`               | P0       | `assign-owner-and-evidence`  | `monitor-until-evidence`                          | `keep-beta-root-unchanged-and-monitor`  |      10 | `monitor-high-risk`: 10                                                                    | Do not promise stable compatibility until an owner, adopter use case, and specific browser/interaction evidence are recorded. |
 | `components/alert-dialog`         | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      18 | `beta-supported-core`: 16<br>`preview-experimental-candidate`: 2                           | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
-| `components/avatar`               | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |       9 | `beta-supported-core`: 8<br>`preview-experimental-candidate`: 1                            | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
+| `components/avatar`               | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      11 | `beta-supported-core`: 10<br>`preview-experimental-candidate`: 1                           | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/button-group`         | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |       7 | `beta-supported-core`: 5<br>`preview-experimental-candidate`: 2                            | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/command`              | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      21 | `beta-supported-composition-conditional`: 20<br>`preview-experimental-candidate`: 1        | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |
 | `components/dialog`               | P0       | `move-to-preview-or-approve` | `preview-only-pending-root-removal-before-stable` | `keep-beta-root-unchanged-preview-only` |      19 | `beta-supported-core`: 17<br>`preview-experimental-candidate`: 2                           | Move behind preview/experimental boundary, make private, or explicitly approve support before stable/latest.                  |

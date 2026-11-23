@@ -77,11 +77,11 @@
   },
   "summary": {
     "sourceFamilies": 82,
-    "sourceExports": 655,
+    "sourceExports": 657,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 356,
+      "beta-supported-core": 358,
       "beta-supported-composition-conditional": 189
     },
     "sourceActionCounts": {
@@ -659,11 +659,11 @@
       "source": "./components/avatar",
       "family": "components/avatar",
       "kind": "component-family",
-      "totalExports": 9,
+      "totalExports": 11,
       "valueExports": 7,
-      "typeExports": 2,
+      "typeExports": 4,
       "tierCounts": {
-        "beta-supported-core": 8,
+        "beta-supported-core": 10,
         "preview-experimental-candidate": 1
       },
       "dominantTier": "beta-supported-core",
