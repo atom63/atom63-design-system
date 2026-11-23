@@ -119,6 +119,17 @@
   cursor: pointer;
   outline: none;
 }
+/* Interaction floor without inflating the 32px glyph box, as Button does: 44px
+   on coarse pointers. The close button sits inside the popup's padding, so the
+   popup does not clip the pseudo. */
+.a63-Dialog-close-button::before {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: var(--a63-control-min-target);
+  min-height: var(--a63-control-min-target);
+  translate: -50% -50%;
+}
 .a63-Dialog-close-button svg {
   width: var(--a63-control-icon-only-size-sm);
   height: var(--a63-control-icon-only-size-sm);
@@ -128,6 +139,10 @@
     background: var(--a63-surface-control-hover);
     color: var(--a63-text-primary);
   }
+}
+.a63-Dialog-close-button:active {
+  background: var(--a63-surface-control-hover);
+  color: var(--a63-text-primary);
 }
 .a63-Dialog-close-button:focus-visible {
   outline: var(--a63-control-focus-ring-width) solid

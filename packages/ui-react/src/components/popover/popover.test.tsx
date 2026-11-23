@@ -1,6 +1,6 @@
 import { render, screen, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import { PortalContainerProvider } from '../portal-container'
 import {
@@ -10,6 +10,7 @@ import {
   PopoverContent,
   PopoverDescription,
   PopoverHeader,
+  PopoverPortal,
   PopoverTitle,
   PopoverTrigger,
 } from './popover'
@@ -90,5 +91,141 @@ describe('Popover', () => {
     })
 
     host.remove()
+  })
+
+  describe('anchoring', () => {
+    afterEach(() => {
+      vi.restoreAllMocks()
+    })
+
+    /* jsdom lays nothing out, so give the anchor a rect far from the trigger's
+       (0, 0) and read where the positioner lands: near the anchor, not at the
+       trigger. */
+    function placeAnchor(element: HTMLElement) {
+      vi.spyOn(element, 'getBoundingClientRect').mockReturnValue(
+        DOMRect.fromRect({ height: 20, width: 40, x: 300, y: 400 })
+      )
+    }
+
+    async function positionerTop(): Promise<number> {
+      const positioner = await waitFor(() => {
+        const element = document.querySelector<HTMLElement>('[data-slot="popover-positioner"]')
+        if (!element) throw new Error('no positioner')
+        return element
+      })
+      return waitFor(() => {
+        const match = /translate\(\s*[-\d.]+px,\s*([-\d.]+)px\)/.exec(positioner.style.transform)
+        const top = match ? Number(match[1]) : Number.parseFloat(positioner.style.top)
+        if (!(top > 0)) throw new Error(`not positioned yet: ${positioner.getAttribute('style')}`)
+        return top
+      })
+    }
+
+    it('positions against a PopoverAnchor instead of the trigger', async () => {
+      render(
+        <Popover defaultOpen>
+          <PopoverTrigger>Open</PopoverTrigger>
+          <PopoverAnchor
+            ref={element => {
+              if (element) placeAnchor(element)
+            }}
+          />
+          <PopoverContent sideOffset={8}>Anchored</PopoverContent>
+        </Popover>
+      )
+      expect(await positionerTop()).toBeGreaterThan(300)
+    })
+
+    it('positions against an explicit anchor element', async () => {
+      const anchor = document.createElement('div')
+      document.body.append(anchor)
+      placeAnchor(anchor)
+
+      render(
+        <Popover defaultOpen>
+          <PopoverTrigger>Open</PopoverTrigger>
+          <PopoverContent anchor={anchor} sideOffset={8}>
+            Anchored
+          </PopoverContent>
+        </Popover>
+      )
+      expect(await positionerTop()).toBeGreaterThan(300)
+      anchor.remove()
+    })
+  })
+
+  it('PopoverPortal falls back to PortalContainerProvider', () => {
+    const host = document.createElement('div')
+    document.body.append(host)
+
+    render(
+      <PortalContainerProvider container={host}>
+        <Popover defaultOpen>
+          <PopoverTrigger>Open</PopoverTrigger>
+          <PopoverPortal>
+            <span>In portal</span>
+          </PopoverPortal>
+        </Popover>
+      </PortalContainerProvider>
+    )
+
+    expect(host).toHaveTextContent('In portal')
+    host.remove()
+  })
+
+  /* The non-modal dialog outcomes: focus moves into the popup, focus is not
+     trapped, Escape closes and returns focus to the trigger, and a press outside
+     closes it. */
+  describe('keyboard and dismissal', () => {
+    function Dismissable() {
+      return (
+        <>
+          <Popover>
+            <PopoverTrigger>Open</PopoverTrigger>
+            <PopoverContent>
+              <PopoverTitle>Share link</PopoverTitle>
+              <PopoverClose>Done</PopoverClose>
+            </PopoverContent>
+          </Popover>
+          <button type="button">Outside</button>
+        </>
+      )
+    }
+
+    it('moves focus in on open, and Escape closes and returns focus to the trigger', async () => {
+      const user = userEvent.setup()
+      render(<Dismissable />)
+      const trigger = screen.getByRole('button', { name: 'Open' })
+
+      await user.click(trigger)
+      const popup = await screen.findByRole('dialog')
+      await waitFor(() => expect(popup).toContainElement(document.activeElement as HTMLElement))
+
+      await user.keyboard('{Escape}')
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+      expect(trigger).toHaveFocus()
+    })
+
+    it('does not trap focus', async () => {
+      const user = userEvent.setup()
+      render(<Dismissable />)
+
+      await user.click(screen.getByRole('button', { name: 'Open' }))
+      await screen.findByRole('dialog')
+      // A trapping dialog would cycle focus between Done and its own edges.
+      for (let stop = 0; stop < 3; stop += 1) await user.tab()
+      const popup = document.querySelector('[data-slot="popover-content"]')
+      expect(popup?.contains(document.activeElement) ?? false).toBe(false)
+    })
+
+    it('closes on a press outside', async () => {
+      const user = userEvent.setup()
+      render(<Dismissable />)
+
+      await user.click(screen.getByRole('button', { name: 'Open' }))
+      await screen.findByRole('dialog')
+      await user.click(screen.getByRole('button', { name: 'Outside' }))
+      await waitFor(() => expect(screen.queryByRole('dialog')).toBeNull())
+    })
   })
 })

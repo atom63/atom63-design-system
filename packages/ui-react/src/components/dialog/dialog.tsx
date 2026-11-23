@@ -137,6 +137,10 @@ export function DialogPopup({
   size?: DialogSize | DialogSizeAlias
   /** @deprecated Use `mobilePlacement="bottom"` or `"center"` instead. */
   bottomStickOnMobile?: boolean
+  /**
+   * Props for the built-in close button. Its accessible name defaults to the
+   * English "Close"; pass a localized one as `closeProps={{ 'aria-label': … }}`.
+   */
   closeProps?: DialogPrimitive.Close.Props
   portalProps?: DialogPrimitive.Portal.Props
 }): React.ReactElement {

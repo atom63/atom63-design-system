@@ -151,6 +151,10 @@ export type SheetPopupProps = SheetPrimitive.Popup.Props & {
   showCloseButton?: boolean
   side?: SheetSide
   variant?: SheetVariant
+  /**
+   * Props for the built-in close button. Its accessible name defaults to the
+   * English "Close"; pass a localized one as `closeProps={{ 'aria-label': … }}`.
+   */
   closeProps?: SheetPrimitive.Close.Props
   portalProps?: SheetPrimitive.Portal.Props
 }
