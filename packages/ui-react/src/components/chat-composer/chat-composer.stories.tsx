@@ -176,5 +176,5 @@ export const FocusVisible: Story = {
 /* The pointer resting on the send button, with text so it is enabled. */
 export const Hover: Story = {
   args: { attach, defaultValue: 'Summarise this thread' },
-  parameters: { visualState: { hover: '[data-slot="chat-composer-submit"]' } },
+  parameters: { visualState: { hover: '[data-trigger-slot="chat-composer-submit"]' } },
 }
