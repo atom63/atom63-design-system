@@ -46,7 +46,12 @@ export interface FeedbackStateAction {
   variant?: ButtonProps['variant']
 }
 
+/** Replaces the built-in English copy, per kind. The `title` and `description` props still win. */
 export interface FeedbackStateLabels {
+  /** The default title of each kind, e.g. `{ error: 'Etwas ist schiefgelaufen' }`. */
+  titles?: Partial<Record<FeedbackStateKind, string>>
+  /** The default description of each kind. */
+  descriptions?: Partial<Record<FeedbackStateKind, string>>
   /** The no-results description when `query` is set. Defaults to `No results found for "{query}"`. */
   noResults?: (query: string) => string
 }
@@ -85,7 +90,7 @@ const stateConfig = {
   loading: {
     icon: 'spinner',
     defaultTitle: 'Loading',
-    defaultDescription: 'Loading...',
+    defaultDescription: 'This will only take a moment',
   },
   'not-found': {
     icon: 'searchX',
@@ -114,26 +119,21 @@ const stateConfig = {
 
 function getFeedbackDescription({
   description,
-  error,
   labels,
   query,
   state,
-}: Pick<FeedbackStateProps, 'description' | 'error' | 'labels' | 'query'> & {
+}: Pick<FeedbackStateProps, 'description' | 'labels' | 'query'> & {
   state: FeedbackStateKind
 }) {
   if (description) {
     return description
   }
 
-  if (state === 'error' && error instanceof Error) {
-    return error.message
-  }
-
   if (state === 'no-results' && query) {
     return labels?.noResults ? labels.noResults(query) : `No results found for "${query}"`
   }
 
-  return stateConfig[state].defaultDescription
+  return labels?.descriptions?.[state] ?? stateConfig[state].defaultDescription
 }
 
 function FeedbackStateActionButton({ action }: { action: FeedbackStateAction }) {
@@ -187,8 +187,10 @@ export function FeedbackState({
   ...props
 }: FeedbackStateProps): React.ReactElement {
   const config = stateConfig[state]
-  const finalDescription = getFeedbackDescription({ description, error, labels, query, state })
-  const finalTitle = title || config.defaultTitle
+  const finalDescription = getFeedbackDescription({ description, labels, query, state })
+  const finalTitle = title || labels?.titles?.[state] || config.defaultTitle
+  // An Error's message is technical detail, so it sits under the friendly description.
+  const detail = state === 'error' && error instanceof Error ? error.message : ''
   const iconNode = renderFeedbackIcon(icon ?? config.icon)
   const Heading = `h${level}` as const
 
@@ -216,6 +218,11 @@ export function FeedbackState({
         <div className="a63-FeedbackState-description" data-slot="feedback-state-description">
           {finalDescription}
         </div>
+        {detail ? (
+          <div className="a63-FeedbackState-detail" data-slot="feedback-state-detail">
+            {detail}
+          </div>
+        ) : null}
       </div>
 
       {actions && actions.length > 0 ? (

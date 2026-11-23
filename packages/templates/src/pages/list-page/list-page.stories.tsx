@@ -63,20 +63,32 @@ function OperationStatus({
   )
 }
 
+/* Below 1024px the amount still shows: as a column at 768px and in each phone row. */
+const checkAmountShown = (canvasElement: HTMLElement) => {
+  const amount = [...canvasElement.querySelectorAll<HTMLElement>('th, li span')].find(
+    element => element.checkVisibility() && /^(Amount|\$3,200\.00)$/.test(element.textContent)
+  )
+  if (!amount) throw new Error(`Expected the invoice amount at ${window.innerWidth}px`)
+}
+
 export const Desktop: Story = {}
 
 export const DefaultWide: Story = { globals: wideGlobals }
 
 export const Compact: Story = { globals: compactGlobals }
 
-export const Tablet: Story = { globals: tabletGlobals }
+export const Tablet: Story = {
+  globals: tabletGlobals,
+  play: ({ canvasElement }) => checkAmountShown(canvasElement),
+}
 
-/* On touch, the phone row's two 32px icon buttons sit far enough apart that their 44px targets
-   do not overlap. */
+/* The amount shows in each phone row. On touch, the row's two 32px icon buttons sit far enough
+   apart that their 44px targets do not overlap. */
 export const Phone: Story = {
   globals: responsivePhoneGlobals,
   play: async ({ canvas, canvasElement }) => {
     const viewButton = await canvas.findByRole('button', { name: 'View INV-1044' })
+    checkAmountShown(canvasElement)
     const menuButton = canvas.getByRole('button', { name: 'Actions for INV-1044' })
     // Touch input sizes, as on a phone: 32px buttons with 44px targets.
     canvasElement.setAttribute('data-a63-input', 'touch')
@@ -91,6 +103,55 @@ export const Phone: Story = {
       canvasElement.removeAttribute('data-a63-input')
     }
   },
+}
+
+const longInvoices = [
+  {
+    amount: 1234567.89,
+    customer: 'Donaudampfschifffahrtsgesellschaft Kundenabrechnungsabteilung GmbH & Co. KG',
+    id: 'INV-1044',
+    issued: '2026-08-12',
+    status: 'overdue' as const,
+  },
+  {
+    amount: 9876543.21,
+    customer: '北京星辰数字科技有限公司华东区域销售与客户服务中心',
+    id: 'INV-1045',
+    issued: '2026-09-08',
+    status: 'open' as const,
+  },
+  {
+    amount: 48,
+    customer: 'Lumen Studio',
+    id: 'INV-1046',
+    issued: '2026-09-10',
+    status: 'paid' as const,
+  },
+]
+
+/* Nothing on the page is wider than the viewport, and the phone rows' amounts read in full. */
+const checkNoOverflow = (canvasElement: HTMLElement) => {
+  if (document.documentElement.scrollWidth > window.innerWidth + 1) {
+    throw new Error('The page overflows horizontally')
+  }
+  for (const element of canvasElement.querySelectorAll<HTMLElement>('ul > li, li span')) {
+    if (element.checkVisibility() && element.scrollWidth > element.clientWidth + 1) {
+      throw new Error(`"${element.textContent}" overflows its row`)
+    }
+  }
+}
+
+/* A long German customer, a long CJK customer and 7-digit amounts. */
+export const LongContentTablet: Story = {
+  args: { invoices: longInvoices },
+  globals: tabletGlobals,
+  play: ({ canvasElement }) => checkNoOverflow(canvasElement),
+}
+
+export const LongContentPhone: Story = {
+  args: { invoices: longInvoices },
+  globals: responsivePhoneGlobals,
+  play: ({ canvasElement }) => checkNoOverflow(canvasElement),
 }
 
 const selectedArgs = { defaultOpenId: 'INV-1044' }

@@ -2803,7 +2803,7 @@ export const feedbackStateContract: {
     defaultSize: "panel";
     kinds: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     sizes: readonly ["inline", "panel", "page", "widget"];
-    slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
+    slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-detail", "feedback-state-content"];
     states: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     visualArchetypes: readonly ["action"];
 };
@@ -2824,7 +2824,7 @@ export const feedbackStateSizes: readonly ["inline", "panel", "page", "widget"];
 export type FeedbackStateSlot = (typeof feedbackStateSlots)[number];
 
 // @public (undocumented)
-export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
+export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-detail", "feedback-state-content"];
 
 // @public (undocumented)
 export type FeedbackStateState = (typeof feedbackStateStates)[number];

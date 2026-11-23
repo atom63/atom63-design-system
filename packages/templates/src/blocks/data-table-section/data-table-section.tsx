@@ -80,7 +80,8 @@ export interface DataTableSectionProps<Row> {
   renderPhoneRow?: (row: Row) => ReactNode
   rowActions?: (row: Row) => ReactNode
   rows: readonly Row[]
-  /** Highlights the open record without making the row itself interactive. */
+  /** Highlights the open record, and marks it `aria-current`, without making the row itself
+   *  interactive. */
   selectedRowKey?: string
   /** A short count such as "12 of 25 invoices", announced when it changes. */
   summary: string
@@ -206,6 +207,7 @@ export function DataTableSection<Row>({
               <TableBody>
                 {rows.map(row => (
                   <TableRow
+                    aria-current={getRowKey(row) === selectedRowKey ? 'true' : undefined}
                     data-state={getRowKey(row) === selectedRowKey ? 'selected' : undefined}
                     key={getRowKey(row)}
                   >
@@ -233,6 +235,7 @@ export function DataTableSection<Row>({
                     ? undefined
                     : 'flex items-start gap-3 p-4 data-[selected]:bg-[var(--a63-selected-background)] data-[selected]:text-[var(--a63-selected-foreground)]'
                 }
+                aria-current={getRowKey(row) === selectedRowKey ? 'true' : undefined}
                 data-selected={getRowKey(row) === selectedRowKey ? '' : undefined}
                 key={getRowKey(row)}
               >
@@ -242,13 +245,21 @@ export function DataTableSection<Row>({
                   <>
                     <div className="flex min-w-0 flex-1 flex-col gap-2">
                       {titleColumn ? (
-                        <div className="text-foreground font-medium">{titleColumn.cell(row)}</div>
+                        <div className="text-foreground font-medium [overflow-wrap:anywhere]">
+                          {titleColumn.cell(row)}
+                        </div>
                       ) : null}
                       <dl className="grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-1 text-sm">
                         {detailColumns.map(column => (
                           <div className="contents" key={column.key}>
                             <dt className="text-muted-foreground">{column.header}</dt>
-                            <dd className={column.align === 'end' ? 'tabular-nums' : undefined}>
+                            <dd
+                              className={
+                                column.align === 'end'
+                                  ? '[overflow-wrap:anywhere] tabular-nums'
+                                  : '[overflow-wrap:anywhere]'
+                              }
+                            >
                               {column.cell(row)}
                             </dd>
                           </div>

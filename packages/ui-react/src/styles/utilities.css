@@ -1199,6 +1199,9 @@
   .py-3 {
     padding-block: calc(var(--spacing) * 3);
   }
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
+  }
   .py-8 {
     padding-block: calc(var(--spacing) * 8);
   }
@@ -1348,6 +1351,9 @@
   }
   .text-balance {
     text-wrap: balance;
+  }
+  .\[overflow-wrap\:anywhere\] {
+    overflow-wrap: anywhere;
   }
   .text-\[color\:var\(--a63-grid-crosshair-color\,var\(--input\,var\(--a63-border-subtle\)\)\)\] {
     color: var(--a63-grid-crosshair-color,var(--input,var(--a63-border-subtle)));
@@ -1701,6 +1707,9 @@
     }
     .sm\:py-32 {
       padding-block: calc(var(--spacing) * 32);
+    }
+    .sm\:ps-6 {
+      padding-inline-start: calc(var(--spacing) * 6);
     }
     .sm\:text-\[var\(--a63-text-primary\)\] {
       color: var(--a63-text-primary);

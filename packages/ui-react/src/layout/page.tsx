@@ -16,6 +16,10 @@ export interface PageProps extends useRender.ComponentProps<'main'> {
  * grows by the bottom inset and the inline padding is the wider side inset,
  * which is 0 outside a notched or standalone screen. The top inset belongs to
  * the header above the page.
+ *
+ * Do not set inline padding (`px-*`, `ps-*`, `pe-*`) through `className`: it
+ * replaces the safe-area inset. Put content padding on a `Container`
+ * (`padding="x"`) or another element inside the page.
  */
 export function Page({ className, noPadding = false, render, ...props }: PageProps): ReactElement {
   const defaultProps = {

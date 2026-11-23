@@ -122,7 +122,13 @@ export function SectionHeader({
 
   return (
     <div
-      className={cn(align === 'center' && 'text-center', align === 'end' && 'text-end', className)}
+      className={cn(
+        // An unbroken token (a URL, a long compound) wraps instead of overflowing a phone.
+        '[overflow-wrap:anywhere]',
+        align === 'center' && 'text-center',
+        align === 'end' && 'text-end',
+        className
+      )}
       data-slot="section-header"
     >
       <TitleTag className={cn(titleClass, alignClasses[align], titleClassName)} id={titleId}>

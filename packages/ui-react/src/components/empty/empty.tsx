@@ -47,11 +47,15 @@ export function EmptyMedia({
 
 export function EmptyTitle({
   className,
+  level = 3,
   ...props
-}: React.ComponentProps<'div'>): React.ReactElement {
+}: React.ComponentProps<'div'> & {
+  /** Heading level of the title, to fit the page outline. Defaults to 3. */
+  level?: 1 | 2 | 3 | 4 | 5 | 6
+}): React.ReactElement {
   return (
     <div
-      aria-level={3}
+      aria-level={level}
       className={cn('a63-Empty-title', className)}
       data-slot="empty-title"
       role="heading"
