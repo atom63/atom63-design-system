@@ -1,5 +1,18 @@
 # @atom63/styles
 
+## 0.1.0-beta.13
+
+### Patch Changes
+
+- [#353](https://github.com/atom63/atom63-design-system/pull/353) [`a4f01d4`](https://github.com/atom63/atom63-design-system/commit/a4f01d4bd008a72f702d4307c1545590df932c0a) Thanks [@atom63](https://github.com/atom63)! - Data and feedback components get their missing states. Pagination draws a disabled Previous or Next faded, mirrors its chevrons under `dir="rtl"`, takes `children` to replace the Previous, Next and More pages text, and its contract `linkSizes` narrows to `xs`, `sm`, `md`, `icon-xs`, `icon-sm` and `icon`. Table rows take `selected`, cells and heads take `wrap`, head and cell padding follow the density scale, and an overflowing table scroller becomes a named, focusable region. Chart gains `layout` (`grouped` or `stacked`, in the contract; `stacked` is deprecated), an empty message (`labels.empty`), tap-to-read on touch, real values below zero in the tooltip and table with a console warning, index keys, a short plot name (`labels.plot`), and whole-number ticks when every value is zero. ItemGroup is a list and its Items are list items (a link or button row is wrapped in one); interactive rows floor at `--a63-row-min-size`, have a disabled look, clamp their title and description, keep long strings inside the row, and mark selection in forced colors. Interactive Cards draw a focus-visible ring and lift, gate the hover lift and media zoom to fine pointers, read type-scale font sizes, and the cursor label uses on-media tokens. FeedbackState forwards native attributes and `ref`, takes `labels.noResults`, mounts a fresh alert for an error, wraps long titles, and its contract states are its kinds (the `idle` alias is gone). EmptyErrorDetail takes `labels` and mirrors in RTL. Skeleton keeps an edge in forced colors and sweeps toward the inline end. ChatComposer adds `submitOnEnter` (off on touchscreens) and `enterKeyHint`. The user ChatMessage bubble keeps an edge in forced colors. The shadcn bridge defines `--a63-row-min-size` and `--a63-action-disabled-opacity`.
+
+- [#357](https://github.com/atom63/atom63-design-system/pull/357) [`27dff37`](https://github.com/atom63/atom63-design-system/commit/27dff3757204017cf40ce68e3b1a314ca7baab81) Thanks [@atom63](https://github.com/atom63)! - Form controls, round 7:
+  
+  - `Textarea` takes `variant` (`default`, `filled`, `plain`), the same field chrome as `Input`; the textarea contract lists the variants.
+  - `SegmentedControl` scrolls the selected segment fully into view in a scrolling track, on mount and when the selection changes, and a pressed segment's content dips.
+  - `FieldLabel`, `FieldLegend`, `FieldDescription`, `FieldError`, `FormDescription` and `FormMessage` wrap long words and unbroken URLs instead of widening the form.
+  - Terminal light `--a63-text-tertiary` is lighter (90% of the action colour instead of 80%), so a placeholder reads clearly below the value while keeping 4.5:1.
+
 ## 0.1.0-beta.12
 
 ### Patch Changes

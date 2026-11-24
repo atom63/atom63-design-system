@@ -54,6 +54,24 @@ describe('WIDGET_TYPE_RAMP', () => {
     expect(ratio).toBeGreaterThan(1.5)
   })
 
+  // @atom63/styles sets body to a fixed 23px line (#241). A role without its
+  // own unitless leading inherits that, so every role must carry one.
+  it('gives every ramp role its own unitless leading', () => {
+    for (const role of Object.keys(WIDGET_TYPE_RAMP) as Array<keyof typeof WIDGET_TYPE_RAMP>) {
+      const { lineHeight } = widgetTypeStyle(role)
+      expect(lineHeight, role).toBeTypeOf('number')
+      expect(lineHeight as number, role).toBeGreaterThanOrEqual(0.8)
+      expect(lineHeight as number, role).toBeLessThanOrEqual(1.6)
+    }
+    for (const role of ['label', 'body', 'name', 'title', 'stat'] as const) {
+      expect(widgetTypeStyle(role).lineHeight, role).toBe(1.5)
+    }
+  })
+
+  it('lets a call site override the role leading', () => {
+    expect(widgetTypeStyle('body', 'small', { leading: 1 }).lineHeight).toBe(1)
+  })
+
   it('gives the display-serif headline room for a second line', () => {
     expect(widgetTypeStyle('headline', 'small').lineHeight).toBe(1.18)
   })
