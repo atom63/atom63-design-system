@@ -1,7 +1,9 @@
 # ADR 0007: A written readiness bar, reviewed by agents with an independent verifier
 
 **Status:** Accepted, 2026-11-18 (full-review proposal, decisions 1A to 4A; the bar approved the
-same day). Rounds 0 to 2 ran 2026-11-18 to 2026-11-20; round 3 fixes in progress.
+same day). Rounds 0 to 2 ran 2026-11-18 to 2026-11-20; round 3 fixes in progress. The goal adds
+open-source adopters under [ADR 0009](./0009-opinionated-open-source-for-ai-products.md)
+(proposed 2026-11-24).
 
 ## Context
 
