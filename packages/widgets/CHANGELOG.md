@@ -1,5 +1,13 @@
 # @atom63/widgets
 
+## 0.1.0-beta.9
+
+### Patch Changes
+
+- [#327](https://github.com/atom63/atom63-design-system/pull/327) [`6a70335`](https://github.com/atom63/atom63-design-system/commit/6a70335ecbea924373a5d595c5c4bed2cc121e8f) Thanks [@atom63](https://github.com/atom63)! - Give every `WIDGET_TYPE_RAMP` role its own unitless `leading`, so widget type no longer inherits the page's line height. `@atom63/styles` sets `body` to the body role with a fixed 23px line ([#241](https://github.com/ATOM63/atom63-design-system/issues/241)), and roles without a leading picked that up: a 12.5px `body` row sat on a 23px line instead of the 1.5x it was designed on. `label`, `body`, `name`, `title` and `stat` now use 1.5, and `display` and `displayCompact` use 1, the value every shipped call site already passed. `chrome` (1) and `headline` (1.18) are unchanged, and a `leading` option still overrides the role.
+- Updated dependencies [[`06093d4`](https://github.com/atom63/atom63-design-system/commit/06093d44b3e1525c699e8806e8761fcd70daa408), [`d9114fe`](https://github.com/atom63/atom63-design-system/commit/d9114fed7fdbdc72762b74d1db8c8981f00fc46f), [`091a94c`](https://github.com/atom63/atom63-design-system/commit/091a94c24f70993fb7fc54f1b34b974c08ba1915), [`a4f01d4`](https://github.com/atom63/atom63-design-system/commit/a4f01d4bd008a72f702d4307c1545590df932c0a), [`d53bffe`](https://github.com/atom63/atom63-design-system/commit/d53bffe8acab6e68a6687230b7c9f362c9145023), [`fdbe267`](https://github.com/atom63/atom63-design-system/commit/fdbe2670698a40448943822a5adc27eb8ee16e2f), [`759fd86`](https://github.com/atom63/atom63-design-system/commit/759fd866fb7d87375716f192d80bb090cb873bf2), [`27dff37`](https://github.com/atom63/atom63-design-system/commit/27dff3757204017cf40ce68e3b1a314ca7baab81), [`9b9f44f`](https://github.com/atom63/atom63-design-system/commit/9b9f44f6861b0958e7c61c3871ddea0140cd8038), [`d00c3cf`](https://github.com/atom63/atom63-design-system/commit/d00c3cfaf7b33744c94e2cc7c64b32612ba98299), [`aea925d`](https://github.com/atom63/atom63-design-system/commit/aea925d372feb22601767fbbf2ba8218046cd463), [`251c53e`](https://github.com/atom63/atom63-design-system/commit/251c53ec14d8161f7858457440c9d852ad50aa5f)]:
+  - @atom63/ui-react@0.2.0-beta.18
+
 ## 0.1.0-beta.8
 
 ### Patch Changes
