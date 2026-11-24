@@ -1,5 +1,13 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.19
+
+### Patch Changes
+
+- [#360](https://github.com/atom63/atom63-design-system/pull/360) [`51c78c9`](https://github.com/atom63/atom63-design-system/commit/51c78c929aa9ad9f6fef4b15206b906508d43a18) Thanks [@atom63](https://github.com/atom63)! - Add a card variant to DestinationLink for card titles and linked cards. It removes the underline and keeps link semantics, destination indicators, and keyboard focus. Inline links retain their default underline.
+- Updated dependencies [[`51c78c9`](https://github.com/atom63/atom63-design-system/commit/51c78c929aa9ad9f6fef4b15206b906508d43a18)]:
+  - @atom63/ui-foundation@0.2.0-beta.11
+
 ## 0.2.0-beta.18
 
 ### Minor Changes
