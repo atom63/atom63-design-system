@@ -22,7 +22,7 @@ describe('DestinationLink', () => {
     )
     const link = screen.getByRole('link', { name: 'Projects' })
     expect(link).toHaveClass('a63-DestinationLink', 'extra')
-    expect(link).toHaveAttribute('data-variant', 'inline')
+    expect(link).not.toHaveAttribute('data-variant')
   })
 
   it('renders internal destinations through the supplied router link', () => {

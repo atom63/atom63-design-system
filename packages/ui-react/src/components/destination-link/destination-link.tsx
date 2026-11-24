@@ -24,7 +24,7 @@ export function DestinationLink({
   children,
   kind,
   render,
-  variant = destinationLinkContract.defaultVariant,
+  variant,
   ...props
 }: DestinationLinkProps): React.ReactElement {
   const external = kind === 'external'
@@ -52,12 +52,12 @@ export function DestinationLink({
       {
         'data-destination-kind': kind,
         'data-slot': destinationLinkContract.slots[0],
-        'data-variant': variant,
       } as React.ComponentProps<'a'>
     ),
     render: external ? undefined : render,
     state: {
       slot: 'destination-link',
+      variant,
     },
   })
 }
