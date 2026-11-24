@@ -22,8 +22,8 @@ describe('DestinationLink', () => {
     )
     const link = screen.getByRole('link', { name: 'Projects' })
     expect(link).toHaveClass('a63-DestinationLink', 'extra')
-    // Plain by default: no underline unless a caller asks for `inline`.
-    expect(link).toHaveAttribute('data-variant', 'plain')
+    // Plain by default: the recipe underlines only `[data-variant='inline']`.
+    expect(link).not.toHaveAttribute('data-variant')
   })
 
   it('renders internal destinations through the supplied router link', () => {

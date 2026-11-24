@@ -4,7 +4,8 @@
  * indicator, and the surface around it carries the cue. The `inline` variant
  * is a text link in running prose, drawn like the system's other links (field
  * and empty descriptions, Button `link`) with an underline. Both get primary
- * text, accent text on hover, and an outline focus ring.
+ * text, accent text on hover, and an outline focus ring. An unset variant is
+ * `plain`, so only `[data-variant='inline']` draws the underline.
  */
 
 .a63-DestinationLink {

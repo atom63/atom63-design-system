@@ -27,7 +27,7 @@ export function DestinationLink({
   children,
   kind,
   render,
-  variant = destinationLinkContract.defaultVariant,
+  variant,
   ...props
 }: DestinationLinkProps): React.ReactElement {
   const external = kind === 'external'
