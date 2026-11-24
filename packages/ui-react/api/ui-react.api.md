@@ -62,6 +62,7 @@ import { CrossRendererContractId } from '@atom63/ui-foundation';
 import { Density } from '@atom63/ui-foundation';
 import { DesignLanguage } from '@atom63/ui-foundation';
 import { DestinationKind } from '@atom63/ui-foundation';
+import { destinationLinkContract } from '@atom63/ui-foundation';
 import { Dialog as Dialog_2 } from '@base-ui/react/dialog';
 import { DialogFooterVariant } from '@atom63/ui-foundation';
 import { DialogMobilePlacement } from '@atom63/ui-foundation';
@@ -1148,6 +1149,7 @@ export function DestinationLink(input: DestinationLinkProps): React$1.ReactEleme
 // @public (undocumented)
 export type DestinationLinkProps = Omit<useRender.ComponentProps<'a'>, 'rel' | 'target'> & {
     kind: DestinationKind;
+    variant?: (typeof destinationLinkContract.variants)[number];
 };
 
 // @public (undocumented)

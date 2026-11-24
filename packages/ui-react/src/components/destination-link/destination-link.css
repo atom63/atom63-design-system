@@ -1,8 +1,8 @@
 /*
  * DestinationLink recipe: an inline text link, drawn like the system's other
  * links (field and empty descriptions, Button `link`): primary text with an
- * underline, accent text on hover, and an outline focus ring. The indicator
- * keeps a small gap before it and is not underlined.
+ * underline, accent text on hover, and an outline focus ring. Card links keep
+ * hover and focus feedback and rely on their surrounding surface for context.
  */
 
 .a63-DestinationLink {
@@ -10,6 +10,10 @@
   color: var(--a63-text-primary);
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.a63-DestinationLink[data-variant='card'] {
+  text-decoration-line: none;
 }
 
 .a63-DestinationLink:hover {

@@ -1482,20 +1482,28 @@
       "source": "packages/ui-foundation/contracts/components/destination-link.json",
       "exportName": "destinationLinkContract",
       "maturity": "stable",
-      "axes": [{ "name": "kinds", "values": ["internal", "external"] }],
+      "axes": [
+        { "name": "variants", "values": ["inline", "card"], "default": "inline" },
+        { "name": "kinds", "values": ["internal", "external"] }
+      ],
       "slots": ["destination-link", "destination-indicator"],
       "states": ["rest", "focus-visible"],
       "tokenSlots": [],
       "visualArchetypes": ["action"],
       "intent": {
-        "description": "What a destination link is, independent of any platform: whether it stays in the product or leaves it. iOS has no Atom63UI enum for it: the kind picks NavigationLink or Link.",
-        "axes": { "kind": ["internal", "external"] },
+        "description": "Whether a link stays in the product or leaves it, and how it is presented on the web. On iOS the kind picks NavigationLink or Link.",
+        "axes": { "kind": ["internal", "external"], "variant": ["inline", "card"] },
         "platforms": {
           "web": {
             "props": {
               "kind": {
                 "list": "kinds",
                 "map": { "internal": { "kind": "internal" }, "external": { "kind": "external" } },
+                "extensions": {}
+              },
+              "variant": {
+                "list": "variants",
+                "map": { "inline": { "variant": "inline" }, "card": { "variant": "card" } },
                 "extensions": {}
               }
             }

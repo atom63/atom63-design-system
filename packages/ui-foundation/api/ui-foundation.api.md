@@ -2497,6 +2497,10 @@ export const destinationKinds: readonly ["internal", "external"];
 
 // @public (undocumented)
 export interface DestinationLinkContract {
+    // Warning: (ae-forgotten-export) The symbol "DestinationLinkVariant" needs to be exported by the entry point index.d.ts
+    //
+    // (undocumented)
+    defaultVariant: DestinationLinkVariant;
     // (undocumented)
     kinds: readonly DestinationKind[];
     // (undocumented)
@@ -2504,11 +2508,15 @@ export interface DestinationLinkContract {
     // (undocumented)
     states: readonly DestinationLinkState[];
     // (undocumented)
+    variants: readonly DestinationLinkVariant[];
+    // (undocumented)
     visualArchetypes: readonly DestinationLinkVisualArchetype[];
 }
 
 // @public (undocumented)
 export const destinationLinkContract: {
+    defaultVariant: "inline";
+    variants: readonly ["inline", "card"];
     kinds: readonly ["internal", "external"];
     slots: readonly ["destination-link", "destination-indicator"];
     states: readonly ["rest", "focus-visible"];
