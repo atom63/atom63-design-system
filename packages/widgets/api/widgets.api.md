@@ -83,10 +83,12 @@ export const WIDGET_TYPE_RAMP: {
     readonly label: {
         readonly designPx: 15;
         readonly weight: 500;
+        readonly leading: 1.5;
     };
     readonly body: {
         readonly designPx: 17;
         readonly weight: 400;
+        readonly leading: 1.5;
     };
     readonly name: {
         readonly designPx: {
@@ -95,6 +97,7 @@ export const WIDGET_TYPE_RAMP: {
             readonly large: 22;
         };
         readonly weight: 600;
+        readonly leading: 1.5;
     };
     readonly title: {
         readonly designPx: {
@@ -103,6 +106,7 @@ export const WIDGET_TYPE_RAMP: {
             readonly large: 24;
         };
         readonly weight: 600;
+        readonly leading: 1.5;
     };
     readonly headline: {
         readonly designPx: {
@@ -120,6 +124,7 @@ export const WIDGET_TYPE_RAMP: {
             readonly large: 26;
         };
         readonly weight: 600;
+        readonly leading: 1.5;
     };
     readonly display: {
         readonly designPx: {
@@ -128,6 +133,7 @@ export const WIDGET_TYPE_RAMP: {
             readonly large: 64;
         };
         readonly weight: 600;
+        readonly leading: 1;
     };
     readonly displayCompact: {
         readonly designPx: {
@@ -136,6 +142,7 @@ export const WIDGET_TYPE_RAMP: {
             readonly large: 52;
         };
         readonly weight: 600;
+        readonly leading: 1;
     };
 };
 
