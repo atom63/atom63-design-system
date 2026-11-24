@@ -1,0 +1,43 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "reading-page",
+  "type": "registry:page",
+  "title": "Reading page",
+  "description": "A long-form reading page for an article, a blog post or a docs page, built on ReaderLayout from @atom63/ui-react/layout: Page owns the main landmark, Container the width, Section the space around the document, and ReaderLayout a centred reading column with a table-of-contents rail beside it on wide screens. reserveAside keeps the column the same width on pages with no rail. Inside an app shell, give Page render={<div />} so the document keeps one main landmark.",
+  "dependencies": [
+    "@atom63/ui-react"
+  ],
+  "registryDependencies": [],
+  "files": [
+    {
+      "path": "templates/pages/reading-page/reading-page.tsx",
+      "type": "registry:page",
+      "target": "@components/atom63/pages/reading-page/reading-page.tsx",
+      "content": "import { Separator } from '@atom63/ui-react'\nimport { Container, Page, ReaderLayout, Section } from '@atom63/ui-react/layout'\n\nexport const template = {\n  id: 'reading-page',\n  kind: 'page',\n  title: 'Reading page',\n  description:\n    'A long-form reading page for an article, a blog post or a docs page, built on ReaderLayout from @atom63/ui-react/layout: Page owns the main landmark, Container the width, Section the space around the document, and ReaderLayout a centred reading column with a table-of-contents rail beside it on wide screens. reserveAside keeps the column the same width on pages with no rail. Inside an app shell, give Page render={<div />} so the document keeps one main landmark.',\n  category: 'layout',\n  tags: [\n    'reading',\n    'reader',\n    'article',\n    'blog',\n    'blog post',\n    'post',\n    'docs',\n    'documentation',\n    'guide',\n    'long-form',\n    'essay',\n    'table of contents',\n    'rail',\n    'reader layout',\n    'prose',\n  ],\n  readiness: 'draft',\n} as const\n\nexport interface ReadingSection {\n  body: readonly string[]\n  id: string\n  title: string\n}\n\nconst sampleSections: readonly ReadingSection[] = [\n  {\n    body: [\n      'An invoice is a request to be paid. It names who owes what, for which work, and by when. Tally keeps every invoice you send in one list, with its status beside it, so you can see at a glance what is still open.',\n      'This guide walks through the life of one invoice, from the draft to the day it is paid.',\n    ],\n    id: 'overview',\n    title: 'Overview',\n  },\n  {\n    body: [\n      'Start from a customer, add the lines you are billing for, and set a due date. A draft stays private until you send it, so you can come back to it as often as you need.',\n      'Each line has a description, a quantity and a price. Tally adds the lines up and applies the tax rate you set for the customer.',\n    ],\n    id: 'drafting',\n    title: 'Drafting an invoice',\n  },\n  {\n    body: [\n      'When you send an invoice, the customer gets an email with a link to pay it. The invoice moves from draft to open, and its due date starts to count down.',\n      'If the due date passes before it is paid, the invoice is marked overdue and Tally sends one polite reminder.',\n    ],\n    id: 'sending',\n    title: 'Sending and reminders',\n  },\n  {\n    body: [\n      'A payment through the link marks the invoice as paid on its own. A payment that arrives another way, such as a bank transfer, you mark as paid yourself from the invoice.',\n    ],\n    id: 'getting-paid',\n    title: 'Getting paid',\n  },\n]\n\nexport interface ReadingPageProps {\n  /** The article's sections; each one gets a heading and a link in the rail. */\n  sections?: readonly ReadingSection[]\n}\n\n/* A sample reading page: a guide with a table-of-contents rail. */\nexport function ReadingPage({ sections = sampleSections }: ReadingPageProps) {\n  return (\n    <Page noPadding>\n      <Container maxWidth=\"widest\" padding=\"none\">\n        <Section gap={false} removeTopSpacing={false} spacing=\"tight\">\n          <ReaderLayout\n            aside={\n              <nav aria-label=\"On this page\" className=\"sticky top-8 flex flex-col gap-3\">\n                <p className=\"text-foreground text-sm font-semibold\">On this page</p>\n                <ul className=\"flex flex-col gap-2\">\n                  {sections.map(section => (\n                    <li key={section.id}>\n                      <a\n                        className=\"text-muted-foreground hover:text-foreground focus-visible:outline-ring text-sm transition-colors focus-visible:outline-2 focus-visible:outline-offset-2\"\n                        href={`#${section.id}`}\n                      >\n                        {section.title}\n                      </a>\n                    </li>\n                  ))}\n                </ul>\n              </nav>\n            }\n          >\n            <header className=\"flex flex-col gap-4\">\n              <p className=\"text-muted-foreground text-sm font-medium\">Guides</p>\n              <h1 className=\"font-heading text-foreground text-4xl font-semibold tracking-tight\">\n                How invoicing works\n              </h1>\n              <p className=\"text-muted-foreground max-w-2xl text-lg leading-relaxed\">\n                From the first draft to the day it is paid: what happens to an invoice, and what you\n                can do at each step.\n              </p>\n              <p className=\"text-muted-foreground text-sm\">\n                Updated 12 September 2026 · 4 min read\n              </p>\n            </header>\n            <Separator />\n            {sections.map(section => (\n              <section className=\"flex flex-col gap-4\" key={section.id}>\n                <h2\n                  className=\"font-heading text-foreground scroll-mt-8 text-2xl font-semibold\"\n                  id={section.id}\n                >\n                  {section.title}\n                </h2>\n                {section.body.map(paragraph => (\n                  <p className=\"text-foreground max-w-2xl leading-relaxed\" key={paragraph}>\n                    {paragraph}\n                  </p>\n                ))}\n              </section>\n            ))}\n          </ReaderLayout>\n        </Section>\n      </Container>\n    </Page>\n  )\n}\n"
+    }
+  ],
+  "categories": [
+    "layout"
+  ],
+  "meta": {
+    "readiness": "draft",
+    "tags": [
+      "reading",
+      "reader",
+      "article",
+      "blog",
+      "blog post",
+      "post",
+      "docs",
+      "documentation",
+      "guide",
+      "long-form",
+      "essay",
+      "table of contents",
+      "rail",
+      "reader layout",
+      "prose"
+    ]
+  },
+  "docs": "Needs the Atom63 token stack and recipes in your CSS, as an @atom63/create app sets up: https://system.atom63.io/patterns/pattern-templates"
+}

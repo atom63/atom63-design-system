@@ -10,11 +10,13 @@ import {
   TableHead,
   TableHeader,
   TableRow,
+  type TableSort,
   UIProvider,
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Ellipsis } from 'lucide-react'
+import { useState } from 'react'
 
 const meta = {
   title: 'UI React/Table',
@@ -45,7 +47,7 @@ export const Playground: Story = {
         </TableHeader>
         <TableBody>
           {rows.map(r => (
-            <TableRow key={r.invoice} data-state={r.invoice === 'INV002' ? 'selected' : undefined}>
+            <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
               <TableCell>{r.invoice}</TableCell>
               <TableCell>{r.status}</TableCell>
               <TableCell>{r.method}</TableCell>
@@ -66,6 +68,88 @@ export const Playground: Story = {
   ),
 }
 
+const amountOf = (row: (typeof rows)[number]) => Number(row.amount.replace(/[^0-9.]/g, ''))
+
+function SortableTable() {
+  const [sort, setSort] = useState<TableSort | null>({ column: 'amount', direction: 'descending' })
+  const sign = sort?.direction === 'ascending' ? 1 : -1
+  const sorted = [...rows].sort((a, b) =>
+    sort?.column === 'invoice'
+      ? a.invoice.localeCompare(b.invoice) * sign
+      : sort?.column === 'amount'
+        ? (amountOf(a) - amountOf(b)) * sign
+        : 0
+  )
+  return (
+    <div style={{ width: 480 }}>
+      <Table aria-label="Invoices" onSortChange={setSort} sort={sort}>
+        <TableHeader>
+          <TableRow>
+            <TableHead sortKey="invoice">Invoice</TableHead>
+            <TableHead>Status</TableHead>
+            <TableHead
+              firstSortDirection="descending"
+              sortKey="amount"
+              style={{ textAlign: 'end' }}
+            >
+              Amount
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {sorted.map(r => (
+            <TableRow key={r.invoice}>
+              <TableCell>{r.invoice}</TableCell>
+              <TableCell>{r.status}</TableCell>
+              <TableCell style={{ textAlign: 'end' }}>{r.amount}</TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  )
+}
+
+/** Sortable heads: the caller owns `sort` and sorts the rows; the head shows the direction
+ *  with an icon and `aria-sort`, and pressing it asks for the next sort. */
+export const SortableColumns: Story = {
+  render: () => <SortableTable />,
+  play: async ({ canvasElement }) => {
+    const heads = canvasElement.querySelectorAll('th')
+    if (heads[2]?.getAttribute('aria-sort') !== 'descending') {
+      throw new Error('Expected the Amount column sorted descending')
+    }
+    const invoice = heads[0]?.querySelector('button')
+    if (!invoice) throw new Error('Expected a sort button in the Invoice head')
+    invoice.click()
+    await new Promise(resolve => setTimeout(resolve, 0))
+    if (
+      heads[0]?.getAttribute('aria-sort') !== 'ascending' ||
+      heads[2]?.hasAttribute('aria-sort')
+    ) {
+      throw new Error('Expected pressing Invoice to sort by it, ascending')
+    }
+    invoice.click()
+    await new Promise(resolve => setTimeout(resolve, 0))
+    const first = canvasElement.querySelector('tbody td')?.textContent
+    if (first !== 'INV003') throw new Error(`Expected INV003 first when descending, got ${first}`)
+    canvasElement.querySelector<HTMLButtonElement>('th:nth-child(3) button')?.click()
+  },
+}
+
+/** Row hover: the first row under the pointer takes half the selected fill, so the
+ *  selected row below it stays the stronger of the two. */
+export const RowHover: Story = {
+  render: () => <DemoTable />,
+  parameters: { visualState: { hover: 'tbody tr:first-child' } },
+}
+
+/** Keyboard focus on a sort button draws the Button focus ring inside the head. */
+export const SortFocusVisible: Story = {
+  render: () => <SortableTable />,
+  parameters: { visualState: { focusVisible: 'th button' } },
+}
+
 /* A compact three-row table reused by the theme matrix. */
 function DemoTable() {
   return (
@@ -79,7 +163,7 @@ function DemoTable() {
       </TableHeader>
       <TableBody>
         {rows.map(r => (
-          <TableRow key={r.invoice} data-state={r.invoice === 'INV002' ? 'selected' : undefined}>
+          <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
             <TableCell>{r.invoice}</TableCell>
             <TableCell>{r.status}</TableCell>
             <TableCell>{r.amount}</TableCell>
@@ -292,7 +376,7 @@ export const Tones: Story = {
           </TableHeader>
           <TableBody>
             {rows.slice(0, 3).map((r, index) => (
-              <TableRow data-state={index === 1 ? 'selected' : undefined} key={r.invoice}>
+              <TableRow selected={index === 1} key={r.invoice}>
                 <TableCell>{r.invoice}</TableCell>
                 <TableCell>{r.status}</TableCell>
                 <TableCell>{r.amount}</TableCell>
@@ -324,7 +408,7 @@ export const StickyColumns: Story = {
         </TableHeader>
         <TableBody>
           {rows.map(r => (
-            <TableRow key={r.invoice} data-state={r.invoice === 'INV002' ? 'selected' : undefined}>
+            <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
               <TableCell sticky="start">{r.invoice}</TableCell>
               {wideColumns.map(column => (
                 <TableCell key={column}>{column === 'Method' ? r.method : '—'}</TableCell>
@@ -340,6 +424,99 @@ export const StickyColumns: Story = {
       </Table>
     </div>
   ),
+}
+
+/** `wrap` lets a long cell (a description, an unbroken URL, CJK text) break onto more lines
+ *  instead of widening the table; the other cells stay on one line. */
+export const LongContent: Story = {
+  render: () => (
+    <div style={{ width: 560 }}>
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead>Invoice</TableHead>
+            <TableHead wrap>Description of the work billed on this invoice</TableHead>
+            <TableHead>Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell>INV001</TableCell>
+            <TableCell wrap>
+              Annual platform subscription, including priority support and the onboarding workshop
+            </TableCell>
+            <TableCell>$250.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>INV002</TableCell>
+            <TableCell wrap>
+              https://billing.example.com/invoices/INV002/receipt?download=1
+            </TableCell>
+            <TableCell>$150.00</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>INV003</TableCell>
+            <TableCell wrap>年度平台订阅费用，包含优先技术支持与入门培训课程的全部内容</TableCell>
+            <TableCell>$350.00</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const container = canvasElement.querySelector<HTMLElement>('.a63-Table-container')
+    if (!container || container.scrollWidth > container.clientWidth + 1) {
+      throw new Error('Expected wrapping cells to keep the table inside its container')
+    }
+  },
+}
+
+/** Under dir="rtl" the start column pins to the right edge and the end column to the left;
+ *  the overflowing scroller is a named, focusable region. */
+export const RightToLeft: Story = {
+  render: () => (
+    <div dir="rtl" lang="ar" style={{ width: 420 }}>
+      <Table aria-label="الفواتير" size="sm">
+        <TableHeader>
+          <TableRow>
+            <TableHead sticky="start">الفاتورة</TableHead>
+            {['العميل', 'الطريقة', 'التاريخ', 'المبلغ المسترد', 'النزاع', 'السبب'].map(column => (
+              <TableHead key={column}>{column}</TableHead>
+            ))}
+            <TableHead sticky="end">إجراءات</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {rows.map(r => (
+            <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
+              <TableCell sticky="start">{r.invoice}</TableCell>
+              {wideColumns.map(column => (
+                <TableCell key={column}>{column === 'Method' ? r.method : '—'}</TableCell>
+              ))}
+              <TableCell sticky="end">
+                <Button aria-label={`إجراءات ${r.invoice}`} size="icon-xs" variant="ghost">
+                  …
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    await new Promise(resolve => requestAnimationFrame(resolve))
+    const container = canvasElement.querySelector<HTMLElement>('.a63-Table-container')
+    if (container?.getAttribute('role') !== 'region' || container.tabIndex !== 0) {
+      throw new Error('Expected the overflowing scroller to be a focusable region')
+    }
+    const start = canvasElement.querySelector<HTMLElement>('th[data-sticky="start"]')
+    if (!start || !container) throw new Error('Expected a sticky start head')
+    const { right } = start.getBoundingClientRect()
+    if (Math.abs(right - container.getBoundingClientRect().right) > 1) {
+      throw new Error('Expected the start column pinned to the right edge in RTL')
+    }
+  },
 }
 
 export const Themes: Story = {
@@ -411,6 +588,92 @@ export const Endpoints: Story = {
       </UIProvider>
     </div>
   ),
+}
+
+/** Forced colors drop the selected fill, so a selected row takes the system selection
+ *  colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ width: 480 }}>
+      <DemoTable />
+    </div>
+  ),
+}
+
+/* Throws unless a tap just outside a control's rendered box, inside its 44px touch target,
+   still lands on the control: a scroller clips in both axes, which would cut the target off. */
+function expectTouchTargetPastEdge(control: HTMLElement, edge: 'top' | 'bottom', name: string) {
+  const rect = control.getBoundingClientRect()
+  const y = edge === 'top' ? rect.top - 3 : rect.bottom + 3
+  const hit = document.elementFromPoint(rect.left + rect.width / 2, y)
+  if (!hit || !control.contains(hit)) {
+    throw new Error(`Expected a tap 3px past the ${edge} of ${name} to reach it`)
+  }
+}
+
+/** On a phone with touch input: a dense table with a sortable head, pinned first and last columns,
+ *  end-aligned amounts in tabular figures and a row menu. The container pads its edges, so
+ *  the 44px touch targets of the head's sort button and the last row's menu are not cut
+ *  off by the scroller. */
+export const Phone: Story = {
+  render: () => {
+    const [sort, setSort] = useState<TableSort | null>(null)
+    return (
+      <UIProvider input="touch">
+        <div data-a63-form-factor="phone" style={{ maxWidth: 358, paddingBlock: 16 }}>
+          <Table aria-label="Recent invoices" onSortChange={setSort} size="sm" sort={sort}>
+            <TableHeader>
+              <TableRow>
+                <TableHead sortKey="invoice" sticky="start">
+                  Invoice
+                </TableHead>
+                <TableHead>Method</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead align="end">Amount</TableHead>
+                <TableHead sticky="end">
+                  <span className="sr-only">Actions</span>
+                </TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {rows.map(r => (
+                <TableRow key={r.invoice} selected={r.invoice === 'INV002'}>
+                  <TableCell sticky="start">{r.invoice}</TableCell>
+                  <TableCell>{r.method}</TableCell>
+                  <TableCell>{r.status}</TableCell>
+                  <TableCell align="end">{r.amount}</TableCell>
+                  <TableCell sticky="end">
+                    <Button
+                      aria-label={`More actions for ${r.invoice}`}
+                      size="icon-xs"
+                      tone="muted"
+                      variant="ghost"
+                    >
+                      <Ellipsis />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      </UIProvider>
+    )
+  },
+  play: ({ canvasElement }) => {
+    const sortButton = canvasElement.querySelector<HTMLElement>('th button')
+    const menus = canvasElement.querySelectorAll<HTMLElement>('button[aria-label^="More actions"]')
+    const lastMenu = menus[menus.length - 1]
+    if (!sortButton || !lastMenu) throw new Error('Expected a sort button and row menus')
+    expectTouchTargetPastEdge(sortButton, 'top', 'the sort button')
+    expectTouchTargetPastEdge(lastMenu, 'bottom', 'the last row menu')
+    const amount = canvasElement.querySelector<HTMLElement>('td[data-align="end"]')
+    if (!amount) throw new Error('Expected an end-aligned amount cell')
+    const style = getComputedStyle(amount)
+    if (style.textAlign !== 'end' || style.fontVariantNumeric !== 'tabular-nums') {
+      throw new Error('Expected align="end" to end-align the amount in tabular figures')
+    }
+  },
 }
 
 export const ContractMetadata: Story = {

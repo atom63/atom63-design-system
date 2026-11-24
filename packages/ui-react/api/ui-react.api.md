@@ -70,6 +70,7 @@ import { DialogSizeAlias } from '@atom63/ui-foundation';
 import { Drawer as Drawer_2 } from '@base-ui/react/drawer';
 import { DrawerDirection } from '@atom63/ui-foundation';
 import { DrawerFooterVariant } from '@atom63/ui-foundation';
+import { DropdownMenuItemVariant } from '@atom63/ui-foundation';
 import { EmptyMediaVariant } from '@atom63/ui-foundation';
 import { FeedbackStateKind } from '@atom63/ui-foundation';
 import { FeedbackStateSize } from '@atom63/ui-foundation';
@@ -94,6 +95,8 @@ import { ItemSizeAlias } from '@atom63/ui-foundation';
 import { ItemTone } from '@atom63/ui-foundation';
 import { ItemVariant } from '@atom63/ui-foundation';
 import { KbdSize } from '@atom63/ui-foundation';
+import { LayeredScenePlacement } from '@atom63/ui-foundation';
+import { LayeredSceneWidth } from '@atom63/ui-foundation';
 import { LoadMoreTriggerState } from '@atom63/ui-foundation';
 import { LoadMoreTriggerVariant } from '@atom63/ui-foundation';
 import * as lucide_react from 'lucide-react';
@@ -105,6 +108,7 @@ import { MessagePosition } from '@atom63/ui-foundation';
 import { Mode } from '@atom63/ui-foundation';
 import { NavigationMenu as NavigationMenu_2 } from '@base-ui/react/navigation-menu';
 import { OTPInput } from 'input-otp';
+import { PaginationLinkSize } from '@atom63/ui-foundation';
 import { PointerInput } from '@atom63/ui-foundation';
 import { Popover as Popover_2 } from '@base-ui/react/popover';
 import { PreviewCard as PreviewCard_2 } from '@base-ui/react/preview-card';
@@ -148,6 +152,7 @@ import { Slider as Slider_2 } from '@base-ui/react/slider';
 import { SliderTone } from '@atom63/ui-foundation';
 import { Switch as Switch_2 } from '@base-ui/react/switch';
 import { SwitchSize } from '@atom63/ui-foundation';
+import { TableAlign } from '@atom63/ui-foundation';
 import { TableSize } from '@atom63/ui-foundation';
 import { TableSizeAlias } from '@atom63/ui-foundation';
 import { TableStickyEdge } from '@atom63/ui-foundation';
@@ -158,6 +163,7 @@ import { TabsSize } from '@atom63/ui-foundation';
 import { TabsSizeAlias } from '@atom63/ui-foundation';
 import { TabsVariant } from '@atom63/ui-foundation';
 import { TextareaSize } from '@atom63/ui-foundation';
+import { TextareaVariant } from '@atom63/ui-foundation';
 import { TextTickerVariant } from '@atom63/ui-foundation';
 import { Theme } from '@atom63/ui-foundation';
 import { toast } from 'sonner';
@@ -461,7 +467,12 @@ export function AutocompleteValue(input: AutocompletePrimitive.Value.Props): Rea
 export function Avatar(input: AvatarProps): React$1.ReactElement;
 
 // @public (undocumented)
-export function AvatarBadge(input: React$1.ComponentProps<'span'>): React$1.ReactElement;
+export function AvatarBadge(input: AvatarBadgeProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface AvatarBadgeProps extends React$1.ComponentProps<'span'> {
+    label?: string;
+}
 
 // @public (undocumented)
 export function AvatarFallback(input: AvatarPrimitive.Fallback.Props): React$1.ReactElement;
@@ -470,7 +481,12 @@ export function AvatarFallback(input: AvatarPrimitive.Fallback.Props): React$1.R
 export function AvatarGroup(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function AvatarGroupCount(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function AvatarGroupCount(input: AvatarGroupCountProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface AvatarGroupCountProps extends React$1.ComponentProps<'div'> {
+    label?: string;
+}
 
 // @public (undocumented)
 export function AvatarImage(input: AvatarPrimitive.Image.Props): React$1.ReactElement;
@@ -553,8 +569,8 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
     'data-slot'?: string;
     indicator?: boolean | number;
     indicatorLabel?: string;
-    // (undocumented)
     loading?: boolean;
+    nativeButton?: boolean;
     shape?: ButtonShape;
     // (undocumented)
     size?: ButtonSize;
@@ -634,8 +650,8 @@ export function CardMediaOverlay(input: CardMediaOverlayProps): React$1.ReactEle
 // @public (undocumented)
 export function CardMediaOverlayBottom(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
-// @public (undocumented)
-export function CardMediaOverlayIconButton(input: useRender.ComponentProps<'span'>): React$1.ReactElement;
+// @public
+export function CardMediaOverlayIconButton(input: ButtonProps): React$1.ReactElement;
 
 // @public (undocumented)
 export function CardMediaOverlayImage(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
@@ -648,7 +664,10 @@ export type CardMediaOverlayProps = useRender.ComponentProps<'div'> & {
 // @public (undocumented)
 export function CardMediaOverlayScrim(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
+export function CardMediaOverlayTopEnd(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
+
+// @public @deprecated (undocumented)
 export function CardMediaOverlayTopRight(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -757,6 +776,7 @@ export type ChatComposerProps = Omit<React$1.ComponentProps<'form'>, 'children' 
     status?: ChatComposerStatus;
     stopIcon?: React$1.ReactNode;
     stopLabel?: string;
+    submitOnEnter?: boolean;
     textareaProps?: Omit<InputGroupTextareaProps, 'defaultValue' | 'disabled' | 'onChange' | 'placeholder' | 'value'>;
     value?: string;
     voiceIcon?: React$1.ReactNode;
@@ -859,13 +879,18 @@ export function CommandCollection(input: React$1.ComponentProps<typeof Autocompl
 export const CommandCreateHandle: typeof Dialog_2.createHandle;
 
 // @public (undocumented)
-export const CommandDialog: typeof Dialog_2.Root;
+export function CommandDialog<Payload>(props: Dialog_2.Root.Props<Payload>): React$1.ReactElement;
 
 // @public (undocumented)
 export function CommandDialogBackdrop(input: Dialog_2.Backdrop.Props): React$1.ReactElement;
 
 // @public (undocumented)
-export function CommandDialogPopup(input: Dialog_2.Popup.Props): React$1.ReactElement;
+export function CommandDialogPopup(input: CommandDialogPopupProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type CommandDialogPopupProps = Omit<Dialog_2.Popup.Props, 'title'> & {
+    title?: React$1.ReactNode;
+};
 
 // @public (undocumented)
 export function CommandDialogPortal(props: Dialog_2.Portal.Props): React$1.ReactElement;
@@ -895,6 +920,7 @@ export function CommandInput(input: CommandInputProps): React$1.ReactElement;
 export type CommandInputProps = React$1.ComponentProps<typeof AutocompletePrimitive.Input> & {
     endAddon?: React$1.ReactNode;
     icon?: React$1.ReactNode;
+    label?: string;
 };
 
 // @public (undocumented)
@@ -1285,10 +1311,9 @@ export function DropdownMenuItem(input: DropdownMenuItemProps): React$1.ReactEle
 
 // @public (undocumented)
 export interface DropdownMenuItemProps extends Menu.Item.Props {
-    // (undocumented)
     inset?: boolean;
     // (undocumented)
-    variant?: 'default' | 'destructive';
+    variant?: DropdownMenuItemVariant;
 }
 
 // @public (undocumented)
@@ -1355,9 +1380,20 @@ export function EmptyContent(input: React$1.ComponentProps<'div'>): React$1.Reac
 export function EmptyDescription(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function EmptyErrorDetail(input: React$1.ComponentProps<'div'> & {
+export function EmptyErrorDetail(input: EmptyErrorDetailProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface EmptyErrorDetailLabels {
+    copy?: string;
+    hideDetails?: string;
+    showDetails?: string;
+}
+
+// @public (undocumented)
+export type EmptyErrorDetailProps = React$1.ComponentProps<'div'> & {
     error: string;
-}): React$1.ReactElement;
+    labels?: EmptyErrorDetailLabels;
+};
 
 // @public (undocumented)
 export function EmptyHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -1370,7 +1406,9 @@ export function EmptyMedia(input: React$1.ComponentProps<'div'> & {
 export { EmptyMediaVariant }
 
 // @public (undocumented)
-export function EmptyTitle(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function EmptyTitle(input: React$1.ComponentProps<'div'> & {
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
+}): React$1.ReactElement;
 
 // @public
 export function extractColorFromImage(img: HTMLImageElement, options?: ExtractColorOptions): ExtractedColor;
@@ -1425,8 +1463,15 @@ export type FeedbackStateIconName = keyof typeof feedbackIcons;
 
 export { FeedbackStateKind }
 
-// @public (undocumented)
-export interface FeedbackStateProps {
+// @public
+export interface FeedbackStateLabels {
+    descriptions?: Partial<Record<FeedbackStateKind, string>>;
+    noResults?: (query: string) => string;
+    titles?: Partial<Record<FeedbackStateKind, string>>;
+}
+
+// @public
+export interface FeedbackStateProps extends Omit<React$1.ComponentProps<'div'>, 'children' | 'title'> {
     // (undocumented)
     actions?: FeedbackStateAction[];
     // (undocumented)
@@ -1437,6 +1482,8 @@ export interface FeedbackStateProps {
     error?: unknown;
     // (undocumented)
     icon?: FeedbackStateIcon;
+    // (undocumented)
+    labels?: FeedbackStateLabels;
     level?: 1 | 2 | 3 | 4 | 5 | 6;
     // (undocumented)
     query?: string;
@@ -1502,6 +1549,8 @@ export { FieldOrientation }
 // @public (undocumented)
 export type FieldProps = React$1.ComponentProps<'div'> & {
     orientation?: FieldOrientation;
+    invalid?: boolean;
+    disabled?: boolean;
 };
 
 // @public (undocumented)
@@ -1712,7 +1761,7 @@ export function ItemFooter(input: React$1.ComponentProps<'div'>): React$1.ReactE
 // @public (undocumented)
 export function ItemGroup(input: ItemGroupProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type ItemGroupProps = React$1.ComponentProps<'div'> & {
     variant?: ItemGroupVariant;
     surface?: ItemGroupSurface;
@@ -1761,6 +1810,41 @@ export function Label(input: LabelProps): React$1.ReactElement;
 
 // @public (undocumented)
 export type LabelProps = React$1.ComponentProps<'label'>;
+
+// @public
+export function LayeredScene(input: LayeredSceneProps): React$1.ReactElement;
+
+// @public
+export function LayeredSceneContent(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+
+// @public
+export function LayeredSceneForeground(input: LayeredSceneForegroundProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type LayeredSceneForegroundProps = Omit<React$1.ComponentProps<'div'>, 'aria-hidden' | 'children'> & {
+    focus?: ArtPlateFocus;
+    focusMobile?: ArtPlateFocus;
+    priority?: boolean;
+    showOnPhone?: boolean;
+    sizes?: string;
+    src: string;
+    srcSet?: string;
+};
+
+// @public
+export function LayeredScenePlate(input: LayeredScenePlateProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type LayeredScenePlateProps = Omit<ArtPlateProps, 'children'>;
+
+// @public (undocumented)
+export type LayeredSceneProps = React$1.ComponentProps<'div'> & {
+    placement?: LayeredScenePlacement;
+    width?: LayeredSceneWidth;
+};
+
+// @public
+export function LayeredSceneStage(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public
 export function loadAndExtractColor(imageUrl: string, options?: ExtractColorOptions & {
@@ -1963,7 +2047,7 @@ export type PaginationContentProps = React$1.ComponentProps<'ul'>;
 // @public (undocumented)
 export function PaginationEllipsis(input: PaginationEllipsisProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationEllipsisProps = React$1.ComponentProps<'span'>;
 
 // @public (undocumented)
@@ -1978,18 +2062,21 @@ export function PaginationLink(input: PaginationLinkProps): React$1.ReactElement
 // @public (undocumented)
 export type PaginationLinkProps = {
     isActive?: boolean;
-} & Pick<ButtonProps, 'size'> & React$1.ComponentProps<'a'>;
+    disabled?: boolean;
+    render?: useRender.RenderProp;
+    size?: PaginationLinkSize;
+} & React$1.ComponentProps<'a'>;
 
 // @public (undocumented)
 export function PaginationNext(input: PaginationNextProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationNextProps = React$1.ComponentProps<typeof PaginationLink>;
 
 // @public (undocumented)
 export function PaginationPrevious(input: PaginationPreviousProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationPreviousProps = React$1.ComponentProps<typeof PaginationLink>;
 
 // @public (undocumented)
@@ -2011,7 +2098,7 @@ export { PointerInput }
 // @public (undocumented)
 export function Popover(props: Popover_2.Root.Props): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export function PopoverAnchor(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -2024,6 +2111,11 @@ export function PopoverContent(input: PopoverContentProps): React$1.ReactElement
 export interface PopoverContentProps extends Popover_2.Popup.Props {
     // (undocumented)
     align?: Popover_2.Positioner.Props['align'];
+    // (undocumented)
+    alignOffset?: Popover_2.Positioner.Props['alignOffset'];
+    anchor?: Popover_2.Positioner.Props['anchor'];
+    // (undocumented)
+    collisionPadding?: Popover_2.Positioner.Props['collisionPadding'];
     // (undocumented)
     portalContainer?: Popover_2.Portal.Props['container'];
     // (undocumented)
@@ -2039,7 +2131,7 @@ export function PopoverDescription(input: Popover_2.Description.Props): React$1.
 export function PopoverHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function PopoverPortal(props: Popover_2.Portal.Props): React$1.ReactElement;
+export function PopoverPortal(input: Popover_2.Portal.Props): React$1.ReactElement;
 
 // @public (undocumented)
 export function PopoverTitle(input: Popover_2.Title.Props): React$1.ReactElement;
@@ -2621,6 +2713,8 @@ export type SidebarProps = React$1.ComponentProps<'div'> & {
     variant?: SidebarVariant;
     collapsible?: SidebarCollapsible;
     dir?: React$1.ComponentProps<typeof SheetPopup>['dir'];
+    mobileTitle?: string;
+    mobileDescription?: string;
 };
 
 // @public (undocumented)
@@ -2641,7 +2735,12 @@ export function SidebarRail(input: React$1.ComponentProps<'button'>): React$1.Re
 export function SidebarSeparator(input: React$1.ComponentProps<typeof Separator>): React$1.ReactElement;
 
 // @public (undocumented)
-export function SidebarTrigger(input: React$1.ComponentProps<typeof Button>): React$1.ReactElement;
+export function SidebarTrigger(input: SidebarTriggerProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type SidebarTriggerProps = React$1.ComponentProps<typeof Button> & {
+    label?: string;
+};
 
 // @public (undocumented)
 export function Skeleton(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -2702,8 +2801,10 @@ export type TableCaptionProps = React$1.ComponentProps<'caption'>;
 export function TableCell(input: TableCellProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableCellProps = React$1.ComponentProps<'td'> & {
+export type TableCellProps = Omit<React$1.ComponentProps<'td'>, 'align'> & {
+    align?: TableAlign;
     sticky?: TableStickyEdge;
+    wrap?: boolean;
 };
 
 // @public (undocumented)
@@ -2722,8 +2823,13 @@ export function TableHeader(input: TableHeaderProps): React$1.ReactElement;
 export type TableHeaderProps = React$1.ComponentProps<'thead'>;
 
 // @public (undocumented)
-export type TableHeadProps = React$1.ComponentProps<'th'> & {
+export type TableHeadProps = Omit<React$1.ComponentProps<'th'>, 'align'> & {
+    align?: TableAlign;
     sticky?: TableStickyEdge;
+    wrap?: boolean;
+    sortKey?: string;
+    firstSortDirection?: TableSortDirection;
+    sortIcon?: (direction: TableSortDirection | 'none') => React$1.ReactNode;
 };
 
 // @public (undocumented)
@@ -2731,13 +2837,28 @@ export type TableProps = React$1.ComponentProps<'table'> & {
     size?: TableSize | TableSizeAlias;
     tone?: TableTone;
     variant?: TableVariant;
+    sort?: TableSort | null;
+    onSortChange?: (sort: TableSort) => void;
 };
 
 // @public (undocumented)
 export function TableRow(input: TableRowProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableRowProps = React$1.ComponentProps<'tr'>;
+export type TableRowProps = React$1.ComponentProps<'tr'> & {
+    selected?: boolean;
+};
+
+// @public
+export interface TableSort {
+    // (undocumented)
+    column: string;
+    // (undocumented)
+    direction: TableSortDirection;
+}
+
+// @public
+export type TableSortDirection = 'ascending' | 'descending';
 
 // @public (undocumented)
 export function Tabs(input: Tabs_2.Root.Props): React$1.ReactElement;
@@ -2780,9 +2901,11 @@ export function Textarea(input: TextareaProps): React$1.ReactElement;
 export type TextareaProps = Omit<React$1.ComponentProps<'textarea'>, 'className'> & {
     className?: string;
     invalid?: boolean;
+    maxRows?: number;
     size?: TextareaSize;
     shadow?: boolean;
     textareaClassName?: string;
+    variant?: TextareaVariant;
     unstyled?: boolean;
 };
 
@@ -2813,7 +2936,7 @@ export const TINT_MAX_LUMINANCE = 0.015;
 export { toast }
 
 // @public (undocumented)
-export function Toaster(input: ToasterProps): React$1.ReactElement;
+export function Toaster(input: ToasterProps): React$1.ReactElement | null;
 
 // @public (undocumented)
 export interface ToasterProps extends ToasterProps_2 {
@@ -2962,6 +3085,7 @@ export const useFormField: () => {
     isValidating: boolean;
     error?: react_hook_form.FieldError | undefined;
     id: string;
+    hasDescription: boolean;
     name: string;
     formItemId: string;
     formDescriptionId: string;

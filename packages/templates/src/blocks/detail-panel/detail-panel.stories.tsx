@@ -1,7 +1,13 @@
 import { Badge, Button } from '@atom63/ui-react'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { DetailPanel } from './detail-panel'
 
 const args = {
@@ -25,6 +31,8 @@ const args = {
 const meta = {
   title: 'Templates/Blocks/Detail panel',
   component: DetailPanel,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof DetailPanel>
 
 export default meta

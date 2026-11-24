@@ -1,6 +1,6 @@
 {
   "name": "@atom63/ui-react",
-  "version": "0.2.0-beta.14",
+  "version": "0.2.0-beta.17",
   "description": "React components, layout primitives, media, and theme controls for the Atom63 design system",
   "license": "MIT",
   "repository": {
@@ -39,6 +39,11 @@
       "types": "./dist/calendar/index.d.ts",
       "import": "./dist/calendar/index.js"
     },
+    "./chart": {
+      "@atom63/source": "./src/chart/index.ts",
+      "types": "./dist/chart/index.d.ts",
+      "import": "./dist/chart/index.js"
+    },
     "./layout": {
       "@atom63/source": "./src/layout/index.ts",
       "types": "./dist/layout/index.d.ts",
@@ -63,10 +68,12 @@
     "./recipes/amount.css": "./src/components/amount/amount.css",
     "./recipes/app-view.css": "./src/components/app-view/app-view.css",
     "./recipes/art-plate.css": "./src/components/art-plate/art-plate.css",
+    "./recipes/chart.css": "./src/components/chart/chart.css",
     "./recipes/chat-composer.css": "./src/components/chat-composer/chat-composer.css",
     "./recipes/chat-message.css": "./src/components/chat-message/chat-message.css",
     "./recipes/chat-steps.css": "./src/components/chat-steps/chat-steps.css",
     "./recipes/chat-typing-indicator.css": "./src/components/chat-typing-indicator/chat-typing-indicator.css",
+    "./recipes/layered-scene.css": "./src/components/layered-scene/layered-scene.css",
     "./recipes/media-lightbox.css": "./src/media/media-lightbox/media-lightbox.css",
     "./recipes/accordion.css": "./src/components/accordion/accordion.css",
     "./recipes/alert-dialog.css": "./src/components/alert-dialog/alert-dialog.css",
@@ -150,7 +157,7 @@
     "src/**/*.css"
   ],
   "scripts": {
-    "build": "tsup",
+    "build": "tsup && node ../../scripts/design-system/preserve-use-client.mjs",
     "dev": "tsup --watch",
     "typecheck": "tsc --noEmit",
     "lint": "eslint . --cache --max-warnings 11",

@@ -10,6 +10,7 @@ import { useRender } from '@base-ui/react/use-render'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { Button, type ButtonProps } from '../button'
 
 /** A content/footer padding: a single preset, or `{ base, sm }` where `sm`
  * applies once the Card's own width crosses the container-query threshold
@@ -151,6 +152,22 @@ export function CardMediaOverlayScrim({
   return useRender({ defaultTagName: 'div', props: mergeProps<'div'>(defaultProps, props), render })
 }
 
+/** Pins its content to the top inline-end corner of a `CardMediaOverlay`: top right, or top
+ *  left under `dir="rtl"`. */
+export function CardMediaOverlayTopEnd({
+  className,
+  render,
+  ...props
+}: useRender.ComponentProps<'div'>): React.ReactElement {
+  const defaultProps = {
+    className: cn('a63-Card-media-overlay-top-end', className),
+    'data-slot': 'card-media-overlay-top-end',
+  }
+  return useRender({ defaultTagName: 'div', props: mergeProps<'div'>(defaultProps, props), render })
+}
+
+/** @deprecated Use `CardMediaOverlayTopEnd`: it pins to the inline end, which is the left
+ *  under `dir="rtl"`. */
 export function CardMediaOverlayTopRight({
   className,
   render,
@@ -175,20 +192,27 @@ export function CardMediaOverlayBottom({
   return useRender({ defaultTagName: 'div', props: mergeProps<'div'>(defaultProps, props), render })
 }
 
+/** A round icon Button drawn for media (`variant="overlay"`, `size="icon-sm"`), such as a
+ *  save or share action in a `CardMediaOverlayTopEnd`. It is a real button with Button's
+ *  touch target and focus ring: give it an `aria-label`, and do not put it inside a card that
+ *  is itself a link. */
 export function CardMediaOverlayIconButton({
   className,
-  render,
+  shape = 'round',
+  size = 'icon-sm',
+  variant = 'overlay',
   ...props
-}: useRender.ComponentProps<'span'>): React.ReactElement {
-  const defaultProps = {
-    className: cn('a63-Card-media-overlay-icon-button', className),
-    'data-slot': 'card-media-overlay-icon-button',
-  }
-  return useRender({
-    defaultTagName: 'span',
-    props: mergeProps<'span'>(defaultProps, props),
-    render,
-  })
+}: ButtonProps): React.ReactElement {
+  return (
+    <Button
+      className={cn('a63-Card-media-overlay-icon-button', className)}
+      data-slot="card-media-overlay-icon-button"
+      shape={shape}
+      size={size}
+      variant={variant}
+      {...props}
+    />
+  )
 }
 
 export type CardContentProps = useRender.ComponentProps<'div'> & { padding?: CardResponsivePadding }

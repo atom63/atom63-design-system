@@ -184,6 +184,9 @@ export function DrawerContent({
         data-slot="drawer-viewport"
       >
         <DrawerPrimitive.Popup
+          // Base UI hides the page behind a modal drawer but does not set
+          // aria-modal, which the APG requires (see Dialog).
+          aria-modal={modal ? true : undefined}
           className={cn('a63-Drawer-content', className)}
           data-side={direction}
           data-slot="drawer-content"

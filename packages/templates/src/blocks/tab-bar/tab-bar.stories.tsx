@@ -1,13 +1,18 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { ArrowLeftRight, Bitcoin, House, LineChart, Sparkles } from 'lucide-react'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { TabBar } from './tab-bar'
 
 const meta = {
   title: 'Templates/Blocks/Tab bar',
   component: TabBar,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...landmarkParameters },
 } satisfies Meta<typeof TabBar>
 
 export default meta
@@ -27,7 +32,9 @@ const args = {
 /* The layout places the bar; here it sits under a short page. */
 const page = (children: React.ReactNode) => (
   <div className="bg-background text-foreground flex min-h-[24rem] flex-col">
-    <p className="text-muted-foreground flex-1 p-4 text-sm">Page content above the tab bar.</p>
+    <main className="text-muted-foreground flex-1 p-4 text-sm">
+      Page content above the tab bar.
+    </main>
     {children}
   </div>
 )

@@ -1,5 +1,27 @@
 # @atom63/widgets
 
+## 0.1.0-beta.8
+
+### Patch Changes
+
+- [#344](https://github.com/atom63/atom63-design-system/pull/344) [`98bb017`](https://github.com/atom63/atom63-design-system/commit/98bb01790dade54585dc348509940c70a478ff92) Thanks [@atom63](https://github.com/atom63)! - Danger text, edges and accents no longer read the danger button fill. The inform danger border uses `--a63-border-danger` and its danger text `--a63-text-danger`; the widget error badge draws its border in `--a63-border-danger` and its tint from `--a63-status-danger`; the ComparisonPair "before" dot uses `--a63-status-danger`.
+- Updated dependencies [[`a4ff444`](https://github.com/atom63/atom63-design-system/commit/a4ff444ae401d612979f81e145e274d11882097e), [`84c3d08`](https://github.com/atom63/atom63-design-system/commit/84c3d085c8d2449e14d88628d4beaab21e087dc2), [`98bb017`](https://github.com/atom63/atom63-design-system/commit/98bb01790dade54585dc348509940c70a478ff92)]:
+  - @atom63/ui-react@0.2.0-beta.17
+
+## 0.1.0-beta.7
+
+### Patch Changes
+
+- Updated dependencies [[`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de), [`986777c`](https://github.com/atom63/atom63-design-system/commit/986777cf20470248992e09e56ad89a3aa40fc149), [`567dbbf`](https://github.com/atom63/atom63-design-system/commit/567dbbf9a706f3bddfb839600eac069e30ec5baa)]:
+  - @atom63/ui-react@0.2.0-beta.16
+
+## 0.1.0-beta.6
+
+### Patch Changes
+
+- Updated dependencies [[`2720544`](https://github.com/atom63/atom63-design-system/commit/2720544eec4f8bf4701366ccff064f015815e987), [`dc9e86d`](https://github.com/atom63/atom63-design-system/commit/dc9e86d5a8ffd8aeec63c082589e8c02334a6994), [`593d783`](https://github.com/atom63/atom63-design-system/commit/593d783b1d730f1eabb94039036767fbd8e54996), [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd), [`a63a96a`](https://github.com/atom63/atom63-design-system/commit/a63a96a1cd37311aeaa313dc1fa951d3ae008c9d)]:
+  - @atom63/ui-react@0.2.0-beta.15
+
 ## 0.1.0-beta.5
 
 ### Patch Changes

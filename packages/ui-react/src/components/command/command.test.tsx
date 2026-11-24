@@ -134,11 +134,75 @@ describe('Command', () => {
     )
     const trigger = screen.getByRole('button', { name: 'Open palette' })
     await user.click(trigger)
-    expect(await screen.findByRole('dialog')).toBeInTheDocument()
+    expect(await screen.findByRole('dialog', { name: 'Command palette' })).toBeInTheDocument()
     await waitFor(() => expect(screen.getByRole('combobox')).toHaveFocus())
 
     await user.keyboard('{Escape}')
-    await waitFor(() => expect(screen.queryByRole('dialog')).not.toBeInTheDocument())
-    expect(trigger).toHaveFocus()
+    await waitFor(() => {
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument()
+      expect(trigger).toHaveFocus()
+    })
+  })
+
+  it('names the dialog with `title`, or leaves the name to aria-label', async () => {
+    const { unmount } = render(
+      <CommandDialog open>
+        <CommandDialogPopup title="Search the docs">
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    expect(await screen.findByRole('dialog', { name: 'Search the docs' })).toBeInTheDocument()
+    unmount()
+    render(
+      <CommandDialog open>
+        <CommandDialogPopup aria-label="Jump to">
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    const dialog = await screen.findByRole('dialog', { name: 'Jump to' })
+    expect(dialog).not.toHaveAttribute('aria-labelledby')
+  })
+
+  it('marks a modal dialog aria-modal, and a non-modal one not', async () => {
+    const { unmount } = render(
+      <CommandDialog open>
+        <CommandDialogPopup>
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    expect(await screen.findByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+    unmount()
+    render(
+      <CommandDialog modal={false} open>
+        <CommandDialogPopup>
+          <Fixture />
+        </CommandDialogPopup>
+      </CommandDialog>
+    )
+    expect(await screen.findByRole('dialog')).not.toHaveAttribute('aria-modal')
+  })
+
+  it('names the input by default, by `label`, or by aria-label', () => {
+    const { unmount } = render(<Fixture />)
+    expect(screen.getByRole('combobox', { name: 'Search commands' })).toBeInTheDocument()
+    unmount()
+    const { unmount: unmountLabel } = render(
+      <Command items={[]}>
+        <CommandInput label="Find a page" placeholder="Search…" />
+      </Command>
+    )
+    expect(screen.getByRole('combobox', { name: 'Find a page' })).toBeInTheDocument()
+    unmountLabel()
+    render(
+      <Command items={[]}>
+        <span id="palette-label">Jump to</span>
+        <CommandInput aria-labelledby="palette-label" placeholder="Search…" />
+      </Command>
+    )
+    const input = screen.getByRole('combobox', { name: 'Jump to' })
+    expect(input).not.toHaveAttribute('aria-label')
   })
 })

@@ -118,4 +118,31 @@ describe('Item', () => {
     rerender(<ItemGroup surface="muted" variant="inset" />)
     expect(group()).toHaveAttribute('data-surface', 'muted')
   })
+
+  it('gives a group list semantics: static rows are list items, link rows are wrapped', () => {
+    const { container } = render(
+      <ItemGroup>
+        <Item>
+          <ItemContent>Static</ItemContent>
+        </Item>
+        <ItemSeparator />
+        <Item render={<a href="#x">Link</a>} />
+      </ItemGroup>
+    )
+    const group = container.querySelector('[data-slot="item-group"]')
+    expect(group).toHaveAttribute('role', 'list')
+    const [first, second] = [...(group?.querySelectorAll(':scope > [role="listitem"]') ?? [])]
+    expect(first).toHaveClass('a63-Item')
+    expect(second).toHaveAttribute('data-slot', 'item-entry')
+    expect(second?.querySelector('a')).not.toHaveAttribute('role')
+    expect(container.querySelector('[data-slot="item-separator"]')).toHaveAttribute(
+      'aria-hidden',
+      'true'
+    )
+  })
+
+  it('adds no list role to an Item outside a group', () => {
+    const { container } = render(<Item>Row</Item>)
+    expect(container.querySelector('.a63-Item')).not.toHaveAttribute('role')
+  })
 })

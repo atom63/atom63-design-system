@@ -1,6 +1,6 @@
 'use client'
 
-import { type TextareaSize, textareaContract } from '@atom63/ui-foundation'
+import { type TextareaSize, type TextareaVariant, textareaContract } from '@atom63/ui-foundation'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -10,12 +10,17 @@ export type TextareaProps = Omit<React.ComponentProps<'textarea'>, 'className'> 
   className?: string
   /** Marks the field invalid and switches focus feedback to the danger color. */
   invalid?: boolean
+  /** Rows the field grows to with its content before it scrolls. Defaults to 12. */
+  maxRows?: number
   /** Control-ramp size used for padding, type, and minimum height. */
   size?: TextareaSize
   /** Drop the recessed field shadow on flat or translucent parent surfaces. */
   shadow?: boolean
   /** Class applied directly to the native textarea element. */
   textareaClassName?: string
+  /** Field chrome, as on Input: `default` outlined, `filled` a muted well with
+   *  no resting border, `plain` no border or fill with a separator below. */
+  variant?: TextareaVariant
   /** Drop the field chrome (border/bg/shadow) so it can nest inside a parent
    *  that provides the chrome. The control wrapper collapses to `display:
    *  contents`. */
@@ -34,13 +39,20 @@ export function Textarea({
   className,
   disabled,
   invalid = false,
+  maxRows,
   shadow = true,
   size = textareaContract.defaultSize,
   textareaClassName,
   unstyled = false,
+  variant = textareaContract.defaultVariant,
+  style,
   ...props
 }: TextareaProps): React.ReactElement {
   const isInvalid = invalid || ariaInvalid === true || ariaInvalid === 'true'
+  const fieldStyle =
+    maxRows === undefined
+      ? style
+      : ({ ...style, '--textarea-max-rows': maxRows } as React.CSSProperties)
 
   return (
     <span
@@ -51,12 +63,14 @@ export function Textarea({
       data-size={size}
       data-slot="textarea-control"
       data-unstyled={unstyled ? '' : undefined}
+      data-variant={variant}
     >
       <textarea
         aria-invalid={isInvalid ? true : ariaInvalid}
         className={cn('a63-Textarea-field', textareaClassName)}
         data-slot="textarea"
         disabled={disabled}
+        style={fieldStyle}
         {...props}
       />
     </span>

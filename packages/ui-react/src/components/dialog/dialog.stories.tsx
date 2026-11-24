@@ -47,34 +47,47 @@ type Story = StoryObj<typeof meta>
 type OpenMode = 'modal' | 'inline'
 
 function RenameDialog({
+  cancelLabel = 'Cancel',
+  closeLabel,
+  description = 'Give this project a new, memorable name.',
   open,
+  panel,
   portalContainerRef,
+  saveLabel = 'Save',
   size = 'md',
+  title = 'Rename project',
   triggerLabel = 'Rename project',
 }: {
+  cancelLabel?: string
+  closeLabel?: string
+  description?: string
   open?: OpenMode
+  panel?: ReactNode
   portalContainerRef?: RefObject<HTMLDivElement | null>
+  saveLabel?: string
   size?: (typeof dialogSizes)[number]
+  title?: string
   triggerLabel?: string
 }) {
   return (
     <Dialog defaultOpen={open !== undefined} modal={open === 'inline' ? false : undefined}>
       {open ? null : <DialogTrigger render={<Button variant="outline">{triggerLabel}</Button>} />}
       <DialogPopup
+        closeProps={closeLabel ? { 'aria-label': closeLabel } : undefined}
         initialFocus={open === 'inline' ? false : undefined}
         portalProps={{ container: portalContainerRef }}
         size={size}
       >
         <DialogHeader>
-          <DialogTitle>Rename project</DialogTitle>
-          <DialogDescription>Give this project a new, memorable name.</DialogDescription>
+          <DialogTitle>{title}</DialogTitle>
+          <DialogDescription>{description}</DialogDescription>
         </DialogHeader>
         <DialogPanel>
-          <p style={{ margin: 0 }}>Any content can live in the scrollable panel.</p>
+          {panel ?? <p style={{ margin: 0 }}>Any content can live in the scrollable panel.</p>}
         </DialogPanel>
         <DialogFooter>
-          <DialogClose render={<Button variant="ghost">Cancel</Button>} />
-          <DialogClose render={<Button variant="primary">Save</Button>} />
+          <DialogClose render={<Button variant="ghost">{cancelLabel}</Button>} />
+          <DialogClose render={<Button variant="primary">{saveLabel}</Button>} />
         </DialogFooter>
       </DialogPopup>
     </Dialog>
@@ -223,6 +236,165 @@ export const Endpoints: Story = {
           surface: 'n2',
         }}
       />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    await expectTouchCloseTarget(canvasElement)
+  },
+}
+
+async function waitFor<T>(find: () => T | null | undefined, what: string): Promise<T> {
+  for (let attempt = 0; attempt < 50; attempt += 1) {
+    const found = find()
+    if (found) return found
+    await new Promise(resolve => setTimeout(resolve, 20))
+  }
+  throw new Error(`Expected ${what}`)
+}
+
+/* On a coarse pointer the close button's hit-area pseudo is at least 44px. */
+async function expectTouchCloseTarget(root: HTMLElement) {
+  const close = await waitFor(
+    () => root.querySelector<HTMLElement>('[data-a63-input="touch"] .a63-Dialog-close-button'),
+    'the close button inside the touch region'
+  )
+  const hitArea = getComputedStyle(close, '::before')
+  const width = Number.parseFloat(hitArea.width)
+  const height = Number.parseFloat(hitArea.height)
+  if (!(width >= 44 && height >= 44)) {
+    throw new Error(`Expected a 44px close hit area, got ${width}x${height}`)
+  }
+}
+
+/* Keyboard focus on the built-in close button, beside a dialog at rest. */
+export const FocusVisibleClose: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
+      <div style={cellStyle}>
+        <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>focused close</span>
+        <OverlayStage>
+          {container => <RenameDialog open="inline" portalContainerRef={container} />}
+        </OverlayStage>
+      </div>
+    </div>
+  ),
+  parameters: { visualState: { focusVisible: '.a63-Dialog-close-button' } },
+}
+
+/* The built-in close button under the pointer. */
+export const HoverClose: Story = {
+  render: () => <RenameDialog open="modal" />,
+  parameters: { visualState: { hover: '.a63-Dialog-close-button' } },
+}
+
+const longPanel = (
+  <div style={{ display: 'grid', gap: 12 }}>
+    {Array.from({ length: 12 }, (_, index) => (
+      <p key={index} style={{ margin: 0 }}>
+        Paragraph {index + 1}: the panel scrolls between the header and the footer, and its edge
+        fades where more content is out of view.
+      </p>
+    ))}
+    {/* Focusable content keeps the scrolled region reachable from the keyboard. */}
+    <Button variant="outline">Read the full terms</Button>
+  </div>
+)
+
+/* The fade sizes the panel's scroll timeline resolves to, in px. */
+function panelFades(panel: HTMLElement) {
+  const style = getComputedStyle(panel)
+  return {
+    end: Number.parseFloat(style.getPropertyValue('--a63-dialog-panel-fade-end')),
+    start: Number.parseFloat(style.getPropertyValue('--a63-dialog-panel-fade-start')),
+  }
+}
+
+/*
+ * scrollFade (on by default): a long panel at the top fades at its bottom edge
+ * only; scrolled to the middle it fades at both edges.
+ */
+export const ScrollFade: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
+      {(['top', 'middle'] as const).map(position => (
+        <div data-scroll-position={position} key={position} style={cellStyle}>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>
+            scrolled to the {position}
+          </span>
+          <OverlayStage height={420}>
+            {container => (
+              <RenameDialog open="inline" panel={longPanel} portalContainerRef={container} />
+            )}
+          </OverlayStage>
+        </div>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const panelAt = (position: string) =>
+      canvasElement.querySelector<HTMLElement>(
+        `[data-scroll-position="${position}"] .a63-Dialog-panel`
+      )
+    const top = await waitFor(() => panelAt('top'), 'the top panel')
+    const middle = await waitFor(() => panelAt('middle'), 'the middle panel')
+    if (middle.scrollHeight <= middle.clientHeight) throw new Error('Expected the panel to scroll')
+    middle.scrollTop = (middle.scrollHeight - middle.clientHeight) / 2
+    await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)))
+    const atTop = panelFades(top)
+    if (!(atTop.start === 0 && atTop.end > 0)) {
+      throw new Error(`Expected a bottom fade only at the top, got ${JSON.stringify(atTop)}`)
+    }
+    const atMiddle = panelFades(middle)
+    if (!(atMiddle.start > 0 && atMiddle.end > 0)) {
+      throw new Error(`Expected both fades in the middle, got ${JSON.stringify(atMiddle)}`)
+    }
+  },
+}
+
+/*
+ * Right-to-left with a long Arabic title, and a long CJK title: the close button
+ * sits at the inline end, the header leaves room for it, and the title wraps.
+ * The close button's name is passed through closeProps['aria-label'].
+ */
+export const RightToLeft: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12, inlineSize: '100%' }}>
+      <UIProvider dir="rtl" lang="ar">
+        <div style={cellStyle}>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>rtl / ar</span>
+          <OverlayStage height={380}>
+            {container => (
+              <RenameDialog
+                cancelLabel="إلغاء"
+                closeLabel="إغلاق"
+                description="امنح هذا المشروع اسمًا جديدًا يسهل تذكره."
+                open="inline"
+                portalContainerRef={container}
+                saveLabel="حفظ"
+                title="إعادة تسمية مشروع المراجعة الربعية للفريق بأكمله قبل الاجتماع القادم"
+              />
+            )}
+          </OverlayStage>
+        </div>
+      </UIProvider>
+      <UIProvider lang="ja">
+        <div style={cellStyle}>
+          <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)' }}>ltr / ja</span>
+          <OverlayStage height={380}>
+            {container => (
+              <RenameDialog
+                cancelLabel="キャンセル"
+                closeLabel="閉じる"
+                description="このプロジェクトに覚えやすい新しい名前を付けてください。"
+                open="inline"
+                portalContainerRef={container}
+                saveLabel="保存"
+                title="チーム全体の四半期レビュープロジェクトの名前を次の会議の前に変更する"
+              />
+            )}
+          </OverlayStage>
+        </div>
+      </UIProvider>
     </div>
   ),
 }

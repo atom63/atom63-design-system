@@ -1,6 +1,6 @@
 import { themes } from '@atom63/ui-foundation'
 import { UIProvider } from '@atom63/ui-react'
-import type { ReactNode } from 'react'
+import type { ComponentType, ReactNode } from 'react'
 
 /*
  * Story support shared by every template: one render per theme and mode, each
@@ -47,12 +47,37 @@ export const themeMatrixParameters = {
   },
 }
 
+/*
+ * Every template story runs axe's `region` rule, which Storybook turns off by
+ * default, so page chrome a product copies sits in landmarks, and names
+ * `label-content-name-mismatch` so a control's accessible name keeps its
+ * visible label. The theme matrix replaces these rules: its theme captions sit
+ * outside the template's landmarks by design.
+ */
+export const landmarkParameters = {
+  a11y: {
+    config: {
+      rules: [
+        { id: 'region', enabled: true },
+        { id: 'label-content-name-mismatch', enabled: true },
+      ],
+    },
+  },
+}
+
+/* A content block sits in a page's main landmark; its stories render it there. */
+export const inMain = (Story: ComponentType) => (
+  <main>
+    <Story />
+  </main>
+)
+
 /* Keeps authored viewport stories and visual baselines on the same four widths. */
 export const wideGlobals = { viewport: { value: 'a63-wide', isRotated: false } }
 export const compactGlobals = { viewport: { value: 'a63-compact', isRotated: false } }
 export const tabletGlobals = { viewport: { value: 'a63-tablet', isRotated: false } }
 export const responsivePhoneGlobals = { viewport: { value: 'a63-phone', isRotated: false } }
-export const phoneGlobals = { viewport: { value: 'mobile2', isRotated: false } }
+export const phoneGlobals = responsivePhoneGlobals
 
 /*
  * Checks a full-page template's safe-area owners with emulated insets, as on a

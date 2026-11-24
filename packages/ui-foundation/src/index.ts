@@ -354,6 +354,26 @@ export type {
   CalendarVisualArchetype,
 } from './components/calendar'
 export {
+  chartColors,
+  chartContract,
+  chartLayouts,
+  chartSizes,
+  chartSlots,
+  chartStates,
+  chartTypes,
+  chartVisualArchetypes,
+} from './components/chart/chart-contract'
+export type {
+  ChartColor,
+  ChartContract,
+  ChartLayout,
+  ChartSize,
+  ChartSlot,
+  ChartState,
+  ChartType,
+  ChartVisualArchetype,
+} from './components/chart/chart-contract'
+export {
   chatComposerContract,
   chatComposerLayouts,
   chatComposerSlots,
@@ -565,7 +585,6 @@ export {
   feedbackStateKinds,
   feedbackStateSizes,
   feedbackStateSlots,
-  feedbackStateStateAliases,
   feedbackStateStates,
   feedbackStateVisualArchetypes,
 } from './components/feedback-state/feedback-state-contract'
@@ -617,7 +636,6 @@ export type {
   FeedbackStateSize,
   FeedbackStateSlot,
   FeedbackStateState,
-  FeedbackStateStateAlias,
   FeedbackStateVisualArchetype,
 } from './components/feedback-state/feedback-state-contract'
 export {
@@ -739,6 +757,22 @@ export type {
   LabelVisualArchetype,
 } from './components/label/label-contract'
 export {
+  layeredSceneContract,
+  layeredScenePlacements,
+  layeredSceneSlots,
+  layeredSceneStates,
+  layeredSceneVisualArchetypes,
+  layeredSceneWidths,
+} from './components/layered-scene/layered-scene-contract'
+export type {
+  LayeredSceneContract,
+  LayeredScenePlacement,
+  LayeredSceneSlot,
+  LayeredSceneState,
+  LayeredSceneVisualArchetype,
+  LayeredSceneWidth,
+} from './components/layered-scene/layered-scene-contract'
+export {
   loadMoreTriggerContract,
   loadMoreTriggerSlots,
   loadMoreTriggerStates,
@@ -827,12 +861,14 @@ export type {
 } from './components/navigation-menu/navigation-menu-contract'
 export {
   paginationContract,
+  paginationLinkSizes,
   paginationSlots,
   paginationStates,
   paginationVisualArchetypes,
 } from './components/pagination/pagination-contract'
 export type {
   PaginationContract,
+  PaginationLinkSize,
   PaginationSlot,
   PaginationState,
   PaginationVisualArchetype,
@@ -1169,6 +1205,7 @@ export {
   switchVisualArchetypes,
 } from './components/switch/switch-contract'
 export {
+  tableAligns,
   tableContract,
   tableSizeAliases,
   tableSizes,
@@ -1180,6 +1217,7 @@ export {
   tableVisualArchetypes,
 } from './components/table'
 export type {
+  TableAlign,
   TableContract,
   TableSize,
   TableSizeAlias,
@@ -1227,6 +1265,7 @@ export {
   textareaSlots,
   textareaStates,
   textareaTokenSlots,
+  textareaVariants,
   textareaVisualArchetypes,
 } from './components/textarea'
 export type {
@@ -1235,6 +1274,7 @@ export type {
   TextareaSlot,
   TextareaState,
   TextareaTokenSlot,
+  TextareaVariant,
   TextareaVisualArchetype,
 } from './components/textarea'
 export type {

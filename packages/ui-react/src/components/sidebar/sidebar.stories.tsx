@@ -100,6 +100,84 @@ export const Playground: Story = {
   ),
 }
 
+/*
+ * The menu button's states side by side: current (`isActive`), under the
+ * pointer, at rest and disabled, with a fine pointer and on touch. Pressed
+ * (`:active`) and an open menu (`data-open`) paint the same plate as hover, so
+ * the hover capture covers them.
+ */
+function StatesSidebar({ hover = false }: { hover?: boolean }) {
+  return (
+    <SidebarProvider style={{ minHeight: 0, width: 'auto' }}>
+      <Sidebar collapsible="none">
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton isActive>
+                    <Inbox aria-hidden />
+                    <span>Current</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton data-hover-target={hover || undefined}>
+                    <Send aria-hidden />
+                    <span>Hover</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FileText aria-hidden />
+                    <span>Rest</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton disabled>
+                    <Star aria-hidden />
+                    <span>Disabled</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+    </SidebarProvider>
+  )
+}
+
+export const States: Story = {
+  parameters: { visualState: { hover: '[data-hover-target]' } },
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, padding: 12 }}>
+      <UIProvider input="pointer">
+        <StatesSidebar hover />
+      </UIProvider>
+      <UIProvider input="touch">
+        <StatesSidebar />
+      </UIProvider>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    // Rows keep the 32px rung on a fine pointer and floor at 44px on touch.
+    for (const [input, floor] of [
+      ['pointer', 32],
+      ['touch', 44],
+    ] as const) {
+      const rows = canvasElement.querySelectorAll<HTMLElement>(
+        `[data-a63-input="${input}"] [data-slot="sidebar-menu-button"]`
+      )
+      if (rows.length !== 4) throw new Error(`Expected 4 ${input} rows, got ${rows.length}`)
+      for (const row of rows) {
+        const height = Math.round(row.getBoundingClientRect().height)
+        if (input === 'touch' ? height < floor : height !== floor)
+          throw new Error(`A ${input} row is ${height}px tall, expected ${floor}px`)
+      }
+    }
+  },
+}
+
 /* tone sets the active menu button: neutral (the default) is the hover plate
    with primary text, accent is the opt-in primary wash with accent text. */
 export const MenuButtonTones: Story = {

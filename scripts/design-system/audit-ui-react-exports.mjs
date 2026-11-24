@@ -8,6 +8,7 @@ const rootSourcePath = 'packages/ui-react/src/index.ts'
 // Component families published on their own subpath instead of the root.
 const subpathSourcePaths = {
   './calendar': 'packages/ui-react/src/calendar/index.ts',
+  './chart': 'packages/ui-react/src/chart/index.ts',
   './layout': 'packages/ui-react/src/layout/index.ts',
 }
 const packageManifestPath = 'packages/ui-react/package.json'

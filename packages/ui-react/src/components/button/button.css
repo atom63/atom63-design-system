@@ -103,6 +103,7 @@
     box-shadow var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+  max-width: 100%;
   user-select: none;
   white-space: nowrap;
 }
@@ -113,8 +114,7 @@
   content: '';
   position: absolute;
   top: 2px;
-  right: 9%;
-  left: 9%;
+  inset-inline: 9%;
   z-index: 0;
   height: 42%;
   border-radius: 999px;
@@ -147,26 +147,20 @@
  * The ::after reflection above is an inset pill (fixed 9% side insets, pill
  * radius) tuned for wide rounded RECTANGLES. On a 1:1 icon button it reads as a
  * narrow capsule floating inside the shape with visible side gaps — worst on
- * fully-round icon controls (scroll/nav chevrons). Full-bleed it and clip to the
- * button's own radius (square OR circle) via overflow, with a convex lower edge
- * so the sheen fits the square footprint as a liquid-glass dome. Only geometry
- * changes — the fill (--button-highlight) stays theme-driven, so this is inert
- * off Aqua (modern leaves it `none`). Keyed on the icon sizes, which are the
- * aspect-ratio:1 buttons. */
-/* Only a theme that paints --a63-control-highlight needs this clip, and clipping
-   the root also clips the hit-area pseudo-element. Aqua is the only theme that
-   sets a highlight (guarded by a test in recipes.test.ts), so scope it there and
-   leave every other theme's icon buttons able to expand their touch target. */
-[data-a63-theme='aqua'] .a63-Button[data-size^='icon'] {
-  overflow: hidden;
-}
-
+ * fully-round icon controls (scroll/nav chevrons). Full-bleed it with a convex
+ * lower edge so the sheen fits the square footprint as a liquid-glass dome, and
+ * clip its top corners to the button's own radius (square OR circle) with
+ * clip-path on the pseudo-element itself. The root never clips its overflow, so
+ * the ::before hit area keeps its 44px coarse-pointer target in every theme.
+ * Only geometry changes — the fill (--button-highlight) stays theme-driven, so
+ * this is inert off Aqua (modern leaves it `none`). Keyed on the icon sizes,
+ * which are the aspect-ratio:1 buttons. */
 .a63-Button[data-size^='icon']::after {
   top: 1px;
-  right: 0;
-  left: 0;
+  inset-inline: 0;
   height: 52%;
   border-radius: 0 0 50% 50% / 0 0 100% 100%;
+  clip-path: inset(0 round var(--button-radius) var(--button-radius) 0 0);
 }
 
 /* Disabled buttons keep their resting look under the pointer. `:where()` keeps
@@ -195,6 +189,15 @@
 .a63-Button[data-disabled] {
   cursor: not-allowed;
   transform: none;
+}
+
+/* Forced colors replace the pressed fill with the button colour, so a held
+   (data-pressed) button takes the system selection colours instead. */
+@media (forced-colors: active) {
+  .a63-Button[data-pressed] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
 }
 
 /* A disabled button with a fill or a border swaps to the neutral disabled tokens:
@@ -271,6 +274,18 @@
      when Button is nested (toolbars / groups). */
   gap: var(--button-gap);
   min-width: 0;
+}
+
+/* Labels never wrap: a label longer than the space the button gets (the button
+   is capped at its container's width) truncates with an ellipsis. The full text
+   stays in the DOM, so it is still the accessible name. Tile labels wrap. */
+.a63-Button-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.a63-Button[data-size='tile'] .a63-Button-text {
+  overflow: visible;
 }
 
 .a63-Button-spinner {
@@ -381,8 +396,7 @@
   --button-state-active-border-color: var(--a63-control-outline-hover-border);
 }
 
-/* Indicator: an unread dot or a count pinned to the top-end corner. Aqua clips
-   icon buttons (see above), so there it sits inside the corner. The selectors
+/* Indicator: an unread dot or a count pinned to the top-end corner. The selectors
    match `.a63-Button > span:not(…)` in specificity and come after it, so the
    indicator stays absolutely positioned. */
 .a63-Button > span.a63-Button-indicator {
@@ -412,10 +426,6 @@
   font-variant-numeric: tabular-nums;
   font-weight: 600;
   line-height: 1;
-}
-[data-a63-theme='aqua'] .a63-Button[data-size^='icon'] .a63-Button-indicator {
-  top: 0;
-  inset-inline-end: 0;
 }
 /* The indicator's meaning, read after the label and hidden from sight. */
 .a63-Button > span.a63-Button-indicator-label {

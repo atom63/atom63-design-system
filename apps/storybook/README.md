@@ -151,3 +151,28 @@ A story without a baseline fails too. On CI, Vitest saves its capture in the sam
 `<story>-reference-chromium-linux.png` instead of writing a baseline. To add it, drop the
 `-reference` part of the name and commit the file to `visual/__screenshots__/`, or run the workflow
 with **update** once the branch is ready.
+
+**Visual states.** Before each capture the test moves the pointer off the page, so no story is
+captured hovered or focused. To capture a hover or keyboard focus state, give the story a
+`visualState` parameter with a CSS selector; the first visible element it matches gets the state,
+just before the screenshot:
+
+```tsx
+// The real pointer rests on the first button, so :hover matches.
+export const Hover: Story = {
+  render: () => <StatePair />,
+  parameters: { visualState: { hover: 'button' } },
+}
+
+// The real keyboard tabs from the top of the page to the first button, so :focus-visible matches.
+export const FocusVisible: Story = {
+  render: () => <StatePair />,
+  parameters: { visualState: { focusVisible: 'button' } },
+}
+```
+
+`hover` and `focusVisible` can be set together. The test fails if nothing matches the selector, if
+the target does not match `:hover`, or if 50 Tab presses do not give it `:focus-visible`. Only one
+element can be hovered and one focused, so put the target beside an element at rest to show the
+difference, as `UI React/Button` `Hover` and `FocusVisible` do. The state applies only in the
+`visual` project; the render, axe and craft tests see the story at rest.

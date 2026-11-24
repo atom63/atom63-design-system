@@ -1023,6 +1023,7 @@
         "card-media-overlay",
         "card-media-overlay-image",
         "card-media-overlay-scrim",
+        "card-media-overlay-top-end",
         "card-media-overlay-top-right",
         "card-media-overlay-bottom",
         "card-media-overlay-icon-button",
@@ -1034,7 +1035,7 @@
         "card-action",
         "card-cursor-label"
       ],
-      "states": ["rest", "hover", "focus-visible", "interactive", "cursor-active"],
+      "states": ["rest", "hover", "pressed", "focus-visible", "interactive", "cursor-active"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"],
       "intent": {
@@ -1192,6 +1193,32 @@
           ]
         }
       }
+    },
+    "chart": {
+      "source": "packages/ui-foundation/contracts/components/chart.json",
+      "exportName": "chartContract",
+      "maturity": "preview",
+      "description": "A small dashboard chart: a line, area or bar chart of a few numeric series over a categorical axis. The series take their colours from --a63-chart-1..5, which keep apart from the brand on every brand.",
+      "axes": [
+        { "name": "types", "values": ["line", "area", "bar"], "default": "line" },
+        { "name": "sizes", "values": ["sm", "md"], "default": "md" },
+        { "name": "layouts", "values": ["grouped", "stacked"], "default": "grouped" },
+        { "name": "colors", "values": ["1", "2", "3", "4", "5"] }
+      ],
+      "slots": [
+        "chart",
+        "chart-legend",
+        "chart-plot",
+        "chart-y-axis",
+        "chart-x-axis",
+        "chart-tooltip",
+        "chart-table",
+        "chart-table-toggle",
+        "chart-empty"
+      ],
+      "states": ["rest", "current", "empty"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
     },
     "chat-composer": {
       "source": "packages/ui-foundation/contracts/components/chat-composer.json",
@@ -1625,6 +1652,7 @@
       "source": "packages/ui-foundation/contracts/components/dropdown-menu.json",
       "exportName": "dropdownMenuContract",
       "maturity": "stable",
+      "description": "Items take the `itemVariants` (default, destructive). Items, labels and submenu triggers also take a boolean `inset` (web only), a layout aid rather than an axis: it indents the row to the checkbox and radio indicator column so plain rows line up with checkable ones. Built-in icons are a check mark for checked rows and a chevron toward the inline end for submenu triggers; it mirrors in right-to-left.",
       "axes": [
         { "name": "itemVariants", "values": ["default", "destructive"], "default": "default" }
       ],
@@ -1797,10 +1825,10 @@
         "feedback-state-media",
         "feedback-state-title",
         "feedback-state-description",
+        "feedback-state-detail",
         "feedback-state-content"
       ],
-      "states": ["rest", "busy", "actionable"],
-      "stateAliases": { "idle": "rest" },
+      "states": ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"],
       "tokenSlots": [],
       "visualArchetypes": ["action"]
     },
@@ -1894,7 +1922,7 @@
       "exportName": "formContract",
       "maturity": "stable",
       "axes": [],
-      "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
+      "slots": ["form-item", "form-label", "form-description", "form-message"],
       "states": ["rest", "invalid"],
       "stateAliases": { "default": "rest" },
       "tokenSlots": [],
@@ -2160,6 +2188,29 @@
       "states": ["rest", "disabled", "invalid"],
       "tokenSlots": [],
       "visualArchetypes": ["field"]
+    },
+    "layered-scene": {
+      "source": "packages/ui-foundation/contracts/components/layered-scene.json",
+      "exportName": "layeredSceneContract",
+      "maturity": "preview",
+      "description": "Three fixed layers in one box: the plate at the back (an ArtPlate), the copy and a stage of live product UI in the middle, and an optional foreground cut-out of the plate at the front. The scene is a two-row grid: the copy takes the first row and the stage the second, at the bottom, so the stage never covers the headline and the plate grows when the content needs more room. The foreground is aria-hidden, takes no pointer events and covers the same box as the plate, so the cut-out lines up when it gets the plate's focal points; it is hidden below the medium breakpoint unless asked. Layers use the in-context z band (--z-layer-below, --z-layer-default, --z-layer-raised). Keep text and controls out from under the cut-out; scripts/design-system/lib/foreground-occlusion.mjs checks it. Preview until its stable evidence is recorded.",
+      "axes": [
+        {
+          "name": "placements",
+          "values": ["center-bottom", "end-bottom", "start-bottom"],
+          "default": "center-bottom"
+        },
+        { "name": "widths", "values": ["wide", "half"], "default": "wide" }
+      ],
+      "slots": [
+        "layered-scene",
+        "layered-scene-content",
+        "layered-scene-stage",
+        "layered-scene-foreground"
+      ],
+      "states": ["rest"],
+      "tokenSlots": [],
+      "visualArchetypes": ["surface"]
     },
     "load-more-trigger": {
       "source": "packages/ui-foundation/contracts/components/load-more-trigger.json",
@@ -2454,19 +2505,7 @@
       "axes": [
         {
           "name": "linkSizes",
-          "values": [
-            "xs",
-            "sm",
-            "md",
-            "lg",
-            "xl",
-            "tile",
-            "icon-xs",
-            "icon-sm",
-            "icon",
-            "icon-lg",
-            "icon-xl"
-          ],
+          "values": ["xs", "sm", "md", "icon-xs", "icon-sm", "icon"],
           "default": "icon"
         }
       ],
@@ -2477,7 +2516,7 @@
         "pagination-link",
         "pagination-ellipsis"
       ],
-      "states": ["rest", "current"],
+      "states": ["rest", "current", "disabled"],
       "tokenSlots": [],
       "visualArchetypes": ["action"]
     },
@@ -2923,22 +2962,6 @@
           {
             "check": "combobox-active-descendant",
             "reason": "Base UI Select moves DOM focus onto the options instead of keeping it on the combobox with aria-activedescendant, and has no option to change it. The APG Combobox pattern requires DOM focus to stay on the combobox (https://www.w3.org/WAI/ARIA/apg/patterns/combobox/), so this is a gap, not a variant. Screen readers still announce the focused option."
-          },
-          {
-            "check": "home-opens-at-first",
-            "reason": "Base UI Select 1.6.0 does not open the listbox on Home; only Enter, Space and the arrow keys open it. See docs/design-system/audits/base-ui-issue-drafts.md."
-          },
-          {
-            "check": "end-opens-at-last",
-            "reason": "Base UI Select 1.6.0 does not open the listbox on End; only Enter, Space and the arrow keys open it. See docs/design-system/audits/base-ui-issue-drafts.md."
-          },
-          {
-            "check": "alt-up-arrow-selects",
-            "reason": "Base UI Select 1.6.0 treats Alt + Up Arrow as Up Arrow: it moves the highlight and keeps the listbox open. See docs/design-system/audits/base-ui-issue-drafts.md."
-          },
-          {
-            "check": "tab-selects",
-            "reason": "Base UI Select 1.6.0 closes the listbox on Tab without selecting the highlighted option. See docs/design-system/audits/base-ui-issue-drafts.md."
           }
         ]
       },
@@ -3007,7 +3030,11 @@
       "maturity": "stable",
       "axes": [
         { "name": "footerVariants", "values": ["default", "bare"], "default": "default" },
-        { "name": "sides", "values": ["right", "left", "top", "bottom"], "default": "right" },
+        {
+          "name": "sides",
+          "values": ["right", "left", "top", "bottom", "inline-start", "inline-end"],
+          "default": "right"
+        },
         { "name": "variants", "values": ["default", "inset"], "default": "default" }
       ],
       "slots": [
@@ -3025,7 +3052,7 @@
         "sheet-panel",
         "sheet-footer"
       ],
-      "states": ["closed", "open", "starting", "ending"],
+      "states": ["closed", "open", "starting", "ending", "focus-visible"],
       "tokenSlots": [],
       "visualArchetypes": ["overlay", "surface", "trigger", "action"]
     },
@@ -3058,7 +3085,7 @@
       "source": "packages/ui-foundation/contracts/components/sidebar.json",
       "exportName": "sidebarContract",
       "maturity": "stable",
-      "description": "Faithful to prod @atom63/ui sidebar.tsx: the Sidebar has three variant unions (side / variant / collapsible) plus the two menu-button ramps (variant + size) and the sub-button size ramp. The many structural parts each get a data-slot; these are enumerated as the contract's slots so consumers can target them. Menu buttons and sub-buttons take tone (neutral/accent) for their active state: neutral is the hover plate with primary text, accent the opt-in primary wash with accent text.",
+      "description": "Faithful to prod @atom63/ui sidebar.tsx: the Sidebar has three variant unions (side / variant / collapsible) plus the two menu-button ramps (variant + size) and the sub-button size ramp. The many structural parts each get a data-slot; these are enumerated as the contract's slots so consumers can target them. The side is logical: 'left' is the inline start, so the sidebar sits on the right under dir=\"rtl\" ('right' is the inline end). Menu buttons and sub-buttons take tone (neutral/accent) for their active state: neutral is the hover plate with primary text, accent the opt-in primary wash with accent text.",
       "axes": [
         { "name": "sides", "values": ["left", "right"], "default": "left" },
         { "name": "variants", "values": ["sidebar", "floating", "inset"], "default": "sidebar" },
@@ -3299,7 +3326,7 @@
       "source": "packages/ui-foundation/contracts/components/table.json",
       "exportName": "tableContract",
       "maturity": "stable",
-      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text.",
+      "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text. Sorting is controlled and data-agnostic: Table takes sort and onSortChange, and a TableHead with a sortKey renders a button with a direction icon and carries aria-sort while its column is sorted; the caller sorts the rows.",
       "axes": [
         { "name": "variants", "values": ["default", "plain"], "default": "default" },
         {
@@ -3309,6 +3336,7 @@
           "default": "md"
         },
         { "name": "stickyEdges", "values": ["start", "end"] },
+        { "name": "aligns", "values": ["start", "end"] },
         { "name": "tones", "values": ["neutral", "accent"], "default": "neutral" }
       ],
       "slots": [
@@ -3320,9 +3348,10 @@
         "table-row",
         "table-head",
         "table-cell",
-        "table-caption"
+        "table-caption",
+        "table-sort-button"
       ],
-      "states": ["rest", "row-hover", "row-selected"],
+      "states": ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"],
       "tokenSlots": [],
       "visualArchetypes": ["surface"]
     },
@@ -3442,7 +3471,10 @@
       "source": "packages/ui-foundation/contracts/components/textarea.json",
       "exportName": "textareaContract",
       "maturity": "stable",
-      "axes": [{ "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" }],
+      "axes": [
+        { "name": "sizes", "values": ["sm", "md", "lg"], "default": "md" },
+        { "name": "variants", "values": ["default", "filled", "plain"], "default": "default" }
+      ],
       "slots": ["textarea-control", "textarea"],
       "states": ["rest", "hover", "focus", "disabled", "invalid"],
       "tokenSlots": [
@@ -3459,7 +3491,7 @@
       ],
       "visualArchetypes": ["field"],
       "intent": {
-        "description": "What a multi-line text field is, independent of any platform: its size and its chrome. AtomTextEditor has no size axis (its height is minHeight); the web Textarea has no variant, which only AtomTextEditor takes so far.",
+        "description": "What a multi-line text field is, independent of any platform: its size and its chrome. AtomTextEditor has no size axis (its height is minHeight); the web Textarea takes Input's variant axis, of which AtomTextEditor takes default and filled.",
         "axes": { "size": ["sm", "md", "lg"], "variant": ["default", "filled"] },
         "platforms": {
           "web": {
@@ -3468,6 +3500,15 @@
                 "list": "sizes",
                 "map": { "sm": { "size": "sm" }, "md": { "size": "md" }, "lg": { "size": "lg" } },
                 "extensions": {}
+              },
+              "variant": {
+                "list": "variants",
+                "map": { "default": { "variant": "default" }, "filled": { "variant": "filled" } },
+                "extensions": {
+                  "plain": {
+                    "description": "No border or fill and a separator below, for a field inside a menu, popover or composer."
+                  }
+                }
               }
             }
           },
@@ -3509,7 +3550,7 @@
       "source": "packages/ui-foundation/contracts/components/toaster.json",
       "exportName": "toasterContract",
       "maturity": "stable",
-      "description": "`default` is a card on the overlay surface with the icon before the message; `inverse` is a compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after the message, the macOS and iOS look for a short status such as Scheduling message….",
+      "description": "`default` is a card on the overlay surface with the icon before the message; `inverse` is a compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after the message, the macOS and iOS look for a short status such as Scheduling message…. The tones are not a Toaster prop: each maps to the function that raises the toast, toast() for default and toast.info, toast.success, toast.warning, toast.error and toast.loading for the rest.",
       "axes": [
         { "name": "variants", "values": ["default", "inverse"], "default": "default" },
         { "name": "tones", "values": ["default", "info", "success", "warning", "error", "loading"] }

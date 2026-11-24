@@ -37,6 +37,7 @@ const entryDocs = {
   '@atom63/ui-foundation': 'component-contract',
   '@atom63/ui-react': 'component-overview',
   '@atom63/ui-react/calendar': 'component-overview',
+  '@atom63/ui-react/chart': 'component-overview',
   '@atom63/ui-react/layout': 'pattern-layout',
   '@atom63/ui-react/media': 'pattern-media',
   '@atom63/ui-react/media/lightbox': 'pattern-media',
@@ -81,10 +82,11 @@ try {
   const contracts = await load('apps/docs/src/lib/component-contract.ts')
   const llms = await load('apps/docs/vite-plugins/llms-txt.ts')
 
-  // The root, `./calendar` and `./layout` entries together export every component family.
+  // The root, `./calendar`, `./chart` and `./layout` entries together export every component family.
   const uiReactIndexSource = [
     read('packages/ui-react/src/index.ts'),
     read('packages/ui-react/src/calendar/index.ts'),
+    read('packages/ui-react/src/chart/index.ts'),
     read('packages/ui-react/src/layout/index.ts'),
   ].join('\n')
   const pagesDir = path.join(root, 'apps/docs/src/pages')

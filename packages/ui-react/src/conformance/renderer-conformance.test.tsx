@@ -602,8 +602,11 @@ describe('React renderer conformance', () => {
         Save
       </Button>
     )
+    // Loading blocks activation but keeps the button focusable (aria-disabled).
     expect(screen.getByRole('button', { name: 'Save' })).toHaveAttribute('aria-busy', 'true')
-    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
+    expect(screen.getByRole('button', { name: 'Save' })).toHaveAttribute('aria-disabled', 'true')
+    fireEvent.click(screen.getByRole('button', { name: 'Save' }))
+    expect(onPress).toHaveBeenCalledOnce()
   })
 
   it('verifies compact toggle selection and disabled activation outcomes', async () => {
@@ -677,7 +680,10 @@ describe('React renderer conformance', () => {
   it('verifies semantic badges retain readable text labels', () => {
     for (const variant of ['default', 'accent', 'success', 'warning', 'error'] as const) {
       const { unmount } = render(<Badge variant={variant}>{variant}</Badge>)
-      expect(screen.getByText(variant)).toHaveAttribute('data-variant', variant)
+      expect(screen.getByText(variant).closest('[data-slot="badge"]')).toHaveAttribute(
+        'data-variant',
+        variant
+      )
       unmount()
     }
   })

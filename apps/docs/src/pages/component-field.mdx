@@ -1,0 +1,89 @@
+import { DocExample } from '@atom63/mdx/blocks'
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  Input,
+} from '@atom63/ui-react'
+
+# Field
+
+Field lays out a form control with its label, description and error, and wires them together: the label points at the control, the description and error describe it, and an error marks it invalid. It works with any control (Input, Textarea, Select, Checkbox, Switch) and with any form library.
+
+<DocExample
+  align="left"
+  title="Label, control, description and error"
+  code={`import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+  Input,
+} from '@atom63/ui-react'
+
+<FieldGroup>
+  <Field>
+    <FieldLabel htmlFor="email">Email</FieldLabel>
+    <Input id="email" placeholder="you@atom63.io" type="email" />
+    <FieldDescription>We only email you about releases.</FieldDescription>
+  </Field>
+  <Field>
+    <FieldLabel htmlFor="name">Name</FieldLabel>
+    <Input id="name" />
+    <FieldError errors={[{ message: 'Name is required.' }]} />
+  </Field>
+  <Field disabled>
+    <FieldLabel htmlFor="url">Workspace URL</FieldLabel>
+    <Input defaultValue="atom63.io/team" disabled id="url" />
+  </Field>
+</FieldGroup>`}
+>
+  <div className="w-full max-w-sm">
+    <FieldGroup>
+      <Field>
+        <FieldLabel htmlFor="docs-field-email">Email</FieldLabel>
+        <Input id="docs-field-email" placeholder="you@atom63.io" type="email" />
+        <FieldDescription>We only email you about releases.</FieldDescription>
+      </Field>
+      <Field>
+        <FieldLabel htmlFor="docs-field-name">Name</FieldLabel>
+        <Input id="docs-field-name" />
+        <FieldError errors={[{ message: 'Name is required.' }]} />
+      </Field>
+      <Field disabled>
+        <FieldLabel htmlFor="docs-field-url">Workspace URL</FieldLabel>
+        <Input defaultValue="atom63.io/team" disabled id="docs-field-url" />
+      </Field>
+    </FieldGroup>
+  </div>
+</DocExample>
+
+## When to use
+
+Use Field for every labelled control in a form or settings page. Use `FieldSet` and `FieldLegend` to group related fields, `FieldGroup` to space a list of fields, and `orientation="horizontal"` or `"responsive"` to put the label beside a control. When React Hook Form owns validation, use Form, which wires the same relationships from the form state.
+
+## State
+
+| State | How to set it | What it does |
+|-------|---------------|--------------|
+| Invalid | Render a `FieldError` with content, or pass `invalid` | Sets `data-invalid` on the field (the label tints) and `aria-invalid="true"` on the control, which draws its danger edge. |
+| Disabled | Pass `disabled` to Field, and `disabled` to the control | Field dims the label and title. It does not disable the control it wraps. |
+
+You set invalid once: a rendered `FieldError` is enough, and the error disappears with its content. `invalid` is for an invalid state with no message on screen.
+
+## How the wiring works
+
+Field finds its control as the element the `FieldLabel`'s `htmlFor` points at, or else the first form control inside it. While a `FieldDescription` or `FieldError` renders, its id is added to the control's `aria-describedby`, after any ids the control already lists; it is removed again when the part unmounts. `FieldError` is a `role="alert"` region, so a new error is announced.
+
+## Decisions worth knowing
+
+### The layout parts stay unstyled containers
+
+`Field`, `FieldContent` and `FieldGroup` own spacing and orientation only. Chrome belongs to the control, so the same Field holds an outlined Input, a Switch row or a choice card.
+
+### Responsive orientation follows the container
+
+`orientation="responsive"` stacks the label above the control until the enclosing `FieldGroup` is at least 28rem wide, measured with a container query, so a field in a narrow sidebar stacks even on a wide screen.

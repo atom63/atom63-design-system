@@ -4,8 +4,8 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1151,
-    "aliasValues": 808,
+    "variables": 1167,
+    "aliasValues": 812,
     "skipped": 412,
     "computed": 64
   },
@@ -1559,9 +1559,9 @@
             },
             "terminal-light": {
               "value": {
-                "r": 0.010041,
-                "g": 0.262546,
-                "b": 0.609689,
+                "r": 0.014297,
+                "g": 0.312915,
+                "b": 0.715122,
                 "a": 1
               }
             },
@@ -4470,6 +4470,46 @@
           ]
         },
         {
+          "name": "type/display/hero/font/weight",
+          "token": "--a63-type-display-hero-font-weight",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 600
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/font/weight/strong",
+          "token": "--a63-type-display-hero-font-weight-strong",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 700
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight-strong)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/letter/spacing",
+          "token": "--a63-type-display-hero-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.045em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/font/size",
           "token": "--a63-type-display-large-font-size",
           "type": "FLOAT",
@@ -4512,6 +4552,18 @@
           ]
         },
         {
+          "name": "type/display/large/letter/spacing",
+          "token": "--a63-type-display-large-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.04em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/line/height",
           "token": "--a63-type-display-large-line-height",
           "type": "FLOAT",
@@ -4524,6 +4576,18 @@
           "scopes": [
             "LINE_HEIGHT"
           ]
+        },
+        {
+          "name": "type/display/letter/spacing",
+          "token": "--a63-type-display-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.03em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-letter-spacing)",
+          "scopes": []
         },
         {
           "name": "type/display/line/height",
@@ -16698,7 +16762,7 @@
               "alias": "--a63-action-primary"
             },
             "dark": {
-              "alias": "--a63-action-primary"
+              "alias": "--a63-brand-400"
             }
           },
           "codeSyntax": "var(--a63-chart-1)",
@@ -16713,10 +16777,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-teal-500"
+              "alias": "--a63-chart-2-light"
             },
             "dark": {
-              "alias": "--color-teal-400"
+              "alias": "--a63-chart-2-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-2)",
@@ -16731,10 +16795,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-amber-500"
+              "alias": "--a63-chart-3-light"
             },
             "dark": {
-              "alias": "--color-amber-400"
+              "alias": "--a63-chart-3-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-3)",
@@ -16749,10 +16813,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-violet-500"
+              "alias": "--a63-chart-4-light"
             },
             "dark": {
-              "alias": "--color-violet-400"
+              "alias": "--a63-chart-4-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-4)",
@@ -16767,10 +16831,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-500"
+              "alias": "--a63-chart-5-light"
             },
             "dark": {
-              "alias": "--color-rose-400"
+              "alias": "--a63-chart-5-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-5)",
@@ -18179,6 +18243,462 @@
           "scopes": [
             "TEXT_FILL"
           ]
+        },
+        {
+          "name": "chart/2/dark",
+          "token": "--a63-chart-2-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.992936,
+                "g": 0.551494,
+                "b": 0.478817,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0,
+                "g": 0.797889,
+                "b": 0.812537,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.766095,
+                "g": 0.603233,
+                "b": 0.979379,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.544963,
+                "g": 0.76983,
+                "b": 0.39639,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.864192,
+                "g": 0.656796,
+                "b": 0.201777,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.324825,
+                "g": 0.798665,
+                "b": 0.562192,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-2-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/2/light",
+          "token": "--a63-chart-2-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.780881,
+                "g": 0.3618,
+                "b": 0.167442,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0,
+                "g": 0.609357,
+                "b": 0.537774,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.554055,
+                "g": 0.409566,
+                "b": 0.801153,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.274445,
+                "g": 0.585413,
+                "b": 0.225632,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.700969,
+                "g": 0.437772,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0,
+                "g": 0.606109,
+                "b": 0.390199,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-2-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/3/dark",
+          "token": "--a63-chart-3-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.072759,
+                "g": 0.722045,
+                "b": 0.599749,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.831034,
+                "g": 0.487879,
+                "b": 0.716205,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.756473,
+                "g": 0.59724,
+                "b": 0.16407,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.54988,
+                "g": 0.584596,
+                "b": 0.933061,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.10297,
+                "g": 0.681128,
+                "b": 0.863754,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.683214,
+                "g": 0.539224,
+                "b": 0.882425,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-3-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/3/light",
+          "token": "--a63-chart-3-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0,
+                "g": 0.523292,
+                "b": 0.484518,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.58599,
+                "g": 0.314541,
+                "b": 0.58522,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.575979,
+                "g": 0.397192,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.409007,
+                "g": 0.380633,
+                "b": 0.714861,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0,
+                "g": 0.495619,
+                "b": 0.6333,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.507598,
+                "g": 0.344975,
+                "b": 0.666036,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-3-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/4/dark",
+          "token": "--a63-chart-4-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.832528,
+                "g": 0.78138,
+                "b": 0.357068,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.632415,
+                "g": 0.753465,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 1,
+                "g": 0.626893,
+                "b": 0.661276,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.214169,
+                "g": 0.860963,
+                "b": 0.931303,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.476741,
+                "g": 0.866277,
+                "b": 0.620124,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.357488,
+                "g": 0.827703,
+                "b": 1,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-4-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/4/light",
+          "token": "--a63-chart-4-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.471677,
+                "g": 0.513338,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.229815,
+                "g": 0.482037,
+                "b": 0.79602,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.743103,
+                "g": 0.319112,
+                "b": 0.39931,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0,
+                "g": 0.555526,
+                "b": 0.671396,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.202434,
+                "g": 0.563794,
+                "b": 0.273179,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0,
+                "g": 0.523374,
+                "b": 0.751205,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-4-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/5/dark",
+          "token": "--a63-chart-5-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.747757,
+                "g": 0.468924,
+                "b": 0.827728,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.51617,
+                "g": 0.65643,
+                "b": 0.18496,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0,
+                "g": 0.65358,
+                "b": 0.891284,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.847859,
+                "g": 0.500736,
+                "b": 0.092241,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.894691,
+                "g": 0.424182,
+                "b": 0.509651,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.754674,
+                "g": 0.564361,
+                "b": 0,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-5-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/5/light",
+          "token": "--a63-chart-5-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.579664,
+                "g": 0.220036,
+                "b": 0.548836,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.40991,
+                "g": 0.412532,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0,
+                "g": 0.442503,
+                "b": 0.660313,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.607169,
+                "g": 0.294441,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.656922,
+                "g": 0.182188,
+                "b": 0.353105,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.527365,
+                "g": 0.356048,
+                "b": 0,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-5-light)",
+          "scopes": []
         }
       ]
     },
@@ -20063,6 +20583,52 @@
           ]
         },
         {
+          "name": "type/display/hero/font/size",
+          "token": "--a63-type-display-hero-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 67.5156
+            },
+            "compact": {
+              "value": 64.7969
+            },
+            "comfortable": {
+              "value": 67.5156
+            },
+            "large": {
+              "value": 67.5156
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "type/display/hero/line/height",
+          "token": "--a63-type-display-hero-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 70.8906
+            },
+            "compact": {
+              "value": 68.0312
+            },
+            "comfortable": {
+              "value": 70.8906
+            },
+            "large": {
+              "value": 70.8906
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
+          ]
+        },
+        {
           "name": "typography/10xl/font/size",
           "token": "--typography-10xl-font-size",
           "type": "FLOAT",
@@ -20389,6 +20955,29 @@
             }
           },
           "codeSyntax": "var(--a63-font-app)",
+          "scopes": [
+            "FONT_FAMILY"
+          ]
+        },
+        {
+          "name": "font/display",
+          "token": "--a63-font-display",
+          "type": "STRING",
+          "values": {
+            "sans": {
+              "alias": "--a63-font-app"
+            },
+            "serif": {
+              "alias": "--a63-font-app"
+            },
+            "mono": {
+              "alias": "--a63-font-app"
+            },
+            "pixel": {
+              "alias": "--a63-font-app"
+            }
+          },
+          "codeSyntax": "var(--a63-font-display)",
           "scopes": [
             "FONT_FAMILY"
           ]
@@ -22781,7 +23370,7 @@
         "surface",
         "theme"
       ],
-      "expression": "var(--surface-dark-11)"
+      "expression": "color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-text-tertiary",
@@ -22792,7 +23381,7 @@
         "surface",
         "theme"
       ],
-      "expression": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))"
+      "expression": "color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-track-shadow",

@@ -150,6 +150,8 @@ export const visualArchetypes = {
       'AppView',
       'Message',
       'ArtPlate',
+      'LayeredScene',
+      'Chart',
     ],
     contracts: ['surface'],
   },

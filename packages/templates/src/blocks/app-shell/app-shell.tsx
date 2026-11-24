@@ -1,6 +1,13 @@
 import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuTrigger,
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -11,6 +18,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from '@atom63/ui-react'
+import { ChevronsUpDown } from 'lucide-react'
 import type { AnchorHTMLAttributes, ReactElement, ReactNode } from 'react'
 
 export const template = {
@@ -18,9 +26,21 @@ export const template = {
   kind: 'block',
   title: 'App shell',
   description:
-    'The frame of a product: a sidebar with the product name and main navigation, a top bar with the menu toggle, and the page as the main landmark.',
+    'The frame of a product: a sidebar with the product name, the main navigation and the signed-in user at its foot (avatar, name, email or role, and an account menu), a top bar with the menu toggle, and the page as the main landmark.',
   category: 'layout',
-  tags: ['shell', 'sidebar', 'navigation', 'layout', 'frame', 'top bar', 'dashboard'],
+  tags: [
+    'shell',
+    'sidebar',
+    'navigation',
+    'layout',
+    'frame',
+    'top bar',
+    'dashboard',
+    'user',
+    'profile',
+    'account menu',
+    'avatar',
+  ],
   readiness: 'ready',
 } as const
 
@@ -32,11 +52,41 @@ export interface AppShellNavItem {
   label: string
 }
 
+/** The signed-in user, shown at the foot of the sidebar. */
+export interface AppShellUser {
+  /** The avatar image; the initials show while it loads, or without one. */
+  avatarSrc?: string
+  /** A second line under the name, such as the email or the role. */
+  detail?: string
+  /**
+   * Account actions (`DropdownMenuItem`s, `DropdownMenuSeparator`s). With
+   * them, the user row opens this menu; without, it is plain text.
+   */
+  menu?: ReactNode
+  name: string
+}
+
+/** The shell's own strings, for a product in another language. */
+export interface AppShellLabels {
+  /** Names the sidebar's user landmark; "Account" by default. */
+  account?: string
+  /** Names the main navigation landmark; "Main" by default. */
+  navigation?: string
+  /** The phone sheet's accessible description; "Displays the mobile sidebar." by default. */
+  sheetDescription?: string
+  /** The phone sheet's accessible title; "Sidebar" by default. */
+  sheetTitle?: string
+  /** The top-bar menu toggle's name; "Toggle Sidebar" by default. */
+  toggle?: string
+}
+
 export interface AppShellProps {
   /** The page. The shell renders the `main` landmark, so pages inside it do not add `Page`. */
   children: ReactNode
   /** Where the product name links; the first navigation item by default. */
   homeHref?: string
+  /** The shell's own strings; English by default. */
+  labels?: AppShellLabels
   navItems: readonly AppShellNavItem[]
   productName: string
   /**
@@ -44,13 +94,73 @@ export interface AppShellProps {
    * anchor by default. It receives the anchor's props, `href` included.
    */
   renderLink?: (props: AppShellLinkProps) => ReactElement
-  /** Actions at the end of the top bar, such as an account menu. */
+  /** Actions at the end of the top bar, such as search or notifications. */
   topBarActions?: ReactNode
+  /** The signed-in user at the foot of the sidebar; nothing renders without it. */
+  user?: AppShellUser
 }
 
 export type AppShellLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { href: string }
 
 const anchor = ({ children, ...props }: AppShellLinkProps) => <a {...props}>{children}</a>
+
+const initials = (name: string) =>
+  name
+    .split(/\s+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map(word => word[0]?.toUpperCase())
+    .join('')
+
+/*
+ * The user row. In the icon rail only the avatar shows; the name and detail
+ * stay in the accessibility tree, hidden visually. The avatar is decorative:
+ * the name beside it says who it is.
+ */
+function UserRow({ user }: { user: AppShellUser }) {
+  const avatar = (
+    <Avatar aria-hidden>
+      {user.avatarSrc && <AvatarImage alt="" src={user.avatarSrc} />}
+      <AvatarFallback>{initials(user.name)}</AvatarFallback>
+    </Avatar>
+  )
+  const text = (
+    <span className="flex min-w-0 flex-1 flex-col text-start leading-tight in-data-[collapsible=icon]:sr-only">
+      <span className="text-foreground truncate font-medium">{user.name}</span>
+      {user.detail && <span className="text-muted-foreground truncate text-xs">{user.detail}</span>}
+    </span>
+  )
+  if (!user.menu) {
+    return (
+      <div className="flex items-center gap-2 p-2 text-sm in-data-[collapsible=icon]:justify-center in-data-[collapsible=icon]:p-0">
+        {avatar}
+        {text}
+      </div>
+    )
+  }
+  return (
+    <SidebarMenu>
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger
+            render={
+              <SidebarMenuButton size="lg">
+                {avatar}
+                {text}
+                <span className="ms-auto">
+                  <ChevronsUpDown aria-hidden className="size-4" />
+                </span>
+              </SidebarMenuButton>
+            }
+          />
+          <DropdownMenuContent align="start" side="top">
+            {user.menu}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    </SidebarMenu>
+  )
+}
 
 /*
  * On a phone the sidebar becomes a sheet the top-bar toggle opens; on wider
@@ -59,23 +169,33 @@ const anchor = ({ children, ...props }: AppShellLinkProps) => <a {...props}>{chi
  *
  * Each safe-area inset has one owner, as in AppView: the top bar takes the top
  * inset, the page wrapper the bottom one, and both clear the inline insets
- * (the larger of the two, so the layout still mirrors).
+ * (the larger of the two, so the layout still mirrors). From `md` the sidebar
+ * rail sits at the inline start and owns that inset, so the top bar and the
+ * page clear only the end one.
+ *
+ * The layout is logical: under dir="rtl" the sidebar moves to the right.
  */
 export function AppShell({
   children,
   homeHref,
+  labels = {},
   navItems,
   productName,
   renderLink = anchor,
   topBarActions,
+  user,
 }: AppShellProps) {
   return (
     <SidebarProvider className="[--app-shell-inset-inline:max(var(--a63-safe-area-left),var(--a63-safe-area-right))]">
-      <Sidebar collapsible="icon">
+      <Sidebar
+        collapsible="icon"
+        mobileDescription={labels.sheetDescription}
+        mobileTitle={labels.sheetTitle}
+      >
         {/* One navigation landmark holds the product name and the menu, so all
             sidebar content sits in a landmark; `contents` keeps the sidebar's
             own layout. */}
-        <nav aria-label="Main" className="contents">
+        <nav aria-label={labels.navigation ?? 'Main'} className="contents">
           <SidebarHeader>
             {renderLink({
               children: productName,
@@ -111,13 +231,19 @@ export function AppShell({
             </SidebarGroup>
           </SidebarContent>
         </nav>
+        {/* The account sits in its own landmark at the sidebar's foot. */}
+        {user && (
+          <SidebarFooter aria-label={labels.account ?? 'Account'} role="region">
+            <UserRow user={user} />
+          </SidebarFooter>
+        )}
       </Sidebar>
       <SidebarInset>
-        <header className="border-border box-content flex h-14 items-center gap-2 border-b px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-[var(--a63-safe-area-top)]">
-          <SidebarTrigger />
+        <header className="border-border box-content flex h-14 items-center gap-2 border-b px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-[var(--a63-safe-area-top)] md:ps-4">
+          <SidebarTrigger label={labels.toggle} />
           <div className="ms-auto flex items-center gap-2">{topBarActions}</div>
         </header>
-        <div className="px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-8 pb-[calc(--spacing(8)+var(--a63-safe-area-bottom))] sm:px-[max(--spacing(6),var(--app-shell-inset-inline))]">
+        <div className="px-[max(--spacing(4),var(--app-shell-inset-inline))] pt-8 pb-[calc(--spacing(8)+var(--a63-safe-area-bottom))] sm:px-[max(--spacing(6),var(--app-shell-inset-inline))] md:ps-6">
           {children}
         </div>
       </SidebarInset>

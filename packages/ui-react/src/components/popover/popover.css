@@ -21,6 +21,11 @@
   gap: var(--a63-space-2_5);
   width: 18rem;
   max-width: var(--available-width);
+  /* Content taller than the room on its side scrolls inside the panel, and an
+     unbroken string (a URL) wraps instead of running out of the fixed width. */
+  max-height: var(--available-height);
+  overflow-y: auto;
+  overflow-wrap: anywhere;
   padding: var(--a63-space-2_5);
   border: var(--a63-overlay-border-width) var(--a63-overlay-border-style) var(--a63-border-subtle);
   border-radius: var(--a63-overlay-radius, var(--radius-lg));
@@ -63,6 +68,21 @@
 .a63-Popover-popup[data-starting-style][data-side='right'],
 .a63-Popover-popup[data-ending-style][data-side='right'] {
   transform: translateX(-0.5rem) scale(0.95);
+}
+
+/* Logical sides slide from the trigger too, mirrored in right-to-left. */
+.a63-Popover-popup[data-starting-style][data-side='inline-end'],
+.a63-Popover-popup[data-ending-style][data-side='inline-end'],
+.a63-Popover-popup[data-starting-style][data-side='inline-start']:dir(rtl),
+.a63-Popover-popup[data-ending-style][data-side='inline-start']:dir(rtl) {
+  transform: translateX(-0.5rem) scale(0.95);
+}
+
+.a63-Popover-popup[data-starting-style][data-side='inline-start'],
+.a63-Popover-popup[data-ending-style][data-side='inline-start'],
+.a63-Popover-popup[data-starting-style][data-side='inline-end']:dir(rtl),
+.a63-Popover-popup[data-ending-style][data-side='inline-end']:dir(rtl) {
+  transform: translateX(0.5rem) scale(0.95);
 }
 
 .a63-Popover-header {

@@ -9,10 +9,11 @@
  *   inside `color-mix()`), and Tailwind palette or arbitrary color utilities in
  *   TS/TSX. `#0000` (the transparent "no shadow" idiom), `transparent` and
  *   `currentColor` pass, and so do masks, where a color only carries alpha.
- * - `physical-properties`: spacing, text alignment, side borders and corner
- *   radii use logical directions so layouts mirror in right-to-left scripts.
- *   `left`/`right` positioning is out of scope for now. Padding that follows a
- *   physical safe-area inset (`env(safe-area-inset-left)`) passes.
+ * - `physical-properties`: spacing, text alignment, side borders, corner
+ *   radii and `left`/`right` insets use logical directions
+ *   (`inset-inline-start`/`-end`) so layouts mirror in right-to-left scripts.
+ *   `top`/`bottom` do not mirror and pass. Padding that follows a physical
+ *   safe-area inset (`env(safe-area-inset-left)`) passes.
  * - `focus-visible`: focus styles follow `:focus-visible`, so a pointer press
  *   does not draw a keyboard focus ring. `:focus-within` passes, and so does a
  *   `:focus` rule or `focus:` utility that only removes the outline.
@@ -44,6 +45,13 @@
  *   against its own foreground, not against the page, so as text it can fail
  *   (the primary action fill is 2.9:1 on the dark page); the text roles are
  *   `--a63-text-*`, such as `--a63-text-accent` and `--a63-text-danger`.
+ *   The danger action fill (`--a63-action-danger`, `-hover`) is held tighter:
+ *   it keeps step 600 in dark mode (about 2.8:1 on the page), so any read of
+ *   it in a text, border or outline color is flagged, `color-mix()` included,
+ *   and so are `border-*`, `outline-*` and `decoration-*` utilities that map
+ *   to it (`border-destructive`). Edges use `--a63-border-danger`, text
+ *   `--a63-text-danger`, icons and accents `--a63-status-danger`; button,
+ *   badge and menu fills still read it as a background.
  *
  * Some physical directions are the point: a sheet docked to the left edge, or
  * an optical nudge on a glyph that never mirrors. CSS rules scoped to
@@ -80,7 +88,7 @@ const CSS_LITERAL_COLOR = new RegExp(
   'gi'
 )
 const CSS_PHYSICAL_PROPERTY =
-  /^(?:margin|padding|scroll-margin|scroll-padding)-(?:left|right)$|^border-(?:left|right)(?:-(?:width|style|color))?$|^border-(?:top|bottom)-(?:left|right)-radius$/
+  /^(?:left|right)$|^(?:margin|padding|scroll-margin|scroll-padding)-(?:left|right)$|^border-(?:left|right)(?:-(?:width|style|color))?$|^border-(?:top|bottom)-(?:left|right)-radius$/
 const CSS_FOCUS = /:focus(?![-\w])/
 const CSS_FOCUS_RESET = /^(?:outline(?:-style)?\s*:\s*(?:none|0)|box-shadow\s*:\s*none)$/
 const CSS_MASK_PROPERTY = /^(?:-webkit-)?mask(?:-image)?$/
@@ -105,12 +113,20 @@ const TEXT_TOKEN = /^--a63-text-[\w-]+$/
 const TEXT_PROPERTY = /^(?:color|-webkit-text-fill-color)$/
 const FILL_PROPERTY = /^background(?:-color)?$/
 const SINGLE_TOKEN_VALUE = /^var\(\s*(--a63-[\w-]+)\s*\)(?:\s*!important)?$/
-const ROLE_UTILITY = /^(text|bg)-(.+?)(?:\/\d+)?$/
+const ROLE_UTILITY = /^(text|bg|border(?:-[trblxyse])?|outline|decoration)-(.+?)(?:\/\d+)?$/
+const DANGER_FILL = /^--a63-action-danger(?:-hover)?$/
+const DANGER_FILL_READ = /var\(\s*(--a63-action-danger(?:-hover)?)\s*[,)]/
+const EDGE_PROPERTY =
+  /^(?:border(?:-(?:top|right|bottom|left|block|inline)(?:-(?:start|end))?)?(?:-color)?|outline(?:-color)?|text-decoration(?:-color)?|caret-color)$/
 const ARBITRARY_TOKEN = /^(?:\((--a63-[\w-]+)\)|\[var\((--a63-[\w-]+)\)\])$/
 
 /** Whether `kind` (`text` or `bg`) painting `token` puts it outside its role. */
 const misusesRole = (kind, token) =>
-  kind === 'text' ? FILL_TOKEN.test(token) : TEXT_TOKEN.test(token)
+  kind === 'text'
+    ? FILL_TOKEN.test(token)
+    : kind === 'bg'
+      ? TEXT_TOKEN.test(token)
+      : DANGER_FILL.test(token)
 
 /**
  * Drop violations a `craft-allow` comment exempts. A comment that shares its
@@ -229,6 +245,9 @@ export function scanCss(css, { knownTokens } = {}) {
     const kind = TEXT_PROPERTY.test(property) ? 'text' : FILL_PROPERTY.test(property) ? 'bg' : null
     if (single && kind && misusesRole(kind, single)) {
       found.push({ rule: 'token-role', match: `${property}: var(${single})`, line })
+    } else if (kind === 'text' || EDGE_PROPERTY.test(property)) {
+      const danger = value.match(DANGER_FILL_READ)?.[1]
+      if (danger) found.push({ rule: 'token-role', match: `${property}: var(${danger})`, line })
     }
     if (CSS_MASK_PROPERTY.test(property)) continue
     for (const color of value.match(CSS_LITERAL_COLOR) ?? []) {

@@ -370,6 +370,42 @@ describe('templates', () => {
     assert.match(text, /shadcn@latest add https:\/\/system\.atom63\.io\/r\/app-view\.json/)
   })
 
+  /* How builders describe a page to read; the kit must lead with ReaderLayout, not an app shell. */
+  const readingIdeas = [
+    'blog post reading page',
+    'docs article page with table of contents',
+    'long-form article',
+    'documentation page',
+    'help center guide',
+  ]
+  for (const idea of readingIdeas) {
+    it(`gives "${idea}" the reading page and ReaderLayout`, () => {
+      const kit = build(index, idea).data
+      assert.deepEqual(
+        kit.pages.map(entry => entry.id),
+        ['reading-page']
+      )
+      assert.deepEqual(kit.blocks, [])
+      assert.match(kit.reading.snippet, /<ReaderLayout/)
+      assert.match(formatEnvelope(build(index, idea)), /^## Reading page$/m)
+    })
+  }
+
+  it('keeps the reading page out of app and phone ideas', () => {
+    for (const idea of ['invoice list page', 'analytics dashboard', 'phone docs reader']) {
+      const kit = build(index, idea).data
+      assert.equal(kit.reading, undefined, idea)
+    }
+  })
+
+  it('points the reading section at a template built on what it imports', () => {
+    const { reading } = build(index, 'blog post').data
+    const source = template(index, reading.template).data.files[0].source
+    for (const name of ['Page', 'Container', 'Section', 'ReaderLayout']) {
+      assert.match(source, new RegExp(`<${name}\\b`), name)
+    }
+  })
+
   /* How builders describe a phone screen; the kit must lead with AppView layout="phone". */
   const phoneIdeas = [
     'Revolut home screen on a phone: balance, accounts, recent transactions, bottom tab bar',
@@ -596,6 +632,30 @@ describe('component', () => {
         assert.equal(error.toEnvelope().type, 'error')
         return true
       }
+    )
+  })
+
+  it('points a layout primitive at atom63 api, which prints its props', () => {
+    for (const [slug, name] of [
+      ['page', 'Page'],
+      ['container', 'Container'],
+      ['section', 'Section'],
+      ['section-header', 'SectionHeader'],
+    ]) {
+      assert.throws(
+        () => component(index, slug),
+        error => {
+          assert.deepEqual(error.suggestions, [`atom63 api ${name}`])
+          assert.match(error.message, /@atom63\/ui-react\/layout/)
+          return true
+        }
+      )
+      const text = formatEnvelope(api(index, name))
+      assert.match(text, new RegExp(`Props of \`${name}\`:`))
+    }
+    assert.match(
+      formatEnvelope(api(index, 'Container')),
+      /- `gap`: `0 \| 2 \| 4 \| 6 \| 8 \| 10 \| 12`/
     )
   })
 })

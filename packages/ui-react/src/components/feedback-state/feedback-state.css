@@ -104,11 +104,13 @@
 
 /* ── Title ─────────────────────────────────────────────────────────────── */
 .a63-FeedbackState-title {
+  margin: 0;
   color: var(--a63-text-primary);
   font-size: var(--typography-base-font-size);
   font-weight: 600;
   letter-spacing: 0;
   line-height: var(--typography-base-line-height);
+  overflow-wrap: anywhere;
 }
 
 /* ── Description ───────────────────────────────────────────────────────── */
@@ -124,6 +126,14 @@
 }
 .a63-FeedbackState-description a:hover {
   color: var(--a63-text-accent);
+}
+
+/* ── Detail (an Error's message, secondary to the description) ─────────── */
+.a63-FeedbackState-detail {
+  color: var(--a63-text-secondary);
+  font-size: var(--typography-xs-font-size);
+  line-height: var(--typography-xs-line-height);
+  overflow-wrap: anywhere;
 }
 
 /* ── Content (action buttons) ──────────────────────────────────────────── */

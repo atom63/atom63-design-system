@@ -1,0 +1,66 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "chart",
+  "maturity": "preview",
+  "description": "A small dashboard chart: a line, area or bar chart of a few numeric series over a categorical axis. The series take their colours from --a63-chart-1..5, which keep apart from the brand on every brand.",
+  "lists": {
+    "types": {
+      "description": "line draws each series as a line; area adds a light fill under it; bar draws a bar per series in each category, grouped side by side or stacked.",
+      "values": ["line", "area", "bar"]
+    },
+    "sizes": {
+      "description": "The height of the plot: sm for a compact card, md for a chart that leads a section. The width follows the container.",
+      "values": ["sm", "md"]
+    },
+    "colors": {
+      "description": "The chart series colour a series takes, --a63-chart-<n>. Series take 1 to 5 in order unless a series names its own.",
+      "values": [1, 2, 3, 4, 5]
+    },
+    "layouts": {
+      "description": "How several bar or area series share a category: grouped draws them side by side (bar) or over each other (area); stacked piles them on each other. Line charts are always grouped.",
+      "values": ["grouped", "stacked"]
+    },
+    "states": {
+      "description": "current is a category picked by the pointer or the arrow keys, which shows its values in the tooltip; empty is a chart with no categories or no series, which shows the empty message instead of a plot.",
+      "values": ["rest", "current", "empty"]
+    },
+    "slots": [
+      "chart",
+      "chart-legend",
+      "chart-plot",
+      "chart-y-axis",
+      "chart-x-axis",
+      "chart-tooltip",
+      "chart-table",
+      "chart-table-toggle",
+      "chart-empty"
+    ],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "defaultType": "line",
+    "defaultSize": "md",
+    "defaultLayout": "grouped",
+    "types": {
+      "$ref": "#/lists/types"
+    },
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "layouts": {
+      "$ref": "#/lists/layouts"
+    },
+    "colors": {
+      "$ref": "#/lists/colors"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

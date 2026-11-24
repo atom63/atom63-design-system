@@ -9,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@atom63/ui-react'
-import { useId } from 'react'
+import { type RefObject, useId, useRef } from 'react'
 
 export const template = {
   id: 'filter-bar',
@@ -28,6 +28,8 @@ export interface FilterBarOption {
 }
 
 export interface FilterBarProps {
+  /** @default 'Clear filters' */
+  clearLabel?: string
   /** Shown as the filter's visible label, for example "Status". */
   filterLabel: string
   filterOptions: readonly FilterBarOption[]
@@ -39,6 +41,8 @@ export interface FilterBarProps {
   /** Shown as the search field's visible label, for example "Search invoices". */
   searchLabel: string
   searchPlaceholder?: string
+  /** The search input, so a caller's own clear action (an empty state's) can return focus to it. */
+  searchRef?: RefObject<HTMLInputElement | null>
   /** Whether any filter differs from its default; shows the clear action. */
   showClear: boolean
 }
@@ -48,8 +52,10 @@ export interface FilterBarProps {
  * the remaining width. Both fields keep a
  * visible label, the row is a search landmark, and the clear action is a
  * ghost button so the page's primary action stays the only strong one.
+ * Clearing moves focus to the search field, since the clear button leaves.
  */
 export function FilterBar({
+  clearLabel = 'Clear filters',
   filterLabel,
   filterOptions,
   filterValue,
@@ -59,8 +65,11 @@ export function FilterBar({
   query,
   searchLabel,
   searchPlaceholder,
+  searchRef,
   showClear,
 }: FilterBarProps) {
+  const ownSearchRef = useRef<HTMLInputElement>(null)
+  const search = searchRef ?? ownSearchRef
   const searchId = useId()
   const filterLabelId = useId()
   return (
@@ -71,11 +80,13 @@ export function FilterBar({
           id={searchId}
           onChange={event => onQueryChange(event.target.value)}
           placeholder={searchPlaceholder}
+          ref={search}
           type="search"
           value={query}
         />
       </Field>
-      <Field className="sm:w-48">
+      {/* At least 12rem, growing with a long option up to 20rem before it truncates. */}
+      <Field className="sm:w-auto sm:max-w-xs sm:min-w-48">
         <FieldLabel id={filterLabelId}>{filterLabel}</FieldLabel>
         <Select
           items={filterOptions}
@@ -95,8 +106,16 @@ export function FilterBar({
         </Select>
       </Field>
       {showClear ? (
-        <Button onClick={onClear} variant="ghost">
-          Clear filters
+        <Button
+          onClick={() => {
+            onClear()
+            // The button unmounts once nothing is filtered; keep focus in the bar.
+            search.current?.focus()
+          }}
+          tone="muted"
+          variant="ghost"
+        >
+          {clearLabel}
         </Button>
       ) : null}
     </div>

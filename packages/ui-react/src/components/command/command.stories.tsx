@@ -156,24 +156,31 @@ export const Dialog: Story = {
     function Demo() {
       const [open, setOpen] = useState(false)
       return (
-        <>
-          <button onClick={() => setOpen(true)} style={triggerStyle} type="button">
-            Open command palette
-          </button>
-          <CommandDialog onOpenChange={setOpen} open={open}>
-            <CommandDialogPopup>
-              <Palette />
-            </CommandDialogPopup>
-          </CommandDialog>
-        </>
+        <CommandDialog onOpenChange={setOpen} open={open}>
+          <CommandDialogTrigger style={triggerStyle}>Open command palette</CommandDialogTrigger>
+          <CommandDialogPopup>
+            <Palette />
+          </CommandDialogPopup>
+        </CommandDialog>
       )
     }
     return <Demo />
   },
 }
 
+/** The modal palette open as an app shows it, so axe and the visual test cover the dialog. */
+export const DialogOpen: Story = {
+  render: () => (
+    <CommandDialog defaultOpen>
+      <CommandDialogPopup>
+        <Palette />
+      </CommandDialogPopup>
+    </CommandDialog>
+  ),
+}
+
 /*
- * Programmatic handle — CommandCreateHandle() builds a detached DialogHandle you
+ * Programmatic handle —CommandCreateHandle() builds a detached DialogHandle you
  * pass to CommandDialog via `handle`. Any button can then call handle.open(null)
  * imperatively (no open state to thread), and a detached CommandDialogTrigger wired
  * to the same handle stays in sync.

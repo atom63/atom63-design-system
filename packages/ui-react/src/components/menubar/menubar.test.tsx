@@ -152,9 +152,11 @@ describe('Menubar', () => {
     await user.click(trigger('File'))
     await screen.findByRole('menuitem', { name: 'New' })
     await user.keyboard('{Escape}')
-    await waitFor(() => expect(menu()).toBeNull())
+    await waitFor(() => {
+      expect(menu()).toBeNull()
+      expect(trigger('File')).toHaveFocus()
+    })
     expect(trigger('File')).toHaveAttribute('aria-expanded', 'false')
-    expect(trigger('File')).toHaveFocus()
   })
 
   it('runs an item once and closes the menu when it is clicked', async () => {

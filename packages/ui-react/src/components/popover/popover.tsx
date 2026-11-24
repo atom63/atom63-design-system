@@ -1,9 +1,10 @@
 'use client'
 
 import { Popover as PopoverPrimitive } from '@base-ui/react/popover'
-import type * as React from 'react'
+import * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { mergeRefs } from '../../lib/merge-refs'
 import { usePortalContainer } from '../portal-container'
 
 /*
@@ -17,14 +18,28 @@ import { usePortalContainer } from '../portal-container'
  * Faithful to prod @atom63/ui: same parts (Root/Trigger/Content/Anchor/Header/
  * Title/Description) plus Close/Portal, Content defaults (side=bottom,
  * align=center, sideOffset=4), and portalContainer falling back to
- * PortalContainerProvider context. The prod trigger slot helper
+ * PortalContainerProvider context. Content positions against its `anchor`, else
+ * a PopoverAnchor inside the same Popover, else the trigger. The prod trigger slot helper
  * (splitTriggerSlotProps/asChild) is replaced by Base UI's native `render` prop
  * (DS convention) — app trigger sites that pass `asChild` must migrate to
  * `render={<Button …/>}`.
  */
 
+/* PopoverAnchor registers its element here; PopoverContent positions against it
+   unless it is given an `anchor` of its own. */
+const PopoverAnchorContext = React.createContext<{
+  anchor: HTMLElement | null
+  setAnchor: (anchor: HTMLElement | null) => void
+} | null>(null)
+
 export function Popover(props: PopoverPrimitive.Root.Props): React.ReactElement {
-  return <PopoverPrimitive.Root data-slot="popover" {...props} />
+  const [anchor, setAnchor] = React.useState<HTMLElement | null>(null)
+  const value = React.useMemo(() => ({ anchor, setAnchor }), [anchor])
+  return (
+    <PopoverAnchorContext.Provider value={value}>
+      <PopoverPrimitive.Root data-slot="popover" {...props} />
+    </PopoverAnchorContext.Provider>
+  )
 }
 
 export function PopoverClose({
@@ -40,8 +55,18 @@ export function PopoverClose({
   )
 }
 
-export function PopoverPortal(props: PopoverPrimitive.Portal.Props): React.ReactElement {
-  return <PopoverPrimitive.Portal data-slot="popover-portal" {...props} />
+export function PopoverPortal({
+  container,
+  ...props
+}: PopoverPrimitive.Portal.Props): React.ReactElement {
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <PopoverPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      data-slot="popover-portal"
+      {...props}
+    />
+  )
 }
 
 export function PopoverTrigger({
@@ -59,6 +84,10 @@ export function PopoverTrigger({
 
 export interface PopoverContentProps extends PopoverPrimitive.Popup.Props {
   align?: PopoverPrimitive.Positioner.Props['align']
+  alignOffset?: PopoverPrimitive.Positioner.Props['alignOffset']
+  /** The element the popup positions against. Defaults to a `PopoverAnchor`, then the trigger. */
+  anchor?: PopoverPrimitive.Positioner.Props['anchor']
+  collisionPadding?: PopoverPrimitive.Positioner.Props['collisionPadding']
   portalContainer?: PopoverPrimitive.Portal.Props['container']
   side?: PopoverPrimitive.Positioner.Props['side']
   sideOffset?: PopoverPrimitive.Positioner.Props['sideOffset']
@@ -66,21 +95,26 @@ export interface PopoverContentProps extends PopoverPrimitive.Popup.Props {
 
 export function PopoverContent({
   align = 'center',
+  alignOffset,
+  anchor,
   children,
   className,
+  collisionPadding,
   portalContainer,
   side = 'bottom',
   sideOffset = 4,
   ...props
 }: PopoverContentProps): React.ReactElement {
-  const contextPortalContainer = usePortalContainer()
-  const container = portalContainer ?? contextPortalContainer
+  const anchorContext = React.useContext(PopoverAnchorContext)
 
   return (
-    <PopoverPrimitive.Portal container={container} data-slot="popover-portal">
+    <PopoverPortal container={portalContainer}>
       <PopoverPrimitive.Positioner
         align={align}
+        alignOffset={alignOffset}
+        anchor={anchor ?? anchorContext?.anchor ?? undefined}
         className="a63-Popover-positioner"
+        collisionPadding={collisionPadding}
         data-slot="popover-positioner"
         side={side}
         sideOffset={sideOffset}
@@ -93,16 +127,24 @@ export function PopoverContent({
           {children}
         </PopoverPrimitive.Popup>
       </PopoverPrimitive.Positioner>
-    </PopoverPrimitive.Portal>
+    </PopoverPortal>
   )
 }
 
+/** An element inside `Popover` that the popup positions against instead of the trigger. */
 export function PopoverAnchor({
   className,
+  ref,
   ...props
 }: React.ComponentProps<'div'>): React.ReactElement {
+  const setAnchor = React.useContext(PopoverAnchorContext)?.setAnchor
   return (
-    <div className={cn('a63-Popover-anchor', className)} data-slot="popover-anchor" {...props} />
+    <div
+      className={cn('a63-Popover-anchor', className)}
+      data-slot="popover-anchor"
+      ref={mergeRefs(ref, setAnchor)}
+      {...props}
+    />
   )
 }
 

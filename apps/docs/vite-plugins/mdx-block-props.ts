@@ -13,11 +13,16 @@ import type { MdxBlockPropsIndex, MdxBlockPropRow } from '../src/lib/mdx-block-p
  *
  * The docs pages render the result as props tables (`virtual:mdx-block-props`),
  * and the Markdown twins and the agent index carry it, so the tables cannot
- * drift from the types.
+ * drift from the types. The page layout primitives of `@atom63/ui-react/layout`
+ * are read the same way (`virtual:layout-props`).
  */
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..')
 const blocksEntry = path.join(workspaceRoot, 'packages/mdx/src/blocks/index.ts')
+const layoutEntry = path.join(workspaceRoot, 'packages/ui-react/src/layout/index.ts')
+
+/** The layout primitives the "Page layout" docs page documents. */
+export const layoutComponents = ['Container', 'Page', 'Section', 'SectionHeader'] as const
 
 const literalFlags =
   ts.TypeFlags.StringLiteral | ts.TypeFlags.NumberLiteral | ts.TypeFlags.BooleanLiteral
@@ -112,29 +117,32 @@ function propsTypeOf(checker: ts.TypeChecker, componentType: ts.Type, location: 
   return parameter ? checker.getTypeOfSymbolAtLocation(parameter, location) : null
 }
 
-let cached: MdxBlockPropsIndex | null = null
-
 /**
- * `{ [Component or Component.Part]: rows }` for every component
- * `@atom63/mdx/blocks` exports and the parts hung on it, required props first.
+ * `{ [Component or Component.Part]: rows }` for the components an entry
+ * exports (all of them, or those `only` names) and the parts hung on them,
+ * required props first.
  */
-export function readMdxBlockProps(): MdxBlockPropsIndex {
-  if (cached) return cached
+function readEntryProps(
+  entry: string,
+  tsconfig: string,
+  only?: readonly string[]
+): MdxBlockPropsIndex {
   const config = ts.getParsedCommandLineOfConfigFile(
-    path.join(workspaceRoot, 'packages/mdx/tsconfig.json'),
+    path.join(workspaceRoot, tsconfig),
     {},
     { ...ts.sys, onUnRecoverableConfigFileDiagnostic() {} }
   )
   const program = ts.createProgram({
-    rootNames: [blocksEntry],
+    rootNames: [entry],
     options: { ...config?.options, noEmit: true },
   })
   const checker = program.getTypeChecker()
-  const module = checker.getSymbolAtLocation(program.getSourceFile(blocksEntry)!)!
+  const module = checker.getSymbolAtLocation(program.getSourceFile(entry)!)!
   const blocks: MdxBlockPropsIndex = {}
 
   for (const exported of checker.getExportsOfModule(module)) {
     if (!/^[A-Z][a-z]/.test(exported.name)) continue
+    if (only && !only.includes(exported.name)) continue
     const symbol =
       exported.flags & ts.SymbolFlags.Alias ? checker.getAliasedSymbol(exported) : exported
     const declaration = symbol.valueDeclaration
@@ -156,22 +164,43 @@ export function readMdxBlockProps(): MdxBlockPropsIndex {
       )
     }
   }
-  cached = Object.fromEntries(Object.entries(blocks).sort(([a], [b]) => a.localeCompare(b)))
+  return Object.fromEntries(Object.entries(blocks).sort(([a], [b]) => a.localeCompare(b)))
+}
+
+let cached: MdxBlockPropsIndex | null = null
+
+/** Every component `@atom63/mdx/blocks` exports, with its parts. */
+export function readMdxBlockProps(): MdxBlockPropsIndex {
+  cached ??= readEntryProps(blocksEntry, 'packages/mdx/tsconfig.json')
   return cached
 }
 
-const VIRTUAL_ID = 'virtual:mdx-block-props'
-const RESOLVED_ID = `\0${VIRTUAL_ID}`
+let cachedLayout: MdxBlockPropsIndex | null = null
 
-/** Serves `virtual:mdx-block-props`: the props of every @atom63/mdx block, read from its types. */
+/** Page, Container, Section and SectionHeader from `@atom63/ui-react/layout`. */
+export function readLayoutProps(): MdxBlockPropsIndex {
+  cachedLayout ??= readEntryProps(layoutEntry, 'packages/ui-react/tsconfig.json', layoutComponents)
+  return cachedLayout
+}
+
+const virtualModules: Record<string, () => MdxBlockPropsIndex> = {
+  'virtual:layout-props': readLayoutProps,
+  'virtual:mdx-block-props': readMdxBlockProps,
+}
+
+/**
+ * Serves `virtual:mdx-block-props` (the props of every @atom63/mdx block) and
+ * `virtual:layout-props` (the layout primitives'), read from their types.
+ */
 export function mdxBlockPropsPlugin(): Plugin {
   return {
     name: 'design-system-mdx-block-props',
     resolveId(id) {
-      return id === VIRTUAL_ID ? RESOLVED_ID : null
+      return id in virtualModules ? `\0${id}` : null
     },
     load(id) {
-      return id === RESOLVED_ID ? `export default ${JSON.stringify(readMdxBlockProps())}\n` : null
+      const read = id.startsWith('\0') ? virtualModules[id.slice(1)] : undefined
+      return read ? `export default ${JSON.stringify(read())}\n` : null
     },
   }
 }

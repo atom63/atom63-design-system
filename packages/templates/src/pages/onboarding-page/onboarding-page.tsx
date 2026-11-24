@@ -1,4 +1,4 @@
-import { Button } from '@atom63/ui-react'
+import { Button, DropdownMenuItem, DropdownMenuSeparator } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
 import { FileText, LayoutDashboard, Plus, Settings, Upload } from 'lucide-react'
 
@@ -31,6 +31,19 @@ const nav = [
   { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
   { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
+
+/* The signed-in user at the foot of the sidebar, with the account menu. */
+const user = {
+  detail: 'ada@tally.app',
+  menu: (
+    <>
+      <DropdownMenuItem>Profile</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>Sign out</DropdownMenuItem>
+    </>
+  ),
+  name: 'Ada Park',
+}
 
 export function OnboardingContent() {
   return (
@@ -88,7 +101,7 @@ export function OnboardingContent() {
    routes, renders `OnboardingContent` inside it instead. */
 export function OnboardingPage() {
   return (
-    <AppShell navItems={nav} productName="Tally">
+    <AppShell navItems={nav} productName="Tally" user={user}>
       <OnboardingContent />
     </AppShell>
   )

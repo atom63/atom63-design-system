@@ -183,6 +183,21 @@ describe('recipes.css cascade layering', () => {
       }
     )
 
+    it('segmented-control dips a pressed segment content, not the measured segment box', () => {
+      const recipe = readRecipe('segmented-control')
+      expect(recipe).toMatch(
+        /\.a63-SegmentedControl-item:active:not\(\[data-disabled\]\) > span \{\s*transform:/
+      )
+      expect(recipe).not.toMatch(
+        /\.a63-SegmentedControl-item:active(?![^{]*> span)[^{]*\{[^}]*transform/
+      )
+    })
+
+    it.each(['filled', 'plain'])('textarea draws the %s variant as Input does', variant => {
+      expect(readRecipe('input')).toContain(`.a63-Input[data-variant='${variant}']`)
+      expect(readRecipe('textarea')).toContain(`.a63-Textarea[data-variant='${variant}']`)
+    })
+
     it('never floors a rendered height ramp with the interaction target', () => {
       // The regression this guards: max(height, min-target) as RENDERED geometry
       // collapses xs/sm/md to one 44px rung on every phone, because
@@ -233,11 +248,10 @@ describe('recipes.css cascade layering', () => {
       expect(recipe).toMatch(/::before \{[^}]*min-height: var\(--a63-control-min-target\)/)
     })
 
-    it('only clips icon-button overflow for themes that paint a gloss', () => {
-      // The clip also clips the hit-area pseudo-element, so it is scoped to the
-      // themes that actually set --a63-control-highlight. If a new theme starts
-      // painting one, it has to be added to that selector or its gloss will
-      // bleed past the button radius.
+    it('never clips the button root, so the hit target survives in every theme', () => {
+      // Clipping the root (overflow: hidden) also clips the ::before hit area,
+      // which left Aqua icon buttons with a 24-32px coarse-pointer target. The
+      // icon gloss clips itself instead, to the button radius.
       const themeDir = join(styleSystemDir, 'themes')
       const glossThemes = readdirSync(themeDir)
         .filter(
@@ -245,13 +259,25 @@ describe('recipes.css cascade layering', () => {
         )
         .filter(file => readWithNative(join(themeDir, file)).includes('--a63-control-highlight:'))
         .map(file => file.replace('.css', ''))
-
       expect(glossThemes).toEqual(['aqua'])
-      for (const theme of glossThemes) {
-        expect(readRecipe('button')).toContain(
-          `[data-a63-theme='${theme}'] .a63-Button[data-size^='icon']`
-        )
-      }
+
+      const buttonCss = readRecipe('button')
+      const rootBlocks = [...buttonCss.matchAll(/([^{}]*)\{([^{}]*)\}/g)].filter(
+        ([, selector]) => /\.a63-Button(?![-\w])/.test(selector) && !selector.includes('::')
+      )
+      const clipping = rootBlocks
+        .filter(([, selector, body]) => {
+          const last = selector.split(',').map(part => part.trim())
+          return (
+            /overflow:\s*(?:hidden|clip)/.test(body) &&
+            last.some(part => /\.a63-Button(?:\[[^\]]*\])*$/.test(part))
+          )
+        })
+        .map(([selector]) => selector.trim())
+      expect(clipping).toEqual([])
+      expect(buttonCss).toMatch(
+        /\.a63-Button\[data-size\^='icon'\]::after \{[^}]*clip-path: inset\(0 round var\(--button-radius\)/
+      )
     })
 
     it('select resolves every supported visual dimension from the control and field contracts', () => {

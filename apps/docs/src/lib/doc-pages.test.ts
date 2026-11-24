@@ -224,12 +224,18 @@ describe('PAGES', () => {
       .filter(isAuthoredPageSlug)
       .sort()
     expect(authoredGuides).toEqual([
+      'component-avatar',
+      'component-badge',
       'component-button',
       'component-button-group',
       'component-dropdown-menu',
+      'component-field',
+      'component-form',
       'component-input',
       'component-segmented-control',
+      'component-select',
       'component-tabs',
+      'component-textarea',
     ])
   })
 })

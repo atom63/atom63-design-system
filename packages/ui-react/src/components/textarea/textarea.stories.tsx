@@ -1,5 +1,11 @@
-import { textareaContract, textareaSizes, themes } from '@atom63/ui-foundation'
-import { Textarea, UIProvider } from '@atom63/ui-react'
+import {
+  inputVariants,
+  textareaContract,
+  textareaSizes,
+  textareaVariants,
+  themes,
+} from '@atom63/ui-foundation'
+import { Input, Textarea, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import type { ReactNode } from 'react'
@@ -13,12 +19,14 @@ const meta = {
     placeholder: 'Type something...',
     shadow: true,
     size: 'md',
+    variant: 'default',
   },
   argTypes: {
     disabled: { control: 'boolean' },
     invalid: { control: 'boolean' },
     shadow: { control: 'boolean' },
     size: { control: 'select', options: textareaSizes },
+    variant: { control: 'select', options: textareaVariants },
   },
 } satisfies Meta<typeof Textarea>
 
@@ -77,6 +85,58 @@ export const AutoSizing: Story = {
   ),
 }
 
+/* Long pasted text, Latin and CJK: the field grows to maxRows (12 by default,
+   4 here) and then scrolls instead of growing without bound. */
+const longText = Array.from(
+  { length: 6 },
+  (_, line) => `Line ${line + 1}: release notes pasted from the changelog, long enough to wrap.`
+).join('\n')
+const longCjkText = Array.from(
+  { length: 6 },
+  (_, line) => `第${line + 1}行：从更新日志粘贴的发布说明，内容足够长，会自动换行。`
+).join('\n')
+
+export const LongContent: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: '1rem', maxWidth: 320 }}>
+      <Textarea aria-label="Release notes" defaultValue={longText} maxRows={4} />
+      <Textarea aria-label="发布说明" defaultValue={longCjkText} lang="zh" maxRows={4} />
+    </div>
+  ),
+}
+
+/* Rest, hover and keyboard focus side by side. The visual project hovers the
+   second field and tabs to the third (parameters.visualState, see
+   apps/storybook/README.md "Visual states"). */
+export const InteractionStates: Story = {
+  render: () => (
+    <UIProvider designLanguage="web" input="pointer" mode="light">
+      <PreviewCard label="web / light / pointer">
+        {(
+          [
+            ['Rest', 'rest'],
+            ['Hover', 'hover'],
+            ['Focus visible', 'focus'],
+          ] as const
+        ).map(([label, target]) => (
+          <Textarea
+            aria-label={`${label} text area`}
+            data-state-target={target}
+            defaultValue={label}
+            key={target}
+          />
+        ))}
+      </PreviewCard>
+    </UIProvider>
+  ),
+  parameters: {
+    visualState: {
+      hover: 'textarea[data-state-target="hover"]',
+      focusVisible: 'textarea[data-state-target="focus"]',
+    },
+  },
+}
+
 /* Drops the field chrome so it can nest inside a parent that provides it. */
 export const Unstyled: Story = {
   // `unstyled` hands all field chrome, the focus ring included, to the parent
@@ -121,6 +181,49 @@ export const SizesAndStates: Story = {
       <Textarea aria-label="Example text area" defaultValue="Flat field shadow" shadow={false} />
     </div>
   ),
+}
+
+/* The variant axis matches Input's, so a filled or plain form keeps its
+   single-line and multi-line fields in the same chrome: each column pairs an
+   Input with a Textarea of the same variant, at rest and invalid. */
+export const Variants: Story = {
+  render: () => (
+    <div
+      style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(3, minmax(0, 14rem))' }}
+    >
+      {textareaVariants.map(variant => (
+        <PreviewCard key={variant} label={variant}>
+          <Input aria-label={`Title, ${variant}`} placeholder="Title" variant={variant} />
+          <Textarea aria-label={`Notes, ${variant}`} placeholder="Notes" variant={variant} />
+          <Textarea
+            aria-label={`Notes, ${variant}, invalid`}
+            defaultValue="Too short"
+            invalid
+            variant={variant}
+          />
+        </PreviewCard>
+      ))}
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    if (textareaVariants.join() !== inputVariants.join())
+      throw new Error('Textarea and Input variants differ')
+    for (const variant of textareaVariants) {
+      const input = canvasElement.querySelector(
+        `[data-slot="input-control"][data-variant="${variant}"]`
+      )
+      const textarea = canvasElement.querySelector(
+        `[data-slot="textarea-control"][data-variant="${variant}"]`
+      )
+      if (!input || !textarea) throw new Error(`No ${variant} pair rendered`)
+      const a = getComputedStyle(input)
+      const b = getComputedStyle(textarea)
+      if (a.backgroundColor !== b.backgroundColor || a.borderTopColor !== b.borderTopColor)
+        throw new Error(
+          `${variant}: the Textarea chrome (${b.backgroundColor}, ${b.borderTopColor}) differs from Input's (${a.backgroundColor}, ${a.borderTopColor})`
+        )
+    }
+  },
 }
 
 export const Themes: Story = {

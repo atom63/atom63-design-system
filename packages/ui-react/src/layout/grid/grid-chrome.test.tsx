@@ -56,6 +56,11 @@ describe('GridChrome styling contract', () => {
     expect(container.querySelector('[data-slot="grid-guide"]')?.className).toContain(
       'border-dashed'
     )
+    // Logical widths, so the rails follow the writing direction.
+    const rails = container.querySelector<HTMLElement>('[data-slot="container"]')?.style
+    expect(rails?.borderInlineStartWidth).toBe('var(--a63-grid-hairline-width, 1px)')
+    expect(rails?.borderInlineEndWidth).toBe('var(--a63-grid-hairline-width, 1px)')
+    expect(rails?.borderLeftWidth).toBe('')
     expect(container.querySelector('[data-slot="grid-rule"]')?.getAttribute('style')).toContain(
       'var(--a63-grid-hairline-width'
     )

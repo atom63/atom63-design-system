@@ -10,6 +10,7 @@ export {
 } from './blocks/activity-list/activity-list'
 export {
   AppShell,
+  type AppShellLabels,
   type AppShellLinkProps,
   type AppShellNavItem,
   type AppShellProps,
@@ -47,6 +48,9 @@ export {
 } from './blocks/getting-started-checklist/getting-started-checklist'
 export { PageHeader, type PageHeaderProps } from './blocks/page-header/page-header'
 export {
+  SettingsRow,
+  type SettingsRowIds,
+  type SettingsRowProps,
   SettingsSection,
   SettingsSwitchRow,
   type SettingsSectionProps,
@@ -66,9 +70,20 @@ export {
   type ChatPageLinkProps,
   type ChatPageProps,
 } from './pages/chat-page/chat-page'
-export { DashboardContent, DashboardPage } from './pages/dashboard-page/dashboard-page'
+export {
+  DashboardContent,
+  type DashboardContentProps,
+  DashboardPage,
+  type DashboardPageProps,
+  type DashboardState,
+} from './pages/dashboard-page/dashboard-page'
 export { ListContent, ListPage, type ListPageProps } from './pages/list-page/list-page'
 export { OnboardingContent, OnboardingPage } from './pages/onboarding-page/onboarding-page'
+export {
+  ReadingPage,
+  type ReadingPageProps,
+  type ReadingSection,
+} from './pages/reading-page/reading-page'
 export {
   SettingsContent,
   type SettingsContentProps,

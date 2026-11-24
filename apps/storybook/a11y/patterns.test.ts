@@ -29,11 +29,14 @@ import { describe, expect, it } from 'vitest'
 import * as accordionStories from '../../../packages/ui-react/src/components/accordion/accordion.stories'
 import * as alertDialogStories from '../../../packages/ui-react/src/components/alert-dialog/alert-dialog.stories'
 import * as checkboxStories from '../../../packages/ui-react/src/components/checkbox/checkbox.stories'
+import * as commandStories from '../../../packages/ui-react/src/components/command/command.stories'
 import * as dialogStories from '../../../packages/ui-react/src/components/dialog/dialog.stories'
+import * as drawerStories from '../../../packages/ui-react/src/components/drawer/drawer.stories'
 import * as dropdownMenuStories from '../../../packages/ui-react/src/components/dropdown-menu/dropdown-menu.stories'
 import * as radioStories from '../../../packages/ui-react/src/components/radio/radio.stories'
 import * as segmentedControlStories from '../../../packages/ui-react/src/components/segmented-control/segmented-control.stories'
 import * as selectStories from '../../../packages/ui-react/src/components/select/select.stories'
+import * as sheetStories from '../../../packages/ui-react/src/components/sheet/sheet.stories'
 import * as switchStories from '../../../packages/ui-react/src/components/switch/switch.stories'
 import * as tabsStories from '../../../packages/ui-react/src/components/tabs/tabs.stories'
 import {
@@ -112,6 +115,26 @@ const bindings: Binding[] = [
     exportName: 'segmentedControlContract',
     contract: { accessibility: { pattern: 'radio' } },
     stories: [{ module: segmentedControlStories, name: 'Playground' }],
+    webOnly: true,
+  },
+  {
+    exportName: 'sheetContract',
+    contract: { accessibility: { pattern: 'dialog-modal' } },
+    stories: [{ module: sheetStories, name: 'Playground', names: { trigger: 'Open sheet' } }],
+    webOnly: true,
+  },
+  {
+    exportName: 'drawerContract',
+    contract: { accessibility: { pattern: 'dialog-modal' } },
+    stories: [{ module: drawerStories, name: 'Playground', names: { trigger: 'Open drawer' } }],
+    webOnly: true,
+  },
+  {
+    exportName: 'commandContract',
+    contract: { accessibility: { pattern: 'dialog-modal' } },
+    stories: [
+      { module: commandStories, name: 'Dialog', names: { trigger: 'Open command palette' } },
+    ],
     webOnly: true,
   },
 ]

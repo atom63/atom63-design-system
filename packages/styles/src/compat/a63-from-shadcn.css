@@ -47,6 +47,12 @@
   --a63-status-danger-foreground: var(--destructive-foreground, white);
   --a63-text-danger: var(--destructive);
   --a63-border-danger: var(--destructive);
+  /* Chart series (the Chart recipe) from shadcn's chart palette. */
+  --a63-chart-1: var(--chart-1);
+  --a63-chart-2: var(--chart-2);
+  --a63-chart-3: var(--chart-3);
+  --a63-chart-4: var(--chart-4);
+  --a63-chart-5: var(--chart-5);
 
   --a63-scrim: color-mix(in oklch, black 40%, transparent);
   /* Shadow, media and on-media colors hold in every theme; same values as semantics.css. */
@@ -104,6 +110,7 @@
   --a63-control-min-target: 2.25rem;
   --a63-control-min-target-lg: var(--a63-control-min-target);
   --a63-control-min-target-xl: var(--a63-control-min-target);
+  --a63-row-min-size: var(--a63-control-min-size);
   --a63-density-scale: 1;
   --a63-editable-font-size-min: 0px;
   --a63-safe-area-top: env(safe-area-inset-top, 0px);
@@ -161,6 +168,7 @@
   --a63-action-disabled-background: var(--a63-surface-muted);
   --a63-action-disabled-border: var(--a63-border-subtle);
   --a63-action-disabled-foreground: var(--muted-foreground);
+  --a63-action-disabled-opacity: 0.56;
   --a63-action-danger-subtle: color-mix(in oklab, var(--a63-action-danger) 14%, transparent);
   --a63-action-danger-subtle-foreground: color-mix(
     in oklch,
@@ -400,6 +408,7 @@
     --a63-control-min-target: 2.75rem;
     --a63-control-min-target-lg: 3rem;
     --a63-control-min-target-xl: 3.25rem;
+    --a63-row-min-size: 2.75rem;
   }
 }
 

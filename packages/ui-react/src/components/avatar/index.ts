@@ -7,4 +7,4 @@ export {
   AvatarImage,
   AvatarPrimitive,
 } from './avatar'
-export type { AvatarProps, AvatarSize } from './avatar'
+export type { AvatarBadgeProps, AvatarGroupCountProps, AvatarProps, AvatarSize } from './avatar'

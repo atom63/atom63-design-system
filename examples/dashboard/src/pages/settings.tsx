@@ -46,7 +46,7 @@ export function SettingsPage() {
     setAlerts(current => ({ ...current, [key]: checked }))
 
   return (
-    <Container className="flex flex-col gap-10" maxWidth="wide" padding="none">
+    <Container gap={10} maxWidth="wide" padding="none">
       <PageHeader description="Changes apply as soon as you make them." title="Settings" />
       <SettingsSection
         description="Choose which account events send you an email."

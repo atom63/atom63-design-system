@@ -96,6 +96,26 @@ export const Playground: Story = {
   ),
 }
 
+/** The drawer open as an app shows it: modal, over the whole page. */
+export const Open: Story = {
+  render: args => (
+    <Drawer {...args} defaultOpen>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Appearance</DrawerTitle>
+          <DrawerDescription>Drag the handle down to dismiss.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerBody style={{ color: 'var(--a63-text-secondary)' }}>
+          The sheet is a raised overlay surface. Content scrolls inside.
+        </DrawerBody>
+        <DrawerFooter>
+          <DrawerClose render={<Button variant="primary">Done</Button>} />
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  ),
+}
+
 /* A persistent bottom sheet over a map or photo: modal={false} keeps the page
    usable behind it, and snapPoints let it rest at a peek height or open fully. */
 export const PersistentSheet: Story = {

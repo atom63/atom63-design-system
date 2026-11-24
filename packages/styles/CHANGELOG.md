@@ -1,5 +1,29 @@
 # @atom63/styles
 
+## 0.1.0-beta.12
+
+### Patch Changes
+
+- [#341](https://github.com/atom63/atom63-design-system/pull/341) [`866802a`](https://github.com/atom63/atom63-design-system/commit/866802aaca193d28791737d9d0be959ce014e514) Thanks [@atom63](https://github.com/atom63)! - The Figma sync model carries each brand's chart series. `--a63-chart-2` to `--a63-chart-5` vary on brand and mode together, so each now has a hidden Brand variable per mode (`chart/2/light`, `chart/2/dark`) with the browser's value for every brand, and the token's Mode variable aliases the one for its mode. In Figma the series follow the layer's Brand and Mode modes instead of showing the default brand's colours. The four tokens leave `computed` and `atom63.computed-values.json`.
+
+## 0.1.0-beta.11
+
+### Minor Changes
+
+- [#336](https://github.com/atom63/atom63-design-system/pull/336) [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de) Thanks [@atom63](https://github.com/atom63)! - `--a63-chart-2` to `--a63-chart-5` now turn the hue of `--a63-chart-1` (the brand) by fixed steps at a set lightness and chroma, instead of fixed teal, amber, violet and rose, so no series lands on the brand on any brand, the violet brand and wallpaper brands included. Every series reaches 3:1 against the page and the panel in every theme and mode, and in dark mode `--a63-chart-1` is the brand's 400 step. `@atom63/styles/compat/a63-from-shadcn` maps the chart tokens from shadcn's `--chart-1..5`. The content-colour rule now points chart series at the chart tokens and the Chart component.
+
+### Patch Changes
+
+- [#332](https://github.com/atom63/atom63-design-system/pull/332) [`a5e997e`](https://github.com/atom63/atom63-design-system/commit/a5e997ec97a7dca091e32beb86f8b7a9c6ab00bc) Thanks [@atom63](https://github.com/atom63)! - `--a63-text-secondary` and `--a63-text-tertiary` now follow `--a63-surface-tint`: they mix toward brand 800 in light mode and brand 100 in dark mode by three tenths of the tint (the terminal theme's dark tertiary text lightens toward brand 100 the same way). At tint 0 they are unchanged. At 50% and 100% tint they keep WCAG AA 4.5:1 on the page, the panel and the muted surface for every brand, theme and mode; before, the tertiary text fell to 3.64:1 and the secondary text to 4.17:1 on the muted surface.
+
+## 0.1.0-beta.10
+
+### Minor Changes
+
+- [#323](https://github.com/atom63/atom63-design-system/pull/323) [`b496558`](https://github.com/atom63/atom63-design-system/commit/b496558edfb8fed1fe7a4cf89a89a56da978b5f1) Thanks [@atom63](https://github.com/atom63)! - Add the optional `display-hero` text role (`--a63-type-display-hero-*`, `text-display-hero`): a fluid marketing headline from the `10xl` step to 72px. The display roles gain `--a63-type-<role>-letter-spacing`, and `--a63-font-display` names the headline font (it defaults to `--a63-font-app`). Existing role values are unchanged.
+
+- [#315](https://github.com/atom63/atom63-design-system/pull/315) [`a63a96a`](https://github.com/atom63/atom63-design-system/commit/a63a96a1cd37311aeaa313dc1fa951d3ae008c9d) Thanks [@atom63](https://github.com/atom63)! - A nested `[data-a63-brand]` or `[data-a63-surface]` scope without a mode (a `UIProvider` that passes only `brand` or `surface`) now re-declares the mode roles that read the brand or neutral ramp: the surfaces, text, borders, `--a63-text-accent`, `--a63-focus-ring`, `--a63-selected-accent-*`, `--a63-choice-card-checked-*`, the badge, skeleton, toggle and widget mode tokens, and the Aqua and Terminal mode overrides. They follow the nearest mode scope through the new `--a63-if-light` / `--a63-if-dark` switch. Add `--a63-border-danger` for invalid control borders (step 600 at 62% in light mode, step 500 in dark mode). Input, Textarea, Select, Autocomplete, InputOTP, Checkbox and Radio draw invalid borders with it and a focused invalid border and ring with `--a63-status-danger`; LoadMoreTrigger's Retry label uses `--a63-text-danger`, and its error icon, FeedbackState's error accent and AlertDialog's destructive accent use `--a63-status-danger`.
+
 ## 0.1.0-beta.9
 
 ### Minor Changes

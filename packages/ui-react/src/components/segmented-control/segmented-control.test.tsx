@@ -149,4 +149,25 @@ describe('SegmentedControl', () => {
     expect(root).toHaveAttribute('aria-label', 'View')
     expect(ref.current).toBe(root)
   })
+
+  it('names label segments by their text and icon segments by aria-label', () => {
+    const { rerender } = render(
+      <SegmentedControl aria-label="View" items={ITEMS} onValueChange={() => {}} value="list" />
+    )
+    const label = screen.getAllByRole('radio')[0]
+    expect(label).not.toHaveAttribute('aria-label')
+    expect(label).not.toHaveAttribute('title')
+    rerender(
+      <SegmentedControl
+        aria-label="View"
+        items={ITEMS}
+        onValueChange={() => {}}
+        value="list"
+        variant="icon"
+      />
+    )
+    const icon = screen.getAllByRole('radio')[0]
+    expect(icon).toHaveAttribute('aria-label', ITEMS[0].label)
+    expect(icon).toHaveAttribute('title', ITEMS[0].label)
+  })
 })

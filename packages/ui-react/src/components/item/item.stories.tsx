@@ -372,3 +372,182 @@ function EndpointItem({ label }: { label: string }) {
     </div>
   )
 }
+
+function LinkRows({ disabled }: { disabled?: string }) {
+  return (
+    <ItemGroup style={{ width: 360 }}>
+      {['Profile', 'Billing', 'Security'].map(label => (
+        <Item
+          key={label}
+          render={
+            label === disabled ? (
+              <div aria-disabled="true" role="link">
+                <ItemContent>
+                  <ItemTitle>{label}</ItemTitle>
+                  <ItemDescription>Unavailable on this plan.</ItemDescription>
+                </ItemContent>
+              </div>
+            ) : (
+              <a href={`#${label}`}>
+                <ItemContent>
+                  <ItemTitle>{label}</ItemTitle>
+                  <ItemDescription>Manage your {label.toLowerCase()} settings.</ItemDescription>
+                </ItemContent>
+              </a>
+            )
+          }
+          size="sm"
+          variant="outline"
+        />
+      ))}
+    </ItemGroup>
+  )
+}
+
+/** The first row under the pointer takes half the selected fill. */
+export const Hover: Story = {
+  render: () => <LinkRows />,
+  parameters: { visualState: { hover: 'a.a63-Item' } },
+}
+
+/** Keyboard focus draws the focus ring around the first row. */
+export const FocusVisible: Story = {
+  render: () => <LinkRows />,
+  parameters: { visualState: { focusVisible: 'a.a63-Item' } },
+}
+
+/** A disabled row (`aria-disabled`, `data-disabled` or `:disabled`) fades its content and
+ *  takes no hover. */
+export const Disabled: Story = {
+  render: () => <LinkRows disabled="Billing" />,
+  play: async ({ canvasElement }) => {
+    const row = canvasElement.querySelector<HTMLElement>('[aria-disabled="true"]')
+    const content = row?.firstElementChild
+    if (!content || Number(getComputedStyle(content).opacity) >= 1) {
+      throw new Error('Expected the disabled row to be drawn faded')
+    }
+  },
+}
+
+/** ItemGroup is a list: each Item is a list item, and a link row is wrapped in one. */
+export const ListSemantics: Story = {
+  render: () => <LinkRows />,
+  play: async ({ canvasElement }) => {
+    const list = canvasElement.querySelector('[data-slot="item-group"]')
+    if (list?.getAttribute('role') !== 'list') throw new Error('Expected role="list"')
+    const items = list.querySelectorAll(':scope > [role="listitem"]')
+    if (items.length !== 3) throw new Error(`Expected 3 list items, got ${items.length}`)
+  },
+}
+
+/** On a touchscreen an interactive row is at least 44px tall, even at size xs. */
+export const Touch: Story = {
+  render: () => (
+    <UIProvider input="touch">
+      <ItemGroup style={{ width: 360 }}>
+        {['Inbox', 'Drafts'].map(label => (
+          <Item key={label} render={<a href={`#${label}`}>{label}</a>} size="xs" />
+        ))}
+      </ItemGroup>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const row = canvasElement.querySelector<HTMLElement>('a.a63-Item')
+    if (!row || row.getBoundingClientRect().height < 44) {
+      throw new Error('Expected a touch row at least 44px tall')
+    }
+  },
+}
+
+/** A long title clamps to one line, a long description to two, and an unbroken string
+ *  wraps inside the row instead of pushing the actions out. */
+export const LongContent: Story = {
+  render: () => (
+    <ItemGroup style={{ width: 320 }}>
+      <Item variant="outline">
+        <ItemContent>
+          <ItemTitle>Quarterly revenue report for the enterprise accounts team</ItemTitle>
+          <ItemDescription>
+            Shared with finance, sales leadership and the regional managers, who each review the
+            numbers for their own territory before the board meeting at the end of the month.
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <Button size="sm" variant="outline">
+            Open
+          </Button>
+        </ItemActions>
+      </Item>
+      <Item variant="outline">
+        <ItemContent>
+          <ItemTitle>Webhook</ItemTitle>
+          <ItemDescription>
+            https://hooks.example.com/services/T000/B000/XXXXXXXXXXXXXXXXXXXX
+          </ItemDescription>
+        </ItemContent>
+        <ItemActions>
+          <Button size="sm" variant="outline">
+            Copy
+          </Button>
+        </ItemActions>
+      </Item>
+    </ItemGroup>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const row of canvasElement.querySelectorAll<HTMLElement>('.a63-Item')) {
+      const actions = row.querySelector('.a63-ItemActions')
+      if (!actions) throw new Error('Expected actions')
+      if (actions.getBoundingClientRect().right > row.getBoundingClientRect().right + 1) {
+        throw new Error('Expected the actions to stay inside the row')
+      }
+    }
+    const title = canvasElement.querySelector<HTMLElement>('.a63-ItemTitle')
+    if (!title || title.scrollHeight <= title.clientHeight) {
+      throw new Error('Expected the long title clamped to one line')
+    }
+  },
+}
+
+/** Under dir="rtl" media sits at the inline start (right) and actions at the end (left). */
+export const RightToLeft: Story = {
+  render: () => (
+    <div dir="rtl" lang="ar" style={{ width: 360 }}>
+      <ItemGroup>
+        <Item variant="outline">
+          <ItemMedia variant="icon">
+            <Bookmark aria-hidden />
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>المحفوظات</ItemTitle>
+            <ItemDescription>العناصر التي حفظتها للقراءة لاحقًا.</ItemDescription>
+          </ItemContent>
+          <ItemActions>
+            <ChevronRight aria-hidden style={{ transform: 'scaleX(-1)' }} />
+          </ItemActions>
+        </Item>
+      </ItemGroup>
+    </div>
+  ),
+}
+
+/** Forced colors drop the selected fill; selected and current rows draw a Highlight border. */
+export const ForcedColors: Story = {
+  render: () => (
+    <ItemGroup style={{ width: 360 }}>
+      <Item
+        render={
+          <a aria-current="page" href="#current">
+            Current page
+          </a>
+        }
+        size="xs"
+      />
+      <Item render={<a href="#other">Another page</a>} size="xs" />
+      <Item data-selected="" size="xs">
+        <ItemContent>
+          <ItemTitle>Selected row</ItemTitle>
+        </ItemContent>
+      </Item>
+    </ItemGroup>
+  ),
+}

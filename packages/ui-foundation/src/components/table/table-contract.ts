@@ -7,13 +7,24 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or
 // end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also
 // takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill
-// with primary text, accent the opt-in primary wash with accent text.
+// with primary text, accent the opt-in primary wash with accent text. Sorting is controlled and
+// data-agnostic: Table takes sort and onSortChange, and a TableHead with a sortKey renders a button
+// with a direction icon and carries aria-sort while its column is sorted; the caller sorts the rows.
 
 export const tableVariants = ['default', 'plain'] as const
 export const tableSizes = ['md', 'sm'] as const
 export const tableTones = ['neutral', 'accent'] as const
 export const tableStickyEdges = ['start', 'end'] as const
-export const tableStates = ['rest', 'row-hover', 'row-selected'] as const
+// How a head or body cell aligns its content. start is the default; end aligns the content to the
+// inline end with tabular figures, for numbers and money, so digits line up.
+export const tableAligns = ['start', 'end'] as const
+export const tableStates = [
+  'rest',
+  'row-hover',
+  'row-selected',
+  'sort-ascending',
+  'sort-descending',
+] as const
 export const tableSlots = [
   'table-container',
   'table',
@@ -24,6 +35,7 @@ export const tableSlots = [
   'table-head',
   'table-cell',
   'table-caption',
+  'table-sort-button',
 ] as const
 export const tableVisualArchetypes = ['surface'] as const satisfies readonly VisualArchetypeId[]
 
@@ -31,6 +43,7 @@ export type TableVariant = (typeof tableVariants)[number]
 export type TableSize = (typeof tableSizes)[number]
 export type TableTone = (typeof tableTones)[number]
 export type TableStickyEdge = (typeof tableStickyEdges)[number]
+export type TableAlign = (typeof tableAligns)[number]
 export type TableState = (typeof tableStates)[number]
 export type TableSlot = (typeof tableSlots)[number]
 export type TableVisualArchetype = (typeof tableVisualArchetypes)[number]
@@ -48,6 +61,7 @@ export interface TableContract {
   variants: readonly TableVariant[]
   sizes: readonly TableSize[]
   stickyEdges: readonly TableStickyEdge[]
+  aligns: readonly TableAlign[]
   states: readonly TableState[]
   slots: readonly TableSlot[]
   visualArchetypes: readonly TableVisualArchetype[]
@@ -61,6 +75,7 @@ export const tableContract = {
   variants: tableVariants,
   sizes: tableSizes,
   stickyEdges: tableStickyEdges,
+  aligns: tableAligns,
   states: tableStates,
   slots: tableSlots,
   visualArchetypes: tableVisualArchetypes,

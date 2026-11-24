@@ -54,6 +54,17 @@
   display: flex;
   justify-content: right;
 }
+/* `inline-start` and `inline-end` follow the text direction: the start edge is
+   the left one in left-to-right pages and the right one in right-to-left pages,
+   so a navigation sheet opens from the reading start without branching. */
+.a63-Sheet-viewport[data-side='inline-start'] {
+  display: flex;
+  justify-content: flex-start;
+}
+.a63-Sheet-viewport[data-side='inline-end'] {
+  display: flex;
+  justify-content: flex-end;
+}
 @media (min-width: 640px) {
   .a63-Sheet-viewport[data-variant='inset'] {
     padding: var(--a63-space-4);
@@ -127,6 +138,35 @@
   translate: 2rem 0;
 }
 
+/* The logical sides. The safe-area insets and the translate are physical, so
+   they swap edges under :dir(rtl). */
+.a63-Sheet-popup:is([data-side='inline-start'], [data-side='inline-end']) {
+  width: calc(100% - 3rem);
+  max-width: 28rem;
+}
+.a63-Sheet-popup[data-side='inline-start'] {
+  padding-inline-start: var(--a63-safe-area-left, 0px);
+  border-inline-end-width: var(--a63-control-border-width);
+}
+.a63-Sheet-popup[data-side='inline-start']:dir(rtl) {
+  padding-inline-start: var(--a63-safe-area-right, 0px);
+}
+.a63-Sheet-popup[data-side='inline-end'] {
+  padding-inline-end: var(--a63-safe-area-right, 0px);
+  border-inline-start-width: var(--a63-control-border-width);
+}
+.a63-Sheet-popup[data-side='inline-end']:dir(rtl) {
+  padding-inline-end: var(--a63-safe-area-left, 0px);
+}
+.a63-Sheet-popup[data-side='inline-start']:is([data-starting-style], [data-ending-style]),
+.a63-Sheet-popup[data-side='inline-end']:dir(rtl):is([data-starting-style], [data-ending-style]) {
+  translate: -2rem 0;
+}
+.a63-Sheet-popup[data-side='inline-end']:is([data-starting-style], [data-ending-style]),
+.a63-Sheet-popup[data-side='inline-start']:dir(rtl):is([data-starting-style], [data-ending-style]) {
+  translate: 2rem 0;
+}
+
 /* Inset variant — a floating rounded card away from the edges (>=640px). */
 @media (min-width: 640px) {
   .a63-Sheet-popup[data-variant='inset'] {
@@ -148,6 +188,17 @@
   flex-direction: column;
   gap: var(--a63-space-2);
   padding: var(--a63-space-6);
+}
+/* Reserve the close button's corner so a long title wraps before it instead of
+   running under it. The button is a Button size="icon" inset by space-2. */
+[data-slot='sheet-popup']:has(> .a63-Sheet-close-button) .a63-Sheet-header {
+  padding-inline-end: calc(
+    var(--a63-space-4) +
+      max(
+        calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
+        var(--a63-control-min-size)
+      )
+  );
 }
 /* Tighten the header's bottom padding when a panel follows it. */
 [data-slot='sheet-popup']:has([data-slot='sheet-panel']) .a63-Sheet-header {

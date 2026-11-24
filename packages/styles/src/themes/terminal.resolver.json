@@ -247,9 +247,9 @@
                 "$type": "color",
                 "$value": "{a63.action.primary}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 80%, black)"
+                  "io.atom63.derive": "color-mix(in oklch, {a63.action.primary} 90%, black)"
                 },
-                "$description": "Placeholders and meta: a lighter phosphor ink on paper, still AA 4.5:1."
+                "$description": "Placeholders and meta: a lighter phosphor ink on paper, clearly below the primary ink and still AA 4.5:1."
               }
             },
             "border": {
@@ -418,9 +418,9 @@
                 "$type": "color",
                 "$value": "{a63.text.accent}",
                 "$extensions": {
-                  "io.atom63.derive": "color-mix(in oklab, {a63.text.accent} 40%, {surface.dark.10})"
+                  "io.atom63.derive": "color-mix( in oklab, color-mix(in oklab, {a63.text.accent} 40%, {surface.dark.10}) calc(100% - {a63.surface.tint} * 0.3), {a63.brand.100} calc({a63.surface.tint} * 0.3) )"
                 },
-                "$description": "Placeholders and meta: a dimmer phosphor than secondary, still AA 4.5:1."
+                "$description": "Placeholders and meta: a dimmer phosphor than secondary, still AA 4.5:1. It lightens toward brand 100 with the surface tint, as the muted surface does."
               }
             },
             "border": {

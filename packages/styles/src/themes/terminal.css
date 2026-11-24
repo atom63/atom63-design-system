@@ -95,8 +95,8 @@
   /* Darker phosphor ink on paper — pure brand-500 fails AA on near-white page. */
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 70%, black);
   --a63-text-secondary: color-mix(in oklch, var(--a63-action-primary) 52%, black);
-  /* Placeholders and meta: a lighter phosphor ink on paper, still AA 4.5:1. */
-  --a63-text-tertiary: color-mix(in oklch, var(--a63-action-primary) 80%, black);
+  /* Placeholders and meta: a lighter phosphor ink on paper, clearly below the primary ink and still AA 4.5:1. */
+  --a63-text-tertiary: color-mix(in oklch, var(--a63-action-primary) 90%, black);
   --a63-border-control: color-mix(
     in oklab,
     var(--a63-action-primary) 26%,
@@ -154,8 +154,13 @@
   --a63-text-primary: color-mix(in oklch, var(--a63-action-primary) 62%, white);
   /* Text mixes read the brand-as-text token; the primary fill is too dark here. */
   --a63-text-secondary: color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11));
-  /* Placeholders and meta: a dimmer phosphor than secondary, still AA 4.5:1. */
-  --a63-text-tertiary: color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10));
+  /* Placeholders and meta: a dimmer phosphor than secondary, still AA 4.5:1. It lightens toward brand 100 with the surface tint, as the muted surface does. */
+  --a63-text-tertiary: color-mix(
+    in oklab,
+    color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10))
+      calc(100% - var(--a63-surface-tint) * 0.3),
+    var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3)
+  );
   --a63-border-control: color-mix(in oklch, var(--a63-action-primary) 42%, transparent);
   --a63-border-input: color-mix(in oklch, var(--a63-text-accent) 60%, transparent);
   --a63-border-subtle: color-mix(in oklch, var(--a63-action-primary) 22%, transparent);
@@ -196,9 +201,17 @@
     var(--a63-if-dark, color-mix(in oklab, var(--a63-text-accent) 48%, var(--surface-dark-11)));
   --a63-text-tertiary: var(
       --a63-if-light,
-      color-mix(in oklch, var(--a63-action-primary) 80%, black)
+      color-mix(in oklch, var(--a63-action-primary) 90%, black)
     )
-    var(--a63-if-dark, color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10)));
+    var(
+      --a63-if-dark,
+      color-mix(
+        in oklab,
+        color-mix(in oklab, var(--a63-text-accent) 40%, var(--surface-dark-10))
+          calc(100% - var(--a63-surface-tint) * 0.3),
+        var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3)
+      )
+    );
   --a63-border-control: var(
       --a63-if-light,
       color-mix(

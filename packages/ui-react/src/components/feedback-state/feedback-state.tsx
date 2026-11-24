@@ -46,7 +46,21 @@ export interface FeedbackStateAction {
   variant?: ButtonProps['variant']
 }
 
-export interface FeedbackStateProps {
+/** Replaces the built-in English copy, per kind. The `title` and `description` props still win. */
+export interface FeedbackStateLabels {
+  /** The default title of each kind, e.g. `{ error: 'Etwas ist schiefgelaufen' }`. */
+  titles?: Partial<Record<FeedbackStateKind, string>>
+  /** The default description of each kind. */
+  descriptions?: Partial<Record<FeedbackStateKind, string>>
+  /** The no-results description when `query` is set. Defaults to `No results found for "{query}"`. */
+  noResults?: (query: string) => string
+}
+
+/** Native `div` attributes and `ref` reach the root (`title` is the heading text). */
+export interface FeedbackStateProps extends Omit<
+  React.ComponentProps<'div'>,
+  'children' | 'title'
+> {
   actions?: FeedbackStateAction[]
   className?: string
   description?: string
@@ -59,6 +73,7 @@ export interface FeedbackStateProps {
   size?: FeedbackStateSize
   state?: FeedbackStateKind
   title?: string
+  labels?: FeedbackStateLabels
 }
 
 const stateConfig = {
@@ -75,7 +90,7 @@ const stateConfig = {
   loading: {
     icon: 'spinner',
     defaultTitle: 'Loading',
-    defaultDescription: 'Loading...',
+    defaultDescription: 'This will only take a moment',
   },
   'not-found': {
     icon: 'searchX',
@@ -104,25 +119,21 @@ const stateConfig = {
 
 function getFeedbackDescription({
   description,
-  error,
+  labels,
   query,
   state,
-}: Pick<FeedbackStateProps, 'description' | 'error' | 'query'> & {
+}: Pick<FeedbackStateProps, 'description' | 'labels' | 'query'> & {
   state: FeedbackStateKind
 }) {
   if (description) {
     return description
   }
 
-  if (state === 'error' && error instanceof Error) {
-    return error.message
-  }
-
   if (state === 'no-results' && query) {
-    return `No results found for "${query}"`
+    return labels?.noResults ? labels.noResults(query) : `No results found for "${query}"`
   }
 
-  return stateConfig[state].defaultDescription
+  return labels?.descriptions?.[state] ?? stateConfig[state].defaultDescription
 }
 
 function FeedbackStateActionButton({ action }: { action: FeedbackStateAction }) {
@@ -156,26 +167,32 @@ function FeedbackStateActionButton({ action }: { action: FeedbackStateAction }) 
    `.a63-FeedbackState-*` elements so this pattern stays self-contained.
    The root is one live region that stays mounted across states, so a change of
    state only changes its text and screen readers announce it: polite
-   (role=status) for loading and the result states, assertive (role=alert) for
-   an error. It is never aria-busy, which would silence it; mark the content
-   being loaded busy instead. */
+   (role=status) for loading and the result states. An error mounts a fresh
+   role=alert root instead, since screen readers announce an alert when it is
+   inserted but not reliably when a live region changes its role. It is never
+   aria-busy, which would silence it; mark the content being loaded busy instead. */
 export function FeedbackState({
   actions,
   className,
   description,
   error,
   icon,
+  labels,
   level = 3,
   query,
   showIcon = true,
   size = feedbackStateContract.defaultSize,
   state = feedbackStateContract.defaultKind,
   title,
+  ...props
 }: FeedbackStateProps): React.ReactElement {
   const config = stateConfig[state]
-  const finalDescription = getFeedbackDescription({ description, error, query, state })
-  const finalTitle = title || config.defaultTitle
+  const finalDescription = getFeedbackDescription({ description, labels, query, state })
+  const finalTitle = title || labels?.titles?.[state] || config.defaultTitle
+  // An Error's message is technical detail, so it sits under the friendly description.
+  const detail = state === 'error' && error instanceof Error ? error.message : ''
   const iconNode = renderFeedbackIcon(icon ?? config.icon)
+  const Heading = `h${level}` as const
 
   return (
     <div
@@ -184,7 +201,9 @@ export function FeedbackState({
       data-size={size}
       data-slot="feedback-state"
       data-state={state}
+      key={state === 'error' ? 'alert' : 'status'}
       role={state === 'error' ? 'alert' : 'status'}
+      {...props}
     >
       <div className="a63-FeedbackState-header" data-slot="feedback-state-header">
         {showIcon && iconNode ? (
@@ -193,17 +212,17 @@ export function FeedbackState({
           </div>
         ) : null}
 
-        <div
-          aria-level={level}
-          className="a63-FeedbackState-title"
-          data-slot="feedback-state-title"
-          role="heading"
-        >
+        <Heading className="a63-FeedbackState-title" data-slot="feedback-state-title">
           {finalTitle}
-        </div>
+        </Heading>
         <div className="a63-FeedbackState-description" data-slot="feedback-state-description">
           {finalDescription}
         </div>
+        {detail ? (
+          <div className="a63-FeedbackState-detail" data-slot="feedback-state-detail">
+            {detail}
+          </div>
+        ) : null}
       </div>
 
       {actions && actions.length > 0 ? (

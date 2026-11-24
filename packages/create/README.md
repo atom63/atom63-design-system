@@ -32,11 +32,12 @@ The generated app follows the [quickstart](../../docs/design-system/quickstart.m
 | `site` (default) | A landing page (hero, features, latest posts, sign-up) and an MDX blog |
 | `docs` | MDX documentation: a sidebar grouped from the pages' frontmatter, the docs typography, an "On this page" table of contents, and previous and next links |
 | `app` | A product app from the page templates: the app shell (rendered once, in a layout route) around an overview, an invoice list with its detail view, settings and a first-run page, plus sign-in and a not-found page. The sample data stays until you replace it |
+| `portfolio` | A personal portfolio: a home page with a hero plate and featured projects, projects with MDX case studies (problem, role, process, outcome, media), MDX writing, a timeline and a printable resume, with a fictional person's sample content. Optional modules switch in `src/portfolio.config.ts`: an assistant on `@atom63/agent` that answers offline from the content (on), slides, a widget board and a bottom dock with mini apps (off). `examples/portfolio` is this kind, generated |
 
 Each kind is a folder in `starter/`, layered over shared layers: `starter/base` is what every app
 shares (the entry, the theme, TypeScript and shadcn setup), `starter/content` adds MDX and the
-site header and footer to `site` and `docs`, and `starter/app` is the app kind's router, layout and
-config. Choose a kind with `--kind`, for example
+site header and footer to `site`, `docs` and `portfolio`, and `starter/app` is the app kind's
+router, layout and config. Choose a kind with `--kind`, for example
 `pnpm create:app my-docs --kind docs`.
 
 ## How it works
@@ -58,8 +59,13 @@ they use from the agent index (`@atom63/cli/agent-index.json`) into `src/templat
 2. generate an app of every kind and install each against the tarballs;
 3. run `typecheck` and `build`;
 4. hold the generated source to the craft rules;
-5. for the `app` kind, open every route at a desktop and a phone width in light and dark mode
-   (axe, console errors, one `h1`, no horizontal overflow);
+5. for the `app` and `portfolio` kinds, open every route at a desktop and a phone width in light
+   and dark mode (axe, console errors, one `h1`, no horizontal overflow); for `portfolio`, build
+   again with every optional module on and open their routes too;
 6. with `--shadcn`, add a shadcn button to the first kind's app and build again.
 
 The generated app installs from npm only after `@atom63/mdx` has been published.
+
+`examples/portfolio` is the portfolio kind generated with the design system packages taken from the
+workspace. After changing the portfolio starter, run `pnpm generate:example:portfolio`;
+`pnpm test:scripts` fails while the two differ.

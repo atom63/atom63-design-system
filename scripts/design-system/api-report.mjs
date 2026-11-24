@@ -33,6 +33,7 @@ const packages = {
   'packages/ui-react': {
     'ui-react': 'dist/index.d.ts',
     'ui-react.calendar': 'dist/calendar/index.d.ts',
+    'ui-react.chart': 'dist/chart/index.d.ts',
     'ui-react.layout': 'dist/layout/index.d.ts',
     'ui-react.media': 'dist/media/index.d.ts',
     'ui-react.media-lightbox': 'dist/media/media-lightbox/parts/index.d.ts',

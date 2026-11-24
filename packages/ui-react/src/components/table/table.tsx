@@ -1,4 +1,7 @@
+'use client'
+
 import {
+  type TableAlign,
   type TableSize,
   type TableSizeAlias,
   type TableStickyEdge,
@@ -6,9 +9,28 @@ import {
   type TableVariant,
   tableContract,
 } from '@atom63/ui-foundation'
+import { ArrowDown, ArrowUp, ArrowUpDown } from 'lucide-react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { Button } from '../button'
+
+/** The direction a sorted column is in, named as `aria-sort` names it. */
+export type TableSortDirection = 'ascending' | 'descending'
+
+/** The column the table is sorted by. The caller sorts the rows; the table only shows it. */
+export interface TableSort {
+  column: string
+  direction: TableSortDirection
+}
+
+interface TableSortContextValue {
+  onSortChange?: (sort: TableSort) => void
+  sort?: TableSort | null
+}
+
+const TableSortContext = createContext<TableSortContextValue>({})
 
 /* Table — the tabular-data set. Faithful port of prod @atom63/ui Table: a
    horizontally scrollable container wrapping a semantic <table> with header /
@@ -22,31 +44,74 @@ export type TableProps = React.ComponentProps<'table'> & {
   /** `'default'` is a deprecated alias of `'md'`. */
   size?: TableSize | TableSizeAlias
   /**
-   * How selected rows (`data-state="selected"`) are coloured. `neutral` (the
+   * How selected rows (`TableRow selected`) are coloured. `neutral` (the
    * default) is a muted fill with primary text; `accent` is a light primary wash
    * with accent text.
    */
   tone?: TableTone
   variant?: TableVariant
+  /** The column the rows are sorted by (controlled), shown by the `TableHead` whose `sortKey`
+   *  matches. `null` or omitted: no column is sorted. */
+  sort?: TableSort | null
+  /** Called when a sortable `TableHead` is pressed, with the sort to apply. Sort the rows and
+   *  pass the new value back as `sort`. */
+  onSortChange?: (sort: TableSort) => void
 }
 
 export function Table({
   className,
+  onSortChange,
   size = tableContract.defaultSize,
+  sort,
   tone = tableContract.defaultTone,
   variant = tableContract.defaultVariant,
   ...props
 }: TableProps): React.ReactElement {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [overflowing, setOverflowing] = useState(false)
+  const [captionText, setCaptionText] = useState<string>()
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container || typeof ResizeObserver === 'undefined') return
+    const measure = () => {
+      setOverflowing(container.scrollWidth > container.clientWidth + 1)
+      setCaptionText(container.querySelector('caption')?.textContent?.trim() || undefined)
+    }
+    const observer = new ResizeObserver(measure)
+    observer.observe(container)
+    if (container.firstElementChild) observer.observe(container.firstElementChild)
+    measure()
+    return () => observer.disconnect()
+  }, [])
+  // While the table is wider than its container, the scroller joins the tab order so a keyboard
+  // can scroll it (Safari does not make scrollers focusable). It is a region named like the
+  // table (aria-labelledby, aria-label or the caption); with no name it stays a plain scroller,
+  // so no English fallback name is announced.
+  const regionName = props['aria-labelledby'] ? undefined : (props['aria-label'] ?? captionText)
+  const named = Boolean(props['aria-labelledby'] || regionName)
+  const scrollerProps: React.ComponentProps<'div'> = overflowing
+    ? {
+        'aria-label': regionName,
+        'aria-labelledby': props['aria-labelledby'],
+        role: named ? 'region' : undefined,
+        tabIndex: 0,
+      }
+    : {}
   return (
-    <div
-      className="a63-Table-container"
-      data-size={size === 'default' ? 'md' : size}
-      data-slot="table-container"
-      data-tone={tone}
-      data-variant={variant}
-    >
-      <table className={cn('a63-Table', className)} data-slot="table" {...props} />
-    </div>
+    <TableSortContext.Provider value={{ onSortChange, sort }}>
+      <div
+        className="a63-Table-container"
+        data-overflowing={overflowing ? '' : undefined}
+        data-size={size === 'default' ? 'md' : size}
+        data-slot="table-container"
+        data-tone={tone}
+        data-variant={variant}
+        ref={containerRef}
+        {...scrollerProps}
+      >
+        <table className={cn('a63-Table', className)} data-slot="table" {...props} />
+      </div>
+    </TableSortContext.Provider>
   )
 }
 
@@ -68,37 +133,121 @@ export function TableFooter({ className, ...props }: TableFooterProps): React.Re
   return <tfoot className={cn('a63-Table-footer', className)} data-slot="table-footer" {...props} />
 }
 
-export type TableRowProps = React.ComponentProps<'tr'>
-
-export function TableRow({ className, ...props }: TableRowProps): React.ReactElement {
-  return <tr className={cn('a63-Table-row', className)} data-slot="table-row" {...props} />
+export type TableRowProps = React.ComponentProps<'tr'> & {
+  /** Draws the row as selected, in the Table's `tone`. Sets `data-state="selected"`. */
+  selected?: boolean
 }
 
-export type TableHeadProps = React.ComponentProps<'th'> & {
-  sticky?: TableStickyEdge
-}
-
-export function TableHead({ className, sticky, ...props }: TableHeadProps): React.ReactElement {
+export function TableRow({ className, selected, ...props }: TableRowProps): React.ReactElement {
   return (
-    <th
-      className={cn('a63-Table-head', className)}
-      data-slot="table-head"
-      data-sticky={sticky}
+    <tr
+      className={cn('a63-Table-row', className)}
+      data-slot="table-row"
+      data-state={selected ? 'selected' : undefined}
       {...props}
     />
   )
 }
 
-export type TableCellProps = React.ComponentProps<'td'> & {
+export type TableHeadProps = Omit<React.ComponentProps<'th'>, 'align'> & {
+  /** `end` aligns the head to the inline end with tabular figures, for a column of numbers.
+   *  Give the column's cells the same `align`. */
+  align?: TableAlign
   sticky?: TableStickyEdge
+  /** Lets the head text wrap onto more lines instead of widening the column. */
+  wrap?: boolean
+  /** Makes the column sortable: the header becomes a button that calls the Table's
+   *  `onSortChange` with this key, and the cell carries `aria-sort` while the Table's
+   *  `sort.column` is this key. */
+  sortKey?: string
+  /** The direction a first press sorts in. Later presses flip it. */
+  firstSortDirection?: TableSortDirection
+  /** Replaces the sort icon. Receives the column's direction, or `none` while it is not sorted. */
+  sortIcon?: (direction: TableSortDirection | 'none') => React.ReactNode
 }
 
-export function TableCell({ className, sticky, ...props }: TableCellProps): React.ReactElement {
+function defaultSortIcon(direction: TableSortDirection | 'none'): React.ReactNode {
+  if (direction === 'ascending') return <ArrowUp aria-hidden />
+  if (direction === 'descending') return <ArrowDown aria-hidden />
+  return <ArrowUpDown aria-hidden />
+}
+
+export function TableHead({
+  align,
+  children,
+  className,
+  firstSortDirection = 'ascending',
+  sortIcon = defaultSortIcon,
+  sortKey,
+  sticky,
+  wrap,
+  ...props
+}: TableHeadProps): React.ReactElement {
+  const { onSortChange, sort } = useContext(TableSortContext)
+  const direction = sortKey !== undefined && sort?.column === sortKey ? sort.direction : undefined
+  return (
+    <th
+      aria-sort={direction}
+      className={cn('a63-Table-head', className)}
+      data-align={align === 'end' ? 'end' : undefined}
+      data-slot="table-head"
+      data-sticky={sticky}
+      data-wrap={wrap ? '' : undefined}
+      {...props}
+    >
+      {sortKey === undefined ? (
+        children
+      ) : (
+        <Button
+          className="a63-Table-sort-button"
+          data-slot="table-sort-button"
+          onClick={() =>
+            onSortChange?.({
+              column: sortKey,
+              direction:
+                direction === undefined
+                  ? firstSortDirection
+                  : direction === 'ascending'
+                    ? 'descending'
+                    : 'ascending',
+            })
+          }
+          size="xs"
+          tone="muted"
+          variant="ghost"
+        >
+          {children}
+          {sortIcon(direction ?? 'none')}
+        </Button>
+      )}
+    </th>
+  )
+}
+
+export type TableCellProps = Omit<React.ComponentProps<'td'>, 'align'> & {
+  /** `end` aligns the cell to the inline end with tabular figures, so the digits of numbers
+   *  and money line up. */
+  align?: TableAlign
+  sticky?: TableStickyEdge
+  /** Lets long text (a description, a URL, CJK) wrap onto more lines, up to about 40
+   *  characters wide, instead of widening the table. Cells stay on one line by default. */
+  wrap?: boolean
+}
+
+export function TableCell({
+  align,
+  className,
+  sticky,
+  wrap,
+  ...props
+}: TableCellProps): React.ReactElement {
   return (
     <td
       className={cn('a63-Table-cell', className)}
+      data-align={align === 'end' ? 'end' : undefined}
       data-slot="table-cell"
       data-sticky={sticky}
+      data-wrap={wrap ? '' : undefined}
       {...props}
     />
   )

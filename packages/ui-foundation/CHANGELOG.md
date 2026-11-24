@@ -1,5 +1,29 @@
 # @atom63/ui-foundation
 
+## 0.2.0-beta.9
+
+### Minor Changes
+
+- [#336](https://github.com/atom63/atom63-design-system/pull/336) [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de) Thanks [@atom63](https://github.com/atom63)! - Add Chart on its own entry, `import { Chart } from '@atom63/ui-react/chart'`: a small SVG line, area or bar chart (grouped or stacked) of up to five series over a categorical axis. It draws gridlines and axis labels from tokens, follows the container's width, shows a tooltip on hover and on the arrow keys, has a legend, mirrors in right-to-left text, keeps series apart by dash pattern in forced colours, and carries a data table of the same numbers that is visually hidden or shown with a toggle. It uses no charting library. The contract adds `chartTypes`, `chartSizes`, `chartColors`, `chartStates` and `chartSlots`.
+
+- [#335](https://github.com/atom63/atom63-design-system/pull/335) [`567dbbf`](https://github.com/atom63/atom63-design-system/commit/567dbbf9a706f3bddfb839600eac069e30ec5baa) Thanks [@atom63](https://github.com/atom63)! - Add sortable table heads: `Table` takes a controlled `sort` and `onSortChange`, and a `TableHead` with a `sortKey` renders a sort button with a direction icon (replaceable through `sortIcon`) and carries `aria-sort` while its column is sorted. `PaginationLink`, `PaginationPrevious` and `PaginationNext` take `render` (such as a router link) and `disabled`, which drops the href and click handler, leaves the tab order and sets `aria-disabled`. Pagination's default name is now "Pagination". Autocomplete's clear button sits beside the trigger instead of on top of it. `FeedbackState` renders its title as a real `h1`–`h6`. `FormControl` lists the description id in `aria-describedby` only while a `FormDescription` renders. The table contract adds the `table-sort-button` slot and the `sort-ascending` and `sort-descending` states; the pagination contract adds the `disabled` state.
+
+## 0.2.0-beta.8
+
+### Minor Changes
+
+- [#322](https://github.com/atom63/atom63-design-system/pull/322) [`2720544`](https://github.com/atom63/atom63-design-system/commit/2720544eec4f8bf4701366ccff064f015815e987) Thanks [@atom63](https://github.com/atom63)! - Add ArtPlate, a full-bleed picture that owns its crop and keeps a safe area for headline and product UI: art-directed phone source, focal point per breakpoint, `size` (viewport, band, card), `safeArea`, `tone`, `veil`, eager loading with `priority`, and a CSS scroll-driven `parallax` that is off under reduced motion. `Image` from `@atom63/ui-react/media` takes `srcSet`, `sizes` and art-directed `sources`, which render a native `<picture>` with native lazy loading, and `aspectRatio="fill"` for a box sized by its parent.
+
+- [#325](https://github.com/atom63/atom63-design-system/pull/325) [`dc9e86d`](https://github.com/atom63/atom63-design-system/commit/dc9e86d5a8ffd8aeec63c082589e8c02334a6994) Thanks [@atom63](https://github.com/atom63)! - Add LayeredScene: a plate (`LayeredScenePlate`, an ArtPlate), the copy (`LayeredSceneContent`) and live product UI (`LayeredSceneStage`) in a two-row grid, with an optional inert foreground cut-out of the plate in front (`LayeredSceneForeground`, aria-hidden, no pointer events, hidden on phones unless `showOnPhone`). `placement` (center-bottom, end-bottom, start-bottom) and `width` (wide, half) place the stage. Layers use the in-context z band.
+
+### Patch Changes
+
+- [#314](https://github.com/atom63/atom63-design-system/pull/314) [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd) Thanks [@atom63](https://github.com/atom63)! - SegmentedControl is a radio group instead of a tab list: the root has `role="radiogroup"` and takes `aria-label` or `aria-labelledby`, each segment is a `radio`, Tab enters at the selected segment and the arrow keys move and select. The selected segment carries `data-checked` (it was `data-active`), and the indicator is placed by `--segment-indicator-*` (it was Base UI's `--active-tab-*`). `SegmentedControlProps` now extends Base UI's RadioGroup props instead of the Tabs root props. The look is unchanged. Use Tabs when the choices switch content panels.
+  
+  Rating draws on stars filled in `--a63-status-warning` and off stars as outlines in `--a63-border-input`, so the two differ by shape as well as colour and both reach 3:1 against the page and the panel in every theme and mode.
+
+- [#310](https://github.com/atom63/atom63-design-system/pull/310) [`4b4c105`](https://github.com/atom63/atom63-design-system/commit/4b4c105e0b96f8040da19b067e6222142845be7d) Thanks [@atom63](https://github.com/atom63)! - Button's contract slots are now the `data-slot` values the React Button renders: `button`, `button-label`, `button-spinner` and `button-indicator` (they were `root`, `label`, `icon`, `spinner` and `indicator`; no `icon` slot is rendered). Search Field's input slot is `input` (it was `search-field-input`). `buttonSlots`, `searchFieldSlots` and their `ButtonSlot` and `SearchFieldSlot` types change with them, and `atom63 component button` lists the new names. Rendered `data-slot` values are unchanged.
+
 ## 0.2.0-beta.7
 
 ### Minor Changes

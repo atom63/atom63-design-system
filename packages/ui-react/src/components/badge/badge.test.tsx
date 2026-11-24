@@ -42,4 +42,12 @@ describe('Badge', () => {
     rerender(<Badge>Plain</Badge>)
     expect(dot()).toBeNull()
   })
+
+  it('wraps its text in a label that can truncate', () => {
+    render(<Badge>Benachrichtigungseinstellungen</Badge>)
+    expect(screen.getByText('Benachrichtigungseinstellungen')).toHaveAttribute(
+      'data-slot',
+      'badge-label'
+    )
+  })
 })

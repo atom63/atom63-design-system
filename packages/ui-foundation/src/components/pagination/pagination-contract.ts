@@ -2,9 +2,8 @@
 // Do not edit; change the JSON and run `pnpm --filter @atom63/ui-foundation generate:contracts`.
 
 import type { VisualArchetypeId } from '../../visual-archetypes'
-import { type ButtonSize, buttonSizes } from '../button/button-contract'
 
-export const paginationStates = ['rest', 'current'] as const
+export const paginationStates = ['rest', 'current', 'disabled'] as const
 export const paginationSlots = [
   'pagination',
   'pagination-content',
@@ -13,14 +12,16 @@ export const paginationSlots = [
   'pagination-ellipsis',
 ] as const
 export const paginationVisualArchetypes = ['action'] as const satisfies readonly VisualArchetypeId[]
+export const paginationLinkSizes = ['xs', 'sm', 'md', 'icon-xs', 'icon-sm', 'icon'] as const
 
 export type PaginationState = (typeof paginationStates)[number]
 export type PaginationSlot = (typeof paginationSlots)[number]
 export type PaginationVisualArchetype = (typeof paginationVisualArchetypes)[number]
+export type PaginationLinkSize = (typeof paginationLinkSizes)[number]
 
 export interface PaginationContract {
-  defaultLinkSize: ButtonSize
-  linkSizes: readonly ButtonSize[]
+  defaultLinkSize: PaginationLinkSize
+  linkSizes: readonly PaginationLinkSize[]
   slots: readonly PaginationSlot[]
   states: readonly PaginationState[]
   visualArchetypes: readonly PaginationVisualArchetype[]
@@ -28,7 +29,7 @@ export interface PaginationContract {
 
 export const paginationContract = {
   defaultLinkSize: 'icon',
-  linkSizes: buttonSizes,
+  linkSizes: paginationLinkSizes,
   slots: paginationSlots,
   states: paginationStates,
   visualArchetypes: paginationVisualArchetypes,

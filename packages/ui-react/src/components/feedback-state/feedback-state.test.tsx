@@ -20,7 +20,7 @@ describe('FeedbackState', () => {
     expect(el).toHaveAttribute('data-size', 'page')
   })
 
-  it('keeps one live region mounted and announces every state', () => {
+  it('keeps one status region mounted across states, and mounts a fresh alert for an error', () => {
     const { container, rerender } = render(<FeedbackState state="loading" />)
     const region = container.querySelector('[data-slot="feedback-state"]')
     // A busy region's announcements are suppressed, so loading is not busy.
@@ -36,9 +36,42 @@ describe('FeedbackState', () => {
     }
 
     rerender(<FeedbackState state="error" />)
-    expect(container.querySelector('[data-slot="feedback-state"]')).toBe(region)
-    expect(region).toHaveAttribute('role', 'alert')
-    expect(region).toHaveAttribute('aria-live', 'assertive')
+    const alert = container.querySelector('[data-slot="feedback-state"]')
+    // A live region that changes its role is not announced reliably; a new alert is.
+    expect(alert).not.toBe(region)
+    expect(alert).toHaveAttribute('role', 'alert')
+    expect(alert).toHaveAttribute('aria-live', 'assertive')
+  })
+
+  it('forwards native attributes and a ref to the root', () => {
+    let node: HTMLDivElement | null = null
+    const { container } = render(
+      <FeedbackState
+        aria-labelledby="heading"
+        data-testid="state"
+        id="orders-state"
+        ref={element => {
+          node = element
+        }}
+        style={{ minHeight: 120 }}
+      />
+    )
+    const root = container.querySelector('[data-slot="feedback-state"]')
+    expect(root).toHaveAttribute('id', 'orders-state')
+    expect(root).toHaveAttribute('aria-labelledby', 'heading')
+    expect(root).toHaveAttribute('data-testid', 'state')
+    expect(node).toBe(root)
+  })
+
+  it('lets labels replace the no-results template', () => {
+    const { getByText } = render(
+      <FeedbackState
+        labels={{ noResults: query => `Keine Ergebnisse für „${query}“` }}
+        query="rot"
+        state="no-results"
+      />
+    )
+    expect(getByText('Keine Ergebnisse für „rot“')).toBeInTheDocument()
   })
 
   it('renders the title as a heading, level 3 unless set', () => {
@@ -50,6 +83,11 @@ describe('FeedbackState', () => {
 
     rerender(<FeedbackState level={2} state="not-found" />)
     expect(getByRole('heading', { level: 2, name: 'Nothing found' })).toBeInTheDocument()
+
+    rerender(<FeedbackState level={1} state="not-found" />)
+    const h1 = getByRole('heading', { level: 1, name: 'Nothing found' })
+    expect(h1.tagName).toBe('H1')
+    expect(h1).not.toHaveAttribute('role')
   })
 
   it('falls back to the state config title + description', () => {
@@ -58,9 +96,58 @@ describe('FeedbackState', () => {
     expect(getByText("We couldn't find what you're looking for")).toBeInTheDocument()
   })
 
-  it('derives the description from an Error when state is error', () => {
-    const { getByText } = render(<FeedbackState error={new Error('Boom happened')} state="error" />)
-    expect(getByText('Boom happened')).toBeInTheDocument()
+  it('keeps the friendly error description and shows an Error message as secondary detail', () => {
+    const { container } = render(<FeedbackState error={new Error('Boom happened')} state="error" />)
+    expect(container.querySelector('[data-slot="feedback-state-description"]')).toHaveTextContent(
+      'An unexpected error occurred'
+    )
+    expect(container.querySelector('[data-slot="feedback-state-detail"]')).toHaveTextContent(
+      'Boom happened'
+    )
+  })
+
+  it('shows no detail outside the error state', () => {
+    const { container } = render(<FeedbackState error={new Error('Boom')} state="empty" />)
+    expect(container.querySelector('[data-slot="feedback-state-detail"]')).toBeNull()
+  })
+
+  it('lets labels replace every built-in title and description', () => {
+    const titles = {
+      empty: 'Noch nichts da',
+      error: 'Etwas ist schiefgelaufen',
+      loading: 'Wird geladen',
+      'not-found': 'Nicht gefunden',
+      'no-results': 'Keine Ergebnisse',
+      offline: 'Du bist offline',
+      stale: 'Gespeicherte Inhalte',
+    } as const
+    const descriptions = Object.fromEntries(
+      Object.entries(titles).map(([kind, text]) => [kind, `${text}: Beschreibung`])
+    )
+    const { container, rerender } = render(<FeedbackState />)
+    for (const state of Object.keys(titles) as (keyof typeof titles)[]) {
+      rerender(<FeedbackState labels={{ descriptions, titles }} state={state} />)
+      expect(container.querySelector('[data-slot="feedback-state-title"]')).toHaveTextContent(
+        titles[state]
+      )
+      expect(container.querySelector('[data-slot="feedback-state-description"]')).toHaveTextContent(
+        `${titles[state]}: Beschreibung`
+      )
+    }
+    // The title and description props still win over labels.
+    rerender(<FeedbackState description="D" labels={{ descriptions, titles }} title="T" />)
+    expect(container.querySelector('[data-slot="feedback-state-title"]')).toHaveTextContent('T')
+    expect(container.querySelector('[data-slot="feedback-state-description"]')).toHaveTextContent(
+      'D'
+    )
+  })
+
+  it('gives loading a description distinct from its title', () => {
+    const { container } = render(<FeedbackState state="loading" />)
+    const title = container.querySelector('[data-slot="feedback-state-title"]')?.textContent ?? ''
+    const description =
+      container.querySelector('[data-slot="feedback-state-description"]')?.textContent ?? ''
+    expect(description.toLowerCase()).not.toContain(title.toLowerCase())
   })
 
   it('builds the no-results description from the query', () => {

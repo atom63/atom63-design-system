@@ -164,6 +164,147 @@ export const ErrorState: Story = {
   ),
 }
 
+function ExpandedError({ rtl }: { rtl?: boolean }) {
+  return (
+    <Empty>
+      <EmptyHeader>
+        <EmptyTitle>{rtl ? 'حدث خطأ ما' : 'Something went wrong'}</EmptyTitle>
+      </EmptyHeader>
+      <EmptyContent>
+        <EmptyErrorDetail
+          error={'TypeError: Cannot read properties of undefined\n    at load (app.tsx:42)'}
+          labels={
+            rtl
+              ? { copy: 'الخطأ', hideDetails: 'إخفاء التفاصيل', showDetails: 'عرض التفاصيل' }
+              : undefined
+          }
+        />
+      </EmptyContent>
+    </Empty>
+  )
+}
+
+/* The expanded error detail: the error text with its copy button at the inline end,
+   in light, dark and right to left (where the button sits on the left). */
+export const ErrorExpanded: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 16, maxWidth: 420 }}>
+      {(['light', 'dark'] as const).map(mode => (
+        <UIProvider key={mode} mode={mode}>
+          <div style={{ background: 'var(--a63-surface-page)', padding: 8 }}>
+            <ExpandedError />
+          </div>
+        </UIProvider>
+      ))}
+      <div dir="rtl" lang="ar">
+        <ExpandedError rtl />
+      </div>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    for (const toggle of canvasElement.querySelectorAll<HTMLElement>('.a63-Empty-errorToggle')) {
+      toggle.click()
+    }
+    await new Promise(resolve => setTimeout(resolve, 0))
+    const boxes = canvasElement.querySelectorAll<HTMLElement>('[data-slot="empty-error-box"]')
+    if (boxes.length !== 3) throw new Error(`Expected 3 expanded details, got ${boxes.length}`)
+    const rtlBox = boxes[2]
+    const copy = rtlBox?.querySelector<HTMLElement>('[data-slot="empty-error-copy"]')
+    if (!rtlBox || !copy) throw new Error('Expected the RTL copy button')
+    if (copy.getBoundingClientRect().left - rtlBox.getBoundingClientRect().left > 16) {
+      throw new Error('Expected the copy button at the inline end (left) in RTL')
+    }
+  },
+}
+
+/* Throws when any Empty part is wider than the Empty that holds it. */
+function expectNoOverflow(canvasElement: HTMLElement) {
+  for (const root of canvasElement.querySelectorAll<HTMLElement>('[data-slot="empty"]')) {
+    const box = root.getBoundingClientRect()
+    for (const part of root.querySelectorAll<HTMLElement>('[data-slot]')) {
+      const rect = part.getBoundingClientRect()
+      if (rect.left < box.left - 0.5 || rect.right > box.right + 0.5) {
+        throw new Error(`${part.dataset.slot} overflows the Empty box`)
+      }
+      const isText =
+        part.dataset.slot === 'empty-title' || part.dataset.slot === 'empty-description'
+      if (isText && part.scrollWidth > part.clientWidth + 1) {
+        throw new Error(`${part.dataset.slot} content overflows its box`)
+      }
+    }
+  }
+}
+
+/* A long title and description that mix Latin, a German compound, CJK and an
+   unbroken URL wrap inside the box. */
+export const LongContent: Story = {
+  play: ({ canvasElement }) => expectNoOverflow(canvasElement),
+  render: () => (
+    <div style={{ maxWidth: 320 }}>
+      <Empty>
+        <EmptyHeader>
+          <EmptyMedia variant="icon">
+            <Inbox aria-hidden />
+          </EmptyMedia>
+          <EmptyTitle>
+            Keine Datenschutzgrundverordnungsauskunftsersuchen 尚无任何项目，请稍后再试
+          </EmptyTitle>
+          <EmptyDescription>
+            Nothing matched
+            https://example.com/workspaces/a63-design-system/projects/archived?filter=everything-since-2019
+            yet. 我们没有找到符合条件的内容。
+          </EmptyDescription>
+        </EmptyHeader>
+        <EmptyContent>
+          <Button size="sm" variant="outline">
+            Rechnungsadressenverwaltung öffnen
+          </Button>
+        </EmptyContent>
+      </Empty>
+    </div>
+  ),
+}
+
+/* At phone width on touch: media, two actions and the error detail expanded. */
+export const Phone: Story = {
+  render: () => (
+    <UIProvider input="touch">
+      <div style={{ background: 'var(--a63-surface-page)', padding: 16, width: 390 }}>
+        <Empty>
+          <EmptyHeader>
+            <EmptyMedia variant="icon">
+              <AlertTriangle aria-hidden />
+            </EmptyMedia>
+            <EmptyTitle>Something went wrong</EmptyTitle>
+            <EmptyDescription>We couldn't load your projects. Please try again.</EmptyDescription>
+          </EmptyHeader>
+          <EmptyContent>
+            <Button size="sm" variant="outline">
+              Retry
+            </Button>
+            <Button size="sm" tone="muted" variant="ghost">
+              Contact support
+            </Button>
+            <EmptyErrorDetail
+              error={
+                'TypeError: Cannot read properties of undefined (reading "projects")\n    at load (app.tsx:42)'
+              }
+            />
+          </EmptyContent>
+        </Empty>
+      </div>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    canvasElement.querySelector<HTMLElement>('.a63-Empty-errorToggle')?.click()
+    await new Promise(resolve => setTimeout(resolve, 0))
+    if (!canvasElement.querySelector('[data-slot="empty-error-box"]')) {
+      throw new Error('Expected the expanded error detail')
+    }
+    expectNoOverflow(canvasElement)
+  },
+}
+
 /* The error state's details toggle across all 4 DS themes × light/dark. */
 export const ErrorThemes: Story = {
   play: ({ canvasElement }) => expectToggleContrast(canvasElement),

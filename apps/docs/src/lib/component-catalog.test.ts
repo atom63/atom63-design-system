@@ -2,9 +2,11 @@ import { describe, expect, it } from 'vitest'
 import { buttonSizes, buttonStates, buttonVariants } from '@atom63/ui-foundation'
 import * as uiReactRootApi from '@atom63/ui-react'
 import * as uiReactCalendarApi from '@atom63/ui-react/calendar'
+import * as uiReactChartApi from '@atom63/ui-react/chart'
 import * as uiReactLayoutApi from '@atom63/ui-react/layout'
 import uiReactPackageSource from '../../../../packages/ui-react/package.json?raw'
 import uiReactCalendarSource from '../../../../packages/ui-react/src/calendar/index.ts?raw'
+import uiReactChartSource from '../../../../packages/ui-react/src/chart/index.ts?raw'
 import uiReactLayoutSource from '../../../../packages/ui-react/src/layout/index.ts?raw'
 import uiReactRootSource from '../../../../packages/ui-react/src/index.ts?raw'
 import {
@@ -15,9 +17,14 @@ import {
 import { getComponentContractDoc, getComponentMaturity } from './component-contract'
 import { componentDocMarkdown, componentExportSurface, getComponentDoc } from './component-docs'
 
-// Calendar and AppView have their own entries; with the root entry they export every component family.
-const uiReactApi = { ...uiReactRootApi, ...uiReactCalendarApi, ...uiReactLayoutApi }
-const uiReactIndexSource = `${uiReactRootSource}\n${uiReactCalendarSource}\n${uiReactLayoutSource}`
+// Calendar, Chart and AppView have their own entries; with the root entry they export every component family.
+const uiReactApi = {
+  ...uiReactRootApi,
+  ...uiReactCalendarApi,
+  ...uiReactChartApi,
+  ...uiReactLayoutApi,
+}
+const uiReactIndexSource = `${uiReactRootSource}\n${uiReactCalendarSource}\n${uiReactChartSource}\n${uiReactLayoutSource}`
 
 const componentIndexSources = import.meta.glob<string>(
   '../../../../packages/ui-react/src/components/*/index.ts',
@@ -99,9 +106,11 @@ describe('component catalog inventory', () => {
       expect(item.importPath).toBe(
         item.slug === 'calendar'
           ? '@atom63/ui-react/calendar'
-          : item.slug === 'app-view'
-            ? '@atom63/ui-react/layout'
-            : '@atom63/ui-react'
+          : item.slug === 'chart'
+            ? '@atom63/ui-react/chart'
+            : item.slug === 'app-view'
+              ? '@atom63/ui-react/layout'
+              : '@atom63/ui-react'
       )
       expect(item.summary.length).toBeGreaterThan(20)
       expect(item.usage.length).toBeGreaterThan(20)
@@ -181,7 +190,7 @@ describe('component catalog inventory', () => {
 })
 
 describe('component public exports', () => {
-  it('uses the package root entry for component imports, and their own entries for Calendar and AppView', () => {
+  it('uses the package root entry for component imports, and their own entries for Calendar, Chart and AppView', () => {
     const packageJson = JSON.parse(uiReactPackageSource) as {
       exports: Record<string, string | Record<string, string>>
     }
@@ -199,7 +208,13 @@ describe('component public exports', () => {
       import: './dist/calendar/index.js',
       types: './dist/calendar/index.d.ts',
     })
+    expect(packageJson.exports['./chart']).toMatchObject({
+      '@atom63/source': './src/chart/index.ts',
+      import: './dist/chart/index.js',
+      types: './dist/chart/index.d.ts',
+    })
     expect(uiReactRootSource).not.toContain('./components/calendar')
+    expect(uiReactRootSource).not.toContain('./components/chart')
     expect(uiReactRootSource).not.toContain('./components/app-view')
     expect(
       componentCatalogItems
@@ -208,6 +223,7 @@ describe('component public exports', () => {
     ).toEqual([
       ['calendar', '@atom63/ui-react/calendar'],
       ['app-view', '@atom63/ui-react/layout'],
+      ['chart', '@atom63/ui-react/chart'],
     ])
   })
 

@@ -62,7 +62,12 @@ export {
   AvatarImage,
   AvatarPrimitive,
 } from './components/avatar'
-export type { AvatarProps, AvatarSize } from './components/avatar'
+export type {
+  AvatarBadgeProps,
+  AvatarGroupCountProps,
+  AvatarProps,
+  AvatarSize,
+} from './components/avatar'
 export { Badge } from './components/badge'
 export type { BadgeProps } from './components/badge'
 export {
@@ -100,6 +105,7 @@ export {
   CardMediaOverlayIconButton,
   CardMediaOverlayImage,
   CardMediaOverlayScrim,
+  CardMediaOverlayTopEnd,
   CardMediaOverlayTopRight,
   CardTags,
   CardTitle,
@@ -178,7 +184,7 @@ export {
   CommandSeparator,
   CommandShortcut,
 } from './components/command'
-export type { CommandInputProps } from './components/command'
+export type { CommandDialogPopupProps, CommandInputProps } from './components/command'
 export {
   ConnectedPanel,
   ConnectedPanelBody,
@@ -296,13 +302,18 @@ export {
   EmptyMedia,
   EmptyTitle,
 } from './components/empty'
-export type { EmptyMediaVariant } from './components/empty'
+export type {
+  EmptyErrorDetailLabels,
+  EmptyErrorDetailProps,
+  EmptyMediaVariant,
+} from './components/empty'
 export { FeedbackState } from './components/feedback-state'
 export type {
   FeedbackStateAction,
   FeedbackStateIcon,
   FeedbackStateIconName,
   FeedbackStateKind,
+  FeedbackStateLabels,
   FeedbackStateProps,
   FeedbackStateSize,
 } from './components/feedback-state'
@@ -396,6 +407,18 @@ export { Kbd, KbdGroup } from './components/kbd'
 export type { KbdProps } from './components/kbd'
 export { Label } from './components/label'
 export type { LabelProps } from './components/label'
+export {
+  LayeredScene,
+  LayeredSceneContent,
+  LayeredSceneForeground,
+  LayeredScenePlate,
+  LayeredSceneStage,
+} from './components/layered-scene'
+export type {
+  LayeredSceneForegroundProps,
+  LayeredScenePlateProps,
+  LayeredSceneProps,
+} from './components/layered-scene'
 export { LoadMoreTrigger } from './components/load-more-trigger'
 export type {
   LoadMoreTriggerProps,
@@ -581,6 +604,7 @@ export type {
   SidebarMenuSubButtonProps,
   SidebarProps,
   SidebarProviderProps,
+  SidebarTriggerProps,
 } from './components/sidebar'
 export {
   SidebarNavCollapsibleItem,
@@ -620,6 +644,8 @@ export type {
   TableHeaderProps,
   TableProps,
   TableRowProps,
+  TableSort,
+  TableSortDirection,
 } from './components/table'
 export { Tabs, TabsContent, TabsList, TabsPanel, TabsTab, TabsTrigger } from './components/tabs'
 export type { TabsListProps, TabsPanelProps, TabsTabProps } from './components/tabs'

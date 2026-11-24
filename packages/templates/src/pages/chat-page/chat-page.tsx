@@ -102,6 +102,7 @@ export function ChatPage({
                 className="ms-auto"
                 onClick={onNewChat}
                 size="icon-sm"
+                tone="muted"
                 variant="ghost"
               >
                 <SquarePen aria-hidden />

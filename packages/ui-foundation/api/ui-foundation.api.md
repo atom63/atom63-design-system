@@ -1167,8 +1167,8 @@ export const cardContract: {
     paddings: readonly ["none", "sm", "md", "lg"];
     contentPaddings: readonly ["none", "xs", "sm", "md", "lg"];
     lineClamps: readonly [1, 2, 3];
-    slots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
-    states: readonly ["rest", "hover", "focus-visible", "interactive", "cursor-active"];
+    slots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-end", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
+    states: readonly ["rest", "hover", "pressed", "focus-visible", "interactive", "cursor-active"];
     visualArchetypes: readonly ["surface"];
 };
 
@@ -1188,13 +1188,13 @@ export const cardPaddings: readonly ["none", "sm", "md", "lg"];
 export type CardSlot = (typeof cardSlots)[number];
 
 // @public (undocumented)
-export const cardSlots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
+export const cardSlots: readonly ["card", "card-header", "card-label", "card-media", "card-media-overlay", "card-media-overlay-image", "card-media-overlay-scrim", "card-media-overlay-top-end", "card-media-overlay-top-right", "card-media-overlay-bottom", "card-media-overlay-icon-button", "card-content", "card-title", "card-description", "card-tags", "card-footer", "card-action", "card-cursor-label"];
 
 // @public (undocumented)
 export type CardState = (typeof cardStates)[number];
 
 // @public (undocumented)
-export const cardStates: readonly ["rest", "hover", "focus-visible", "interactive", "cursor-active"];
+export const cardStates: readonly ["rest", "hover", "pressed", "focus-visible", "interactive", "cursor-active"];
 
 // @public (undocumented)
 export type CardVariant = (typeof cardVariants)[number];
@@ -1278,6 +1278,86 @@ export type CarouselVisualArchetype = (typeof carouselVisualArchetypes)[number];
 
 // @public (undocumented)
 export const carouselVisualArchetypes: readonly ["surface", "overlay", "action"];
+
+// @public (undocumented)
+export type ChartColor = (typeof chartColors)[number];
+
+// @public (undocumented)
+export const chartColors: readonly [1, 2, 3, 4, 5];
+
+// @public (undocumented)
+export interface ChartContract {
+    // (undocumented)
+    colors: readonly ChartColor[];
+    // (undocumented)
+    defaultLayout: ChartLayout;
+    // (undocumented)
+    defaultSize: ChartSize;
+    // (undocumented)
+    defaultType: ChartType;
+    // (undocumented)
+    layouts: readonly ChartLayout[];
+    // (undocumented)
+    sizes: readonly ChartSize[];
+    // (undocumented)
+    slots: readonly ChartSlot[];
+    // (undocumented)
+    states: readonly ChartState[];
+    // (undocumented)
+    types: readonly ChartType[];
+    // (undocumented)
+    visualArchetypes: readonly ChartVisualArchetype[];
+}
+
+// @public (undocumented)
+export const chartContract: {
+    defaultType: "line";
+    defaultSize: "md";
+    defaultLayout: "grouped";
+    types: readonly ["line", "area", "bar"];
+    sizes: readonly ["sm", "md"];
+    layouts: readonly ["grouped", "stacked"];
+    colors: readonly [1, 2, 3, 4, 5];
+    slots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle", "chart-empty"];
+    states: readonly ["rest", "current", "empty"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type ChartLayout = (typeof chartLayouts)[number];
+
+// @public (undocumented)
+export const chartLayouts: readonly ["grouped", "stacked"];
+
+// @public (undocumented)
+export type ChartSize = (typeof chartSizes)[number];
+
+// @public (undocumented)
+export const chartSizes: readonly ["sm", "md"];
+
+// @public (undocumented)
+export type ChartSlot = (typeof chartSlots)[number];
+
+// @public (undocumented)
+export const chartSlots: readonly ["chart", "chart-legend", "chart-plot", "chart-y-axis", "chart-x-axis", "chart-tooltip", "chart-table", "chart-table-toggle", "chart-empty"];
+
+// @public (undocumented)
+export type ChartState = (typeof chartStates)[number];
+
+// @public (undocumented)
+export const chartStates: readonly ["rest", "current", "empty"];
+
+// @public (undocumented)
+export type ChartType = (typeof chartTypes)[number];
+
+// @public (undocumented)
+export const chartTypes: readonly ["line", "area", "bar"];
+
+// @public (undocumented)
+export type ChartVisualArchetype = (typeof chartVisualArchetypes)[number];
+
+// @public (undocumented)
+export const chartVisualArchetypes: readonly ["surface"];
 
 // @public (undocumented)
 export interface ChatComposerContract {
@@ -2723,8 +2803,8 @@ export const feedbackStateContract: {
     defaultSize: "panel";
     kinds: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     sizes: readonly ["inline", "panel", "page", "widget"];
-    slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
-    states: readonly ["rest", "busy", "actionable"];
+    slots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-detail", "feedback-state-content"];
+    states: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
     visualArchetypes: readonly ["action"];
 };
 
@@ -2744,21 +2824,13 @@ export const feedbackStateSizes: readonly ["inline", "panel", "page", "widget"];
 export type FeedbackStateSlot = (typeof feedbackStateSlots)[number];
 
 // @public (undocumented)
-export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-content"];
+export const feedbackStateSlots: readonly ["feedback-state", "feedback-state-header", "feedback-state-media", "feedback-state-title", "feedback-state-description", "feedback-state-detail", "feedback-state-content"];
 
 // @public (undocumented)
 export type FeedbackStateState = (typeof feedbackStateStates)[number];
 
-// @public @deprecated (undocumented)
-export type FeedbackStateStateAlias = keyof typeof feedbackStateStateAliases;
-
-// @public
-export const feedbackStateStateAliases: {
-    readonly idle: "rest";
-};
-
 // @public (undocumented)
-export const feedbackStateStates: readonly ["rest", "busy", "actionable"];
+export const feedbackStateStates: readonly ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"];
 
 // @public (undocumented)
 export type FeedbackStateVisualArchetype = (typeof feedbackStateVisualArchetypes)[number];
@@ -2843,7 +2915,7 @@ export interface FormContract {
 
 // @public (undocumented)
 export const formContract: {
-    slots: readonly ["form-item", "form-label", "form-control", "form-description", "form-message"];
+    slots: readonly ["form-item", "form-label", "form-description", "form-message"];
     states: readonly ["rest", "invalid"];
     visualArchetypes: readonly ["field"];
 };
@@ -2852,7 +2924,7 @@ export const formContract: {
 export type FormSlot = (typeof formSlots)[number];
 
 // @public (undocumented)
-export const formSlots: readonly ["form-item", "form-label", "form-control", "form-description", "form-message"];
+export const formSlots: readonly ["form-item", "form-label", "form-description", "form-message"];
 
 // @public (undocumented)
 export type FormState = (typeof formStates)[number];
@@ -3388,6 +3460,65 @@ export type LabelVisualArchetype = (typeof labelVisualArchetypes)[number];
 export const labelVisualArchetypes: readonly ["field"];
 
 // @public (undocumented)
+export interface LayeredSceneContract {
+    // (undocumented)
+    defaultPlacement: LayeredScenePlacement;
+    // (undocumented)
+    defaultWidth: LayeredSceneWidth;
+    // (undocumented)
+    placements: readonly LayeredScenePlacement[];
+    // (undocumented)
+    slots: readonly LayeredSceneSlot[];
+    // (undocumented)
+    states: readonly LayeredSceneState[];
+    // (undocumented)
+    visualArchetypes: readonly LayeredSceneVisualArchetype[];
+    // (undocumented)
+    widths: readonly LayeredSceneWidth[];
+}
+
+// @public (undocumented)
+export const layeredSceneContract: {
+    defaultPlacement: "center-bottom";
+    defaultWidth: "wide";
+    placements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+    widths: readonly ["wide", "half"];
+    slots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+    states: readonly ["rest"];
+    visualArchetypes: readonly ["surface"];
+};
+
+// @public (undocumented)
+export type LayeredScenePlacement = (typeof layeredScenePlacements)[number];
+
+// @public (undocumented)
+export const layeredScenePlacements: readonly ["center-bottom", "end-bottom", "start-bottom"];
+
+// @public (undocumented)
+export type LayeredSceneSlot = (typeof layeredSceneSlots)[number];
+
+// @public (undocumented)
+export const layeredSceneSlots: readonly ["layered-scene", "layered-scene-content", "layered-scene-stage", "layered-scene-foreground"];
+
+// @public (undocumented)
+export type LayeredSceneState = (typeof layeredSceneStates)[number];
+
+// @public (undocumented)
+export const layeredSceneStates: readonly ["rest"];
+
+// @public (undocumented)
+export type LayeredSceneVisualArchetype = (typeof layeredSceneVisualArchetypes)[number];
+
+// @public (undocumented)
+export const layeredSceneVisualArchetypes: readonly ["surface"];
+
+// @public (undocumented)
+export type LayeredSceneWidth = (typeof layeredSceneWidths)[number];
+
+// @public (undocumented)
+export const layeredSceneWidths: readonly ["wide", "half"];
+
+// @public (undocumented)
 export interface LoadMoreTriggerContract {
     // (undocumented)
     defaultVariant: LoadMoreTriggerVariant;
@@ -3704,9 +3835,9 @@ export const osSystems: readonly ["macos", "windows"];
 // @public (undocumented)
 export interface PaginationContract {
     // (undocumented)
-    defaultLinkSize: ButtonSize;
+    defaultLinkSize: PaginationLinkSize;
     // (undocumented)
-    linkSizes: readonly ButtonSize[];
+    linkSizes: readonly PaginationLinkSize[];
     // (undocumented)
     slots: readonly PaginationSlot[];
     // (undocumented)
@@ -3718,11 +3849,17 @@ export interface PaginationContract {
 // @public (undocumented)
 export const paginationContract: {
     defaultLinkSize: "icon";
-    linkSizes: readonly ["xs", "sm", "md", "lg", "xl", "tile", "icon-xs", "icon-sm", "icon", "icon-lg", "icon-xl"];
+    linkSizes: readonly ["xs", "sm", "md", "icon-xs", "icon-sm", "icon"];
     slots: readonly ["pagination", "pagination-content", "pagination-item", "pagination-link", "pagination-ellipsis"];
-    states: readonly ["rest", "current"];
+    states: readonly ["rest", "current", "disabled"];
     visualArchetypes: readonly ["action"];
 };
+
+// @public (undocumented)
+export type PaginationLinkSize = (typeof paginationLinkSizes)[number];
+
+// @public (undocumented)
+export const paginationLinkSizes: readonly ["xs", "sm", "md", "icon-xs", "icon-sm", "icon"];
 
 // @public (undocumented)
 export type PaginationSlot = (typeof paginationSlots)[number];
@@ -3734,7 +3871,7 @@ export const paginationSlots: readonly ["pagination", "pagination-content", "pag
 export type PaginationState = (typeof paginationStates)[number];
 
 // @public (undocumented)
-export const paginationStates: readonly ["rest", "current"];
+export const paginationStates: readonly ["rest", "current", "disabled"];
 
 // @public (undocumented)
 export type PaginationVisualArchetype = (typeof paginationVisualArchetypes)[number];
@@ -4851,9 +4988,9 @@ export const sheetContract: {
     defaultSide: "right";
     defaultVariant: "default";
     footerVariants: readonly ["default", "bare"];
-    sides: readonly ["right", "left", "top", "bottom"];
+    sides: readonly ["right", "left", "top", "bottom", "inline-start", "inline-end"];
     slots: readonly ["sheet", "sheet-portal", "sheet-trigger", "sheet-backdrop", "sheet-viewport", "sheet-popup", "sheet-close", "sheet-close-button", "sheet-header", "sheet-title", "sheet-description", "sheet-panel", "sheet-footer"];
-    states: readonly ["closed", "open", "starting", "ending"];
+    states: readonly ["closed", "open", "starting", "ending", "focus-visible"];
     variants: readonly ["default", "inset"];
     visualArchetypes: readonly ["overlay", "surface", "trigger", "action"];
 };
@@ -4868,7 +5005,7 @@ export const sheetFooterVariants: readonly ["default", "bare"];
 export type SheetSide = (typeof sheetSides)[number];
 
 // @public (undocumented)
-export const sheetSides: readonly ["right", "left", "top", "bottom"];
+export const sheetSides: readonly ["right", "left", "top", "bottom", "inline-start", "inline-end"];
 
 // @public (undocumented)
 export type SheetSlot = (typeof sheetSlots)[number];
@@ -4880,7 +5017,7 @@ export const sheetSlots: readonly ["sheet", "sheet-portal", "sheet-trigger", "sh
 export type SheetState = (typeof sheetStates)[number];
 
 // @public (undocumented)
-export const sheetStates: readonly ["closed", "open", "starting", "ending"];
+export const sheetStates: readonly ["closed", "open", "starting", "ending", "focus-visible"];
 
 // @public (undocumented)
 export type SheetVariant = (typeof sheetVariants)[number];
@@ -5270,7 +5407,15 @@ export type SwitchVisualArchetype = (typeof switchVisualArchetypes)[number];
 export const switchVisualArchetypes: readonly ["choice"];
 
 // @public (undocumented)
+export type TableAlign = (typeof tableAligns)[number];
+
+// @public (undocumented)
+export const tableAligns: readonly ["start", "end"];
+
+// @public (undocumented)
 export interface TableContract {
+    // (undocumented)
+    aligns: readonly TableAlign[];
     // (undocumented)
     defaultSize: TableSize;
     // (undocumented)
@@ -5301,8 +5446,9 @@ export const tableContract: {
     variants: readonly ["default", "plain"];
     sizes: readonly ["md", "sm"];
     stickyEdges: readonly ["start", "end"];
-    states: readonly ["rest", "row-hover", "row-selected"];
-    slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
+    aligns: readonly ["start", "end"];
+    states: readonly ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"];
+    slots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption", "table-sort-button"];
     visualArchetypes: readonly ["surface"];
     tones: readonly ["neutral", "accent"];
 };
@@ -5325,13 +5471,13 @@ export const tableSizes: readonly ["md", "sm"];
 export type TableSlot = (typeof tableSlots)[number];
 
 // @public (undocumented)
-export const tableSlots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption"];
+export const tableSlots: readonly ["table-container", "table", "table-header", "table-body", "table-footer", "table-row", "table-head", "table-cell", "table-caption", "table-sort-button"];
 
 // @public (undocumented)
 export type TableState = (typeof tableStates)[number];
 
 // @public (undocumented)
-export const tableStates: readonly ["rest", "row-hover", "row-selected"];
+export const tableStates: readonly ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"];
 
 // @public (undocumented)
 export type TableStickyEdge = (typeof tableStickyEdges)[number];
@@ -5448,6 +5594,8 @@ export interface TextareaContract {
     // (undocumented)
     defaultSize: TextareaSize;
     // (undocumented)
+    defaultVariant: TextareaVariant;
+    // (undocumented)
     sizes: readonly TextareaSize[];
     // (undocumented)
     slots: readonly TextareaSlot[];
@@ -5456,13 +5604,17 @@ export interface TextareaContract {
     // (undocumented)
     tokenSlots: readonly TextareaTokenSlot[];
     // (undocumented)
+    variants: readonly TextareaVariant[];
+    // (undocumented)
     visualArchetypes: readonly TextareaVisualArchetype[];
 }
 
 // @public (undocumented)
 export const textareaContract: {
     defaultSize: "md";
+    defaultVariant: "default";
     sizes: readonly ["sm", "md", "lg"];
+    variants: readonly ["default", "filled", "plain"];
     states: readonly ["rest", "hover", "focus", "disabled", "invalid"];
     slots: readonly ["textarea-control", "textarea"];
     tokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.paddingInline", "field.paddingBlock", "field.fontSize", "field.minHeight"];
@@ -5492,6 +5644,12 @@ export type TextareaTokenSlot = (typeof textareaTokenSlots)[number];
 
 // @public (undocumented)
 export const textareaTokenSlots: readonly ["field.background", "field.border", "field.radius", "field.shadow", "field.focusRing", "field.focusBorder", "field.paddingInline", "field.paddingBlock", "field.fontSize", "field.minHeight"];
+
+// @public (undocumented)
+export type TextareaVariant = (typeof textareaVariants)[number];
+
+// @public (undocumented)
+export const textareaVariants: readonly ["default", "filled", "plain"];
 
 // @public (undocumented)
 export type TextareaVisualArchetype = (typeof textareaVisualArchetypes)[number];
@@ -5963,7 +6121,7 @@ export const visualArchetypes: {
         readonly id: "surface";
         readonly label: "Static content surfaces";
         readonly description: "In-flow containers and content surfaces that do not inherently manipulate state.";
-        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate"];
+        readonly components: readonly ["Card", "Frame", "Alert", "ConnectedPanel", "DialogPopup", "DrawerContent", "Empty", "Table", "List", "Toaster", "ChatMessage", "ChatSteps", "Amount", "AppView", "Message", "ArtPlate", "LayeredScene", "Chart"];
         readonly contracts: readonly ["surface"];
     };
 };

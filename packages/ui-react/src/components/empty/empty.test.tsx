@@ -40,6 +40,13 @@ describe('Empty', () => {
     )
   })
 
+  it('renders EmptyTitle as a heading, level 3 unless set', () => {
+    const { getByRole, rerender } = render(<EmptyTitle>Nothing here</EmptyTitle>)
+    expect(getByRole('heading', { level: 3, name: 'Nothing here' })).toBeInTheDocument()
+    rerender(<EmptyTitle level={2}>Nothing here</EmptyTitle>)
+    expect(getByRole('heading', { level: 2, name: 'Nothing here' })).toBeInTheDocument()
+  })
+
   it('defaults EmptyMedia to the default variant and honors the icon variant', () => {
     const { container, rerender } = render(<EmptyMedia />)
     expect(container.querySelector('.a63-Empty-media')).toHaveAttribute('data-variant', 'default')
@@ -63,5 +70,17 @@ describe('Empty', () => {
     expect(container.querySelector('.a63-CopyButton')).not.toBeNull()
     fireEvent.click(getByRole('button', { name: 'Hide details' }))
     expect(queryByText('Boom happened')).toBeNull()
+  })
+
+  it('lets labels replace the toggle and copy strings', () => {
+    const { getByRole } = render(
+      <EmptyErrorDetail
+        error="Boom"
+        labels={{ copy: 'Fehler', hideDetails: 'Weniger', showDetails: 'Details' }}
+      />
+    )
+    fireEvent.click(getByRole('button', { name: 'Details' }))
+    expect(getByRole('button', { name: 'Weniger' })).toBeInTheDocument()
+    expect(getByRole('button', { name: /Fehler/ })).toBeInTheDocument()
   })
 })

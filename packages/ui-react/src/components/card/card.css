@@ -27,6 +27,8 @@
   backdrop-filter: var(--a63-surface-backdrop);
   box-shadow: var(--a63-surface-inner-shadow, none), var(--a63-surface-shadow);
   color: var(--a63-text-primary);
+  /* A card rendered as a link reads as a card, not as underlined link text. */
+  text-decoration: none;
 }
 
 /* ── Padding scale (root chrome inset that drives concentric media) ─────── */
@@ -74,14 +76,37 @@
     border-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
 
-.a63-Card[data-variant='interactive']:hover,
-.a63-Card[data-variant='overlay']:hover {
+/* The lift follows a fine pointer's hover, or keyboard focus on the card or on the
+   CardLink around it. Touch gets no hover lift: a tap would leave it stuck. */
+@media (hover: hover) and (pointer: fine) {
+  .a63-Card[data-variant='interactive']:hover,
+  .a63-Card[data-variant='overlay']:hover {
+    z-index: 10;
+    transform: translateY(-4px);
+    border-color: var(--a63-border-control);
+    box-shadow:
+      var(--a63-surface-shadow),
+      0 12px 24px -8px color-mix(in oklch, var(--a63-shadow-color) 22%, transparent);
+  }
+}
+.a63-Card[data-variant='interactive']:focus-visible,
+.a63-Card[data-variant='overlay']:focus-visible,
+.a63-CardLink:focus-visible > .a63-Card:is([data-variant='interactive'], [data-variant='overlay']) {
   z-index: 10;
   transform: translateY(-4px);
   border-color: var(--a63-border-control);
   box-shadow:
     var(--a63-surface-shadow),
     0 12px 24px -8px color-mix(in oklch, var(--a63-shadow-color) 22%, transparent);
+}
+/* Pressed: the lift settles to half, on any pointer. */
+.a63-Card:is([data-variant='interactive'], [data-variant='overlay']):is(:active, [data-pressed]),
+.a63-CardLink:active > .a63-Card:is([data-variant='interactive'], [data-variant='overlay']) {
+  transform: translateY(-2px);
+}
+.a63-Card:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid var(--a63-focus-ring);
+  outline-offset: 2px;
 }
 
 /* ghost: no shell — a scaled pseudo hover wash instead */
@@ -107,7 +132,14 @@
   pointer-events: none;
 }
 
-.a63-Card[data-variant='ghost']:hover::before {
+@media (hover: hover) and (pointer: fine) {
+  .a63-Card[data-variant='ghost']:hover::before {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.a63-Card[data-variant='ghost']:focus-visible::before,
+.a63-CardLink:focus-visible > .a63-Card[data-variant='ghost']::before {
   opacity: 1;
   transform: scale(1);
 }
@@ -193,6 +225,7 @@
   );
 }
 
+.a63-Card-media-overlay-top-end,
 .a63-Card-media-overlay-top-right {
   position: absolute;
   top: 0.75rem;
@@ -210,22 +243,6 @@
   justify-content: space-between;
   gap: var(--a63-space-3);
   padding: var(--a63-space-4);
-}
-
-.a63-Card-media-overlay-icon-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: var(--radius-pill);
-  background-color: color-mix(in oklch, var(--a63-on-media-foreground) 10%, transparent);
-  color: var(--a63-on-media-foreground);
-  backdrop-filter: blur(4px);
-}
-.a63-Card-media-overlay-icon-button svg {
-  width: 1rem;
-  height: 1rem;
 }
 
 /* ── Content / text ────────────────────────────────────────────────────── */
@@ -258,14 +275,14 @@
 
 .a63-Card-title {
   color: var(--a63-text-primary);
-  font-size: 1.125rem;
+  font-size: var(--typography-xl-font-size);
   font-weight: 700;
   line-height: 1.2;
 }
 
 .a63-Card-description {
   color: var(--a63-text-secondary);
-  font-size: 0.875rem;
+  font-size: var(--typography-sm-font-size);
   line-height: 1.4;
 }
 
@@ -341,7 +358,7 @@
   outline: none;
 }
 .a63-CardLink:focus-visible {
-  outline: 2px solid var(--a63-focus-ring);
+  outline: var(--a63-control-focus-ring-width) solid var(--a63-focus-ring);
 }
 
 /* Responsive padding: once the CARD is wide enough, the `sm` step wins
@@ -393,8 +410,10 @@
 .a63-Card-media[data-hover-scale] > * {
   transition: transform var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
 }
-.a63-Card:hover .a63-Card-media[data-hover-scale] > * {
-  transform: scale(1.03);
+@media (hover: hover) and (pointer: fine) {
+  .a63-Card:hover .a63-Card-media[data-hover-scale] > * {
+    transform: scale(1.03);
+  }
 }
 
 /* ── Cursor label (pointer-following pill) ─────────────────────────────── */
@@ -413,9 +432,10 @@
   align-items: center;
   gap: var(--a63-space-1);
   padding: var(--a63-space-1) var(--a63-space-2);
+  border: var(--a63-control-border-width) solid var(--a63-on-media-border);
   border-radius: var(--radius-pill);
-  background-color: var(--a63-text-primary);
-  color: var(--a63-surface-page);
+  background-color: var(--a63-on-media-surface-strong);
+  color: var(--a63-on-media-foreground);
   font-size: 0.75rem;
   font-weight: 500;
   white-space: nowrap;

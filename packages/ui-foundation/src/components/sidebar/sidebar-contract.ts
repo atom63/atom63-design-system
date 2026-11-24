@@ -6,9 +6,10 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 // Faithful to prod @atom63/ui sidebar.tsx: the Sidebar has three variant unions (side / variant /
 // collapsible) plus the two menu-button ramps (variant + size) and the sub-button size ramp. The
 // many structural parts each get a data-slot; these are enumerated as the contract's slots so
-// consumers can target them. Menu buttons and sub-buttons take tone (neutral/accent) for their
-// active state: neutral is the hover plate with primary text, accent the opt-in primary wash with
-// accent text.
+// consumers can target them. The side is logical: 'left' is the inline start, so the sidebar sits on
+// the right under dir="rtl" ('right' is the inline end). Menu buttons and sub-buttons take tone
+// (neutral/accent) for their active state: neutral is the hover plate with primary text, accent the
+// opt-in primary wash with accent text.
 
 export const sidebarSides = ['left', 'right'] as const
 export const sidebarVariants = ['sidebar', 'floating', 'inset'] as const

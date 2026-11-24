@@ -1,4 +1,5 @@
 import { gzipSync } from 'node:zlib'
+import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -6,8 +7,9 @@ import { build } from 'esbuild'
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
-// Two checks. The first is the combined gzip of every published JS file. The
-// second, below it, is what a consumer pays for one import from the root.
+// Three checks. The first is the combined gzip of every published JS file. The
+// second, below it, is what a consumer pays for one import from the root. The
+// third is the same per-import cost for @atom63/mdx entries.
 //
 // Combined gzip of every published JS entry. The media lightbox lives on
 // `./media` (~23 kB gzip of its own), and has grown deliberately: 64 kB was the
@@ -128,7 +130,26 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // comments removed, which measured 92.1 kB before the split and 97.8 kB after.
 // The +5.7 kB is the import and export lines between the files. The budget
 // stays at 100 kB.
-const gzipBudgetBytes = 100 * 1024
+//
+// 100 kB held 98.5 kB. The art-landing parts take it to 100.1, so it moves to
+// 102. ArtPlate and Image's native <picture> path (srcSet, sizes and
+// art-directed sources) add 1.2 kB; LayeredScene, its copy, stage and inert
+// foreground cut-out add 0.4 kB. They are what a plate-first landing page or a
+// portfolio hero needs, and a consumer that does not import them drops them.
+// 102 kB held 100.1 kB. Chart takes it to 103.1, so it moves to 104. The
+// +3.0 kB is a dependency-free SVG chart: line, area and bar marks with a tick
+// scale, the pointer and arrow-key category picker, the tooltip and live
+// readout, and the data table and its toggle. It ships on its own entry,
+// `@atom63/ui-react/chart`, like `./calendar`; this total counts every entry,
+// so the subpath does not lower it. A consumer that does not import Chart
+// drops it.
+// Merged with Table sorting (#335), which Chart reuses, the total is 104.0 kB; the
+// budget keeps about 2% headroom at 106.
+// Readiness fix round 6 (#348-#353: Popover anchors, Toaster hydration and
+// slots, Select keyboard handling, Item list semantics, Chart empty, loading
+// and touch states) brings the total to 106.7-107.1 kB; the budget keeps about 1%
+// headroom at 108.
+const gzipBudgetBytes = 108 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
@@ -173,32 +194,99 @@ const importBudgets = {
   Dialog: 25,
   Toaster: 23,
 }
-const rootEntry = path.join(distDirectory, 'index.js')
-for (const [name, budgetKB] of Object.entries(importBudgets)) {
+// esbuild splits the bundle and only the chunks the entry imports statically
+// count: a block that loads shiki or mermaid with import() pays for them on
+// first use, not on import.
+async function importCost(entryFile, name) {
   const result = await build({
     stdin: {
-      contents: `export { ${name} } from ${JSON.stringify(rootEntry)}`,
-      resolveDir: distDirectory,
+      contents: `export { ${name} } from ${JSON.stringify(entryFile)}`,
+      resolveDir: path.dirname(entryFile),
       loader: 'js',
     },
+    absWorkingDir: workspaceRoot,
     bundle: true,
     external: ['react', 'react-dom', 'react/jsx-runtime', 'react-hook-form'],
     format: 'esm',
     logLevel: 'error',
+    metafile: true,
     minify: true,
+    outdir: path.join(workspaceRoot, '.size-check'),
+    splitting: true,
     write: false,
   })
-  const bytes = gzipSync(result.outputFiles[0].contents).byteLength
+  const outputs = result.metafile.outputs
+  const staticFiles = new Set()
+  const visit = file => {
+    if (staticFiles.has(file)) return
+    staticFiles.add(file)
+    for (const { kind, path: imported } of outputs[file].imports) {
+      if (kind === 'import-statement' && outputs[imported]) visit(imported)
+    }
+  }
+  visit(Object.keys(outputs).find(file => outputs[file].entryPoint === '<stdin>'))
+  const absolute = new Set([...staticFiles].map(file => path.join(workspaceRoot, file)))
+  return result.outputFiles
+    .filter(file => absolute.has(file.path))
+    .reduce((bytes, file) => bytes + gzipSync(file.contents).byteLength, 0)
+}
+
+async function checkImport(label, entryFile, name, budgetKB) {
+  const bytes = await importCost(entryFile, name)
   const budgetBytes = budgetKB * 1024
   if (bytes > budgetBytes) {
-    failures.push(`import { ${name} }: ${kB(bytes)} gzip exceeds ${kB(budgetBytes)} budget`)
+    failures.push(`${label}: ${kB(bytes)} gzip exceeds ${kB(budgetBytes)} budget`)
   }
-  console.log(`import { ${name} }: ${kB(bytes)} gzip / ${kB(budgetBytes)} budget`)
+  console.log(`${label}: ${kB(bytes)} gzip / ${kB(budgetBytes)} budget`)
+}
+
+const rootEntry = path.join(distDirectory, 'index.js')
+for (const [name, budgetKB] of Object.entries(importBudgets)) {
+  await checkImport(`import { ${name} }`, rootEntry, name, budgetKB)
+}
+
+// Chart ships on its own entry, `@atom63/ui-react/chart` (like `./calendar`), so it is
+// measured from there: 15.6 kB after Table sorting (#335), mostly the Button and Table
+// it reuses. 18 kB leaves about 15% headroom.
+await checkImport(
+  'import { Chart } from @atom63/ui-react/chart',
+  path.join(distDirectory, 'chart/index.js'),
+  'Chart',
+  18
+)
+
+// The same per-import check for @atom63/mdx. Its entries were built into
+// shared chunks until they moved to one build file per module, as ui-react did
+// above; before that, isExternalMdxHref (a URL helper) cost 160.9 kB,
+// Accordion 100.8, CreditsBlock 68.0 and MDXContentProvider 184.0, because
+// every import kept Base UI, motion and sonner. Measured after the split:
+// isExternalMdxHref 0.8 kB, Accordion 19.7 (Base UI's accordion and
+// tailwind-merge), CreditsBlock 68.0 (motion, already its own entry) and
+// MDXContentProvider 184.5, which registers every block on its default map.
+// Each budget leaves about 14-17% headroom.
+const mdxDistDirectory = path.join(workspaceRoot, 'packages/mdx/dist')
+const mdxImportBudgets = [
+  ['@atom63/mdx', 'index.js', 'isExternalMdxHref', 1.5],
+  ['@atom63/mdx', 'index.js', 'MDXContentProvider', 212],
+  ['@atom63/mdx/blocks', 'blocks/index.js', 'Accordion', 23],
+  ['@atom63/mdx/blocks/credits-block', 'blocks/credits-block-entry.js', 'CreditsBlock', 78],
+]
+if (existsSync(path.join(mdxDistDirectory, 'index.js'))) {
+  for (const [specifier, entry, name, budgetKB] of mdxImportBudgets) {
+    await checkImport(
+      `import { ${name} } from '${specifier}'`,
+      path.join(mdxDistDirectory, entry),
+      name,
+      budgetKB
+    )
+  }
+} else {
+  failures.push('@atom63/mdx: build output is missing')
 }
 
 if (failures.length > 0) {
-  console.error(`UI React bundle-size check failed:\n  ${failures.join('\n  ')}`)
+  console.error(`Bundle-size check failed:\n  ${failures.join('\n  ')}`)
   process.exit(1)
 }
 
-console.log('UI React bundle-size check passed')
+console.log('Bundle-size check passed')

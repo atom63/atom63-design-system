@@ -73,8 +73,18 @@ export function Input({
   }
 
   return (
+    // mousedown only moves focus to the text field, the real control; the
+    // wrapper's hit strip (input.css) is part of the field's target.
+    // eslint-disable-next-line jsx-a11y/no-static-element-interactions -- the input remains the sole interactive control
     <span
       className={cn('a63-Input', className)}
+      onMouseDown={event => {
+        if (event.target !== event.currentTarget || disabled) {
+          return
+        }
+        event.preventDefault()
+        event.currentTarget.querySelector<HTMLInputElement>('.a63-Input-field')?.focus()
+      }}
       data-disabled={disabled ? '' : undefined}
       data-invalid={isInvalid ? '' : undefined}
       data-shadow={shadow ? undefined : 'false'}
