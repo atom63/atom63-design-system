@@ -2515,8 +2515,8 @@ export interface DestinationLinkContract {
 
 // @public (undocumented)
 export const destinationLinkContract: {
-    defaultVariant: "inline";
-    variants: readonly ["inline", "card"];
+    defaultVariant: "plain";
+    variants: readonly ["plain", "inline"];
     kinds: readonly ["internal", "external"];
     slots: readonly ["destination-link", "destination-indicator"];
     states: readonly ["rest", "focus-visible"];

@@ -40,10 +40,11 @@ export const External: Story = {
 /* Internal in dark mode, with the global on <html>, so portals are dark too. */
 export const Dark: Story = { ...Internal, globals: { mode: 'dark' } }
 
-export const CardTitle: Story = {
+/* A text link in running prose: the one variant that draws an underline. */
+export const Inline: Story = {
   args: {
     ...Internal.args,
-    variant: 'card',
+    variant: 'inline',
   },
 }
 
@@ -55,11 +56,11 @@ export const Themes: Story = {
         (['light', 'dark'] as const).map(mode => (
           <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>
             <p style={{ background: 'var(--a63-surface-page)', margin: 0, padding: '0.75rem' }}>
-              <DestinationLink href="#internal" kind="internal">
+              <DestinationLink href="#internal" kind="internal" variant="inline">
                 View project
                 <DestinationIndicator className="size-4" kind="internal" />
               </DestinationLink>{' '}
-              <DestinationLink href="https://example.com" kind="external">
+              <DestinationLink href="https://example.com" kind="external" variant="inline">
                 View source
                 <DestinationIndicator className="size-4" kind="external" />
               </DestinationLink>

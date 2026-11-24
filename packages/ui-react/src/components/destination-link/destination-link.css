@@ -1,19 +1,21 @@
 /*
- * DestinationLink recipe: an inline text link, drawn like the system's other
- * links (field and empty descriptions, Button `link`): primary text with an
- * underline, accent text on hover, and an outline focus ring. Card links keep
- * hover and focus feedback and rely on their surrounding surface for context.
+ * DestinationLink recipe. The default `plain` variant draws no underline: it
+ * is the link behind a card, a title, an icon button or a destination
+ * indicator, and the surface around it carries the cue. The `inline` variant
+ * is a text link in running prose, drawn like the system's other links (field
+ * and empty descriptions, Button `link`) with an underline. Both get primary
+ * text, accent text on hover, and an outline focus ring.
  */
 
 .a63-DestinationLink {
   border-radius: var(--radius-sm);
   color: var(--a63-text-primary);
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  text-decoration-line: none;
 }
 
-.a63-DestinationLink[data-variant='card'] {
-  text-decoration-line: none;
+.a63-DestinationLink[data-variant='inline'] {
+  text-decoration-line: underline;
+  text-underline-offset: 4px;
 }
 
 .a63-DestinationLink:hover {

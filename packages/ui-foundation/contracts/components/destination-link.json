@@ -8,13 +8,13 @@
       "exportName": "destinationKinds",
       "typeName": "DestinationKind"
     },
-    "variants": ["inline", "card"],
+    "variants": ["plain", "inline"],
     "states": ["rest", "focus-visible"],
     "slots": ["destination-link", "destination-indicator"],
     "visualArchetypes": ["action"]
   },
   "contract": {
-    "defaultVariant": "inline",
+    "defaultVariant": "plain",
     "variants": {
       "$ref": "#/lists/variants"
     },
@@ -35,7 +35,7 @@
     "description": "Whether a link stays in the product or leaves it, and how it is presented on the web. On iOS the kind picks NavigationLink or Link.",
     "axes": {
       "kind": ["internal", "external"],
-      "variant": ["inline", "card"]
+      "variant": ["plain", "inline"]
     },
     "platforms": {
       "web": {
@@ -55,11 +55,11 @@
           "variant": {
             "list": "variants",
             "map": {
+              "plain": {
+                "variant": "plain"
+              },
               "inline": {
                 "variant": "inline"
-              },
-              "card": {
-                "variant": "card"
               }
             },
             "extensions": {}
