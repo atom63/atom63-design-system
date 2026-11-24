@@ -8,11 +8,16 @@
       "exportName": "destinationKinds",
       "typeName": "DestinationKind"
     },
+    "variants": ["inline", "card"],
     "states": ["rest", "focus-visible"],
     "slots": ["destination-link", "destination-indicator"],
     "visualArchetypes": ["action"]
   },
   "contract": {
+    "defaultVariant": "inline",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
     "kinds": {
       "$ref": "#/lists/kinds"
     },
@@ -27,9 +32,10 @@
     }
   },
   "intent": {
-    "description": "What a destination link is, independent of any platform: whether it stays in the product or leaves it. iOS has no Atom63UI enum for it: the kind picks NavigationLink or Link.",
+    "description": "Whether a link stays in the product or leaves it, and how it is presented on the web. On iOS the kind picks NavigationLink or Link.",
     "axes": {
-      "kind": ["internal", "external"]
+      "kind": ["internal", "external"],
+      "variant": ["inline", "card"]
     },
     "platforms": {
       "web": {
@@ -42,6 +48,18 @@
               },
               "external": {
                 "kind": "external"
+              }
+            },
+            "extensions": {}
+          },
+          "variant": {
+            "list": "variants",
+            "map": {
+              "inline": {
+                "variant": "inline"
+              },
+              "card": {
+                "variant": "card"
               }
             },
             "extensions": {}

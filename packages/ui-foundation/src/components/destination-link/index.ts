@@ -4,6 +4,7 @@ export {
   destinationLinkContract,
   destinationLinkSlots,
   destinationLinkStates,
+  destinationLinkVariants,
   destinationLinkVisualArchetypes,
 } from './destination-link-contract'
 export type {
@@ -11,5 +12,6 @@ export type {
   DestinationLinkContract,
   DestinationLinkSlot,
   DestinationLinkState,
+  DestinationLinkVariant,
   DestinationLinkVisualArchetype,
 } from './destination-link-contract'

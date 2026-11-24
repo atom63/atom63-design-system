@@ -40,6 +40,13 @@ export const External: Story = {
 /* Internal in dark mode, with the global on <html>, so portals are dark too. */
 export const Dark: Story = { ...Internal, globals: { mode: 'dark' } }
 
+export const CardTitle: Story = {
+  args: {
+    ...Internal.args,
+    variant: 'card',
+  },
+}
+
 export const Themes: Story = {
   args: { href: '#internal', kind: 'internal' },
   render: () => (

@@ -11,6 +11,8 @@ export type { DestinationKind }
 
 export type DestinationLinkProps = Omit<useRender.ComponentProps<'a'>, 'rel' | 'target'> & {
   kind: DestinationKind
+  /** Use card for a card title or a linked card with its own destination cue. */
+  variant?: (typeof destinationLinkContract.variants)[number]
 }
 
 /**
@@ -22,6 +24,7 @@ export function DestinationLink({
   children,
   kind,
   render,
+  variant,
   ...props
 }: DestinationLinkProps): React.ReactElement {
   const external = kind === 'external'
@@ -54,6 +57,7 @@ export function DestinationLink({
     render: external ? undefined : render,
     state: {
       slot: 'destination-link',
+      variant,
     },
   })
 }
