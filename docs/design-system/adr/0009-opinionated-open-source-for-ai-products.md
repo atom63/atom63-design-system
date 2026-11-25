@@ -48,11 +48,17 @@ settled.
    only the axis values its contract lists, spacing, states and accessibility correct by default,
    and checks that catch misuse (`check:craft`, the AGENTS.md rules, type errors on unknown axis
    values). The test for a new API is whether an agent can use it wrongly; if it can, narrow it.
-4. **Extension is at the token layer (assumption).** Products extend Atom63 through the theme
-   axes already public under N4: brand colour, radius, density, font and the theme presets.
-   Components are extended by composition and slots, not by editing recipes. The maintainer was
-   not sure about this point, so it stays an assumption until a dogfood consumer needs more (see
-   "Open questions").
+4. **Extension is at the token layer, through a small public tier.** Products extend Atom63
+   through public tokens and the theme axes already public under N4: brand colour, radius,
+   density, font and the theme presets. Adopters do not add component variants; they compose
+   components and use slots, and new behaviour comes back to the system as an issue. Token-layer
+   theming is enough only with three additions, planned in the
+   [token optimization plan](../token-optimization-plan.md) beside F1:
+   - a small, stable public token tier (shadcn role names under N3), placed in a cascade layer so
+     a consumer's override always wins, with every other token marked internal;
+   - a brand generated from one seed colour (`brand="#hex"` and `atom63 brand`), with b1–b6 kept
+     as preset seeds from one source;
+   - every component contract listing its token slots, checked against its recipe.
 5. **Dogfood and open source run in parallel, not in sequence.**
    - Dogfood: OS63, the website, learn and the documentation consume the published packages, each
      a different form (an OS-style shell, a portfolio site, a tutorial app, a docs site).
@@ -160,8 +166,11 @@ What it leaves to Atom63:
 
 ## Open questions
 
-1. **Extension.** Is token-layer theming enough, or do adopters need to add their own component
-   variants? This decides whether contracts need an extension point.
+1. **Extension. Decided 2026-11-25:** token-layer theming, with no consumer-added component
+   variants, so contracts get no extension point. The 2026-11-24 token review found the core
+   sound but nothing marked stable, overrides that depend on load order, eight hand-written
+   lists per brand and token slots on 8 of 80 contracts. Item 4 and the
+   [token optimization plan](../token-optimization-plan.md) record the fix (phases T1–T6).
 2. **Which components go into the registry as source first.** Proposed: the `stable` ones and the
    chat components; the rest stay npm-only until F1.
 3. **Pattern packages (N12).** Should `@atom63/agent` and the chat components move out of

@@ -23,7 +23,7 @@
 7. **定位（2026-11-24，ADR 0009）：** opinionated 的开源设计系统，为做 AI 产品而生，维护者从 token 到组件、AI 产品 pattern（chat、agent runtime、widgets、inform）整条链自己掌控。
    - 差异点是 ownership，不是品牌辨识度，也不是技术栈：Atom63 本身就基于 Tailwind 和 Base UI。
    - opinion 落在 API 和默认值上：每个组件只有一种正确用法，间距、状态、a11y 默认就对，agent 很难用错。
-   - 扩展靠 token 层的主题轴（品牌色、radius、density、font、主题 preset）。这一条是假设，待 dogfood 验证。
+   - 扩展只走 token 层：公开 token 和主题轴（品牌色、radius、density、font、主题 preset），消费方不加组件 variant。2026-11-25 定下，前提是补上公开 token 层、种子色品牌和组件 token 槽，见 [`token-optimization-plan.md`](./token-optimization-plan.md)（T1–T6）。
 
 ## 结论先行
 
