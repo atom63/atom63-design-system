@@ -32,6 +32,7 @@ import { mdxBlockPropsMarkdown } from '../src/lib/mdx-block-props'
 import { mdxToMarkdown } from '../src/lib/mdx-to-markdown'
 import { buildChangelogMarkdown } from './changelog-data'
 import { readLayoutProps, readMdxBlockProps } from './mdx-block-props'
+import { readRepoDocRoutes, repoDocPathFromSource, rewriteRepoDocMarkdown } from './repo-docs'
 
 const SITE_TITLE = 'ATOM63 Design System'
 const SITE_SUMMARY =
@@ -197,6 +198,11 @@ export async function readEntryMarkdown(
   }
 
   const source = await fs.readFile(path.join(pagesDir, `${entry.slug}.mdx`), 'utf8')
+  const repoDocPath = repoDocPathFromSource(source)
+  if (repoDocPath) {
+    const repoDoc = await fs.readFile(path.resolve(pagesDir, '../../../..', repoDocPath), 'utf8')
+    return rewriteRepoDocMarkdown(repoDoc.trim(), repoDocPath, readRepoDocRoutes(pagesDir))
+  }
   const markdown = mdxToMarkdown(
     expandMdxBlockProps(expandComponentGuidance(expandCraftCriteria(source)))
   )

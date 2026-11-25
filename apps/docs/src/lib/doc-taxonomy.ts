@@ -9,11 +9,27 @@ export type LegacyDocAreaId = 'system'
 
 export type DocNavDomainId = 'system' | 'components'
 
-export type PageSection = 'architecture' | 'component' | 'foundation' | 'pattern' | 'theme'
+export type PageSection =
+  | 'architecture'
+  | 'component'
+  | 'decision'
+  | 'foundation'
+  | 'pattern'
+  | 'theme'
 
 /** Nav label when slug-based inference is wrong. */
 export const NAV_LABEL_OVERRIDES: Record<string, string> = {
   'component-overview': 'Overview',
+  'decision-adrs': 'Decision records',
+  'decision-adr-0001-base-ui-primitive-layer': 'ADR 0001: Base UI primitives',
+  'decision-adr-0002-dtcg-single-token-source': 'ADR 0002: DTCG token source',
+  'decision-adr-0003-one-component-contract': 'ADR 0003: One component contract',
+  'decision-adr-0004-shadcn-close-not-identical': 'ADR 0004: Close to shadcn',
+  'decision-adr-0005-themes-as-axes': 'ADR 0005: Themes as axes',
+  'decision-adr-0006-agent-interface': 'ADR 0006: Agent interface',
+  'decision-adr-0007-readiness-bar-and-review': 'ADR 0007: Readiness bar',
+  'decision-adr-0008-figma-scratchpad-code-source': 'ADR 0008: Figma scratchpad',
+  'decision-adr-0009-opinionated-open-source-for-ai-products': 'ADR 0009: Positioning',
   'foundation-z-index': 'Z-index',
   icon: 'Icons',
   'pattern-layout': 'Page layout',
@@ -30,6 +46,7 @@ export const SECTION_ORDER: Partial<Record<PageSection, string[]>> = {
     'architecture-preview-exports',
   ],
   component: ['component-overview', 'component-contract'],
+  decision: ['decision-adrs', 'decision-roadmap', 'decision-token-optimization-plan'],
   foundation: [
     'foundation-personalization',
     'foundation-designing-in-code',
@@ -75,7 +92,10 @@ export const DOC_AREA_LABELS: Record<DocAreaId, string> = {
 }
 
 export const DOC_AREA_SECTIONS = {
-  architecture: [['architecture', 'Architecture']],
+  architecture: [
+    ['architecture', 'Architecture'],
+    ['decision', 'Decisions'],
+  ],
   components: [['component', 'Components']],
   foundations: [['foundation', 'Foundations']],
   patterns: [['pattern', 'Patterns']],
@@ -141,6 +161,7 @@ export const LEGACY_DOC_SLUG_ALIASES: Record<string, string> = {
 const SECTION_PREFIXES: Array<[string, PageSection]> = [
   ['component-', 'component'],
   ['architecture-', 'architecture'],
+  ['decision-', 'decision'],
   ['foundation-', 'foundation'],
   ['pattern-', 'pattern'],
   ['theme-', 'theme'],
@@ -193,6 +214,7 @@ export function parsePageSection(slug: string): PageSection | null {
 export function areaForSection(section: PageSection | null): DocAreaId {
   switch (section) {
     case 'architecture':
+    case 'decision':
       return 'architecture'
     case 'foundation':
       return 'foundations'

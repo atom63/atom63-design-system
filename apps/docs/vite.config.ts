@@ -12,6 +12,7 @@ import { defaultClientConditions, defineConfig } from 'vite'
 import { changelogDataPlugin } from './vite-plugins/changelog-data'
 import { llmsTxtPlugin } from './vite-plugins/llms-txt'
 import { mdxBlockPropsPlugin } from './vite-plugins/mdx-block-props'
+import { remarkRepoDocLinks } from './vite-plugins/repo-docs'
 
 const docsRoot = path.dirname(fileURLToPath(import.meta.url))
 const workspaceRoot = path.resolve(docsRoot, '../..')
@@ -29,7 +30,13 @@ export default defineConfig({
     }),
     mdx({
       providerImportSource: '@mdx-js/react',
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
+      remarkPlugins: [
+        remarkFrontmatter,
+        remarkMdxFrontmatter,
+        remarkGfm,
+        // Repository Markdown published as doc pages; see vite-plugins/repo-docs.ts.
+        remarkRepoDocLinks({ pagesDir: path.join(docsRoot, 'src/pages'), workspaceRoot }),
+      ],
       rehypePlugins: [
         [
           rehypePrettyCode,

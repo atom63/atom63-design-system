@@ -12,7 +12,7 @@ pnpm build:docs   # build (also the fastest way to verify a page compiles)
 Pages are **auto-discovered** — there is no central page registry to edit. The nav builds itself from the files. Mechanics live in [`src/lib/doc-pages.ts`](src/lib/doc-pages.ts). MDX rendering components come from the workspace package `@atom63/mdx` (`packages/mdx`).
 
 - **A prose page is** `src/pages/<slug>.mdx` — plain MDX: `# Title`, prose, `##` sections, tables, and any imported DS components. **No frontmatter.**
-- **Its nav group comes from the filename PREFIX:** `architecture-*` → Architecture; `foundation-*` → Foundations; `theme-*` → Themes; `component-*` → Components; `pattern-*` → Patterns. Legacy slugs from before the move redirect through `LEGACY_DOC_SLUG_ALIASES`.
+- **Its nav group comes from the filename PREFIX:** `architecture-*` → Architecture; `foundation-*` → Foundations; `decision-*` → Decisions (under Architecture); `theme-*` → Themes; `component-*` → Components; `pattern-*` → Patterns. Legacy slugs from before the move redirect through `LEGACY_DOC_SLUG_ALIASES`.
 - **Its nav label is derived** from the slug (prefix stripped + humanized: `foundation-personalization` → "Personalization"). Override in `NAV_LABEL_OVERRIDES` only when that inference is wrong.
 - **Its order within a section** comes from the `SECTION_ORDER` map in `doc-pages.ts`. Listed slugs sort first, in array order; unlisted slugs sort alphabetically after. Add a slug there to place a new page deliberately.
 
@@ -21,6 +21,8 @@ Pages are **auto-discovered** — there is no central page registry to edit. The
 > Note: `.md`/`.mdx` are excluded from Prettier — do not run the formatter on doc pages.
 
 The public Components catalog and its reference routes are generated from `src/lib/component-catalog.ts`. Keep one entry for every `src/components/*` family exported from the root `@atom63/ui-react` barrel; the public `/layout`, `/media`, `/theme`, and provider surfaces stay in their dedicated documentation areas. `component-catalog.test.ts` guards inventory parity, root exports, recipe targets, representative stories, and focused-test status. A co-located MDX page such as `component-button.mdx` overrides the generated reference when a component needs deeper decision documentation. Storybook remains the internal exhaustive state and regression environment; the public site gives every catalog family a representative preview, correct import, actual root export surface, concise guidance, and related components.
+
+**Decisions** (`decision-*`, under Architecture) publish Markdown from `docs/design-system/`: the ADRs, the roadmap and the token optimization plan. Each page is a two-line wrapper that imports the file as `RepoDoc`, so the Markdown stays the only source; [`vite-plugins/repo-docs.ts`](vite-plugins/repo-docs.ts) rewrites its relative links to the published page, or to GitHub for files that are not published. A new ADR needs its own wrapper (`repo-docs.test.ts` fails without one) and a nav label in `NAV_LABEL_OVERRIDES`.
 
 `architecture-changelog.mdx` is a generated-data page. `vite-plugins/changelog-data.ts` reads pending `.changeset/*.md` files and released package `CHANGELOG.md` files into a virtual module; the page must not duplicate release entries by hand. Its Markdown twin is expanded from the same data so Copy Markdown, per-page `.md`, and `llms.txt` stay useful.
 

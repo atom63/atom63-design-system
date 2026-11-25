@@ -251,6 +251,7 @@ Generate facts that already exist in code or the filesystem. Author the judgment
 | Change | Authority | Minimum focused check |
 |--------|-----------|-----------------------|
 | Add or rename an MDX page | `src/pages` discovery and `doc-taxonomy.ts` ordering | Design-system build, page tests, and LLM inventory tests |
+| Publish a repository Markdown file (an ADR, the roadmap, a plan) | A `decision-*.mdx` wrapper that imports it as `RepoDoc`; the Markdown stays the source | Repo-docs test and design-system build |
 | Add or change a component family or root export | TypeScript barrel and component catalog | Component-catalog test and representative Storybook story |
 | Change curated guidance | Authored MDX | Design-system build and a source/API comparison |
 | Change a non-ignored versioned package's public API, behavior, styles, exports, or runtime dependencies | Package source and a Changeset | Package test/typecheck and a changeset |
