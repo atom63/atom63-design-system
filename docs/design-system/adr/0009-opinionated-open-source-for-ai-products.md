@@ -171,6 +171,9 @@ What it leaves to Atom63:
    sound but nothing marked stable, overrides that depend on load order, eight hand-written
    lists per brand and token slots on 8 of 80 contracts. Item 4 and the
    [token optimization plan](../token-optimization-plan.md) record the fix (phases T1–T6).
+   YZ confirmed the plan's five decisions on 2026-11-25: no consumer variants, shadcn role
+   names for the public tier, a cascade layer shipped in the same minor as F1a, the Tailwind
+   palette made opt-in after one deprecation beta, and b1–b6 kept as preset seeds.
 2. **Which components go into the registry as source first.** Proposed: the `stable` ones and the
    chat components; the rest stay npm-only until F1.
 3. **Pattern packages (N12).** Should `@atom63/agent` and the chat components move out of
