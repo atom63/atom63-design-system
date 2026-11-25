@@ -320,7 +320,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['breadcrumb', 'navigation-menu', 'button'],
     summary: 'Destination Link distinguishes internal navigation from safe external navigation.',
     usage:
-      'Pass the app router link through render for internal routes and preserve visible destination cues.',
+      'Pass the app router link through render for internal routes and preserve visible destination cues. It draws no underline by default, for cards, titles and icon links; set variant="inline" for a text link in prose.',
     usageExports: ['DestinationLink', 'DestinationIndicator'],
   },
   dialog: {

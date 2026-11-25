@@ -35,7 +35,7 @@ import { readLayoutProps, readMdxBlockProps } from './mdx-block-props'
 
 const SITE_TITLE = 'ATOM63 Design System'
 const SITE_SUMMARY =
-  'Atom63 Design System — one token architecture rendered in React, SwiftUI, and Figma: tokens, themes, component contracts, and components.'
+  'Atom63 Design System — an opinionated, open-source design system for building AI products, with one token architecture rendered in React, SwiftUI, and Figma: tokens, themes, component contracts, and components.'
 
 export type DocEntry = {
   area: DocAreaId

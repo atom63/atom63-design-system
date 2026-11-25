@@ -272,7 +272,11 @@ empty one with `pnpm changeset --empty`.
 ## Pull requests
 
 - Keep each pull request focused on one change, and describe how you verified it.
-- Update documentation and tests alongside behavior changes.
+- Update documentation and tests alongside behavior changes. A change to a component contract,
+  a component's source, a token source or a pattern package should also change a page in
+  `apps/docs` (the site at [system.atom63.io](https://system.atom63.io)) or a story. CI warns
+  when it does not; write `Docs: n/a` on its own line in the pull request description when
+  nothing a reader sees changed.
 - A pull request can propose a new component or API, but it does not by itself change a support
   tier or authorize a release; see the
   [governance policy](./docs/design-system/support-governance.md).
