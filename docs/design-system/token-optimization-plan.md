@@ -1,6 +1,6 @@
 # Token 架构优化计划
 
-> 2026-11-25。依据 [ADR 0009](./adr/0009-opinionated-open-source-for-ai-products.md)（提议中）第 4 条和它的开放问题 1。
+> 2026-11-25。依据 [ADR 0009](./adr/0009-opinionated-open-source-for-ai-products.md)（已接受）第 4 条和它的开放问题 1。
 > 5 个决定已在 2026-11-25 由 YZ 确认，见“已定的决定”。
 > 结论：扩展只走 token 层，消费方不加组件 variant。前提是补上三样东西：一层稳定的公开 token、
 > 用一个种子色生成品牌、每个组件都列出 token 槽。另外有两项配套：给消费方的 AI 护栏，以及 dogfood 应用的清理。

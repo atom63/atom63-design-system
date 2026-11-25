@@ -5,7 +5,7 @@
 > [`research/agent-design-system-harness.md`](research/agent-design-system-harness.md)（2026 年 agent 用设计系统格局、AI 视觉漂移度量、设计师认可的 token 架构），
 > 以及使用方漂移基线 [`audits/consumer-drift-2026-10-09.md`](audits/consumer-drift-2026-10-09.md)。
 >
-> **2026-11-24 更新（[ADR 0009](adr/0009-opinionated-open-source-for-ai-products.md)，待 YZ 确认）：** 定位改为“为做 AI 产品而生、opinionated、开源的设计系统”。开源采用从“有更好”升为目标之一，和自有产品 dogfood 并行；F5 开源分发提前到和 F1 并行。改动处都标了“2026-11-24”。
+> **2026-11-24 更新（[ADR 0009](adr/0009-opinionated-open-source-for-ai-products.md)，2026-11-25 YZ 确认）：** 定位改为“为做 AI 产品而生、opinionated、开源的设计系统”。开源采用从“有更好”升为目标之一，和自有产品 dogfood 并行；F5 开源分发提前到和 F1 并行。改动处都标了“2026-11-24”。
 
 ## 已确认的前提
 
@@ -507,7 +507,7 @@ F1 的实施方案（拆成哪些 PR、怎么验证、按什么顺序）见 [`f1
 | N8 iOS | B：按需拉动，公开 style | B（2026-10-20 确认） |
 | N9 Figma 结构 | B：Primitive → Alias → Semantic 三层，重新生成 | B（2026-10-10 确认） |
 | N10 Figma 同步 | B：单向，引擎只留一份 | B（2026-10-10 确认；2026-10-20 补充入口分工） |
-| N11 开源分发 | B：F1 和 F2 之后 | B（2026-10-10 确认）；2026-11-24 由 ADR 0009 取代：F5a 和 F1 并行，F5b 在 F1 之后（待 YZ 确认） |
+| N11 开源分发 | B：F1 和 F2 之后 | B（2026-10-10 确认）；2026-11-24 由 ADR 0009 取代：F5a 和 F1 并行，F5b 在 F1 之后（2026-11-25 YZ 确认） |
 | N12 pattern 包 | B：保持 beta | |
 | N13 字体角色 | B：HIG 字体角色做语义层 | B（2026-10-10 确认） |
 | N14 图标命名 | B：语义图标注册表 | |

@@ -1,7 +1,7 @@
 # ADR 0009: An opinionated, open-source design system for building AI products
 
-**Status:** Proposed, 2026-11-24 (roadmap discussion with the maintainer). Accepted when YZ
-approves this record. It changes the goal order and phase order of
+**Status:** Accepted, 2026-11-25 (proposed 2026-11-24 in a roadmap discussion with the
+maintainer; YZ approved it 2026-11-25). It changes the goal order and phase order of
 [roadmap-next.md](../roadmap-next.md), replaces part of [ADR 0004](./0004-shadcn-close-not-identical.md)'s
 2026-11-21 positioning and widens [ADR 0007](./0007-readiness-bar-and-review.md)'s goal. The
 sections "What this supersedes" and "Open questions" list exactly what changes and what is not
