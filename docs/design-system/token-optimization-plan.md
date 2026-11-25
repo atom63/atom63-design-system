@@ -18,7 +18,7 @@
    对比度报告，CSS、Swift、Figma 三端一致。b1–b6 改成六个预设种子，加一个品牌不用再改 8 个手写清单。
 4. 80 个组件 contract 都列出 token 槽，recipe 里用到的组件变量全部在 manifest 里，
    并有检查保证两边一致。
-5. 消费方默认拿不到 Tailwind 原色板，`atom63 check` 能在消费方仓库里跑和本仓库同一套 craft 规则。
+5. 消费方默认拿不到 Tailwind 原色板，`atom63 check` 能在消费方仓库里跑和本仓库同一份 token 规则（F2）。
 6. atom63-vite 的四个 dogfood 应用零原色板 utility、零十六进制颜色、零覆盖内部 token。
 
 ## 现状（2026-11-24）
@@ -78,10 +78,10 @@
 | T2 | 种子色品牌：CSS 生成色阶、`atom63 brand`、品牌单一来源 | T1 定下种子 token 的名字 | F1a 之后，F2 之前 | 部分（单一来源迁移） |
 | T3 | 组件 token 槽：80 个 contract 补齐、66 个变量归位、一致性检查 | T1 的 `tier`；F1b 的 contract JSON | 和 F1b 一起做 | 是（按组件族分批） |
 | T4 | 主题 native 值收进 DTCG | T1 | F1c 之后 | 部分 |
-| T5 | 消费方 AI 护栏：原色板改为可选、`atom63 check`、llms.txt 的 token 部分 | T5a 要等 T6；T5b 要等 T1 | T5b、T5c 并入 F5a | T5b 的规则移植可以 |
+| T5 | 消费方 AI 护栏：原色板改为可选、`atom63 check` 的 token 规则、llms.txt 的 token 部分 | T5a 要等 T6；T5b 要等 T1 | T5a 属于 N6，T5b 属于 N5（F2）；T5c 并入 F5a | T5b 的规则移植可以 |
 | T6 | atom63-vite dogfood 清理 | 无（T1 之后再收尾一次） | 现在就能做 | 是 |
 
-建议顺序：**T6 和 T1 先并行**，T5b、T5c 跟着 F5a 走，接着做 T2 和 T3，T5a 在 T6 做完、
+建议顺序：**T6 和 T1 先并行**，T5c 跟着 F5a 走，接着做 T2 和 T3，T5b 跟着 F2 的 `atom63 check` 走，T5a 在 T6 做完、
 发出一个 beta 之后再做，T4 放最后。
 
 ---
@@ -234,24 +234,27 @@
     `package.json` 里已经有 `./tokens/foundation/palette` 这个导出。
   - `tailwind/theme.css` 默认只保留语义色、分类色（`category-*`，F1a-2）和 `chart-*`。
     b1–b6、状态色阶这些原色挪到可选的 `./tailwind/primitives`。
-  - 结果：agent 写 `bg-blue-500` 时，Tailwind 不生成样式，类型检查和 `atom63 check` 都会报。
+  - 结果：agent 写 `bg-blue-500` 时，Tailwind 不生成样式，`atom63 check` 会报。
+  - 这一步就是 [roadmap-next.md](./roadmap-next.md) N6（Tailwind 锁定）在颜色上的落地。
 - **破坏性：** 有，用了原色板的消费方会掉样式。先发一个 beta 打废弃警告，下一个 minor beta 再改默认。
   atom63-vite 要先做完 T6。
 - **验证：** atom63-vite 的 `check:app-consumption` 和 Storybook 截图比对；本仓库的 `check:starter`；
   在 starter 里写一个 `bg-blue-500`，确认不生效且被检查报出。
 - **changeset：** `@atom63/styles` minor，写迁移说明。
 
-### T5b `atom63 check`
+### T5b `atom63 check` 里的 token 规则
 
 - **做什么：**
-  - 把 `scripts/design-system/lib/craft-rules.mjs` 里适用于应用的规则搬进 `@atom63/cli`，
-    让 `atom63 check [paths]` 在消费方仓库里跑：`raw-color`、`unknown-token`、`token-role`、
-    `physical-properties`、`focus-visible`、`focus-ring-outline`、`mode-branch`，加上 T1-3 的 `internal-token`。
-  - 本仓库的 `check:craft` 改为调用同一份规则，避免两份。
+  - `atom63 check` 的形态按 [roadmap-next.md](./roadmap-next.md) N5 的推荐 A：一层薄壳，调用
+    `@shadcn/lint`（配 Atom63 主题）和一个小的 Atom63 ESLint 插件，再加 token 检查。它属于 F2。
+  - 这里只管其中的 token 部分：把 `scripts/design-system/lib/craft-rules.mjs` 里的 `raw-color`、
+    `unknown-token`、`token-role`，加上 T1-3 的 `internal-token`，做成能在消费方仓库里跑的规则。
+    `unknown-token` 就是 N5 里“未定义的变量”那一条。
+  - 本仓库的 `check:craft` 改为调用同一份 token 规则，避免两份。
   - 支持 `--json`；MCP server 加一个 `check` 工具，agent 写完就能自查。
-  - starter 的 `AGENTS.md` 和 `package.json` 加上这条命令。
 - **破坏性：** 无。
-- **验证：** CLI 单测用 craft-rules 现有的测试用例；对 atom63-vite 跑一次，结果和 T6 的清单对得上。
+- **验证：** 规则沿用 craft-rules 现有的单测，并按 N7 各带一个已知是坏的反例 fixture；
+  对 atom63-vite 跑一次，结果和 T6 的清单对得上。
 - **changeset：** `@atom63/cli` minor。
 - **Codex：** 规则移植部分适合。
 
@@ -280,7 +283,7 @@
   - **T6-4：** timeline toolbar 的 `--a63-control-radius` 和 drawer 的 `--a63-drawer-viewport-gutter`：
     - 如果是设计系统该给的公开槽，在设计系统开 issue，等 T3 补上；
     - 否则改用公开 token。
-  - **T6-5：** T1-3 和 T5b 做好以后，在 atom63-vite 的 CI 里加 `atom63 check`，
+  - **T6-5：** T1-3 和 T5b 做好以后（F2），在 atom63-vite 的 CI 里加 `atom63 check`，
     先以警告模式跑，清零后改为报错。
 - **破坏性：** 视觉上应该零变化。凡是变了的地方，说明原来的颜色不在系统里，要逐个确认。
 - **验证：** `pnpm check:app-consumption`、各应用 `typecheck`、Storybook 截图比对、
