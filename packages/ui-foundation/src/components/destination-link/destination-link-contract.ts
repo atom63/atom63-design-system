@@ -4,7 +4,7 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const destinationKinds = ['internal', 'external'] as const
-export const destinationLinkVariants = ['inline', 'card'] as const
+export const destinationLinkVariants = ['plain', 'inline'] as const
 export const destinationLinkStates = ['rest', 'focus-visible'] as const
 export const destinationLinkSlots = ['destination-link', 'destination-indicator'] as const
 export const destinationLinkVisualArchetypes = [
@@ -27,7 +27,7 @@ export interface DestinationLinkContract {
 }
 
 export const destinationLinkContract = {
-  defaultVariant: 'inline',
+  defaultVariant: 'plain',
   variants: destinationLinkVariants,
   kinds: destinationKinds,
   slots: destinationLinkSlots,

@@ -22,6 +22,7 @@ describe('DestinationLink', () => {
     )
     const link = screen.getByRole('link', { name: 'Projects' })
     expect(link).toHaveClass('a63-DestinationLink', 'extra')
+    // Plain by default: the recipe underlines only `[data-variant='inline']`.
     expect(link).not.toHaveAttribute('data-variant')
   })
 
@@ -32,13 +33,13 @@ describe('DestinationLink', () => {
         href="/projects/atom63"
         kind="internal"
         render={<RouterLink href="/projects/atom63" />}
-        variant="card"
+        variant="inline"
       />
     )
 
     const link = screen.getByRole('link', { name: 'View project' })
     expect(link.hasAttribute('data-router-link')).toBe(true)
-    expect(link).toHaveAttribute('data-variant', 'card')
+    expect(link).toHaveAttribute('data-variant', 'inline')
     expect(link).toHaveAttribute('href', '/projects/atom63')
     expect(link.hasAttribute('target')).toBe(false)
     expect(link.hasAttribute('rel')).toBe(false)

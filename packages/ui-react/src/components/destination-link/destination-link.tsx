@@ -11,7 +11,10 @@ export type { DestinationKind }
 
 export type DestinationLinkProps = Omit<useRender.ComponentProps<'a'>, 'rel' | 'target'> & {
   kind: DestinationKind
-  /** Use card for a card title or a linked card with its own destination cue. */
+  /**
+   * `plain` (default) draws no underline, for a card, title, icon or other
+   * surface that carries its own cue. `inline` underlines a text link in prose.
+   */
   variant?: (typeof destinationLinkContract.variants)[number]
 }
 

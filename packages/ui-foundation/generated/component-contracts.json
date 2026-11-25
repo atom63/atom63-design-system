@@ -1483,7 +1483,7 @@
       "exportName": "destinationLinkContract",
       "maturity": "stable",
       "axes": [
-        { "name": "variants", "values": ["inline", "card"], "default": "inline" },
+        { "name": "variants", "values": ["plain", "inline"], "default": "plain" },
         { "name": "kinds", "values": ["internal", "external"] }
       ],
       "slots": ["destination-link", "destination-indicator"],
@@ -1492,7 +1492,7 @@
       "visualArchetypes": ["action"],
       "intent": {
         "description": "Whether a link stays in the product or leaves it, and how it is presented on the web. On iOS the kind picks NavigationLink or Link.",
-        "axes": { "kind": ["internal", "external"], "variant": ["inline", "card"] },
+        "axes": { "kind": ["internal", "external"], "variant": ["plain", "inline"] },
         "platforms": {
           "web": {
             "props": {
@@ -1503,7 +1503,7 @@
               },
               "variant": {
                 "list": "variants",
-                "map": { "inline": { "variant": "inline" }, "card": { "variant": "card" } },
+                "map": { "plain": { "variant": "plain" }, "inline": { "variant": "inline" } },
                 "extensions": {}
               }
             }
