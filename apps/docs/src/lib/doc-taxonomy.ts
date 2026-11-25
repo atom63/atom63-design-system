@@ -10,12 +10,7 @@ export type LegacyDocAreaId = 'system'
 export type DocNavDomainId = 'system' | 'components'
 
 export type PageSection =
-  | 'architecture'
-  | 'component'
-  | 'decision'
-  | 'foundation'
-  | 'pattern'
-  | 'theme'
+  'architecture' | 'component' | 'decision' | 'foundation' | 'pattern' | 'theme'
 
 /** Nav label when slug-based inference is wrong. */
 export const NAV_LABEL_OVERRIDES: Record<string, string> = {
