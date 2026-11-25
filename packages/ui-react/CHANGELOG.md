@@ -1,5 +1,16 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.20
+
+### Minor Changes
+
+- [#362](https://github.com/atom63/atom63-design-system/pull/362) [`317cd31`](https://github.com/atom63/atom63-design-system/commit/317cd314aeb634191b8f972ab7b24720688d67f0) Thanks [@atom63](https://github.com/atom63)! - DestinationLink no longer draws an underline by default. Its default `plain` variant is for links behind cards, titles, icons and other surfaces that carry their own cue; set `variant="inline"` for an underlined text link in prose. The `card` variant added in the previous beta is renamed `plain`, since it is now the default.
+
+### Patch Changes
+
+- Updated dependencies [[`317cd31`](https://github.com/atom63/atom63-design-system/commit/317cd314aeb634191b8f972ab7b24720688d67f0)]:
+  - @atom63/ui-foundation@0.2.0-beta.12
+
 ## 0.2.0-beta.19
 
 ### Patch Changes
