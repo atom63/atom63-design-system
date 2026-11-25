@@ -150,6 +150,7 @@ Web ↔ iOS component-token gap: [web-ios-token-parity.md](./web-ios-token-parit
 | [ui-react-preview-migration.md](./ui-react-preview-migration.md) | Root-to-preview import guidance for beta adopters and stable/latest root narrowing |
 | [roadmap.md](./roadmap.md) | Direction for phases A–E, decisions D1–D5 and progress |
 | [token-single-source.md](./token-single-source.md) | Phase B design: DTCG as the only token source, CSS-native values, themes in Figma and iOS |
+| [token-optimization-plan.md](./token-optimization-plan.md) | Token architecture plan under ADR 0009: a public token tier, seed-colour brands, token slots on every contract, consumer guardrails and dogfood cleanup (T1–T6) |
 | [release-automation.md](./release-automation.md) | GitHub Actions beta release workflow, stable/latest no-publish preflight, and npm trusted publishing setup notes |
 | [stable-release-policy.json](./stable-release-policy.json) | Machine-readable stable/latest dist-tag, registry readback, and rollback policy |
 | [ui-react-root-api-audit.md](./ui-react-root-api-audit.md) | Proposed support tiers for the broad `@atom63/ui-react` root and public subpaths |

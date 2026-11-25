@@ -1,7 +1,9 @@
 # ADR 0004: A component API close to shadcn, not identical; role bridges and a registry instead
 
 **Status:** Accepted, 2026-09-24 (roadmap decision D4: A first, then B in phase C). Role names
-extended 2026-10-10 (next-phase roadmap N3). Positioning confirmed 2026-11-21.
+extended 2026-10-10 (next-phase roadmap N3). Positioning confirmed 2026-11-21; the positioning
+line and the templates-only registry are replaced by [ADR 0009](./0009-opinionated-open-source-for-ai-products.md)
+(proposed 2026-11-24).
 
 ## Context
 

@@ -4,18 +4,26 @@
 > 依据：本次全面审查（tokens、React、iOS + Figma、pattern 包、工具链与 CI 五个方向），以及调研报告
 > [`research/agent-design-system-harness.md`](research/agent-design-system-harness.md)（2026 年 agent 用设计系统格局、AI 视觉漂移度量、设计师认可的 token 架构），
 > 以及使用方漂移基线 [`audits/consumer-drift-2026-10-09.md`](audits/consumer-drift-2026-10-09.md)。
+>
+> **2026-11-24 更新（[ADR 0009](adr/0009-opinionated-open-source-for-ai-products.md)，2026-11-25 YZ 确认）：** 定位改为“为做 AI 产品而生、opinionated、开源的设计系统”。开源采用从“有更好”升为目标之一，和自有产品 dogfood 并行；F5 开源分发提前到和 F1 并行。改动处都标了“2026-11-24”。
 
 ## 已确认的前提
 
-1. **目标排序：**
-   - 商用级质量：架构、评测和门禁经得起外部审视；
-   - 维护者自己的产品设计开发走这套 harness：更高效、更一致，不重复造轮子，做出来的东西能复用；
-   - 开源让别人采用：有更好，不是必须。
+1. **目标排序（2026-11-24 按 ADR 0009 修改）：**
+   - 商用级质量：架构、评测和门禁经得起外部审视，开箱即用；
+   - 两件事并行：
+     - 维护者自己的产品走这套 harness（dogfood）：OS63、website、learn、文档站，四种不同形态的使用方；
+     - 开源让社区采用：这个项目也用来向开源社区证明维护者的设计系统能力，所以采用是目标，不再是“有更好”。
+   - 原排序是“质量 > 自有产品 > 开源（有更好，不是必须）”。
 2. **主要使用方是 agent。** 人在环时（比如快速做原型），会直接用 Tailwind / shadcn 的习惯改样式。
 3. **维护者的产品以 React + Vite + Tailwind 为主。** iOS 端倾向 SwiftUI。
 4. **平台无关：** 设计意图是唯一源头，各平台按适合自己的方式采用。
 5. **Figma 是草稿本。** 代码是唯一源头，Figma 用 system token 快速探索想法。Figma 结构不依赖 Organization 或 Enterprise 才有的功能（Code Connect、extended collections、变量 REST API），每个集合不超过 10 个 mode。
 6. **守卫规则：** 凡是会阻塞 CI，或者要发给使用方的检查，都必须带至少一个已知是坏的反例 fixture。这一条已定，见 N7。
+7. **定位（2026-11-24，ADR 0009）：** opinionated 的开源设计系统，为做 AI 产品而生，维护者从 token 到组件、AI 产品 pattern（chat、agent runtime、widgets、inform）整条链自己掌控。
+   - 差异点是 ownership，不是品牌辨识度，也不是技术栈：Atom63 本身就基于 Tailwind 和 Base UI。
+   - opinion 落在 API 和默认值上：每个组件只有一种正确用法，间距、状态、a11y 默认就对，agent 很难用错。
+   - 扩展只走 token 层：公开 token 和主题轴（品牌色、radius、density、font、主题 preset），消费方不加组件 variant。2026-11-25 定下，前提是补上公开 token 层、种子色品牌和组件 token 槽，见 [`token-optimization-plan.md`](./token-optimization-plan.md)（T1–T6）。
 
 ## 结论先行
 
@@ -29,7 +37,7 @@
 4. **三处收缩：**
    - Figma 收成草稿本：回到 Primitive → Alias → Semantic 三层，单向同步；
    - iOS 按自己 app 的实际需要拉动，不去追 React 的 70 个组件；
-   - shadcn 分发放到最后。
+   - ~~shadcn 分发放到最后。~~ 2026-11-24 改为：开源分发提前，和 F1 并行；会锁定名字的部分（`registry:base`、preset 生成器）仍等 F1（ADR 0009）。
 5. **质量证明靠什么：** 可复现的评测、能带进别的项目的门禁、真实产品在用。不靠组件数量，也不靠单次 79 比 68 的 vibe 结果。
 
 ---
@@ -316,7 +324,14 @@
   - **A. 现在就做。**
   - **B. 等 N1–N6 完成后再做：** 词汇冻结，并且 harness 已经在自有项目里证明过有效。届时提供 `registry:base`、preset 生成器和 Atom63 skill。
   - **C. 不做。**
-- **推荐：B。** 这一项主要服务目标 3。
+- **推荐：B。** 这一项主要服务目标 3。（2026-11-24 起“目标 3”即前提 1 里的开源采用，已和 dogfood 并列。）
+- **2026-11-24 改为分两步（ADR 0009）：**
+  - **F5a，现在开始，和 F1 并行：** 不锁名字的部分。
+    - registry 除了模板和 block，也提供组件源码，先放 `stable`、`candidate` 的组件；拷贝出去的源码标明来自哪个 Atom63 版本；
+    - 文档站发布 `llms.txt`，和 `atom63` CLI 用同一份生成的索引；
+    - 发布一份给使用方的 `AGENTS.md`，和 starter 里的保持同步；
+    - 文档首页用几行话写清定位，不另做面向大众的宣传站。
+  - **F5b，F1 冻结词汇之后：** `registry:base`、preset 生成器、Atom63 skill。
 
 ### N12. pattern 包怎么定位（inform、agent、widgets、mdx）
 
@@ -420,12 +435,12 @@ DS 从 atom63-vite 拆出来之后，机械性的残留已经由两个清理 PR 
 |---|---|---|---|
 | **F0 前置清理** | Windows 兼容（`.gitattributes`、pnpm 子进程）、发布积压（Version PR #89、`latest` 标签、`@atom63/figma` 的发布状态）、CI 漏洞、拆分遗留（机械部分已有两个清理 PR，其余见 N15） | 2 | 无 |
 | **F1 冻结意图** | N1–N4、N13、N14：组件意图迁到中立数据、轴按语义重整、角色名、轴收窄和正交化；一套主题 API | 1、2 | F0 |
+| **F5 开源分发**（2026-11-24 提前） | N11、N12：F5a 现在开始（registry 提供组件源码、`llms.txt`、使用方 `AGENTS.md`、文档首页写定位）；F5b 在 F1 之后（`registry:base`、preset 生成器、skill） | 3 | F5a：F0；F5b：F1 |
 | **F2 harness 进自有项目** | N5–N7：lint 加 Tailwind 锁定，`atom63 check` 写进 starter 和完成定义；反例 fixture 规则；评测拆成两层 | 2、1 | F1（第五节的实验已做过一轮试点） |
 | **F3 iOS 按需** | N8 | 2 | F1 |
 | **F4 Figma 草稿本** | N9、N10 | 1 | F1 |
-| **F5 开源分发** | N11、N12 | 3 | F1、F2 |
 
-F3 和 F4 互相独立，可以并行。
+F1 和 F5a 并行（2026-11-24 起，ADR 0009）；F3 和 F4 互相独立，也可以并行。原顺序是 F5 排在 F1、F2 之后。
 
 F1 的实施方案（拆成哪些 PR、怎么验证、按什么顺序）见 [`f1-plan.md`](./f1-plan.md)。
 
@@ -492,7 +507,7 @@ F1 的实施方案（拆成哪些 PR、怎么验证、按什么顺序）见 [`f1
 | N8 iOS | B：按需拉动，公开 style | B（2026-10-20 确认） |
 | N9 Figma 结构 | B：Primitive → Alias → Semantic 三层，重新生成 | B（2026-10-10 确认） |
 | N10 Figma 同步 | B：单向，引擎只留一份 | B（2026-10-10 确认；2026-10-20 补充入口分工） |
-| N11 开源分发 | B：F1 和 F2 之后 | B（2026-10-10 确认） |
+| N11 开源分发 | B：F1 和 F2 之后 | B（2026-10-10 确认）；2026-11-24 由 ADR 0009 取代：F5a 和 F1 并行，F5b 在 F1 之后（2026-11-25 YZ 确认） |
 | N12 pattern 包 | B：保持 beta | |
 | N13 字体角色 | B：HIG 字体角色做语义层 | B（2026-10-10 确认） |
 | N14 图标命名 | B：语义图标注册表 | |
