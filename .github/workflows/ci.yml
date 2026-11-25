@@ -48,6 +48,17 @@ jobs:
           # tested, in scripts/design-system/lib/ios-impact.mjs.
           echo "$changed" | node scripts/design-system/ios-impact.mjs | tee -a "$GITHUB_OUTPUT"
 
+      # Warns, never fails: a change to what the docs site describes with no
+      # docs or story change. "Docs: n/a" in the PR description skips it.
+      # The paths are listed, and tested, in scripts/design-system/lib/docs-impact.mjs.
+      - name: Check the docs were updated
+        if: github.event_name == 'pull_request'
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
+        run: |
+          git diff --name-only "${{ github.event.pull_request.base.sha }}" "${{ github.event.pull_request.head.sha }}" \
+            | node scripts/design-system/docs-impact.mjs
+
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 30
