@@ -21,7 +21,9 @@ export default defineConfig({
   resolve: {
     // Resolve the workspace @atom63/* packages to source so docs track edits live.
     conditions: ['@atom63/source', ...defaultClientConditions],
-    dedupe: ['react', 'react-dom'],
+    // @mdx-js/react too: repository Markdown under docs/ is compiled outside this
+    // app, and its provider import must resolve from here.
+    dedupe: ['react', 'react-dom', '@mdx-js/react'],
   },
   plugins: [
     TanStackRouterVite({

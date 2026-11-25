@@ -64,6 +64,9 @@ describe('repository docs published as pages', () => {
       'https://github.com/mui/base-ui'
     )
     expect(rewriteRepoDocHref('#decision', adr9, routes)).toBe('#decision')
+    expect(rewriteRepoDocHref('../bad%zz.md', adr9, routes)).toBe(
+      `${REPOSITORY_BLOB_URL}docs/design-system/bad%25zz.md`
+    )
   })
 
   it('rewrites the links in the Markdown twin', async () => {

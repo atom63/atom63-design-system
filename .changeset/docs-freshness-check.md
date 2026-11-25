@@ -1,4 +1,5 @@
 ---
+'@atom63/cli': patch
 ---
 
-Add a warn-only docs check to CI and fix stale docs-site copy; no published package changes.
+The agent index now includes the decision records, the roadmap and the token optimization plan published on the docs site, the new home page positioning, and the DestinationLink usage note.

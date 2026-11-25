@@ -47,6 +47,15 @@ export function readRepoDocRoutes(pagesDir: string): Map<string, string> {
   return routes
 }
 
+/** decodeURI that keeps a malformed `%` sequence as written instead of throwing. */
+function safeDecodeURI(value: string): string {
+  try {
+    return decodeURI(value)
+  } catch {
+    return value
+  }
+}
+
 /** Rewrites one link found in the repository file `fromRepoPath`. */
 export function rewriteRepoDocHref(
   href: string,
@@ -61,7 +70,7 @@ export function rewriteRepoDocHref(
   const target = hashIndex === -1 ? href : href.slice(0, hashIndex)
   const hash = hashIndex === -1 ? '' : href.slice(hashIndex)
   const repoPath = path.posix.normalize(
-    path.posix.join(path.posix.dirname(fromRepoPath), decodeURI(target))
+    path.posix.join(path.posix.dirname(fromRepoPath), safeDecodeURI(target))
   )
   if (repoPath.startsWith('..')) {
     return href
