@@ -11,7 +11,7 @@
   "dependencies": {
     "@atom63/styles": "workspace:*",
     "@atom63/ui-react": "workspace:*",
-    "lucide-react": "^1.70.0",
+    "lucide-react": "^1.78.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
