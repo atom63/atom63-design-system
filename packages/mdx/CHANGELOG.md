@@ -1,5 +1,12 @@
 # @atom63/mdx
 
+## 0.4.0-beta.12
+
+### Patch Changes
+
+- Updated dependencies [[`f00d3b0`](https://github.com/atom63/atom63-design-system/commit/f00d3b0efeacade5986cf1b97dbf12b12441ab32)]:
+  - @atom63/ui-react@0.2.0-beta.21
+
 ## 0.4.0-beta.11
 
 ### Patch Changes
