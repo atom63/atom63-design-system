@@ -194,6 +194,20 @@ describe('focus-visible', () => {
     expect(await checkFocusVisible(document, driver)).toEqual([])
   })
 
+  it('accepts a changing field fill around an editable combobox', async () => {
+    mount(
+      '<div class="field"><input role="combobox" aria-label="Search" aria-expanded="true"></div>' +
+        '<div class="field unchanged"><input role="combobox" aria-label="Unchanged" aria-expanded="true"></div>',
+      `.field { position: relative; }
+       .field input { outline: none; background: transparent; }
+       .field::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: rgb(225, 225, 225); }
+       .field:not(.unchanged):has(> input:focus-visible)::before { background: rgb(180, 180, 180); }`
+    )
+    expect((await checkFocusVisible(document, driver)).map(v => v.element)).toEqual([
+      'input[role=combobox] "Unchanged"',
+    ])
+  })
+
   it('catches a ring drawn on :focus, which a pointer press shows too', async () => {
     mount(
       '<button class="probe">Save</button>',
