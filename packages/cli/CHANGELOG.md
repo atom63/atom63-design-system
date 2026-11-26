@@ -1,5 +1,11 @@
 # @atom63/cli
 
+## 0.1.0-beta.8
+
+### Patch Changes
+
+- [#365](https://github.com/atom63/atom63-design-system/pull/365) [`cb0cb00`](https://github.com/atom63/atom63-design-system/commit/cb0cb0030aaf3e677fee935b49d448d59ec0f637) Thanks [@atom63](https://github.com/atom63)! - The agent index now includes the decision records, the roadmap and the token optimization plan published on the docs site, the new home page positioning, and the DestinationLink usage note.
+
 ## 0.1.0-beta.7
 
 ### Patch Changes

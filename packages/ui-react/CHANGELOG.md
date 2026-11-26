@@ -1,5 +1,11 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.21
+
+### Patch Changes
+
+- [#370](https://github.com/atom63/atom63-design-system/pull/370) [`f00d3b0`](https://github.com/atom63/atom63-design-system/commit/f00d3b0efeacade5986cf1b97dbf12b12441ab32) Thanks [@atom63](https://github.com/atom63)! - Use menu highlights for Command results and an inset field fill for search focus.
+
 ## 0.2.0-beta.20
 
 ### Minor Changes
