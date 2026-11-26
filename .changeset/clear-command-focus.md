@@ -2,4 +2,4 @@
 '@atom63/ui-react': patch
 ---
 
-Show a single focus ring in Command, on the active result or the search field, and clear it when focus moves to another control.
+Use the menu highlight for Command results and keep the focus ring on the search field.

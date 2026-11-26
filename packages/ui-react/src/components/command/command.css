@@ -90,14 +90,8 @@
   padding: 0.625rem 0.875rem;
   border-radius: var(--a63-control-radius);
 }
-/* The input keeps DOM focus while a result is active. Show the field's ring
-   only when the results do not supply a keyboard target. */
-.a63-Command-input-wrapper:has(> .a63-Command-input:focus-visible):not(
-    :has(> .a63-Command-input[aria-activedescendant]:not([aria-activedescendant=''])):has(
-      ~ :is(.a63-Command-panel, .a63-Command-list)
-        .a63-Command-item[data-highlighted]:not([data-disabled])
-    )
-  ) {
+/* The search field holds keyboard focus while the result uses its menu highlight. */
+.a63-Command-input-wrapper:has(> .a63-Command-input:focus-visible) {
   outline: var(--a63-control-focus-ring-width) solid
     var(--a63-control-focus-ring-color, var(--a63-focus-ring));
   outline-offset: calc(-1 * var(--a63-space-1_5));
@@ -215,17 +209,6 @@
   background-image: var(--a63-menu-highlight-gloss, none);
   box-shadow: var(--a63-menu-highlight-shadow, none);
   color: var(--a63-menu-highlight-foreground, var(--a63-text-primary));
-}
-/* Ring the Enter target only while the input has visible keyboard focus.
-   Base UI can keep the highlighted item after focus moves to another control. */
-.a63-Command-input-wrapper:has(
-    > .a63-Command-input:focus-visible[aria-activedescendant]:not([aria-activedescendant=''])
-  )
-  ~ :is(.a63-Command-panel, .a63-Command-list)
-  .a63-Command-item[data-highlighted]:not([data-disabled]) {
-  outline: var(--a63-control-focus-ring-width) solid
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
-  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 .a63-Command-item[data-disabled] {
   pointer-events: none;
