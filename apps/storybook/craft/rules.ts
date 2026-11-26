@@ -452,6 +452,18 @@ export function readFocusIndicator(element: Element, { ancestors = true } = {}):
     if (getComputedStyle(element, pseudo).content === 'none') continue
     add(`${pseudo} `, readRing(element, PSEUDO_RING_PROPERTIES, pseudo))
   }
+  // Editable comboboxes can show focus on the field surface while DOM focus
+  // stays on the input. The listbox's options still need their own indicator.
+  const field = element.parentElement
+  if (ancestors && field && element.matches('input[role="combobox"]')) {
+    const fill = getComputedStyle(field, '::before')
+    if (fill.content !== 'none' && fill.display !== 'none' && Number(fill.opacity) > 0) {
+      add(
+        'combobox field ',
+        readStyle(field, ['background-color', 'border-bottom-width'], '::before')
+      )
+    }
+  }
   return snapshot
 }
 
@@ -526,7 +538,7 @@ export async function checkFocusVisible(
       violations.push({
         rule: 'focus-visible',
         element: describeElement(element),
-        detail: 'keyboard focus changes no outline, box-shadow or ring pseudo-element',
+        detail: 'keyboard focus changes no detected focus indicator',
       })
     }
   }
