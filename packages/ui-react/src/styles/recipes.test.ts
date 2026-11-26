@@ -475,16 +475,23 @@ describe('state that survives forced colors', () => {
     expect(focus).toContain('outline-offset: calc(-1 * var(--a63-control-focus-ring-width))')
   })
 
-  it.each([
-    [
-      'menu',
-      /\.a63-Menu-item:focus-visible,\s*\.a63-Autocomplete-item\[data-highlighted\] \{[^}]*\}/,
-    ],
-    ['command', /\.a63-Command-item\[data-highlighted\]:not\(\[data-disabled\]\) \{[^}]*\}/],
-  ])('%s draws the keyboard target of its options with an inset focus outline', (name, rule) => {
-    const focus = readRecipe(name).match(rule)?.[0]
+  it('draws the menu keyboard target with an inset focus outline', () => {
+    const focus = readRecipe('menu').match(
+      /\.a63-Menu-item:focus-visible,\s*\.a63-Autocomplete-item\[data-highlighted\] \{[^}]*\}/
+    )?.[0]
     expect(focus).toContain('outline: var(--a63-control-focus-ring-width) solid')
     expect(focus).toContain('outline-offset: calc(-1 * var(--a63-control-focus-ring-width))')
+  })
+
+  it('fills the active Command result and preserves the search focus cue in forced colors', () => {
+    const css = readRecipe('command')
+    expect(css).toMatch(
+      /\.a63-Command-item\[data-highlighted\] \{[^}]*background-color: var\(--a63-menu-highlight-background,/
+    )
+    expect(css).not.toMatch(/\.a63-Command-item[^\n{]*\[data-highlighted\][^{]*\{[^}]*outline:/)
+    expect(css).toMatch(
+      /@media \(forced-colors: active\) \{\s*\.a63-Command-input-wrapper:has\(> \.a63-Command-input:focus-visible\)::before \{\s*border-block-end: 1px solid CanvasText;/
+    )
   })
 
   it('marks the current navigation menu link apart from its hover fill', () => {
