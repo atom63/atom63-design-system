@@ -16,23 +16,7 @@ const packages = { '@atom63/ui-react': 'packages/ui-react', '@atom63/mdx': 'pack
 // `'use client'` and removing it here; never add to this list.
 const pending = {
   '@atom63/ui-react': [],
-  '@atom63/mdx': [
-    'src/blocks/code-block/code-block.tsx',
-    'src/blocks/credits-block/credits-block.tsx',
-    'src/blocks/demo-stage/demo-config-panel.tsx',
-    'src/blocks/doc-example/doc-example.tsx',
-    'src/blocks/figure-block/figure-block.tsx',
-    'src/blocks/mermaid-diagram/mermaid-diagram.tsx',
-    'src/blocks/page-table-of-contents/page-table-of-contents.tsx',
-    'src/example-context.tsx',
-    'src/lightbox/figure-lightbox-host.tsx',
-    'src/mdx-components.tsx',
-    'src/mdx-live-preview.tsx',
-    'src/mdx-source-editor.tsx',
-    'src/mdx-source-view.tsx',
-    'src/primitives/reveal/reveal.tsx',
-    'src/primitives/stagger/stagger.tsx',
-  ],
+  '@atom63/mdx': [],
 }
 
 const sourceFiles = dir =>
