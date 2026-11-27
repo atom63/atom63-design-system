@@ -1,7 +1,13 @@
 import assert from 'node:assert/strict'
 import { describe, it } from 'node:test'
 
-import { addDirective, hasUseClient, isBarrel, planUseClient } from './use-client.mjs'
+import {
+  addDirective,
+  hasUseClient,
+  isBarrel,
+  needsUseClient,
+  planUseClient,
+} from './use-client.mjs'
 
 const sources = {
   'src/button.tsx': `'use client'\nimport { useState } from 'react'\nexport function Button() {}`,
@@ -68,5 +74,48 @@ describe('use-client', () => {
     assert.equal(code, `'use client';\nexport {}\n`)
     assert.equal(JSON.parse(map).mappings, ';AAAA')
     assert.equal(addDirective(code, undefined).code, code)
+  })
+
+  it('flags a component that calls a hook without the directive', () => {
+    assert.equal(
+      needsUseClient(
+        `import * as React from 'react'\nexport const C = () => { const id = React.useId(); return <div id={id} /> }`
+      ),
+      true
+    )
+    assert.equal(
+      needsUseClient(
+        `export function C() { const ref = useRef<HTMLDivElement>(null); return <div ref={ref} /> }`
+      ),
+      true
+    )
+    assert.equal(
+      needsUseClient(`export function C() { const value = use(promise); return <p>{value}</p> }`),
+      true
+    )
+    assert.equal(needsUseClient(`export function C(props) { return useRender({ props }) }`), true)
+  })
+
+  it('passes a client component, a server component and hook names that are not calls', () => {
+    assert.equal(
+      needsUseClient(`'use client'\nexport function C() { useState(0); return null }`),
+      false
+    )
+    assert.equal(
+      needsUseClient(
+        `/** Docs. */\n"use client";\nexport function C() { useState(0); return null }`
+      ),
+      false
+    )
+    assert.equal(
+      needsUseClient(`// useState() in a comment\nexport const C = () => <p>{'useState()'}</p>`),
+      false
+    )
+    assert.equal(
+      needsUseClient(
+        `export const C = () => <p />\nexport function useThing() {}\nconst user = reuse(1)\nobj.useMemo()`
+      ),
+      false
+    )
   })
 })

@@ -154,7 +154,13 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // content-hashed chunks, which re-sorts the stream this check gzips and
 // measures 111,003 bytes. The total moves a few hundred bytes on any rename, so
 // the budget moves to 109 to leave room for that noise.
-const gzipBudgetBytes = 109 * 1024
+// 109 kB held 108.4 kB. Giving every client component a `'use client'` it
+// keeps through the build (Chart, Card, Badge, Frame, InputOTP, ScrollableList,
+// Image, and the layout's Container, Page and grid chrome) takes it to 110.0,
+// so it moves to 111. Nearly all of the +1.6 kB is the layout entry splitting
+// into one file per module, as the root does, so its client modules land apart
+// from the server-safe ones; the rest is the directive lines themselves.
+const gzipBudgetBytes = 111 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()

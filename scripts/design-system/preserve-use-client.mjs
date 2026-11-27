@@ -3,7 +3,8 @@
  * Post-build step: put `'use client'` back at the top of every built file that
  * holds a `'use client'` source module (see lib/use-client.mjs), then delete
  * the metafile so it is not published. Fails when a client module lands next
- * to a module that is neither client nor declared server-safe below.
+ * to a module that is neither client nor declared server-safe (`serverSafeByPackage`
+ * in lib/use-client.mjs).
  *
  * Run from a package directory after `tsup` with `metafile: true`:
  *   node ../../scripts/design-system/preserve-use-client.mjs
@@ -12,46 +13,7 @@ import { existsSync, readFileSync, rmSync, writeFileSync } from 'node:fs'
 import path from 'node:path'
 import process from 'node:process'
 
-import { addDirective, planUseClient } from './lib/use-client.mjs'
-
-// Modules without the directive that share a built file with client modules.
-// The file stays unmarked so their exports (DEFAULT_MEDIA_LIGHTBOX_LABELS,
-// isVideoSrc, THEME_OPTIONS, …) keep working in a server component; the client
-// modules beside them get no boundary there. Today that is the media and
-// lightbox internals and the theme entry.
-const serverSafeByPackage = {
-  '@atom63/ui-react': [
-    'src/media/media-lightbox/direction.ts',
-    'src/media/media-lightbox/labels.ts',
-    'src/media/media-lightbox/motion.ts',
-    'src/media/media-lightbox/origin-morph.ts',
-    'src/media/media-lightbox/reveal-origin.ts',
-    'src/media/media-lightbox/scroll-lock.ts',
-    'src/media/media-lightbox/slide-media.tsx',
-    'src/media/media-lightbox/timing.ts',
-    'src/media/media-lightbox/track-physics.ts',
-    'src/media/media-lightbox/use-media-aspect.ts',
-    'src/media/media-lightbox/use-media-lightbox.ts',
-    'src/media/media-lightbox/use-media-zoom.ts',
-    'src/media/media-lightbox/use-min-width.ts',
-    'src/media/media-lightbox/use-pull-to-dismiss.ts',
-    'src/media/media-lightbox/velocity.ts',
-    'src/media/media-lightbox/view-transition.ts',
-    'src/media/media-lightbox/wheel-momentum.ts',
-    'src/media/video-manager-context.tsx',
-    'src/media/video-modal.tsx',
-    'src/media/video-thumbnail.tsx',
-    'src/media/video.tsx',
-    'src/theme/appearance/appearance-section.tsx',
-    'src/theme/core/apply-personalization.ts',
-    'src/theme/core/auto-contrast.ts',
-    'src/theme/core/auto-primary.ts',
-    'src/theme/core/options.ts',
-    'src/theme/providers/create-personalization-controller.tsx',
-    'src/theme/providers/create-theme-provider.tsx',
-  ],
-  '@atom63/mdx': [],
-}
+import { addDirective, planUseClient, serverSafeByPackage } from './lib/use-client.mjs'
 
 const cwd = process.cwd()
 const { name } = JSON.parse(readFileSync(path.join(cwd, 'package.json'), 'utf8'))

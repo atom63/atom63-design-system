@@ -1,3 +1,5 @@
+'use client'
+
 /**
  * Scrollable List Component
  * Generic horizontal scrolling container with chevron navigation

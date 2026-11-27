@@ -13,6 +13,45 @@
  * its directive silently.
  */
 
+// Modules without the directive that share a built file with client modules.
+// The file stays unmarked so their exports (DEFAULT_MEDIA_LIGHTBOX_LABELS,
+// isVideoSrc, THEME_OPTIONS, …) keep working in a server component; the client
+// modules beside them get no boundary there. Today that is the media and
+// lightbox internals and the theme entry.
+export const serverSafeByPackage = {
+  '@atom63/ui-react': [
+    'src/media/media-lightbox/direction.ts',
+    'src/media/media-lightbox/labels.ts',
+    'src/media/media-lightbox/motion.ts',
+    'src/media/media-lightbox/origin-morph.ts',
+    'src/media/media-lightbox/reveal-origin.ts',
+    'src/media/media-lightbox/scroll-lock.ts',
+    'src/media/media-lightbox/slide-media.tsx',
+    'src/media/media-lightbox/timing.ts',
+    'src/media/media-lightbox/track-physics.ts',
+    'src/media/media-lightbox/use-media-aspect.ts',
+    'src/media/media-lightbox/use-media-lightbox.ts',
+    'src/media/media-lightbox/use-media-zoom.ts',
+    'src/media/media-lightbox/use-min-width.ts',
+    'src/media/media-lightbox/use-pull-to-dismiss.ts',
+    'src/media/media-lightbox/velocity.ts',
+    'src/media/media-lightbox/view-transition.ts',
+    'src/media/media-lightbox/wheel-momentum.ts',
+    'src/media/video-manager-context.tsx',
+    'src/media/video-modal.tsx',
+    'src/media/video-thumbnail.tsx',
+    'src/media/video.tsx',
+    'src/theme/appearance/appearance-section.tsx',
+    'src/theme/core/apply-personalization.ts',
+    'src/theme/core/auto-contrast.ts',
+    'src/theme/core/auto-primary.ts',
+    'src/theme/core/options.ts',
+    'src/theme/providers/create-personalization-controller.tsx',
+    'src/theme/providers/create-theme-provider.tsx',
+  ],
+  '@atom63/mdx': [],
+}
+
 const DIRECTIVE = /^(?:\s|\/\*[\s\S]*?\*\/|\/\/[^\n]*\n)*['"]use client['"]/
 const COMMENT = /\/\*[\s\S]*?\*\/|(^|[^:\\])\/\/[^\n]*/g
 const REEXPORT =
@@ -85,4 +124,22 @@ export function addDirective(code, map) {
     code: `'use client';\n${code}`,
     map: shifted ? JSON.stringify(shifted) : undefined,
   }
+}
+
+// A call to a React hook: `useState(`, `React.useId(`, `useRef<T>(`, `use(`.
+const HOOK_CALL = /(?<![\w$.]|function\s)(?:React\.)?use(?:[A-Z]\w*)?\s*(?:<[^>()]*>)?\s*\(/
+const HOOK_DEFINITION = /(?:function\s+|(?:const|let)\s+)use[A-Z]\w*/g
+const STRING = /(['"`])(?:\\.|(?!\1)[^\\\n])*\1/g
+
+/**
+ * Whether a `.tsx` source renders on the client but cannot say so: it calls a
+ * React hook and does not start with `'use client'`. esbuild drops the
+ * directive, and `planUseClient` restores it only from source, so such a
+ * component ships without a client boundary and breaks when a server
+ * component imports it.
+ */
+export function needsUseClient(text) {
+  if (hasUseClient(text)) return false
+  const code = text.replace(COMMENT, '$1').replace(STRING, '""').replace(HOOK_DEFINITION, '')
+  return HOOK_CALL.test(code)
 }
