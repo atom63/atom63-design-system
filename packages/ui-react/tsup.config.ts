@@ -1,4 +1,5 @@
 import { existsSync, readFileSync } from 'node:fs'
+import path from 'node:path'
 import { defineConfig } from 'tsup'
 
 const publicEntries = [
@@ -16,17 +17,23 @@ const publicEntries = [
 // built root is a list of re-exports over per-component files. A consumer's
 // bundler then drops whole files it does not use (`sideEffects` lists only CSS)
 // instead of keeping one module whose imports (sonner, input-otp, Base UI) and
-// top-level calls it cannot prove unused.
+// top-level calls it cannot prove unused. The layout barrels get the same split
+// so their `'use client'` modules (Container, Page, the grid chrome) land in
+// files of their own, apart from the server-safe ones (Section, max-width).
+const barrelModuleEntries = barrel =>
+  [...readFileSync(barrel, 'utf8').matchAll(/from '(\.\.?\/[^']+)'/g)].map(([, specifier]) => {
+    const base = path.posix.join(path.posix.dirname(barrel), specifier)
+    const file = [`${base}.ts`, `${base}.tsx`, `${base}/index.ts`, `${base}/index.tsx`].find(
+      existsSync
+    )
+    if (!file) throw new Error(`Cannot resolve ${specifier} from ${barrel}`)
+    return file
+  })
 const rootModuleEntries = [
-  ...readFileSync('src/index.ts', 'utf8').matchAll(/from '(\.\/[^']+)'/g),
-].map(([, specifier]) => {
-  const base = `src/${specifier.slice(2)}`
-  const file = [`${base}.ts`, `${base}.tsx`, `${base}/index.ts`, `${base}/index.tsx`].find(
-    existsSync
-  )
-  if (!file) throw new Error(`Cannot resolve ${specifier} from src/index.ts`)
-  return file
-})
+  'src/index.ts',
+  'src/layout/index.ts',
+  'src/layout/grid/index.ts',
+].flatMap(barrelModuleEntries)
 
 export default defineConfig({
   clean: true,

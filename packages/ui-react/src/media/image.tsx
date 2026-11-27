@@ -1,3 +1,5 @@
+'use client'
+
 import { motion } from 'motion/react'
 import { memo, useEffect, useRef, useState } from 'react'
 import { cn } from '../lib/cn'
