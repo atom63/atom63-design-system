@@ -1,3 +1,5 @@
+'use client'
+
 import { MediaLightbox, type MediaLightboxItem } from '@atom63/ui-react/media'
 import { useEffect, useRef, useState } from 'react'
 import { MDX_FIGURE_LIGHTBOX_GALLERY_ID } from './constants'

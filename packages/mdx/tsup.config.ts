@@ -19,16 +19,19 @@ const publicEntries = [
 // bundler then drops whole files it does not use (`sideEffects` lists only CSS)
 // instead of keeping shared chunks whose imports (Base UI, motion, sonner) it
 // cannot prove unused. Same approach as packages/ui-react/tsup.config.ts.
-const moduleEntries = publicEntries.flatMap(entry =>
-  [...readFileSync(entry, 'utf8').matchAll(/from '(\.\.?\/[^']+)'/g)].map(([, specifier]) => {
-    const base = path.posix.join(path.posix.dirname(entry), specifier)
+// Nested `index` barrels are split the same way, so a `'use client'` module
+// (DemoConfigPanel) lands in a file of its own, apart from a server-safe
+// sibling (DemoStage) that its folder's barrel also re-exports.
+const barrelModuleEntries = (barrel: string): string[] =>
+  [...readFileSync(barrel, 'utf8').matchAll(/from '(\.\.?\/[^']+)'/g)].flatMap(([, specifier]) => {
+    const base = path.posix.join(path.posix.dirname(barrel), specifier)
     const file = [`${base}.ts`, `${base}.tsx`, `${base}/index.ts`, `${base}/index.tsx`].find(
       existsSync
     )
-    if (!file) throw new Error(`Cannot resolve ${specifier} from ${entry}`)
-    return file
+    if (!file) throw new Error(`Cannot resolve ${specifier} from ${barrel}`)
+    return /\/index\.tsx?$/.test(file) ? [file, ...barrelModuleEntries(file)] : [file]
   })
-)
+const moduleEntries = publicEntries.flatMap(barrelModuleEntries)
 
 export default defineConfig({
   entry: [...new Set([...publicEntries, ...moduleEntries])],

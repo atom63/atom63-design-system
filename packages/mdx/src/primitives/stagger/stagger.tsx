@@ -1,3 +1,5 @@
+'use client'
+
 import { motion } from 'motion/react'
 import { Children, isValidElement, type ReactNode } from 'react'
 import { motionDurations, motionEasings } from '../motion-tokens'
