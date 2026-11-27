@@ -1,5 +1,13 @@
 # @atom63/mdx
 
+## 0.4.0-beta.13
+
+### Patch Changes
+
+- [#375](https://github.com/atom63/atom63-design-system/pull/375) [`0ff95c3`](https://github.com/atom63/atom63-design-system/commit/0ff95c37b637c9ca02c0e75349deddd44846fc4d) Thanks [@atom63](https://github.com/atom63)! - Mark every client component with `'use client'` so it keeps a client boundary in React Server Components. CodeBlock, CreditsBlock, DemoConfigPanel, DocExample, FigureBlock, MermaidDiagram, PageTableOfContents, the figure lightbox host, the MDX components map, the live preview, the source editor and view, Reveal, Stagger and the example context called hooks without the directive, so the build shipped them unmarked and a server component that imported them failed. Each block folder's barrel now builds one file per module, as the public entries do, so DemoConfigPanel sits apart from the server-safe DemoStage.
+- Updated dependencies [[`9b01a87`](https://github.com/atom63/atom63-design-system/commit/9b01a875f706becf9fcd163f689e1e9484e345c9)]:
+  - @atom63/ui-react@0.2.0-beta.22
+
 ## 0.4.0-beta.12
 
 ### Patch Changes
