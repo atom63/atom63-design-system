@@ -1606,7 +1606,7 @@ terminal b5 n1 light borderSubtle 0.820816 0.807302 0.91779 1
 terminal b5 n1 dark borderSubtle 0.368627 0.039215 0.792157 0.22
 terminal b5 n1 light borderControl 0.759122 0.735062 0.911555 1
 terminal b5 n1 dark borderControl 0.368627 0.039215 0.792157 0.42
-terminal b5 n1 light borderInput 0.396625 0.278403 0.720591 1
+terminal b5 n1 light borderInput 0.396624 0.278403 0.720591 1
 terminal b5 n1 dark borderInput 0.721569 0.572549 1 0.6
 terminal b5 n1 light actionPrimary 0.368627 0.039216 0.792157 1
 terminal b5 n1 dark actionPrimary 0.368627 0.039216 0.792157 1
