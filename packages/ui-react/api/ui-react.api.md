@@ -378,6 +378,7 @@ export type Atom63ThemeMode = Exclude<Mode, 'system'>;
 
 // @public (undocumented)
 export interface Atom63ThemeProps extends useRender.ComponentProps<'div'> {
+    formFactor?: FormFactor;
     // (undocumented)
     mode?: Atom63ThemeMode;
     // (undocumented)
@@ -1590,6 +1591,9 @@ export function FormControl(input: React$1.ComponentProps<'div'> & {
 
 // @public (undocumented)
 export function FormDescription(input: React$1.ComponentProps<'p'>): React$1.JSX.Element;
+
+// @public
+export type FormFactor = 'phone' | 'default';
 
 // @public (undocumented)
 export const FormField: <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(input: ControllerProps<TFieldValues, TName>) => React$1.JSX.Element;
@@ -3048,6 +3052,7 @@ export function UIProvider(input: UIProviderProps): React$1.ReactElement;
 // @public (undocumented)
 export interface UIProviderProps extends useRender.ComponentProps<'div'>, Partial<UIEnvironment> {
     dir?: 'ltr' | 'rtl' | 'auto';
+    formFactor?: FormFactor;
 }
 
 // @public (undocumented)
