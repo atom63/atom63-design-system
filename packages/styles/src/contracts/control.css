@@ -66,6 +66,7 @@
   --a63-control-icon-only-size-lg: 1.25rem;
   --a63-control-icon-only-size-xl: 1.375rem;
   --a63-control-gap: var(--a63-space-2);
+  /* Public slot: the corner radius of the controls in a scope. Themes set it, and a container can set it to round the controls inside it, e.g. `.toolbar { --a63-control-radius: var(--radius-md); }`. Button, Input, Textarea, Select, Badge, Tabs and the menu triggers read it on their own element, so the nearest declaration wins. Grouped controls keep their own slots: Toggle and ToggleGroup read --a63-toggle-radius, SegmentedControl reads --a63-segment-radius. */
   --a63-control-radius: var(--a63-radius-control);
   --a63-control-border-width: 1px;
   /* `0 0 #0000` not `none` — composed into comma-separated box-shadow lists

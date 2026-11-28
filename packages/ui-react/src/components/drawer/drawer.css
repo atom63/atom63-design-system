@@ -35,10 +35,13 @@
 
 .a63-Drawer-viewport {
   /* Screen edge the sheet must never occupy, so a top/bottom drawer always
-     leaves the opposite edge visible. Reserved as viewport padding below, and
-     exposed as a variable so a host sizing its own sheet can subtract it
-     instead of guessing at it. */
-  --a63-drawer-viewport-gutter: 6rem;
+     leaves the opposite edge visible. Reserved as viewport padding below.
+     The public slot is --a63-drawer-gutter: DrawerContent's `gutter` prop sets
+     it on this one viewport, and a theme or :root can set it for every drawer.
+     It is read here rather than declared, so either of those wins. The resolved
+     value stays readable as --a63-drawer-viewport-gutter, so a host sizing its
+     own sheet can subtract it instead of guessing at it. */
+  --a63-drawer-viewport-gutter: var(--a63-drawer-gutter, 6rem);
   position: fixed;
   inset: 0;
   z-index: var(--z-layer-modal, 600);

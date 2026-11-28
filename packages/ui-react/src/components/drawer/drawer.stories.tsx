@@ -116,6 +116,24 @@ export const Open: Story = {
   ),
 }
 
+/** `gutter` sets how far this drawer stops from the top of the screen (6rem by default). */
+export const Gutter: Story = {
+  render: args => (
+    <Drawer {...args} defaultOpen>
+      <DrawerContent gutter="max(3rem, var(--a63-safe-area-top, 0px))">
+        <DrawerHeader>
+          <DrawerTitle>Project detail</DrawerTitle>
+          <DrawerDescription>This sheet stops 3rem from the top.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerBody style={{ color: 'var(--a63-text-secondary)' }}>
+          Set the gutter per drawer with the prop, or for every drawer with the --a63-drawer-gutter
+          variable.
+        </DrawerBody>
+      </DrawerContent>
+    </Drawer>
+  ),
+}
+
 /* A persistent bottom sheet over a map or photo: modal={false} keeps the page
    usable behind it, and snapPoints let it rest at a peek height or open fully. */
 export const PersistentSheet: Story = {

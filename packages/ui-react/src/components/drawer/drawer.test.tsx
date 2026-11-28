@@ -84,6 +84,33 @@ describe('Drawer', () => {
     )
   })
 
+  it('sets the public gutter slot on the viewport and keeps the caller style', () => {
+    const { unmount } = render(
+      <Drawer open>
+        <DrawerContent gutter="3rem" viewportProps={{ style: { color: 'red' } }}>
+          <DrawerTitle>Detail</DrawerTitle>
+        </DrawerContent>
+      </Drawer>
+    )
+    const viewport = document.querySelector<HTMLElement>('[data-slot="drawer-viewport"]')
+    expect(viewport?.style.getPropertyValue('--a63-drawer-gutter')).toBe('3rem')
+    expect(viewport?.style.color).toBe('red')
+    unmount()
+
+    render(
+      <Drawer open>
+        <DrawerContent>
+          <DrawerTitle>Detail</DrawerTitle>
+        </DrawerContent>
+      </Drawer>
+    )
+    expect(
+      document
+        .querySelector<HTMLElement>('[data-slot="drawer-viewport"]')
+        ?.style.getPropertyValue('--a63-drawer-gutter')
+    ).toBe('')
+  })
+
   it('marks a modal drawer aria-modal, and a persistent one not', () => {
     const { unmount } = render(
       <Drawer open>

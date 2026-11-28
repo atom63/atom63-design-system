@@ -1241,6 +1241,7 @@ export function DrawerContent(input: DrawerContentProps): React$1.ReactElement;
 export type DrawerContentProps = Omit<Drawer_2.Popup.Props, 'children'> & {
     children?: React$1.ReactNode;
     contentProps?: Drawer_2.Content.Props;
+    gutter?: string;
     portalProps?: Drawer_2.Portal.Props;
     viewportProps?: Drawer_2.Viewport.Props;
 };
