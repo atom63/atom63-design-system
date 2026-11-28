@@ -1,0 +1,815 @@
+{
+  "scope": "Layer 2: contracts (C1-C5) — packages/ui-foundation/contracts/components, generated contracts, cross-renderer contracts; web and React only (iOS judged from contract JSON only)",
+  "reviewedAt": "2026-11-28",
+  "round": 3,
+  "reviewedCommit": "f7e5e419",
+  "notes": "Same 16 subjects as r2. Fixed since r2: r2-contracts-1 (button slots; plus a new checkSlots lint wired into check:contract-consistency) and r2-contracts-2 (button stable is now honest). r2-contracts-12 partly fixed (search-field slot) and carried for the sizes/invalid gap. Commands run: node scripts/design-system/check-contract-consistency.mjs (OK, 80 contracts), generate-component-contracts.mjs --check and generate-cross-renderer-contracts.mjs --check (exit 0), pnpm check:agent-index (current), pnpm atom63 component button/calendar/chart. New contracts art-plate, chart, layered-scene (all preview) were checked for prop/contract parity and wiring and raise no finding.",
+  "subjects": [
+    {
+      "subject": "all-contracts",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "Schema still requires only component, maturity and contract (packages/ui-foundation/contracts/schema/component-intent.schema.json:8-13, lists :72); states and slots stay optional: alert, app-view and separator have no states list, portal-container and sidebar-nav-tree no slots list (node sweep of contracts/components, 80 files). New since r2: check:contract-consistency now runs checkSlots (scripts/design-system/lib/contract-consistency.mjs:23-25,150-166; wired at scripts/design-system/check-contract-consistency.mjs:20,65; CI .github/workflows/ci.yml:155), so contract slots are now tied to rendered data-slot values, but 23 misses are baselined (docs/design-system/audits/contract-consistency-baseline.json:2-24: 14 calendar, 8 menu, 1 autocomplete). Axes and states are still not tied to React props or recipes: a sweep of component .tsx finds hand-typed axis props with no contract list (toggle-group size/tone toggle-group.tsx:30-31, connected-panel variant connected-panel.tsx:89, context-menu item variant context-menu.tsx:136), and a recipe sweep finds :hover/:focus-visible drawn but not listed in ~28 contracts (e.g. checkbox, menubar, navigation-menu, sidebar, button-group, field, table). APG bindings: 9 of 80 contracts carry contract.accessibility."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "`node scripts/design-system/check-contract-consistency.mjs` -> 'Contract consistency OK (80 contracts).' with the same 5 baselined synonyms (contract-consistency-baseline.json:25-29). The value lint itself is unchanged since r2 (git diff 099d1eba..HEAD of lib/contract-consistency.mjs adds only checkSlots), so list-name synonyms (drawer.json:6 'directions' vs sheet 'sides'; connected-panel.json:7 'aligns' vs tooltip.json:7 'alignments'), *Sizes lists (sidebar.json:11 'default'), tone names (menu.json:6 'primary'), neutral status ('default' in alert.json:7 vs 'neutral' stateTones), failure states ('failed' vs 'error') and slot conventions (calendar/menu class-name suffixes) are still unlinted."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/cross-renderer.json lists 31 components; generate-cross-renderer-contracts.mjs --check exit 0. 15 of 31 (dialog, alert-dialog, switch, select, toggle, destination-link, segmented-control, radio, dropdown-menu, accordion, calendar, search-field, tabs, skeleton, load-more-trigger) still have no intent.platforms.ios and explain the missing iOS axes only in prose. Subject-level gaps remain on badge and amount."
+        },
+        {
+          "criterion": "C4",
+          "score": 3,
+          "evidence": "Every one of the 80 contracts except the internal menu helper has a component folder with stories and a test; the three new contracts (art-plate, chart, layered-scene) are fully wired (packages/ui-react/src/components/{art-plate,chart,layered-scene}/ with .css, stories, test; agent-index routes /components/component-chart etc.). check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419. spinner and animated-check still style through an inline <style> (spinner.tsx:39, animated-check.tsx:70) and progressive-blur through inline styles (progressive-blur.tsx:60,69)."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "maturity is a schema enum; 69 stable, 11 preview (new art-plate, chart, layered-scene enter as preview: art-plate.json:4, chart.json:4, layered-scene.json:4). The r2 button P1 is fixed, so button's stable is honest. The doubtful stable claim left is menu (an internal helper, menu.json:4). r2 layer-3 P1s on stable components have fix commits since 099d1eba (d88a3870 rating/segmented-control, 336a05c9 tabs/text-ticker, a63a96a1 load-more-trigger danger role); r3 layer-3 verdicts not visible to this reviewer."
+        }
+      ]
+    },
+    {
+      "subject": "button",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/button.json:42 slots now [\"button\",\"button-label\",\"button-spinner\",\"button-indicator\"], matching the data-slot values in packages/ui-react/src/components/button/button.tsx; `pnpm -s atom63 component button` prints data-slot=\"button\" (line 30) and 'Slots: button, button-label, button-spinner, button-indicator' (line 184), no longer contradictory. checkSlots keeps it so (no button entry in contract-consistency-baseline.json; contract-consistency.test.mjs:88-110 uses the old button slots as its failing fixture)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "Axis values canonical (md, focus-visible via stateAliases at packages/ui-foundation/contracts/components/button.json:39, pressed); slot names now carry the component prefix like every other contract."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "intent.platforms.web/ios map variant, size and shape (packages/ui-foundation/contracts/components/button.json intent); AtomButtonShape bound by swiftEnum; requiredStates rest/pressed/disabled/loading all in states; cross-renderer --check exit 0."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/button.json + packages/ui-react/src/components/button/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/button.json:4 maturity \"stable\"; r2-contracts-1 (P1) is fixed (git diff 099d1eba..HEAD button.json:42), so no open P0/P1 at the contract layer."
+        }
+      ]
+    },
+    {
+      "subject": "badge",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "Axes, defaults, slots [badge, badge-dot], states [rest, interactive, disabled, focus-visible], intent present (packages/ui-foundation/contracts/components/badge.json). Recipe draws :hover with no hover state listed (badge.css), polish."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Unchanged since r2: solidVariants \"accent\" is a neutral (packages/ui-foundation/contracts/components/badge.json:16,158), paletteVariants \"neutral\" is a hue (:43), \"glass\" a plain extension (:14,152) while button.json deprecates glass for overlay."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "crossRenderer.requiredStates still [\"neutral\",\"accent\",\"success\",\"warning\",\"error\"] (packages/ui-foundation/contracts/components/badge.json:283) under strict parity, against intent tone axis [neutral, primary, info, success, warning, error] (:105)."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/badge.json + packages/ui-react/src/components/badge/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/badge.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "Unchanged: tones [neutral, primary] (packages/ui-foundation/contracts/components/menu.json:6) with no public tone prop on DropdownMenu/ContextMenu/Menubar content; its 8 slots are class-name suffixes and are now baselined by the new slot check as never rendered (contract-consistency-baseline.json:17-24)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "Tone \"primary\" (packages/ui-foundation/contracts/components/menu.json:6) where item, table, segmented-control, slider, progress, toggle, sidebar-nav-tree and sidebar menuButtonTones say \"accent\"."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: internal recipe, no SwiftUI counterpart."
+        },
+        {
+          "criterion": "C4",
+          "score": 2,
+          "evidence": "Still no menu.tsx, test or docs page; menu is absent from packages/cli/generated/agent-index.json components (79 entries, no 'menu'), yet menuContract stays a public component contract under contracts/components (contracts/shared holds only selection.json)."
+        },
+        {
+          "criterion": "C5",
+          "score": 2,
+          "evidence": "maturity \"stable\" (packages/ui-foundation/contracts/components/menu.json:4) on a helper that is not a public component."
+        }
+      ]
+    },
+    {
+      "subject": "sidebar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "states still [\"expanded\",\"collapsed\"] (packages/ui-foundation/contracts/components/sidebar.json:14); sidebar.css draws hover, focus-visible and the [data-active] current item (recipe sweep: :hover and :focus-visible present, neither listed)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "menuButtonSizes [\"default\",\"sm\",\"lg\"] (packages/ui-foundation/contracts/components/sidebar.json:11) vs menuSubButtonSizes [\"sm\",\"md\"] in the same file; unlinted because the list is not named 'sizes'."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart (not in cross-renderer.json)."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar.json + packages/ui-react/src/components/sidebar/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "sidebar-nav-tree",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "Still no slots list; anatomy is a \"parts\" list (packages/ui-foundation/contracts/components/sidebar-nav-tree.json:13,25), so the new slot check skips it entirely (checkSlots reads only lists.slots, contract-consistency.mjs:152-155)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "Deprecated alias active -> current declared; tones neutral/accent (packages/ui-foundation/contracts/components/sidebar-nav-tree.json:12)."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar-nav-tree.json + packages/ui-react/src/components/sidebar-nav-tree/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/sidebar-nav-tree.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "search-field",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "Slot fixed: search-field-input replaced by the rendered \"input\" (packages/ui-foundation/contracts/components/search-field.json:10). Still no sizes axis and no invalid state (packages/ui-foundation/contracts/components/search-field.json:6) although SearchField takes size and invalid and forwards them (packages/ui-react/src/components/search-field/search-field.tsx:62,66,106-107)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "states and crossRenderer.requiredStates still use \"focus\" (packages/ui-foundation/contracts/components/search-field.json:6, cross-renderer block :32+), baselined (contract-consistency-baseline.json:28)."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "In cross-renderer.json, renderer searchable(text:prompt:), parity platform-adaptive; no axes to map."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/search-field.json + packages/ui-react/src/components/search-field/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419. Styling composes InputGroup."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/search-field.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "input",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "sizes/variants with defaults, states, slots, tokenSlots, group part (packages/ui-foundation/contracts/components/input.json)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "states \"focus\" (packages/ui-foundation/contracts/components/input.json:11) and crossRenderer requiredStates [rest, focus, disabled, invalid], baselined (contract-consistency-baseline.json:26)."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "intent.platforms.ios maps variant to AtomTextField."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/input.json + packages/ui-react/src/components/input/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/input.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "textarea",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "Now also carries the variants axis default/filled/plain with defaultVariant (packages/ui-foundation/contracts/components/textarea.json:7-10,29), matching Textarea's variant prop (packages/ui-react/src/components/textarea/textarea.tsx:23,47)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "states still \"focus\" (packages/ui-foundation/contracts/components/textarea.json:11) and in requiredStates (:110 block), baselined (contract-consistency-baseline.json:29)."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "ios maps size and now variant default/filled to AtomTextEditor, plain declared as a web extension (packages/ui-foundation/contracts/components/textarea.json intent.platforms.ios)."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/textarea.json + packages/ui-react/src/components/textarea/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/textarea.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "field",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "orientations/legendVariants with defaults, states, slots (packages/ui-foundation/contracts/components/field.json). Recipe draws :hover/:focus-visible not listed, polish."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "states [\"default\",\"invalid\",\"disabled\"] (packages/ui-foundation/contracts/components/field.json:8), \"default\" for rest; baselined (contract-consistency-baseline.json:25)."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "ios maps variant to AtomFormField (parity strict)."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/field.json + packages/ui-react/src/components/field/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/field.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "load-more-trigger",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "variants with default, states, slots (packages/ui-foundation/contracts/components/load-more-trigger.json)."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "states and requiredStates use \"idle\" (packages/ui-foundation/contracts/components/load-more-trigger.json:7, cross-renderer block :60+), baselined (contract-consistency-baseline.json:27)."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "intent.platforms has web only; prose says AtomLoadMoreView has no variant axis; requiredStates/stateTones validated by the generator."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/load-more-trigger.json + packages/ui-react/src/components/load-more-trigger/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/load-more-trigger.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "checkbox",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "states unchanged [\"unchecked\",\"checked\",\"indeterminate\",\"disabled\",\"invalid\"] (packages/ui-foundation/contracts/components/checkbox.json:8), omitting hover and focus-visible that the recipe draws (packages/ui-react/src/components/checkbox/checkbox.css:95,100)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "Values match radio/switch apart from the omission."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/checkbox.json + packages/ui-react/src/components/checkbox/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/checkbox.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "toggle-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "ToggleGroupProps still has size?: ToggleSize and tone?: ToggleTone (packages/ui-react/src/components/toggle-group/toggle-group.tsx:30-31); packages/ui-foundation/contracts/components/toggle-group.json lists only variants, orientations, selectionModes, so `atom63 component toggle-group` omits both axes."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "variants segmented/pills/ghost and orientations match the system."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "ios maps orientation; swiftUIRenderer Picker(.segmented) / AtomGhostToggleGroup."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/toggle-group.json + packages/ui-react/src/components/toggle-group/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/toggle-group.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "connected-panel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 2,
+          "evidence": "variant?: ConnectedPanelVariant ('default' | 'button-group') still hand-typed (packages/ui-react/src/components/connected-panel/connected-panel.tsx:89,106,138); packages/ui-foundation/contracts/components/connected-panel.json has no variants list."
+        },
+        {
+          "criterion": "C2",
+          "score": 2,
+          "evidence": "List \"aligns\" (packages/ui-foundation/contracts/components/connected-panel.json:7) vs tooltip.json:7 \"alignments\"."
+        },
+        {
+          "criterion": "C3",
+          "score": null,
+          "evidence": "n/a: no SwiftUI counterpart."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/connected-panel.json + packages/ui-react/src/components/connected-panel/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/connected-panel.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "amount",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "sizes/fractions with defaults, slots, states (packages/ui-foundation/contracts/components/amount.json)."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "Consistent names."
+        },
+        {
+          "criterion": "C3",
+          "score": 2,
+          "evidence": "AtomAmountText exists (packages/ui-ios/Sources/Atom63UI/AtomAmountText.swift:6-13) but amount is still not in contracts/cross-renderer.json (31 entries, no amount) and has no intent.platforms.ios or swiftEnum binding."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/amount.json + packages/ui-react/src/components/amount/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/amount.json:4 maturity \"preview\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    },
+    {
+      "subject": "card",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "C1",
+          "score": 3,
+          "evidence": "variants, paddings, states (now with pressed, packages/ui-foundation/contracts/components/card.json:30), slots (new card-media-overlay-top-end, logical), intent present."
+        },
+        {
+          "criterion": "C2",
+          "score": 3,
+          "evidence": "\"interactive\" is still both a variant (packages/ui-foundation/contracts/components/card.json:6) and a state (:30, requiredStates :120): polish."
+        },
+        {
+          "criterion": "C3",
+          "score": 3,
+          "evidence": "ios maps variant to AtomCard."
+        },
+        {
+          "criterion": "C4",
+          "score": 4,
+          "evidence": "packages/ui-foundation/contracts/components/card.json + packages/ui-react/src/components/card/ (recipe, stories, test) present; check:agent-index 'Agent index is current.' and generate-component-contracts.mjs / generate-cross-renderer-contracts.mjs --check exit 0 at f7e5e419."
+        },
+        {
+          "criterion": "C5",
+          "score": 3,
+          "evidence": "packages/ui-foundation/contracts/components/card.json:4 maturity \"stable\"; no open P0/P1 on it at the contract layer, and the r2 layer-3 P1s (rating, segmented-control, tabs, text-ticker, load-more-trigger) have fix commits since 099d1eba (d88a3870, 336a05c9, a63a96a1). Layer-3 r3 cross-check pending other reviewers."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r3-contracts-1",
+      "subject": "badge",
+      "criterion": "C3",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-3: badge crossRenderer.requiredStates still use a palette hue (neutral) and a web-only extension (accent) under strict parity, and omit info and primary.",
+      "evidence": "packages/ui-foundation/contracts/components/badge.json:283 vs intent tone axis :105.",
+      "fix": "Make requiredStates the semantic subset by variant name (default, primary, info, success, warning, error) and regenerate.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-2",
+      "subject": "badge",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-4: badge variant \"accent\" is a neutral, \"neutral\" is a palette hue, and \"glass\" is not deprecated for \"overlay\" as in Button.",
+      "evidence": "packages/ui-foundation/contracts/components/badge.json:14,16,43,152,158.",
+      "fix": "Rename accent to a neutral name and glass to overlay with deprecatedAliases; lint both.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-3",
+      "subject": "menu",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-5: menu declares a tones axis no public component exposes, and its slots are class names; the new slot check now baselines all 8 as never rendered.",
+      "evidence": "packages/ui-foundation/contracts/components/menu.json:6,9; contract-consistency-baseline.json:17-24.",
+      "fix": "Expose tone through the menu contracts or drop it; list real data-slot values.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-4",
+      "subject": "menu",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-6: menu tone \"primary\" means what every other tone list calls \"accent\".",
+      "evidence": "packages/ui-foundation/contracts/components/menu.json:6.",
+      "fix": "Rename to accent with a deprecated alias; add to lint SYNONYMS.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-5",
+      "subject": "menu",
+      "criterion": "C4",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-7: menuContract is a public component contract for an internal helper with no component, test, docs page or CLI entry.",
+      "evidence": "packages/ui-foundation/contracts/components/menu.json; packages/cli/generated/agent-index.json has no 'menu' component; contracts/shared holds only selection.json.",
+      "fix": "Move it to contracts/shared/menu.json.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-6",
+      "subject": "menu",
+      "criterion": "C5",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-8: \"stable\" maturity on a non-public helper.",
+      "evidence": "packages/ui-foundation/contracts/components/menu.json:4.",
+      "fix": "Resolved by moving it to contracts/shared.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-7",
+      "subject": "sidebar",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-9: sidebar menuButtonSizes uses \"default\" for the middle size while menuSubButtonSizes uses \"md\".",
+      "evidence": "packages/ui-foundation/contracts/components/sidebar.json:11.",
+      "fix": "Rename to md with deprecatedAliases; apply the sizes synonym to every *Sizes list.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-8",
+      "subject": "sidebar",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-10: sidebar states list only expanded/collapsed; the recipe draws hover, focus-visible and the current item.",
+      "evidence": "packages/ui-foundation/contracts/components/sidebar.json:14; packages/ui-react/src/components/sidebar/sidebar.css (:hover, :focus-visible, [data-active]).",
+      "fix": "Add hover, focus-visible and current.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-9",
+      "subject": "sidebar-nav-tree",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-11: no slots list; anatomy is a \"parts\" list that the CLI shows as an axis and the new slot check cannot see.",
+      "evidence": "packages/ui-foundation/contracts/components/sidebar-nav-tree.json:13,25; scripts/design-system/lib/contract-consistency.mjs:152-155.",
+      "fix": "Rename parts to slots with rendered data-slot values.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-10",
+      "subject": "search-field",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-12 (slot part fixed): the search-field contract still omits the sizes axis and invalid state that SearchField accepts.",
+      "evidence": "packages/ui-foundation/contracts/components/search-field.json:6 vs packages/ui-react/src/components/search-field/search-field.tsx:62,66,106-107.",
+      "fix": "Add sizes via $ref ./input.json#/lists/sizes and invalid to states.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-11",
+      "subject": "search-field",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-13: \"focus\" in states and requiredStates (baselined).",
+      "evidence": "packages/ui-foundation/contracts/components/search-field.json:6; contract-consistency-baseline.json:28.",
+      "fix": "Rename to focus-visible with deprecatedAliases; shrink the baseline.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-12",
+      "subject": "input",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-14: input states use \"focus\" though its own stateAliases names focus-visible canonical (baselined).",
+      "evidence": "packages/ui-foundation/contracts/components/input.json:11; contract-consistency-baseline.json:26.",
+      "fix": "Rename with deprecatedAliases.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-13",
+      "subject": "textarea",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-15: textarea uses \"focus\" in states and requiredStates (baselined).",
+      "evidence": "packages/ui-foundation/contracts/components/textarea.json:11; contract-consistency-baseline.json:29.",
+      "fix": "Rename to focus-visible with deprecatedAliases.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-14",
+      "subject": "field",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-16: field uses \"default\" for the rest state (baselined).",
+      "evidence": "packages/ui-foundation/contracts/components/field.json:8; contract-consistency-baseline.json:25.",
+      "fix": "Rename to rest with deprecatedAliases.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-15",
+      "subject": "load-more-trigger",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-17: \"idle\" for the rest state, also in strict-parity requiredStates (baselined).",
+      "evidence": "packages/ui-foundation/contracts/components/load-more-trigger.json:7; contract-consistency-baseline.json:27.",
+      "fix": "Rename to rest with deprecatedAliases; regenerate cross-renderer and Swift.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-16",
+      "subject": "checkbox",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-18: checkbox states omit hover and focus-visible, which the recipe draws and radio/switch list.",
+      "evidence": "packages/ui-foundation/contracts/components/checkbox.json:8; packages/ui-react/src/components/checkbox/checkbox.css:95,100.",
+      "fix": "Add hover and focus-visible.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-17",
+      "subject": "toggle-group",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-19: ToggleGroup accepts size and tone props not in its contract (so not in `atom63 component toggle-group`).",
+      "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.tsx:30-31; packages/ui-foundation/contracts/components/toggle-group.json.",
+      "fix": "Add sizes and tones via $ref ./toggle.json lists, with defaults.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-18",
+      "subject": "connected-panel",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-20: ConnectedPanel's variant axis (default | button-group) is hand-typed and missing from the contract.",
+      "evidence": "packages/ui-react/src/components/connected-panel/connected-panel.tsx:89,106,138.",
+      "fix": "Add a variants list and derive the type from the generated contract.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-19",
+      "subject": "connected-panel",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-21: list name \"aligns\" duplicates tooltip's \"alignments\".",
+      "evidence": "packages/ui-foundation/contracts/components/connected-panel.json:7; tooltip.json:7.",
+      "fix": "Pick one list name with an alias; lint list-name synonyms.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-20",
+      "subject": "amount",
+      "criterion": "C3",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-22: amount has an iOS counterpart but no cross-renderer entry or iOS mapping.",
+      "evidence": "packages/ui-ios/Sources/Atom63UI/AtomAmountText.swift:6-13; packages/ui-foundation/contracts/cross-renderer.json (no amount).",
+      "fix": "Add intent.platforms.ios with swiftEnum AtomAmountFraction and a crossRenderer block.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-21",
+      "subject": "all-contracts",
+      "criterion": "C2",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-23: the value lint is unchanged and still misses list-name synonyms, *Sizes/*Tones lists, the neutral status name, failure-state names and descending size orders.",
+      "evidence": "scripts/design-system/lib/contract-consistency.mjs (git diff 099d1eba..HEAD adds only checkSlots); drawer.json:6 vs sheet sides; alert.json:7 'default'; sidebar.json:11.",
+      "fix": "Extend the lint as proposed in r2 and baseline the rest.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-22",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "Carried from r2-contracts-24 (slots part partly fixed by checkSlots): states and slots stay optional in the schema, and nothing ties contract axes or states to React props or recipes; hand-typed axes and undeclared drawn states remain.",
+      "evidence": "component-intent.schema.json:8-13; alert/app-view/separator lack states, portal-container/sidebar-nav-tree lack slots; toggle-group.tsx:30-31, connected-panel.tsx:89, context-menu.tsx:136; recipe sweep: :hover/:focus-visible undeclared in ~28 contracts.",
+      "fix": "Require states and slots (empty with a reason), and add a test that each size/tone/variant/orientation prop has a contract list and each drawn interaction state is listed.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-23",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "New: the slot check baselines 15 contract slots that are never rendered as data-slot outside menu: 14 of calendar's 15 slots are a63-Calendar-* class names, and autocomplete-surface is a class. `atom63 component calendar` serves them as Slots, so an agent targeting [data-slot=\"calendar-day\"] matches nothing (the defect class of r2-contracts-1, on a less central component).",
+      "evidence": "docs/design-system/audits/contract-consistency-baseline.json:2-16; packages/ui-react/src/components/calendar/calendar.tsx:93-105 (classNames only; data-slot only at :153); packages/ui-react/src/components/autocomplete/autocomplete.tsx:178; `pnpm -s atom63 component calendar` line 39.",
+      "fix": "Render data-slot on each DayPicker part via its components/props (or list only the real data-slots), render data-slot=\"autocomplete-surface\", and drop the baseline entries.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-24",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P2",
+      "summary": "New: ContextMenuItem takes a hand-typed variant 'default' | 'destructive' that the context-menu contract does not list, while dropdown-menu declares the same axis as itemVariants.",
+      "evidence": "packages/ui-react/src/components/context-menu/context-menu.tsx:136; packages/ui-foundation/contracts/components/context-menu.json (no itemVariants); dropdown-menu.json:7.",
+      "fix": "Add itemVariants (or a shared menu list) to context-menu and menubar contracts and type the prop from the generated contract.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-25",
+      "subject": "all-contracts",
+      "criterion": "C1",
+      "severity": "P3",
+      "summary": "Carried from r2-contracts-25: only 9 of 80 contracts bind an APG pattern.",
+      "evidence": "node sweep of contract.accessibility: accordion, alert-dialog, checkbox, dialog, dropdown-menu, radio, select, switch, tabs.",
+      "fix": "Add and bind menubar, slider, disclosure and combobox pattern data.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-26",
+      "subject": "all-contracts",
+      "criterion": "C4",
+      "severity": "P3",
+      "summary": "Carried from r2-contracts-26: spinner and animated-check style through an inline <style>, progressive-blur through inline styles, not a recipe .css.",
+      "evidence": "packages/ui-react/src/components/spinner/spinner.tsx:39; animated-check/animated-check.tsx:70; progressive-blur/progressive-blur.tsx:60,69.",
+      "fix": "Move them to <name>.css recipes.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-27",
+      "subject": "all-contracts",
+      "criterion": "C3",
+      "severity": "P3",
+      "summary": "Carried from r2-contracts-27: 15 cross-renderer contracts with no iOS axes say so only in prose.",
+      "evidence": "cross-renderer.json: dialog, alert-dialog, switch, select, toggle, destination-link, segmented-control, radio, dropdown-menu, accordion, calendar, search-field, tabs, skeleton, load-more-trigger lack intent.platforms.ios.",
+      "fix": "Add intent.platforms.ios with a machine-readable reason.",
+      "kind": "fix",
+      "scope": "contracts"
+    },
+    {
+      "id": "r3-contracts-28",
+      "subject": "card",
+      "criterion": "C2",
+      "severity": "P3",
+      "summary": "Carried from r2-contracts-28: \"interactive\" is both a Card variant and a Card state.",
+      "evidence": "packages/ui-foundation/contracts/components/card.json:6,30,120.",
+      "fix": "Keep one.",
+      "kind": "fix",
+      "scope": "contracts"
+    }
+  ]
+}

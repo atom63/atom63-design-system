@@ -1,0 +1,605 @@
+{
+  "scope": "architecture",
+  "reviewedAt": "2026-11-28",
+  "round": 3,
+  "reviewedCommit": "f7e5e419",
+  "notes": "Layer 5: architecture and packages (A1-A6), web and React only; iOS excluded (backlog). Same subjects as round 2. Read-only: package manifests and build configs on main f7e5e419, scripts/design-system, .github/workflows, `npm view` of the published beta manifests, and `gh run list/view` (read-only) for CI and release history. No dist was on disk this round, so per-import costs are taken from the size check's own recorded measurements (check-ui-react-bundle-size.mjs) rather than re-probed. Since round 2: #313 split the ui-react and ui-foundation roots into one build file per module and added per-import budgets; #334 did the same for mdx with mdx per-import budgets; #309 made the Version Packages job exit cleanly when versioning changes nothing. r2-architecture-1 (P1), -5 and -14 are fixed; -2 is narrowed to P3.",
+  "subjects": [
+    {
+      "subject": "@atom63/styles",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "packages/styles/package.json dependencies are only tw-animate-css 1.4.0; no @atom63/* import in packages/styles/src. No check enforces direction (r3-architecture-13)."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "Still no CSS budget: the only size check gzips .js files (scripts/design-system/check-ui-react-bundle-size.mjs:163-165) and budgets ui-react and mdx JS imports (:201-283). semantics.css alone grew by 419 lines since r2 (the brand/surface rescope, `git diff --stat 099d1eba..f7e5e419 -- packages/styles/src/tokens/semantics.css`) and badge.css now declares its 40 badge tokens three times, with nothing measuring the consumer CSS."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "Unchanged: docs/design-system/audits/package-surface.json lists @atom63/styles with exportTiers null, docs/design-system/package-export-tiers.json tiers only agent, inform, mdx and widgets, and the only styles API report is packages/styles/api/styles.z-layers.api.md."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "tw-animate-css pinned 1.4.0 per runtimeDependencyPolicy; check:dependency-version-policy runs in CI."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "Published 0.1.0-beta.13 through release-beta.yml with OIDC provenance; the latest Release beta runs on main succeeded (gh run 46103310123: preflight, publish, registry smoke evidence)."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: CI health is repo-level; scored on 'release pipeline and CI'."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/ui-foundation",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "No dependencies or peers (package.json); bottom of the graph. No direction check."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "Fixed since r2 (r2-architecture-5): every module the root re-exports is its own build entry (packages/ui-foundation/tsup.config.ts:4-21) with sideEffects false, so a consumer drops the a11y patterns and cross-renderer table it does not use; Kbd from the ui-react root, which used to carry all of ui-foundation, is now recorded at 8.6 kB (check-ui-react-bundle-size.mjs:190-200). Polish: ui-foundation has no budget of its own (r3-architecture-14)."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "API report checked, but still no tier: exportTiers null in package-surface.json and absent from package-export-tiers.json; deprecated alias maps carry no removal version."
+        },
+        {
+          "criterion": "A4",
+          "score": 4,
+          "evidence": "Zero runtime dependencies; audit-dependency-version-policy.mjs fails on any dependency missing a policy entry."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "Published 0.2.0-beta.12 with provenance through the beta pipeline."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/ui-react",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on @atom63/styles and @atom63/ui-foundation only (package.json); nothing upstream imports it. No direction check."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "Fixed since r2 (r2-architecture-1, P1): the root is one build file per component (packages/ui-react/tsup.config.ts:32-47), and check:ui-react-size now bundles single named imports the way an app does and budgets them: Kbd 10, Button 12.5, Separator 12, Dialog 25, Toaster 23 kB gzip (check-ui-react-bundle-size.mjs:201-257; recorded after the split as 8.6/11.1/10.6/22.2/20.4 kB against 35.6/37.8/107.2/107.1 before), plus Chart from its own entry (:261-267). Not 4: the all-files budget moved again from 100 to 111 kB in this window (:163, comment :134-162)."
+        },
+        {
+          "criterion": "A3",
+          "score": 3,
+          "evidence": "API reports for every JS subpath including the new ./chart (package.json exports), tiers in docs/design-system/ui-react-support-policy.json, stable actions enforced by check:ui-react-stable-actions."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "Unchanged: react-hook-form ^7.81.0 is a required peer with no peerDependenciesMeta (package.json), and the root barrel still re-exports Form, so an unbundled or dev-server load resolves it; the README install line still omits it (packages/ui-react/README.md:16)."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "npm: beta = latest = 0.2.0-beta.22 with provenance; pack and registry smoke run in CI (ci.yml:195-199)."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on @atom63/styles and @atom63/ui-react; no reverse import."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "Fixed since r2 (mostly): entries are split one build file per module (packages/mdx/tsup.config.ts:5-30) and the size check budgets mdx imports: isExternalMdxHref 1.5, MDXContentProvider 212, Accordion 23, CreditsBlock 78 kB gzip (check-ui-react-bundle-size.mjs:279-299; recorded 0.8/184.5/19.7/68.0). Polish: the README still sells ./blocks/credits-block as a 'Lightweight credits-only import' (packages/mdx/README.md:22) at about 68 kB gzip."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "Unchanged: package-export-tiers.json:10-23 marks 13 of 14 entries 'stable', whose definition (:4) needs a major version for a break, while the package is 0.4.0-beta.13 and README:13-16 says a release can still change a Stable entry."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "The published manifest still pins '@atom63/ui-react': '0.2.0-beta.22' as a dependency, not a peer (`npm view @atom63/mdx@beta dependencies`), so upgrading ui-react alone installs a second copy with its own React contexts."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "npm: beta 0.4.0-beta.13 with provenance; 'use client' preserved in builds (package.json build script, #375)."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/inform",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends only on @atom63/ui-react; no reverse import."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "Root entry shakes (r2 probe 140 B gzip; source unchanged apart from inform-parts.css); ./react and ./surfaces now benefit from the per-component ui-react root. No budget of its own (r3-architecture-14)."
+        },
+        {
+          "criterion": "A3",
+          "score": 4,
+          "evidence": "3 API reports, every export tiered beta, check:package-surface fails on an untiered export."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "Published manifest exact-pins '@atom63/ui-react': '0.2.0-beta.22' as a dependency (`npm view @atom63/inform@beta dependencies`)."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "npm: beta 0.2.0-beta.13 with provenance."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/agent",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "zustand only; react an optional peer (package.json peerDependenciesMeta)."
+        },
+        {
+          "criterion": "A2",
+          "score": 3,
+          "evidence": "Unchanged source since r2 (createAgentRuntime probe 2.8 kB gzip); sideEffects false. No budget."
+        },
+        {
+          "criterion": "A3",
+          "score": 4,
+          "evidence": "agent.api.md and agent.react.api.md checked; both entries tiered beta and checked by check:package-surface."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "zustand ^5.1.0 compatible-range-ok; its react peer range is still not checked by the policy script (audit-dependency-version-policy.mjs:91-95 reads ui-react only)."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "npm: 0.3.0-beta.1 with provenance."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on @atom63/ui-react, lucide-react and motion; no reverse import."
+        },
+        {
+          "criterion": "A2",
+          "score": 2,
+          "evidence": "./state is still one bundled output (packages/widgets/tsup.config.ts:4) holding the pure helpers (src/state/types.ts) beside the memo()-wrapped WidgetStateFeedback, which imports ui-react, lucide icons and ../primitives (src/state/widget-state-feedback.tsx:1-16), so a helper-only import keeps that module's top-level code. The ui-react root now shakes, so the r2 cost (167 kB) is likely much lower, but nothing measures it: no widgets entry in check-ui-react-bundle-size.mjs:201-283."
+        },
+        {
+          "criterion": "A3",
+          "score": 4,
+          "evidence": "4 API reports (api/widgets.api.md updated), exports tiered beta, checked by check:api-report and check:package-surface."
+        },
+        {
+          "criterion": "A4",
+          "score": 2,
+          "evidence": "Published manifest exact-pins '@atom63/ui-react': '0.2.0-beta.22' as a dependency (`npm view @atom63/widgets@beta dependencies`)."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "npm: beta 0.1.0-beta.13 with provenance."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/cli",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Runtime deps @modelcontextprotocol/server and zod; @atom63/ui-react appears only in generated import strings (packages/cli/src/templates.mjs)."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: a Node CLI and MCP server, not bundled into apps."
+        },
+        {
+          "criterion": "A3",
+          "score": 2,
+          "evidence": "Unchanged: exports '.', './agents-md' and './agent-index.json' (packages/cli/package.json:15-19) are documented as a programmatic API, but there are no types, no packages/cli/api report and no tier (exportTiers null in package-surface.json)."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "@modelcontextprotocol/server pinned 2.4.0, zod a compatible range; enforced by the policy script."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "npm: 0.1.0-beta.8 with provenance; publint passes in check:package-correctness."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/templates (private)",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Depends on ui-foundation and ui-react; @atom63/agent only in stories as a devDependency; nothing imports templates."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: private; copied as source by `atom63 template`."
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a: private, no published surface."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "Peers react/react-dom ^19.1.0 match the published packages; linted in CI (ci.yml lint step includes @atom63/templates)."
+        },
+        {
+          "criterion": "A5",
+          "score": null,
+          "evidence": "n/a: private, not released."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "private tooling packages (@atom63/brand, @atom63/figma, @atom63/create)",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "brand and figma have no @atom63 dependencies; create depends on @atom63/cli only; no cycles in the manifest graph."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: private, not consumed as bundles."
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a: private."
+        },
+        {
+          "criterion": "A4",
+          "score": null,
+          "evidence": "n/a: private, outside coordinatedPackages."
+        },
+        {
+          "criterion": "A5",
+          "score": null,
+          "evidence": "n/a: private."
+        },
+        {
+          "criterion": "A6",
+          "score": null,
+          "evidence": "n/a: repo-level."
+        }
+      ]
+    },
+    {
+      "subject": "release pipeline and CI",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "A1",
+          "score": 3,
+          "evidence": "Manifest graph is still one-way with no cycles, checked by hand. scripts/design-system/check-package-correctness.mjs still runs only publint and attw (:20-51); no-restricted-imports is listed as a hard error (config/eslint-config/base.js:47) but configured with no paths."
+        },
+        {
+          "criterion": "A2",
+          "score": null,
+          "evidence": "n/a: scored per package."
+        },
+        {
+          "criterion": "A3",
+          "score": null,
+          "evidence": "n/a: scored per package."
+        },
+        {
+          "criterion": "A4",
+          "score": 3,
+          "evidence": "check:dependency-version-policy passes but still checks only policy entries, @base-ui/react exact, input-otp and ui-react's react peers (audit-dependency-version-policy.mjs:91-111); workspaceDependencyPolicy and the peer ranges of mdx, inform, widgets and agent are read by nothing."
+        },
+        {
+          "criterion": "A5",
+          "score": 3,
+          "evidence": "Fixed since r2 (r2-architecture-14): the version job exits 0 when `git diff --cached --quiet` (release-beta.yml:141-144, :332), and release runs queue without cancelling (concurrency queue: max, :31-37). The last 10 Release beta runs all succeeded (gh run list --workflow release-beta.yml, 2026-11-26 to 2026-11-28). Polish: the stable preflight still covers 3 of 8 published packages (r3-architecture-16)."
+        },
+        {
+          "criterion": "A6",
+          "score": 2,
+          "evidence": "Main is healthy: 39 of the last 40 CI runs on main succeeded; the one failure (run 45373850624) was ci-status after a cancelled ios-snapshots job. Gaps unchanged: PR CI still runs the live registry smoke (ci.yml:198-199), and there is still no flake register, quarantine or retry policy (grep -ril 'flak' over docs, .github and apps/storybook finds only readiness-bar.md and the draft plan-agentic-ci-optimization.md); a WebKit template story failed again on a PR branch (run 45123498604, cross-browser webkit, app-shell 'With User')."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r3-architecture-1",
+      "subject": "@atom63/widgets",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-3: a helper-only import from @atom63/widgets/state still bundles the WidgetStateFeedback module, and no budget measures it.",
+      "evidence": "packages/widgets/tsup.config.ts:4 (one ./state output); packages/widgets/src/state/index.ts and widget-state-feedback.tsx:1-16; scripts/design-system/check-ui-react-bundle-size.mjs:201-283 has no widgets entry.",
+      "fix": "Split widgets entries per module as ui-react and mdx do (or move the helpers to a side-effect-free file), and add widgets per-import budgets.",
+      "kind": "perf",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-2",
+      "subject": "@atom63/styles",
+      "criterion": "A2",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-4: there is no CSS budget, and the token CSS grew substantially this round without any check measuring it.",
+      "evidence": "scripts/design-system/check-ui-react-bundle-size.mjs:163-165 counts .js only; packages/styles/src/tokens/semantics.css +419 lines since 099d1eba; packages/styles/src/contracts/badge.css:10, :53, :98.",
+      "fix": "Add a gzip budget for the consumer CSS (styles index plus ui-react recipes) to the size check.",
+      "kind": "perf",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-3",
+      "subject": "@atom63/ui-react",
+      "criterion": "A4",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-6: react-hook-form is a required peer the root barrel re-exports, and the install docs leave it out.",
+      "evidence": "packages/ui-react/package.json peerDependencies (no peerDependenciesMeta); packages/ui-react/README.md:16.",
+      "fix": "Mark it optional and move Form to its own subpath, or add it to the README install line.",
+      "kind": "bug",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-4",
+      "subject": "@atom63/mdx",
+      "criterion": "A4",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-7: mdx exact-pins @atom63/ui-react as a dependency, not a peer.",
+      "evidence": "`npm view @atom63/mdx@beta dependencies` -> '@atom63/ui-react': '0.2.0-beta.22'; packages/mdx/package.json dependencies.",
+      "fix": "Make @atom63/ui-react (and @atom63/styles) a peer with a range, or add a duplicate-copy guard and document upgrading together.",
+      "kind": "risk",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-5",
+      "subject": "@atom63/widgets",
+      "criterion": "A4",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-8: widgets exact-pins @atom63/ui-react as a dependency.",
+      "evidence": "`npm view @atom63/widgets@beta dependencies` -> '@atom63/ui-react': '0.2.0-beta.22'.",
+      "fix": "As r3-architecture-4.",
+      "kind": "risk",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-6",
+      "subject": "@atom63/inform",
+      "criterion": "A4",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-9: inform exact-pins @atom63/ui-react as a dependency.",
+      "evidence": "`npm view @atom63/inform@beta dependencies` -> '@atom63/ui-react': '0.2.0-beta.22'.",
+      "fix": "As r3-architecture-4.",
+      "kind": "risk",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-7",
+      "subject": "@atom63/mdx",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-10: mdx tiers 13 of 14 entries 'stable' on a 0.x beta package, and the two tier statements contradict each other.",
+      "evidence": "docs/design-system/package-export-tiers.json:4, :10-23; packages/mdx/README.md:13-16.",
+      "fix": "Tier them beta until 1.0, or reword one definition so both say the same thing.",
+      "kind": "docs",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-8",
+      "subject": "@atom63/styles",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-11: the styles exports have no tier, and only z-layers has an API report.",
+      "evidence": "docs/design-system/audits/package-surface.json (@atom63/styles exportTiers null); packages/styles/api/styles.z-layers.api.md is the only report.",
+      "fix": "Add styles to package-export-tiers.json, tiering the CSS subpaths.",
+      "kind": "gap",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-9",
+      "subject": "@atom63/ui-foundation",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-12: ui-foundation has no stated tier, and its deprecated alias exports give no removal version.",
+      "evidence": "docs/design-system/audits/package-surface.json (exportTiers null); package-export-tiers.json lists only agent, inform, mdx and widgets.",
+      "fix": "Tier the package and give each deprecated alias a removal version.",
+      "kind": "gap",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-10",
+      "subject": "@atom63/cli",
+      "criterion": "A3",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-13: the CLI's programmatic exports are documented but have no types, no API report and no tier.",
+      "evidence": "packages/cli/package.json:15-19; no packages/cli/api directory; scripts/design-system/api-report.mjs has no cli entry.",
+      "fix": "Ship .d.ts for core.mjs, add it to api-report, and tier it.",
+      "kind": "gap",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-11",
+      "subject": "release pipeline and CI",
+      "criterion": "A6",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-15: PR CI still depends on the live npm registry, so a publish or registry hiccup can fail unrelated PRs.",
+      "evidence": ".github/workflows/ci.yml:198-199 (Smoke-test registry packages in the PR verify job).",
+      "fix": "Run the registry smoke on main and after publish only, and keep the packed-tarball smoke in PR CI.",
+      "kind": "ci",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-12",
+      "subject": "release pipeline and CI",
+      "criterion": "A6",
+      "severity": "P2",
+      "summary": "Carried from r2-architecture-16: known web flakes go untracked; there is no flake register, quarantine or retry policy.",
+      "evidence": "grep -ril 'flak' over docs, .github and apps/storybook finds only readiness-bar.md and docs/design-system/plan-agentic-ci-optimization.md (a draft); WebKit cross-browser failure on run 45123498604.",
+      "fix": "Add a flake register (story, browser, first seen, runs) and a retry-once policy for cross-browser stories with a report.",
+      "kind": "ci",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-13",
+      "subject": "release pipeline and CI",
+      "criterion": "A1",
+      "severity": "P3",
+      "summary": "Carried from r2-architecture-17: nothing checks package direction or cycles, although the bar names check:package-correctness as A1's check.",
+      "evidence": "scripts/design-system/check-package-correctness.mjs:20-51 (publint and attw only); config/eslint-config/base.js:47.",
+      "fix": "Add a manifest-graph direction and cycle check to check:package-correctness.",
+      "kind": "ci",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-14",
+      "subject": "release pipeline and CI",
+      "criterion": "A2",
+      "severity": "P3",
+      "summary": "Narrowed from r2-architecture-19: ui-react and mdx now have per-import budgets, but inform, agent, widgets and ui-foundation still have none.",
+      "evidence": "scripts/design-system/check-ui-react-bundle-size.mjs:201-283.",
+      "fix": "Add one or two representative imports per package to the budget list.",
+      "kind": "ci",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-15",
+      "subject": "release pipeline and CI",
+      "criterion": "A4",
+      "severity": "P3",
+      "summary": "Carried from r2-architecture-18: parts of the dependency policy are declared but enforced by nothing (workspace dependency policy, peer ranges outside ui-react).",
+      "evidence": "scripts/design-system/audit-dependency-version-policy.mjs:91-111.",
+      "fix": "Read workspaceDependencyPolicy and every published package's peer ranges in the audit.",
+      "kind": "ci",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-16",
+      "subject": "release pipeline and CI",
+      "criterion": "A5",
+      "severity": "P3",
+      "summary": "Carried from r2-architecture-20: the stable preflight covers 3 of the 8 published packages and names a rollback owner lane rather than a person.",
+      "evidence": "docs/design-system/stable-release-policy.json (ownerLane entries, :79); scripts/design-system/audit-stable-release-preflight.mjs unchanged since 099d1eba.",
+      "fix": "Cover every package in scripts/design-system/published-packages.mjs and name the owner.",
+      "kind": "process",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-17",
+      "subject": "@atom63/ui-react",
+      "criterion": "A4",
+      "severity": "P3",
+      "summary": "Carried from r2-architecture-21: consumers who type-check dependencies hit the upstream csstype 3.2.4 break that the smoke tests pin around.",
+      "evidence": "scripts/design-system/smoke-packed-ui-react.mjs:136-140; smoke-registry-ui-react.mjs:45.",
+      "fix": "Document the pin for consumers until csstype ships a fix, then drop it.",
+      "kind": "risk",
+      "scope": "architecture"
+    },
+    {
+      "id": "r3-architecture-18",
+      "subject": "@atom63/mdx",
+      "criterion": "A2",
+      "severity": "P3",
+      "summary": "Narrowed from r2-architecture-2: the credits-block entry fell from 164 to about 68 kB gzip and is now budgeted, but the README still calls it 'Lightweight'.",
+      "evidence": "packages/mdx/README.md:22; scripts/design-system/check-ui-react-bundle-size.mjs:283 (budget 78 kB, recorded 68.0).",
+      "fix": "Drop 'Lightweight' or state what it costs and that motion dominates it.",
+      "kind": "docs",
+      "scope": "architecture"
+    }
+  ]
+}

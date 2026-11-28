@@ -1,0 +1,748 @@
+{
+  "scope": "Layer 3 (K1-K10), batch 2 choice and range: checkbox, radio, switch, segmented-control, slider, rating, progress, spinner (web/React only; K10 n/a: iOS in backlog)",
+  "reviewedAt": "2026-11-28",
+  "round": 3,
+  "reviewedCommit": "f7e5e419",
+  "notes": "Re-scored at f7e5e419 against r2 (099d1eba). Changes in scope since r2: SegmentedControl rebuilt as a Base UI radio group with States/Hover/FocusVisible/RightToLeft baselines, arrow-key tests and an APG radio binding (#314, #349, #357); Rating stars differ by shape and reach 3:1 with a contrast test (#314); Checkbox and Radio invalid edges use --a63-border-danger. Switch, Slider, Progress and Spinner sources are unchanged (git diff empty), so their findings carry forward. K4 stays capped at 2 where a contract lists hover/focus-visible and no baseline captures it; the visualState mechanism (#346) exists but only SegmentedControl uses it in this batch. K3 provisional until YZ sees the contact sheet. K10 n/a (iOS in backlog). Open PR #377 (origin/claude/project-thread-5pvtyy) grows the SegmentedControl track to the touch target on coarse pointers, tints the terminal-dark selected plate and rewrites the mdx token list: findings marked pendingIn \"#377\". r2 findings fixed: r2-k02-choice-1, -2, -14, -18; -3 half fixed (root props); -16 fixed for SegmentedControl only.",
+  "subjects": [
+    {
+      "subject": "checkbox",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/checkbox/checkbox.tsx:9-14 string className, contract sizes, props and ref spread to Base UI. Unchanged since r2."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG checkbox pattern played (apps/storybook/a11y/patterns.test.ts); focus ring on :focus-visible; reduced motion. Invalid edge now --a63-border-danger (checkbox.css:110), which contrast.browser.test.ts holds at 3:1 (packages/styles/src/tokens/contrast.browser.test.ts:66-68). Still no forced-colors rule or capture."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-checkbox-themes-chromium-linux.png. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/checkbox/checkbox.stories.tsx:28-38 States still omits the contract state invalid (designed at checkbox.css:109-111); hover/focus-visible designed but not captured, though visualState now exists (apps/storybook/.storybook/visual.setup.ts:55-102)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "sm/md only; ::after min-target floor; Endpoints with touch. Unchanged."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical properties; no directional parts."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Touch endpoint baseline; 44px on coarse input."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "checkbox.mdx (tokens line updated for border-danger) and `atom63 component checkbox`."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "checkbox.test.tsx 6 tests, APG keyboard test, 8 baselines, SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "radio",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/radio/radio.tsx:10-29 unchanged."
+        },
+        {
+          "criterion": "K2",
+          "score": 4,
+          "evidence": "APG radio pattern played; forced-colors rule (radio.css:124-136) kept by apps/storybook/visual/__screenshots__/ui-react-radio-forced-colors-chromium-linux.png; invalid edge --a63-border-danger (radio.css:112) contrast-tested."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-radio-themes-chromium-linux.png. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "States baseline has unchecked, checked, disabled, invalid; contract focus-visible (radio.json) and hover still not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "sm/md; ::after target floor; Endpoints with touch."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical properties."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Touch endpoint baseline."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "radio.mdx and `atom63 component radio`."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "radio.test.tsx 6 tests + APG + 10 baselines + SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "switch",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/switch/switch.tsx unchanged since r2."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG switch pattern; outline ring; reduced motion; no forced-colors capture."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-switch-themes and -brand-ramps. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "States baseline off/on/disabled; contract hover, pressed, focus-visible (switch.json) not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "::after 44px floor; Endpoints and PhoneFormFactor baselines."
+        },
+        {
+          "criterion": "K6",
+          "score": 4,
+          "evidence": ":dir(rtl) travel (switch.css:125-135) kept by apps/storybook/visual/__screenshots__/ui-react-switch-right-to-left-chromium-linux.png."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Phone form factor baseline; hover rule switch.css:137 still outside @media (hover: hover)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "switch.mdx and `atom63 component switch`."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "switch.test.tsx 4 tests, APG test, 11 baselines, SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "segmented-control",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/segmented-control/segmented-control.tsx:22-46,138-153 is now a Base UI RadioGroup: aria-label/aria-labelledby and other root props land on the radiogroup root (tested segmented-control.test.tsx:97-116,134), controlled and uncontrolled work (:28-38,88), title only in the icon variant (:169). Items are still data-only (:15-20; only tabClassName reaches a segment)."
+        },
+        {
+          "criterion": "K2",
+          "score": 4,
+          "evidence": "Radio group semantics (segmented-control.tsx:55-60), arrow keys move and select (segmented-control.test.tsx:118-132), and the APG radio pattern is played on the Playground story (apps/storybook/a11y/patterns.test.ts, segmentedControlContract binding, webOnly). Forced colors map the plate to Highlight (segmented-control.css:250-259). r2-k02-choice-2 fixed."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-segmentedcontrol-themes-chromium-linux.png: raised plate per theme. In terminal dark the selected plate barely steps off the field-coloured track and the label colour barely changes, so the neutral selection is quiet. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 4,
+          "evidence": "States story with a disabled segment (packages/ui-react/src/components/segmented-control/segmented-control.stories.tsx:215-226), Hover (:228) and FocusVisible (:236) via visualState, kept by apps/storybook/visual/__screenshots__/ui-react-segmentedcontrol-states, -hover and -focus-visible baselines. r2-k02-choice-14 fixed."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/segmented-control/segmented-control.css:18-22,42,87-92: the track is overflow-x: auto and only as tall as max(control-height, --a63-control-min-size) (32px on a coarse pointer), and the segment ::after spans only the inset, so each segment's touch target stays ~30-32px; the scrolling track clips any larger hit area. Not caught by the MobileOverflow story (:166)."
+        },
+        {
+          "criterion": "K6",
+          "score": 4,
+          "evidence": "Indicator offset is measured from the physical left in either direction (segmented-control.css:176-177, craft-allow note; segmented-control.tsx:101) and reveal() reads direction (:122-123); RightToLeft story (stories:245) kept by apps/storybook/visual/__screenshots__/ui-react-segmentedcontrol-right-to-left-chromium-linux.png; labels truncate (css:165-169). r2-k02-choice-18 fixed."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "MobileOverflow under touch keeps the selected segment in view (stories:166-183); touch-action pan-x, scroll-snap (css:42-46)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/segmented-control/segmented-control.mdx and `atom63 component segmented-control` describe the radio-group semantics and naming. segmented-control.mdx:28 still names --a63-surface-control/page rather than the --a63-segment-* tokens the recipe reads."
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "packages/ui-react/src/components/segmented-control/segmented-control.test.tsx 11 tests incl. arrow keys, naming, ref; APG radio pattern test; 13 baselines incl. hover/focus/RTL; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "slider",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/slider/slider.tsx:19-22 still omits render; SliderValue (:131-141) drops function classNames through cn(). Unchanged (r2-k02-choice-5)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/slider/slider.css:33-51 rail and fill are background-color only with no forced-colors block or ForcedColors story; no APG slider pattern binding. Unchanged (r2-k02-choice-9)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-slider-themes-chromium-linux.png: unfilled rail nearly invisible in modern and terminal dark (slider.css:38); craft-baseline.json:19 token-role debt (slider.css:50). Unchanged. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Disabled (slider.css:101-104) appears in no story; focus-visible and dragging not captured; thumb has no hover. Unchanged (r2-k02-choice-15)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Thumb ::after 44px floor; root min-height min-target; Endpoints."
+        },
+        {
+          "criterion": "K6",
+          "score": 4,
+          "evidence": "RTL keyboard test and apps/storybook/visual/__screenshots__/ui-react-slider-right-to-left baseline."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "touch-action none; 44px thumb target."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Generated docs page and CLI answer; forms guidance mentions an invalid state slider lacks (component-docs.ts:27)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "slider.test.tsx 8 tests; 10 baselines; SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "rating",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/rating/rating.tsx:12 value still required with no defaultValue (controlled-only input); `disabled` ignored in the read-only branch (:47-75); input props force-cast onto RadioGroup (:86). Unchanged (r2-k02-choice-6)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/rating/rating.css:15-16,55-56,64-67: on stars are filled --a63-status-warning, off stars are outlines in --a63-border-input, so on vs off differs by shape, and packages/styles/src/tokens/contrast.browser.test.ts:55,74-78 holds both at 3:1 on page and panel. r2-k02-choice-1 fixed. Input is a Base UI radio group (rating.tsx:79-104); rating.json binds no APG pattern."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-rating-themes-chromium-linux.png (re-captured): the same warning-colour star in every theme and the Themes story rows are still unlabelled (rating.stories.tsx Themes). Unchanged (r2-k02-choice-11, yz-decision). Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Read-only, half, input, disabled captured; contract hover and focus-visible (rating.json) still not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Input stars max(size, min-target) (rating.css:77-82)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/rating/rating.tsx:50,90 hard-code \"N out of M\" and \"1 star\"/\"N stars\" in English with no override. Unchanged (r2-k02-choice-19)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Touch target from rating.css:80-81; hover rules (rating.css:89-96) not behind @media (hover: hover)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Generated docs page + `atom63 component rating`; shared guidance mentions an invalid state Rating lacks."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/rating/rating.test.tsx:9,20,27: still 3 tests; no arrow-key, disabled or rounding test (rating.tsx:85 rounds 2.5 to 3 while :92 lights stars <= 2.5). Unchanged (r2-k02-choice-22)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "progress",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/progress/progress.tsx:14,30,44-94 still pass Base UI function className through cn(). Unchanged (r2-k02-choice-4)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Base UI progressbar; reduced motion; forced colors (progress.css:95-100) with baseline."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-progress-themes-chromium-linux.png. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "indeterminate, progressing, complete captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Endpoints baseline."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/progress/progress.css:66-73 indeterminate sweep translateX left-to-right in RTL; no RTL story. Unchanged (r2-k02-choice-20)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Width 100%; list-page progress phone baseline."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Generated docs page and CLI answer."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "progress.test.tsx 5 tests; 9 baselines; SSR."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "spinner",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/spinner/spinner.tsx:27 raw svg props, no SpinnerProps, no decorative mode; per-instance <style> (:5-25,39). Unchanged (r2-k02-choice-7)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/spinner/spinner.tsx:30-34 role=status + aria-label on the <svg>, an empty live region. Unchanged (r2-k02-choice-8)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Only playground, sizes and dark baselines; styles in a TSX string. Unchanged (r2-k02-choice-12). Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "loading and reduced-motion states captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "No size axis in spinner.json; Sizes story uses inline pixel styles (spinner.stories.tsx:22-30). Unchanged (r2-k02-choice-17)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Default name overridable through aria-label."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: non-interactive inline glyph with no layout of its own"
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`atom63 component spinner`: Types None, no sizing or labelling guidance. Unchanged (r2-k02-choice-21)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "spinner.test.tsx 2 tests. Unchanged (r2-k02-choice-23)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r3-k02-choice-1",
+      "subject": "segmented-control",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The scrolling track clips segment hit areas, so on a coarse pointer each segment keeps a ~30-32px target instead of 44px.",
+      "evidence": "packages/ui-react/src/components/segmented-control/segmented-control.css:18-22,42,87-92",
+      "fix": "Grow the track to --a63-control-min-target on coarse pointers (a --segment-touch-floor in --segment-height) and assert it in MobileOverflow.",
+      "kind": "fix",
+      "pendingIn": "#377",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-2",
+      "subject": "segmented-control",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "In terminal dark the neutral selected segment is a quiet plate on the field-coloured track and its label barely changes.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-segmentedcontrol-themes-chromium-linux.png; packages/styles/src/themes/terminal.css (no --a63-segment-selected-* in dark)",
+      "fix": "Give terminal dark a tinted selected plate and a brighter selected label. Provisional until YZ sees it.",
+      "kind": "fix",
+      "pendingIn": "#377",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-3",
+      "subject": "segmented-control",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Segments still cannot take their own props (aria, data, test ids); only tabClassName reaches them.",
+      "evidence": "Carried from r2-k02-choice-3 (root half fixed). packages/ui-react/src/components/segmented-control/segmented-control.tsx:15-20,40,161-170",
+      "fix": "Allow per-item extra props or a renderItem.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-4",
+      "subject": "segmented-control",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "segmented-control.mdx still lists the old track and pill tokens rather than the --a63-segment-* tokens the recipe reads.",
+      "evidence": "packages/ui-react/src/components/segmented-control/segmented-control.mdx:28 (\"Tokens it reads\"); segmented-control.css:48-53,186,203",
+      "fix": "List the --a63-segment-* tokens with their fallbacks.",
+      "kind": "fix",
+      "pendingIn": "#377",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-5",
+      "subject": "rating",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Rating input is controlled-only and disabled is ignored when read-only.",
+      "evidence": "Carried from r2-k02-choice-6. packages/ui-react/src/components/rating/rating.tsx:12,47-75,86",
+      "fix": "Add defaultValue with internal state, and document or drop disabled for read-only.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-6",
+      "subject": "progress",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Progress parts accept a state-function className in their types but silently drop it.",
+      "evidence": "Carried from r2-k02-choice-4. packages/ui-react/src/components/progress/progress.tsx:14,30,44-94",
+      "fix": "Omit and re-type className as string, or resolve it with state.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-7",
+      "subject": "slider",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Slider drops the render prop and SliderValue drops function classNames.",
+      "evidence": "Carried from r2-k02-choice-5. packages/ui-react/src/components/slider/slider.tsx:19-22,131-141",
+      "fix": "Keep render on SliderProps; type SliderValue className as string.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-8",
+      "subject": "spinner",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Spinner has no props type, no decorative mode and injects a <style> per instance.",
+      "evidence": "Carried from r2-k02-choice-7. packages/ui-react/src/components/spinner/spinner.tsx:5-25,27,39",
+      "fix": "Export SpinnerProps with label and decorative; move keyframes to spinner.css.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-9",
+      "subject": "spinner",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Spinner's live region is an SVG with only an aria-label, so it may never be announced.",
+      "evidence": "Carried from r2-k02-choice-8. packages/ui-react/src/components/spinner/spinner.tsx:30-34",
+      "fix": "aria-hidden SVG inside a role=status span with visually hidden text.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-10",
+      "subject": "slider",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Slider has no forced-colors treatment or capture, and no APG pattern test.",
+      "evidence": "Carried from r2-k02-choice-9. packages/ui-react/src/components/slider/slider.css:33-51; packages/ui-foundation/src/a11y/index.ts",
+      "fix": "Add a forced-colors block and ForcedColors story; add an APG slider pattern.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-11",
+      "subject": "slider",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Slider's unfilled rail nearly disappears in dark modes.",
+      "evidence": "Carried from r2-k02-choice-10. packages/ui-react/src/components/slider/slider.css:38; apps/storybook/visual/__screenshots__/ui-react-slider-themes-chromium-linux.png",
+      "fix": "Give the rail a visible boundary in dark. Provisional.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-12",
+      "subject": "rating",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Rating looks identical in all four themes and its Themes story is unlabelled.",
+      "evidence": "Carried from r2-k02-choice-11. apps/storybook/visual/__screenshots__/ui-react-rating-themes-chromium-linux.png; packages/ui-react/src/components/rating/rating.stories.tsx (Themes)",
+      "fix": "Label the rows; YZ to decide on theme expression.",
+      "kind": "yz-decision",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-13",
+      "subject": "spinner",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Spinner has no theme capture and its styles cannot be themed.",
+      "evidence": "Carried from r2-k02-choice-12. packages/ui-react/src/components/spinner/spinner.tsx:5-25",
+      "fix": "Move styles to spinner.css and add a Themes story.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-14",
+      "subject": "checkbox",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Checkbox's contract state invalid is never rendered in a story or baseline.",
+      "evidence": "Carried from r2-k02-choice-13. packages/ui-react/src/components/checkbox/checkbox.stories.tsx:28-38; checkbox.css:109-111",
+      "fix": "Add invalid (and invalid + checked) to States.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-15",
+      "subject": "slider",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Slider's disabled state is never captured and the thumb has no hover state.",
+      "evidence": "Carried from r2-k02-choice-15. packages/ui-react/src/components/slider/slider.css:101-104; slider.stories.tsx",
+      "fix": "Add disabled to a captured story; design a fine-pointer thumb hover.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-16",
+      "subject": "checkbox, radio, switch, slider, rating",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No baseline captures hover, focus-visible, pressed or dragging for these five, though their contracts list them; SegmentedControl now does.",
+      "evidence": "Carried from r2-k02-choice-16 (mechanism landed in #346; segmented-control fixed). apps/storybook/.storybook/visual.setup.ts:55-102 (visualState); packages/ui-react/src/components/segmented-control/segmented-control.stories.tsx:228-243 is the only user in batch 2",
+      "fix": "Add Hover and FocusVisible stories with parameters.visualState per control.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-17",
+      "subject": "spinner",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Spinner has no size axis; its Sizes story uses inline pixel styles.",
+      "evidence": "Carried from r2-k02-choice-17. packages/ui-foundation/contracts/components/spinner.json; packages/ui-react/src/components/spinner/spinner.stories.tsx:22-30",
+      "fix": "Add contract sizes or follow 1em; drop inline styles.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-18",
+      "subject": "rating",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Rating's star names are hard-coded English with no override.",
+      "evidence": "Carried from r2-k02-choice-19. packages/ui-react/src/components/rating/rating.tsx:50,90",
+      "fix": "Add getItemLabel(star, max).",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-19",
+      "subject": "progress",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The indeterminate sweep does not mirror in right-to-left, and nothing captures RTL.",
+      "evidence": "Carried from r2-k02-choice-20. packages/ui-react/src/components/progress/progress.css:66-73",
+      "fix": "Flip keyframes under :dir(rtl) and add a RightToLeft story.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-20",
+      "subject": "spinner",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Spinner's docs cannot tell a builder how to size, label or hide it.",
+      "evidence": "Carried from r2-k02-choice-21. `atom63 component spinner` (Types: None)",
+      "fix": "Document the props once added.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-21",
+      "subject": "rating",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Rating input behaviour beyond a click is untested, and the rounding of a half value disagrees between checked and lit stars.",
+      "evidence": "Carried from r2-k02-choice-22. packages/ui-react/src/components/rating/rating.test.tsx:9,20,27; rating.tsx:85,92",
+      "fix": "Add keyboard, disabled and rounding tests; bind the radio pattern.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-22",
+      "subject": "spinner",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Spinner tests cover attributes only.",
+      "evidence": "Carried from r2-k02-choice-23. packages/ui-react/src/components/spinner/spinner.test.tsx",
+      "fix": "Test label and decorative props and reduced motion.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-23",
+      "subject": "slider",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Neutral tone paints a text token as a fill (slider baselined; progress hides it behind a custom property).",
+      "evidence": "Carried from r2-k02-choice-24. docs/design-system/audits/craft-baseline.json:19; packages/ui-react/src/components/slider/slider.css:50; progress/progress.css:51",
+      "fix": "Add a neutral fill token and drop the baseline entry.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-24",
+      "subject": "switch",
+      "criterion": "K7",
+      "severity": "P3",
+      "summary": "Switch and Rating hover rules are not limited to hover-capable pointers.",
+      "evidence": "Carried from r2-k02-choice-25. packages/ui-react/src/components/switch/switch.css:137; rating/rating.css:89-96",
+      "fix": "Wrap them in @media (hover: hover).",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-25",
+      "subject": "checkbox",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "Checkbox has no forced-colors rule or capture, unlike Radio.",
+      "evidence": "Carried from r2-k02-choice-26. packages/ui-react/src/components/checkbox/checkbox.css (no forced-colors block); radio/radio.css:124-136",
+      "fix": "Add a ForcedColors story and map checked to Highlight if needed.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    },
+    {
+      "id": "r3-k02-choice-26",
+      "subject": "slider, rating",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Shared form guidance tells builders to validate an invalid state Slider and Rating do not have.",
+      "evidence": "Carried from r2-k02-choice-27. apps/docs/src/lib/component-docs.ts:26-27",
+      "fix": "Make the guidance conditional on contract states.",
+      "kind": "fix",
+      "scope": "k02-choice"
+    }
+  ]
+}
