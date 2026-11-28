@@ -77,12 +77,12 @@
   },
   "summary": {
     "sourceFamilies": 82,
-    "sourceExports": 660,
+    "sourceExports": 662,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 361,
-      "beta-supported-composition-conditional": 189
+      "beta-supported-core": 362,
+      "beta-supported-composition-conditional": 190
     },
     "sourceActionCounts": {
       "assign-owner-and-evidence": 15,
@@ -1325,11 +1325,11 @@
       "source": "./components/item",
       "family": "components/item",
       "kind": "component-family",
-      "totalExports": 14,
+      "totalExports": 15,
       "valueExports": 10,
-      "typeExports": 4,
+      "typeExports": 5,
       "tierCounts": {
-        "beta-supported-composition-conditional": 14
+        "beta-supported-composition-conditional": 15
       },
       "dominantTier": "beta-supported-composition-conditional",
       "blockingTier": "beta-supported-composition-conditional",
@@ -1495,11 +1495,11 @@
       "source": "./atom63-theme",
       "family": "atom63-theme",
       "kind": "module",
-      "totalExports": 3,
+      "totalExports": 4,
       "valueExports": 1,
-      "typeExports": 2,
+      "typeExports": 3,
       "tierCounts": {
-        "beta-supported-core": 3
+        "beta-supported-core": 4
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -1511,7 +1511,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": ["Atom63Theme", "Atom63ThemeMode", "Atom63ThemeProps"],
+      "notableSymbols": ["Atom63Theme", "Atom63ThemeMode", "Atom63ThemeProps", "FormFactor"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
