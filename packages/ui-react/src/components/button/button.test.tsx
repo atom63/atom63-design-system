@@ -122,6 +122,25 @@ describe('Button', () => {
     expect(text).toHaveAttribute('data-slot', 'button-text')
   })
 
+  it('keeps interpolated text in one label span', () => {
+    const name = '白模动画'
+    const { container } = render(<Button>归到「{name}」</Button>)
+    const texts = container.querySelectorAll('[data-slot="button-text"]')
+    expect(texts).toHaveLength(1)
+    expect(texts[0]).toHaveTextContent('归到「白模动画」')
+  })
+
+  it('keeps spaces inside a run and trims them next to an icon', () => {
+    const { container } = render(
+      <Button>
+        <svg aria-hidden data-testid="icon" /> {'a'} · {'b'}{' '}
+      </Button>
+    )
+    const texts = container.querySelectorAll('[data-slot="button-text"]')
+    expect(texts).toHaveLength(1)
+    expect(texts[0]?.textContent).toBe('a · b')
+  })
+
   it('sets data-button on the root', () => {
     render(<Button>Go</Button>)
     expect(screen.getByRole('button', { name: 'Go' })).toHaveAttribute('data-button', '')

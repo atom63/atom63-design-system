@@ -7,6 +7,7 @@ import { useRender } from '@base-ui/react/use-render'
 import * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { wrapTextRuns } from '../../lib/wrap-text-runs'
 
 export type BadgeProps = useRender.ComponentProps<'span'> & {
   variant?: BadgeVariant
@@ -15,18 +16,14 @@ export type BadgeProps = useRender.ComponentProps<'span'> & {
   dot?: boolean | BadgeDotColor
 }
 
-/* Text goes in `.a63-Badge-label`, which truncates with an ellipsis when the
-   badge is capped at its container's width. */
+/* Each run of text goes in one `.a63-Badge-label`, which truncates with an
+   ellipsis when the badge is capped at its container's width. */
 function wrapText(children: React.ReactNode): React.ReactNode {
-  return React.Children.map(children, child =>
-    typeof child === 'string' || typeof child === 'number' ? (
-      <span className="a63-Badge-label" data-slot="badge-label">
-        {child}
-      </span>
-    ) : (
-      child
-    )
-  )
+  return wrapTextRuns(children, (text, key) => (
+    <span className="a63-Badge-label" data-slot="badge-label" key={key}>
+      {text}
+    </span>
+  ))
 }
 
 /* A small labeled chip — the marker archetype. Renders a <span> by default;

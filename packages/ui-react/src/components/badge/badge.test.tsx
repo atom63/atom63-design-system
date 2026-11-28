@@ -50,4 +50,15 @@ describe('Badge', () => {
       'badge-label'
     )
   })
+
+  it('keeps a space between two interpolations in one label', () => {
+    const { container } = render(
+      <Badge>
+        {'T01'} {'黑色宽松棉 T'}
+      </Badge>
+    )
+    const labels = container.querySelectorAll('[data-slot="badge-label"]')
+    expect(labels).toHaveLength(1)
+    expect(labels[0]?.textContent).toBe('T01 黑色宽松棉 T')
+  })
 })
