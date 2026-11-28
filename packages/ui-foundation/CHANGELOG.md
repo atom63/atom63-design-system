@@ -1,5 +1,15 @@
 # @atom63/ui-foundation
 
+## 0.2.0-beta.13
+
+### Patch Changes
+
+- [#377](https://github.com/atom63/atom63-design-system/pull/377) [`5b987d8`](https://github.com/atom63/atom63-design-system/commit/5b987d850a0f46a70f6855a5536289b054f71335) Thanks [@atom63](https://github.com/atom63)! - Sheet's default side is now `inline-end`: unchanged in left-to-right pages, and a sheet opens from the left in right-to-left pages. Pass `side="right"` to keep the physical right edge.
+  
+  SegmentedControl's track grows to the minimum touch target on a coarse pointer, because the scrolling track clips hit areas drawn outside it. In the terminal theme's dark mode the selected segment takes a phosphor-tinted plate and a brighter label than the resting segments.
+  
+  Toaster colours each toned toast's icon with its status colour and starts it with a visually hidden status word ("Error:", "Success:"), which the new `statusLabels` prop translates. Textarea has a RightToLeft story.
+
 ## 0.2.0-beta.12
 
 ### Minor Changes

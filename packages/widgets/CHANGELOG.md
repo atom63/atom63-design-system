@@ -1,5 +1,13 @@
 # @atom63/widgets
 
+## 0.1.0-beta.14
+
+### Patch Changes
+
+- [#379](https://github.com/atom63/atom63-design-system/pull/379) [`af1aeeb`](https://github.com/atom63/atom63-design-system/commit/af1aeeb08a3f8979a9a73b027a720e5600aac30a) Thanks [@atom63](https://github.com/atom63)! - Raise the minimum `lucide-react` to `^1.78.0` (ui-react, mdx, widgets), `react-resizable-panels` to `^4.24.1` and `tailwind-merge` to `^3.7.1` (ui-react).
+- Updated dependencies [[`4369b49`](https://github.com/atom63/atom63-design-system/commit/4369b494a2838cf68c1976f3a22b203685bb0e55), [`af1aeeb`](https://github.com/atom63/atom63-design-system/commit/af1aeeb08a3f8979a9a73b027a720e5600aac30a), [`5b987d8`](https://github.com/atom63/atom63-design-system/commit/5b987d850a0f46a70f6855a5536289b054f71335), [`8ac4924`](https://github.com/atom63/atom63-design-system/commit/8ac4924d1271e9243d2061598449eb6a663b7e67), [`14f2481`](https://github.com/atom63/atom63-design-system/commit/14f248101418ff39e72731be3f4f82cfebbdd761), [`759862d`](https://github.com/atom63/atom63-design-system/commit/759862d8328a66181d9f175685729b2e97831988)]:
+  - @atom63/ui-react@0.2.0-beta.23
+
 ## 0.1.0-beta.13
 
 ### Patch Changes
