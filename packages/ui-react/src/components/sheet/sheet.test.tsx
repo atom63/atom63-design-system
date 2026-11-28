@@ -18,7 +18,7 @@ describe('Sheet', () => {
 
     const popup = document.querySelector('[data-slot="sheet-popup"]')
     expect(popup).not.toBeNull()
-    expect(popup).toHaveAttribute('data-side', 'right')
+    expect(popup).toHaveAttribute('data-side', 'inline-end')
     expect(popup).toHaveClass('a63-Sheet-popup')
 
     const title = document.querySelector('[data-slot="sheet-title"]')

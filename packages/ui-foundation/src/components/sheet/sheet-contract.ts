@@ -50,7 +50,7 @@ export interface SheetContract {
 
 export const sheetContract = {
   defaultFooterVariant: 'default',
-  defaultSide: 'right',
+  defaultSide: 'inline-end',
   defaultVariant: 'default',
   footerVariants: sheetFooterVariants,
   sides: sheetSides,

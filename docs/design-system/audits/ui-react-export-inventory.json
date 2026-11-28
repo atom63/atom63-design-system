@@ -48,7 +48,7 @@
   },
   "counts": {
     "rootValueExports": 444,
-    "rootTypeExports": 214,
+    "rootTypeExports": 215,
     "packageExportKeys": 86,
     "cssExportKeys": 78
   },
@@ -3622,6 +3622,10 @@
       "types": [
         {
           "name": "ToasterProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ToastStatus",
           "proposedTier": "beta-supported-core"
         }
       ]

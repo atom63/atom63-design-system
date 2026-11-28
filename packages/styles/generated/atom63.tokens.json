@@ -62,9 +62,9 @@
   ],
   "summary": {
     "sourceFiles": 57,
-    "declarations": 2203,
+    "declarations": 2207,
     "uniqueCssVariables": 1218,
-    "figmaMappedDeclarations": 2136
+    "figmaMappedDeclarations": 2140
   },
   "entries": [
     {
@@ -11704,6 +11704,44 @@
       "scope": "[data-a63-theme='terminal']"
     },
     {
+      "name": "a63-segment-selected-background",
+      "cssVar": "--a63-segment-selected-background",
+      "type": "color",
+      "value": "color-mix( in oklab, var(--surface-dark-3) 82%, var(--a63-action-primary) 18% )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "segment/selected/background",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-action-primary", "--surface-dark-3"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-segment-selected-background",
+      "cssVar": "--a63-segment-selected-background",
+      "type": "color",
+      "value": "var(--a63-if-light, var(--a63-surface-muted)) var( --a63-if-dark, color-mix(in oklab, var(--surface-dark-3) 82%, var(--a63-action-primary) 18%) )",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "segment/selected/background",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": [
+        "--a63-action-primary",
+        "--a63-if-dark",
+        "--a63-if-light",
+        "--a63-surface-muted",
+        "--surface-dark-3"
+      ],
+      "scope": "[data-a63-theme='terminal']:is([data-a63-brand], [data-a63-surface]), [data-a63-theme='terminal'] :is([data-a63-brand], [data-a63-surface])"
+    },
+    {
       "name": "a63-segment-selected-foreground",
       "cssVar": "--a63-segment-selected-foreground",
       "type": "color",
@@ -11766,6 +11804,38 @@
       "lifecycle": "preview",
       "aliases": ["--a63-text-primary"],
       "scope": "[data-a63-theme='terminal']"
+    },
+    {
+      "name": "a63-segment-selected-foreground",
+      "cssVar": "--a63-segment-selected-foreground",
+      "type": "color",
+      "value": "color-mix(in oklch, var(--a63-text-accent) 72%, white)",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "segment/selected/foreground",
+        "mode": "Dark"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-text-accent"],
+      "scope": "[data-a63-theme='terminal']:is(.dark, [data-a63-mode='dark']), [data-a63-theme='terminal'] :is(.dark, [data-a63-mode='dark'])"
+    },
+    {
+      "name": "a63-segment-selected-foreground",
+      "cssVar": "--a63-segment-selected-foreground",
+      "type": "color",
+      "value": "var(--a63-if-light, var(--a63-text-primary)) var(--a63-if-dark, color-mix(in oklch, var(--a63-text-accent) 72%, white))",
+      "sourceFile": "packages/styles/src/themes/terminal.css",
+      "layer": "theme",
+      "figma": {
+        "collection": "Theme",
+        "path": "segment/selected/foreground",
+        "mode": "theme: terminal"
+      },
+      "lifecycle": "preview",
+      "aliases": ["--a63-if-dark", "--a63-if-light", "--a63-text-accent", "--a63-text-primary"],
+      "scope": "[data-a63-theme='terminal']:is([data-a63-brand], [data-a63-surface]), [data-a63-theme='terminal'] :is([data-a63-brand], [data-a63-surface])"
     },
     {
       "name": "a63-segment-selected-gloss",

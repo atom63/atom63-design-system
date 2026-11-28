@@ -656,7 +656,7 @@ export type { TextareaProps } from './components/textarea'
 // `toast` is re-exported so consumers can raise package-styled toasts without
 // taking their own sonner dependency.
 export { Toaster, toast } from './components/toaster'
-export type { ToasterProps } from './components/toaster'
+export type { ToasterProps, ToastStatus } from './components/toaster'
 export { Toggle } from './components/toggle'
 export type { ToggleProps } from './components/toggle'
 export { ToggleGroup, ToggleGroupItem, ToggleGroupSeparator } from './components/toggle-group'

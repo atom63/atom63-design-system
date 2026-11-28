@@ -283,7 +283,7 @@ describe('component public exports', () => {
   it('associates the public toast helper with the Toaster family', () => {
     const exports = componentExportSurface('toaster', uiReactIndexSource)
     expect(exports.values).toEqual(['Toaster', 'toast'])
-    expect(exports.types).toEqual(['ToasterProps'])
+    expect(exports.types).toEqual(['ToasterProps', 'ToastStatus'])
   })
 
   it('keeps every published CSS recipe target on disk', () => {

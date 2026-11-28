@@ -3041,7 +3041,7 @@
         {
           "name": "sides",
           "values": ["right", "left", "top", "bottom", "inline-start", "inline-end"],
-          "default": "right"
+          "default": "inline-end"
         },
         { "name": "variants", "values": ["default", "inset"], "default": "default" }
       ],
