@@ -173,12 +173,12 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "input-otp": "^1.4.2",
-    "lucide-react": "^1.70.0",
+    "lucide-react": "^1.80.0",
     "motion": "^14.14.0",
     "react-day-picker": "^10.0.2",
-    "react-resizable-panels": "^4.21.0",
+    "react-resizable-panels": "^4.24.2",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.6.0"
+    "tailwind-merge": "^3.7.1"
   },
   "peerDependencies": {
     "react": "^19.1.0",
@@ -189,8 +189,8 @@
     "@atom63/eslint-config": "workspace:*",
     "@atom63/tsconfig": "workspace:*",
     "@eslint/js": "10.0.1",
-    "@storybook/addon-docs": "^10.6.6",
-    "@storybook/react-vite": "^10.6.6",
+    "@storybook/addon-docs": "^10.6.9",
+    "@storybook/react-vite": "^10.6.9",
     "@tailwindcss/cli": "catalog:",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",
@@ -198,18 +198,18 @@
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "@vitejs/plugin-react": "catalog:",
-    "eslint": "10.14.0",
+    "eslint": "10.15.0",
     "eslint-plugin-jsx-a11y": "6.10.2",
     "eslint-plugin-react-compiler": "19.1.0-rc.2",
     "eslint-plugin-react-hooks": "7.1.1",
     "jsdom": "catalog:",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "react-hook-form": "^7.91.0",
+    "react-hook-form": "^7.92.0",
     "tailwindcss": "catalog:",
     "tsup": "^9.0.0",
     "typescript": "catalog:",
-    "typescript-eslint": "8.72.2",
+    "typescript-eslint": "8.74.0",
     "vitest": "catalog:"
   }
 }
