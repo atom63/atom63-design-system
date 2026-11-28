@@ -37,8 +37,28 @@ type DrawerContextValue = {
 export type DrawerContentProps = Omit<DrawerPrimitive.Popup.Props, 'children'> & {
   children?: React.ReactNode
   contentProps?: DrawerPrimitive.Content.Props
+  /**
+   * How far a top or bottom drawer stops short of the opposite screen edge, as
+   * a CSS length such as `'3rem'` or `'max(3rem, var(--a63-safe-area-top, 0px))'`.
+   * Left and right drawers ignore it. Without it, the drawer reads the
+   * `--a63-drawer-gutter` variable from its scope, else 6rem.
+   */
+  gutter?: string
   portalProps?: DrawerPrimitive.Portal.Props
   viewportProps?: DrawerPrimitive.Viewport.Props
+}
+
+type DrawerViewportStyle = DrawerPrimitive.Viewport.Props['style']
+
+/** Set the public `--a63-drawer-gutter` slot on the viewport, keeping any style the caller passed. */
+function withDrawerGutter(
+  style: DrawerViewportStyle,
+  gutter: string | undefined
+): DrawerViewportStyle {
+  if (gutter === undefined) return style
+  const gutterStyle = { '--a63-drawer-gutter': gutter } as React.CSSProperties
+  if (typeof style === 'function') return state => ({ ...style(state), ...gutterStyle })
+  return { ...style, ...gutterStyle }
 }
 
 const DrawerContext = React.createContext<DrawerContextValue>({
@@ -167,11 +187,13 @@ export function DrawerContent({
   className,
   children,
   contentProps,
+  gutter,
   portalProps,
   viewportProps,
   ...props
 }: DrawerContentProps): React.ReactElement {
   const { direction, modal } = React.useContext(DrawerContext)
+  const viewportStyle = withDrawerGutter(viewportProps?.style, gutter)
 
   return (
     <DrawerPortal {...portalProps}>
@@ -179,6 +201,7 @@ export function DrawerContent({
       <DrawerPrimitive.Viewport
         {...viewportProps}
         className={cn('a63-Drawer-viewport', viewportProps?.className)}
+        style={viewportStyle}
         data-modal={modal ? undefined : 'false'}
         data-side={direction}
         data-slot="drawer-viewport"
