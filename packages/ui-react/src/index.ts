@@ -31,6 +31,8 @@ export { Amount } from './components/amount'
 export type { AmountProps } from './components/amount'
 export { AnimatedCheck } from './components/animated-check'
 export type { AnimatedCheckProps } from './components/animated-check'
+export { ArtPlate } from './components/art-plate'
+export type { ArtPlateFocus, ArtPlateProps } from './components/art-plate'
 export {
   Autocomplete,
   AutocompleteClear,
@@ -60,7 +62,12 @@ export {
   AvatarImage,
   AvatarPrimitive,
 } from './components/avatar'
-export type { AvatarProps, AvatarSize } from './components/avatar'
+export type {
+  AvatarBadgeProps,
+  AvatarGroupCountProps,
+  AvatarProps,
+  AvatarSize,
+} from './components/avatar'
 export { Badge } from './components/badge'
 export type { BadgeProps } from './components/badge'
 export {
@@ -98,6 +105,7 @@ export {
   CardMediaOverlayIconButton,
   CardMediaOverlayImage,
   CardMediaOverlayScrim,
+  CardMediaOverlayTopEnd,
   CardMediaOverlayTopRight,
   CardTags,
   CardTitle,
@@ -176,7 +184,7 @@ export {
   CommandSeparator,
   CommandShortcut,
 } from './components/command'
-export type { CommandInputProps } from './components/command'
+export type { CommandDialogPopupProps, CommandInputProps } from './components/command'
 export {
   ConnectedPanel,
   ConnectedPanelBody,
@@ -294,13 +302,18 @@ export {
   EmptyMedia,
   EmptyTitle,
 } from './components/empty'
-export type { EmptyMediaVariant } from './components/empty'
+export type {
+  EmptyErrorDetailLabels,
+  EmptyErrorDetailProps,
+  EmptyMediaVariant,
+} from './components/empty'
 export { FeedbackState } from './components/feedback-state'
 export type {
   FeedbackStateAction,
   FeedbackStateIcon,
   FeedbackStateIconName,
   FeedbackStateKind,
+  FeedbackStateLabels,
   FeedbackStateProps,
   FeedbackStateSize,
 } from './components/feedback-state'
@@ -394,6 +407,18 @@ export { Kbd, KbdGroup } from './components/kbd'
 export type { KbdProps } from './components/kbd'
 export { Label } from './components/label'
 export type { LabelProps } from './components/label'
+export {
+  LayeredScene,
+  LayeredSceneContent,
+  LayeredSceneForeground,
+  LayeredScenePlate,
+  LayeredSceneStage,
+} from './components/layered-scene'
+export type {
+  LayeredSceneForegroundProps,
+  LayeredScenePlateProps,
+  LayeredSceneProps,
+} from './components/layered-scene'
 export { LoadMoreTrigger } from './components/load-more-trigger'
 export type {
   LoadMoreTriggerProps,
@@ -579,6 +604,7 @@ export type {
   SidebarMenuSubButtonProps,
   SidebarProps,
   SidebarProviderProps,
+  SidebarTriggerProps,
 } from './components/sidebar'
 export {
   SidebarNavCollapsibleItem,
@@ -618,6 +644,8 @@ export type {
   TableHeaderProps,
   TableProps,
   TableRowProps,
+  TableSort,
+  TableSortDirection,
 } from './components/table'
 export { Tabs, TabsContent, TabsList, TabsPanel, TabsTab, TabsTrigger } from './components/tabs'
 export type { TabsListProps, TabsPanelProps, TabsTabProps } from './components/tabs'
@@ -625,11 +653,10 @@ export { TextTicker } from './components/text-ticker'
 export type { TextTickerProps } from './components/text-ticker'
 export { Textarea } from './components/textarea'
 export type { TextareaProps } from './components/textarea'
-export { Toaster } from './components/toaster'
+// `toast` is re-exported so consumers can raise package-styled toasts without
+// taking their own sonner dependency.
+export { Toaster, toast } from './components/toaster'
 export type { ToasterProps } from './components/toaster'
-// Re-exported so consumers can raise package-styled toasts without taking their
-// own sonner dependency.
-export { toast } from 'sonner'
 export { Toggle } from './components/toggle'
 export type { ToggleProps } from './components/toggle'
 export { ToggleGroup, ToggleGroupItem, ToggleGroupSeparator } from './components/toggle-group'

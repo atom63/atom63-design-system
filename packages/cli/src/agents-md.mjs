@@ -16,7 +16,8 @@ const cliQueries = [
   '',
   '- `atom63 build <idea>`: a kit for what you are building: the closest page templates and blocks, the components they use, the foundation and the rules. For a phone screen it leads with `AppView layout="phone"` and a snippet to start from.',
   '- `atom63 template <id>` and `atom63 copy <id> <dir>`: read a page or block template, then copy it and the blocks it uses into your project to adapt.',
-  '- `atom63 search <words>`: find a component, template, docs page, story example or token.',
+  '- `atom63 search <words>`: find a component, template, docs page, story example, token or public API name (a SwiftUI type or the export of a package entry point).',
+  '- `atom63 api <name>`: a SwiftUI type (`AtomWidgetCard`) or a JavaScript export (`MediaLightbox`, `KeyIdea`) with its import line and docs, and for an MDX block its purpose, an example and its props; an entry point (`@atom63/ui-react/media`, `Atom63UI`) with everything it exports.',
   '- `atom63 component <slug>`: the import line, contract (axes, defaults, slots, states, web and iOS), related components and examples.',
   '- `atom63 example <slug> [story]`: a known-good usage sample to start from.',
   '- `atom63 token <name or words>`: a token with its values per theme and mode, Figma path and Swift name.',
@@ -34,6 +35,10 @@ const docsQueries = [
   '- Start from a component that exists before writing markup of your own.',
 ]
 
+/** `a`, `a and b`, `a, b and c`. */
+const list = items =>
+  items.length > 1 ? `${items.slice(0, -1).join(', ')} and ${items.at(-1)}` : items.join('')
+
 /**
  * `variant: 'cli'` points agents at the `atom63` CLI and MCP server; `'docs'`
  * points them at the published docs, for projects that cannot run the CLI yet.
@@ -43,11 +48,12 @@ export function agentsSection({ variant = 'cli' } = {}) {
     (rule, position) =>
       `${position + 1}. ${rule.rule} ${rule.why}${
         rule.check
-          ? ` In the design system repo, \`check:craft\` enforces it as ${[rule.check]
-              .flat()
-              .map(check => `\`${check}\``)
-              .join(' and ')}.`
+          ? ` In the design system repo, \`check:craft\` enforces it as ${list(
+              [rule.check].flat().map(check => `\`${check}\``)
+            )}.`
           : ''
+      }${rule.checkedBy ? ` ${rule.checkedBy}` : ''}${
+        rule.unchecked ? ` Not checked mechanically: ${rule.unchecked}` : ''
       }`
   )
   return [
@@ -59,6 +65,21 @@ export function agentsSection({ variant = 'cli' } = {}) {
     '',
     ...ruleLines,
   ].join('\n')
+}
+
+/**
+ * Rules that do not say how they are enforced: each needs `check` or
+ * `checkedBy`, or else `unchecked` with the reason no check can enforce it.
+ * @returns {string[]} one message per rule that breaks this
+ */
+export function ruleEnforcementErrors(table = rules) {
+  return table.flatMap(rule => {
+    const checked = Boolean(rule.check || rule.checkedBy)
+    if (checked && rule.unchecked) return [`${rule.id}: names a check and says it is unchecked`]
+    if (!checked && !rule.unchecked?.trim())
+      return [`${rule.id}: names no check (\`check\`, \`checkedBy\`) and no reason (\`unchecked\`)`]
+    return []
+  })
 }
 
 /** The section wrapped in markers, ready to paste into or sync with an AGENTS.md. */

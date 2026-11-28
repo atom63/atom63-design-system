@@ -22,9 +22,19 @@ export const feedbackStateSlots = [
   'feedback-state-media',
   'feedback-state-title',
   'feedback-state-description',
+  'feedback-state-detail',
   'feedback-state-content',
 ] as const
-export const feedbackStateStates = ['idle', 'busy', 'actionable'] as const
+// The state a FeedbackState shows, set by its state prop: the same values as kinds.
+export const feedbackStateStates = [
+  'empty',
+  'error',
+  'loading',
+  'not-found',
+  'no-results',
+  'offline',
+  'stale',
+] as const
 export const feedbackStateVisualArchetypes = [
   'action',
 ] as const satisfies readonly VisualArchetypeId[]

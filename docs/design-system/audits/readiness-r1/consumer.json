@@ -1,0 +1,339 @@
+{
+  "scope": "Layer 6: consumer and agent experience (U1-U5), web and React only",
+  "reviewedAt": "2026-11-19",
+  "round": 1,
+  "subjects": [
+    {
+      "subject": "packages/cli (atom63 CLI and MCP server)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": 2,
+          "evidence": "Correct where tested: `node --test src/mcp.test.mjs` 17/17 pass (MCP answers each command with the CLI's envelope); sweep-r1/agent-index.log 'Agent index is current.'; status of all 76 indexed components equals contract maturity (node script over generated/agent-index.json vs contracts/components/*.json: 0 mismatches); `atom63 component button` axes/defaults match button.json; `atom63 api MediaLightbox|InformProvider|KeyIdea|WidgetCard` give right import lines. Gap: `atom63 token --a63-text-primay` (typo) returns type token.results with --a63-action-control-text-shadow first, exit 0, no not_found and no suggestion (core.mjs:544-556) -> r1-consumer-3. P3s: r1-consumer-9..12, 14."
+        },
+        {
+          "criterion": "U2",
+          "score": null,
+          "evidence": "n/a: the rule table (src/rules.mjs) is scored under the AGENTS.md subject."
+        },
+        {
+          "criterion": "U3",
+          "score": 2,
+          "evidence": "sweep-r1/ds-pack-smoke.log: packed @atom63/cli runs `atom63 build, component, example, token`; ds-registry-smoke.log installs @atom63/cli@beta -> 0.1.0-beta.1. Gap: `npm view @atom63/cli dist-tags` = { latest: 0.1.0-beta.0, beta: 0.1.0-beta.1 }; a plain `npx @atom63/cli` gets the 2026-11-02 build that predates #290 (public API index) -> r1-consumer-6."
+        },
+        {
+          "criterion": "U4",
+          "score": 3,
+          "evidence": "packages/cli/README.md:10-21 documents the index, query core and agents-md export; `atom63 manifest` lists every command and error code. Polish: the JS exports of src/core.mjs (loadIndex, component, token...) are not listed in the README."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a: outcomes are scored under the case-study subject."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "AGENTS.md rules (repo AGENTS.md + packages/cli/src/rules.mjs)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": 4,
+          "evidence": "The atom63:agents block is generated from rules.mjs (agents-md.mjs:47-68); agents-md.test.mjs:38-41 and sweep-r1/agents-md.log 'AGENTS.md is current.' keep AGENTS.md, `atom63 rules` and `atom63 build` identical."
+        },
+        {
+          "criterion": "U2",
+          "score": 1,
+          "evidence": "Of 15 rules, 6 name a check (rules.mjs:27,53,59,65,71,77), rule 5 names the vibe warning (rules.mjs:32) and rule 15 names axe in CI (rules.mjs:87). Rules query-first (:9), compose-before-create (:14), contract-values (:19), quiet-secondary-actions (:35), one-boundary (:40), on-media-colors (:45) and as-child-spreads-props (:80) give neither a check nor why there is none. No test requires `check` or a why-not, nor that `check` ids exist in scripts/design-system/lib/craft-rules.mjs -> r1-consumer-1."
+        },
+        {
+          "criterion": "U3",
+          "score": null,
+          "evidence": "n/a: no install surface."
+        },
+        {
+          "criterion": "U4",
+          "score": null,
+          "evidence": "n/a: no exports."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a: scored under case studies."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "packages/create and the starter (site, docs, app kinds)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": 2,
+          "evidence": "generate.mjs:235-238 always writes agentsBlock({ variant: 'docs' }); packages/create/README.md:25-26 says 'because the CLI is not published yet'. @atom63/cli has been on npm since 2026-11-02 (npm view time), and starter-plan.md:86-91 says to swap in the atom63 commands and a .mcp.json once it is published. Generated apps get no CLI/MCP -> r1-consumer-4. The docs variant targets are live: curl https://system.atom63.io/llms.txt 200, /components/component-dialog.md 200, /r/registry.json returns the shadcn registry."
+        },
+        {
+          "criterion": "U2",
+          "score": 3,
+          "evidence": "check-starter.mjs:130-142 holds generated source of every kind to the craft rules (sweep-r1/starter.log:416,460,483 pass). Polish: the generated project gets the rules but no craft check of its own; the rule text says enforcement is 'in the design system repo' only."
+        },
+        {
+          "criterion": "U3",
+          "score": 2,
+          "evidence": "In-repo: sweep-r1/starter.log site/docs/app typecheck+build pass, app route check 20 pages pass; CI runs `pnpm check:starter --shadcn` (.github/workflows/ci.yml:213-217); the sweep ran without --shadcn, so the shadcn path is evidenced by CI config only. Gap: @atom63/create is private 0.0.0 (packages/create/package.json), `npm view @atom63/create` 404, so `pnpm create @atom63` (README.md:8) does not work for any outside consumer; README.md:last line says the app installs from npm only after @atom63/mdx is published, but mdx@beta 0.4.0-beta.3 is published -> r1-consumer-5."
+        },
+        {
+          "criterion": "U4",
+          "score": null,
+          "evidence": "n/a: no package exports (bin only)."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a: scored under case studies."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "Docs coverage (apps/docs, llms.txt, Markdown twins)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": 3,
+          "evidence": "Twins are generated from the pages (build-index.mjs:129-140) and the index is checked current; every catalogued component (76) has a contract and a generated page, and every ui-react component directory is catalogued except the internal recipe `menu`. Polish: see r1-consumer-7 for content the twins drop."
+        },
+        {
+          "criterion": "U2",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "U3",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "U4",
+          "score": 2,
+          "evidence": "Findable: every export resolves via `atom63 api`/`search` (e.g. `atom63 search InformBanner`). Documented: build-index.mjs:35-62,160-170 only requires each entry point to map to a page. Script over agent-index.json: 223 of 778 non-ui-foundation export names appear in no docs or component Markdown, e.g. 27/28 of @atom63/ui-react/media/lightbox, 13/14 of @atom63/inform/surfaces (InformBanner, InformDialog...), 21/26 of @atom63/ui-react/theme, 27/35 of @atom63/widgets (incl. a leaked `cn`). `atom63 docs pattern-inform` never names InformBanner: the JSX inside <ExampleContainer> (pattern-inform.mdx:139-150) is dropped from the twin -> r1-consumer-7."
+        },
+        {
+          "criterion": "U5",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "Case-study outcomes (Round 12/13a, vibe benchmarks)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "U1",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "U2",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "U3",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "U4",
+          "score": null,
+          "evidence": "n/a"
+        },
+        {
+          "criterion": "U5",
+          "score": 1,
+          "evidence": "Round 13a (web: mobile 79.9, desktop 87.0) ran on 889ecc81; main is 19 commits later (git log 889ecc81..HEAD: TypeScript 6, motion 14, app-shell safe-area owners #296, CLI index #290) with no rerun, so 'no lower than Round 13' is unproven on this main. The Round 12 and 13a reports are untracked files in . (git status '??'), not on main. 13a covered 14 of 48 web arms, used 3 judge runs where Round 12 set the default to 5 (case-studies-round-12.md:175), dropped the system-share measure, and does not trace its drops (doc-page -4) to a layer. Vibe CRM synthesis (audits/vibe-crm-three-sample-synthesis-2026-11-03.md): plain 93.7 vs ds-core 73.7 / ds-guided 76.7, serious axe findings in every arm; its step 5 rerun has no report (latest audits/vibe-2026-11-03-s3.md) -> r1-consumer-2, r1-consumer-8."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r1-consumer-1",
+      "subject": "AGENTS.md rules",
+      "criterion": "U2",
+      "severity": "P2",
+      "summary": "7 of the 15 AGENTS.md rules give neither a check nor why there is none, and nothing tests that they must.",
+      "evidence": "packages/cli/src/rules.mjs:9 query-first, :14 compose-before-create, :19 contract-values, :35 quiet-secondary-actions, :40 one-boundary, :45 on-media-colors, :80 as-child-spreads-props have no `check` and their `why` does not address enforcement. agents-md.test.mjs and core.test.mjs:686 only require a reason; no test validates `check` ids against craft-rules.mjs.",
+      "fix": "Add an `enforcement` field to every rule: the check id (contract-values -> tsc unions; multiple-primary -> vibe-measure; as-child -> a story/test; one-boundary/on-media -> a craft rule if feasible) or a one-line 'not checkable because ...'. Render it in the AGENTS block and add a test that every rule has one and every named craft id exists in craft-rules.mjs.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "Reproduced from the source. packages/cli/src/rules.mjs has 15 rules. 6 carry `check` (tokens-only, content-colors, logical-directions, focus-visible, focus-ring-outline, theme-agnostic). accent-sparingly (vibe measures) and accessible-by-default (axe in CI) say how they are enforced in `why`. The other 7 (query-first, compose-before-create, contract-values, quiet-secondary-actions, one-boundary, on-media-colors, as-child-spreads-props) give no check and no reason why there is none. check:agents-md is `sync-agents-md.mjs --check`, a sync check only. agents-md.test.mjs:9-13 and core.test.mjs ('lists the rules, each with a reason') only require `why`. Nothing checks `check` ids against scripts/design-system/lib/craft-rules.mjs. So U2 is not met as written. Downgraded because the rules are still delivered and work, and no consumer runs into this. The fix is a one-line 'why no check' per rule plus a test. That fits score 2 ('works, with a known gap'), not 1."
+      }
+    },
+    {
+      "id": "r1-consumer-2",
+      "subject": "Case-study outcomes",
+      "criterion": "U5",
+      "severity": "P2",
+      "summary": "The outcome bar cannot be shown on this main: the Round 13 baseline is not in the repo, no web rerun followed 19 commits, and 13a's drops are not traced to a layer.",
+      "evidence": ".: `git status` shows case-studies-round-12.md and case-studies-round-13a.md as untracked; absent from .. 13a ran on 889ecc81 (case-studies-round-13a.md:7), 14 of 48 web arms, 3 judge runs vs the 5-run default (case-studies-round-12.md:175), system-share left out (13a:12-14), doc-page -4 untraced (13a:24).",
+      "fix": "Commit the Round 12/13a reports; rerun the web arms (all 48, 5-run judge) on current main and add a per-failure layer column (tokens / components / templates / CLI / harness) to the report.",
+      "kind": "fix",
+      "reviewedSeverity": "P1",
+      "verified": {
+        "verdict": "downgraded",
+        "reason": "Partly holds. Confirmed: the case-studies-round-12.md and round-13a.md files and the other case-study docs are untracked in . (`git status` shows `??`), and `git ls-files` in ds-review lists none. `git log 889ecc81..HEAD` gives 19 commits with no rerun after them, and 13a:12-14 says system-share was left out. Overstated: 'Round 13' is the harness round itself, 13a/13b, named in proposal-ds-full-review.md:20, so the baseline exists but is not committed. 3 judge runs was deliberate, to compare with Round 12 (13a:7-9). The 'doc-page -4 untraced' point is refuted by the repo's own noise rule (case-studies-round-12.md:175: treat a single case moving by less than about 7 points as noise). The available outcome data does not regress: mobile web +9.0, desktop +0.6. What is left is a missing fresh measurement and uncommitted docs. That is a process step in the review plan, not a defect in the system, so P2."
+      }
+    },
+    {
+      "id": "r1-consumer-3",
+      "subject": "packages/cli",
+      "criterion": "U1",
+      "severity": "P2",
+      "summary": "A misspelled token name returns unrelated tokens with exit 0 instead of not-found with a nearest-name suggestion.",
+      "evidence": "`pnpm -s atom63 token --a63-text-primay --json` -> type token.results, first result --a63-action-control-text-shadow; --a63-text-primary not listed. core.mjs:546-556 falls back to word search for any dashed name. AGENTS rule 4 tells agents to look names up with this command.",
+      "fix": "When the query is a full --a63-* name with no exact match, return token.not_found with edit-distance suggestions (as component.not_found does for 'dropdown').",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-4",
+      "subject": "packages/create and the starter",
+      "criterion": "U1",
+      "severity": "P2",
+      "summary": "Generated projects still get the docs-only AGENTS block and no MCP config, on the stale ground that the CLI is unpublished.",
+      "evidence": "packages/create/src/generate.mjs:235-238 hard-codes agentsBlock({ variant: 'docs' }); packages/create/README.md:25-26 'because the CLI is not published yet'; starter-plan.md:86-91 says swap once published; npm view @atom63/cli time: 0.1.0-beta.0 2026-11-02, 0.1.0-beta.1 2026-11-18.",
+      "fix": "Add @atom63/cli as a starter devDependency, write the cli variant of the AGENTS block and a .mcp.json running `atom63 mcp`, and update the README.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-5",
+      "subject": "packages/create and the starter",
+      "criterion": "U3",
+      "severity": "P2",
+      "summary": "The starter cannot be created outside this repo: @atom63/create is private and unpublished, and its README is stale about @atom63/mdx.",
+      "evidence": "packages/create/package.json private, version 0.0.0; `npm view @atom63/create` 404; README.md:8 'pnpm create @atom63 my-site # once published'; README last line says installs work only after @atom63/mdx is published, but mdx@beta 0.4.0-beta.3 is on npm (ds-registry-smoke.log). starter-plan.md:49 recommended private until release work resumes.",
+      "fix": "Decide whether to publish @atom63/create on the beta tag now (needs YZ's release approval); either way remove the stale mdx sentence.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r1-consumer-6",
+      "subject": "packages/cli",
+      "criterion": "U3",
+      "severity": "P2",
+      "summary": "npm `latest` points at older betas than `beta`, while README tells consumers a plain install gets the beta.",
+      "evidence": "npm view dist-tags: cli latest 0.1.0-beta.0 / beta 0.1.0-beta.1; ui-react 0.2.0-beta.9 / 0.2.0-beta.12; ui-foundation 0.1.1-beta.2 / 0.2.0-beta.5; styles 0.1.0-beta.5 / 0.1.0-beta.8; mdx, inform, agent, widgets likewise. README.md:15-17 'npm's latest tag also points at the beta, so a plain npm install @atom63/ui-react installs it too.'",
+      "fix": "Have the beta publish also move `latest` (or move it once with YZ's approval), or correct README.md:15-17 to require @beta.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-7",
+      "subject": "Docs coverage",
+      "criterion": "U4",
+      "severity": "P2",
+      "summary": "223 of 778 public export names (outside ui-foundation) appear in no agent-readable docs, and the check only maps entry points to pages.",
+      "evidence": "Script over packages/cli/generated/agent-index.json docs+component Markdown: @atom63/ui-react/media/lightbox 27/28 missing, @atom63/inform/surfaces 13/14 (InformBanner...), @atom63/ui-react/theme 21/26, @atom63/widgets 27/35 (incl. `cn`), @atom63/mdx/primitives 24/28. `atom63 docs pattern-inform` never names InformBanner: JSX inside <ExampleContainer> (apps/docs/src/pages/pattern-inform.mdx:139-150) is dropped from the twin. build-index.mjs:160-170 checks the page mapping only.",
+      "fix": "Emit example JSX into the Markdown twins; extend check:agent-index to fail on an export no page names (with an explicit allowlist for internal constants), and drop leaked internals such as widgets `cn` from the public surface.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-8",
+      "subject": "Case-study outcomes",
+      "criterion": "U5",
+      "severity": "P2",
+      "summary": "The CRM vibe benchmark found both Atom63 arms 17-20 points below plain with serious axe findings in every arm, and its decided rerun has not been reported.",
+      "evidence": "audits/vibe-crm-three-sample-synthesis-2026-11-03.md: plain 93.7, ds-core 73.7, ds-guided 76.7; 'Every arm in every sample had serious axe findings'; Decision step 5 'Repeat this benchmark after the slice'. Newest vibe report is audits/vibe-2026-11-03-s3.md; its ds arms each carry skip-link (4 nodes) with no traced cause.",
+      "fix": "Rerun the CRM vibe benchmark on current main and record the result; trace the skip-link and color-contrast nodes to the template, component or harness that produced them.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-9",
+      "subject": "packages/cli",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "`atom63 component datepicker` returns not-found with no suggestions, though calendar is the answer.",
+      "evidence": "`pnpm -s atom63 component datepicker --json` -> suggestions: []; synonyms.mjs has no date-picker entry; `atom63 search \"date picker\"` ranks calendar first.",
+      "fix": "Fall back to search results for suggestions on component.not_found, or add date picker -> calendar to synonyms.mjs.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-10",
+      "subject": "packages/cli",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "A leading --json silently prints the manifest and drops the command.",
+      "evidence": "`pnpm -s atom63 --json component button` prints the manifest envelope, exit 0 (bin.mjs:25,33).",
+      "fix": "Strip a leading --json and run the command that follows.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-11",
+      "subject": "packages/cli",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "The MCP server reports version 0.0.0 to hosts.",
+      "evidence": "packages/cli/src/mcp.mjs:18 `const packageVersion = '0.0.0'`; package.json version 0.1.0-beta.1.",
+      "fix": "Read the version from package.json.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-12",
+      "subject": "packages/cli",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "`atom63 build` lists unrelated components for a desktop settings page.",
+      "evidence": "`atom63 build \"settings page for a saas app\"` components include message (person-to-person chat bubble), pagination, breadcrumb and the phone tab-bar block, while field, label and select are absent.",
+      "fix": "Weight build-kit components by the matched templates' imports before keyword matches.",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-13",
+      "subject": "packages/create and the starter",
+      "criterion": "U2",
+      "severity": "P3",
+      "summary": "Generated projects get the rules but no check that enforces them.",
+      "evidence": "AGENTS rules 4, 9-13 say 'In the design system repo, check:craft enforces it'; the starter's package.json scripts are dev/build/typecheck/preview only (generate.mjs:225-231).",
+      "fix": "Ship a `check:craft` script in the starter that runs the craft rules over src (the rules already run on it in check-starter.mjs).",
+      "kind": "fix"
+    },
+    {
+      "id": "r1-consumer-14",
+      "subject": "packages/cli",
+      "criterion": "U1",
+      "severity": "P3",
+      "summary": "`atom63 component button` omits the Status line every other component prints.",
+      "evidence": "`atom63 component dialog|chat-composer|amount` print '**Status:** ...' at line 5; button's hand-written page (apps/docs/src/pages/component-button.mdx) does not.",
+      "fix": "Prepend the status in the CLI formatter rather than relying on the page.",
+      "kind": "fix"
+    }
+  ]
+}

@@ -3,6 +3,7 @@ export {
   accordionContract,
   accordionIconVariants,
   accordionSlots,
+  accordionStateAliases,
   accordionStates,
   accordionVisualArchetypes,
 } from './accordion-contract'
@@ -11,5 +12,6 @@ export type {
   AccordionIconVariant,
   AccordionSlot,
   AccordionState,
+  AccordionStateAlias,
   AccordionVisualArchetype,
 } from './accordion-contract'

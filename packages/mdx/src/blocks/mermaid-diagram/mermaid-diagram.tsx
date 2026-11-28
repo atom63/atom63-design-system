@@ -1,3 +1,5 @@
+'use client'
+
 import { Button, Tooltip, TooltipContent, TooltipTrigger } from '@atom63/ui-react'
 import { clsx } from 'clsx'
 import { RotateCcw, ZoomIn, ZoomOut } from 'lucide-react'

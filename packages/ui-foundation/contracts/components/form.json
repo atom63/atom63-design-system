@@ -3,8 +3,13 @@
   "component": "form",
   "maturity": "stable",
   "lists": {
-    "slots": ["form-item", "form-label", "form-control", "form-description", "form-message"],
-    "states": ["default", "invalid"],
+    "slots": ["form-item", "form-label", "form-description", "form-message"],
+    "states": {
+      "values": ["rest", "invalid"],
+      "deprecatedAliases": {
+        "default": "rest"
+      }
+    },
     "visualArchetypes": ["field"]
   },
   "contract": {

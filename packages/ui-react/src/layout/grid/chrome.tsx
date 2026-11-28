@@ -1,3 +1,5 @@
+'use client'
+
 import { type ComponentPropsWithoutRef, createContext, type ReactNode, useContext } from 'react'
 import { cn } from '../../lib/cn'
 import { containerFrameClassName, type ContainerMaxWidth } from '../max-width'

@@ -3,6 +3,7 @@ export {
   breadcrumbCompositions,
   breadcrumbContract,
   breadcrumbSlots,
+  breadcrumbStateAliases,
   breadcrumbStates,
   breadcrumbVisualArchetypes,
 } from './breadcrumb-contract'
@@ -11,5 +12,6 @@ export type {
   BreadcrumbContract,
   BreadcrumbSlot,
   BreadcrumbState,
+  BreadcrumbStateAlias,
   BreadcrumbVisualArchetype,
 } from './breadcrumb-contract'

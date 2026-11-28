@@ -7,6 +7,9 @@ public struct AtomThemeColors: Equatable, Sendable {
   public var surfaceControl: AtomDynamicColor
   public var textPrimary: AtomDynamicColor
   public var textSecondary: AtomDynamicColor
+  /// Error and destructive text on surfaces (`--a63-text-danger`): step 600 in
+  /// light mode and 400 in dark mode, so it keeps 4.5:1. `actionDanger` is the fill.
+  public var textDanger: AtomDynamicColor
   public var borderSubtle: AtomDynamicColor
   public var borderControl: AtomDynamicColor
   /// The border of a form field: 3:1 against the page, the panel and the field
@@ -27,6 +30,8 @@ public struct AtomThemeColors: Equatable, Sendable {
   public var statusInfo: AtomDynamicColor
   public var statusSuccess: AtomDynamicColor
   public var statusWarning: AtomDynamicColor
+  /// The danger status accent for error icons and borders (`--a63-status-danger`).
+  public var statusDanger: AtomDynamicColor
   public var selectionTrackOff: AtomDynamicColor
   public var selectionThumb: AtomDynamicColor
   public var skeletonHighlight: AtomDynamicColor
@@ -68,6 +73,7 @@ public struct AtomTheme: Equatable, Sendable {
       surfaceControl: AtomTokens.Color.surfaceControl,
       textPrimary: AtomTokens.Color.textPrimary,
       textSecondary: AtomTokens.Color.textSecondary,
+      textDanger: AtomTokens.Color.textDanger,
       borderSubtle: AtomTokens.Color.borderSubtle,
       borderControl: AtomTokens.Color.borderControl,
       borderInput: AtomTokens.Color.borderInput,
@@ -84,6 +90,7 @@ public struct AtomTheme: Equatable, Sendable {
       statusInfo: AtomTokens.Color.statusInfo,
       statusSuccess: AtomTokens.Color.statusSuccess,
       statusWarning: AtomTokens.Color.statusWarning,
+      statusDanger: AtomTokens.Color.statusDanger,
       selectionTrackOff: AtomTokens.Color.selectionTrackOff,
       selectionThumb: AtomTokens.Color.selectionThumb,
       skeletonHighlight: AtomTokens.Color.skeletonHighlight,

@@ -1,8 +1,12 @@
-import { render } from '@testing-library/react'
+import { render, screen, waitFor } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { useForm } from 'react-hook-form'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
+import { Checkbox } from '../checkbox'
 import { Input } from '../input'
+import { Select, SelectItem, SelectPopup, SelectTrigger, SelectValue } from '../select'
+import { Textarea } from '../textarea'
 import {
   Form,
   FormControl,
@@ -13,7 +17,7 @@ import {
   FormMessage,
 } from './form'
 
-function DemoForm({ error }: { error?: string }) {
+function DemoForm({ description = true, error }: { description?: boolean; error?: string }) {
   const methods = useForm<{ username: string }>({
     defaultValues: { username: '' },
     errors: error ? { username: { type: 'manual', message: error } } : undefined,
@@ -31,7 +35,7 @@ function DemoForm({ error }: { error?: string }) {
               <FormControl>
                 <Input {...field} />
               </FormControl>
-              <FormDescription>Your public handle.</FormDescription>
+              {description ? <FormDescription>Your public handle.</FormDescription> : null}
               <FormMessage />
             </FormItem>
           )}
@@ -53,10 +57,12 @@ describe('Form', () => {
     // label htmlFor points at the control id
     const htmlFor = label?.getAttribute('for')
 
-    const control = container.querySelector('[data-slot="form-control"]')
+    const control = container.querySelector('[data-form-control]')
     expect(control).not.toBeNull()
+    // The input keeps its own contract slot under FormControl.
+    expect(control).toHaveAttribute('data-slot', 'input')
     expect(control).toHaveAttribute('id', htmlFor ?? '')
-    expect(control).toHaveAttribute('aria-invalid', 'false')
+    expect(control).not.toHaveAttribute('aria-invalid')
 
     const description = container.querySelector('[data-slot="form-description"]')
     expect(description).toHaveTextContent('Your public handle.')
@@ -75,15 +81,254 @@ describe('Form', () => {
     const message = container.querySelector('[data-slot="form-message"]')
     expect(message).toHaveTextContent('Username is taken')
     expect(message).toHaveAttribute('role', 'alert')
-    expect(message).toHaveAttribute('aria-live', 'polite')
+    expect(message).not.toHaveAttribute('aria-live')
 
     expect(container.querySelector('[data-slot="form-label"]')).toHaveAttribute(
       'data-error',
       'true'
     )
-    expect(container.querySelector('[data-slot="form-control"]')).toHaveAttribute(
-      'aria-invalid',
-      'true'
-    )
+    expect(container.querySelector('[data-form-control]')).toHaveAttribute('aria-invalid', 'true')
+    expect(container.querySelector('[data-slot="input-control"]')).toHaveAttribute('data-invalid')
+  })
+
+  it('renders a static message as plain text, not an alert', () => {
+    function StaticMessage() {
+      const methods = useForm<{ username: string }>({ defaultValues: { username: '' } })
+      return (
+        <Form {...methods}>
+          <FormField
+            control={methods.control}
+            name="username"
+            render={() => (
+              <FormItem>
+                <FormMessage>Letters and numbers only.</FormMessage>
+              </FormItem>
+            )}
+          />
+        </Form>
+      )
+    }
+    const { container } = render(<StaticMessage />)
+    const message = container.querySelector('[data-slot="form-message"]')
+    expect(message).toHaveTextContent('Letters and numbers only.')
+    expect(message).not.toHaveAttribute('role')
+  })
+
+  it('references only the parts that render', () => {
+    const { container, rerender } = render(<DemoForm description={false} />)
+    const control = () => container.querySelector('[data-form-control]')
+    expect(control()).not.toHaveAttribute('aria-describedby')
+
+    rerender(<DemoForm description={false} error="Username is taken" />)
+    const message = container.querySelector('[data-slot="form-message"]')
+    expect(control()?.getAttribute('aria-describedby')).toBe(message?.getAttribute('id'))
+
+    rerender(<DemoForm />)
+    const description = container.querySelector('[data-slot="form-description"]')
+    expect(control()?.getAttribute('aria-describedby')).toBe(description?.getAttribute('id'))
+  })
+})
+
+type ComposedValues = { plan: string; bio: string; terms: boolean }
+
+/* FormControl must keep each control's own data-slot and wire id and
+   aria-describedby onto the element the label points at. */
+function ComposedForm({ error }: { error?: boolean }) {
+  const methods = useForm<ComposedValues>({
+    defaultValues: { plan: 'free', bio: '', terms: false },
+    errors: error
+      ? {
+          plan: { type: 'manual', message: 'Pick a plan.' },
+          bio: { type: 'manual', message: 'Add a bio.' },
+          terms: { type: 'manual', message: 'Accept the terms.' },
+        }
+      : undefined,
+  })
+  const items = [
+    { label: 'Free', value: 'free' },
+    { label: 'Pro', value: 'pro' },
+  ]
+
+  return (
+    <Form {...methods}>
+      <form>
+        <FormField
+          control={methods.control}
+          name="plan"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Plan</FormLabel>
+              <Select items={items} onValueChange={field.onChange} value={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectPopup>
+                  {items.map(item => (
+                    <SelectItem key={item.value} value={item.value}>
+                      {item.label}
+                    </SelectItem>
+                  ))}
+                </SelectPopup>
+              </Select>
+              <FormDescription>Billed monthly.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={methods.control}
+          name="bio"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Bio</FormLabel>
+              <FormControl>
+                <Textarea {...field} />
+              </FormControl>
+              <FormDescription>Shown on your profile.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={methods.control}
+          name="terms"
+          render={({ field }) => (
+            <FormItem>
+              <FormControl>
+                <Checkbox checked={field.value} onCheckedChange={field.onChange} />
+              </FormControl>
+              <FormLabel>Accept the terms</FormLabel>
+              <FormDescription>Required to continue.</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+      </form>
+    </Form>
+  )
+}
+
+describe('Form composition', () => {
+  const cases = [
+    ['Select', 'select-trigger'],
+    ['Textarea', 'textarea'],
+    ['Checkbox', 'checkbox'],
+  ] as const
+
+  for (const [index, [name, slot]] of cases.entries()) {
+    it(`keeps the ${name} slot and wires its label and description`, () => {
+      const { container } = render(<ComposedForm />)
+      const item = container.querySelectorAll('[data-slot="form-item"]')[index]
+      const control = item?.querySelector('[data-form-control]')
+      expect(control).toHaveAttribute('data-slot', slot)
+      // The label points at the control; Base UI Checkbox moves the id onto its
+      // native input, which sits right after the visible control.
+      const labelled = document.getElementById(
+        item?.querySelector('[data-slot="form-label"]')?.getAttribute('for') ?? ''
+      )
+      expect(labelled).not.toBeNull()
+      expect([control, control?.nextElementSibling]).toContain(labelled)
+      const description = item?.querySelector('[data-slot="form-description"]')
+      expect(control?.getAttribute('aria-describedby')).toBe(description?.getAttribute('id'))
+      expect(control).not.toHaveAttribute('aria-invalid')
+    })
+
+    it(`marks the ${name} invalid and describes it by the message`, () => {
+      const { container } = render(<ComposedForm error />)
+      const item = container.querySelectorAll('[data-slot="form-item"]')[index]
+      const control = item?.querySelector('[data-form-control]')
+      expect(control).toHaveAttribute('data-slot', slot)
+      expect(control).toHaveAttribute('aria-invalid', 'true')
+      const message = item?.querySelector('[data-slot="form-message"]')
+      expect(control?.getAttribute('aria-describedby')).toContain(message?.getAttribute('id'))
+    })
+  }
+})
+
+type SignupValues = { email: string; plan: string | null }
+
+const PLANS = [
+  { value: 'free', label: 'Free' },
+  { value: 'team', label: 'Team' },
+]
+
+function SignupForm({ onValid }: { onValid: (values: SignupValues) => void }) {
+  const methods = useForm<SignupValues>({ defaultValues: { email: '', plan: null } })
+  return (
+    <Form {...methods}>
+      <form onSubmit={methods.handleSubmit(onValid)}>
+        <FormField
+          control={methods.control}
+          name="email"
+          rules={{ required: 'Email is required.' }}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={methods.control}
+          name="plan"
+          rules={{ required: 'Choose a plan.' }}
+          render={({ field: { onChange, ref, value, ...field } }) => (
+            <FormItem>
+              <FormLabel>Plan</FormLabel>
+              <Select items={PLANS} onValueChange={onChange} value={value}>
+                <FormControl>
+                  <SelectTrigger ref={ref} {...field}>
+                    <SelectValue placeholder="Choose a plan" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectPopup>
+                  {PLANS.map(plan => (
+                    <SelectItem key={plan.value} value={plan.value}>
+                      {plan.label}
+                    </SelectItem>
+                  ))}
+                </SelectPopup>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <button type="submit">Sign up</button>
+      </form>
+    </Form>
+  )
+}
+
+describe('Form validation', () => {
+  it('runs the rules on submit, focuses the first invalid control and clears on change', async () => {
+    const onValid = vi.fn()
+    render(<SignupForm onValid={onValid} />)
+    const email = screen.getByRole('textbox', { name: 'Email' })
+    const plan = screen.getByRole('combobox', { name: 'Plan' })
+
+    await userEvent.click(screen.getByRole('button', { name: 'Sign up' }))
+
+    const alerts = await screen.findAllByRole('alert')
+    expect(alerts.map(alert => alert.textContent)).toEqual(['Email is required.', 'Choose a plan.'])
+    expect(email).toHaveAttribute('aria-invalid', 'true')
+    expect(plan).toHaveAttribute('aria-invalid', 'true')
+    expect(email.getAttribute('aria-describedby')).toBe(alerts[0]?.id)
+    expect(document.activeElement).toBe(email)
+    expect(onValid).not.toHaveBeenCalled()
+
+    // After a submit, react-hook-form revalidates on change: the error clears.
+    await userEvent.type(email, 'a@atom63.io')
+    await waitFor(() => expect(email).not.toHaveAttribute('aria-invalid'))
+    expect(screen.getAllByRole('alert').map(alert => alert.textContent)).toEqual(['Choose a plan.'])
+
+    // The next submit focuses the first control still invalid: the Select trigger.
+    await userEvent.click(screen.getByRole('button', { name: 'Sign up' }))
+    await waitFor(() => expect(document.activeElement).toBe(plan))
+    expect(onValid).not.toHaveBeenCalled()
   })
 })

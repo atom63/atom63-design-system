@@ -1,3 +1,4 @@
+import { UIProvider } from '@atom63/ui-react'
 import type { WidgetSize } from '@atom63/widgets'
 import { WidgetCard } from '@atom63/widgets/primitives'
 import {
@@ -73,4 +74,37 @@ export const Footprints: Story = {
 export const Dark: Story = {
   render: Footprints.render,
   globals: { mode: 'dark' },
+}
+
+/**
+ * On a touch screen the recovery controls keep their 24px proportion inside the
+ * tile, and their hit areas grow to 44 physical px (--widget-interaction-target)
+ * around them. The 165px cell scales the canvas down, so the target is measured
+ * after the presentation transform.
+ */
+export const ErrorTouch: Story = {
+  play: ({ canvasElement }) => {
+    const canvas = canvasElement.querySelector<HTMLElement>('[data-widget-presentation-canvas]')
+    const buttons = canvasElement.querySelectorAll<HTMLElement>(
+      '.a63-WidgetStateFeedback .a63-Button'
+    )
+    if (!canvas || buttons.length === 0) throw new Error('Expected widget recovery controls')
+    const scale = canvas.getBoundingClientRect().width / canvas.offsetWidth
+    for (const button of buttons) {
+      const hitArea = getComputedStyle(button, '::before')
+      const width = parseFloat(hitArea.width) * scale
+      const height = parseFloat(hitArea.height) * scale
+      if (!(width >= 43.5 && height >= 43.5)) {
+        const name = button.getAttribute('aria-label') ?? button.textContent
+        throw new Error(`${name}: hit area is ${width.toFixed(1)}×${height.toFixed(1)}px`)
+      }
+    }
+  },
+  render: () => (
+    <UIProvider input="touch">
+      <SingleWidget cellPx={165} size="small">
+        <StateCard size="small" state="error" />
+      </SingleWidget>
+    </UIProvider>
+  ),
 }

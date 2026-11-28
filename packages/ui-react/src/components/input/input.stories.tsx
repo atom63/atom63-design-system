@@ -8,6 +8,7 @@ import {
 import { Search, X } from 'lucide-react'
 import {
   Input,
+  type InputProps,
   InputGroup,
   InputGroupAddon,
   InputGroupButton,
@@ -172,6 +173,83 @@ export const States: Story = {
   ),
 }
 
+/* Rest, hover and keyboard focus side by side for one chrome. The visual project
+   hovers the second field and tabs to the third (parameters.visualState, see
+   apps/storybook/README.md "Visual states"). */
+function InteractionStates({ variant }: { variant: NonNullable<InputProps['variant']> }) {
+  const rows = [
+    ['Rest', 'rest'],
+    ['Hover', 'hover'],
+    ['Focus visible', 'focus'],
+  ] as const
+  return (
+    <UIProvider designLanguage="web" input="pointer" mode="light">
+      <PreviewCard label={`web / light / pointer / ${variant}`} style={{ maxWidth: '22rem' }}>
+        {rows.map(([label, target]) => (
+          <div key={target} style={{ display: 'grid', gap: '0.375rem' }}>
+            <span style={{ color: 'var(--a63-text-secondary)', fontSize: '0.75rem' }}>{label}</span>
+            <Input
+              aria-label={`${label} field`}
+              data-state-target={target}
+              defaultValue="Filled value"
+              style={{ width: '100%' }}
+              variant={variant}
+            />
+          </div>
+        ))}
+      </PreviewCard>
+    </UIProvider>
+  )
+}
+
+const interactionStates = {
+  visualState: {
+    hover: 'input[data-state-target="hover"]',
+    focusVisible: 'input[data-state-target="focus"]',
+  },
+}
+
+export const InteractionDefault: Story = {
+  render: () => <InteractionStates variant="default" />,
+  parameters: interactionStates,
+}
+
+export const InteractionFilled: Story = {
+  render: () => <InteractionStates variant="filled" />,
+  parameters: interactionStates,
+}
+
+export const InteractionPlain: Story = {
+  render: () => <InteractionStates variant="plain" />,
+  parameters: interactionStates,
+}
+
+/* A coarse web pointer: the field keeps the 32px control ramp and takes a 44px
+   tap through its hit strip (input.css; check:control-alignment measures it). */
+export const WebTouch: Story = {
+  render: () => (
+    <div
+      style={{ display: 'grid', gap: '1rem', gridTemplateColumns: 'repeat(2, minmax(0, 18rem))' }}
+    >
+      {(['pointer', 'touch'] as const).map(input => (
+        <UIProvider designLanguage="web" input={input} key={input} mode="light">
+          <PreviewCard label={`web / light / ${input}`}>
+            {inputSizes.map(size => (
+              <Input
+                aria-label={`Example text field, ${size}`}
+                defaultValue={size}
+                key={size}
+                size={size}
+                style={{ width: '100%' }}
+              />
+            ))}
+          </PreviewCard>
+        </UIProvider>
+      ))}
+    </div>
+  ),
+}
+
 /* Composable InputGroup: leading/trailing addons (icons, buttons, prefix text)
    sharing the field chrome. The group owns the chrome; the field nests unstyled. */
 export const Group: Story = {
@@ -217,6 +295,81 @@ export const Group: Story = {
       </div>
     </EnvironmentShell>
   ),
+}
+
+/* Right to left: Arabic value and placeholder, an icon addon at inline start
+   (the right edge) and a clear button at inline end (the left edge). */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl">
+      <div data-testid="rtl" style={{ display: 'grid', gap: '0.75rem', maxWidth: '22rem' }}>
+        <Input aria-label="البريد الإلكتروني" placeholder="أدخل بريدك الإلكتروني" />
+        <Input aria-label="الاسم" defaultValue="ليلى أحمد" />
+        <InputGroup data-testid="rtl-group" style={{ width: '100%' }}>
+          <InputGroupAddon>
+            <Search aria-hidden />
+          </InputGroupAddon>
+          <InputGroupInput aria-label="بحث" defaultValue="تقرير الربع الثالث" />
+          <InputGroupAddon align="inline-end">
+            <InputGroupButton aria-label="مسح" size="icon-xs" type="button">
+              <X aria-hidden />
+            </InputGroupButton>
+          </InputGroupAddon>
+        </InputGroup>
+      </div>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const group = canvasElement.querySelector('[data-testid="rtl-group"]')
+    const field = group?.querySelector('input')
+    const [start, end] = Array.from(
+      group?.querySelectorAll('[data-slot="input-group-addon"]') ?? []
+    )
+    if (!field || !start || !end) throw new Error('The RTL group did not render its parts')
+    const box = field.getBoundingClientRect()
+    if (start.getBoundingClientRect().left < box.right - 1)
+      throw new Error('The inline-start addon is not on the right of the field in RTL')
+    if (end.getBoundingClientRect().right > box.left + 1)
+      throw new Error('The inline-end addon is not on the left of the field in RTL')
+  },
+}
+
+const LONG_PLACEHOLDER =
+  'Donaudampfschifffahrtsgesellschaftskapitänsmütze 设计系统长占位符文本 https://atom63.io/a/very/long/unbroken/path/that/keeps/going'
+
+/* Long strings: a German compound, CJK and an unbroken URL as placeholder and
+   value, in a field and a group. The field keeps its width and clips the text. */
+export const LongStrings: Story = {
+  render: () => (
+    <div data-testid="long" style={{ display: 'grid', gap: '0.75rem', maxWidth: '20rem' }}>
+      <Input aria-label="Long placeholder" placeholder={LONG_PLACEHOLDER} />
+      <Input aria-label="Long value" defaultValue={LONG_PLACEHOLDER} />
+      <InputGroup style={{ width: '100%' }}>
+        <InputGroupAddon>
+          <InputGroupText>https://</InputGroupText>
+        </InputGroupAddon>
+        <InputGroupInput aria-label="Long address" placeholder={LONG_PLACEHOLDER} />
+        <InputGroupAddon align="inline-end">
+          <InputGroupButton aria-label="Clear" size="icon-xs" type="button">
+            <X aria-hidden />
+          </InputGroupButton>
+        </InputGroupAddon>
+      </InputGroup>
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const frame = canvasElement.querySelector<HTMLElement>('[data-testid="long"]')
+    if (!frame) throw new Error('No frame')
+    const limit = frame.getBoundingClientRect().right + 1
+    for (const control of frame.querySelectorAll(
+      '[data-slot="input-control"], [data-slot="input-group"]'
+    )) {
+      if (control.getBoundingClientRect().right > limit)
+        throw new Error(
+          `A ${control.getAttribute('data-slot')} grows past its column with a long string`
+        )
+    }
+  },
 }
 
 /* Prod parity: a numeric `size` forwards to the native char-width attribute
@@ -340,7 +493,7 @@ export const Themes: Story = {
                 />
                 <Input
                   aria-label="Example text field, invalid"
-                  defaultValue="focused-look"
+                  defaultValue="Invalid entry"
                   invalid
                   style={{ width: '100%' }}
                 />

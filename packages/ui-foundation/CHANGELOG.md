@@ -1,5 +1,104 @@
 # @atom63/ui-foundation
 
+## 0.2.0-beta.12
+
+### Minor Changes
+
+- [#362](https://github.com/atom63/atom63-design-system/pull/362) [`317cd31`](https://github.com/atom63/atom63-design-system/commit/317cd314aeb634191b8f972ab7b24720688d67f0) Thanks [@atom63](https://github.com/atom63)! - DestinationLink no longer draws an underline by default. Its default `plain` variant is for links behind cards, titles, icons and other surfaces that carry their own cue; set `variant="inline"` for an underlined text link in prose. The `card` variant added in the previous beta is renamed `plain`, since it is now the default.
+
+## 0.2.0-beta.11
+
+### Patch Changes
+
+- [#360](https://github.com/atom63/atom63-design-system/pull/360) [`51c78c9`](https://github.com/atom63/atom63-design-system/commit/51c78c929aa9ad9f6fef4b15206b906508d43a18) Thanks [@atom63](https://github.com/atom63)! - Add a card variant to DestinationLink for card titles and linked cards. It removes the underline and keeps link semantics, destination indicators, and keyboard focus. Inline links retain their default underline.
+
+## 0.2.0-beta.10
+
+### Minor Changes
+
+- [#351](https://github.com/atom63/atom63-design-system/pull/351) [`d53bffe`](https://github.com/atom63/atom63-design-system/commit/d53bffe8acab6e68a6687230b7c9f362c9145023) Thanks [@atom63](https://github.com/atom63)! - Form controls:
+  
+  - `Field` takes `invalid` and `disabled` props, and a rendered `FieldError` now sets `data-invalid` on the field, so the label tints without `data-invalid="true"`. Input and Textarea draw their danger edge when their field is `aria-invalid`.
+  - `FormControl` no longer overwrites the wrapped control's `data-slot` (it adds `data-form-control`) and sets `aria-invalid` only on error; `form-control` leaves the Form contract's slots. `FormMessage` is `role="alert"` only while it shows an error, without `aria-live`.
+  - `Textarea` takes `maxRows` (default 12); past it, the field scrolls instead of growing.
+  - On a coarse pointer, Input and the Select trigger take a 44px tap through a hit strip, and Select options grow to the 44px row height.
+  - Select options wrap instead of truncating, and the popup grows up to 20rem.
+  - `SelectTrigger` opens the list on Home and End, at the first or last option; in `SelectPopup`, Tab and Alt + Up Arrow select the focused option. The four gaps leave the Select contract's `knownGaps`.
+  - The CLI answers for Field, Form, Select and Textarea are written guides.
+
+- [#357](https://github.com/atom63/atom63-design-system/pull/357) [`27dff37`](https://github.com/atom63/atom63-design-system/commit/27dff3757204017cf40ce68e3b1a314ca7baab81) Thanks [@atom63](https://github.com/atom63)! - Form controls, round 7:
+  
+  - `Textarea` takes `variant` (`default`, `filled`, `plain`), the same field chrome as `Input`; the textarea contract lists the variants.
+  - `SegmentedControl` scrolls the selected segment fully into view in a scrolling track, on mount and when the selection changes, and a pressed segment's content dips.
+  - `FieldLabel`, `FieldLegend`, `FieldDescription`, `FieldError`, `FormDescription` and `FormMessage` wrap long words and unbroken URLs instead of widening the form.
+  - Terminal light `--a63-text-tertiary` is lighter (90% of the action colour instead of 80%), so a placeholder reads clearly below the value while keeping 4.5:1.
+
+- [#359](https://github.com/atom63/atom63-design-system/pull/359) [`9b9f44f`](https://github.com/atom63/atom63-design-system/commit/9b9f44f6861b0958e7c61c3871ddea0140cd8038) Thanks [@atom63](https://github.com/atom63)! - Sheet takes `side="inline-start"` and `side="inline-end"`, which follow the text direction; `left` and `right` stay physical edges. The Sheet contract lists the `focus-visible` state. The Toaster's keyboard focus outline now draws on the toast and its action (it lost to Sonner's `outline: none`), and the default toast reads the overlay contract (border, gloss, texture, backdrop, shadow and radius) per theme. `DialogPanel`'s `scrollFade` now fades the panel's edge while it scrolls, in browsers with scroll-driven animations. A menu shortcut keeps its own direction, so `⌘C` stays `⌘C` in a right-to-left menu.
+
+### Patch Changes
+
+- [#353](https://github.com/atom63/atom63-design-system/pull/353) [`a4f01d4`](https://github.com/atom63/atom63-design-system/commit/a4f01d4bd008a72f702d4307c1545590df932c0a) Thanks [@atom63](https://github.com/atom63)! - Data and feedback components get their missing states. Pagination draws a disabled Previous or Next faded, mirrors its chevrons under `dir="rtl"`, takes `children` to replace the Previous, Next and More pages text, and its contract `linkSizes` narrows to `xs`, `sm`, `md`, `icon-xs`, `icon-sm` and `icon`. Table rows take `selected`, cells and heads take `wrap`, head and cell padding follow the density scale, and an overflowing table scroller becomes a named, focusable region. Chart gains `layout` (`grouped` or `stacked`, in the contract; `stacked` is deprecated), an empty message (`labels.empty`), tap-to-read on touch, real values below zero in the tooltip and table with a console warning, index keys, a short plot name (`labels.plot`), and whole-number ticks when every value is zero. ItemGroup is a list and its Items are list items (a link or button row is wrapped in one); interactive rows floor at `--a63-row-min-size`, have a disabled look, clamp their title and description, keep long strings inside the row, and mark selection in forced colors. Interactive Cards draw a focus-visible ring and lift, gate the hover lift and media zoom to fine pointers, read type-scale font sizes, and the cursor label uses on-media tokens. FeedbackState forwards native attributes and `ref`, takes `labels.noResults`, mounts a fresh alert for an error, wraps long titles, and its contract states are its kinds (the `idle` alias is gone). EmptyErrorDetail takes `labels` and mirrors in RTL. Skeleton keeps an edge in forced colors and sweeps toward the inline end. ChatComposer adds `submitOnEnter` (off on touchscreens) and `enterKeyHint`. The user ChatMessage bubble keeps an edge in forced colors. The shadcn bridge defines `--a63-row-min-size` and `--a63-action-disabled-opacity`.
+
+- [#352](https://github.com/atom63/atom63-design-system/pull/352) [`fdbe267`](https://github.com/atom63/atom63-design-system/commit/fdbe2670698a40448943822a5adc27eb8ee16e2f) Thanks [@atom63](https://github.com/atom63)! - Menu rows (DropdownMenu, ContextMenu, Menubar, Select and Autocomplete) are at least 44px tall on touch, cap the popup at the available width and wrap long labels, and the submenu chevron mirrors in right-to-left. `DropdownMenuContent` and `DropdownMenuSubContent` honour `portalProps.container`. `PopoverAnchor` now positions the popup, `PopoverContent` takes `anchor`, `alignOffset` and `collisionPadding`, `PopoverPortal` falls back to `PortalContainerProvider`, and the popup scrolls and wraps long strings. The Dialog close button has a 44px touch target and a pressed state, and the Sheet header leaves room for its close button. Toaster stamps the `toast`, `toast-icon` and `toast-message` slots, takes its direction from the portal region, adds the safe-area insets to its offsets, draws an outline focus ring, gives its close and action buttons the touch floor, and mounts after hydration. The dropdown-menu and toaster contracts document `inset` and the tone functions.
+
+- [#358](https://github.com/atom63/atom63-design-system/pull/358) [`759fd86`](https://github.com/atom63/atom63-design-system/commit/759fd866fb7d87375716f192d80bb090cb873bf2) Thanks [@atom63](https://github.com/atom63)! - Table, Pagination, Card and Chart reach readiness. The Table and Pagination scrollers pad their edges and take the padding back with a negative margin, so the 44px touch targets and focus rings of controls at the edge are no longer clipped. TableHead and TableCell take `align="end"`, which ends the column in tabular figures (the contract adds `aligns`); a selected row keeps the system selection colours in forced colors; an overflowing table without a caption or label stays focusable but no longer gets the English region name "Table". Previous and Next given `children` are named by them instead of an English `aria-label`, and their labels are visually hidden, not removed, on narrow screens. `CardMediaOverlayIconButton` is now a round overlay `Button` (it was a `span`), so it has a name, keyboard access and a touch target; `CardMediaOverlayTopEnd` is added and `CardMediaOverlayTopRight` is deprecated; interactive and overlay cards have a pressed state (`:active` or `data-pressed`). Chart removes the deprecated `stacked` boolean (use `layout="stacked"`), cuts long category labels with an ellipsis, and its contract lists the `chart-empty` slot and the `empty` state.
+
+- [#354](https://github.com/atom63/atom63-design-system/pull/354) [`d00c3cf`](https://github.com/atom63/atom63-design-system/commit/d00c3cfaf7b33744c94e2cc7c64b32612ba98299) Thanks [@atom63](https://github.com/atom63)! - FeedbackState: `labels.titles` and `labels.descriptions` replace every built-in title and description per kind. With `state="error"` and an `Error`, the friendly description stays and `error.message` shows in a new `feedback-state-detail` line under it. The loading description no longer repeats its title. Empty: `EmptyTitle` takes a `level` prop, and long titles and descriptions wrap inside the box.
+
+- [#350](https://github.com/atom63/atom63-design-system/pull/350) [`aea925d`](https://github.com/atom63/atom63-design-system/commit/aea925d372feb22601767fbbf2ba8218046cd463) Thanks [@atom63](https://github.com/atom63)! - Sidebar's `side` is now logical: `left` is the inline start, so under `dir="rtl"` the desktop panel and its border sit on the right and the phone sheet opens from the right. The desktop panel pads its outer edge by the safe-area inset and reserves that width beside the content. Add `mobileTitle` and `mobileDescription` to `Sidebar` and `label` to `SidebarTrigger` for the built-in accessible names, and export `SidebarTriggerProps`.
+
+## 0.2.0-beta.9
+
+### Minor Changes
+
+- [#336](https://github.com/atom63/atom63-design-system/pull/336) [`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de) Thanks [@atom63](https://github.com/atom63)! - Add Chart on its own entry, `import { Chart } from '@atom63/ui-react/chart'`: a small SVG line, area or bar chart (grouped or stacked) of up to five series over a categorical axis. It draws gridlines and axis labels from tokens, follows the container's width, shows a tooltip on hover and on the arrow keys, has a legend, mirrors in right-to-left text, keeps series apart by dash pattern in forced colours, and carries a data table of the same numbers that is visually hidden or shown with a toggle. It uses no charting library. The contract adds `chartTypes`, `chartSizes`, `chartColors`, `chartStates` and `chartSlots`.
+
+- [#335](https://github.com/atom63/atom63-design-system/pull/335) [`567dbbf`](https://github.com/atom63/atom63-design-system/commit/567dbbf9a706f3bddfb839600eac069e30ec5baa) Thanks [@atom63](https://github.com/atom63)! - Add sortable table heads: `Table` takes a controlled `sort` and `onSortChange`, and a `TableHead` with a `sortKey` renders a sort button with a direction icon (replaceable through `sortIcon`) and carries `aria-sort` while its column is sorted. `PaginationLink`, `PaginationPrevious` and `PaginationNext` take `render` (such as a router link) and `disabled`, which drops the href and click handler, leaves the tab order and sets `aria-disabled`. Pagination's default name is now "Pagination". Autocomplete's clear button sits beside the trigger instead of on top of it. `FeedbackState` renders its title as a real `h1`–`h6`. `FormControl` lists the description id in `aria-describedby` only while a `FormDescription` renders. The table contract adds the `table-sort-button` slot and the `sort-ascending` and `sort-descending` states; the pagination contract adds the `disabled` state.
+
+## 0.2.0-beta.8
+
+### Minor Changes
+
+- [#322](https://github.com/atom63/atom63-design-system/pull/322) [`2720544`](https://github.com/atom63/atom63-design-system/commit/2720544eec4f8bf4701366ccff064f015815e987) Thanks [@atom63](https://github.com/atom63)! - Add ArtPlate, a full-bleed picture that owns its crop and keeps a safe area for headline and product UI: art-directed phone source, focal point per breakpoint, `size` (viewport, band, card), `safeArea`, `tone`, `veil`, eager loading with `priority`, and a CSS scroll-driven `parallax` that is off under reduced motion. `Image` from `@atom63/ui-react/media` takes `srcSet`, `sizes` and art-directed `sources`, which render a native `<picture>` with native lazy loading, and `aspectRatio="fill"` for a box sized by its parent.
+
+- [#325](https://github.com/atom63/atom63-design-system/pull/325) [`dc9e86d`](https://github.com/atom63/atom63-design-system/commit/dc9e86d5a8ffd8aeec63c082589e8c02334a6994) Thanks [@atom63](https://github.com/atom63)! - Add LayeredScene: a plate (`LayeredScenePlate`, an ArtPlate), the copy (`LayeredSceneContent`) and live product UI (`LayeredSceneStage`) in a two-row grid, with an optional inert foreground cut-out of the plate in front (`LayeredSceneForeground`, aria-hidden, no pointer events, hidden on phones unless `showOnPhone`). `placement` (center-bottom, end-bottom, start-bottom) and `width` (wide, half) place the stage. Layers use the in-context z band.
+
+### Patch Changes
+
+- [#314](https://github.com/atom63/atom63-design-system/pull/314) [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd) Thanks [@atom63](https://github.com/atom63)! - SegmentedControl is a radio group instead of a tab list: the root has `role="radiogroup"` and takes `aria-label` or `aria-labelledby`, each segment is a `radio`, Tab enters at the selected segment and the arrow keys move and select. The selected segment carries `data-checked` (it was `data-active`), and the indicator is placed by `--segment-indicator-*` (it was Base UI's `--active-tab-*`). `SegmentedControlProps` now extends Base UI's RadioGroup props instead of the Tabs root props. The look is unchanged. Use Tabs when the choices switch content panels.
+  
+  Rating draws on stars filled in `--a63-status-warning` and off stars as outlines in `--a63-border-input`, so the two differ by shape as well as colour and both reach 3:1 against the page and the panel in every theme and mode.
+
+- [#310](https://github.com/atom63/atom63-design-system/pull/310) [`4b4c105`](https://github.com/atom63/atom63-design-system/commit/4b4c105e0b96f8040da19b067e6222142845be7d) Thanks [@atom63](https://github.com/atom63)! - Button's contract slots are now the `data-slot` values the React Button renders: `button`, `button-label`, `button-spinner` and `button-indicator` (they were `root`, `label`, `icon`, `spinner` and `indicator`; no `icon` slot is rendered). Search Field's input slot is `input` (it was `search-field-input`). `buttonSlots`, `searchFieldSlots` and their `ButtonSlot` and `SearchFieldSlot` types change with them, and `atom63 component button` lists the new names. Rendered `data-slot` values are unchanged.
+
+## 0.2.0-beta.7
+
+### Minor Changes
+
+- [#307](https://github.com/atom63/atom63-design-system/pull/307) [`099d1eb`](https://github.com/atom63/atom63-design-system/commit/099d1eba7a4db553969c367618d2e6f402d57a32) Thanks [@atom63](https://github.com/atom63)! - Contracts now use one name per concept. The middle size is `md` on Alert Dialog, Autocomplete, Avatar, Button Group, Dialog, Item, Table and Tabs (it was `default`), so `size="md"` type-checks on every sized component. Alert Dialog's danger variant is `error` (it was `destructive`), as on Alert and the toast. State lists use `rest`, `focus-visible`, `hover` and `current` (Badge `resting`, Breadcrumb, Item, Toggle and Toggle Group `focus`, Feedback State, Resizable, Scroll Area and Scrollable List `idle`, Form and Frame `default`, Input OTP, Navigation Menu and Sidebar Nav Tree `active`, Scroll Area `hovering`, and Accordion and Button `focusVisible`).
+  
+  Props keep working: each component still accepts the old size or variant and draws it as the new one (`size="default"` renders `data-size="md"`, `variant="destructive"` renders `data-variant="error"`). The state lists are not props, but their union types (such as `ButtonState`) drop the old names. A recipe override that targets `[data-size='default']` or the Alert Dialog popup's `[data-variant='destructive']` must move to the new value. `@atom63/ui-foundation` exports each old name in a `<component><List>Aliases` map and a `@deprecated` `<Type>Alias` type (for example `tabsSizeAliases` and `TabsSizeAlias`); the React props accept `TabsSize | TabsSizeAlias`. The aliases go in the next breaking release. Button's and Badge's `intent.stateAliases` entries moved to these maps.
+  
+  Every cross-renderer component with web axes now has an `intent` block that maps each axis to its SwiftUI enum, or says that iOS has no such axis. The CLI and the docs list the deprecated aliases with the contract.
+  
+  `reactRendererConformance` is now read from the cross-renderer contracts instead of a copied table, which takes about 2.7 kB gzip off `@atom63/ui-react`. Its type is `readonly ReactRendererConformanceEvidence[]`, and `ReactVerifiedContractId` is `CrossRendererContractId`. The values are unchanged.
+
+### Patch Changes
+
+- [#313](https://github.com/atom63/atom63-design-system/pull/313) [`0d9b571`](https://github.com/atom63/atom63-design-system/commit/0d9b5713c2f6b794b3aff9e1dd997da410c26c3e) Thanks [@atom63](https://github.com/atom63)! - The root entries of `@atom63/ui-react` and `@atom63/ui-foundation` now tree-shake. Each module the root re-exports is built as its own file, and the root is a list of re-exports over them, so a bundler drops the components an app does not import. One import from `@atom63/ui-react` now costs a consumer bundle 8.6 kB gzip for `Kbd` (was 35.6 kB), 11.1 kB for `Button` (was 37.8 kB), 10.6 kB for `Separator` (was 107.2 kB) and 22.2 kB for `Dialog` (was 107.1 kB). `toast` is re-exported through the toaster module, so sonner is loaded only by apps that use the toaster or `toast`. The public exports and types are unchanged.
+
+## 0.2.0-beta.6
+
+### Minor Changes
+
+- [#298](https://github.com/atom63/atom63-design-system/pull/298) [`7ab4fc9`](https://github.com/atom63/atom63-design-system/commit/7ab4fc97d5ce63f3f3c7237e4db61a3dc6954582) Thanks [@atom63](https://github.com/atom63)! - Add the Progressive Blur contract (`progressiveBlurContract`, `progressiveBlurPositions`, `ProgressiveBlurPosition`), marked preview; `ProgressiveBlur` takes its defaults and position type from it. Map the iOS axes of Alert, Avatar, Button shape, Card, Carousel dots, Input, Item group surface, Message, Progress, Toaster and Toggle Group onto the contract intent; the contract check fails when a mapped Swift enum drifts. The catalog and the agent index now fail on a component without a contract maturity instead of calling it stable.
+
+### Patch Changes
+
+- [#295](https://github.com/atom63/atom63-design-system/pull/295) [`524fd93`](https://github.com/atom63/atom63-design-system/commit/524fd93260a5405a3becfe9e8ceb9e35d6bf6754) Thanks [@atom63](https://github.com/atom63)! - `SelectTrigger` and `AutocompleteInput` take an `invalid` prop and draw the same danger edge as `Input` when it or `aria-invalid` is set; the Autocomplete input gains a hover border. The Select contract lists an `invalid` state and the Autocomplete contract lists `hover` and `invalid`. The default `Toaster` now reads `--a63-surface-overlay`, `--a63-border-subtle`, `--a63-text-primary` and `--radius-lg` instead of the shadcn compat variables, so its toast has a fill with only `@atom63/ui-react/styles.css` installed.
+  
+  `SelectSeparator` and `AutocompleteSeparator` render with `role="none"`, so a separator between groups inside the open listbox no longer fails axe `aria-required-children`.
+
 ## 0.2.0-beta.5
 
 ### Minor Changes

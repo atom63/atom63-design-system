@@ -4,6 +4,10 @@
   "maturity": "stable",
   "lists": {
     "sizes": ["sm", "md", "lg"],
+    "variants": {
+      "description": "Field chrome, the same axis as Input's so a form's multi-line field matches its single-line ones. default: the outlined form field. filled: a muted fill with no resting border. plain: no border or fill and a separator below, for a field inside a menu, popover or composer.",
+      "values": ["default", "filled", "plain"]
+    },
     "states": ["rest", "hover", "focus", "disabled", "invalid"],
     "slots": ["textarea-control", "textarea"],
     "tokenSlots": [
@@ -22,8 +26,12 @@
   },
   "contract": {
     "defaultSize": "md",
+    "defaultVariant": "default",
     "sizes": {
       "$ref": "#/lists/sizes"
+    },
+    "variants": {
+      "$ref": "#/lists/variants"
     },
     "states": {
       "$ref": "#/lists/states"
@@ -36,6 +44,66 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What a multi-line text field is, independent of any platform: its size and its chrome. AtomTextEditor has no size axis (its height is minHeight); the web Textarea takes Input's variant axis, of which AtomTextEditor takes default and filled.",
+    "axes": {
+      "size": ["sm", "md", "lg"],
+      "variant": ["default", "filled"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          },
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "filled": {
+                "variant": "filled"
+              }
+            },
+            "extensions": {
+              "plain": {
+                "description": "No border or fill and a separator below, for a field inside a menu, popover or composer."
+              }
+            }
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "variant": {
+            "swiftEnum": "AtomFieldVariant",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "filled": {
+                "variant": "filled"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

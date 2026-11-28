@@ -250,17 +250,10 @@ describe('the real Button recipe', () => {
       { what: '.a63-Button::after', reason: 'pseudo-element' },
       { what: ".a63-Button:not([data-size='tile'])::before", reason: 'pseudo-element' },
       { what: '.a63-Button > span:not(.a63-Button-spinner)', reason: 'descendant' },
-      {
-        what: "[data-a63-theme='aqua'] .a63-Button[data-size^='icon']",
-        reason: 'context selector',
-      },
       { what: ".a63-Button[data-size^='icon']::after", reason: 'pseudo-element' },
+      { what: ".a63-Button[data-size='tile'] .a63-Button-text", reason: 'descendant' },
       { what: '.a63-Button > span.a63-Button-indicator', reason: 'descendant' },
       { what: '.a63-Button > span.a63-Button-indicator[data-count]', reason: 'descendant' },
-      {
-        what: "[data-a63-theme='aqua'] .a63-Button[data-size^='icon'] .a63-Button-indicator",
-        reason: 'context selector',
-      },
       { what: '.a63-Button > span.a63-Button-indicator-label', reason: 'descendant' },
       // The web-only shape axis is not a Figma variant property yet.
       { what: ".a63-Button[data-shape='round']", reason: 'unsupported selector' },
@@ -310,7 +303,7 @@ describe('the real Button recipe', () => {
       const [root] = v.layers
       const ring = v.layers.find(l => l.name === 'Focus ring')!
       const expected =
-        v.coord.state === 'focusVisible'
+        v.coord.state === 'focus-visible'
           ? {
               visible: { value: true },
               stroke: { alias: '--a63-control-focus-ring-color' },
@@ -343,7 +336,7 @@ describe('the real Button recipe', () => {
         for (const key of Object.keys(anatomyLayer.reads) as (keyof typeof properties)[]) {
           if (`${anatomyLayer.name}.${key}` in exemptions) continue
           // An outline that is not drawn (`outline: none`) has no color, width or offset.
-          if (outlineOnly.has(`${anatomyLayer.name}.${key}`) && v.coord.state !== 'focusVisible')
+          if (outlineOnly.has(`${anatomyLayer.name}.${key}`) && v.coord.state !== 'focus-visible')
             continue
           const value = properties[key]
           if (!value || 'skipped' in value) missing.push(`${v.name} ${anatomyLayer.name}.${key}`)

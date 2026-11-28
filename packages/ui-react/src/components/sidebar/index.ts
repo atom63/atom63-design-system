@@ -30,4 +30,5 @@ export type {
   SidebarMenuSubButtonProps,
   SidebarProps,
   SidebarProviderProps,
+  SidebarTriggerProps,
 } from './sidebar'

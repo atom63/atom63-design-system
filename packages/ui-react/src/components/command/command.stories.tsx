@@ -106,6 +106,11 @@ export const Inline: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): focus stays in the
+   input, so the highlighted option, the one Enter runs, takes the system
+   selection colours. */
+export const ForcedColors: Story = { render: Inline.render }
+
 /* The input's slots: a caller's icon in place of the search glyph, and a
    shortcut hint after the field, as in a filter menu. */
 export const InputSlots: Story = {
@@ -151,24 +156,31 @@ export const Dialog: Story = {
     function Demo() {
       const [open, setOpen] = useState(false)
       return (
-        <>
-          <button onClick={() => setOpen(true)} style={triggerStyle} type="button">
-            Open command palette
-          </button>
-          <CommandDialog onOpenChange={setOpen} open={open}>
-            <CommandDialogPopup>
-              <Palette />
-            </CommandDialogPopup>
-          </CommandDialog>
-        </>
+        <CommandDialog onOpenChange={setOpen} open={open}>
+          <CommandDialogTrigger style={triggerStyle}>Open command palette</CommandDialogTrigger>
+          <CommandDialogPopup>
+            <Palette />
+          </CommandDialogPopup>
+        </CommandDialog>
       )
     }
     return <Demo />
   },
 }
 
+/** The modal palette open as an app shows it, so axe and the visual test cover the dialog. */
+export const DialogOpen: Story = {
+  render: () => (
+    <CommandDialog defaultOpen>
+      <CommandDialogPopup>
+        <Palette />
+      </CommandDialogPopup>
+    </CommandDialog>
+  ),
+}
+
 /*
- * Programmatic handle — CommandCreateHandle() builds a detached DialogHandle you
+ * Programmatic handle —CommandCreateHandle() builds a detached DialogHandle you
  * pass to CommandDialog via `handle`. Any button can then call handle.open(null)
  * imperatively (no open state to thread), and a detached CommandDialogTrigger wired
  * to the same handle stays in sync.

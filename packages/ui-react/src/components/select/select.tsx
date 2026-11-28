@@ -19,19 +19,58 @@ export const selectTriggerDefaultClassName = 'a63-Select-trigger'
 
 export type SelectTriggerProps = SelectPrimitive.Trigger.Props & {
   size?: SelectSize
+  /** Draws the danger edge and sets `aria-invalid`, as `Input`'s `invalid` does.
+   *  `aria-invalid` on its own draws the same state. */
+  invalid?: boolean
+}
+
+/* Base UI Select 1.6 opens only on Enter, Space and the arrow keys. The APG
+ * select-only combobox also opens on Home and End, at the first or last option:
+ * open with Down Arrow, then send Home or End to the option that takes focus. */
+function openAtEdge(trigger: HTMLElement, edge: 'Home' | 'End'): void {
+  const send = (target: Element, key: string) =>
+    target.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, cancelable: true, key }))
+  send(trigger, 'ArrowDown')
+  const doc = trigger.ownerDocument
+  let frames = 0
+  const moveToEdge = () => {
+    const option = doc.activeElement?.closest('[role="option"]')
+    if (option) {
+      send(option, edge)
+    } else if (++frames < 30) {
+      requestAnimationFrame(moveToEdge)
+    }
+  }
+  requestAnimationFrame(moveToEdge)
 }
 
 export function SelectTrigger({
+  'aria-invalid': ariaInvalid,
   children,
   className,
+  invalid = false,
+  onKeyDown,
   size = selectContract.defaultSize,
   ...props
 }: SelectTriggerProps): React.ReactElement {
+  const isInvalid = invalid || ariaInvalid === true || ariaInvalid === 'true'
   return (
     <SelectPrimitive.Trigger
+      aria-invalid={isInvalid ? true : ariaInvalid}
       className={cn(selectTriggerDefaultClassName, className)}
       data-size={size}
       data-slot="select-trigger"
+      {...(isInvalid ? { 'data-invalid': '' } : null)}
+      onKeyDown={event => {
+        onKeyDown?.(event)
+        const trigger = event.currentTarget
+        const closed = trigger.getAttribute('aria-expanded') !== 'true'
+        if (event.defaultPrevented || !closed || (event.key !== 'Home' && event.key !== 'End')) {
+          return
+        }
+        event.preventDefault()
+        openAtEdge(trigger, event.key)
+      }}
       {...props}
     >
       {children}
@@ -66,6 +105,7 @@ export function SelectPopup({
   children,
   className,
   listClassName,
+  onKeyDown,
   portalContainer,
   sideOffset = 4,
   alignItemWithTrigger = true,
@@ -85,6 +125,22 @@ export function SelectPopup({
         <SelectPrimitive.Popup
           className={cn('a63-Select-popup', className)}
           data-slot="select-popup"
+          onKeyDown={event => {
+            onKeyDown?.(event)
+            // APG select-only combobox: Tab and Alt + Up Arrow select the focused
+            // option; Base UI 1.6 closes on Tab and treats Alt + Up as Up.
+            const option = (event.target as HTMLElement).closest<HTMLElement>('[role="option"]')
+            if (event.defaultPrevented || !option || option.hasAttribute('data-disabled')) {
+              return
+            }
+            if (event.key === 'Tab') {
+              option.click()
+            } else if (event.key === 'ArrowUp' && event.altKey) {
+              event.preventDefault()
+              event.preventBaseUIHandler()
+              option.click()
+            }
+          }}
           {...props}
         >
           <SelectPrimitive.ScrollUpArrow
@@ -142,10 +198,14 @@ export function SelectSeparator({
   className,
   ...props
 }: SelectPrimitive.Separator.Props): React.ReactElement {
+  // A listbox may own only options and groups, so a separator role inside the
+  // popup fails axe (aria-required-children). The rule is drawn for sight only.
   return (
     <SelectPrimitive.Separator
+      aria-orientation={undefined}
       className={cn('a63-Menu-separator', 'a63-Select-separator', className)}
       data-slot="select-separator"
+      role="none"
       {...props}
     />
   )

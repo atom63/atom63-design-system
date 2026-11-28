@@ -1,0 +1,813 @@
+{
+  "scope": "Layer 3, batch 5 menus and navigation (web/React only): menu, dropdown-menu, context-menu, menubar, command, navigation-menu, breadcrumb, pagination, tabs",
+  "reviewedAt": "2026-11-20",
+  "round": 2,
+  "subjects": [
+    {
+      "subject": "menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "The contract declares tones neutral|primary (packages/ui-foundation/contracts/components/menu.json lists.tones) but no menu part exposes a typed `tone` prop; primary is reachable only by spreading a raw data-tone attribute (packages/ui-react/src/components/menu/menu.css:105-112, packages/ui-react/src/components/menu/menu.stories.tsx:24-28; dropdown-menu.tsx DropdownMenuContentProps has no tone)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/menu/menu.css:119-131 inset focus-visible ring on top of highlight; forced-colors block 237-256; reduced motion 228-232; menu-forced-colors baseline exists. Standalone label is a plain div not tied to a group (dropdown-menu.tsx DropdownMenuLabel comment)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-menu-themes-chromium-linux.png: 8 cells, aqua gel/striped dark, retro bevel shadow, terminal mono + blue frame are visibly distinct; highlighted, disabled and destructive rows are distinguishable in every cell."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-menu-preview / -tones / -forced-colors: rest, highlighted, disabled, checked, radio selected, submenu-open and destructive (+highlighted) are all drawn statically in both tones."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Menu rows floor at --a63-control-min-size, which is 2rem (32px) on coarse pointers, not --a63-row-min-size (2.75rem on touch): packages/ui-react/src/components/menu/menu.css:59-62; packages/styles/src/contracts/environment.css:128-137 (row-min-size is the documented floor for full-width rows in clipping containers, environment.css:68-76)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "The submenu chevron (.a63-Menu-sub-icon) has no RTL mirror rule in packages/ui-react/src/components/menu/menu.css (breadcrumb does mirror its chevron, breadcrumb.css:63-68); no story in this batch sets dir=\"rtl\" (grep for rtl in the batch stories: none)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/menu/menu.css:24-28 max-height var(--available-height) + overflow-y auto; apps/storybook/visual/__screenshots__/ui-react-menu-endpoints (iOS touch row spacing). No explicit safe-area handling (relies on Base UI collision padding)."
+        },
+        {
+          "criterion": "K8",
+          "score": 1,
+          "evidence": "`pnpm -s atom63 component menu` -> 'No component \"menu\". (component.not_found)', although menu.json is maturity stable and carries the tone axis; the tone axis is not mentioned in the dropdown-menu answer either."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "Static baselines menu-preview/tones/forced-colors/themes/endpoints; SSR smoke renders every story (apps/storybook/ssr/ssr.test.tsx:16-37). Behaviour lives in the consuming components' tests."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "dropdown-menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/dropdown-menu/dropdown-menu.tsx: every part spreads props onto the Base UI part; trigger composes via `render`; Root controlled/uncontrolled from Base UI; Item `variant` matches contract itemVariants default|destructive. Tone axis gap is filed on `menu`."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG menu-button pattern tests bound in apps/storybook/a11y/patterns.test.ts:69-72 (tree, structure and keyboard checks on Playground). DropdownMenuLabel is a bare div with no group wiring by default (dropdown-menu.tsx:203-226)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. Popup chrome per theme is the shared recipe (apps/storybook/visual/__screenshots__/ui-react-menu-themes-chromium-linux.png); apps/storybook/visual/__screenshots__/ui-react-dropdownmenu-themes-chromium-linux.png shows only closed triggers."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-dropdownmenu-playground, -submenu and -checkbox-and-radio baselines show the closed trigger only (submenu baseline is a lone 'Share' button); the real open popup, an open submenu and the real checkbox/radio rows are never captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Menu rows floor at --a63-control-min-size, which is 2rem (32px) on coarse pointers, not --a63-row-min-size (2.75rem on touch): packages/ui-react/src/components/menu/menu.css:59-62; packages/styles/src/contracts/environment.css:128-137 (row-min-size is the documented floor for full-width rows in clipping containers, environment.css:68-76). (inherited through a63-Menu-item)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "ChevronRightIcon in packages/ui-react/src/components/dropdown-menu/dropdown-menu.tsx:57-68 is never mirrored. The submenu chevron (.a63-Menu-sub-icon) has no RTL mirror rule in packages/ui-react/src/components/menu/menu.css (breadcrumb does mirror its chevron, breadcrumb.css:63-68); no story in this batch sets dir=\"rtl\" (grep for rtl in the batch stories: none)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Positioner gets --available-height via the recipe; portal container respected (dropdown-menu.test.tsx:61). No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Hand-written apps/docs/src/pages/component-dropdown-menu.mdx; CLI answer has a runnable snippet and contract. But it describes --a63-menu-highlight-primary-background as 'Selected/current row fill' while menu.css:105-112 uses it only for the highlighted row under data-tone=primary, and the tone opt-in is never mentioned."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/dropdown-menu/dropdown-menu.test.tsx (4 render tests) + APG keyboard pattern tests + SSR smoke; open-state baselines missing (see K4)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "context-menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "ContextMenuItem takes `variant: 'default' | 'destructive'` (packages/ui-react/src/components/context-menu/context-menu.tsx ContextMenuItemProps) but packages/ui-foundation/contracts/components/context-menu.json declares no itemVariants axis (contract has only slots/states/visualArchetypes), so `atom63 component context-menu` shows no axis. ContextMenuSubContent defaults sideOffset 6 vs DropdownMenuSubContent 4 and MenubarSubContent 8."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/context-menu/context-menu.test.tsx:92-159 covers right-click, keyboard context-menu key, arrows, Enter, Escape focus return, outside click. Contract has no `accessibility` pattern binding, so the APG harness does not run on it."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional; shared recipe apps/storybook/visual/__screenshots__/ui-react-menu-themes-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-contextmenu-with-sub-and-checkables-chromium-linux.png and -playground show only the 'Right-click here' area; the open menu, submenu and checkable rows are never captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Menu rows floor at --a63-control-min-size, which is 2rem (32px) on coarse pointers, not --a63-row-min-size (2.75rem on touch): packages/ui-react/src/components/menu/menu.css:59-62; packages/styles/src/contracts/environment.css:128-137 (row-min-size is the documented floor for full-width rows in clipping containers, environment.css:68-76)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "ChevronRightIcon in context-menu.tsx:47-58 never mirrored. The submenu chevron (.a63-Menu-sub-icon) has no RTL mirror rule in packages/ui-react/src/components/menu/menu.css (breadcrumb does mirror its chevron, breadcrumb.css:63-68); no story in this batch sets dir=\"rtl\" (grep for rtl in the batch stories: none)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Base UI ContextMenu supports long-press; no touch test or phone story exercises it (context-menu.test.tsx has only mouse/keyboard)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Generated page only (no apps/docs/src/pages/component-context-menu.mdx); CLI guidance is one specific bullet plus two boilerplate bullets shared with breadcrumb/command; `variant` is not listed."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "10 behaviour tests (context-menu.test.tsx:67-159), SSR smoke; open-state baselines missing (K4)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "menubar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "MenubarItem forwards `variant` (menubar.tsx MenubarItem) but menubar.json declares no itemVariants axis; MenubarCheckboxItem/RadioItem bypass the DropdownMenu parts and use lucide Check while DropdownMenu uses an inline SVG."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/menubar/menubar.test.tsx:86-160: one tab stop with roving focus, ArrowDown opens, ArrowLeft/Right move between menus with wrap, Escape returns focus. No forced-colors rule for .a63-Menubar-trigger[data-popup-open] (menubar.css), so the open trigger is not marked in high-contrast mode."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-menubar-themes-chromium-linux.png: bar shell reads per theme (retro heavier border, terminal mono/blue)."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/menubar/menubar.css has no [data-disabled] rule for triggers (hover still applies); no story has a disabled trigger; apps/storybook/visual/__screenshots__/ui-react-menubar-playground-chromium-linux.png shows the closed bar only — popup-open trigger and open menu never captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Bar floors at control-min-size (32px on coarse), triggers are stretched to it with no min-target expansion (menubar.css:12-15, 33-50); items inherit the 32px menu row (packages/ui-react/src/components/menu/menu.css:59-62)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Submenu chevron inherited from DropdownMenuSubTrigger, not mirrored. The submenu chevron (.a63-Menu-sub-icon) has no RTL mirror rule in packages/ui-react/src/components/menu/menu.css (breadcrumb does mirror its chevron, breadcrumb.css:63-68); no story in this batch sets dir=\"rtl\" (grep for rtl in the batch stories: none). menubar.css header comment still refers to a63-DropdownMenu-* classes that no longer exist."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/menubar/menubar.css:21-27 horizontal scroll with pan-x at narrow widths."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Generated page only; CLI guidance one specific bullet + boilerplate; no runnable snippet in the answer."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "9 behaviour tests + SSR; open/disabled baselines missing (K4)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "command",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/command/command.tsx: every part spreads props onto its Base UI Autocomplete/Dialog part; CommandInput `icon`/`endAddon` are replaceable (test command.test.tsx:76); autoFocus set before the spread so callers can override."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "CommandDialogPopup renders a Base UI Dialog popup with no title part and no aria-label default (command.tsx CommandDialogPopup), and the Dialog story passes none (command.stories.tsx:154-172), so the modal is an unnamed dialog; the combobox input is named only by its placeholder (command.stories.tsx:58). No combobox APG binding in command.json."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-command-themes-chromium-linux.png: inset tray, ring on highlighted row, per-theme material visible in all 8 cells."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Empty state tested (command.test.tsx:93), highlighted ring captured, forced-colors baseline; disabled item styled (command.css .a63-Command-item[data-disabled]) but never captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/command/command.css .a63-Command-item min-height max(control-height-md, control-min-size) = 32px on coarse; its own comment claims it 'floors to the 44px touch target', which is false (control-min-size is 2rem on touch, environment.css:128-137)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical properties throughout command.css (margin-inline-start on shortcut, padding-inline); no directional icons; no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Viewport padding max(1rem, 4vh) and popup max-height 26rem (command.css); no safe-area inset in .a63-Command-viewport padding."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Generated page only; CLI shows an import line; the items/Collection render-function API is only learnable from `atom63 example command Inline`."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "6 behaviour tests (filter, arrows+Enter, dialog open/Escape focus return) + SSR + 8 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "navigation-menu",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "NavigationMenuIndicator is exported (packages/ui-react/src/index.ts:431) but is a plain div: nothing sets data-state, so the [data-state] opacity rules never apply, and `top: 100%` has no effect without positioning (packages/ui-react/src/components/navigation-menu/navigation-menu.tsx:159-170, navigation-menu.css indicator block). It is used nowhere."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/navigation-menu/navigation-menu.test.tsx:93-150: click/hover open, Escape focus return, Arrow keys between triggers, Tab into panel, aria-current on the active link; forced-colors rules for open trigger and current link."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. The trigger chevron is lucide ChevronDown at its default 24px with stroke 2 (navigation-menu.tsx NavigationMenuTrigger; no size rule on .a63-NavigationMenu-trigger-icon), visibly heavier than the 14px label in apps/storybook/visual/__screenshots__/ui-react-navigationmenu-themes-chromium-linux.png; menu chevrons elsewhere are 14-16px at stroke 1.5."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Open popup captured (apps/storybook/visual/__screenshots__/ui-react-navigationmenu-open-chromium-linux.png, modern light only); current link styled by weight; disabled trigger uses a literal opacity 0.5 and has no story."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Triggers and links floor at control-min-size (32px on coarse) with no min-target expansion (navigation-menu.css trigger and link min-height)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical inline paddings; content slide uses translateX by data-activation-direction (physical, unverified in RTL); no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Popup max-width subtracts --a63-safe-area-left/right and max-height caps at 72% viewport; viewport scrolls under 40rem (navigation-menu.css popup and viewport blocks)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Generated page only; the exported Indicator and navigationMenuTriggerStyle are undocumented beyond the API list."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "9 behaviour tests + SSR + 7 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "breadcrumb",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/breadcrumb/breadcrumb.tsx BreadcrumbLink: useRender + mergeProps with `render` and a deprecated `asChild`; test breadcrumb.test.tsx:55."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "BreadcrumbEllipsis is a non-interactive span (packages/ui-react/src/components/breadcrumb/breadcrumb.tsx BreadcrumbEllipsis), and the Collapsed and Endpoints stories ship it bare, so collapsed levels are unreachable for every user; nav aria-label is the hard-coded lowercase 'breadcrumb' and the sr text 'More' is fixed English."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-breadcrumb-themes-chromium-linux.png: current page reads apart from links in all 8 cells."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "rest/hover/focus-visible/current styled (breadcrumb.css); collapsed and custom-separator compositions captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Link min-height var(--a63-control-min-target) (breadcrumb.css .a63-Breadcrumb-link), 44px on coarse."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Default separator mirrored under rtl (breadcrumb.css:63-68); list wraps with word-break (breadcrumb.css .a63-Breadcrumb-list); no truncation option."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "flex-wrap list wraps at phone width; Endpoints iOS touch cell."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Generated page only; nothing tells a builder how to make the collapsed segment usable (e.g. wrap the ellipsis in a DropdownMenuTrigger)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "4 render tests + SSR + 6 baselines; behaviour is static links."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "pagination",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/pagination/pagination.tsx: PaginationLink renders a DS Button through `render` on an <a> with the props spread; size defaults to paginationContract.defaultLinkSize. data-active={isActive} emits data-active=\"false\" on inactive links (harmless today)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "aria-current=page on the active link, labelled Previous/Next whose names contain the visible text, sr-only 'More pages' on the ellipsis (pagination.tsx; pagination.test.tsx:37-71)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-pagination-themes-chromium-linux.png: current page outline plate reads in all 8 cells."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "No disabled state for Previous/Next at the first/last page: the contract lists only rest|current (pagination.json) and PaginationLink has no disabled handling for an <a>."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Links are DS Buttons (button.css:135-136 min-target); ellipsis floors both axes (pagination.css .a63-Pagination-ellipsis)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "ChevronLeft/ChevronRight are never mirrored in RTL (pagination.tsx, no rtl rule in pagination.css), and the visible 'Previous'/'Next' text is hard-coded and cannot be replaced (children set after the props spread)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Labels hide under 40rem and the list scrolls inline with snap (pagination.css)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Generated page only; no guidance on page windows, bounds or localization."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "5 render tests + SSR + 4 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "tabs",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 1,
+          "evidence": "The contract declares orientations horizontal|vertical and the docs say the marker stays aligned, but the default variant breaks vertically: the list keeps a fixed one-row height (packages/ui-react/src/components/tabs/tabs.css .a63-Tabs-list[data-variant='default'] height: var(--tabs-height)) while vertical stacks tabs in a column with overflow visible, and the indicator is placed with top:50% + translateX(--active-tab-left) translateY(-50%) and never reads --active-tab-top (tabs.css default indicator block), so it stays centred on the list instead of following the active tab. Base UI exposes --active-tab-top (TabsIndicatorCssVars). Only underline has a vertical indicator rule."
+        },
+        {
+          "criterion": "K2",
+          "score": 4,
+          "evidence": "APG tabs pattern (activation manual) bound in apps/storybook/a11y/patterns.test.ts:74-77; focus-visible inset ring; panel focus ring; forced-colors selected tab; reduced motion (tabs.css)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-tabs-themes-chromium-linux.png shows default + underline in all 8 cells with per-theme plates; attached is captured only in modern light (apps/storybook/visual/__screenshots__/ui-react-tabs-attached-chromium-linux.png), and its panel radius falls back to var(--a63-surface-radius), which rounds the corner under the active tab whenever a theme sets that token."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "No story or baseline has a disabled tab or a vertical tab list (grep disabled/vertical in tabs.stories.tsx: none); disabled uses a literal opacity 0.56."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Tab height floors at control-min-size (32px on coarse); the default-variant tab is that minus 2x inset and its ::after only extends by the inset (tabs.css); min-width uses min-target but height never reaches 44px."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Indicator positions from Base UI's measured --active-tab-left so it holds in RTL; inline paddings logical; labels nowrap with inline scroll; no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-tabs-mobile-overflow-chromium-linux.png: list scrolls with snap at narrow width, but the hidden scrollbar leaves only a hard clip ('Access pe') as the overflow cue."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "Hand-written apps/docs/src/pages/component-tabs.mdx; CLI answer with variants and design decisions; but it claims vertical keeps the marker aligned, which is false for the default variant."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "tabs.test.tsx has 5 tests (defaults, alias, attached indicator omission, click select, size); no test or baseline for vertical orientation or disabled tabs, which is how the K1 bug went unnoticed."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r2-k05-1",
+      "subject": "menu",
+      "criterion": "K8",
+      "severity": "P1",
+      "summary": "The stable `menu` contract has no `atom63 component` answer, so its tone axis (neutral/primary) is undiscoverable to builders.",
+      "evidence": "pnpm -s atom63 component menu -> component.not_found; packages/ui-foundation/contracts/components/menu.json maturity stable, tones [neutral, primary]; dropdown-menu CLI answer lists only itemVariants.",
+      "fix": "Index `menu` as a recipe subject in the CLI (or fold its tone axis and states into the dropdown-menu/context-menu/menubar answers) and document how to pick the primary tone.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-2",
+      "subject": "menu",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The contract's tone axis has no typed prop; primary tone needs a raw data-tone attribute.",
+      "evidence": "menu.json tones; menu.css:105-112 selects [data-tone='primary']; DropdownMenuContentProps/ContextMenuContentProps have no tone; menu.stories.tsx:28 sets data-tone by hand.",
+      "fix": "Add `tone?: 'neutral' | 'primary'` to DropdownMenuContent, ContextMenuContent, MenubarContent (and sub contents), mapped to data-tone, with the contract default.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-3",
+      "subject": "menu",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Menu rows are 32px tall on coarse pointers instead of the 44px row floor.",
+      "evidence": "Menu rows floor at --a63-control-min-size, which is 2rem (32px) on coarse pointers, not --a63-row-min-size (2.75rem on touch): packages/ui-react/src/components/menu/menu.css:59-62; packages/styles/src/contracts/environment.css:128-137 (row-min-size is the documented floor for full-width rows in clipping containers, environment.css:68-76).",
+      "fix": "Floor .a63-Menu-item min-height with max(..., var(--a63-row-min-size)) and add a web+touch Endpoints cell (designLanguage web, input touch) to the baselines.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-4",
+      "subject": "menu",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The submenu chevron points right in RTL, away from where the submenu opens.",
+      "evidence": "The submenu chevron (.a63-Menu-sub-icon) has no RTL mirror rule in packages/ui-react/src/components/menu/menu.css (breadcrumb does mirror its chevron, breadcrumb.css:63-68); no story in this batch sets dir=\"rtl\" (grep for rtl in the batch stories: none).",
+      "fix": "Mirror .a63-Menu-sub-icon under :dir(rtl)/[dir='rtl'] as breadcrumb does, and add an RTL menu story with a long and a CJK label.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-5",
+      "subject": "dropdown-menu",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No visual baseline captures the open dropdown popup, an open submenu or real checkbox/radio rows.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-dropdownmenu-submenu-chromium-linux.png shows only the 'Share' trigger; -playground and -checkbox-and-radio likewise closed.",
+      "fix": "Add play functions (or defaultOpen) to Playground, Submenu and CheckboxAndRadio so the open popup and open submenu are captured in at least modern light/dark and one textured theme.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-6",
+      "subject": "dropdown-menu",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Docs misdescribe the primary highlight token and omit the tone opt-in.",
+      "evidence": "pnpm -s atom63 component dropdown-menu Key tokens table vs packages/ui-react/src/components/menu/menu.css:105-112.",
+      "fix": "Describe --a63-menu-highlight-primary-* as the highlighted row under tone=primary and document the tone option.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-7",
+      "subject": "context-menu",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "ContextMenuItem's destructive `variant` is not in the context-menu contract, so the CLI shows no axis for it.",
+      "evidence": "context-menu.json contract keys: slots, states, visualArchetypes; context-menu.tsx ContextMenuItemProps.variant.",
+      "fix": "Add itemVariants (ref menu.json#/lists/itemVariants) and defaultItemVariant to context-menu.json; align sub-content sideOffset with DropdownMenu.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-8",
+      "subject": "context-menu",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "No baseline shows the context menu open.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-contextmenu-with-sub-and-checkables-chromium-linux.png shows only the trigger area.",
+      "fix": "Open the menu in a play function (contextmenu event) for Playground and WithSubAndCheckables before capture.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-9",
+      "subject": "context-menu",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Context menu has only a generated page with boilerplate guidance.",
+      "evidence": "pnpm -s atom63 component context-menu: Guidance bullets 2-3 are identical to breadcrumb/command; no usage snippet beyond the import line.",
+      "fix": "Write component-context-menu.mdx: when to use vs DropdownMenu, the touch long-press behaviour, destructive variant, a runnable example.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-10",
+      "subject": "menubar",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Menubar triggers have no disabled style, and no baseline captures a disabled trigger, an open trigger or an open menu.",
+      "evidence": "packages/ui-react/src/components/menubar/menubar.css (no [data-disabled]); apps/storybook/visual/__screenshots__/ui-react-menubar-playground-chromium-linux.png closed only.",
+      "fix": "Add .a63-Menubar-trigger[data-disabled] (menu disabled opacity, no hover), a forced-colors rule for [data-popup-open], and an opened Playground baseline.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-11",
+      "subject": "menubar",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Menubar triggers and rows are 32px on coarse pointers.",
+      "evidence": "menubar.css:12-15 min-height max(control-height-sm, control-min-size); environment.css:128-137 control-min-size 2rem on touch.",
+      "fix": "Expand trigger hit areas to --a63-control-min-target (pseudo-element as Button does) and floor rows with --a63-row-min-size.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-12",
+      "subject": "menubar",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Menubar's destructive item variant is not in its contract.",
+      "evidence": "menubar.json contract keys: slots, states, visualArchetypes; menubar.tsx MenubarItem variant.",
+      "fix": "Add itemVariants to menubar.json (ref menu.json) and regenerate.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-13",
+      "subject": "command",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The command palette dialog has no accessible name and its input is named only by placeholder.",
+      "evidence": "command.tsx CommandDialogPopup (no title, no aria-label); command.stories.tsx:58, 154-172.",
+      "fix": "Give CommandDialogPopup a default aria-label (overridable, e.g. 'Command palette') or a visually hidden title slot, and an aria-label on CommandInput in the examples; bind command to the combobox APG pattern.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-14",
+      "subject": "command",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Command rows are 32px on coarse pointers although the recipe comment promises 44px.",
+      "evidence": "command.css .a63-Command-item min-height; environment.css:128-137.",
+      "fix": "Floor rows with --a63-row-min-size and fix the comment; add a web+touch Endpoints cell.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-15",
+      "subject": "command",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Command has no hand-written docs for its items/Collection API.",
+      "evidence": "pnpm -s atom63 component command: Usage is an import line; guidance is boilerplate.",
+      "fix": "Write component-command.mdx with the items + render-function pattern, dialog vs inline, and naming guidance.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-16",
+      "subject": "command",
+      "criterion": "K7",
+      "severity": "P3",
+      "summary": "The ⌘K viewport ignores safe-area insets.",
+      "evidence": "command.css .a63-Command-viewport padding.",
+      "fix": "Add var(--a63-safe-area-*) to the viewport padding.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-17",
+      "subject": "navigation-menu",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "NavigationMenuIndicator is exported but does nothing: its state attribute is never set and it is not positioned.",
+      "evidence": "navigation-menu.tsx:159-170; navigation-menu.css .a63-NavigationMenu-indicator rules; no usage in the repo.",
+      "fix": "Either rebuild it on Base UI NavigationMenu.Arrow inside the popup, or deprecate and remove the export.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-18",
+      "subject": "navigation-menu",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The trigger chevron renders at lucide's default 24px, oversized against the label.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-navigationmenu-themes-chromium-linux.png; navigation-menu.tsx ChevronDown without size; css has no width/height on the icon.",
+      "fix": "Size .a63-NavigationMenu-trigger-icon to var(--a63-control-icon-size-sm) with the same stroke weight as the menu chevrons.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-19",
+      "subject": "navigation-menu",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Navigation triggers and links are 32px on coarse pointers.",
+      "evidence": "navigation-menu.css min-height max(control-height-sm, control-min-size); environment.css:128-137.",
+      "fix": "Floor links with --a63-row-min-size and expand triggers to --a63-control-min-target.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-20",
+      "subject": "navigation-menu",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Navigation menu has only a generated docs page.",
+      "evidence": "pnpm -s atom63 component navigation-menu: no snippet, boilerplate guidance.",
+      "fix": "Write component-navigation-menu.mdx with a runnable example and the current-link (`active`) usage.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-21",
+      "subject": "breadcrumb",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The collapsed composition hides levels behind a non-interactive ellipsis, so they cannot be reached.",
+      "evidence": "breadcrumb.tsx BreadcrumbEllipsis (span); breadcrumb.stories.tsx:45-64 Collapsed.",
+      "fix": "Show the collapsed composition with the ellipsis as a DropdownMenuTrigger (button with an accessible name) listing the hidden levels, and make the 'More' label and nav label overridable/localizable.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-22",
+      "subject": "breadcrumb",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Breadcrumb has only a generated docs page.",
+      "evidence": "pnpm -s atom63 component breadcrumb: import line, boilerplate guidance.",
+      "fix": "Write component-breadcrumb.mdx covering collapsing, custom separators and localization of labels.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-23",
+      "subject": "pagination",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Previous/Next have no disabled state for the first and last page.",
+      "evidence": "pagination.json states [rest, current]; pagination.tsx PaginationLink.",
+      "fix": "Add a `disabled` state: render aria-disabled, drop href and pointer events, style it from the Button disabled state, add it to the contract and a story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-24",
+      "subject": "pagination",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "Pagination chevrons do not mirror in RTL and the Previous/Next labels cannot be localized.",
+      "evidence": "pagination.tsx PaginationPrevious/PaginationNext; pagination.css has no rtl rule.",
+      "fix": "Mirror the chevrons under rtl (as breadcrumb.css:63-68) and accept children/label props for the visible text.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-25",
+      "subject": "pagination",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Pagination has only a generated docs page.",
+      "evidence": "pnpm -s atom63 component pagination.",
+      "fix": "Write component-pagination.mdx with a runnable windowed example, bounds handling and localization.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-26",
+      "subject": "tabs",
+      "criterion": "K1",
+      "severity": "P1",
+      "summary": "Vertical orientation is broken in the default variant: the track keeps one-row height and the sliding indicator never moves vertically.",
+      "evidence": "tabs.css .a63-Tabs-list[data-variant='default'] {height: var(--tabs-height)}; default indicator {top:50%; transform: translateX(var(--active-tab-left)) translateY(-50%)}; tabs.json orientations [horizontal, vertical]; docs 'Orientation is component behavior'.",
+      "fix": "Under [data-orientation='vertical'] set the default list height:auto and position the indicator with top:0 + translateY(var(--active-tab-top)); add a Vertical story for every variant with baselines and a test.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-27",
+      "subject": "tabs",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "Disabled and vertical tabs are never designed in a story or captured.",
+      "evidence": "grep disabled|vertical in tabs.stories.tsx: no matches; tabs.css:203-206 literal opacity 0.56.",
+      "fix": "Add Disabled and Vertical stories to the visual baselines; read the disabled opacity from a token.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-28",
+      "subject": "tabs",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "Tabs are 28-32px tall on coarse pointers.",
+      "evidence": "tabs.css --tabs-height max(control-height-md, control-min-size, floor); default tab height minus 2x inset.",
+      "fix": "Expand the tab hit area to --a63-control-min-target vertically (pseudo-element), as Button does.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-29",
+      "subject": "tabs",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "No test covers vertical orientation or disabled tabs.",
+      "evidence": "packages/ui-react/src/components/tabs/tabs.test.tsx:21-75.",
+      "fix": "Add tests for vertical arrow-key navigation, indicator vars and a disabled tab being skipped.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k05-30",
+      "subject": "tabs",
+      "criterion": "K7",
+      "severity": "P3",
+      "summary": "The overflowing tab list has no edge cue besides a hard clip.",
+      "evidence": "apps/storybook/visual/__screenshots__/ui-react-tabs-mobile-overflow-chromium-linux.png.",
+      "fix": "Add a scroll fade on the overflowing edge (as ScrollArea scrollFade).",
+      "kind": "fix"
+    }
+  ]
+}

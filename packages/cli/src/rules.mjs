@@ -1,54 +1,70 @@
 /**
  * The rules an agent follows when it builds UI with Atom63. `atom63 rules`
  * prints them, and the AGENTS.md snippet is generated from the same table.
- * `check` names the repo check that enforces a rule mechanically, when one
- * exists.
+ * Every rule says how it is enforced, or why it is not:
+ * - `check`: the `check:craft` rule (or rules) that enforces it;
+ * - `checkedBy`: another check that enforces it, as a sentence;
+ * - `unchecked`: why no check can enforce it mechanically.
+ * `check:agents-md` fails on a rule with none of them.
  */
 export const rules = [
   {
     id: 'query-first',
     rule: 'Query the design system before writing UI: start a screen from the closest page template, then search for components, read their contracts, and start from story examples.',
     why: 'The templates, catalog, contracts and examples are the reviewed answers; guessing reinvents them with drift.',
+    unchecked: 'it is a way of working, not a property of the code it produces.',
   },
   {
     id: 'compose-before-create',
     rule: 'Compose existing components before writing new ones. Add a component to the system with `pnpm ds:new`, not by copying another.',
     why: 'A new component must be wired into contracts, recipes, docs and tests; the scaffold does that, a copy does not.',
+    unchecked:
+      'whether a new component was needed is a judgement; the vibe case studies report the share of elements taken from the system as a diagnostic.',
   },
   {
     id: 'contract-values',
     rule: "Pass only the axis values a component's contract lists (sizes, variants, orientations), and rely on its defaults.",
     why: 'Recipes, the SwiftUI renderer and the Figma variables are built for exactly those values.',
+    unchecked:
+      "each component's TypeScript props accept only the contract's values, so a type check rejects any other literal and no lint is needed.",
   },
   {
     id: 'tokens-only',
-    rule: 'Take every color, space, radius, shadow and duration from `--a63-*` tokens, and look a name up with `atom63 token` before using it. No literal colors and no Tailwind palette utilities.',
+    rule: 'Take every color, space, radius, shadow and duration from `--a63-*` tokens, and look a name up with `atom63 token` before using it. No literal colors and no Tailwind palette utilities. Paint text with `--a63-text-*` tokens and backgrounds with fill tokens, not the other way round.',
     why: 'Tokens follow the theme, brand, mode and density; literals break all four, and a token name that does not exist resolves to nothing.',
-    check: ['raw-color', 'unknown-token'],
+    check: ['raw-color', 'unknown-token', 'token-role'],
   },
   {
     id: 'accent-sparingly',
     rule: 'Use the accent for one or two cues per view; the main action may be neutral. Give a view at most one `variant="primary"` Button. Selection is neutral by default; set `tone="accent"` on a selection, Slider or Progress only when it is one of those cues. Where the product draws its main action or its links in its brand colour, keep `variant="primary"` and `variant="link"`: sparing means one or two cues, not none.',
-    why: 'An accent on every control points at nothing. Button `default` is a high-emphasis neutral solid; `primary` is for a main action in the brand colour. The vibe measures warn at more than one primary Button per file. Taking the accent off a product whose main action is brand-coloured loses the cue the product relies on.',
+    why: 'An accent on every control points at nothing. Button `default` is a high-emphasis neutral solid; `primary` is for a main action in the brand colour. Taking the accent off a product whose main action is brand-coloured loses the cue the product relies on.',
+    checkedBy:
+      'The vibe measures warn at more than one primary Button per file, and a case study with that warning is invalid.',
   },
   {
     id: 'quiet-secondary-actions',
     rule: 'Draw secondary actions in toolbars, list rows and card headers as `variant="ghost"` Buttons with `tone="muted"`, icon-only at `icon-sm` or `icon-xs` in dense rows. Keep the main action at full contrast.',
     why: 'Muted ghost actions rest in the secondary text colour, with no box, and go to full contrast on hover, focus and press, so a row of actions stays calm and still answers the pointer.',
+    checkedBy:
+      'The vibe measures warn at a `variant="ghost"` Button with no `tone`; whether an action is secondary stays a judgement.',
   },
   {
     id: 'one-boundary',
     rule: "One boundary per element: border, fill or shadow, not two. Don't nest outlined containers.",
     why: 'Each extra edge is another line to read past. Card `filled` and `elevated` and Button `raised` give a fill or a shadow without the border.',
+    unchecked:
+      'borders, fills and shadows add up across components and their parents at render time, so the source does not show the stack; it is left to review.',
   },
   {
     id: 'on-media-colors',
     rule: 'Controls drawn over photos or video use the `--a63-on-media-*` and `--a63-media-*` tokens.',
     why: 'Theme colors are meaningless on an unknown picture; these hold contrast on any image.',
+    unchecked:
+      'whether a control sits over a picture is a layout fact the source does not show; it is left to review.',
   },
   {
     id: 'content-colors',
-    rule: 'Draw content that carries its own colours (illustrations, game pieces, map and chart series, story rings, category marks) with the `--a63-category-{hue}` palette: 18 hues, each with `-subtle` and `-subtle-foreground`, as utilities such as `bg-category-green` and `text-category-green-subtle-foreground`. For another shade, mix two tokens with `color-mix(in oklch, var(--a63-category-green) 75%, var(--a63-text-primary))`, never a colour keyword or value.',
+    rule: 'Draw content that carries its own colours (illustrations, game pieces, map series, story rings, category marks) with the `--a63-category-{hue}` palette: 18 hues, each with `-subtle` and `-subtle-foreground`, as utilities such as `bg-category-green` and `text-category-green-subtle-foreground`. Chart series take `--a63-chart-1` to `--a63-chart-5`, which keep apart from the brand; the `Chart` component reads them for you. For another shade, mix two tokens with `color-mix(in oklch, var(--a63-category-green) 75%, var(--a63-text-primary))`, never a colour keyword or value.',
     why: 'The palette follows the theme and the mode, so content stays legible in dark mode. A literal colour, or a keyword such as `black` inside `color-mix()`, fails `raw-color` and makes a vibe case invalid.',
     check: ['raw-color'],
   },
@@ -80,10 +96,13 @@ export const rules = [
     id: 'as-child-spreads-props',
     rule: 'A component you pass with `asChild` (or as `render`) must spread the props it receives onto the element it renders and forward its ref.',
     why: 'The part merges its class, data attributes and ref into that element; a wrapper that drops them renders unstyled.',
+    unchecked:
+      'the component passed is your own code, and whether it spreads the props it receives shows only when it renders.',
   },
   {
     id: 'accessible-by-default',
     rule: 'Keep the native semantics components render (buttons, links, labels, dialogs) and give every icon-only control an accessible name.',
-    why: 'Every story runs axe in CI; code that removes semantics fails it.',
+    why: 'Assistive technology reads the roles, states and names those elements carry.',
+    checkedBy: 'Every story runs axe in CI; code that removes semantics fails it.',
   },
 ]

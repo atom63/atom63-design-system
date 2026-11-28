@@ -14,11 +14,12 @@ import {
 } from '@atom63/ui-react'
 import { Container } from '@atom63/ui-react/layout'
 import { ChevronRight, Ellipsis, FileText, LayoutDashboard, Plus, Settings } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
 
 import { AppShell } from '../../blocks/app-shell/app-shell'
 import {
   type DataTableColumn,
+  type DataTableError,
   DataTableSection,
 } from '../../blocks/data-table-section/data-table-section'
 import { DetailPanel } from '../../blocks/detail-panel/detail-panel'
@@ -42,6 +43,19 @@ const nav = [
   { current: true, href: '#invoices', icon: <FileText aria-hidden />, label: 'Invoices' },
   { href: '#settings', icon: <Settings aria-hidden />, label: 'Settings' },
 ]
+
+/* The signed-in user at the foot of the sidebar, with the account menu. */
+const user = {
+  detail: 'ada@tally.app',
+  menu: (
+    <>
+      <DropdownMenuItem>Profile</DropdownMenuItem>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>Sign out</DropdownMenuItem>
+    </>
+  ),
+  name: 'Ada Park',
+}
 
 const statusOptions = [
   { label: 'All statuses', value: 'all' },
@@ -72,14 +86,16 @@ const columns: readonly DataTableColumn<Invoice>[] = [
     cell: invoice => date.format(new Date(invoice.issued)),
     header: 'Issued',
     key: 'issued',
-    showFrom: 'md',
+    showFrom: 'lg',
   },
+  /* The amount is the page's main datum, so it shows from the tablet width (and in the phone
+     row); the issue date gives way first. */
   {
     align: 'end',
     cell: invoice => currency.format(invoice.amount),
     header: 'Amount',
     key: 'amount',
-    showFrom: 'lg',
+    showFrom: 'md',
   },
 ]
 
@@ -88,8 +104,12 @@ export interface ListPageProps {
   defaultOpenId?: string
   /** Initial search text, useful when the URL restores filter state. */
   defaultQuery?: string
+  /** A failed load: shown in place of the rows, with a retry when it has `onRetry`. */
+  error?: DataTableError
   /** The rows to list; the page filters them in memory. */
   invoices?: readonly Invoice[]
+  /** While the invoices load: placeholder rows in place of the table. */
+  loading?: boolean
   /** A transient operation surface such as import progress or completion. */
   operationStatus?: ReactNode
 }
@@ -97,9 +117,12 @@ export interface ListPageProps {
 export function ListContent({
   defaultOpenId,
   defaultQuery = '',
+  error,
   invoices = sampleInvoices,
+  loading = false,
   operationStatus,
 }: ListPageProps) {
+  const searchRef = useRef<HTMLInputElement>(null)
   const [query, setQuery] = useState(defaultQuery)
   const [status, setStatus] = useState('all')
   const [openId, setOpenId] = useState<string | null>(defaultOpenId ?? null)
@@ -122,7 +145,12 @@ export function ListContent({
     <DropdownMenu>
       <DropdownMenuTrigger
         render={
-          <Button aria-label={`Actions for ${invoice.id}`} size="icon-sm" variant="ghost">
+          <Button
+            aria-label={`Actions for ${invoice.id}`}
+            size="icon-sm"
+            tone="muted"
+            variant="ghost"
+          >
             <Ellipsis aria-hidden />
           </Button>
         }
@@ -160,6 +188,7 @@ export function ListContent({
           query={query}
           searchLabel="Search invoices"
           searchPlaceholder="Invoice number or customer"
+          searchRef={searchRef}
           showClear={filtered}
         />
         <DataTableSection
@@ -167,13 +196,20 @@ export function ListContent({
           empty={
             invoices.length === 0
               ? {
-                  action: <Button variant="primary">New invoice</Button>,
+                  action: <Button variant="outline">New invoice</Button>,
                   description: 'Invoices you create appear here, with their status and amount.',
                   title: 'No invoices yet',
                 }
               : {
                   action: (
-                    <Button onClick={clear} variant="outline">
+                    <Button
+                      onClick={() => {
+                        clear()
+                        // The empty state leaves with the filters; focus the search instead.
+                        searchRef.current?.focus()
+                      }}
+                      variant="outline"
+                    >
                       Clear filters
                     </Button>
                   ),
@@ -182,8 +218,10 @@ export function ListContent({
                   title: 'No matching invoices',
                 }
           }
+          error={error}
           getRowKey={invoice => invoice.id}
           label="Invoices"
+          loading={loading}
           renderPhoneRow={invoice => (
             <Item
               className="rounded-none"
@@ -196,15 +234,20 @@ export function ListContent({
                   {invoice.id} · {date.format(new Date(invoice.issued))}
                 </ItemDescription>
               </ItemContent>
-              <ItemActions className="gap-1">
+              {/* gap-3 keeps the 44px touch targets of the two 32px buttons apart. */}
+              <ItemActions className="gap-3">
+                <span className="text-foreground text-sm font-medium tabular-nums">
+                  {currency.format(invoice.amount)}
+                </span>
                 <StatusBadge status={invoice.status} />
                 <Button
                   aria-label={`View ${invoice.id}`}
                   onClick={() => setOpenId(invoice.id)}
                   size="icon-sm"
+                  tone="muted"
                   variant="ghost"
                 >
-                  <ChevronRight aria-hidden />
+                  <ChevronRight aria-hidden className="rtl:-scale-x-100" />
                 </Button>
                 {rowMenu(invoice)}
               </ItemActions>
@@ -214,9 +257,13 @@ export function ListContent({
           rows={visible}
           selectedRowKey={openId ?? undefined}
           summary={
-            filtered
-              ? `${visible.length} of ${invoices.length} invoices`
-              : `${invoices.length} invoices`
+            loading
+              ? 'Loading invoices'
+              : error
+                ? 'Invoices unavailable'
+                : filtered
+                  ? `${visible.length} of ${invoices.length} invoices`
+                  : `${invoices.length} invoices`
           }
         />
       </Container>
@@ -224,7 +271,7 @@ export function ListContent({
         actions={
           <>
             <Button variant="outline">Download PDF</Button>
-            {open?.status === 'paid' ? null : <Button variant="primary">Mark as paid</Button>}
+            {open?.status === 'paid' ? null : <Button variant="default">Mark as paid</Button>}
           </>
         }
         description={open?.customer}
@@ -252,7 +299,7 @@ export function ListContent({
    routes, renders `ListContent` inside it instead. */
 export function ListPage(props: ListPageProps) {
   return (
-    <AppShell navItems={nav} productName="Tally">
+    <AppShell navItems={nav} productName="Tally" user={user}>
       <ListContent {...props} />
     </AppShell>
   )

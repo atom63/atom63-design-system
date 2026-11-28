@@ -16,12 +16,17 @@ describe('Avatar', () => {
     const el = container.querySelector('.a63-Avatar')
     expect(el).not.toBeNull()
     expect(el).toHaveAttribute('data-slot', 'avatar')
-    expect(el).toHaveAttribute('data-size', 'default')
+    expect(el).toHaveAttribute('data-size', 'md')
   })
 
   it('forwards the size prop to data-size', () => {
     const { container } = render(<Avatar size="lg" />)
     expect(container.querySelector('.a63-Avatar')).toHaveAttribute('data-size', 'lg')
+  })
+
+  it('accepts the deprecated size name default as md', () => {
+    const { container } = render(<Avatar size="default" />)
+    expect(container.querySelector('.a63-Avatar')).toHaveAttribute('data-size', 'md')
   })
 
   it('renders a fallback (image src is unresolved in jsdom)', () => {
@@ -84,5 +89,21 @@ describe('Avatar', () => {
     expect(ring('unseen')).toBe('unseen')
     expect(ring('seen')).toBe('seen')
     expect(ring(false)).toBeNull()
+  })
+
+  it('names a status badge and spells out the group count for assistive technology', () => {
+    const { container } = render(
+      <AvatarGroup>
+        <Avatar>
+          <AvatarBadge label="Online" />
+        </Avatar>
+        <AvatarGroupCount label="5 more people">+5</AvatarGroupCount>
+      </AvatarGroup>
+    )
+    const badge = container.querySelector('[data-slot="avatar-badge"]')
+    expect(badge).toHaveTextContent('Online')
+    const count = container.querySelector('[data-slot="avatar-group-count"]')
+    expect(count?.querySelector('[aria-hidden]')).toHaveTextContent('+5')
+    expect(count?.querySelector('.a63-Avatar-sr-only')).toHaveTextContent('5 more people')
   })
 })

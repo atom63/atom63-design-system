@@ -66,7 +66,7 @@ export const buttonAnatomy: {
         rest: { visible: false },
         hover: { visible: false },
         pressed: { visible: false },
-        focusVisible: { visible: false },
+        'focus-visible': { visible: false },
         disabled: { visible: false },
         loading: { visible: true },
       },

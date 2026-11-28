@@ -53,6 +53,8 @@ The package targets iOS 17+ and macOS 14+.
 - `AtomToast`
 - `AtomMotionPreference`
 - `AtomDensity` and `.atomDensity(_:)`
+- `AtomWidgetCard`, `AtomWidgetHeader`, `AtomWidgetGrid`, `AtomWidgetSize`,
+  `AtomWidgetState` and `AtomWidgetStateView`
 - generated `AtomComponentContracts`
 - `AtomRendererConformance` verified renderer evidence
 - `AtomTheme` and generated `AtomTokens`
@@ -129,6 +131,46 @@ AtomMessage("Are we still on for 7?", from: "Maya", position: .first) {
 }
 AtomMessage("Yes, see you there", from: "Me", direction: .outgoing,
             time: "18:42", status: .read)
+```
+
+### Widgets
+
+The widget views are the native counterpart of `@atom63/widgets`. `AtomWidgetGrid`
+lays out square cells, `columns` across; each child takes the cells of its
+`.atomWidgetSize(_:)` (`AtomWidgetSize`: `.small` is one cell, `.medium` two wide,
+`.large` two by two) and fills the first gap it fits in. `AtomWidgetCard` draws the
+widget rim and card face around its content (stack several views yourself), and `AtomWidgetHeader` is the title row,
+read as a heading by VoiceOver. `AtomWidgetStateView` shows a tile's loading, empty or
+error state; `AtomWidgetState.resolve(hasError:isLoading:isEmpty:)` picks it in the same
+order as the web (an error wins over loading). The header and state view draw no
+chrome, so the same content can be a WidgetKit widget's body, where
+`AtomWidgetSize.widgetFamily` gives the matching family; leave `onRetry` out there.
+
+```swift
+AtomWidgetGrid(columns: 2) {
+  AtomWidgetCard {
+    VStack(alignment: .leading) {
+      AtomWidgetHeader("Steps", systemImage: "figure.walk")
+      Text("8,204")
+    }
+  }
+  .atomWidgetSize(.small)
+
+  AtomWidgetCard {
+    VStack(alignment: .leading) {
+      AtomWidgetHeader("Calendar", systemImage: "calendar")
+      if let state = AtomWidgetState.resolve(
+        hasError: failed, isLoading: loading, isEmpty: events.isEmpty
+      ) {
+        AtomWidgetStateView(state, title: state == .error ? "Couldn't load" : "No events",
+                            onRetry: state == .error ? reload : nil)
+      } else {
+        EventList(events)
+      }
+    }
+  }
+  .atomWidgetSize(.medium)
+}
 ```
 
 The JSON files in `tokens/` document how the platform-neutral component slots

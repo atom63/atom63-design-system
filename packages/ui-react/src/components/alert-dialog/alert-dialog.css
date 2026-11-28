@@ -6,7 +6,7 @@
  * tokens: the popup is a raised overlay surface (--a63-surface-overlay +
  * --a63-overlay-shadow + --a63-border-subtle), the backdrop scrim + stacking
  * read the --z-layer-scrim / --z-layer-modal foundation. The five popup
- * variants (default/destructive/info/success/warning) tint the media chip via
+ * variants (default/error/info/success/warning) tint the media chip via
  * a local --alert-dialog-accent. No new global --a63-* tokens.
  */
 
@@ -76,14 +76,14 @@
 }
 
 /* ── Per-variant accent (drives the media chip tint) ─────────────────────
-   default = brand action; destructive = danger; feedback variants map to the
+   default = brand action; error = danger; feedback variants map to the
    canonical status tokens (NOT action-primary) so the media chip reads with the
    correct semantic hue. */
 .a63-AlertDialog-popup[data-variant='default'] {
   --alert-dialog-accent: var(--a63-action-primary);
 }
-.a63-AlertDialog-popup[data-variant='destructive'] {
-  --alert-dialog-accent: var(--a63-action-danger);
+.a63-AlertDialog-popup[data-variant='error'] {
+  --alert-dialog-accent: var(--a63-status-danger);
 }
 .a63-AlertDialog-popup[data-variant='info'] {
   --alert-dialog-accent: var(--a63-status-info);

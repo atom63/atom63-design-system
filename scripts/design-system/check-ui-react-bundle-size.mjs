@@ -1,10 +1,16 @@
 import { gzipSync } from 'node:zlib'
+import { existsSync } from 'node:fs'
 import { readdir, readFile } from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { build } from 'esbuild'
 
 const workspaceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
+// Three checks. The first is the combined gzip of every published JS file. The
+// second, below it, is what a consumer pays for one import from the root. The
+// third is the same per-import cost for @atom63/mdx entries.
+//
 // Combined gzip of every published JS entry. The media lightbox lives on
 // `./media` (~23 kB gzip of its own), and has grown deliberately: 64 kB was the
 // pre-lightbox kit budget, 72 kB was the budget before its motion pass, and 74
@@ -106,7 +112,55 @@ const distDirectory = path.join(workspaceRoot, 'packages/ui-react/dist')
 // directional bubble with run positions, a meta row and four delivery status
 // icons) and MessageEvent. chat-thread scored 72 web / 62 iOS in case study
 // round 12 because the AI chat components do not model this thread.
-const gzipBudgetBytes = 98 * 1024
+//
+// 98 kB held 97.7 kB. Accessibility and API fixes from the readiness review
+// take it to 99.0, so it moves to 100. Most of the +1.3 kB is Field linking its
+// description and error to the control (ids, a registry context and the
+// aria-describedby merge); the rest is ScrollableList keeping its chevrons
+// mounted and handing focus across, LoadMoreTrigger's persistent live region,
+// SearchField and SegmentedControl forwarding refs and props, and Sidebar's
+// inert collapsed panel and aria-current.
+//
+// 100 kB held 97.3 kB as the sum of each file's own gzip. The root entry then
+// moved to one build file per component so a consumer's bundler can drop the
+// ones it does not import (see the per-import budgets below). That splits the
+// output from 14 files into about 170, and gzipping each file on its own
+// charges every one of them a fresh dictionary: the sum went to 141.3 kB with
+// no new code. The check now gzips all the files as one stream, with source map
+// comments removed, which measured 92.1 kB before the split and 97.8 kB after.
+// The +5.7 kB is the import and export lines between the files. The budget
+// stays at 100 kB.
+//
+// 100 kB held 98.5 kB. The art-landing parts take it to 100.1, so it moves to
+// 102. ArtPlate and Image's native <picture> path (srcSet, sizes and
+// art-directed sources) add 1.2 kB; LayeredScene, its copy, stage and inert
+// foreground cut-out add 0.4 kB. They are what a plate-first landing page or a
+// portfolio hero needs, and a consumer that does not import them drops them.
+// 102 kB held 100.1 kB. Chart takes it to 103.1, so it moves to 104. The
+// +3.0 kB is a dependency-free SVG chart: line, area and bar marks with a tick
+// scale, the pointer and arrow-key category picker, the tooltip and live
+// readout, and the data table and its toggle. It ships on its own entry,
+// `@atom63/ui-react/chart`, like `./calendar`; this total counts every entry,
+// so the subpath does not lower it. A consumer that does not import Chart
+// drops it.
+// Merged with Table sorting (#335), which Chart reuses, the total is 104.0 kB; the
+// budget keeps about 2% headroom at 106.
+// Readiness fix round 6 (#348-#353: Popover anchors, Toaster hydration and
+// slots, Select keyboard handling, Item list semantics, Chart empty, loading
+// and touch states) brings the total to 106.7-107.1 kB; the budget keeps about 1%
+// headroom at 108.
+// 108 kB held 108.0 kB (110,567 bytes), 25 bytes under. DestinationLink dropping
+// its default underline (#362) changes no built byte count, but it renames two
+// content-hashed chunks, which re-sorts the stream this check gzips and
+// measures 111,003 bytes. The total moves a few hundred bytes on any rename, so
+// the budget moves to 109 to leave room for that noise.
+// 109 kB held 108.4 kB. Giving every client component a `'use client'` it
+// keeps through the build (Chart, Card, Badge, Frame, InputOTP, ScrollableList,
+// Image, and the layout's Container, Page and grid chrome) takes it to 110.0,
+// so it moves to 111. Nearly all of the +1.6 kB is the layout entry splitting
+// into one file per module, as the root does, so its client modules land apart
+// from the server-safe ones; the rest is the directive lines themselves.
+const gzipBudgetBytes = 111 * 1024
 const files = (await readdir(distDirectory, { recursive: true }))
   .filter(file => file.endsWith('.js'))
   .sort()
@@ -116,19 +170,134 @@ if (files.length === 0) {
   process.exit(1)
 }
 
-let gzipBytes = 0
-for (const file of files) {
-  gzipBytes += gzipSync(await readFile(path.join(distDirectory, file))).byteLength
-}
+const sources = await Promise.all(
+  files.map(async file =>
+    (await readFile(path.join(distDirectory, file), 'utf8')).replace(
+      /^\/\/# sourceMappingURL=.*$/gm,
+      ''
+    )
+  )
+)
+const gzipBytes = gzipSync(sources.join('\n')).byteLength
+const failures = []
 
-const formattedSize = `${(gzipBytes / 1024).toFixed(1)} kB`
-const formattedBudget = `${(gzipBudgetBytes / 1024).toFixed(0)} kB`
+const kB = bytes => `${(bytes / 1024).toFixed(1)} kB`
 
 if (gzipBytes > gzipBudgetBytes) {
-  console.error(
-    `UI React bundle-size check failed: ${formattedSize} gzip exceeds ${formattedBudget} budget`
-  )
+  failures.push(`all files: ${kB(gzipBytes)} gzip exceeds ${kB(gzipBudgetBytes)} budget`)
+}
+console.log(`all files: ${kB(gzipBytes)} gzip / ${kB(gzipBudgetBytes)} budget`)
+
+// What one named import from the root entry costs a consumer: esbuild bundles
+// it the way an app would (minified ESM, tree-shaking on, the peers react,
+// react-dom and react-hook-form left external, every dependency included), and
+// the result is gzipped. Before the root was split per component, Kbd cost
+// 35.6 kB, Button 37.8 kB, Separator 107.2 kB and Dialog 107.1 kB, because
+// every import kept all of @atom63/ui-foundation, sonner and input-otp, and the
+// Base UI parts of any shared chunk. Measured after the split: Kbd 8.6 kB
+// (nearly all of it tailwind-merge behind `cn`), Button 11.1, Separator 10.6,
+// Dialog 22.2 and Toaster 20.4 (sonner itself). Each budget leaves about 12-16%
+// headroom; the regression this guards against costs 25 kB or more.
+const importBudgets = {
+  Kbd: 10,
+  Button: 12.5,
+  Separator: 12,
+  Dialog: 25,
+  Toaster: 23,
+}
+// esbuild splits the bundle and only the chunks the entry imports statically
+// count: a block that loads shiki or mermaid with import() pays for them on
+// first use, not on import.
+async function importCost(entryFile, name) {
+  const result = await build({
+    stdin: {
+      contents: `export { ${name} } from ${JSON.stringify(entryFile)}`,
+      resolveDir: path.dirname(entryFile),
+      loader: 'js',
+    },
+    absWorkingDir: workspaceRoot,
+    bundle: true,
+    external: ['react', 'react-dom', 'react/jsx-runtime', 'react-hook-form'],
+    format: 'esm',
+    logLevel: 'error',
+    metafile: true,
+    minify: true,
+    outdir: path.join(workspaceRoot, '.size-check'),
+    splitting: true,
+    write: false,
+  })
+  const outputs = result.metafile.outputs
+  const staticFiles = new Set()
+  const visit = file => {
+    if (staticFiles.has(file)) return
+    staticFiles.add(file)
+    for (const { kind, path: imported } of outputs[file].imports) {
+      if (kind === 'import-statement' && outputs[imported]) visit(imported)
+    }
+  }
+  visit(Object.keys(outputs).find(file => outputs[file].entryPoint === '<stdin>'))
+  const absolute = new Set([...staticFiles].map(file => path.join(workspaceRoot, file)))
+  return result.outputFiles
+    .filter(file => absolute.has(file.path))
+    .reduce((bytes, file) => bytes + gzipSync(file.contents).byteLength, 0)
+}
+
+async function checkImport(label, entryFile, name, budgetKB) {
+  const bytes = await importCost(entryFile, name)
+  const budgetBytes = budgetKB * 1024
+  if (bytes > budgetBytes) {
+    failures.push(`${label}: ${kB(bytes)} gzip exceeds ${kB(budgetBytes)} budget`)
+  }
+  console.log(`${label}: ${kB(bytes)} gzip / ${kB(budgetBytes)} budget`)
+}
+
+const rootEntry = path.join(distDirectory, 'index.js')
+for (const [name, budgetKB] of Object.entries(importBudgets)) {
+  await checkImport(`import { ${name} }`, rootEntry, name, budgetKB)
+}
+
+// Chart ships on its own entry, `@atom63/ui-react/chart` (like `./calendar`), so it is
+// measured from there: 15.6 kB after Table sorting (#335), mostly the Button and Table
+// it reuses. 18 kB leaves about 15% headroom.
+await checkImport(
+  'import { Chart } from @atom63/ui-react/chart',
+  path.join(distDirectory, 'chart/index.js'),
+  'Chart',
+  18
+)
+
+// The same per-import check for @atom63/mdx. Its entries were built into
+// shared chunks until they moved to one build file per module, as ui-react did
+// above; before that, isExternalMdxHref (a URL helper) cost 160.9 kB,
+// Accordion 100.8, CreditsBlock 68.0 and MDXContentProvider 184.0, because
+// every import kept Base UI, motion and sonner. Measured after the split:
+// isExternalMdxHref 0.8 kB, Accordion 19.7 (Base UI's accordion and
+// tailwind-merge), CreditsBlock 68.0 (motion, already its own entry) and
+// MDXContentProvider 184.5, which registers every block on its default map.
+// Each budget leaves about 14-17% headroom.
+const mdxDistDirectory = path.join(workspaceRoot, 'packages/mdx/dist')
+const mdxImportBudgets = [
+  ['@atom63/mdx', 'index.js', 'isExternalMdxHref', 1.5],
+  ['@atom63/mdx', 'index.js', 'MDXContentProvider', 212],
+  ['@atom63/mdx/blocks', 'blocks/index.js', 'Accordion', 23],
+  ['@atom63/mdx/blocks/credits-block', 'blocks/credits-block-entry.js', 'CreditsBlock', 78],
+]
+if (existsSync(path.join(mdxDistDirectory, 'index.js'))) {
+  for (const [specifier, entry, name, budgetKB] of mdxImportBudgets) {
+    await checkImport(
+      `import { ${name} } from '${specifier}'`,
+      path.join(mdxDistDirectory, entry),
+      name,
+      budgetKB
+    )
+  }
+} else {
+  failures.push('@atom63/mdx: build output is missing')
+}
+
+if (failures.length > 0) {
+  console.error(`Bundle-size check failed:\n  ${failures.join('\n  ')}`)
   process.exit(1)
 }
 
-console.log(`UI React bundle-size check passed: ${formattedSize} gzip / ${formattedBudget} budget`)
+console.log('Bundle-size check passed')

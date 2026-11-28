@@ -1,3 +1,5 @@
+import { LayoutProps } from '../components/layout-props'
+
 # Page layout
 
 `Page`, `Container`, and `Section` separate three decisions that otherwise drift together: the document landmark, the content frame, and the rhythm between page regions. They are composable defaults, not a required wrapper stack for every product shell.
@@ -6,9 +8,9 @@
 
 | Primitive | Actual contract | Use when |
 |-----------|-----------------|----------|
-| `Page` | Renders `<main>` (or the element passed to `render`), fills the available height, and adds `pt-8 pb-20` unless `noPadding` is set | The route does not already have a main landmark, or it does and `Page` renders a `div` |
-| `Container` | Centers a named max-width, adds a fixed `gap-8` between direct children, and applies `p-6`, `px-6`, or no padding | Content needs a shared measure or inline inset |
-| `Section` | Renders `<section>`, applies a spacing preset, and optionally spaces direct children | A real page region needs repeatable vertical rhythm |
+| `Page` | Renders `<main>` (or the element passed to `render`), fills the available height, adds `pt-8` and `pb-20` plus the bottom safe-area inset, and takes the wider side safe-area inset inline, unless `noPadding` is set | The route does not already have a main landmark, or it does and `Page` renders a `div` |
+| `Container` | Centers a named max-width, adds a `gap` between direct children (`gap-8` by default), and applies `p-6`, `px-6`, or no padding | Content needs a shared measure or inline inset |
+| `Section` | Renders `<section>`, applies a spacing preset, and optionally spaces direct children with a flex gap | A real page region needs repeatable vertical rhythm |
 
 `Container` padding is not responsive: `padding="all"` is `p-6`, while `padding="x"` is `px-6`. `Section` owns breakpoint-dependent vertical padding. `tight` stays `py-8`; `default` stays `py-16`; `loose` changes from `py-16` to `py-20` at 768px. `generous` progresses from `py-20` to `py-28` at 640px and `py-32` at 768px; `spacious` progresses from `py-24` to `py-32` and `py-40`. Its default `removeTopSpacing` is `true`, so a section keeps its bottom padding but removes only the top padding at every breakpoint; set it to `false` for an opening region that needs the preset on both sides.
 
@@ -58,7 +60,7 @@ Do not add wrappers only to match the diagram. Current consumers deliberately st
 
 | Decision | Owner |
 |----------|-------|
-| Main landmark and route inset | `Page` or the app shell, never both |
+| Main landmark, route inset and the bottom and inline safe-area insets | `Page` or the app shell, never both |
 | Maximum width and outer padding | `Container` |
 | Space around a page region | `Section` |
 | Gap between cards or controls | The local grid, stack, or component |
@@ -68,4 +70,64 @@ Nested containers are valid when a region intentionally changes measure. Otherwi
 
 ## Accessibility boundary
 
-`Page` renders `<main>` by default, so use it at most once in a document. When `Page` sits inside `SidebarInset`, the inset already renders `<main>` and owns the landmark: give `Page` `render={<div />}` so the document keeps exactly one `main`. `Section` always renders `<section>`; give the region an accessible heading rather than using it as a generic spacing wrapper. The primitives provide structure, but they do not infer a heading outline.
+`Page` renders `<main>` by default, so use it at most once in a document. When `Page` sits inside `SidebarInset`, the inset already renders `<main>` and owns the landmark: give `Page` `render={<div />}` so the document keeps exactly one `main`. `Section` always renders `<section>`; give the region an accessible heading rather than using it as a generic spacing wrapper, and name it with `aria-labelledby` pointing at the heading (`SectionHeader`'s `titleId`). The primitives provide structure, but they do not infer a heading outline.
+
+## Primitives
+
+### Page
+
+The document landmark and the route's inset. Page owns the bottom and inline safe-area insets, which are 0 outside a notched or standalone screen; the top inset belongs to the header above it. Inside a shell that already renders `<main>`, pass `render={<div />}`; when the shell owns the inset too, add `noPadding`. Do not give Page inline padding through `className` (`px-4`): it replaces the inline safe-area inset. Put content padding on the `Container` inside it.
+
+```tsx
+<Page>
+  <Container maxWidth="wide" padding="x">{content}</Container>
+</Page>
+```
+
+<LayoutProps name="Page" />
+
+It also takes the attributes of `<main>` and `render`, which replaces the element.
+
+### Container
+
+The content measure: a centred max-width with inline (or all-round) padding and a gap between its direct children. Its padding does not add the safe-area insets; `Page` or the app shell owns them. Set `gap` instead of overriding it with a class.
+
+```tsx
+<Container gap={6} maxWidth="wide" padding="none">
+  <PageHeader title="Invoices" />
+  <DataTableSection {...table} />
+</Container>
+```
+
+<LayoutProps name="Container" />
+
+### Section
+
+A page region with a vertical spacing preset. Name it from its heading so it is a region landmark; other attributes and the ref reach the `<section>`.
+
+```tsx
+<Section aria-labelledby="pricing-title" removeTopSpacing={false} spacing="loose">
+  <SectionHeader title="Pricing" titleId="pricing-title" variant="secondary" />
+  <PricingTable />
+</Section>
+```
+
+<LayoutProps name="Section" />
+
+### SectionHeader
+
+A heading with its description. `variant` sets the scale and `level` the heading element; the title and description take inline content such as a count badge or a link. `align` is logical: `start`, `center` or `end` follow the writing direction (`left` and `right` are deprecated aliases of `start` and `end`). The `label` variant keeps normal tracking in Chinese, Japanese and Korean.
+
+```tsx
+<SectionHeader
+  description="Invoices past their due date."
+  title={
+    <>
+      Overdue <Badge variant="error">3</Badge>
+    </>
+  }
+  variant="secondary"
+/>
+```
+
+<LayoutProps name="SectionHeader" />

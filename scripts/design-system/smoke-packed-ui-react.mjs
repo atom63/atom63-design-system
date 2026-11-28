@@ -19,7 +19,21 @@ const packageDefinitions = [
     required: true,
   },
   { name: '@atom63/ui-react', directory: 'packages/ui-react', required: true },
+  { name: '@atom63/mdx', directory: 'packages/mdx', required: true },
+  { name: '@atom63/inform', directory: 'packages/inform', required: true },
+  { name: '@atom63/agent', directory: 'packages/agent', required: true },
+  { name: '@atom63/widgets', directory: 'packages/widgets', required: true },
   { name: '@atom63/cli', directory: 'packages/cli', required: true },
+]
+
+/* The packages built from source before packing; @atom63/styles ships generated files. */
+const builtPackageNames = [
+  '@atom63/ui-foundation',
+  '@atom63/ui-react',
+  '@atom63/mdx',
+  '@atom63/inform',
+  '@atom63/agent',
+  '@atom63/widgets',
 ]
 
 const tarballSearchDirectories = [
@@ -162,6 +176,7 @@ const server = await createServer({
 })
 try {
   await server.transformRequest('/src/main.tsx')
+  await server.transformRequest('/src/other-packages.ts')
 } finally {
   await server.close()
 }
@@ -184,7 +199,8 @@ async function writeHarness(harnessDirectory, packedPackages) {
     type: 'module',
     packageManager: 'pnpm@10.29.2',
     scripts: {
-      check: 'tsc --noEmit && vite build && node dev-resolve.mjs',
+      check:
+        'tsc --noEmit && tsc --noEmit -p tsconfig.other.json && vite build && node dev-resolve.mjs',
       // The query path AGENTS.md prescribes, answered from the packed index alone.
       cli: [
         'atom63 build settings screen --json',
@@ -199,6 +215,10 @@ async function writeHarness(harnessDirectory, packedPackages) {
       '@atom63/styles': tarballSpec('@atom63/styles'),
       '@atom63/ui-foundation': tarballSpec('@atom63/ui-foundation'),
       '@atom63/ui-react': tarballSpec('@atom63/ui-react'),
+      '@atom63/mdx': tarballSpec('@atom63/mdx'),
+      '@atom63/inform': tarballSpec('@atom63/inform'),
+      '@atom63/agent': tarballSpec('@atom63/agent'),
+      '@atom63/widgets': tarballSpec('@atom63/widgets'),
       react: installedVersion('react'),
       'react-dom': installedVersion('react-dom'),
     },
@@ -215,6 +235,10 @@ async function writeHarness(harnessDirectory, packedPackages) {
         '@atom63/styles': tarballSpec('@atom63/styles'),
         '@atom63/ui-foundation': tarballSpec('@atom63/ui-foundation'),
         '@atom63/ui-react': tarballSpec('@atom63/ui-react'),
+        '@atom63/mdx': tarballSpec('@atom63/mdx'),
+        '@atom63/inform': tarballSpec('@atom63/inform'),
+        '@atom63/agent': tarballSpec('@atom63/agent'),
+        '@atom63/widgets': tarballSpec('@atom63/widgets'),
       },
     },
   }
@@ -236,6 +260,16 @@ async function writeHarness(harnessDirectory, packedPackages) {
       types: ['vite/client'],
     },
     include: ['src'],
+    exclude: ['src/other-packages.ts'],
+  }
+  // The other packages pull in shiki and @types/mdx, whose own declarations need
+  // lib esnext and a global JSX namespace that React 19 dropped, so this entry
+  // type-checks the way a default Vite app does: our declarations, not theirs.
+  const otherTsconfig = {
+    extends: './tsconfig.json',
+    compilerOptions: { skipLibCheck: true },
+    include: ['src/other-packages.ts'],
+    exclude: [],
   }
 
   const source = `import '@atom63/ui-react/styles.css'
@@ -281,6 +315,7 @@ import {
 } from '@atom63/ui-react'
 import { buttonContract, type ButtonContract } from '@atom63/ui-foundation'
 import { Calendar } from '@atom63/ui-react/calendar'
+import { Chart } from '@atom63/ui-react/chart'
 import { Container, type ContainerProps } from '@atom63/ui-react/layout'
 import { Image, type ImageProps } from '@atom63/ui-react/media'
 import { Lightbox, type LightboxState } from '@atom63/ui-react/media/lightbox'
@@ -294,6 +329,7 @@ import {
 } from '@atom63/ui-react/preview'
 import { MODE_OPTIONS, type ThemeMode } from '@atom63/ui-react/theme'
 import { StrictMode } from 'react'
+
 import { createRoot } from 'react-dom/client'
 
 const foundationContract: ButtonContract = buttonContract
@@ -301,6 +337,7 @@ const publicApiReferences = {
   Autocomplete,
   Calendar,
   Carousel,
+  Chart,
   CopyButton,
   DestinationLink,
   Dialog,
@@ -384,15 +421,69 @@ createRoot(rootElement).render(
 )
 `
 
+  // One export from every typed entry of the other published packages, and their stylesheets.
+  const otherPackagesSource = `import '@atom63/mdx/styles/mdx-blocks.css'
+import '@atom63/inform/styles.css'
+import '@atom63/widgets/styles.css'
+
+import { createAgentRuntime, type AgentRuntime } from '@atom63/agent'
+import { useOwnedAgentRuntime } from '@atom63/agent/react'
+import { createInformStore } from '@atom63/inform'
+import { InformProvider } from '@atom63/inform/react'
+import { InformBanner } from '@atom63/inform/surfaces'
+import { mdxComponents } from '@atom63/mdx'
+import { ArticleMDXContentProvider } from '@atom63/mdx/article'
+import { Callout } from '@atom63/mdx/blocks'
+import { CreditsBlock } from '@atom63/mdx/blocks/credits-block'
+import { MediaCaption } from '@atom63/mdx/blocks/media-caption'
+import { MdxSourceView } from '@atom63/mdx/editor'
+import { FigureLightboxHost } from '@atom63/mdx/lightbox'
+import { Bleed } from '@atom63/mdx/primitives'
+import { compileMdx } from '@atom63/mdx/runtime'
+import { resolveDestination } from '@atom63/widgets'
+import { useWidgetSurfaceSize } from '@atom63/widgets/primitives'
+import { shouldReduceWidgetHostMotion } from '@atom63/widgets/runtime'
+import { widgetStateCopy } from '@atom63/widgets/state'
+
+const agentRuntime: AgentRuntime | undefined = undefined
+
+export const otherPackageReferences = {
+  agentRuntime,
+  ArticleMDXContentProvider,
+  Bleed,
+  Callout,
+  compileMdx,
+  createAgentRuntime,
+  createInformStore,
+  mdxComponents,
+  CreditsBlock,
+  FigureLightboxHost,
+  InformBanner,
+  InformProvider,
+  MdxSourceView,
+  MediaCaption,
+  resolveDestination,
+  shouldReduceWidgetHostMotion,
+  useOwnedAgentRuntime,
+  useWidgetSurfaceSize,
+  widgetStateCopy,
+}
+`
+
   await mkdir(resolve(harnessDirectory, 'src'), { recursive: true })
   await Promise.all([
     writeFile(resolve(harnessDirectory, 'package.json'), `${JSON.stringify(manifest, null, 2)}\n`),
     writeFile(resolve(harnessDirectory, 'tsconfig.json'), `${JSON.stringify(tsconfig, null, 2)}\n`),
     writeFile(
+      resolve(harnessDirectory, 'tsconfig.other.json'),
+      `${JSON.stringify(otherTsconfig, null, 2)}\n`
+    ),
+    writeFile(
       resolve(harnessDirectory, 'index.html'),
-      '<!doctype html>\n<html lang="en"><head><meta charset="UTF-8" /></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>\n'
+      '<!doctype html>\n<html lang="en"><head><meta charset="UTF-8" /></head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script><script type="module" src="/src/other-packages.ts"></script></body></html>\n'
     ),
     writeFile(resolve(harnessDirectory, 'src/main.tsx'), source),
+    writeFile(resolve(harnessDirectory, 'src/other-packages.ts'), otherPackagesSource),
     writeFile(resolve(harnessDirectory, 'dev-resolve.mjs'), devResolveSource),
   ])
 }
@@ -429,12 +520,13 @@ async function main() {
 
   try {
     const stylesPackage = packageDefinitions.find(item => item.name === '@atom63/styles')
-    const foundationPackage = packageDefinitions.find(item => item.name === '@atom63/ui-foundation')
-    const reactPackage = packageDefinitions.find(item => item.name === '@atom63/ui-react')
-
     await runPackageScript(stylesPackage, 'check:tokens')
-    await runPackageScript(foundationPackage, 'build')
-    await runPackageScript(reactPackage, 'build')
+    for (const name of builtPackageNames) {
+      await runPackageScript(
+        packageDefinitions.find(item => item.name === name),
+        'build'
+      )
+    }
 
     const packedPackages = []
     for (const packageDefinition of packageDefinitions) {
@@ -454,7 +546,9 @@ async function main() {
     console.log(`Harness: ${harnessDirectory} (removed after success)`)
     console.log(`Tarballs: ${requiredTarballs}`)
     console.log(`Install: ${installCommand}`)
-    console.log('Command: pnpm run check (tsc --noEmit && vite build && vite dev resolve)')
+    console.log(
+      'Command: pnpm run check (tsc --noEmit per entry && vite build && vite dev resolve)'
+    )
     console.log('Command: pnpm run cli (atom63 build, component, example, token)')
     succeeded = true
   } catch (error) {

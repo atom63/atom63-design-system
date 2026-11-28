@@ -5,12 +5,14 @@ import {
   type ItemGroupVariant,
   type ItemMediaVariant,
   type ItemSize,
+  type ItemSizeAlias,
   type ItemTone,
   type ItemVariant,
   itemContract,
 } from '@atom63/ui-foundation'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
+import { createContext, useContext } from 'react'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -22,6 +24,10 @@ import { Separator } from '../separator'
    ItemGroup/ItemSeparator for lists. `render` swaps the container element (e.g.
    an <a> for a clickable row). Chrome from --a63-* tokens. */
 
+/* Rows inside an ItemGroup are its list items. */
+const ItemGroupContext = createContext(false)
+
+/** A list of rows: `role="list"`, and each Item in it is a list item. */
 export type ItemGroupProps = React.ComponentProps<'div'> & {
   /** `inset` draws the group as a rounded card with hairline dividers (a grouped settings list). */
   variant?: ItemGroupVariant
@@ -39,21 +45,27 @@ export function ItemGroup({
   ...props
 }: ItemGroupProps): React.ReactElement {
   return (
-    <div
-      className={cn('a63-ItemGroup', className)}
-      data-slot="item-group"
-      data-surface={surface}
-      data-variant={variant}
-      {...props}
-    />
+    <ItemGroupContext.Provider value>
+      <div
+        className={cn('a63-ItemGroup', className)}
+        data-slot="item-group"
+        data-surface={surface}
+        data-variant={variant}
+        role="list"
+        {...props}
+      />
+    </ItemGroupContext.Provider>
   )
 }
 
 export type ItemSeparatorProps = React.ComponentProps<typeof Separator>
 
 export function ItemSeparator({ className, ...props }: ItemSeparatorProps): React.ReactElement {
+  // Inside a list the divider is drawing only: a list owns list items, not separators.
+  const inGroup = useContext(ItemGroupContext)
   return (
     <Separator
+      aria-hidden={inGroup || undefined}
       className={cn('a63-ItemSeparator', className)}
       data-slot="item-separator"
       orientation="horizontal"
@@ -64,7 +76,8 @@ export function ItemSeparator({ className, ...props }: ItemSeparatorProps): Reac
 
 export type ItemProps = useRender.ComponentProps<'div'> & {
   variant?: ItemVariant
-  size?: ItemSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: ItemSize | ItemSizeAlias
   /**
    * How a selected or current row (`aria-current`, `data-selected`) is coloured.
    * `neutral` (the default) is a muted fill with primary text; `accent` is a light
@@ -76,16 +89,19 @@ export type ItemProps = useRender.ComponentProps<'div'> & {
 export function Item({
   className,
   variant = itemContract.defaultVariant,
-  size = itemContract.defaultSize,
+  size: sizeProp = itemContract.defaultSize,
   tone = itemContract.defaultTone,
   render,
   ...props
 }: ItemProps): React.ReactElement {
-  return useRender({
+  const size = sizeProp === 'default' ? 'md' : sizeProp
+  const inGroup = useContext(ItemGroupContext)
+  const element = useRender({
     defaultTagName: 'div',
     props: mergeProps<'div'>(
       {
         className: cn('a63-Item', className),
+        role: inGroup && !render ? 'listitem' : undefined,
         'data-size': size,
         'data-slot': 'item',
         'data-tone': tone,
@@ -101,6 +117,15 @@ export function Item({
       variant,
     },
   })
+  // A rendered link or button keeps its own role, so a list item wraps it.
+  if (inGroup && render) {
+    return (
+      <div className="a63-ItemGroup-entry" data-slot="item-entry" role="listitem">
+        {element}
+      </div>
+    )
+  }
+  return element
 }
 
 export type ItemMediaProps = React.ComponentProps<'div'> & {

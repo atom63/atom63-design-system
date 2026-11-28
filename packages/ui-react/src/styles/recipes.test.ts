@@ -81,6 +81,37 @@ describe('recipes.css cascade layering', () => {
       expect(reverseCompatCss).toContain('--a63-editable-font-size-min: 1rem')
     })
 
+    it('defines every token the recipes read without a fallback in the shadcn bridge', () => {
+      // A shadcn host loads only compat/a63-from-shadcn.css and recipes.css. A
+      // token neither defines resolves to nothing: padding collapses to 0 and
+      // selected states go transparent.
+      const collect = (file: string, seen = new Set<string>()): Set<string> => {
+        if (seen.has(file)) return seen
+        seen.add(file)
+        for (const [, path] of readFileSync(file, 'utf8').matchAll(/@import\s+['"]([^'"]+)['"]/g)) {
+          if (path.startsWith('.')) collect(join(dirname(file), path), seen)
+        }
+        return seen
+      }
+      const files = [
+        ...collect(join(stylesDir, 'recipes.css')),
+        ...collect(join(styleSystemDir, 'compat', 'a63-from-shadcn.css')),
+      ]
+      const declared = new Set<string>()
+      const reads = new Map<string, string>()
+      for (const file of files) {
+        const css = readFileSync(file, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '')
+        for (const [, name] of css.matchAll(/(--a63-[\w-]+)\s*:/g)) declared.add(name)
+        for (const [, name] of css.matchAll(/var\(\s*(--a63-[\w-]+)\s*\)/g)) {
+          if (!reads.has(name)) reads.set(name, file.slice(repoDir.length + 1))
+        }
+      }
+      const missing = [...reads]
+        .filter(([name]) => !declared.has(name))
+        .map(([name, file]) => `${name} (read in ${file})`)
+      expect(missing, 'add these to packages/styles/src/compat/a63-from-shadcn.css').toEqual([])
+    })
+
     it('exposes safe-area and dynamic viewport contracts', () => {
       expect(environmentContractCss).toContain('--a63-safe-area-top: env(safe-area-inset-top, 0px)')
       expect(environmentContractCss).toContain(
@@ -152,6 +183,21 @@ describe('recipes.css cascade layering', () => {
       }
     )
 
+    it('segmented-control dips a pressed segment content, not the measured segment box', () => {
+      const recipe = readRecipe('segmented-control')
+      expect(recipe).toMatch(
+        /\.a63-SegmentedControl-item:active:not\(\[data-disabled\]\) > span \{\s*transform:/
+      )
+      expect(recipe).not.toMatch(
+        /\.a63-SegmentedControl-item:active(?![^{]*> span)[^{]*\{[^}]*transform/
+      )
+    })
+
+    it.each(['filled', 'plain'])('textarea draws the %s variant as Input does', variant => {
+      expect(readRecipe('input')).toContain(`.a63-Input[data-variant='${variant}']`)
+      expect(readRecipe('textarea')).toContain(`.a63-Textarea[data-variant='${variant}']`)
+    })
+
     it('never floors a rendered height ramp with the interaction target', () => {
       // The regression this guards: max(height, min-target) as RENDERED geometry
       // collapses xs/sm/md to one 44px rung on every phone, because
@@ -202,11 +248,10 @@ describe('recipes.css cascade layering', () => {
       expect(recipe).toMatch(/::before \{[^}]*min-height: var\(--a63-control-min-target\)/)
     })
 
-    it('only clips icon-button overflow for themes that paint a gloss', () => {
-      // The clip also clips the hit-area pseudo-element, so it is scoped to the
-      // themes that actually set --a63-control-highlight. If a new theme starts
-      // painting one, it has to be added to that selector or its gloss will
-      // bleed past the button radius.
+    it('never clips the button root, so the hit target survives in every theme', () => {
+      // Clipping the root (overflow: hidden) also clips the ::before hit area,
+      // which left Aqua icon buttons with a 24-32px coarse-pointer target. The
+      // icon gloss clips itself instead, to the button radius.
       const themeDir = join(styleSystemDir, 'themes')
       const glossThemes = readdirSync(themeDir)
         .filter(
@@ -214,13 +259,25 @@ describe('recipes.css cascade layering', () => {
         )
         .filter(file => readWithNative(join(themeDir, file)).includes('--a63-control-highlight:'))
         .map(file => file.replace('.css', ''))
-
       expect(glossThemes).toEqual(['aqua'])
-      for (const theme of glossThemes) {
-        expect(readRecipe('button')).toContain(
-          `[data-a63-theme='${theme}'] .a63-Button[data-size^='icon']`
-        )
-      }
+
+      const buttonCss = readRecipe('button')
+      const rootBlocks = [...buttonCss.matchAll(/([^{}]*)\{([^{}]*)\}/g)].filter(
+        ([, selector]) => /\.a63-Button(?![-\w])/.test(selector) && !selector.includes('::')
+      )
+      const clipping = rootBlocks
+        .filter(([, selector, body]) => {
+          const last = selector.split(',').map(part => part.trim())
+          return (
+            /overflow:\s*(?:hidden|clip)/.test(body) &&
+            last.some(part => /\.a63-Button(?:\[[^\]]*\])*$/.test(part))
+          )
+        })
+        .map(([selector]) => selector.trim())
+      expect(clipping).toEqual([])
+      expect(buttonCss).toMatch(
+        /\.a63-Button\[data-size\^='icon'\]::after \{[^}]*clip-path: inset\(0 round var\(--button-radius\)/
+      )
     })
 
     it('select resolves every supported visual dimension from the control and field contracts', () => {
@@ -357,5 +414,110 @@ describe('recipes.css cascade layering', () => {
 
   it('keeps the scoped reset in @layer base (so recipes still override it)', () => {
     expect(resetCss).toMatch(/@layer\s+base\b/)
+  })
+})
+
+/* WCAG 1.4.11: rating stars are graphics that carry the score. Their two
+   colours are pairs contrast.browser.test.ts (packages/styles) holds at 3:1 on
+   the page and the panel, and on and off differ by shape (fill vs outline), not
+   only by hue. */
+describe('rating stars', () => {
+  const css = readRecipe('rating')
+  const base = css.slice(0, css.indexOf('@media'))
+
+  it('draws on stars in the warning accent and off stars in the input border colour', () => {
+    expect(base).toMatch(/--rating-on:\s*var\(--a63-status-warning\);/)
+    expect(base).toMatch(/--rating-off:\s*var\(--a63-border-input\);/)
+  })
+
+  it('fills on stars and draws off stars as outlines', () => {
+    expect(base).toMatch(/\.a63-Rating-item \{[^}]*--rating-glyph-fill:\s*none;/)
+    expect(base).toMatch(
+      /\.a63-Rating-icon > :where\(svg\) \{[^}]*fill:\s*var\(--rating-glyph-fill\);/
+    )
+    expect(base).toMatch(/\.a63-Rating-item\[data-on\] \{[^}]*--rating-glyph-fill:\s*currentColor;/)
+    expect(base).toMatch(/\.a63-Rating-icon--filled \{[^}]*--rating-glyph-fill:\s*currentColor;/)
+  })
+})
+
+describe('state that survives forced colors', () => {
+  /* Forced colors (Windows High Contrast) replace fills and text colours with
+     system colours and drop shadows and gradients, so a state drawn by colour
+     alone vanishes. These recipes repaint their selected, pressed, checked or
+     highlighted state in the system selection colours. */
+  it.each([
+    'command',
+    'menu',
+    'navigation-menu',
+    'panel-setting-button',
+    'progress',
+    'radio',
+    'rating',
+    'segmented-control',
+    'tabs',
+    'toggle',
+    'toggle-group',
+  ])('%s repaints its state under forced colors', name => {
+    expect(readRecipe(name)).toMatch(/@media \(forced-colors: active\)[\s\S]*Highlight/)
+  })
+
+  it('keeps the typing indicator dots visible under forced colors', () => {
+    expect(readRecipe('chat-typing-indicator')).toMatch(
+      /@media \(forced-colors: active\)[\s\S]*\.a63-ChatTypingIndicator-dot[\s\S]*CanvasText/
+    )
+  })
+
+  it('draws a navigation menu link focus ring as an inset outline', () => {
+    const focus = readRecipe('navigation-menu').match(
+      /\.a63-NavigationMenu-link:focus-visible \{[^}]*\}/
+    )?.[0]
+    expect(focus).toContain('outline: var(--a63-control-focus-ring-width) solid')
+    expect(focus).toContain('outline-offset: calc(-1 * var(--a63-control-focus-ring-width))')
+  })
+
+  it('draws the menu keyboard target with an inset focus outline', () => {
+    const focus = readRecipe('menu').match(
+      /\.a63-Menu-item:focus-visible,\s*\.a63-Autocomplete-item\[data-highlighted\] \{[^}]*\}/
+    )?.[0]
+    expect(focus).toContain('outline: var(--a63-control-focus-ring-width) solid')
+    expect(focus).toContain('outline-offset: calc(-1 * var(--a63-control-focus-ring-width))')
+  })
+
+  it('fills the active Command result and preserves the search focus cue in forced colors', () => {
+    const css = readRecipe('command')
+    expect(css).toMatch(
+      /\.a63-Command-item\[data-highlighted\] \{[^}]*background-color: var\(--a63-menu-highlight-background,/
+    )
+    expect(css).not.toMatch(/\.a63-Command-item[^\n{]*\[data-highlighted\][^{]*\{[^}]*outline:/)
+    expect(css).toMatch(
+      /@media \(forced-colors: active\) \{\s*\.a63-Command-input-wrapper:has\(> \.a63-Command-input:focus-visible\)::before \{\s*border-block-end: 1px solid CanvasText;/
+    )
+  })
+
+  it('marks the current navigation menu link apart from its hover fill', () => {
+    const active = readRecipe('navigation-menu').match(
+      /\.a63-NavigationMenu-link\[data-active\] \{[^}]*\}/
+    )?.[0]
+    expect(active).toContain('font-weight')
+  })
+
+  it('draws a pressed neutral toggle in the neutral solid, not the segment plate', () => {
+    const toggle = readRecipe('toggle')
+    expect(toggle).toContain(
+      '--toggle-on-background: var(--a63-toggle-on-background, var(--a63-action-neutral))'
+    )
+    expect(toggle).not.toContain('--a63-segment-selected-background')
+  })
+
+  it('keeps menu group labels at full text-secondary contrast', () => {
+    const label = readRecipe('menu').match(/\.a63-Menu-label \{[^}]*\}/)?.[0]
+    expect(label).toBeDefined()
+    expect(label).not.toContain('opacity')
+  })
+
+  it('does not draw a still indeterminate progress bar as a partial fill', () => {
+    expect(readRecipe('progress')).toMatch(
+      /prefers-reduced-motion: reduce[\s\S]*\[data-indeterminate\] \{\s*width: 100%;/
+    )
   })
 })

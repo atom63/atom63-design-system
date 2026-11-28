@@ -415,6 +415,73 @@ export const Indicator: Story = {
   ),
 }
 
+/* Right to left: the icon leads at the inline start (the right), the indicator
+   pins to the top-end corner (the top left). Labels are Arabic, so the
+   indicator meaning is passed in Arabic through indicatorLabel. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl">
+      <PreviewCard label="rtl / ar">
+        <div style={{ alignItems: 'center', display: 'flex', flexWrap: 'wrap', gap: '1rem' }}>
+          <Button variant="primary">
+            <Inbox aria-hidden />
+            حفظ التغييرات
+          </Button>
+          <Button indicator={4} indicatorLabel="4 جديدة" variant="outline">
+            <Inbox aria-hidden />
+            البريد الوارد
+          </Button>
+          <Button
+            aria-label="الإشعارات"
+            indicator
+            indicatorLabel="جديد"
+            size="icon"
+            variant="ghost"
+          >
+            <Bell aria-hidden />
+          </Button>
+          <Button loading>جارٍ الحفظ</Button>
+        </div>
+      </PreviewCard>
+    </UIProvider>
+  ),
+}
+
+/* Long and translated labels never wrap: in a narrow container the label
+   truncates with an ellipsis at the button's edge, in either direction. */
+export const LongLabels: Story = {
+  render: () => (
+    <EnvironmentShell>
+      <div data-testid="long-labels" style={{ display: 'grid', gap: '0.75rem', width: 200 }}>
+        <Button variant="outline">Einstellungen für Benachrichtigungen speichern</Button>
+        <Button variant="outline">
+          <Inbox aria-hidden />
+          通知设置和隐私偏好全部保存到账户
+        </Button>
+        <div dir="rtl" style={{ display: 'grid' }}>
+          <Button variant="outline">حفظ إعدادات الإشعارات والخصوصية في الحساب</Button>
+        </div>
+      </div>
+    </EnvironmentShell>
+  ),
+  play: async ({ canvasElement }) => {
+    const texts = canvasElement.querySelectorAll<HTMLElement>(
+      '[data-testid="long-labels"] [data-slot="button-text"]'
+    )
+    // EnvironmentShell renders the column once per environment.
+    if (texts.length === 0 || texts.length % 3 !== 0)
+      throw new Error(`Expected 3 label texts per environment, found ${texts.length}`)
+    for (const text of texts) {
+      const button = text.closest('button')
+      if (!button) throw new Error('Label text is not inside a button')
+      if (button.getBoundingClientRect().width > 201)
+        throw new Error(`A long label widened its button: "${text.textContent}"`)
+      if (text.scrollWidth <= text.clientWidth)
+        throw new Error(`A long label does not truncate: "${text.textContent}"`)
+    }
+  },
+}
+
 export const Shapes: Story = {
   render: () => (
     <EnvironmentShell>
@@ -547,6 +614,33 @@ export const States: Story = {
       }
     }
   },
+}
+
+/* A target button beside one at rest. The visual project puts the target in the
+   story's interaction state (parameters.visualState, see apps/storybook/README.md). */
+function InteractionStatePair() {
+  return (
+    <UIProvider designLanguage="web" input="pointer" mode="light">
+      <PreviewCard label="web / light / pointer">
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+          <Button>Target</Button>
+          <Button>At rest</Button>
+        </div>
+      </PreviewCard>
+    </UIProvider>
+  )
+}
+
+/* The visual project hovers the target with the real pointer. */
+export const Hover: Story = {
+  render: () => <InteractionStatePair />,
+  parameters: { visualState: { hover: 'button' } },
+}
+
+/* The visual project tabs to the first button, so it shows the focus-visible ring. */
+export const FocusVisible: Story = {
+  render: () => <InteractionStatePair />,
+  parameters: { visualState: { focusVisible: 'button' } },
 }
 
 /* Loading treatment across every variant. */

@@ -3,7 +3,9 @@ import { DocsSearchLauncher } from '../components/docs-search'
 
 # Atom63 Design System
 
-Atom63 is an open-source design system with one token architecture behind every platform it ships to. The same tokens drive the React components, the SwiftUI components, and the Figma variables, so a decision made once reaches web, iOS, and design files without being restated.
+Atom63 is an opinionated, open-source design system for building AI products, made to be used by coding agents as well as people. It works out of the box and extends through tokens and theme axes rather than new component variants.
+
+One owner controls the whole chain: DTCG tokens, component contracts, React and SwiftUI components, and the AI-product patterns (chat, agent runtime, widgets, inform). The same tokens drive the React components, the SwiftUI components, and the Figma variables, so a decision made once reaches web, iOS, and design files without being restated. The [decision record](/architecture/decision-adr-0009-opinionated-open-source-for-ai-products) explains the positioning.
 
 <DocsSearchLauncher />
 
@@ -22,6 +24,8 @@ Install the web packages from the `beta` tag:
 ```bash
 pnpm add @atom63/styles@beta @atom63/ui-react@beta
 ```
+
+Coding agents can ask the system before they write UI: `atom63 build <idea>` from `@atom63/cli` (also an MCP server, `atom63 mcp`) returns the closest [templates](/patterns/pattern-templates), the components they use, and the rules.
 
 ## Start here
 

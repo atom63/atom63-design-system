@@ -30,6 +30,23 @@ describe('Tabs', () => {
     expect(container.querySelector('[data-slot="tab-indicator"]')).not.toBeNull()
   })
 
+  it('accepts the deprecated size name default as md', () => {
+    const { container } = render(
+      <Tabs defaultValue="one">
+        <TabsList size="default">
+          <TabsTab value="one">One</TabsTab>
+          <TabsTab size="default" value="two">
+            Two
+          </TabsTab>
+        </TabsList>
+      </Tabs>
+    )
+    expect(container.querySelector('.a63-Tabs-list')).toHaveAttribute('data-size', 'md')
+    for (const tab of container.querySelectorAll('.a63-Tabs-tab')) {
+      expect(tab).toHaveAttribute('data-size', 'md')
+    }
+  })
+
   it('omits the indicator for the attached variant', () => {
     const { container } = render(
       <Tabs defaultValue="one">

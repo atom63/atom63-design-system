@@ -9,8 +9,8 @@ export type SequenceBlockProps = {
 
 export function SequenceBlock({ children, className }: SequenceBlockProps) {
   return (
-    <MdxFrame className={className}>
-      <MdxFramePanel>
+    <MdxFrame border="off" className={className}>
+      <MdxFramePanel className="mdx-frame-panel-flat">
         <ol className="grid gap-0">{children}</ol>
       </MdxFramePanel>
     </MdxFrame>

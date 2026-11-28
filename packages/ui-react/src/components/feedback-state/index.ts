@@ -4,6 +4,7 @@ export type {
   FeedbackStateIcon,
   FeedbackStateIconName,
   FeedbackStateKind,
+  FeedbackStateLabels,
   FeedbackStateProps,
   FeedbackStateSize,
 } from './feedback-state'

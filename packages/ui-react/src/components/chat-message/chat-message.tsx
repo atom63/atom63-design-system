@@ -3,9 +3,10 @@ import {
   type ChatMessageRole,
   chatMessageContract,
 } from '@atom63/ui-foundation'
-import type * as React from 'react'
+import * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { ChatTypingIndicator } from '../chat-typing-indicator/chat-typing-indicator'
 
 export type ChatMessageListProps = React.ComponentProps<'div'>
 
@@ -40,8 +41,19 @@ export type ChatMessageProps = React.ComponentProps<'article'> & {
    * speaking. Defaults to "You" for the user and "Assistant" for the assistant.
    */
   label?: string
-  /** Marks a reply that is still arriving (`aria-busy`), so assistive technology waits for the whole text. */
+  /**
+   * Marks a reply that is still arriving (`aria-busy`), so assistive technology waits for the whole
+   * text. While a direct child is a ChatTypingIndicator, `aria-busy` is left off so its status is
+   * announced.
+   */
   streaming?: boolean
+}
+
+/** Whether a direct child is a ChatTypingIndicator, whose status `aria-busy` would hold back. */
+function holdsTypingIndicator(children: React.ReactNode): boolean {
+  return React.Children.toArray(children).some(
+    child => React.isValidElement(child) && child.type === ChatTypingIndicator
+  )
 }
 
 const DEFAULT_LABELS: Record<ChatMessageRole, string> = { assistant: 'Assistant', user: 'You' }
@@ -66,7 +78,7 @@ export function ChatMessage({
 }: ChatMessageProps): React.ReactElement {
   return (
     <article
-      aria-busy={streaming || undefined}
+      aria-busy={(streaming && !holdsTypingIndicator(children)) || undefined}
       aria-label={label ?? DEFAULT_LABELS[from]}
       className={cn('a63-ChatMessage', className)}
       data-appearance={from === 'user' ? 'bubble' : appearance}

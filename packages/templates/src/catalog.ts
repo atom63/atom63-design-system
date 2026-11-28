@@ -8,6 +8,7 @@ import { template as chatPage } from './pages/chat-page/chat-page'
 import { template as dashboardPage } from './pages/dashboard-page/dashboard-page'
 import { template as listPage } from './pages/list-page/list-page'
 import { template as onboardingPage } from './pages/onboarding-page/onboarding-page'
+import { template as readingPage } from './pages/reading-page/reading-page'
 import { template as settingsPage } from './pages/settings-page/settings-page'
 import { template as signInPage } from './pages/sign-in-page/sign-in-page'
 import { template as activityList } from './blocks/activity-list/activity-list'
@@ -45,6 +46,7 @@ export const templateCatalog: readonly TemplateEntry[] = [
   dashboardPage,
   listPage,
   onboardingPage,
+  readingPage,
   settingsPage,
   signInPage,
   activityList,

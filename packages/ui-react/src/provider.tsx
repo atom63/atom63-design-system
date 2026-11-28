@@ -11,6 +11,7 @@ import {
   type Theme,
   type UIEnvironment,
 } from '@atom63/ui-foundation'
+import { DirectionProvider } from '@base-ui/react/direction-provider'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import * as React from 'react'
@@ -19,13 +20,22 @@ import { cn } from './lib/cn'
 
 const UIEnvironmentContext = React.createContext<UIEnvironment>(defaultUIEnvironment)
 
-export interface UIProviderProps extends useRender.ComponentProps<'div'>, Partial<UIEnvironment> {}
+export interface UIProviderProps extends useRender.ComponentProps<'div'>, Partial<UIEnvironment> {
+  /**
+   * Text direction for this scope. Sets the `dir` attribute, and with `ltr` or
+   * `rtl` also tells the Base UI parts inside (Slider drag and arrow keys,
+   * RadioGroup, Tabs, Menu) which way is forward. Set `dir="rtl"` here rather
+   * than only on `<html>`, or those parts keep stepping left-to-right.
+   */
+  dir?: 'ltr' | 'rtl' | 'auto'
+}
 
 export function UIProvider({
   brand,
   className,
   density,
   designLanguage,
+  dir,
   input,
   mode,
   render,
@@ -62,15 +72,22 @@ export function UIProvider({
     ...(mode !== undefined && { 'data-a63-mode': resolvedMode }),
     ...(surface !== undefined && { 'data-a63-surface': surface }),
     ...(theme !== undefined && { 'data-a63-theme': theme }),
+    ...(dir !== undefined && { dir }),
   }
+
+  const element = useRender({
+    defaultTagName: 'div',
+    props: mergeProps<'div'>(defaultProps, props),
+    render,
+  })
 
   return (
     <UIEnvironmentContext.Provider value={environment}>
-      {useRender({
-        defaultTagName: 'div',
-        props: mergeProps<'div'>(defaultProps, props),
-        render,
-      })}
+      {dir === 'ltr' || dir === 'rtl' ? (
+        <DirectionProvider direction={dir}>{element}</DirectionProvider>
+      ) : (
+        element
+      )}
     </UIEnvironmentContext.Provider>
   )
 }

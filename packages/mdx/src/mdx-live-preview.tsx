@@ -1,3 +1,5 @@
+'use client'
+
 // packages/mdx/src/mdx-live-preview.tsx
 import { MDXProvider } from '@mdx-js/react'
 import type { ComponentType, ReactNode } from 'react'
@@ -50,7 +52,9 @@ export function MdxLivePreview({ source, components, onError }: MdxLivePreviewPr
 
   return (
     <MdxErrorBoundary
-      fallback={e => <div className="text-destructive p-4 text-sm">Runtime error: {e.message}</div>}
+      fallback={e => (
+        <div className="p-4 text-sm text-(--a63-text-danger)">Runtime error: {e.message}</div>
+      )}
       resetKey={source}
     >
       <MDXProvider components={components}>

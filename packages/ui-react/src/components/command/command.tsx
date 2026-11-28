@@ -2,9 +2,10 @@
 
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete'
 import { Dialog as CommandDialogPrimitive } from '@base-ui/react/dialog'
-import type * as React from 'react'
+import * as React from 'react'
 
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 import { ScrollArea } from '../scroll-area/scroll-area'
 
 /*
@@ -24,9 +25,37 @@ import { ScrollArea } from '../scroll-area/scroll-area'
  */
 
 // ── Dialog shell ─────────────────────────────────────────────────────────
-export const CommandDialog = CommandDialogPrimitive.Root
 
-export const CommandDialogPortal = CommandDialogPrimitive.Portal
+/*
+ * Base UI hides the rest of the page while a modal dialog is open but does not
+ * set aria-modal, which the APG requires, and its Popup does not see the root's
+ * `modal` prop. The root passes it down here, as Dialog does.
+ */
+const CommandDialogModalContext =
+  React.createContext<CommandDialogPrimitive.Root.Props['modal']>(true)
+
+export function CommandDialog<Payload>(
+  props: CommandDialogPrimitive.Root.Props<Payload>
+): React.ReactElement {
+  return (
+    <CommandDialogModalContext.Provider value={props.modal ?? true}>
+      <CommandDialogPrimitive.Root {...props} />
+    </CommandDialogModalContext.Provider>
+  )
+}
+
+export function CommandDialogPortal(
+  props: CommandDialogPrimitive.Portal.Props
+): React.ReactElement {
+  const { container, ...portalProps } = props
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <CommandDialogPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      {...portalProps}
+    />
+  )
+}
 
 // Handle factory for programmatically opening the ⌘K dialog (faithful port of prod).
 export const CommandCreateHandle = CommandDialogPrimitive.createHandle
@@ -63,20 +92,40 @@ export function CommandDialogViewport({
   )
 }
 
+export type CommandDialogPopupProps = Omit<CommandDialogPrimitive.Popup.Props, 'title'> & {
+  /**
+   * The dialog's accessible name, read by screen readers and not shown.
+   * Ignored when you pass `aria-label` or `aria-labelledby`.
+   */
+  title?: React.ReactNode
+}
+
 export function CommandDialogPopup({
   className,
   children,
+  title = 'Command palette',
   ...props
-}: CommandDialogPrimitive.Popup.Props): React.ReactElement {
+}: CommandDialogPopupProps): React.ReactElement {
+  const namedByCaller = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined
+  const modal = React.useContext(CommandDialogModalContext)
   return (
     <CommandDialogPortal>
       <CommandDialogBackdrop />
       <CommandDialogViewport>
         <CommandDialogPrimitive.Popup
+          aria-modal={modal === false ? undefined : true}
           className={cn('a63-Command-popup', className)}
           data-slot="command-dialog-popup"
           {...props}
         >
+          {namedByCaller ? null : (
+            <CommandDialogPrimitive.Title
+              className="a63-Command-sr-only"
+              data-slot="command-dialog-title"
+            >
+              {title}
+            </CommandDialogPrimitive.Title>
+          )}
           {children}
         </CommandDialogPrimitive.Popup>
       </CommandDialogViewport>
@@ -121,15 +170,22 @@ export type CommandInputProps = React.ComponentProps<typeof AutocompletePrimitiv
   endAddon?: React.ReactNode
   /** Replaces the built-in search icon. Pass `null` to show none. */
   icon?: React.ReactNode
+  /**
+   * The field's accessible name; the placeholder alone does not name it.
+   * Ignored when you pass `aria-label` or `aria-labelledby`.
+   */
+  label?: string
 }
 
 export function CommandInput({
   className,
   endAddon,
   icon = <SearchIcon />,
+  label = 'Search commands',
   placeholder,
   ...props
 }: CommandInputProps): React.ReactElement {
+  const namedByCaller = props['aria-label'] !== undefined || props['aria-labelledby'] !== undefined
   return (
     <div className="a63-Command-input-wrapper" data-slot="command-input-wrapper">
       {icon ? (
@@ -141,6 +197,7 @@ export function CommandInput({
         // The list is inline and always open (see Command), so the combobox is
         // always expanded; ARIA requires the attribute on role="combobox".
         aria-expanded
+        aria-label={namedByCaller ? undefined : label}
         autoFocus
         className={cn('a63-Command-input', className)}
         data-slot="command-input"

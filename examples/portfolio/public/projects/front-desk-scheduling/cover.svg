@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <!-- Sample cover art. Replace with your own image. -->
+  <rect width="1600" height="900" fill="#f4e7d7"/>
+  <g fill="#ead6bf">
+    <rect x="160" y="140" width="220" height="140" rx="22"/>
+    <rect x="410" y="140" width="220" height="140" rx="22"/>
+    <rect x="660" y="140" width="220" height="140" rx="22"/>
+    <rect x="910" y="140" width="220" height="140" rx="22"/>
+    <rect x="1160" y="140" width="220" height="140" rx="22"/>
+    <rect x="160" y="310" width="220" height="140" rx="22"/>
+    <rect x="410" y="310" width="220" height="140" rx="22"/>
+    <rect x="910" y="310" width="220" height="140" rx="22"/>
+    <rect x="1160" y="310" width="220" height="140" rx="22"/>
+    <rect x="160" y="480" width="220" height="140" rx="22"/>
+    <rect x="410" y="480" width="220" height="140" rx="22"/>
+    <rect x="660" y="480" width="220" height="140" rx="22"/>
+    <rect x="910" y="480" width="220" height="140" rx="22"/>
+    <rect x="1160" y="480" width="220" height="140" rx="22"/>
+    <rect x="160" y="650" width="220" height="140" rx="22"/>
+    <rect x="410" y="650" width="220" height="140" rx="22"/>
+    <rect x="660" y="650" width="220" height="140" rx="22"/>
+    <rect x="1160" y="650" width="220" height="140" rx="22"/>
+  </g>
+  <rect x="660" y="310" width="220" height="140" rx="22" fill="#c9634a"/>
+  <rect x="690" y="340" width="120" height="18" rx="9" fill="#fbe9df"/>
+  <rect x="690" y="372" width="160" height="14" rx="7" fill="#efb9a6"/>
+  <rect x="910" y="650" width="220" height="140" rx="22" fill="none" stroke="#c9634a" stroke-width="6" stroke-dasharray="18 14"/>
+</svg>

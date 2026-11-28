@@ -50,6 +50,33 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a calendar is, independent of any platform: whether it picks one date, several or a range. iOS has no Atom63UI enum for it: the mode is the choice of DatePicker or MultiDatePicker.",
+    "axes": {
+      "selectionMode": ["single", "multiple", "range"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "mode": {
+            "list": "selectionModes",
+            "map": {
+              "single": {
+                "selectionMode": "single"
+              },
+              "multiple": {
+                "selectionMode": "multiple"
+              },
+              "range": {
+                "selectionMode": "range"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "datePicker",

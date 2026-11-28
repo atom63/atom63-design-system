@@ -26,7 +26,12 @@
 }
 
 .a63-LoadMoreTrigger[data-tone='error'] {
-  --load-more-accent: var(--a63-action-danger);
+  --load-more-accent: var(--a63-status-danger);
+}
+
+/* Hidden keeps only the empty live region mounted; it takes no space. */
+.a63-LoadMoreTrigger[data-state='hidden'] {
+  padding-block: 0;
 }
 
 /* The message form reserves a minimum height so the observer target keeps a
@@ -81,13 +86,27 @@
 }
 
 .a63-LoadMoreTrigger-action {
+  position: relative;
   padding: 0;
   border: 0;
   background: transparent;
-  color: var(--load-more-accent);
+  /* Retry shows only in the failed row: text, so the danger text role (4.5:1),
+     not the 3:1 accent the icon uses. */
+  color: var(--a63-text-danger);
   font: inherit;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* The hit area reaches the control minimum target (24px, 44px on coarse
+   pointers) without growing the inline text, the way Button does. */
+.a63-LoadMoreTrigger-action::before {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: max(100%, var(--a63-control-min-target));
+  min-height: max(100%, var(--a63-control-min-target));
+  translate: -50% -50%;
 }
 
 .a63-LoadMoreTrigger-action:focus-visible {

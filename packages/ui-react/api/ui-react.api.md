@@ -6,21 +6,32 @@
 
 import { Accordion as Accordion_2 } from '@base-ui/react/accordion';
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog';
+import { AlertDialogSize } from '@atom63/ui-foundation';
+import { AlertDialogSizeAlias } from '@atom63/ui-foundation';
+import { AlertDialogVariant } from '@atom63/ui-foundation';
+import { AlertDialogVariantAlias } from '@atom63/ui-foundation';
 import { AlertVariant } from '@atom63/ui-foundation';
 import { AmountFraction } from '@atom63/ui-foundation';
 import { AmountSize } from '@atom63/ui-foundation';
 import { AnimatedCheckVariant } from '@atom63/ui-foundation';
+import { ArtPlateSafeArea } from '@atom63/ui-foundation';
+import { ArtPlateSize } from '@atom63/ui-foundation';
+import { ArtPlateTone } from '@atom63/ui-foundation';
+import { ArtPlateVeil } from '@atom63/ui-foundation';
 import { Autocomplete as AutocompletePrimitive } from '@base-ui/react/autocomplete';
+import { AutocompleteSize } from '@atom63/ui-foundation';
+import { AutocompleteSizeAlias } from '@atom63/ui-foundation';
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar';
 import { AvatarRing } from '@atom63/ui-foundation';
 import { AvatarShape } from '@atom63/ui-foundation';
 import { AvatarSize } from '@atom63/ui-foundation';
+import { AvatarSizeAlias } from '@atom63/ui-foundation';
 import { BadgeDotColor } from '@atom63/ui-foundation';
 import { BadgeSize } from '@atom63/ui-foundation';
 import { BadgeVariant } from '@atom63/ui-foundation';
-import * as _base_ui_react from '@base-ui/react';
 import { ButtonGroupOrientation } from '@atom63/ui-foundation';
 import { ButtonGroupSize } from '@atom63/ui-foundation';
+import { ButtonGroupSizeAlias } from '@atom63/ui-foundation';
 import { ButtonShape } from '@atom63/ui-foundation';
 import { ButtonSize } from '@atom63/ui-foundation';
 import { ButtonTone } from '@atom63/ui-foundation';
@@ -51,13 +62,16 @@ import { CrossRendererContractId } from '@atom63/ui-foundation';
 import { Density } from '@atom63/ui-foundation';
 import { DesignLanguage } from '@atom63/ui-foundation';
 import { DestinationKind } from '@atom63/ui-foundation';
+import { destinationLinkContract } from '@atom63/ui-foundation';
 import { Dialog as Dialog_2 } from '@base-ui/react/dialog';
 import { DialogFooterVariant } from '@atom63/ui-foundation';
 import { DialogMobilePlacement } from '@atom63/ui-foundation';
 import { DialogSize } from '@atom63/ui-foundation';
+import { DialogSizeAlias } from '@atom63/ui-foundation';
 import { Drawer as Drawer_2 } from '@base-ui/react/drawer';
 import { DrawerDirection } from '@atom63/ui-foundation';
 import { DrawerFooterVariant } from '@atom63/ui-foundation';
+import { DropdownMenuItemVariant } from '@atom63/ui-foundation';
 import { EmptyMediaVariant } from '@atom63/ui-foundation';
 import { FeedbackStateKind } from '@atom63/ui-foundation';
 import { FeedbackStateSize } from '@atom63/ui-foundation';
@@ -78,9 +92,12 @@ import { ItemGroupSurface } from '@atom63/ui-foundation';
 import { ItemGroupVariant } from '@atom63/ui-foundation';
 import { ItemMediaVariant } from '@atom63/ui-foundation';
 import { ItemSize } from '@atom63/ui-foundation';
+import { ItemSizeAlias } from '@atom63/ui-foundation';
 import { ItemTone } from '@atom63/ui-foundation';
 import { ItemVariant } from '@atom63/ui-foundation';
 import { KbdSize } from '@atom63/ui-foundation';
+import { LayeredScenePlacement } from '@atom63/ui-foundation';
+import { LayeredSceneWidth } from '@atom63/ui-foundation';
 import { LoadMoreTriggerState } from '@atom63/ui-foundation';
 import { LoadMoreTriggerVariant } from '@atom63/ui-foundation';
 import * as lucide_react from 'lucide-react';
@@ -92,9 +109,11 @@ import { MessagePosition } from '@atom63/ui-foundation';
 import { Mode } from '@atom63/ui-foundation';
 import { NavigationMenu as NavigationMenu_2 } from '@base-ui/react/navigation-menu';
 import { OTPInput } from 'input-otp';
+import { PaginationLinkSize } from '@atom63/ui-foundation';
 import { PointerInput } from '@atom63/ui-foundation';
 import { Popover as Popover_2 } from '@base-ui/react/popover';
 import { PreviewCard as PreviewCard_2 } from '@base-ui/react/preview-card';
+import { ProgressiveBlurPosition } from '@atom63/ui-foundation';
 import { Progress as ProgressPrimitive } from '@base-ui/react/progress';
 import { ProgressTone } from '@atom63/ui-foundation';
 import { Radio as Radio_2 } from '@base-ui/react/radio';
@@ -134,14 +153,18 @@ import { Slider as Slider_2 } from '@base-ui/react/slider';
 import { SliderTone } from '@atom63/ui-foundation';
 import { Switch as Switch_2 } from '@base-ui/react/switch';
 import { SwitchSize } from '@atom63/ui-foundation';
+import { TableAlign } from '@atom63/ui-foundation';
 import { TableSize } from '@atom63/ui-foundation';
+import { TableSizeAlias } from '@atom63/ui-foundation';
 import { TableStickyEdge } from '@atom63/ui-foundation';
 import { TableTone } from '@atom63/ui-foundation';
 import { TableVariant } from '@atom63/ui-foundation';
 import { Tabs as Tabs_2 } from '@base-ui/react/tabs';
 import { TabsSize } from '@atom63/ui-foundation';
+import { TabsSizeAlias } from '@atom63/ui-foundation';
 import { TabsVariant } from '@atom63/ui-foundation';
 import { TextareaSize } from '@atom63/ui-foundation';
+import { TextareaVariant } from '@atom63/ui-foundation';
 import { TextTickerVariant } from '@atom63/ui-foundation';
 import { Theme } from '@atom63/ui-foundation';
 import { toast } from 'sonner';
@@ -185,7 +208,7 @@ export interface AccordionTriggerProps extends Accordion_2.Trigger.Props {
     icon?: 'chevron' | 'plus-minus';
 }
 
-// @public (undocumented)
+// @public
 export function Alert(input: AlertProps): React$1.ReactElement;
 
 // @public (undocumented)
@@ -232,8 +255,8 @@ export function AlertDialogMedia(input: React$1.ComponentProps<'div'>): React$1.
 function AlertDialogPopup(input: AlertDialogPrimitive.Popup.Props & {
     bottomStickOnMobile?: boolean;
     portalProps?: AlertDialogPrimitive.Portal.Props;
-    size?: 'default' | 'sm';
-    variant?: 'default' | 'destructive' | 'info' | 'success' | 'warning';
+    size?: AlertDialogSize | AlertDialogSizeAlias;
+    variant?: AlertDialogVariant | AlertDialogVariantAlias;
 }): React$1.ReactElement;
 export { AlertDialogPopup as AlertDialogContent }
 export { AlertDialogPopup }
@@ -285,6 +308,35 @@ export interface AnimatedCheckProps extends Omit<React$1.ComponentProps<'svg'>, 
     animate?: boolean;
     variant?: AnimatedCheckVariant;
 }
+
+// @public
+export function ArtPlate(input: ArtPlateProps): React$1.ReactElement;
+
+// @public
+export interface ArtPlateFocus {
+    // (undocumented)
+    x: number;
+    // (undocumented)
+    y: number;
+}
+
+// @public (undocumented)
+export type ArtPlateProps = Omit<React$1.ComponentProps<'div'>, 'children'> & {
+    alt: string;
+    children?: React$1.ReactNode;
+    focus?: ArtPlateFocus;
+    focusMobile?: ArtPlateFocus;
+    parallax?: boolean;
+    priority?: boolean;
+    safeArea?: ArtPlateSafeArea;
+    size?: ArtPlateSize;
+    sizes?: string;
+    src: string;
+    srcSet?: string;
+    srcMobile?: string;
+    tone?: ArtPlateTone;
+    veil?: ArtPlateVeil;
+};
 
 // @public (undocumented)
 export const ATOM63_FLYOUT_TRANSITION: {
@@ -356,14 +408,14 @@ export function AutocompleteInput(input: AutocompleteInputProps): React$1.ReactE
 export interface AutocompleteInputProps extends Omit<AutocompletePrimitive.Input.Props, 'size'> {
     // (undocumented)
     clearProps?: AutocompletePrimitive.Clear.Props;
+    invalid?: boolean;
     // (undocumented)
     ref?: React$1.Ref<HTMLInputElement>;
     // (undocumented)
     showClear?: boolean;
     // (undocumented)
     showTrigger?: boolean;
-    // (undocumented)
-    size?: 'sm' | 'default' | 'lg' | number;
+    size?: AutocompleteSize | AutocompleteSizeAlias | number;
     // (undocumented)
     startAddon?: React$1.ReactNode;
     // (undocumented)
@@ -416,7 +468,12 @@ export function AutocompleteValue(input: AutocompletePrimitive.Value.Props): Rea
 export function Avatar(input: AvatarProps): React$1.ReactElement;
 
 // @public (undocumented)
-export function AvatarBadge(input: React$1.ComponentProps<'span'>): React$1.ReactElement;
+export function AvatarBadge(input: AvatarBadgeProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface AvatarBadgeProps extends React$1.ComponentProps<'span'> {
+    label?: string;
+}
 
 // @public (undocumented)
 export function AvatarFallback(input: AvatarPrimitive.Fallback.Props): React$1.ReactElement;
@@ -425,7 +482,12 @@ export function AvatarFallback(input: AvatarPrimitive.Fallback.Props): React$1.R
 export function AvatarGroup(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function AvatarGroupCount(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function AvatarGroupCount(input: AvatarGroupCountProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface AvatarGroupCountProps extends React$1.ComponentProps<'div'> {
+    label?: string;
+}
 
 // @public (undocumented)
 export function AvatarImage(input: AvatarPrimitive.Image.Props): React$1.ReactElement;
@@ -436,7 +498,7 @@ export { AvatarPrimitive }
 export type AvatarProps = AvatarPrimitive.Root.Props & {
     ring?: boolean | AvatarRing;
     shape?: AvatarShape;
-    size?: AvatarSize;
+    size?: AvatarSize | AvatarSizeAlias;
 };
 
 export { AvatarSize }
@@ -486,7 +548,7 @@ export function ButtonGroup(input: ButtonGroupProps): React$1.ReactElement;
 // @public (undocumented)
 export type ButtonGroupProps = React$1.ComponentProps<'div'> & {
     orientation?: ButtonGroupOrientation;
-    size?: ButtonGroupSize;
+    size?: ButtonGroupSize | ButtonGroupSizeAlias;
 };
 
 // @public (undocumented)
@@ -508,8 +570,8 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
     'data-slot'?: string;
     indicator?: boolean | number;
     indicatorLabel?: string;
-    // (undocumented)
     loading?: boolean;
+    nativeButton?: boolean;
     shape?: ButtonShape;
     // (undocumented)
     size?: ButtonSize;
@@ -589,8 +651,8 @@ export function CardMediaOverlay(input: CardMediaOverlayProps): React$1.ReactEle
 // @public (undocumented)
 export function CardMediaOverlayBottom(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
-// @public (undocumented)
-export function CardMediaOverlayIconButton(input: useRender.ComponentProps<'span'>): React$1.ReactElement;
+// @public
+export function CardMediaOverlayIconButton(input: ButtonProps): React$1.ReactElement;
 
 // @public (undocumented)
 export function CardMediaOverlayImage(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
@@ -603,7 +665,10 @@ export type CardMediaOverlayProps = useRender.ComponentProps<'div'> & {
 // @public (undocumented)
 export function CardMediaOverlayScrim(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
+export function CardMediaOverlayTopEnd(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
+
+// @public @deprecated (undocumented)
 export function CardMediaOverlayTopRight(input: useRender.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -635,7 +700,7 @@ export type CardTitleProps = useRender.ComponentProps<'span'> & {
     lineClamp?: CardLineClamp;
 };
 
-// @public (undocumented)
+// @public
 export function Carousel(input: React$1.ComponentProps<'div'> & CarouselProps): React$1.ReactElement;
 
 // @public (undocumented)
@@ -712,6 +777,7 @@ export type ChatComposerProps = Omit<React$1.ComponentProps<'form'>, 'children' 
     status?: ChatComposerStatus;
     stopIcon?: React$1.ReactNode;
     stopLabel?: string;
+    submitOnEnter?: boolean;
     textareaProps?: Omit<InputGroupTextareaProps, 'defaultValue' | 'disabled' | 'onChange' | 'placeholder' | 'value'>;
     value?: string;
     voiceIcon?: React$1.ReactNode;
@@ -814,16 +880,21 @@ export function CommandCollection(input: React$1.ComponentProps<typeof Autocompl
 export const CommandCreateHandle: typeof Dialog_2.createHandle;
 
 // @public (undocumented)
-export const CommandDialog: typeof Dialog_2.Root;
+export function CommandDialog<Payload>(props: Dialog_2.Root.Props<Payload>): React$1.ReactElement;
 
 // @public (undocumented)
 export function CommandDialogBackdrop(input: Dialog_2.Backdrop.Props): React$1.ReactElement;
 
 // @public (undocumented)
-export function CommandDialogPopup(input: Dialog_2.Popup.Props): React$1.ReactElement;
+export function CommandDialogPopup(input: CommandDialogPopupProps): React$1.ReactElement;
 
 // @public (undocumented)
-export const CommandDialogPortal: React$1.ForwardRefExoticComponent<Omit<_base_ui_react.AlertDialogPortalProps, "ref"> & React$1.RefAttributes<HTMLDivElement>>;
+export type CommandDialogPopupProps = Omit<Dialog_2.Popup.Props, 'title'> & {
+    title?: React$1.ReactNode;
+};
+
+// @public (undocumented)
+export function CommandDialogPortal(props: Dialog_2.Portal.Props): React$1.ReactElement;
 
 // @public (undocumented)
 export function CommandDialogTrigger(props: Dialog_2.Trigger.Props): React$1.ReactElement;
@@ -850,6 +921,7 @@ export function CommandInput(input: CommandInputProps): React$1.ReactElement;
 export type CommandInputProps = React$1.ComponentProps<typeof AutocompletePrimitive.Input> & {
     endAddon?: React$1.ReactNode;
     icon?: React$1.ReactNode;
+    label?: string;
 };
 
 // @public (undocumented)
@@ -1077,6 +1149,7 @@ export function DestinationLink(input: DestinationLinkProps): React$1.ReactEleme
 // @public (undocumented)
 export type DestinationLinkProps = Omit<useRender.ComponentProps<'a'>, 'rel' | 'target'> & {
     kind: DestinationKind;
+    variant?: (typeof destinationLinkContract.variants)[number];
 };
 
 // @public (undocumented)
@@ -1120,7 +1193,7 @@ export function DialogPanel(input: useRender.ComponentProps<'div'> & {
 function DialogPopup(input: Dialog_2.Popup.Props & {
     showCloseButton?: boolean;
     mobilePlacement?: DialogMobilePlacement;
-    size?: DialogSize;
+    size?: DialogSize | DialogSizeAlias;
     bottomStickOnMobile?: boolean;
     closeProps?: Dialog_2.Close.Props;
     portalProps?: Dialog_2.Portal.Props;
@@ -1240,10 +1313,9 @@ export function DropdownMenuItem(input: DropdownMenuItemProps): React$1.ReactEle
 
 // @public (undocumented)
 export interface DropdownMenuItemProps extends Menu.Item.Props {
-    // (undocumented)
     inset?: boolean;
     // (undocumented)
-    variant?: 'default' | 'destructive';
+    variant?: DropdownMenuItemVariant;
 }
 
 // @public (undocumented)
@@ -1310,9 +1382,20 @@ export function EmptyContent(input: React$1.ComponentProps<'div'>): React$1.Reac
 export function EmptyDescription(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function EmptyErrorDetail(input: React$1.ComponentProps<'div'> & {
+export function EmptyErrorDetail(input: EmptyErrorDetailProps): React$1.ReactElement;
+
+// @public (undocumented)
+export interface EmptyErrorDetailLabels {
+    copy?: string;
+    hideDetails?: string;
+    showDetails?: string;
+}
+
+// @public (undocumented)
+export type EmptyErrorDetailProps = React$1.ComponentProps<'div'> & {
     error: string;
-}): React$1.ReactElement;
+    labels?: EmptyErrorDetailLabels;
+};
 
 // @public (undocumented)
 export function EmptyHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -1325,7 +1408,9 @@ export function EmptyMedia(input: React$1.ComponentProps<'div'> & {
 export { EmptyMediaVariant }
 
 // @public (undocumented)
-export function EmptyTitle(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export function EmptyTitle(input: React$1.ComponentProps<'div'> & {
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
+}): React$1.ReactElement;
 
 // @public
 export function extractColorFromImage(img: HTMLImageElement, options?: ExtractColorOptions): ExtractedColor;
@@ -1380,8 +1465,15 @@ export type FeedbackStateIconName = keyof typeof feedbackIcons;
 
 export { FeedbackStateKind }
 
-// @public (undocumented)
-export interface FeedbackStateProps {
+// @public
+export interface FeedbackStateLabels {
+    descriptions?: Partial<Record<FeedbackStateKind, string>>;
+    noResults?: (query: string) => string;
+    titles?: Partial<Record<FeedbackStateKind, string>>;
+}
+
+// @public
+export interface FeedbackStateProps extends Omit<React$1.ComponentProps<'div'>, 'children' | 'title'> {
     // (undocumented)
     actions?: FeedbackStateAction[];
     // (undocumented)
@@ -1392,6 +1484,9 @@ export interface FeedbackStateProps {
     error?: unknown;
     // (undocumented)
     icon?: FeedbackStateIcon;
+    // (undocumented)
+    labels?: FeedbackStateLabels;
+    level?: 1 | 2 | 3 | 4 | 5 | 6;
     // (undocumented)
     query?: string;
     // (undocumented)
@@ -1456,6 +1551,8 @@ export { FieldOrientation }
 // @public (undocumented)
 export type FieldProps = React$1.ComponentProps<'div'> & {
     orientation?: FieldOrientation;
+    invalid?: boolean;
+    disabled?: boolean;
 };
 
 // @public (undocumented)
@@ -1666,7 +1763,7 @@ export function ItemFooter(input: React$1.ComponentProps<'div'>): React$1.ReactE
 // @public (undocumented)
 export function ItemGroup(input: ItemGroupProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type ItemGroupProps = React$1.ComponentProps<'div'> & {
     variant?: ItemGroupVariant;
     surface?: ItemGroupSurface;
@@ -1686,7 +1783,7 @@ export type ItemMediaProps = React$1.ComponentProps<'div'> & {
 // @public (undocumented)
 export type ItemProps = useRender.ComponentProps<'div'> & {
     variant?: ItemVariant;
-    size?: ItemSize;
+    size?: ItemSize | ItemSizeAlias;
     tone?: ItemTone;
 };
 
@@ -1715,6 +1812,41 @@ export function Label(input: LabelProps): React$1.ReactElement;
 
 // @public (undocumented)
 export type LabelProps = React$1.ComponentProps<'label'>;
+
+// @public
+export function LayeredScene(input: LayeredSceneProps): React$1.ReactElement;
+
+// @public
+export function LayeredSceneContent(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+
+// @public
+export function LayeredSceneForeground(input: LayeredSceneForegroundProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type LayeredSceneForegroundProps = Omit<React$1.ComponentProps<'div'>, 'aria-hidden' | 'children'> & {
+    focus?: ArtPlateFocus;
+    focusMobile?: ArtPlateFocus;
+    priority?: boolean;
+    showOnPhone?: boolean;
+    sizes?: string;
+    src: string;
+    srcSet?: string;
+};
+
+// @public
+export function LayeredScenePlate(input: LayeredScenePlateProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type LayeredScenePlateProps = Omit<ArtPlateProps, 'children'>;
+
+// @public (undocumented)
+export type LayeredSceneProps = React$1.ComponentProps<'div'> & {
+    placement?: LayeredScenePlacement;
+    width?: LayeredSceneWidth;
+};
+
+// @public
+export function LayeredSceneStage(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public
 export function loadAndExtractColor(imageUrl: string, options?: ExtractColorOptions & {
@@ -1765,6 +1897,7 @@ export type MarqueeProps = ComponentPropsWithoutRef<'div'> & {
     reverse?: boolean;
     pauseOnHover?: boolean;
     paused?: boolean;
+    pauseLabel?: string;
     children: ReactNode;
     vertical?: boolean;
     repeat?: number;
@@ -1916,7 +2049,7 @@ export type PaginationContentProps = React$1.ComponentProps<'ul'>;
 // @public (undocumented)
 export function PaginationEllipsis(input: PaginationEllipsisProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationEllipsisProps = React$1.ComponentProps<'span'>;
 
 // @public (undocumented)
@@ -1931,18 +2064,21 @@ export function PaginationLink(input: PaginationLinkProps): React$1.ReactElement
 // @public (undocumented)
 export type PaginationLinkProps = {
     isActive?: boolean;
-} & Pick<ButtonProps, 'size'> & React$1.ComponentProps<'a'>;
+    disabled?: boolean;
+    render?: useRender.RenderProp;
+    size?: PaginationLinkSize;
+} & React$1.ComponentProps<'a'>;
 
 // @public (undocumented)
 export function PaginationNext(input: PaginationNextProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationNextProps = React$1.ComponentProps<typeof PaginationLink>;
 
 // @public (undocumented)
 export function PaginationPrevious(input: PaginationPreviousProps): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export type PaginationPreviousProps = React$1.ComponentProps<typeof PaginationLink>;
 
 // @public (undocumented)
@@ -1964,7 +2100,7 @@ export { PointerInput }
 // @public (undocumented)
 export function Popover(props: Popover_2.Root.Props): React$1.ReactElement;
 
-// @public (undocumented)
+// @public
 export function PopoverAnchor(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
@@ -1977,6 +2113,11 @@ export function PopoverContent(input: PopoverContentProps): React$1.ReactElement
 export interface PopoverContentProps extends Popover_2.Popup.Props {
     // (undocumented)
     align?: Popover_2.Positioner.Props['align'];
+    // (undocumented)
+    alignOffset?: Popover_2.Positioner.Props['alignOffset'];
+    anchor?: Popover_2.Positioner.Props['anchor'];
+    // (undocumented)
+    collisionPadding?: Popover_2.Positioner.Props['collisionPadding'];
     // (undocumented)
     portalContainer?: Popover_2.Portal.Props['container'];
     // (undocumented)
@@ -1992,7 +2133,7 @@ export function PopoverDescription(input: Popover_2.Description.Props): React$1.
 export function PopoverHeader(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
 
 // @public (undocumented)
-export function PopoverPortal(props: Popover_2.Portal.Props): React$1.ReactElement;
+export function PopoverPortal(input: Popover_2.Portal.Props): React$1.ReactElement;
 
 // @public (undocumented)
 export function PopoverTitle(input: Popover_2.Title.Props): React$1.ReactElement;
@@ -2044,8 +2185,7 @@ export function ProgressIndicator(input: ProgressPrimitive.Indicator.Props): Rea
 // @public
 export function ProgressiveBlur(input: ProgressiveBlurProps): React$1.JSX.Element;
 
-// @public (undocumented)
-export type ProgressiveBlurPosition = 'both' | 'bottom' | 'top';
+export { ProgressiveBlurPosition }
 
 // @public (undocumented)
 export interface ProgressiveBlurProps {
@@ -2107,194 +2247,8 @@ export type RatingProps = Omit<React$1.ComponentProps<'div'>, 'defaultValue' | '
     size?: RatingSize;
 };
 
-// @public (undocumented)
-export const reactRendererConformance: readonly [{
-    readonly contractId: "button";
-    readonly implementedStates: readonly ["rest", "pressed", "disabled", "loading"];
-    readonly verifiedSharedOutcomes: readonly ["action-fires-once", "loading-blocks-repeat-activation", "disabled-prevents-activation"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "announces-loading", "disabled-while-loading"];
-    readonly verifiesMotionRecipe: true;
-}, {
-    readonly contractId: "alert";
-    readonly implementedStates: readonly ["info", "success", "warning", "error"];
-    readonly verifiedSharedOutcomes: readonly ["tone-is-not-conveyed-by-color-alone", "message-remains-readable", "action-does-not-obscure-status"];
-    readonly verifiedAccessibilityOutcomes: readonly ["announces-semantic-tone", "text-does-not-rely-on-color"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "dialog";
-    readonly implementedStates: readonly ["closed", "open", "focus-visible"];
-    readonly verifiedSharedOutcomes: readonly ["opening-presents-a-modal-context", "background-interaction-is-blocked-while-open", "dismissal-returns-to-the-originating-context"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-modal-title", "keeps-assistive-focus-in-the-modal-context", "restores-access-to-the-originating-control"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "alert-dialog";
-    readonly implementedStates: readonly ["closed", "open"];
-    readonly verifiedSharedOutcomes: readonly ["consequential-action-requires-explicit-confirmation", "cancel-dismisses-without-performing-the-action", "confirmation-performs-the-action-once-and-dismisses"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-alert-dialog-title", "exposes-consequence-description", "identifies-cancel-and-confirm-actions"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "field";
-    readonly implementedStates: readonly ["default", "invalid", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["label-identifies-control", "description-explains-input", "invalid-state-exposes-error"];
-    readonly verifiedAccessibilityOutcomes: readonly ["associates-label", "associates-description", "announces-error"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "destination-link";
-    readonly implementedStates: readonly ["rest", "focus-visible"];
-    readonly verifiedSharedOutcomes: readonly ["internal-destination-preserves-application-navigation", "external-destination-uses-platform-external-navigation", "destination-kind-remains-distinguishable"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-link-label", "announces-external-destination-behavior", "preserves-native-link-semantics"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "input";
-    readonly implementedStates: readonly ["rest", "focus", "disabled", "invalid"];
-    readonly verifiedSharedOutcomes: readonly ["value-remains-editable-when-enabled", "focus-is-visible", "invalid-state-is-announced"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "exposes-value", "announces-invalid"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "textarea";
-    readonly implementedStates: readonly ["rest", "focus", "disabled", "invalid"];
-    readonly verifiedSharedOutcomes: readonly ["multi-line-value-remains-editable", "focus-is-visible", "invalid-state-is-announced"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "exposes-value", "announces-invalid"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "switch";
-    readonly implementedStates: readonly ["off", "on", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["value-is-boolean", "activation-toggles-value", "disabled-prevents-change"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "exposes-boolean-value", "preserves-native-control-role"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "select";
-    readonly implementedStates: readonly ["closed", "open", "disabled", "selected-item", "disabled-item"];
-    readonly verifiedSharedOutcomes: readonly ["current-selection-remains-visible", "activation-reveals-available-options", "choosing-an-option-updates-the-value-once", "disabled-controls-and-options-prevent-selection"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "exposes-selected-value", "preserves-single-selection-semantics"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "segmented-control";
-    readonly implementedStates: readonly ["rest", "selected", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["one-segment-is-selected-at-a-time", "activation-updates-the-selection-once", "disabled-segment-prevents-selection"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-each-segment-label", "exposes-selected-state", "preserves-single-selection-semantics"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "radio";
-    readonly implementedStates: readonly ["unchecked", "checked", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["exactly-one-option-may-be-selected", "activation-moves-selection-to-the-chosen-option", "disabled-option-prevents-selection"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-group-label", "exposes-option-labels-and-selected-state", "preserves-single-selection-semantics"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "slider";
-    readonly implementedStates: readonly ["rest", "dragging", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["value-remains-within-the-declared-range", "interaction-updates-value-using-the-declared-step", "disabled-control-prevents-value-change"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "exposes-current-value-and-range", "supports-adjustable-actions"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "dropdown-menu";
-    readonly implementedStates: readonly ["closed", "open", "disabled", "checked", "destructive"];
-    readonly verifiedSharedOutcomes: readonly ["enabled-action-executes-once-and-dismisses-the-menu", "disabled-action-does-not-execute", "checked-choice-exposes-its-current-state", "destructive-action-retains-destructive-intent"];
-    readonly verifiedAccessibilityOutcomes: readonly ["trigger-exposes-menu-availability", "items-expose-label-role-and-disabled-state", "checked-items-expose-selected-or-checked-state"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "accordion";
-    readonly implementedStates: readonly ["closed", "open", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["activation-toggles-associated-content-visibility", "expanded-state-matches-content-visibility", "disabled-trigger-prevents-disclosure-change"];
-    readonly verifiedAccessibilityOutcomes: readonly ["trigger-exposes-expanded-state", "trigger-is-associated-with-disclosed-content", "disabled-trigger-exposes-disabled-state"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "calendar";
-    readonly implementedStates: readonly ["rest", "selected", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["selection-updates-to-an-allowed-date", "disabled-date-prevents-selection", "selected-date-remains-visible"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-control-label", "dates-expose-complete-date-names", "selected-date-exposes-selected-state"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "search-field";
-    readonly implementedStates: readonly ["empty", "query", "focus", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["editing-updates-the-query", "clear-empties-the-query-and-preserves-input-context", "submit-commits-the-current-query-once", "disabled-search-prevents-editing-and-clear"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-search-input-role-and-label", "clear-action-has-an-accessible-label", "disabled-state-is-exposed"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "tabs";
-    readonly implementedStates: readonly ["rest", "selected"];
-    readonly verifiedSharedOutcomes: readonly ["one-tab-is-selected-at-a-time", "selection-reveals-the-associated-content", "selected-tab-remains-visually-distinguishable"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-tab-labels", "exposes-selected-state", "associates-selection-with-visible-content"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "load-more-trigger";
-    readonly implementedStates: readonly ["idle", "loading", "failed", "exhausted"];
-    readonly verifiedSharedOutcomes: readonly ["loading-is-announced", "failure-provides-retry", "exhaustion-is-announced", "existing-items-remain-stable-while-appending"];
-    readonly verifiedAccessibilityOutcomes: readonly ["announces-loading", "exposes-retry-action", "announces-exhausted"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "skeleton";
-    readonly implementedStates: readonly ["loading", "reduced-motion"];
-    readonly verifiedSharedOutcomes: readonly ["placeholder-is-hidden-from-assistive-technology", "interaction-is-blocked-while-loading", "reduced-motion-result-is-static"];
-    readonly verifiedAccessibilityOutcomes: readonly ["hidden-from-accessibility-tree", "blocks-interaction-while-active"];
-    readonly verifiesMotionRecipe: true;
-}, {
-    readonly contractId: "toggle";
-    readonly implementedStates: readonly ["off", "on", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["selected-state-is-visible", "activation-toggles-selection", "disabled-prevents-change"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "announces-selected-state", "preserves-button-role"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "toggle-group";
-    readonly implementedStates: readonly ["rest", "selected", "disabled"];
-    readonly verifiedSharedOutcomes: readonly ["selection-state-is-visible", "disabled-options-cannot-change-selection"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-selection", "exposes-disabled-state"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "card";
-    readonly implementedStates: readonly ["rest", "interactive", "focus-visible"];
-    readonly verifiedSharedOutcomes: readonly ["content-order-is-preserved", "static-card-does-not-imply-action", "interactive-card-has-one-primary-action"];
-    readonly verifiedAccessibilityOutcomes: readonly ["preserves-content-order", "does-not-imply-action-when-static"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "badge";
-    readonly implementedStates: readonly ["neutral", "accent", "success", "warning", "error"];
-    readonly verifiedSharedOutcomes: readonly ["label-remains-readable-without-color", "semantic-tone-retains-meaning"];
-    readonly verifiedAccessibilityOutcomes: readonly ["text-does-not-rely-on-color"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "avatar";
-    readonly implementedStates: readonly ["loading", "loaded", "fallback"];
-    readonly verifiedSharedOutcomes: readonly ["accessible-name-is-preserved", "fallback-preserves-identity", "loading-does-not-expose-empty-image"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-accessible-name", "fallback-preserves-identity"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "empty";
-    readonly implementedStates: readonly ["empty", "error"];
-    readonly verifiedSharedOutcomes: readonly ["heading-explains-state", "supporting-copy-provides-context", "recovery-action-remains-available"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-heading", "exposes-recovery-action", "preserves-reading-order"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "progress";
-    readonly implementedStates: readonly ["indeterminate", "progressing", "complete"];
-    readonly verifiedSharedOutcomes: readonly ["label-identifies-operation", "determinate-value-is-exposed", "completion-is-distinguishable"];
-    readonly verifiedAccessibilityOutcomes: readonly ["exposes-label", "announces-progress-value"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "toaster";
-    readonly implementedStates: readonly ["visible", "dismissing", "reduced-motion"];
-    readonly verifiedSharedOutcomes: readonly ["message-is-announced", "focus-is-not-trapped", "dismissal-respects-motion-preference"];
-    readonly verifiedAccessibilityOutcomes: readonly ["announces-message", "does-not-trap-focus"];
-    readonly verifiesMotionRecipe: true;
-}, {
-    readonly contractId: "item";
-    readonly implementedStates: readonly ["rest"];
-    readonly verifiedSharedOutcomes: readonly ["rows-keep-reading-order", "dividers-are-decorative"];
-    readonly verifiedAccessibilityOutcomes: readonly ["preserves-row-order", "hides-dividers-from-assistive-technology"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "carousel";
-    readonly implementedStates: readonly ["rest"];
-    readonly verifiedSharedOutcomes: readonly ["one-dot-per-slide", "current-slide-is-marked", "choosing-a-dot-shows-its-slide"];
-    readonly verifiedAccessibilityOutcomes: readonly ["names-the-indicator", "exposes-the-current-position"];
-    readonly verifiesMotionRecipe: false;
-}, {
-    readonly contractId: "message";
-    readonly implementedStates: readonly ["rest"];
-    readonly verifiedSharedOutcomes: readonly ["direction-sets-side-and-fill", "runs-join-at-shared-corners", "status-is-named"];
-    readonly verifiedAccessibilityOutcomes: readonly ["names-the-sender", "names-the-delivery-status"];
-    readonly verifiesMotionRecipe: false;
-}];
+// @public
+export const reactRendererConformance: readonly ReactRendererConformanceEvidence[];
 
 // @public (undocumented)
 export interface ReactRendererConformanceEvidence {
@@ -2311,7 +2265,7 @@ export interface ReactRendererConformanceEvidence {
 }
 
 // @public (undocumented)
-export type ReactVerifiedContractId = (typeof reactRendererConformance)[number]['contractId'];
+export type ReactVerifiedContractId = CrossRendererContractId;
 
 // @public (undocumented)
 export function ResizableHandle(input: ResizableHandleProps): React$1.ReactElement;
@@ -2343,14 +2297,14 @@ export type ResizablePanelProps = React$1.ComponentProps<typeof ResizablePrimiti
 // @public (undocumented)
 export function ScrollableList(input: ScrollableListProps): React$1.JSX.Element;
 
-// @public
+// @public (undocumented)
 export const scrollableListControlClassNames: {
     readonly button: "a63-ScrollableList-controlButton";
     readonly icon: "a63-ScrollableList-controlIcon";
 };
 
 // @public (undocumented)
-export interface ScrollableListProps {
+export interface ScrollableListProps extends Omit<React.ComponentProps<'div'>, 'children' | 'className'> {
     // (undocumented)
     children: React.ReactNode;
     // (undocumented)
@@ -2361,6 +2315,8 @@ export interface ScrollableListProps {
     disabled?: boolean;
     draggable?: boolean;
     mask?: boolean;
+    scrollEndLabel?: string;
+    scrollStartLabel?: string;
     // (undocumented)
     showChevrons?: boolean;
     // (undocumented)
@@ -2424,22 +2380,25 @@ export interface SegmentedControlItem {
 }
 
 // @public (undocumented)
-export interface SegmentedControlProps {
+export interface SegmentedControlProps extends Omit<RadioGroup_2.Props<string>, 'children' | 'className' | 'defaultValue' | 'onValueChange' | 'value'> {
+    'aria-label'?: string;
     animateBackplate?: boolean;
     // (undocumented)
     className?: string;
+    defaultValue?: string;
     fullWidth?: boolean;
     // (undocumented)
     items: SegmentedControlItem[];
     // (undocumented)
-    onValueChange: (value: string) => void;
+    onValueChange?: (value: string) => void;
+    // (undocumented)
+    ref?: React$1.Ref<HTMLDivElement>;
     // (undocumented)
     size?: SegmentedControlSize;
     tabClassName?: string;
     // (undocumented)
     tone?: SegmentedControlTone;
-    // (undocumented)
-    value: string;
+    value?: string;
     // (undocumented)
     variant?: SegmentedControlVariant;
 }
@@ -2486,6 +2445,7 @@ export const selectTriggerDefaultClassName = "a63-Select-trigger";
 // @public (undocumented)
 export type SelectTriggerProps = Select_2.Trigger.Props & {
     size?: SelectSize;
+    invalid?: boolean;
 };
 
 // @public (undocumented)
@@ -2755,6 +2715,8 @@ export type SidebarProps = React$1.ComponentProps<'div'> & {
     variant?: SidebarVariant;
     collapsible?: SidebarCollapsible;
     dir?: React$1.ComponentProps<typeof SheetPopup>['dir'];
+    mobileTitle?: string;
+    mobileDescription?: string;
 };
 
 // @public (undocumented)
@@ -2775,7 +2737,12 @@ export function SidebarRail(input: React$1.ComponentProps<'button'>): React$1.Re
 export function SidebarSeparator(input: React$1.ComponentProps<typeof Separator>): React$1.ReactElement;
 
 // @public (undocumented)
-export function SidebarTrigger(input: React$1.ComponentProps<typeof Button>): React$1.ReactElement;
+export function SidebarTrigger(input: SidebarTriggerProps): React$1.ReactElement;
+
+// @public (undocumented)
+export type SidebarTriggerProps = React$1.ComponentProps<typeof Button> & {
+    label?: string;
+};
 
 // @public (undocumented)
 export function Skeleton(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
@@ -2793,6 +2760,7 @@ export interface SliderProps extends Omit<SliderRootProps, 'value' | 'defaultVal
     defaultValue?: number | readonly number[];
     getThumbAriaLabel?: (index: number) => string;
     onValueChange?: (value: number) => void;
+    onValuesChange?: (values: number[], eventDetails: Slider_2.Root.ChangeEventDetails) => void;
     tone?: SliderTone;
     value?: number | readonly number[];
 }
@@ -2835,8 +2803,10 @@ export type TableCaptionProps = React$1.ComponentProps<'caption'>;
 export function TableCell(input: TableCellProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableCellProps = React$1.ComponentProps<'td'> & {
+export type TableCellProps = Omit<React$1.ComponentProps<'td'>, 'align'> & {
+    align?: TableAlign;
     sticky?: TableStickyEdge;
+    wrap?: boolean;
 };
 
 // @public (undocumented)
@@ -2855,22 +2825,42 @@ export function TableHeader(input: TableHeaderProps): React$1.ReactElement;
 export type TableHeaderProps = React$1.ComponentProps<'thead'>;
 
 // @public (undocumented)
-export type TableHeadProps = React$1.ComponentProps<'th'> & {
+export type TableHeadProps = Omit<React$1.ComponentProps<'th'>, 'align'> & {
+    align?: TableAlign;
     sticky?: TableStickyEdge;
+    wrap?: boolean;
+    sortKey?: string;
+    firstSortDirection?: TableSortDirection;
+    sortIcon?: (direction: TableSortDirection | 'none') => React$1.ReactNode;
 };
 
 // @public (undocumented)
 export type TableProps = React$1.ComponentProps<'table'> & {
-    size?: TableSize;
+    size?: TableSize | TableSizeAlias;
     tone?: TableTone;
     variant?: TableVariant;
+    sort?: TableSort | null;
+    onSortChange?: (sort: TableSort) => void;
 };
 
 // @public (undocumented)
 export function TableRow(input: TableRowProps): React$1.ReactElement;
 
 // @public (undocumented)
-export type TableRowProps = React$1.ComponentProps<'tr'>;
+export type TableRowProps = React$1.ComponentProps<'tr'> & {
+    selected?: boolean;
+};
+
+// @public
+export interface TableSort {
+    // (undocumented)
+    column: string;
+    // (undocumented)
+    direction: TableSortDirection;
+}
+
+// @public
+export type TableSortDirection = 'ascending' | 'descending';
 
 // @public (undocumented)
 export function Tabs(input: Tabs_2.Root.Props): React$1.ReactElement;
@@ -2880,8 +2870,7 @@ export function TabsList(input: TabsListProps): React$1.ReactElement;
 
 // @public (undocumented)
 export interface TabsListProps extends Tabs_2.List.Props {
-    // (undocumented)
-    size?: TabsSize;
+    size?: TabsSize | TabsSizeAlias;
     // (undocumented)
     variant?: TabsVariant;
 }
@@ -2904,8 +2893,7 @@ export { TabsTab as TabsTrigger }
 
 // @public (undocumented)
 export interface TabsTabProps extends Tabs_2.Tab.Props {
-    // (undocumented)
-    size?: TabsSize;
+    size?: TabsSize | TabsSizeAlias;
 }
 
 // @public (undocumented)
@@ -2915,9 +2903,11 @@ export function Textarea(input: TextareaProps): React$1.ReactElement;
 export type TextareaProps = Omit<React$1.ComponentProps<'textarea'>, 'className'> & {
     className?: string;
     invalid?: boolean;
+    maxRows?: number;
     size?: TextareaSize;
     shadow?: boolean;
     textareaClassName?: string;
+    variant?: TextareaVariant;
     unstyled?: boolean;
 };
 
@@ -2935,6 +2925,8 @@ export interface TextTickerProps extends Omit<ComponentProps<'span'>, 'children'
     marqueeDelay?: number;
     // (undocumented)
     marqueeSpeed?: number;
+    paused?: boolean;
+    pauseLabel?: string;
     variant?: TextTickerVariant;
 }
 
@@ -2946,7 +2938,7 @@ export const TINT_MAX_LUMINANCE = 0.015;
 export { toast }
 
 // @public (undocumented)
-export function Toaster(input: ToasterProps): React$1.ReactElement;
+export function Toaster(input: ToasterProps): React$1.ReactElement | null;
 
 // @public (undocumented)
 export interface ToasterProps extends ToasterProps_2 {
@@ -3039,6 +3031,7 @@ export function UIProvider(input: UIProviderProps): React$1.ReactElement;
 
 // @public (undocumented)
 export interface UIProviderProps extends useRender.ComponentProps<'div'>, Partial<UIEnvironment> {
+    dir?: 'ltr' | 'rtl' | 'auto';
 }
 
 // @public (undocumented)
@@ -3094,6 +3087,7 @@ export const useFormField: () => {
     isValidating: boolean;
     error?: react_hook_form.FieldError | undefined;
     id: string;
+    hasDescription: boolean;
     name: string;
     formItemId: string;
     formDescriptionId: string;

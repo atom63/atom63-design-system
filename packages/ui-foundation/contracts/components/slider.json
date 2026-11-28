@@ -39,6 +39,72 @@
       "$ref": "#/lists/tones"
     }
   },
+  "intent": {
+    "description": "What a slider is, independent of any platform: its direction, whether it picks one value or a range, and the tone of its track. atomSliderTone(_:) takes the tone on iOS; the native Slider is horizontal and single-valued only, so iOS has no orientation or mode axis.",
+    "axes": {
+      "orientation": ["horizontal", "vertical"],
+      "mode": ["single", "range"],
+      "tone": ["accent", "neutral"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "orientation": {
+            "list": "orientations",
+            "map": {
+              "horizontal": {
+                "orientation": "horizontal"
+              },
+              "vertical": {
+                "orientation": "vertical"
+              }
+            },
+            "extensions": {}
+          },
+          "mode": {
+            "list": "modes",
+            "map": {
+              "single": {
+                "mode": "single"
+              },
+              "range": {
+                "mode": "range"
+              }
+            },
+            "extensions": {}
+          },
+          "tone": {
+            "list": "tones",
+            "map": {
+              "accent": {
+                "tone": "accent"
+              },
+              "neutral": {
+                "tone": "neutral"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "tone": {
+            "swiftEnum": "AtomTrackTone",
+            "map": {
+              "accent": {
+                "tone": "accent"
+              },
+              "neutral": {
+                "tone": "neutral"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "slider",

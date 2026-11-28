@@ -147,4 +147,11 @@ describe('InputGroup', () => {
       'false'
     )
   })
+
+  it('focuses the field from a press on the wrapper hit strip', () => {
+    const { container } = render(<Input aria-label="Name" />)
+    const wrapper = container.querySelector<HTMLElement>('[data-slot="input-control"]')
+    wrapper?.dispatchEvent(new MouseEvent('mousedown', { bubbles: true, cancelable: true }))
+    expect(screen.getByRole('textbox', { name: 'Name' })).toHaveFocus()
+  })
 })

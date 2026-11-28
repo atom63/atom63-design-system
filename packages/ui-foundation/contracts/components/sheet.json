@@ -3,10 +3,10 @@
   "component": "sheet",
   "maturity": "stable",
   "lists": {
-    "sides": ["right", "left", "top", "bottom"],
+    "sides": ["right", "left", "top", "bottom", "inline-start", "inline-end"],
     "variants": ["default", "inset"],
     "footerVariants": ["default", "bare"],
-    "states": ["closed", "open", "starting", "ending"],
+    "states": ["closed", "open", "starting", "ending", "focus-visible"],
     "slots": [
       "sheet",
       "sheet-portal",

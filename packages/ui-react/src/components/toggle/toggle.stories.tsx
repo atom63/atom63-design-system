@@ -83,6 +83,23 @@ export const States: Story = {
   ),
 }
 
+/* Captured with forced colors on (Windows High Contrast): a pressed toggle of
+   every tone takes the system selection colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 12 }}>
+      <Toggle>Rest</Toggle>
+      <Toggle defaultPressed>Neutral</Toggle>
+      <Toggle defaultPressed tone="accent">
+        Accent
+      </Toggle>
+      <Toggle defaultPressed tone="subtle">
+        Subtle
+      </Toggle>
+    </div>
+  ),
+}
+
 /* Gapped independent toggles — compose standalone Toggles, not ToggleGroup. */
 export const GappedRow: Story = {
   render: () => (
@@ -113,7 +130,47 @@ function PreviewCard({ children, label }: { children: ReactNode; label: string }
   )
 }
 
+/* The sRGB channels of a computed CSS colour, read back through a canvas so any
+   colour syntax (oklch, color-mix) resolves the way the browser paints it. */
+function paintedRgb(color: string): [number, number, number] {
+  const context = document.createElement('canvas').getContext('2d')
+  if (!context) throw new Error('Expected a 2D canvas context')
+  context.fillStyle = color
+  context.fillRect(0, 0, 1, 1)
+  const [r, g, b] = context.getImageData(0, 0, 1, 1).data
+  return [r, g, b]
+}
+
+function contrast(a: string, b: string): number {
+  const luminance = (color: string) => {
+    const [r, g, b] = paintedRgb(color).map(channel => {
+      const c = channel / 255
+      return c <= 0.04045 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4
+    })
+    return 0.2126 * r + 0.7152 * g + 0.0722 * b
+  }
+  const [hi, lo] = [luminance(a), luminance(b)].sort((x, y) => y - x)
+  return (hi + 0.05) / (lo + 0.05)
+}
+
 export const Themes: Story = {
+  /* A pressed neutral toggle must stand apart from the surface it sits on (WCAG
+     1.4.11 non-text contrast, 3:1) in every theme and mode. */
+  play: ({ canvasElement }) => {
+    for (const row of canvasElement.querySelectorAll<HTMLElement>('[data-toggle-row]')) {
+      const pressed = row.querySelector<HTMLElement>(
+        '.a63-Toggle[data-tone="neutral"][data-pressed]'
+      )
+      if (!pressed) throw new Error('Expected a pressed neutral toggle')
+      const ratio = contrast(
+        getComputedStyle(pressed).backgroundColor,
+        getComputedStyle(row).backgroundColor
+      )
+      if (ratio < 3) {
+        throw new Error(`${row.dataset.toggleRow}: pressed fill is ${ratio.toFixed(2)}:1`)
+      }
+    }
+  },
   render: () => (
     <div style={{ display: 'grid', gap: 12 }}>
       {themes.map(theme =>
@@ -129,6 +186,7 @@ export const Themes: Story = {
                 gap: 12,
                 padding: '0.75rem',
               }}
+              data-toggle-row={`${theme} / ${mode}`}
             >
               <span style={{ fontSize: 12, color: 'var(--a63-text-secondary)', width: 96 }}>
                 {theme} / {mode}

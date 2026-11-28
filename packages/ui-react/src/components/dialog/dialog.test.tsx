@@ -44,7 +44,7 @@ describe('Dialog', () => {
     const popup = document.querySelector('[data-slot="dialog-popup"]')
     expect(popup).not.toBeNull()
     expect(popup).toHaveClass('a63-Dialog-popup')
-    expect(popup).toHaveAttribute('data-size', 'default')
+    expect(popup).toHaveAttribute('data-size', 'md')
     expect(popup).toHaveAttribute('data-mobile-placement', 'bottom')
     expect(document.querySelector('[data-slot="dialog-backdrop"]')).not.toBeNull()
     expect(document.querySelector('[data-slot="dialog-header"]')).not.toBeNull()
@@ -52,6 +52,17 @@ describe('Dialog', () => {
     expect(document.querySelector('[data-slot="dialog-description"]')).not.toBeNull()
     expect(document.querySelector('[data-slot="dialog-panel"]')).not.toBeNull()
     expect(document.querySelector('[data-slot="dialog-footer"]')).not.toBeNull()
+  })
+
+  it('accepts the deprecated size name default as md', () => {
+    render(
+      <Dialog defaultOpen>
+        <DialogPopup size="default">
+          <DialogTitle>Title</DialogTitle>
+        </DialogPopup>
+      </Dialog>
+    )
+    expect(document.querySelector('[data-slot="dialog-popup"]')).toHaveAttribute('data-size', 'md')
   })
 
   it('renders a default close button', () => {

@@ -3,6 +3,7 @@
   "inputs": [
     "packages/ui-react/src/index.ts",
     "packages/ui-react/src/calendar/index.ts",
+    "packages/ui-react/src/chart/index.ts",
     "packages/ui-react/src/layout/index.ts",
     "packages/ui-react/package.json",
     "docs/design-system/ui-react-support-policy.json"
@@ -46,14 +47,15 @@
     ]
   },
   "counts": {
-    "rootValueExports": 437,
-    "rootTypeExports": 200,
-    "packageExportKeys": 81,
-    "cssExportKeys": 74
+    "rootValueExports": 444,
+    "rootTypeExports": 214,
+    "packageExportKeys": 86,
+    "cssExportKeys": 78
   },
   "packageExportKeys": [
     ".",
     "./calendar",
+    "./chart",
     "./layout",
     "./media",
     "./media/lightbox",
@@ -64,6 +66,7 @@
     "./recipes/alert.css",
     "./recipes/amount.css",
     "./recipes/app-view.css",
+    "./recipes/art-plate.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -73,6 +76,7 @@
     "./recipes/calendar.css",
     "./recipes/card.css",
     "./recipes/carousel.css",
+    "./recipes/chart.css",
     "./recipes/chat-composer.css",
     "./recipes/chat-message.css",
     "./recipes/chat-steps.css",
@@ -83,6 +87,7 @@
     "./recipes/connected-panel.css",
     "./recipes/context-menu.css",
     "./recipes/copy-button.css",
+    "./recipes/destination-link.css",
     "./recipes/dialog.css",
     "./recipes/drawer.css",
     "./recipes/dropdown-menu.css",
@@ -97,6 +102,7 @@
     "./recipes/item.css",
     "./recipes/kbd.css",
     "./recipes/label.css",
+    "./recipes/layered-scene.css",
     "./recipes/load-more-trigger.css",
     "./recipes/marquee.css",
     "./recipes/media-lightbox.css",
@@ -141,6 +147,7 @@
     "./recipes/alert.css",
     "./recipes/amount.css",
     "./recipes/app-view.css",
+    "./recipes/art-plate.css",
     "./recipes/autocomplete.css",
     "./recipes/avatar.css",
     "./recipes/badge.css",
@@ -150,6 +157,7 @@
     "./recipes/calendar.css",
     "./recipes/card.css",
     "./recipes/carousel.css",
+    "./recipes/chart.css",
     "./recipes/chat-composer.css",
     "./recipes/chat-message.css",
     "./recipes/chat-steps.css",
@@ -160,6 +168,7 @@
     "./recipes/connected-panel.css",
     "./recipes/context-menu.css",
     "./recipes/copy-button.css",
+    "./recipes/destination-link.css",
     "./recipes/dialog.css",
     "./recipes/drawer.css",
     "./recipes/dropdown-menu.css",
@@ -174,6 +183,7 @@
     "./recipes/item.css",
     "./recipes/kbd.css",
     "./recipes/label.css",
+    "./recipes/layered-scene.css",
     "./recipes/load-more-trigger.css",
     "./recipes/marquee.css",
     "./recipes/media-lightbox.css",
@@ -227,6 +237,15 @@
         "@atom63/source": "./src/calendar/index.ts",
         "import": "./dist/calendar/index.js",
         "types": "./dist/calendar/index.d.ts"
+      }
+    },
+    {
+      "subpath": "./chart",
+      "kind": "module",
+      "target": {
+        "@atom63/source": "./src/chart/index.ts",
+        "import": "./dist/chart/index.js",
+        "types": "./dist/chart/index.d.ts"
       }
     },
     {
@@ -296,6 +315,11 @@
       "target": "./src/components/app-view/app-view.css"
     },
     {
+      "subpath": "./recipes/art-plate.css",
+      "kind": "css",
+      "target": "./src/components/art-plate/art-plate.css"
+    },
+    {
       "subpath": "./recipes/autocomplete.css",
       "kind": "css",
       "target": "./src/components/autocomplete/autocomplete.css"
@@ -339,6 +363,11 @@
       "subpath": "./recipes/carousel.css",
       "kind": "css",
       "target": "./src/components/carousel/carousel.css"
+    },
+    {
+      "subpath": "./recipes/chart.css",
+      "kind": "css",
+      "target": "./src/components/chart/chart.css"
     },
     {
       "subpath": "./recipes/chat-composer.css",
@@ -389,6 +418,11 @@
       "subpath": "./recipes/copy-button.css",
       "kind": "css",
       "target": "./src/components/copy-button/copy-button.css"
+    },
+    {
+      "subpath": "./recipes/destination-link.css",
+      "kind": "css",
+      "target": "./src/components/destination-link/destination-link.css"
     },
     {
       "subpath": "./recipes/dialog.css",
@@ -459,6 +493,11 @@
       "subpath": "./recipes/label.css",
       "kind": "css",
       "target": "./src/components/label/label.css"
+    },
+    {
+      "subpath": "./recipes/layered-scene.css",
+      "kind": "css",
+      "target": "./src/components/layered-scene/layered-scene.css"
     },
     {
       "subpath": "./recipes/load-more-trigger.css",
@@ -836,6 +875,25 @@
       ]
     },
     {
+      "source": "./components/art-plate",
+      "values": [
+        {
+          "name": "ArtPlate",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "ArtPlateFocus",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "ArtPlateProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
       "source": "./components/autocomplete",
       "values": [
         {
@@ -951,6 +1009,14 @@
         }
       ],
       "types": [
+        {
+          "name": "AvatarBadgeProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "AvatarGroupCountProps",
+          "proposedTier": "beta-supported-core"
+        },
         {
           "name": "AvatarProps",
           "proposedTier": "beta-supported-core"
@@ -1126,6 +1192,10 @@
         },
         {
           "name": "CardMediaOverlayScrim",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "CardMediaOverlayTopEnd",
           "proposedTier": "beta-supported-core"
         },
         {
@@ -1458,6 +1528,10 @@
         }
       ],
       "types": [
+        {
+          "name": "CommandDialogPopupProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
         {
           "name": "CommandInputProps",
           "proposedTier": "beta-supported-composition-conditional"
@@ -1931,6 +2005,14 @@
       ],
       "types": [
         {
+          "name": "EmptyErrorDetailLabels",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "EmptyErrorDetailProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
           "name": "EmptyMediaVariant",
           "proposedTier": "beta-supported-composition-conditional"
         }
@@ -1959,6 +2041,10 @@
         },
         {
           "name": "FeedbackStateKind",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "FeedbackStateLabels",
           "proposedTier": "beta-supported-composition-conditional"
         },
         {
@@ -2352,6 +2438,45 @@
       "types": [
         {
           "name": "LabelProps",
+          "proposedTier": "beta-supported-core"
+        }
+      ]
+    },
+    {
+      "source": "./components/layered-scene",
+      "values": [
+        {
+          "name": "LayeredScene",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneContent",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneForeground",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredScenePlate",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneStage",
+          "proposedTier": "beta-supported-core"
+        }
+      ],
+      "types": [
+        {
+          "name": "LayeredSceneForegroundProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredScenePlateProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "LayeredSceneProps",
           "proposedTier": "beta-supported-core"
         }
       ]
@@ -3218,6 +3343,10 @@
         {
           "name": "SidebarProviderProps",
           "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "SidebarTriggerProps",
+          "proposedTier": "beta-supported-composition-conditional"
         }
       ]
     },
@@ -3394,6 +3523,14 @@
         {
           "name": "TableRowProps",
           "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableSort",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "TableSortDirection",
+          "proposedTier": "beta-supported-core"
         }
       ]
     },
@@ -3473,6 +3610,10 @@
     {
       "source": "./components/toaster",
       "values": [
+        {
+          "name": "toast",
+          "proposedTier": "beta-supported-core"
+        },
         {
           "name": "Toaster",
           "proposedTier": "beta-supported-core"
@@ -3743,16 +3884,6 @@
           "proposedTier": "beta-supported-core"
         }
       ]
-    },
-    {
-      "source": "./sonner",
-      "values": [
-        {
-          "name": "toast",
-          "proposedTier": "beta-supported-core"
-        }
-      ],
-      "types": []
     }
   ],
   "subpathExports": [
@@ -3772,6 +3903,35 @@
             {
               "name": "CalendarProps",
               "proposedTier": "monitor-high-risk"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "subpath": "./chart",
+      "source": "packages/ui-react/src/chart/index.ts",
+      "exports": [
+        {
+          "source": "./components/chart",
+          "values": [
+            {
+              "name": "Chart",
+              "proposedTier": "beta-supported-core"
+            }
+          ],
+          "types": [
+            {
+              "name": "ChartLabels",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ChartProps",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ChartSeries",
+              "proposedTier": "beta-supported-core"
             }
           ]
         }
@@ -3807,6 +3967,10 @@
           "types": [
             {
               "name": "ContainerChrome",
+              "proposedTier": "beta-supported-core"
+            },
+            {
+              "name": "ContainerGap",
               "proposedTier": "beta-supported-core"
             },
             {
@@ -3997,6 +4161,10 @@
             }
           ],
           "types": [
+            {
+              "name": "SectionHeaderAlign",
+              "proposedTier": "beta-supported-core"
+            },
             {
               "name": "SectionHeaderLevel",
               "proposedTier": "beta-supported-core"

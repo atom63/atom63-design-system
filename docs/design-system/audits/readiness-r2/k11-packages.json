@@ -1,0 +1,2774 @@
+{
+  "scope": "Layer 3, batch 11: @atom63/mdx (prose and blocks), @atom63/inform, @atom63/widgets, @atom63/brand (web and React only; iOS in backlog)",
+  "reviewedAt": "2026-11-20",
+  "round": 2,
+  "notes": "One subject per public component; compound parts are scored with their root. Out of scope: @atom63/mdx primitives (exportTier 'experimental' in docs/design-system/audits/package-surface.json), editor, runtime and lightbox helpers (the lightbox is scored with FigureBlock). Evidence: the CLI on main 099d1eba, source, baselines and sweep-r2 logs (all pass). visual-qa-matrix.json is stale and was not relied on. K3 scores are provisional until YZ sees the contact sheets.",
+  "subjects": [
+    {
+      "subject": "@atom63/mdx prose (mdxComponents, MDXContentProvider, DocsMDXContentProvider, ArticleMDXContentProvider)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Providers take a components map and `variant` (article|narrow|docs) per `atom63 docs pattern-mdx`; createMdxComponents() in @atom63/mdx/article lets a consumer override any element (packages/mdx/api/mdx.article.api.md)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Prose elements map to native h1-h6, lists, table, blockquote, details/summary (stories in packages/mdx/src/typography/typography.stories.tsx)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baselines: apps/storybook/visual/__screenshots__/mdx-prose-typography-*.png (9 stories), no Dark prose story."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Headings, lists, tables, code blocks, details/summary, inline elements and a full page captured: apps/storybook/visual/__screenshots__/mdx-prose-typography-{headings,lists,tables,code-blocks,details-summary,inline-elements,full-page}-chromium-linux.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Text in rem; links and summary are native. Prose does not follow compact density (see density finding)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Code padding is physical only where code is always LTR, with craft-allow reasons (packages/mdx/src/styles/base.css:102). Table scroll shadows use left/right background positions (base.css:282-285), symmetric so RTL-safe. No RTL or CJK prose story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured. Wide tables rely on horizontal scroll shadows that are not captured at phone width."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 docs pattern-mdx` (75 lines) shows entry points, the stylesheet import and a runnable DocsMDXContentProvider example; `atom63 api MDXContentProvider` returns only the import line and docs link (no props)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/mdx/src/mdx-components-code.test.tsx, mdx-styles.test.ts, use-mdx-style.test.ts and 9 prose baselines; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx Accordion",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Spreads props onto ui-react Accordion and re-exports Item/Trigger/Content (packages/mdx/src/blocks/accordion/accordion.tsx:21-33); refs pass through React 19 ref-as-prop."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Inherits the ui-react Accordion APG pattern; blocks.a11y.test.tsx:49-62 asserts zero axe violations."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-accordion-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "single-collapsible and multiple captured: apps/storybook/visual/__screenshots__/mdx-blocks-accordion-*.png; open/closed states via ui-react."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/accordion/accordion.tsx), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api Accordion` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/accordion/accordion.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx Callout",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/callout/callout.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). blocks.a11y.test.tsx:20-33 covers Callout with Title/Body/Actions. Tone is carried by tint and border; the authored text must name it (story text 'Warning —', apps/storybook/visual/__screenshots__/mdx-blocks-callout-all-types-chromium-linux.png)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-callout-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "info/warning/error/success captured: apps/storybook/visual/__screenshots__/mdx-blocks-callout-{info,warning,success,error-variant,all-types}-chromium-linux.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api Callout` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/callout/callout.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx CodeBlock",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Spreads rest props (2 spreads in packages/mdx/src/blocks/code-block/code-block.tsx); 12 documented props in `atom63 api CodeBlock`."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-codeblock-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Long overflow, TypeScript and unknown-language fallback captured: apps/storybook/visual/__screenshots__/mdx-blocks-codeblock-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/code-block/code-block.tsx (CopyButton, ScrollArea)), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Code is LTR by design with craft-allow reasons (code-block.css:20,23). Syntax colours switch by mode with `dark:` variants (code-block.tsx:81,135; craft-baseline.json mode-branch entries), not by theme."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api CodeBlock` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/code-block/code-block.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx ColorSwatchItem",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/color-swatch-item/color-swatch-item.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-colorswatchitem-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "primary, muted and grid captured: apps/storybook/visual/__screenshots__/mdx-blocks-colorswatchitem-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api ColorSwatchItem` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/color-swatch-item/color-swatch-item.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx Compare",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/compare/compare.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-compare-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "before/after, dark and dense Chinese content captured: apps/storybook/visual/__screenshots__/mdx-blocks-compare-{before-after,dark,dense-chinese-content}-chromium-linux.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "CJK long-content story captured (apps/storybook/visual/__screenshots__/mdx-blocks-compare-dense-chinese-content-chromium-linux.png); no physical properties in the block; no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api Compare` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/compare/compare.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx ComparisonPair",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/comparison-pair/comparison-pair.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-comparisonpair-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "before/after and with speed control captured: apps/storybook/visual/__screenshots__/mdx-blocks-comparisonpair-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/comparison-pair (Label, Switch)), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api ComparisonPair` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/comparison-pair/comparison-pair.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx CreditsBlock",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/credits-block/credits-block.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-creditsblock-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default and custom label captured: apps/storybook/visual/__screenshots__/mdx-blocks-creditsblock-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api CreditsBlock` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/credits-block/credits-block.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx DemoStage (with DemoConfigPanel)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "DemoStage is a forwardRef component (packages/mdx/api/mdx.blocks.api.md: ForwardRefExoticComponent<DemoStageProps & RefAttributes<HTMLElement>>); DemoConfigPanel has 13 documented props."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-demostage-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, rich content and with config panel captured: apps/storybook/visual/__screenshots__/mdx-blocks-demostage-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/demo-stage/demo-config-panel.tsx), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api DemoStage (with DemoConfigPanel)` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/demo-stage/demo-stage.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx DocExample",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/doc-example/doc-example.tsx:46 takes a fixed prop list; refs are internal only (previewTabRef/codeTabRef), no rest spread or forwarded ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Hand-rolled tablist with role=tab, aria-selected, aria-controls, roving tabIndex and an arrow-key handler (doc-example.tsx:150-190). Its aria-label suffix 'example view' is hard-coded English (doc-example.tsx:154)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-docexample-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, code panel, left-aligned, no title, wide captured: apps/storybook/visual/__screenshots__/mdx-blocks-docexample-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "Targets are sized by viewport, not pointer: tabs are `h-11 … md:h-7` (doc-example.tsx:44) and the copy button `size-11 md:size-7` (doc-example.tsx:139), so a touch tablet at >=768px gets 28px targets; it also overrides the ui-react Button size with custom classes."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 api DocExample` lists 12 props but no example; the pattern-mdx-blocks Demos section documents it."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/doc-example/doc-example.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx DocExampleCode",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/doc-example-code/doc-example-code.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-docexamplecode-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "CSS and TSX captured: apps/storybook/visual/__screenshots__/mdx-blocks-docexamplecode-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api DocExampleCode` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/doc-example-code/doc-example-code.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx ExampleContainer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/example-container/example-container.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-prose-examplecontainer-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, embedded, left-aligned, with title, with description captured: apps/storybook/visual/__screenshots__/mdx-prose-examplecontainer-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 api ExampleContainer` lists 8 props but no example; pattern-mdx-blocks Demos section documents it."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/example-container/example-container.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx FigureBlock (with the figure lightbox)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/figure-block/figure-block.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Images open in ui-react MediaLightbox through @atom63/mdx/lightbox (pattern-mdx entry table)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-figureblock-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "string caption, rich caption slot and with aside captured: apps/storybook/visual/__screenshots__/mdx-blocks-figureblock-*.png. The lightbox open state is not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api FigureBlock (with the figure lightbox)` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/figure-block/figure-block.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx ImageCompare",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "forwardRef with rest spread onto the root (packages/mdx/src/blocks/image-compare/image-compare.tsx:6 imports forwardRef; API report: ForwardRefExoticComponent<Omit<HTMLAttributes<HTMLDivElement>,…>>)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "The draggable handle is react-compare-slider's role=slider (keyboard arrows, aria-valuenow) but its accessible name is the library's fixed English instruction 'Click and drag or focus and use arrow keys to change the position of the slider' (node_modules/.pnpm/react-compare-slider@4.0.0…/dist/hooks-*.mjs); ImageCompare passes neither the before/after labels nor a translatable name (image-compare.tsx:266-277)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-imagecompare-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "plain, side by side and long labels captured: apps/storybook/visual/__screenshots__/mdx-blocks-imagecompare-*.png; loading skeleton fallback (image-compare.tsx:258-263) not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "The handle is a full-height drag target from the library; labels truncate at max-w-[45%] (image-compare.tsx:280-285)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Slider name is fixed English (see K2), so the block cannot be localised; labels truncate (image-compare.tsx:280)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 api ImageCompare` lists 18 props but no example; pattern-mdx-blocks Comparison section documents it."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/image-compare/image-compare.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx KeyIdea",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/key-idea/key-idea.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-keyidea-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, dark and Chinese article note captured: apps/storybook/visual/__screenshots__/mdx-blocks-keyidea-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "CJK story captured (apps/storybook/visual/__screenshots__/mdx-blocks-keyidea-chinese-article-note-chromium-linux.png); no physical properties; no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api KeyIdea` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/key-idea/key-idea.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx LayerStack",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/layer-stack/layer-stack.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-layerstack-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "two content sets captured: apps/storybook/visual/__screenshots__/mdx-blocks-layerstack-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Chinese course-model story captured (apps/storybook/visual/__screenshots__/mdx-blocks-layerstack-chinese-course-model-chromium-linux.png); no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api LayerStack` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/layer-stack/layer-stack.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx MdxPageSkeleton",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/mdx-page-skeleton/mdx-page-skeleton.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-page-skeleton-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "lesson, docs variant, no rail, no inline TOC captured: apps/storybook/visual/__screenshots__/mdx-blocks-page-skeleton-*.png; it is itself the loading state (ui-react Skeleton)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api MdxPageSkeleton` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/mdx-page-skeleton/mdx-page-skeleton.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx MediaCaption",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/media-caption/media-caption.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-mediacaption-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default and with markup captured: apps/storybook/visual/__screenshots__/mdx-blocks-mediacaption-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api MediaCaption` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/media-caption/media-caption.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx MediaPlaceholder",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/media-placeholder/media-placeholder.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-mediaplaceholder-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "image, video, diagram and square captured: apps/storybook/visual/__screenshots__/mdx-blocks-mediaplaceholder-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api MediaPlaceholder` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/media-placeholder/media-placeholder.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx MermaidDiagram",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Props are only animated/chart/labels/title (packages/mdx/src/blocks/mermaid-diagram/mermaid-diagram.tsx:35-41,170): no className, no rest spread, no ref."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). The rendered SVG gets role=img and an aria-label from title or the labels (mermaid-diagram.tsx:283-284); the draw-in animation is skipped under reduced motion (useMdxReducedMotion, mermaid-diagram.tsx:172)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-mermaiddiagram-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "flowchart, sequence, class, state, overview, animated and invalid chart (error) captured: apps/storybook/visual/__screenshots__/mdx-blocks-mermaiddiagram-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/mermaid-diagram (Button)), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api MermaidDiagram` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/mermaid-diagram/mermaid-diagram.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx PageMeta",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/page-meta/page-meta.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-pagemeta-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "full and title-only captured: apps/storybook/visual/__screenshots__/mdx-blocks-pagemeta-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api PageMeta` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/page-meta/page-meta.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx PageTableOfContents",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/page-table-of-contents/page-table-of-contents.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-page-table-of-contents-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "rail, menu, dark and custom label captured: apps/storybook/visual/__screenshots__/mdx-blocks-page-table-of-contents-*.png; active-heading state not isolated."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/page-table-of-contents), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured. The menu form exists for narrow layouts but is captured at 1280px only."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api PageTableOfContents` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/page-table-of-contents/page-table-of-contents.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx ResourceList",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/resource-list/resource-list.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-resourcelist-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default and with notes captured: apps/storybook/visual/__screenshots__/mdx-blocks-resourcelist-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "The row divider is positioned with physical `right:` and `left: calc(…)` to clear the icon column (packages/mdx/src/blocks/resource-list/resource-list.css:42-43), so in RTL it is offset from the wrong side; check:craft does not flag it because left/right positioning is out of scope (scripts/design-system/lib/craft-rules.mjs:14)."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api ResourceList` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/resource-list/resource-list.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx ScrollStage",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/scroll-stage/scroll-stage.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-scrollstage-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default captured (apps/storybook/visual/__screenshots__/mdx-blocks-scrollstage-default-chromium-linux.png); the reduced-motion branch (scroll-stage.tsx:203-206) is not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured. The sticky media pane is `sticky top-24 … h-[70vh]` (scroll-stage.tsx:170); its phone behaviour is unverified."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 api ScrollStage` lists 5 props but no example; pattern-mdx-blocks Page furniture section documents it."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/scroll-stage/scroll-stage.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx StatCard",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/stat-card/stat-card.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). blocks.a11y.test.tsx:76-80 covers StatCard with a trend."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-statcard-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "standalone, grid and dark captured: apps/storybook/visual/__screenshots__/mdx-blocks-statcard-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api StatCard` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/stat-card/stat-card.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx StatGrid",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/stat-grid/stat-grid.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-stat-grid-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "two, default and six cards captured: apps/storybook/visual/__screenshots__/mdx-blocks-stat-grid-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api StatGrid` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/stat-grid/stat-grid.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx Steps",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/steps/steps.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). blocks.a11y.test.tsx:65-73 covers Steps."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-steps-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "auto numbering and install guide captured: apps/storybook/visual/__screenshots__/mdx-blocks-steps-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api Steps` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/steps/steps.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx Tabs",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Wraps ui-react Tabs with a rest spread (1 spread in packages/mdx/src/blocks/tabs/tabs.tsx) and exposes List/Tab/Panel."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). ui-react Tabs APG pattern; blocks.a11y.test.tsx:35-46."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-tabs-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "two and three panels and underline variant captured: apps/storybook/visual/__screenshots__/mdx-blocks-tabs-*.png; selected tab visible."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/tabs/tabs.tsx), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api Tabs` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/tabs/tabs.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx Timeline",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/timeline/timeline.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Static content block: native headings/lists/text, no interactive role to get wrong. No forced-colors rule in packages/mdx/src (grep forced-colors: 0), but meaning is carried by text and borders, which survive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-timeline-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "release history captured: apps/storybook/visual/__screenshots__/mdx-blocks-timeline-release-history-chromium-linux.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No interactive targets; type is set in rem through prose utilities so it follows text scaling. Does not respond to compact density (Tailwind --spacing utilities; density only changes --a63-space-unit, packages/styles/src/contracts/environment.css:85-90) — see the density finding."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 api Timeline` prints import line, purpose, props and a tsx example; docs page pattern-mdx-blocks (736 lines) has a section for it; stories exist."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/timeline/timeline.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/mdx VideoBlock",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/mdx/src/blocks/video-block/video-block.tsx destructures a fixed prop list and neither spreads the rest onto its root nor forwards a ref (grep '\\.\\.\\.(props|rest)' and 'forwardRef' in the file: 0); id, aria-*, data-* and ref passed by a consumer are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Autoplay is ignored under reduced motion (video-block.tsx:109); without native controls an autoplaying video gets a labelled pause/play toggle (video-block.tsx:94,133); decorative videos are aria-hidden (video-block.tsx:95,107)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Light baseline(s): apps/storybook/visual/__screenshots__/mdx-blocks-video-block-*.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, caption, cover fit, autoplay loop and decorative captured: apps/storybook/visual/__screenshots__/mdx-blocks-video-block-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Interactive parts are @atom63/ui-react components (imports in packages/mdx/src/blocks/video-block (Button toggle)), which carry the system's coarse-pointer target rules."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical margin/padding/border in the block (check:craft physical-properties passes: sweep-r2/craft.log 'Craft check passed (11 baseline violation(s) remaining)', none for this block). No RTL story in packages/mdx/src."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story (grep 'export const Phone' in packages/mdx/src finds none) and no -phone baseline; behaviour at 390px is uncaptured."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 api VideoBlock` lists 17 props but no example; pattern-mdx-blocks Media section documents it."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/mdx/src/blocks/video-block/video-block.test.tsx and light baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/inform InformBanner",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Takes the fixed InformSurfaceProps set (packages/inform/src/surfaces/types.ts:9-34): no rest props, no ref, so a consumer cannot add an id, data-* or aria attributes or measure the element."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). role=status with aria-live=polite, never takes focus (inform-banner.tsx:38-43); icons aria-hidden and severity carried by text (pattern-inform). Severity border survives forced colors as a border."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/inform-banner-*.png (16, incl. dark)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "info/success/warning/danger, title, two and many lines, leading icon, dismissable, actions captured: apps/storybook/visual/__screenshots__/inform-banner-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "The dismiss control is a one-line (≈19px) box with an invisible expansion to exactly 24px (packages/inform/src/surfaces/inform-parts.css:57-61, dismiss-button.tsx:17); there is no coarse-pointer rule (grep 'coarse' in packages/inform/src: 0), so it never reaches the 44px the bar asks for on touch."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical margins (inform-banner.css:14,27); many-lines story shows wrap with the dismiss slot pinned to line one (apps/storybook/visual/__screenshots__/inform-banner-many-lines-dismissable-chromium-linux.png); dismissLabel is translatable. No RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "No Phone story or -phone baseline for the banner; only the spotlight has one."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 api <name>` returns only the import line and 'Docs: atom63 docs pattern-inform' (no props, no example). The pattern-inform page explains when to use the surface and its behaviour, but lists no surface props (open, dismissable, dismissLabel, anchor, icon, media) and shows no direct-use code."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/inform/src/surfaces/inform-banner.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/inform InformDialog",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Takes the fixed InformSurfaceProps set (packages/inform/src/surfaces/types.ts:9-34): no rest props, no ref, so a consumer cannot add an id, data-* or aria attributes or measure the element."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Built on ui-react Dialog (inform-dialog.tsx:1-8): focus trap, Escape, scroll lock, inerting; a non-dismissable dialog disables pointer dismissal and the close button (inform-dialog.tsx:40-50)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/inform-dialog-*.png (default, danger, dark, media, actions, not dismissable)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, danger, with media, with actions, not dismissable, dark captured: apps/storybook/visual/__screenshots__/inform-dialog-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "The close control and actions are ui-react Button/DialogPopup, which own the system target sizing."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "InformDialog does not destructure or forward `dismissLabel` (inform-dialog.tsx:30-41) although InformSurfaceProps declares it, and ui-react DialogPopup's close button is hard-coded aria-label=\"Close\" (packages/ui-react/src/components/dialog/dialog.tsx:163), so the dialog's dismiss name cannot be translated while the banner's, flyout's and spotlight's can."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Phone layout, safe areas and scroll come from ui-react Dialog; no inform-specific phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 api <name>` returns only the import line and 'Docs: atom63 docs pattern-inform' (no props, no example). The pattern-inform page explains when to use the surface and its behaviour, but lists no surface props (open, dismissable, dismissLabel, anchor, icon, media) and shows no direct-use code."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test packages/inform/src/surfaces/inform-dialog.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/inform InformCornerFlyout (with InformFlyoutStack)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Takes the fixed InformSurfaceProps set (packages/inform/src/surfaces/types.ts:9-34): no rest props, no ref, so a consumer cannot add an id, data-* or aria attributes or measure the element. InformFlyoutStack likewise takes only children/placement/offset/className (flyout-stack.tsx:8-14)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). role=status, aria-live polite, no focus steal (inform-corner-flyout.tsx role/aria-live on the card); the stack expands on focus-within so keyboard users reach the back cards (flyout-stack.tsx doc comment); exit is skipped under reduced motion (inform-corner-flyout.tsx requestDismiss, inform-corner-flyout.css:68-73)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/inform-corner-flyout-*.png (8, incl. dark, in a stack)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, warning, actions, media, media+actions, not dismissable, in a stack, dark captured: apps/storybook/visual/__screenshots__/inform-corner-flyout-*.png; the expanded stack is not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "The dismiss control is a one-line (≈19px) box with an invisible expansion to exactly 24px (packages/inform/src/surfaces/inform-parts.css:57-61, dismiss-button.tsx:17); there is no coarse-pointer rule (grep 'coarse' in packages/inform/src: 0), so it never reaches the 44px the bar asks for on touch."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Corner placement is deliberately physical (inform-corner-flyout.css:55-61 comment). The exit always slides +X (`translateX(var(--a63-space-4))`, inform-corner-flyout.css:32-35), toward the centre for -left placements; see the P3 finding."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "Stack width is min(22rem, 100vw - 2rem) (inform-corner-flyout.css:51) but its edge offsets ignore safe-area insets (grep 'safe-area' in packages/inform/src: 0; right/left: var(--a63-space-4) at css:56-61), so in a notched landscape phone or with a home indicator the card can sit under system UI. No phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 api <name>` returns only the import line and 'Docs: atom63 docs pattern-inform' (no props, no example). The pattern-inform page explains when to use the surface and its behaviour, but lists no surface props (open, dismissable, dismissLabel, anchor, icon, media) and shows no direct-use code."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test inform-corner-flyout.test.tsx and flyout-stack.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/inform InformSpotlight",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Takes the fixed InformSurfaceProps set (packages/inform/src/surfaces/types.ts:9-34): no rest props, no ref, so a consumer cannot add an id, data-* or aria attributes or measure the element. `anchor` is a CSS selector string only; an element ref cannot be passed (inform-spotlight.tsx:16-20)."
+        },
+        {
+          "criterion": "K2",
+          "score": 1,
+          "evidence": "Keyboard and SR handling are good (role=dialog, aria-modal, labelled/described, focus trap, Escape, focus restore, background inert: inform-spotlight.tsx:136-185, 205-221). But the scrim and the cutout are drawn only with `box-shadow: 0 0 0 9999px var(--a63-scrim)` (packages/inform/src/surfaces/inform-spotlight.css:19-23) and there is no forced-colors rule in the package (grep forced-colors packages/inform/src: 0). Forced-colors mode drops box-shadows, so in Windows High Contrast the page is not dimmed and the highlighted control is not marked: the step's whole purpose, pointing at one control, is lost."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/inform-spotlight-*.png. The programmatic focus ring on the bubble draws a heavy 2px ring around the whole bubble on open (apps/storybook/visual/__screenshots__/inform-spotlight-phone-chromium-linux.png)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, actions, not dismissable, missing anchor, near right edge, near bottom (flip), phone, dark captured: apps/storybook/visual/__screenshots__/inform-spotlight-*.png."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "The dismiss control is a one-line (≈19px) box with an invisible expansion to exactly 24px (packages/inform/src/surfaces/inform-parts.css:57-61, dismiss-button.tsx:17); there is no coarse-pointer rule (grep 'coarse' in packages/inform/src: 0), so it never reaches the 44px the bar asks for on touch."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Bubble placement is computed from the anchor's viewport rect (place-bubble.ts, place-bubble.test.ts) so it follows the anchor in either direction; dismissLabel translatable."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Phone story captured (apps/storybook/visual/__screenshots__/inform-spotlight-phone-chromium-linux.png); scrim press dismisses as the touch path out (inform-spotlight.tsx:193-205); bubble width min(20rem, 100vw - 2rem) (inform-spotlight.css:29). The phone story mounts two 'Target control' buttons (meta and story decorators), see P3."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 api <name>` returns only the import line and 'Docs: atom63 docs pattern-inform' (no props, no example). The pattern-inform page explains when to use the surface and its behaviour, but lists no surface props (open, dismissable, dismissLabel, anchor, icon, media) and shows no direct-use code."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test inform-spotlight.test.tsx and place-bubble.test.ts and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/inform runtime (InformProvider, InformOutlet, useInform)",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Registry is data (defineInformRegistry rejects duplicates), provider takes context/registry/dismissals, outlet takes surfaces/flyoutOffset (`atom63 docs pattern-inform`); surfaces stay controlled and usable without it."
+        },
+        {
+          "criterion": "K2",
+          "score": null,
+          "evidence": "n/a: renders the four surfaces; their accessibility is scored on each surface. The arbiter guarantees at most one blocking surface (pattern-inform 'The arbiter' step 3)."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: no visual of its own; arbitration and stacking baselines are evidence for K4."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "arbitration and stacking in four corners captured: apps/storybook/visual/__screenshots__/inform-runtime-{arbitration,stacking,stacking-bottom-left,stacking-top-left,stacking-top-right}-chromium-linux.png."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: no controls of its own."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Content may be a function of context.locale (pattern-inform message model); copy is passed already localised."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: placement is the flyout stack's (flyoutOffset passes chrome clearance)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 docs pattern-inform` documents every registry field in a table, the four arbiter steps and a runnable provider/outlet example; `atom63 api InformProvider` itself gives no props."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "core/arbiter.test.ts, registry.test.ts, store.test.ts, persistence.test.ts, react/inform-runtime.test.tsx, including a first-paint server-render test (renderToStaticMarkup, inform-runtime.test.tsx:148-160). Not in the CI ssr project."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets WidgetSurface",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Spreads rest props onto the shell root and splits className between shell and face (packages/widgets/src/primitives/widget-surface.tsx:91-113); size is a signal via data attribute and context."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Pure surface; the rim is a border (pattern-widgets contract tokens), so the edge survives forced colors."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/widgets-surface-{small,medium,large,footprints,dark}-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Three footprints and dark captured: apps/storybook/visual/__screenshots__/widgets-surface-*.png; drag/focus shadow states are host-driven (--a63-widget-shadow) and not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Coarse pointers: buttons inside widget surfaces grow their hit area to 44px over the presentation scale (packages/widgets/src/layout/widget-layout.css:19-38); type roles have CSS-px floors (WIDGET_TYPE_ROLE_FLOOR, widget-type.test.ts)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical properties flagged (check:craft passes, sweep-r2/craft.log)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Fixed footprints by design (pattern-widgets 'Tracks are fixed'); coarse-pointer rule as K5."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 docs pattern-widgets` (143 lines) explains WidgetSurface with a runnable tsx example; `atom63 api WidgetSurface` itself gives only the import line and docs link (no props)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test primitives/widget-surface.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets WidgetCard (with header/title/content parts, WidgetShell, WidgetBlock)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "WidgetCard spreads rest props (widget-card.tsx:46-49) but every part takes only children/className (and style on some): WidgetCardHeader :70, HeaderLeft :99, HeaderRight :118, Content :136, WidgetBlock :160, Block regions :174-192, Title :211, TextGroup :243, Row :255. No rest spread or ref, so aria-*, id and data-* on parts are dropped."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Title icon passed aria-hidden by convention (pattern-widgets example)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/widgets-card-{small,medium,large,footprints,header-slots,blocks,shell,dark}-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Three footprints, header slots, blocks, shell and dark captured: apps/storybook/visual/__screenshots__/widgets-card-*.png. Loading/empty/error are WidgetStateFeedback's."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Coarse pointers: buttons inside widget surfaces grow their hit area to 44px over the presentation scale (packages/widgets/src/layout/widget-layout.css:19-38); type roles have CSS-px floors (WIDGET_TYPE_ROLE_FLOOR, widget-type.test.ts)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Inline padding from the footprint inset (WIDGET_BODY_INSET_CLASS, widget-card.tsx:34); no physical properties flagged by check:craft."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Fixed footprints; coarse-pointer rule covers card actions (widget-layout.css:26-38)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 docs pattern-widgets` (143 lines) explains WidgetCard and its parts with a runnable tsx example; `atom63 api WidgetCard` itself gives only the import line and docs link (no props)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test primitives/widget-card.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets WidgetAvatar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "memo component with a fixed prop list (packages/widgets/src/primitives/widget-avatar.tsx:8-27,37-48): no rest props, no ref. `status` and `showOutline` are boolean styling flags."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). The shuffle button is named (shuffleLabel) but is set `disabled={busy}` (widget-avatar.tsx:76): pressing it with the keyboard puts it in the busy state, the disabled button drops focus to <body>, and nothing announces the busy state (no aria-busy or live text)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/widgets-avatar-{default,sizes,with-status,shuffle,busy,dark}-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "default, sizes, status, shuffle, busy, dark captured: apps/storybook/visual/__screenshots__/widgets-avatar-*.png; image-error fallback via ui-react Avatar."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "The coarse-pointer 44px rule targets `.a63-Button` only (widget-layout.css:26-38); the shuffle control is a raw <button> (widget-avatar.tsx:72) sized to the avatar, so the sm avatar's shuffle target is not lifted on touch."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Status dot uses inset-block-end/inset-inline-end (widget-avatar.css:127-128) and mirrors."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "The shuffle overlay is opacity 0 and revealed only on :hover inside @media (hover: hover), on :focus-visible or while busy (widget-avatar.css:88,98-100,115-118); on a touch screen the affordance is invisible though tappable."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Listed in the pattern-widgets entry table only; no usage, props or example (`atom63 api WidgetAvatar`: import line only)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test primitives/widget-avatar.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets WidgetStateFeedback",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "memo component with a fixed prop list (packages/widgets/src/state/widget-state-feedback.tsx:96-108,128-129): no rest props or ref. Labels are overridable (labels prop)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). error is role=alert, loading/empty role=status (widget-state-feedback.tsx:139); icons aria-hidden; the details trigger is a named icon button opening a ui-react Popover with a CopyButton (:59-90); spinner class covered by reduced-motion rules (8 files in packages/widgets/src match prefers-reduced-motion)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/widgets-states-*.png (loading, empty, error, error-large, error-touch, footprints, dark)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "loading, empty, error (compact and large), touch and dark captured across footprints: apps/storybook/visual/__screenshots__/widgets-states-*.png (apps/storybook/visual/__screenshots__/widgets-states-footprints-chromium-linux.png shows all three per footprint)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "ErrorTouch story captures the coarse case (apps/storybook/visual/__screenshots__/widgets-states-error-touch-chromium-linux.png); row gap follows density (widget-state-feedback.tsx:40-42); coarse rule widget-layout.css:26-38."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "All control strings translatable (WidgetErrorLabels, DEFAULT_WIDGET_ERROR_LABELS); no physical properties flagged."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "ErrorTouch story and coarse-pointer rule; fixed footprints."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 docs pattern-widgets` 'States' section explains it with a runnable example using resolveWidgetFeedbackState and widgetStateCopy, but leaks unrendered JSX into the Markdown (see P3)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test state/widget-state-feedback.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets WidgetHostedShell (with title/content transitions, loading shell, error fallback)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Takes WidgetCard props (`Omit<ComponentProps<typeof WidgetCard>, 'children'>`, packages/widgets/src/runtime/widget-hosted-shell.tsx:52) plus contentKey/header/footer."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Reduced motion swaps without animating (shouldReduceWidgetHostMotion, widgets.runtime API; pattern-widgets 'The hosted shell')."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/widgets-hosted-shell-{hosted-shell,loading-shell,error-fallback,dark}-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "hosted, loading shell, error fallback, dark captured: apps/storybook/visual/__screenshots__/widgets-hosted-shell-*.png; mid-transition frames not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Coarse pointers: buttons inside widget surfaces grow their hit area to 44px over the presentation scale (packages/widgets/src/layout/widget-layout.css:19-38); type roles have CSS-px floors (WIDGET_TYPE_ROLE_FLOOR, widget-type.test.ts)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical properties flagged by check:craft."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Coarse rule applies to .a63-WidgetHostFallback (widget-layout.css:31)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 docs pattern-widgets` (143 lines) explains WidgetHostedShell with a runnable tsx example; `atom63 api WidgetHostedShell` itself gives only the import line and docs link (no props)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test runtime/widget-runtime.test.tsx and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets WidgetGrid and WidgetViewport (units and scale)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Both extend ComponentPropsWithRef and spread/forward (packages/widgets/src/layout/widget-grid.tsx:34,55-75; widget-viewport.tsx:16,37-51)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "axe runs on every story in CI (apps/storybook/.storybook/preview.tsx:153 a11y.test 'error'; storybook main.ts includes packages/mdx|inform|widgets|brand stories). Layout containers; WidgetViewport renders an <article> per tile."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/widgets-units-and-scale-{grid,scale,type-ramp,dark}-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: layout containers with no interactive or data states."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Type floors keep labels legible when scaled down (WIDGET_TYPE_ROLE_FLOOR; widget-type.test.ts, widget-scale.test.ts); --widget-interaction-target feeds the coarse rule (widget-layout.css:19-38)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "No physical properties flagged by check:craft."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Fixed tracks and a scale clamp (WIDGET_MAX_PRESENTATION_SCALE 1.375) per pattern-widgets 'Units and sizes'; widget-viewport.test.tsx."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 docs pattern-widgets` (143 lines) explains WidgetGrid and WidgetViewport with a runnable tsx example; `atom63 api WidgetGrid` itself gives only the import line and docs link (no props)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Behaviour test layout/widget-grid.test.tsx, widget-viewport.test.tsx, widget-units/scale/type/inset tests and baselines exist; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/widgets WidgetImage",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Fixed prop list with no rest spread or ref (packages/widgets/src/image.tsx:8-29), and WidgetImageProps is not exported (packages/widgets/api/widgets.api.md:185 ae-forgotten-export), so consumers cannot type a wrapper."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "`alt` is required (image.tsx:9); crossfade respects reduced motion (useReducedMotion, image.tsx:31); image.test.tsx."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). WidgetImage has no story and no baseline (ls apps/storybook/visual/__screenshots__/ | grep -i widget | grep -i image: none)."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Loading skeleton, error and crossfade states exist in code (isLoading/hasError, image.tsx:35-36) but no story captures any of them."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: no interactive target."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Aspect ratios are fixed enums ('1/1'|'16/9'|'2/3'|'none', image.tsx:6); no physical properties."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Sized by the tile; no phone-specific behaviour."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "Only named in the pattern-widgets entry table; `atom63 api WidgetImage` returns the import line only."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/widgets/src/image.test.tsx exists; no baseline; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/brand AppLogo",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "Props are only className/colored/height/variant (packages/brand/src/logo/app-logo.tsx:64-75): no rest spread, no ref, no way to pass aria-hidden or a different name; `colored` is a boolean standing in for a colour variant."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Lockups are one role=img named 'ATOM63' with decorative parts (app-logo.tsx:28-29,84-96); axe test app-logo.test.tsx:42-50. Inside a link that also has visible 'ATOM63' text it is announced twice and cannot be hidden without a wrapper (see K1)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captures: apps/storybook/visual/__screenshots__/brand-logo-variants-chromium-linux.png and brand-logo-dark-chromium-linux.png; `colored` follows --a63-action-primary so it changes per theme, uncaptured."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: a static mark with no interactive or data states."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "`height` scales symbol, wordmark and gap from fixed ratios (app-logo.tsx:6-11); test 'scales the symbol and wordmark from height' (app-logo.test.tsx:26)."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: a brand mark does not mirror and has no translatable text."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: no phone-specific behaviour."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "packages/brand/README.md documents every export with an example; the package is private and deliberately outside the CLI index (`atom63 search logo`: no results), which matches the README's 'not part of the design system's public surface'."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "app-logo.test.tsx (size, colour, axe, aspect) and two baselines; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    },
+    {
+      "subject": "@atom63/brand Atom63Logo",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "Extends SVGProps and spreads the rest onto <svg> (packages/brand/src/atom63-logo.tsx:3-29), so ref (React 19), aria-hidden and className pass through; title overridable."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "role=img with a <title> (atom63-logo.tsx:21-28); covered by the brand axe test (app-logo.test.tsx:42-55)."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional (YZ confirms). No theme coverage: the 202 baselines for these packages (ls apps/storybook/visual/__screenshots__/ | grep -E '^(mdx|inform|widgets|brand)') are one default (modern light) capture per story plus a Dark story on some; no aqua, retro or terminal capture exists, unlike ui-react (e.g. Alert has a Themes story per `atom63 component alert`). Captured in apps/storybook/visual/__screenshots__/brand-logo-variants-chromium-linux.png and brand-logo-dark-chromium-linux.png."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: a static mark."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "height sets size and keeps the 40:48 ratio (atom63-logo.tsx:17); test app-logo.test.tsx:55."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: a brand mark does not mirror."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: no phone-specific behaviour."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "README documents it, but says each logo is named 'ATOM63' while the default title is 'ATOM63 logo' (atom63-logo.tsx:14); see P3."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "Covered by app-logo.test.tsx and the brand baselines; apps/storybook/ssr/ssr.test.tsx:16 globs only packages/ui-react/src/**/*.stories.tsx, so no story of this package is server-rendered in CI."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r2-k11-1",
+      "subject": "@atom63/inform InformSpotlight",
+      "criterion": "K2",
+      "severity": "P1",
+      "summary": "In forced-colors mode the spotlight draws neither its scrim nor its cutout, so it no longer shows which control it is about.",
+      "evidence": "packages/inform/src/surfaces/inform-spotlight.css:19-23 draws both with `box-shadow: 0 0 0 9999px var(--a63-scrim)`; forced colors drop box-shadow; `grep -rn forced-colors packages/inform/src` returns nothing. No ForcedColors story (visual.setup.ts captures `--forced-colors` stories, none in inform).",
+      "fix": "Add `@media (forced-colors: active)` for the cutout: an `outline: 3px solid Highlight` (or CanvasText) around the anchor rect, and optionally a Canvas-coloured translucent backdrop; add a `ForcedColors` story so visual.setup.ts captures it.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-2",
+      "subject": "All subjects in @atom63/mdx, @atom63/inform, @atom63/widgets, @atom63/brand",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "No story of these packages is captured in aqua, retro or terminal, so the 4 themes x 2 modes the bar asks for are unseen; several subjects also have no dark capture.",
+      "evidence": "ls apps/storybook/visual/__screenshots__ | grep -E '^(mdx|inform|widgets|brand)' gives 202 files, none per theme; dark only on KeyIdea, StatCard, PageTableOfContents, Compare, the four inform surfaces, five widget stories and the brand logo. ui-react components carry a Themes story (`atom63 component alert` lists Themes, ActionThemes).",
+      "fix": "Add a Themes story (4 themes x 2 modes grid) per subject, following ui-react's pattern, and regenerate baselines on CI.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-3",
+      "subject": "All subjects in @atom63/mdx, @atom63/inform, @atom63/widgets, @atom63/brand",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Server-rendering safety is untested for these packages: the CI ssr project renders only ui-react stories.",
+      "evidence": "apps/storybook/ssr/ssr.test.tsx:16 `import.meta.glob('../../../packages/ui-react/src/**/*.stories.tsx')`. Only inform's runtime has a first-paint renderToStaticMarkup test (packages/inform/src/react/inform-runtime.test.tsx:148), under jsdom.",
+      "fix": "Widen the glob to packages/{ui-react,mdx,inform,widgets,brand}/src/**/*.stories.tsx and fix what fails.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-4",
+      "subject": "All @atom63/mdx blocks and prose",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "No MDX block or prose story is captured at phone width, though many blocks change layout there (rail vs menu TOC, ScrollStage's sticky pane, StatGrid, Compare, DocExample).",
+      "evidence": "`grep -rn 'export const Phone' packages/mdx/src` returns nothing; no mdx-*-phone baseline. visual.setup.ts captures `-phone` story ids at 390x844.",
+      "fix": "Add Phone stories for the layout-sensitive blocks (PageTableOfContents, ScrollStage, StatGrid, Compare, ComparisonPair, ImageCompare, DocExample, CodeBlock, Timeline, ResourceList, prose tables) and one phone page for the rest.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-5",
+      "subject": "@atom63/inform surfaces and @atom63/widgets components",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "`atom63 api` answers for inform surfaces and widget components give only an import line and a docs link (no props, no example), and `atom63 component`/`atom63 example` know none of the four packages.",
+      "evidence": "Loop over `pnpm -s atom63 api <name>`: MDX blocks return 2-18 props and an example; InformBanner, InformDialog, InformCornerFlyout, InformSpotlight, WidgetCard, WidgetSurface, WidgetAvatar, WidgetStateFeedback, WidgetHostedShell, WidgetImage return 0 props. `atom63 component inform-banner` and `atom63 example image-compare` return component.not_found. pattern-inform lists no surface props.",
+      "fix": "Generate prop lists and an example for these exports the way the MDX block entries are generated (from the API report or docgen), and index their stories for `atom63 example`.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-6",
+      "subject": "@atom63/mdx blocks (Callout, ColorSwatchItem, Compare, ComparisonPair, CreditsBlock, DocExample, DocExampleCode, ExampleContainer, FigureBlock, KeyIdea, LayerStack, MdxPageSkeleton, MediaCaption, MediaPlaceholder, MermaidDiagram, PageMeta, PageTableOfContents, ResourceList, ScrollStage, StatCard, StatGrid, Steps, Timeline, VideoBlock)",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Most MDX blocks drop unknown props and refs: an author's id, aria-*, data-* or ref never reaches the DOM.",
+      "evidence": "Survey of packages/mdx/src/blocks/*/*.tsx: only accordion, code-block, image-compare and tabs spread rest props; only image-compare and demo-stage forward a ref. e.g. callout.tsx:19 `function Callout({ children, type = 'info', className })`; MermaidDiagram takes no className at all (mermaid-diagram.tsx:35-41).",
+      "fix": "Type each block's props as its root element's ComponentProps plus its own, spread the rest onto the root, and accept ref (React 19 ref-as-prop).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-7",
+      "subject": "@atom63/inform InformBanner, InformDialog, InformCornerFlyout, InformFlyoutStack, InformSpotlight",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Inform surfaces accept a closed prop set: no rest props and no ref, so consumers cannot add an id, data-* or aria attributes, or pass an element instead of a selector to the spotlight.",
+      "evidence": "packages/inform/src/surfaces/types.ts:9-34 (InformSurfaceProps), flyout-stack.tsx:8-14, inform-spotlight.tsx:16-20 (anchor: string).",
+      "fix": "Extend the surface props with the root element's HTML attributes, spread them on the root, accept ref; let `anchor` also take an Element or RefObject.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-8",
+      "subject": "@atom63/widgets WidgetCard parts, WidgetAvatar, WidgetStateFeedback, WidgetImage",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "Widget card parts and the memo components take only children/className, so ids, aria-* and refs are dropped; WidgetImageProps is not exported.",
+      "evidence": "packages/widgets/src/primitives/widget-card.tsx:70-255 (Header, HeaderLeft, HeaderRight, Content, Block, Block regions, Title, TextGroup, Row); widget-avatar.tsx:37-48; widget-state-feedback.tsx:128-129; widgets.api.md:185 ae-forgotten-export WidgetImageProps.",
+      "fix": "Spread rest props and accept ref on every part (as WidgetCard and WidgetSurface already do), and export WidgetImageProps.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-9",
+      "subject": "@atom63/inform InformBanner, InformCornerFlyout, InformSpotlight",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "The inform dismiss control's hit area is 24px on every pointer; it never grows to 44px on touch.",
+      "evidence": "packages/inform/src/surfaces/inform-parts.css:57-61 `.a63-InformDismissButton::after { inset: calc((1lh - 1.5rem) / 2) }`; dismiss-button.tsx:17 comment '24px WCAG target'; `grep -rn coarse packages/inform/src` returns nothing.",
+      "fix": "Add `@media (pointer: coarse) { .a63-InformDismissButton::after { inset: calc((1lh - 2.75rem) / 2) } }` (or read the system's coarse target token), keeping the one-line layout box.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-10",
+      "subject": "@atom63/mdx ImageCompare",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "ImageCompare's slider is named with the library's fixed English instruction, not the before/after labels, and authors cannot translate it.",
+      "evidence": "react-compare-slider@4.0.0 dist sets aria-label 'Click and drag or focus and use arrow keys to change the position of the slider'; ImageCompare passes no name (packages/mdx/src/blocks/image-compare/image-compare.tsx:266-277).",
+      "fix": "Pass an accessible name built from beforeLabel/afterLabel through the library's handle or root props, and add a translatable `sliderLabel` prop.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-11",
+      "subject": "@atom63/inform InformDialog",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "InformDialog ignores `dismissLabel`, and its close button's name is a hard-coded English 'Close', so the dialog is the one inform surface whose dismiss control cannot be translated.",
+      "evidence": "packages/inform/src/surfaces/inform-dialog.tsx:30-41 omits dismissLabel; packages/ui-react/src/components/dialog/dialog.tsx:163 `aria-label=\"Close\"`.",
+      "fix": "Add a close-label prop to ui-react DialogPopup and pass dismissLabel through from InformDialog; add a test.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-12",
+      "subject": "@atom63/inform InformCornerFlyout (InformFlyoutStack)",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "The flyout stack is placed a fixed space-4 from the corner and ignores safe-area insets, so on notched or home-indicator phones a card can sit under system UI.",
+      "evidence": "packages/inform/src/surfaces/inform-corner-flyout.css:56-61 (right/left: var(--a63-space-4)); offsets along the anchored edge come from the `offset` prop (flyout-stack.tsx:13); `grep -rn safe-area packages/inform/src` returns nothing; no flyout phone story.",
+      "fix": "Add env(safe-area-inset-*) to the stack's side and anchored-edge offsets (max(offset, inset)), and a Phone story.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-13",
+      "subject": "@atom63/widgets WidgetAvatar",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "Pressing shuffle from the keyboard disables the focused button, which drops focus to the page, and the busy state is not announced.",
+      "evidence": "packages/widgets/src/primitives/widget-avatar.tsx:72-77 `<button … disabled={busy}>`; no aria-busy or live text in the component.",
+      "fix": "Use aria-disabled with a guarded onClick instead of disabled while busy, keep focus on the button, and expose aria-busy (or a polite status) during the shuffle.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-14",
+      "subject": "@atom63/widgets WidgetAvatar",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "On touch screens the shuffle affordance is invisible: it shows only on hover, keyboard focus or while busy, and its target is not lifted to 44px.",
+      "evidence": "packages/widgets/src/primitives/widget-avatar.css:88 (opacity: 0), :98-100 (busy, focus-visible), :115-118 (@media (hover: hover)); the coarse 44px rule targets only .a63-Button (packages/widgets/src/layout/widget-layout.css:26-38) and shuffle is a raw <button> (widget-avatar.tsx:72).",
+      "fix": "Under (hover: none) show a persistent small shuffle badge (or rest the glyph at partial opacity), and include .a63-WidgetAvatar-shuffle in the coarse target rule.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-15",
+      "subject": "@atom63/mdx ResourceList",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "ResourceList's row divider is positioned with physical left/right, so in RTL it is inset from the wrong side; check:craft does not catch it because left/right positioning is out of the rule's scope.",
+      "evidence": "packages/mdx/src/blocks/resource-list/resource-list.css:42-43 (`right: var(--a63-space-3); left: calc(…)`); scripts/design-system/lib/craft-rules.mjs:14 '`left`/`right` positioning is out of scope for now'.",
+      "fix": "Use inset-inline-end / inset-inline-start; consider extending physical-properties to positioning with the existing craft-allow escape hatch.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-16",
+      "subject": "@atom63/mdx DocExample",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "DocExample sizes its tabs and copy button by viewport width, not pointer: at 768px and up a touch device gets 28px targets, and the copy button overrides the ui-react size with custom classes.",
+      "evidence": "packages/mdx/src/blocks/doc-example/doc-example.tsx:44 (`h-11 … md:h-7`), :139 (`size-11 md:size-7` on a size=\"icon-sm\" CopyButton), :155 (`h-12 … md:h-8` tablist).",
+      "fix": "Use the system coarse-pointer target (or a `pointer-coarse:` variant) instead of the `md:` breakpoint, and let the CopyButton keep its contract size.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-17",
+      "subject": "@atom63/mdx Callout; @atom63/inform surfaces; ui-react Alert",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "One concept, three names: notice tone is `type` on Callout, `variant` on ui-react Alert, and `severity` on inform with `danger` where the others say `error`.",
+      "evidence": "`atom63 api Callout`: type 'info'|'warning'|'error'|'success'; `atom63 component alert`: variants default|error|info|success|warning; pattern-inform: severity info|success|warning|danger.",
+      "fix": "YZ decides the canonical axis name and values; then alias the others with a deprecation.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k11-18",
+      "subject": "@atom63/widgets WidgetImage",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "WidgetImage has no story and no baseline, so its loading skeleton, error and crossfade states are never seen.",
+      "evidence": "No widgets image story in packages/widgets/src; no widgets-*image* file in apps/storybook/visual/__screenshots__; states in packages/widgets/src/image.tsx:35-36.",
+      "fix": "Add stories for loading, loaded, error, missing src and each aspect ratio.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-19",
+      "subject": "@atom63/brand AppLogo",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AppLogo takes no rest props or ref, so it cannot be hidden (aria-hidden) beside visible brand text or renamed; `colored` is a boolean standing in for a colour variant.",
+      "evidence": "packages/brand/src/logo/app-logo.tsx:64-75 (className, colored, height, variant only); lockups hard-code aria-label=\"ATOM63\" (:84,100).",
+      "fix": "Spread the root's attributes (as Atom63Logo does), accept a `title`/aria override and ref; YZ may keep `colored` as is since the package is private.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-20",
+      "subject": "@atom63/widgets WidgetStateFeedback",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "`atom63 docs pattern-widgets` prints a bare JSX fragment in the States section: the docs-to-Markdown export leaks a live example.",
+      "evidence": "`pnpm -s atom63 docs pattern-widgets` output contains `{['loading', 'empty', 'error'].map(state => (` followed by `))}` with nothing between.",
+      "fix": "Make the Markdown export replace JSX example blocks with their source (or drop them) the way other pages do; add a CLI test that no docs page contains raw JSX expressions.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-21",
+      "subject": "@atom63/inform InformCornerFlyout",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "The flyout's exit always slides toward +X, so in a left-placed stack the card slides toward the centre, not the edge the comment promises.",
+      "evidence": "packages/inform/src/surfaces/inform-corner-flyout.css:32-35 `transform: translateX(var(--a63-space-4))` with no placement condition; placements -left exist (flyout-stack.tsx:6).",
+      "fix": "Negate the offset under `.a63-InformFlyoutStack[data-placement$='left']`.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-22",
+      "subject": "@atom63/mdx CodeBlock",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Syntax colours switch by light/dark mode with `dark:` variants, not by theme, so a theme cannot restyle code; this is baselined debt.",
+      "evidence": "docs/design-system/audits/craft-baseline.json mode-branch entries for packages/mdx/src/blocks/code-block/code-block.tsx (x2 each); code-block.tsx:81,135.",
+      "fix": "Drive Shiki's dual palette from a token (e.g. --a63-code-token-* resolved per mode and theme) and drop the baseline entries.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-23",
+      "subject": "@atom63/mdx Timeline",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Timeline dots paint --a63-text-primary as a background, a token used outside its role (baselined).",
+      "evidence": "docs/design-system/audits/craft-baseline.json: 'token-role | packages/mdx/src/blocks/timeline/timeline.css | background-color: var(--a63-text-primary)'.",
+      "fix": "Use a fill/indicator token for the dot and remove the baseline entry.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-24",
+      "subject": "@atom63/brand Atom63Logo",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "The brand README says each logo is named 'ATOM63', but Atom63Logo's default accessible name is 'ATOM63 logo'.",
+      "evidence": "packages/brand/README.md ('Each logo is an image named \"ATOM63\"'); packages/brand/src/atom63-logo.tsx:14 `title = 'ATOM63 logo'`.",
+      "fix": "Change the default title to 'ATOM63' (matching AppLogo) or correct the README.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-25",
+      "subject": "@atom63/inform InformSpotlight",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "The Phone story mounts two 'Target control' buttons (the meta decorator's and the story's), so its baseline shows a stray, dimmed duplicate control.",
+      "evidence": "packages/inform/src/surfaces/inform-spotlight.stories.tsx:17-33 (meta decorator button) and :66-79 (Phone decorator button); apps/storybook/visual/__screenshots__/inform-spotlight-phone-chromium-linux.png shows both.",
+      "fix": "Give Phone its own render without the meta decorator (or parameterise the decorator's target).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-26",
+      "subject": "@atom63/mdx DocExample",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "DocExample's tablist name appends a hard-coded English 'example view'.",
+      "evidence": "packages/mdx/src/blocks/doc-example/doc-example.tsx:154 `aria-label={titleString ? `${titleString} example view` : 'Component example view'}` while the tab and copy labels are props.",
+      "fix": "Add a `tablistLabel` prop with the current text as default.",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-27",
+      "subject": "All subjects in @atom63/mdx, @atom63/inform, @atom63/widgets",
+      "criterion": "K6",
+      "severity": "P3",
+      "summary": "No story in these packages renders right-to-left, so mirroring is unverified (ui-react components have a RightToLeft story).",
+      "evidence": "No `dir=\"rtl\"`/RightToLeft story in packages/{mdx,inform,widgets}/src; `atom63 component alert` lists a RightToLeft story.",
+      "fix": "Add one RTL story per package covering the blocks with directional layout (Timeline, Steps, ResourceList, Compare, ImageCompare, flyout stack, widget card header).",
+      "kind": "fix"
+    },
+    {
+      "id": "r2-k11-28",
+      "subject": "@atom63/mdx prose and blocks",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "MDX prose and blocks ignore compact density: they space with Tailwind --spacing utilities, which density does not change.",
+      "evidence": "packages/styles/src/contracts/environment.css:85-90 changes only --a63-space-unit under [data-a63-density='compact']; MDX blocks use Tailwind p-/gap- utilities (e.g. doc-example.tsx:44).",
+      "fix": "YZ decides whether long-form content follows density; if yes, map block spacing to --a63-space-*.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k11-29",
+      "subject": "@atom63/mdx ResourceList",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "The ResourceList row divider is mixed to 4% of an already subtle border, so it is effectively invisible.",
+      "evidence": "packages/mdx/src/blocks/resource-list/resource-list.css:46 `background-color: color-mix(in oklab, var(--a63-border-subtle) 4%, transparent)`.",
+      "fix": "Use --a63-border-subtle directly (or a separator token), or remove the divider if spacing alone should separate rows.",
+      "kind": "yz-decision"
+    },
+    {
+      "id": "r2-k11-30",
+      "subject": "All subjects (audit hygiene)",
+      "criterion": "K9",
+      "severity": "P3",
+      "summary": "docs/design-system/audits/visual-qa-matrix.json is stale: it still says no screenshot baseline is stored in the repo.",
+      "evidence": "visual-qa-matrix.json knownGaps[0] 'No deterministic screenshot diff baseline is stored in this repo yet.' while apps/storybook/visual/__screenshots__ holds 909 baselines.",
+      "fix": "Regenerate the matrix (`pnpm check:visual-qa-matrix --write`) with the current evidence.",
+      "kind": "fix"
+    }
+  ]
+}

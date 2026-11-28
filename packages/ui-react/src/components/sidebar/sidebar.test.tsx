@@ -1,3 +1,4 @@
+import { DirectionProvider } from '@base-ui/react/direction-provider'
 import { fireEvent, render, waitFor } from '@testing-library/react'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -272,5 +273,77 @@ describe('Sidebar', () => {
         'sidebar-menu-button'
       )
     })
+  })
+
+  it('opens the phone sheet from the inline start under RTL, with localised names', async () => {
+    const originalInnerWidth = Object.getOwnPropertyDescriptor(window, 'innerWidth')
+    Object.defineProperty(window, 'innerWidth', { configurable: true, value: 390 })
+    try {
+      const { getByRole } = render(
+        <DirectionProvider direction="rtl">
+          <SidebarProvider>
+            <Sidebar mobileDescription="قائمة التنقل" mobileTitle="الشريط الجانبي">
+              <SidebarContent>المحتوى</SidebarContent>
+            </Sidebar>
+            <SidebarTrigger label="تبديل الشريط الجانبي" />
+          </SidebarProvider>
+        </DirectionProvider>
+      )
+      const trigger = getByRole('button', { name: 'تبديل الشريط الجانبي' })
+      await waitFor(() => expect(document.querySelector('[data-slot="sidebar"]')).toBeNull())
+      fireEvent.click(trigger)
+      const dialog = await waitFor(() => getByRole('dialog', { name: 'الشريط الجانبي' }))
+      expect(dialog).toHaveAttribute('data-side', 'right')
+      expect(dialog).toHaveAccessibleDescription('قائمة التنقل')
+    } finally {
+      if (originalInnerWidth) Object.defineProperty(window, 'innerWidth', originalInnerWidth)
+    }
+  })
+
+  it('takes a collapsed offcanvas sidebar out of the tab order and the accessibility tree', () => {
+    const { container, rerender } = render(
+      <SidebarProvider open={false}>
+        <Sidebar collapsible="offcanvas">
+          <SidebarMenuButton>Home</SidebarMenuButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    const panel = () => container.querySelector('[data-slot="sidebar-container"]')
+    expect(panel()).toHaveAttribute('inert')
+
+    rerender(
+      <SidebarProvider open>
+        <Sidebar collapsible="offcanvas">
+          <SidebarMenuButton>Home</SidebarMenuButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(panel()).not.toHaveAttribute('inert')
+
+    rerender(
+      <SidebarProvider open={false}>
+        <Sidebar collapsible="icon">
+          <SidebarMenuButton>Home</SidebarMenuButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(panel()).not.toHaveAttribute('inert')
+  })
+
+  it('marks the active menu button and sub button as the current page', () => {
+    const { getByRole } = render(
+      <SidebarProvider>
+        <Sidebar>
+          <SidebarMenuButton isActive render={<a href="/home">Home</a>} />
+          <SidebarMenuButton render={<a href="/inbox">Inbox</a>} />
+          <SidebarMenuSubButton href="/settings" isActive>
+            Settings
+          </SidebarMenuSubButton>
+        </Sidebar>
+      </SidebarProvider>
+    )
+    expect(getByRole('link', { name: 'Home' })).toHaveAttribute('aria-current', 'page')
+    expect(getByRole('link', { name: 'Inbox' })).not.toHaveAttribute('aria-current')
+    expect(getByRole('link', { name: 'Settings' })).toHaveAttribute('aria-current', 'page')
   })
 })

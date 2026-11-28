@@ -528,15 +528,19 @@
                 },
                 "secondary": {
                   "$type": "color",
-                  "$value": "{surface.light.11}"
+                  "$value": "{surface.light.11}",
+                  "$description": "The second text grey. It darkens toward brand 800 by three tenths of\n--a63-surface-tint, so it keeps WCAG AA 4.5:1 on the page, the panel and the muted fill\nas they tint toward the brand.",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklab, {surface.light.11} calc(100% - {a63.surface.tint} * 0.3), {a63.brand.800} calc({a63.surface.tint} * 0.3) )"
+                  }
                 },
                 "tertiary": {
                   "$type": "color",
                   "$value": "{surface.light.11}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklab, {surface.light.11} 70%, {surface.light.10})"
+                    "io.atom63.derive": "color-mix( in oklab, color-mix(in oklab, {surface.light.11} 70%, {surface.light.10}) calc(100% - {a63.surface.tint} * 0.3), {a63.brand.800} calc({a63.surface.tint} * 0.3) )"
                   },
-                  "$description": "The third text grey, lighter than secondary: placeholders, meta and timestamps.\nSeven parts step 11 to three parts step 10, so it keeps WCAG AA 4.5:1 on the page,\nthe panel, the field fill and the muted fill of a filled field."
+                  "$description": "The third text grey, lighter than secondary: placeholders, meta and timestamps.\nSeven parts step 11 to three parts step 10, so it keeps WCAG AA 4.5:1 on the page,\nthe panel, the field fill and the muted fill of a filled field. Like secondary, it darkens\ntoward brand 800 by three tenths of --a63-surface-tint, so it keeps 4.5:1 as the surfaces tint."
                 },
                 "accent": {
                   "$type": "color",
@@ -572,6 +576,14 @@
                     "io.atom63.derive": "color-mix( in oklab, {surface.light.10} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   },
                   "$description": "The border of a form control a person has to find: text fields, selects,\ncheckboxes, radios, switches and slider thumbs. WCAG 1.4.11 needs 3:1 against\nthe page, the panel and the field fill; step 10 reaches that on every theme,\nbrand and surface (step 9 falls to about 2.97:1). Decorative edges keep\n--a63-border-control."
+                },
+                "danger": {
+                  "$type": "color",
+                  "$value": "{color.danger.600}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {color.danger.600} 62%, transparent)"
+                  },
+                  "$description": "The border of an invalid form control (aria-invalid or data-invalid). WCAG 1.4.11 needs\n3:1 against the page, the panel and the field fill: step 600 at 62% reaches about 3.1:1\non light surfaces. Mixed toward transparent so the red keeps its hue. A focused\ninvalid control draws its border and ring in --a63-status-danger."
                 }
               },
               "control": {
@@ -644,7 +656,8 @@
                 "danger": {
                   "$root": {
                     "$type": "color",
-                    "$value": "{color.danger.600}"
+                    "$value": "{color.danger.600}",
+                    "$description": "The fill of a danger action (a destructive Button), under a white label. It keeps step 600 in both modes, which is about 2.8:1 on dark surfaces, so it is never text, an icon or an edge: those use --a63-text-danger, --a63-status-danger and --a63-border-danger."
                   },
                   "hover": {
                     "$type": "color",
@@ -697,7 +710,7 @@
                   "$root": {
                     "$type": "color",
                     "$value": "{color.info.600}",
-                    "$description": "Status (danger's status role is served by --a63-action-danger). The base is\nthe accent used for tinted callouts (bg = mix toward transparent, text/border\n= the accent); -foreground is the text/icon color ON a SOLID status fill.\nStep 600 on light surfaces and 500 on dark ones (the .dark block), so icons\ndrawn in the accent reach WCAG's 3:1 for graphics in both modes."
+                    "$description": "Status (info, success, warning and danger). The base is\nthe accent used for tinted callouts (bg = mix toward transparent, text/border\n= the accent); -foreground is the text/icon color ON a SOLID status fill.\nStep 600 on light surfaces and 500 on dark ones (the .dark block), so icons\ndrawn in the accent reach WCAG's 3:1 for graphics in both modes."
                   },
                   "foreground": {
                     "$type": "color",
@@ -774,29 +787,69 @@
                       "$value": "{color.warning.800}"
                     }
                   }
+                },
+                "danger": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.danger.600}",
+                    "$description": "The danger status accent: error icons, borders and tints (Alert, form and\nsync errors). --a63-action-danger stays the fill for danger buttons and does\nnot change with the mode; this one moves to step 500 on dark surfaces so it\nreaches 3:1 there. Error text uses --a63-text-danger."
+                  },
+                  "foreground": {
+                    "$type": "color",
+                    "$value": "{a63.status.danger}",
+                    "$description": "Text and icons on a solid fill of this status. Same auto-contrast step as\nthe primary foreground: near-black on bright fills, near-white on dark ones.",
+                    "$extensions": {
+                      "io.atom63.derive": "oklch(from {a63.status.danger} clamp(0.15, (0.57 - l) * 1000, 0.985) calc(c * 0.06) h)"
+                    }
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.danger}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.danger} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.danger.700}"
+                    }
+                  }
                 }
               },
               "chart": {
                 "1": {
                   "$type": "color",
                   "$value": "{a63.action.primary}",
-                  "$description": "Chart series colors. Series 1 is the primary; 2–5 are fixed hues that stay\ndistinct from it and from each other (500 on light surfaces, 400 on dark)."
+                  "$description": "Chart series colors. Series 1 is the brand's primary; series 2 to 5 turn its hue\nby fixed steps at a set lightness and chroma, so no series takes the brand's hue\nwhatever the brand (the wallpaper brand included), and each reaches 3:1 against\nthe page and the panel. The plain value is the default (blue) brand's result, for\ntools that cannot run the derivation."
                 },
                 "2": {
                   "$type": "color",
-                  "$value": "{color.teal.500}"
+                  "$value": "{color.orange.600}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.6 0.15 calc(h + 144))"
+                  }
                 },
                 "3": {
                   "$type": "color",
-                  "$value": "{color.amber.500}"
+                  "$value": "{color.teal.600}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.54 0.13 calc(h + 288))"
+                  }
                 },
                 "4": {
                   "$type": "color",
-                  "$value": "{color.violet.500}"
+                  "$value": "{color.lime.700}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.58 0.14 calc(h + 216))"
+                  }
                 },
                 "5": {
                   "$type": "color",
-                  "$value": "{color.rose.500}"
+                  "$value": "{color.fuchsia.700}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.5 0.16 calc(h + 72))"
+                  }
                 }
               },
               "category": {
@@ -1085,15 +1138,19 @@
                 },
                 "secondary": {
                   "$type": "color",
-                  "$value": "{surface.dark.11}"
+                  "$value": "{surface.dark.11}",
+                  "$description": "It lightens toward brand 100 by three tenths of --a63-surface-tint,\nas the dark surfaces tint toward the brand.",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix( in oklab, {surface.dark.11} calc(100% - {a63.surface.tint} * 0.3), {a63.brand.100} calc({a63.surface.tint} * 0.3) )"
+                  }
                 },
                 "tertiary": {
                   "$type": "color",
                   "$value": "{surface.dark.10}",
                   "$extensions": {
-                    "io.atom63.derive": "color-mix(in oklab, {surface.dark.11} 30%, {surface.dark.10})"
+                    "io.atom63.derive": "color-mix( in oklab, color-mix(in oklab, {surface.dark.11} 30%, {surface.dark.10}) calc(100% - {a63.surface.tint} * 0.3), {a63.brand.100} calc({a63.surface.tint} * 0.3) )"
                   },
-                  "$description": "Three parts step 11 to seven parts step 10: WCAG AA 4.5:1 on the page, the panel,\nthe field fill and the muted fill."
+                  "$description": "Three parts step 11 to seven parts step 10: WCAG AA 4.5:1 on the page, the panel,\nthe field fill and the muted fill. Like secondary, it lightens toward brand 100 by three\ntenths of --a63-surface-tint."
                 },
                 "accent": {
                   "$type": "color",
@@ -1128,6 +1185,11 @@
                     "io.atom63.derive": "color-mix( in oklab, {surface.dark.9} calc(100% - {a63.surface.tint}), {a63.brand.500} {a63.surface.tint} )"
                   },
                   "$description": "Step 9 on dark surfaces reaches 3:1 against the page, the panel and the field fill."
+                },
+                "danger": {
+                  "$type": "color",
+                  "$value": "{color.danger.500}",
+                  "$description": "Step 500, opaque, on dark surfaces: about 4.2:1 on the panel (step 600 at 62% was about 1.7:1)."
                 }
               },
               "control": {
@@ -1287,28 +1349,60 @@
                       "$value": "{color.warning.400}"
                     }
                   }
+                },
+                "danger": {
+                  "$root": {
+                    "$type": "color",
+                    "$value": "{color.danger.500}"
+                  },
+                  "subtle": {
+                    "$root": {
+                      "$type": "color",
+                      "$value": "{a63.status.danger}",
+                      "$extensions": {
+                        "io.atom63.derive": "color-mix(in oklab, {a63.status.danger} 14%, transparent)"
+                      }
+                    },
+                    "foreground": {
+                      "$type": "color",
+                      "$value": "{color.danger.400}"
+                    }
+                  }
                 }
               },
               "chart": {
                 "1": {
                   "$type": "color",
-                  "$value": "{a63.action.primary}"
+                  "$value": "{a63.brand.400}",
+                  "$description": "On dark surfaces series 1 is the brand's 400 step and 2 to 5 are lighter, for 3:1\nagainst the dark page."
                 },
                 "2": {
                   "$type": "color",
-                  "$value": "{color.teal.400}"
+                  "$value": "{color.orange.300}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.76 0.14 calc(h + 144))"
+                  }
                 },
                 "3": {
                   "$type": "color",
-                  "$value": "{color.amber.400}"
+                  "$value": "{color.teal.400}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.7 0.13 calc(h + 288))"
+                  }
                 },
                 "4": {
                   "$type": "color",
-                  "$value": "{color.violet.400}"
+                  "$value": "{color.lime.300}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.82 0.13 calc(h + 216))"
+                  }
                 },
                 "5": {
                   "$type": "color",
-                  "$value": "{color.rose.400}"
+                  "$value": "{color.purple.400}",
+                  "$extensions": {
+                    "io.atom63.derive": "oklch(from {a63.chart.1} 0.68 0.15 calc(h + 72))"
+                  }
                 }
               },
               "category": {
@@ -1532,6 +1626,13 @@
       "selectors": {
         "light": ":root,\n.light,\n[data-a63-mode='light']",
         "dark": ":is(.dark, [data-a63-mode='dark'])"
+      },
+      "rescope": {
+        "selector": "[data-a63-brand], [data-a63-surface]",
+        "light": "light",
+        "dark": "dark",
+        "base": "base",
+        "switch": true
       }
     }
   }

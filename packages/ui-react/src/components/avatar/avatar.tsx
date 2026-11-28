@@ -4,6 +4,7 @@ import {
   type AvatarRing,
   type AvatarShape,
   type AvatarSize,
+  type AvatarSizeAlias,
   avatarContract,
 } from '@atom63/ui-foundation'
 import { Avatar as AvatarPrimitive } from '@base-ui/react/avatar'
@@ -14,14 +15,16 @@ import { cn } from '../../lib/cn'
 export type AvatarProps = AvatarPrimitive.Root.Props & {
   /**
    * A ring for a story or new activity, set off from the face by a gap of the
-   * page surface. `unseen` (or `true`) draws `--a63-avatar-ring-fill`, the
-   * accent unless a product sets it, for example to a gradient of the category
-   * palette; `seen` draws a thin border-coloured ring.
+   * page surface. `unseen` draws `--a63-avatar-ring-fill`, the accent unless a
+   * product sets it, for example to a gradient of the category palette; `seen`
+   * draws a thin border-coloured ring. `true` is a deprecated alias of
+   * `'unseen'`: pass `ring="unseen"`.
    */
   ring?: boolean | AvatarRing
   /** `square` suits organisations and apps; people stay `circle`. */
   shape?: AvatarShape
-  size?: AvatarSize
+  /** `'default'` is a deprecated alias of `'md'`. */
+  size?: AvatarSize | AvatarSizeAlias
 }
 
 /* Avatar — a user/entity image with a graceful fallback (Base UI Avatar).
@@ -39,7 +42,7 @@ export function Avatar({
       className={cn('a63-Avatar', className)}
       data-ring={ring === true ? 'unseen' : ring || undefined}
       data-shape={shape}
-      data-size={size}
+      data-size={size === 'default' ? 'md' : size}
       data-slot="avatar"
       {...props}
     />
@@ -72,11 +75,27 @@ export function AvatarFallback({
   )
 }
 
+export interface AvatarBadgeProps extends React.ComponentProps<'span'> {
+  /**
+   * What the badge means, such as "Online" or "Busy". The dot shows it by colour
+   * only, so give every status badge a label: it is read after the avatar's name
+   * and hidden from sight.
+   */
+  label?: string
+}
+
 export function AvatarBadge({
+  children,
   className,
+  label,
   ...props
-}: React.ComponentProps<'span'>): React.ReactElement {
-  return <span className={cn('a63-Avatar-badge', className)} data-slot="avatar-badge" {...props} />
+}: AvatarBadgeProps): React.ReactElement {
+  return (
+    <span className={cn('a63-Avatar-badge', className)} data-slot="avatar-badge" {...props}>
+      {children}
+      {label ? <span className="a63-Avatar-sr-only">{label}</span> : null}
+    </span>
+  )
 }
 
 export function AvatarGroup({
@@ -86,16 +105,35 @@ export function AvatarGroup({
   return <div className={cn('a63-Avatar-group', className)} data-slot="avatar-group" {...props} />
 }
 
+export interface AvatarGroupCountProps extends React.ComponentProps<'div'> {
+  /**
+   * The count in words for assistive technology, such as "5 more people". The
+   * visible text ("+5") is then hidden from assistive technology.
+   */
+  label?: string
+}
+
 export function AvatarGroupCount({
+  children,
   className,
+  label,
   ...props
-}: React.ComponentProps<'div'>): React.ReactElement {
+}: AvatarGroupCountProps): React.ReactElement {
   return (
     <div
       className={cn('a63-Avatar-group-count', className)}
       data-slot="avatar-group-count"
       {...props}
-    />
+    >
+      {label ? (
+        <>
+          <span aria-hidden>{children}</span>
+          <span className="a63-Avatar-sr-only">{label}</span>
+        </>
+      ) : (
+        children
+      )}
+    </div>
   )
 }
 

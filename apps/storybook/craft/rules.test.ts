@@ -194,6 +194,20 @@ describe('focus-visible', () => {
     expect(await checkFocusVisible(document, driver)).toEqual([])
   })
 
+  it('accepts a changing field fill around an editable combobox', async () => {
+    mount(
+      '<div class="field"><input role="combobox" aria-label="Search" aria-expanded="true"></div>' +
+        '<div class="field unchanged"><input role="combobox" aria-label="Unchanged" aria-expanded="true"></div>',
+      `.field { position: relative; }
+       .field input { outline: none; background: transparent; }
+       .field::before { content: ''; position: absolute; inset: 0; pointer-events: none; background: rgb(225, 225, 225); }
+       .field:not(.unchanged):has(> input:focus-visible)::before { background: rgb(180, 180, 180); }`
+    )
+    expect((await checkFocusVisible(document, driver)).map(v => v.element)).toEqual([
+      'input[role=combobox] "Unchanged"',
+    ])
+  })
+
   it('catches a ring drawn on :focus, which a pointer press shows too', async () => {
     mount(
       '<button class="probe">Save</button>',
@@ -201,6 +215,18 @@ describe('focus-visible', () => {
     )
     expect(await checkFocusVisible(document, driver)).toEqual([
       expect.objectContaining({ rule: 'focus-visible', element: 'button "Save" (pointer press)' }),
+    ])
+  })
+
+  it('catches an option or menu item that shows focus with a highlight fill alone', async () => {
+    mount(
+      '<div role="listbox" aria-label="Fruit"><div role="option" tabindex="0" class="item">Apple</div></div>' +
+        '<div role="menu" aria-label="File"><div role="menuitem" tabindex="0" class="item">Open</div></div>',
+      '.item { outline: none; } .item:focus { background: rgb(235, 235, 235); }'
+    )
+    expect((await checkFocusVisible(document, driver)).map(v => v.element)).toEqual([
+      'div[role=option] "Apple"',
+      'div[role=menuitem] "Open"',
     ])
   })
 

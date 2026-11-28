@@ -30,8 +30,28 @@ const LONG_ITEMS = [
   { value: 'integrations', label: 'Connected integrations' },
 ]
 
+const DISABLED_ITEMS = [
+  { value: 'list', label: 'List' },
+  { value: 'grid', label: 'Grid' },
+  { value: 'tree', label: 'Tree', disabled: true },
+]
+
+const ARABIC_ITEMS = [
+  { value: 'list', label: 'قائمة' },
+  { value: 'grid', label: 'شبكة' },
+  { value: 'tree', label: 'شجرة' },
+]
+
+const ARABIC_LONG_ITEMS = [
+  { value: 'overview', label: 'نظرة عامة على المشروع' },
+  { value: 'activity', label: 'النشاط الأخير' },
+  { value: 'permissions', label: 'أذونات الوصول' },
+  { value: 'integrations', label: 'التكاملات المتصلة' },
+]
+
 function Demo({
   animateBackplate,
+  initialValue = 'list',
   items = ITEMS,
   size,
   tabClassName,
@@ -39,16 +59,18 @@ function Demo({
   variant,
 }: {
   animateBackplate?: boolean
-  items?: typeof ITEMS
+  initialValue?: string
+  items?: { disabled?: boolean; label: string; value: string }[]
   size?: (typeof segmentedControlSizes)[number]
   tabClassName?: string
   tone?: (typeof segmentedControlTones)[number]
   variant?: (typeof segmentedControlVariants)[number]
 }) {
-  const [value, setValue] = useState('list')
+  const [value, setValue] = useState(initialValue)
   return (
     <SegmentedControl
       animateBackplate={animateBackplate}
+      aria-label="View"
       items={items}
       onValueChange={setValue}
       size={size}
@@ -84,9 +106,18 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/* A radio group named "View": Tab enters at the selected segment and the arrow
+   keys move and select. The APG radio pattern test plays this story, which
+   starts on the second segment. */
 export const Playground: Story = {
   render: ({ animateBackplate, size, tone, variant }) => (
-    <Demo animateBackplate={animateBackplate} size={size} tone={tone} variant={variant} />
+    <Demo
+      animateBackplate={animateBackplate}
+      initialValue="grid"
+      size={size}
+      tone={tone}
+      variant={variant}
+    />
   ),
 }
 
@@ -112,15 +143,170 @@ export const Sizes: Story = {
   ),
 }
 
+/* The selected segment of every scrolling track sits fully inside the track. */
+function expectSelectedInView(canvasElement: HTMLElement, when: string) {
+  for (const track of canvasElement.querySelectorAll<HTMLElement>(
+    '[data-slot="segmented-control-track"]'
+  )) {
+    const selected = track.querySelector('[data-slot="segmented-control-item"][data-checked]')
+    if (!selected) continue
+    const box = track.getBoundingClientRect()
+    const start = box.left + track.clientLeft
+    const end = start + track.clientWidth
+    const rect = selected.getBoundingClientRect()
+    if (rect.left < start - 1 || rect.right > end + 1)
+      throw new Error(
+        `${when}: the selected segment (${rect.left}-${rect.right}) is clipped by its track (${start}-${end})`
+      )
+  }
+}
+
+const frame = () => new Promise(resolve => requestAnimationFrame(() => resolve(null)))
+
 export const MobileOverflow: Story = {
   tags: ['!manifest'],
   render: () => (
     <UIProvider input="touch">
       <div style={{ maxWidth: 320, width: 'min(100%, calc(100vw - 2rem))' }}>
-        <Demo items={LONG_ITEMS} />
+        <Demo initialValue="integrations" items={LONG_ITEMS} />
       </div>
     </UIProvider>
   ),
+  /* The last segment starts selected, so the track scrolls it into view. */
+  play: async ({ canvasElement }) => {
+    await frame()
+    const track = canvasElement.querySelector<HTMLElement>('[data-slot="segmented-control-track"]')
+    if (!track || track.scrollWidth <= track.clientWidth)
+      throw new Error('The overflow track does not scroll')
+    expectSelectedInView(canvasElement, 'At rest')
+  },
+}
+
+/* Rest, selected and a disabled segment (Tree) in light and dark. The Hover and
+   FocusVisible stories capture the same rows with the first row's state forced
+   (parameters.visualState, see apps/storybook/README.md). */
+function StateRows() {
+  return (
+    <div style={{ display: 'grid', gap: 12 }}>
+      {(['light', 'dark'] as const).map(mode => (
+        <UIProvider key={mode} mode={mode}>
+          <div
+            data-mode-row={mode}
+            style={{
+              alignItems: 'center',
+              background: 'var(--a63-surface-page)',
+              display: 'flex',
+              gap: 16,
+              padding: 12,
+            }}
+          >
+            <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12, width: 48 }}>
+              {mode}
+            </span>
+            <Demo items={DISABLED_ITEMS} />
+            <Demo items={DISABLED_ITEMS} tone="accent" />
+          </div>
+        </UIProvider>
+      ))}
+    </div>
+  )
+}
+
+export const States: Story = {
+  render: () => <StateRows />,
+  play: async ({ canvasElement }) => {
+    const disabled = canvasElement.querySelector(
+      '[data-slot="segmented-control-item"][data-disabled]'
+    )
+    if (!disabled) throw new Error('No disabled segment rendered')
+    if (!disabled.matches(':disabled') && disabled.getAttribute('aria-disabled') !== 'true')
+      throw new Error('The disabled segment is not disabled for assistive technology')
+  },
+}
+
+/* The visual project hovers Grid, the first unselected segment, with the real pointer. */
+export const Hover: Story = {
+  render: () => <StateRows />,
+  parameters: {
+    visualState: { hover: '[data-slot="segmented-control-item"]:not([data-checked])' },
+  },
+}
+
+/* The visual project tabs into the first group, which focuses its selected segment. */
+export const FocusVisible: Story = {
+  render: () => <StateRows />,
+  parameters: {
+    visualState: { focusVisible: '[data-slot="segmented-control-item"][data-checked]' },
+  },
+}
+
+/* Right to left, in a track that fits and in one that scrolls: the sliding plate
+   covers the selected segment in both, at rest and after the track scrolls. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl">
+      <div style={{ display: 'grid', gap: 16, justifyItems: 'start' }}>
+        <Demo initialValue="grid" items={ARABIC_ITEMS} />
+        <div data-testid="rtl-overflow" style={{ maxWidth: 240 }}>
+          <Demo initialValue="permissions" items={ARABIC_LONG_ITEMS} />
+        </div>
+      </div>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const expectCovered = (when: string) => {
+      const controls = canvasElement.querySelectorAll('[data-slot="segmented-control"]')
+      if (controls.length !== 2) throw new Error(`Expected 2 controls, found ${controls.length}`)
+      for (const control of controls) {
+        const selected = control.querySelector('[data-slot="segmented-control-item"][data-checked]')
+        const plate = control.querySelector<HTMLElement>(
+          '[data-slot="segmented-control-indicator"]'
+        )
+        if (!selected || !plate || plate.hidden)
+          throw new Error(`${when}: no selected segment or plate`)
+        const a = selected.getBoundingClientRect()
+        const b = plate.getBoundingClientRect()
+        if (Math.abs(a.left - b.left) > 1 || Math.abs(a.width - b.width) > 1)
+          throw new Error(
+            `${when}: the plate (${b.left}, ${b.width}) does not cover the selected segment (${a.left}, ${a.width})`
+          )
+      }
+    }
+    await frame()
+    expectCovered('At rest')
+    expectSelectedInView(canvasElement, 'At rest')
+    const track = canvasElement.querySelector<HTMLElement>(
+      '[data-testid="rtl-overflow"] [data-slot="segmented-control-track"]'
+    )
+    if (!track || track.scrollWidth <= track.clientWidth)
+      throw new Error('The RTL overflow track does not scroll')
+    /* Segments that resize after mount (a web font settling) keep the
+       selection in view: grow the labels, then put them back. */
+    const control = track.closest<HTMLElement>('[data-slot="segmented-control"]')
+    control?.style.setProperty('--segment-font-size', '1.25rem')
+    await frame()
+    await frame()
+    expectSelectedInView(canvasElement, 'After the segments grow')
+    control?.style.removeProperty('--segment-font-size')
+    await frame()
+    await frame()
+    expectSelectedInView(canvasElement, 'After the segments shrink back')
+    // Let the plate finish sliding back before checking it covers the segment.
+    await Promise.all(
+      Array.from(canvasElement.querySelectorAll('[data-slot="segmented-control-indicator"]'))
+        .flatMap(plate => plate.getAnimations())
+        .map(animation => animation.finished)
+    )
+    const rest = track.scrollLeft
+    track.scrollLeft = -(track.scrollWidth - track.clientWidth)
+    await frame()
+    expectCovered('Scrolled to the end')
+    track.scrollLeft = 0
+    await frame()
+    expectCovered('Scrolled to the start')
+    track.scrollLeft = rest
+    await frame()
+  },
 }
 
 export const Variants: Story = {
@@ -137,6 +323,18 @@ export const Tones: Story = {
     <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
       <Demo tone="neutral" />
       <Demo tone="accent" />
+    </div>
+  ),
+}
+
+/* Captured with forced colors on (Windows High Contrast): the selected segment
+   of both tones takes the system selection colours. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+      <Demo tone="neutral" />
+      <Demo tone="accent" />
+      <Demo items={ICON_ITEMS} variant="icon" />
     </div>
   ),
 }

@@ -407,10 +407,13 @@ export function addCrossRendererIndex(jsonText, { slug }) {
 `
 }
 
-/** Add React conformance evidence before the end of `reactRendererConformance`. */
+/**
+ * Add React conformance evidence before the end of the verified list in
+ * renderer-conformance.test.tsx (`reactRendererConformance` itself is read from the contracts).
+ */
 export function addReactConformance(source, { slug }) {
   const end = source.indexOf('] as const satisfies readonly ReactRendererConformanceEvidence[]')
-  if (end === -1) throw new Error('renderer-conformance.ts has no reactRendererConformance list')
+  if (end === -1) throw new Error('renderer-conformance.test.tsx has no verified evidence list')
   const entry = `  {
     contractId: '${slug}',
     implementedStates: ['rest'],

@@ -1,5 +1,5 @@
-import { render } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import { act, fireEvent, render } from '@testing-library/react'
+import { describe, expect, it, vi } from 'vitest'
 
 import {
   Table,
@@ -95,11 +95,13 @@ describe('Table', () => {
   it('puts size and variant on the container, defaulting from the contract', () => {
     const { container, rerender } = render(<Table />)
     const wrapper = () => container.querySelector('[data-slot="table-container"]')
-    expect(wrapper()).toHaveAttribute('data-size', 'default')
+    expect(wrapper()).toHaveAttribute('data-size', 'md')
     expect(wrapper()).toHaveAttribute('data-variant', 'default')
     rerender(<Table size="sm" variant="plain" />)
     expect(wrapper()).toHaveAttribute('data-size', 'sm')
     expect(wrapper()).toHaveAttribute('data-variant', 'plain')
+    rerender(<Table size="default" />)
+    expect(wrapper()).toHaveAttribute('data-size', 'md')
   })
 
   it('marks sticky head and body cells, and leaves others unmarked', () => {
@@ -125,5 +127,170 @@ describe('Table', () => {
     expect(heads[1]).not.toHaveAttribute('data-sticky')
     expect(cells[0]).not.toHaveAttribute('data-sticky')
     expect(cells[1]).toHaveAttribute('data-sticky', 'end')
+  })
+
+  it('sortable heads: a button in the cell, aria-sort on the sorted column, controlled sort', () => {
+    const onSortChange = vi.fn()
+    const view = (sort: { column: string; direction: 'ascending' | 'descending' } | null) => (
+      <Table onSortChange={onSortChange} sort={sort}>
+        <TableHeader>
+          <TableRow>
+            <TableHead sortKey="name">Name</TableHead>
+            <TableHead firstSortDirection="descending" sortKey="mrr">
+              MRR
+            </TableHead>
+            <TableHead>Status</TableHead>
+          </TableRow>
+        </TableHeader>
+      </Table>
+    )
+    const { container, getByRole, rerender } = render(
+      view({ column: 'name', direction: 'ascending' })
+    )
+    const heads = container.querySelectorAll('th')
+    expect(heads[0]).toHaveAttribute('aria-sort', 'ascending')
+    expect(heads[1]).not.toHaveAttribute('aria-sort')
+    expect(heads[2]).not.toHaveAttribute('aria-sort')
+    expect(heads[2].querySelector('button')).toBeNull()
+    expect(heads[0].querySelector('[data-trigger-slot="table-sort-button"]')).toHaveClass(
+      'a63-Table-sort-button'
+    )
+
+    fireEvent.click(getByRole('button', { name: 'Name' }))
+    expect(onSortChange).toHaveBeenLastCalledWith({ column: 'name', direction: 'descending' })
+    fireEvent.click(getByRole('button', { name: 'MRR' }))
+    expect(onSortChange).toHaveBeenLastCalledWith({ column: 'mrr', direction: 'descending' })
+
+    rerender(view({ column: 'mrr', direction: 'descending' }))
+    expect(heads[0]).not.toHaveAttribute('aria-sort')
+    expect(heads[1]).toHaveAttribute('aria-sort', 'descending')
+    fireEvent.click(getByRole('button', { name: 'MRR' }))
+    expect(onSortChange).toHaveBeenLastCalledWith({ column: 'mrr', direction: 'ascending' })
+  })
+
+  it('lets the caller replace the sort icon', () => {
+    const { container } = render(
+      <Table sort={null}>
+        <TableHeader>
+          <TableRow>
+            <TableHead sortIcon={direction => <i data-icon={direction} />} sortKey="name">
+              Name
+            </TableHead>
+          </TableRow>
+        </TableHeader>
+      </Table>
+    )
+    expect(container.querySelector('[data-icon="none"]')).not.toBeNull()
+  })
+
+  it('marks a selected row and opts cells into wrapping', () => {
+    const { container } = render(
+      <Table>
+        <TableBody>
+          <TableRow selected>
+            <TableCell wrap>Long</TableCell>
+          </TableRow>
+          <TableRow>
+            <TableCell>Short</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    )
+    const [selected, plain] = container.querySelectorAll('tr')
+    expect(selected).toHaveAttribute('data-state', 'selected')
+    expect(plain).not.toHaveAttribute('data-state')
+    expect(container.querySelector('td')).toHaveAttribute('data-wrap')
+    expect(plain?.querySelector('td')).not.toHaveAttribute('data-wrap')
+  })
+
+  it('end-aligns a numeric head and cell with align="end", not the native align attribute', () => {
+    const { container } = render(
+      <Table>
+        <TableHeader>
+          <TableRow>
+            <TableHead align="end">Amount</TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          <TableRow>
+            <TableCell align="end">$250.00</TableCell>
+            <TableCell>Paid</TableCell>
+          </TableRow>
+        </TableBody>
+      </Table>
+    )
+    expect(container.querySelector('th')).toHaveAttribute('data-align', 'end')
+    expect(container.querySelector('th')).not.toHaveAttribute('align')
+    const [amount, status] = container.querySelectorAll('td')
+    expect(amount).toHaveAttribute('data-align', 'end')
+    expect(status).not.toHaveAttribute('data-align')
+  })
+
+  it('makes the scroller a named, focusable region only while it overflows', () => {
+    let callback: ResizeObserverCallback = () => {}
+    const original = globalThis.ResizeObserver
+    globalThis.ResizeObserver = class {
+      constructor(cb: ResizeObserverCallback) {
+        callback = cb
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    } as unknown as typeof ResizeObserver
+    try {
+      const { container } = render(
+        <Table>
+          <TableCaption>Invoices</TableCaption>
+          <TableBody>
+            <TableRow>
+              <TableCell>INV001</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )
+      const scroller = container.querySelector<HTMLElement>('[data-slot="table-container"]')!
+      expect(scroller).not.toHaveAttribute('tabindex')
+      Object.defineProperty(scroller, 'scrollWidth', { configurable: true, value: 800 })
+      Object.defineProperty(scroller, 'clientWidth', { configurable: true, value: 400 })
+      act(() => callback([], {} as ResizeObserver))
+      expect(scroller).toHaveAttribute('tabindex', '0')
+      expect(scroller).toHaveAttribute('role', 'region')
+      expect(scroller).toHaveAttribute('aria-label', 'Invoices')
+    } finally {
+      globalThis.ResizeObserver = original
+    }
+  })
+
+  it('gives an unnamed overflowing scroller no built-in English name', () => {
+    let callback: ResizeObserverCallback = () => {}
+    const original = globalThis.ResizeObserver
+    globalThis.ResizeObserver = class {
+      constructor(cb: ResizeObserverCallback) {
+        callback = cb
+      }
+      observe() {}
+      unobserve() {}
+      disconnect() {}
+    } as unknown as typeof ResizeObserver
+    try {
+      const { container } = render(
+        <Table>
+          <TableBody>
+            <TableRow>
+              <TableCell>INV001</TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      )
+      const scroller = container.querySelector<HTMLElement>('[data-slot="table-container"]')!
+      Object.defineProperty(scroller, 'scrollWidth', { configurable: true, value: 800 })
+      Object.defineProperty(scroller, 'clientWidth', { configurable: true, value: 400 })
+      act(() => callback([], {} as ResizeObserver))
+      expect(scroller).toHaveAttribute('tabindex', '0')
+      expect(scroller).not.toHaveAttribute('role')
+      expect(scroller).not.toHaveAttribute('aria-label')
+    } finally {
+      globalThis.ResizeObserver = original
+    }
   })
 })

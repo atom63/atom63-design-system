@@ -47,6 +47,37 @@ export const WithActions: Story = {
   },
 }
 
+/**
+ * A standing step with `dismissable={false}`: no dismiss button, and neither
+ * Escape nor a press on the scrim closes it. Its actions are the only way out,
+ * so a non-dismissable spotlight must carry at least one.
+ */
+export const NotDismissable: Story = {
+  args: {
+    actions: [{ id: 'ok', label: 'Got it', onSelect: () => undefined, variant: 'primary' }],
+    dismissable: false,
+  },
+}
+
+/**
+ * On a phone there is no Escape key: the dismiss button and a press on the
+ * scrim are the touch paths out, even for a message with no actions.
+ */
+export const Phone: Story = {
+  globals: { viewport: { value: 'a63-phone', isRotated: false } },
+  decorators: [
+    Story => (
+      <div style={{ display: 'flex', justifyContent: 'flex-start', padding: '1rem' }}>
+        <Button id="spotlight-target-phone" variant="outline">
+          Target control
+        </Button>
+        <Story />
+      </div>
+    ),
+  ],
+  args: { anchor: '#spotlight-target-phone' },
+}
+
 export const MissingAnchor: Story = {
   args: { anchor: '#does-not-exist' },
 }

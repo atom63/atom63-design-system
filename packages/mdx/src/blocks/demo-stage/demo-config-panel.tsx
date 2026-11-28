@@ -1,3 +1,5 @@
+'use client'
+
 import { SlidersHorizontal } from 'lucide-react'
 import { clsx } from 'clsx'
 import {

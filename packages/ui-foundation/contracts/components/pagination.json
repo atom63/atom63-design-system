@@ -3,7 +3,7 @@
   "component": "pagination",
   "maturity": "stable",
   "lists": {
-    "states": ["rest", "current"],
+    "states": ["rest", "current", "disabled"],
     "slots": [
       "pagination",
       "pagination-content",
@@ -11,12 +11,13 @@
       "pagination-link",
       "pagination-ellipsis"
     ],
-    "visualArchetypes": ["action"]
+    "visualArchetypes": ["action"],
+    "linkSizes": ["xs", "sm", "md", "icon-xs", "icon-sm", "icon"]
   },
   "contract": {
     "defaultLinkSize": "icon",
     "linkSizes": {
-      "$ref": "./button.json#/lists/sizes"
+      "$ref": "#/lists/linkSizes"
     },
     "slots": {
       "$ref": "#/lists/slots"

@@ -12,6 +12,10 @@
   width: 100%;
   color: var(--a63-text-primary);
   font-family: var(--a63-control-font-family);
+  --autocomplete-adornment-size: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
 }
 .a63-Autocomplete-input-group:has(:disabled) {
   opacity: 0.64;
@@ -20,6 +24,9 @@
 /* ── Input (field) ─────────────────────────────────────────────────────── */
 
 .a63-Autocomplete-input {
+  --autocomplete-border: var(--a63-border-input);
+  --autocomplete-focus-border: var(--a63-action-primary);
+  --autocomplete-focus-ring: var(--a63-control-focus-ring-color, var(--a63-focus-ring));
   /* Content floor — see button.css. */
   --autocomplete-content-lh: var(--typography-sm-line-height);
   --autocomplete-content-floor: calc(var(--autocomplete-content-lh) + 2 * var(--a63-space-0_5));
@@ -32,7 +39,7 @@
     var(--autocomplete-content-floor)
   );
   padding-inline: var(--a63-control-padding-inline-md);
-  border: var(--a63-control-border-width) solid var(--a63-border-input);
+  border: var(--a63-control-border-width) solid var(--autocomplete-border);
   border-radius: var(--a63-control-radius);
   background: var(--a63-surface-control);
   box-shadow: var(--a63-field-shadow);
@@ -49,10 +56,23 @@
   color: var(--a63-text-tertiary);
 }
 
+@media (hover: hover) and (pointer: fine) {
+  .a63-Autocomplete-input:hover:not(:disabled) {
+    border-color: color-mix(in oklch, var(--autocomplete-border), var(--a63-text-primary) 18%);
+  }
+}
+
 .a63-Autocomplete-input:focus-visible {
-  border-color: var(--a63-action-primary);
-  outline: var(--a63-control-focus-ring-width) solid
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  border-color: var(--autocomplete-focus-border);
+  outline: var(--a63-control-focus-ring-width) solid var(--autocomplete-focus-ring);
+}
+
+/* Invalid: the same danger edge as .a63-Input[data-invalid] (input.css). */
+.a63-Autocomplete-input[data-invalid],
+.a63-Autocomplete-input[aria-invalid='true'] {
+  --autocomplete-border: var(--a63-border-danger);
+  --autocomplete-focus-border: var(--a63-status-danger);
+  --autocomplete-focus-ring: var(--a63-status-danger);
 }
 
 .a63-Autocomplete-input[data-has-start-addon] {
@@ -62,6 +82,13 @@
 /* trailing adornment reserves room */
 .a63-Autocomplete-input-group:has(.a63-Autocomplete-adornment) .a63-Autocomplete-input {
   padding-inline-end: 2rem;
+}
+/* trigger and clear together: room for both, side by side */
+.a63-Autocomplete-input-group:has([data-slot='autocomplete-trigger']):has(
+    [data-slot='autocomplete-clear']
+  )
+  .a63-Autocomplete-input {
+  padding-inline-end: calc(2 * var(--autocomplete-adornment-size) + 0.125rem);
 }
 
 .a63-Autocomplete-input-group[data-size='sm'] .a63-Autocomplete-input {
@@ -111,14 +138,8 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
-  width: max(
-    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
-  );
-  height: max(
-    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
-  );
+  width: var(--autocomplete-adornment-size);
+  height: var(--autocomplete-adornment-size);
   border: 1px solid transparent;
   border-radius: var(--radius-md);
   background: transparent;
@@ -129,6 +150,11 @@
   transition:
     color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease),
     opacity var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
+}
+/* With a trigger present, the clear button sits to its inline start, not on top of it. */
+.a63-Autocomplete-input-group:has([data-slot='autocomplete-trigger'])
+  [data-slot='autocomplete-clear'] {
+  inset-inline-end: calc(0.125rem + var(--autocomplete-adornment-size));
 }
 .a63-Autocomplete-adornment:hover {
   opacity: 1;

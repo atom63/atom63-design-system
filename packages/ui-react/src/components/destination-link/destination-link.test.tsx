@@ -14,6 +14,18 @@ function RouterLink({ children, href, ...props }: ComponentProps<'a'>) {
 }
 
 describe('DestinationLink', () => {
+  it('carries the link recipe class and merges a consumer class', () => {
+    render(
+      <DestinationLink className="extra" href="/projects" kind="internal">
+        Projects
+      </DestinationLink>
+    )
+    const link = screen.getByRole('link', { name: 'Projects' })
+    expect(link).toHaveClass('a63-DestinationLink', 'extra')
+    // Plain by default: the recipe underlines only `[data-variant='inline']`.
+    expect(link).not.toHaveAttribute('data-variant')
+  })
+
   it('renders internal destinations through the supplied router link', () => {
     render(
       <DestinationLink
@@ -21,11 +33,14 @@ describe('DestinationLink', () => {
         href="/projects/atom63"
         kind="internal"
         render={<RouterLink href="/projects/atom63" />}
+        variant="inline"
       />
     )
 
     const link = screen.getByRole('link', { name: 'View project' })
     expect(link.hasAttribute('data-router-link')).toBe(true)
+    expect(link).toHaveAttribute('data-variant', 'inline')
+    expect(link).toHaveAttribute('href', '/projects/atom63')
     expect(link.hasAttribute('target')).toBe(false)
     expect(link.hasAttribute('rel')).toBe(false)
   })

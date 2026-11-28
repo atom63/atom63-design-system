@@ -4,9 +4,9 @@
   "derivedFrom": "packages/styles/generated/atom63.tokens.json",
   "summary": {
     "collections": 14,
-    "variables": 1144,
-    "aliasValues": 783,
-    "skipped": 279,
+    "variables": 1167,
+    "aliasValues": 812,
+    "skipped": 412,
     "computed": 64
   },
   "collections": [
@@ -1559,9 +1559,9 @@
             },
             "terminal-light": {
               "value": {
-                "r": 0.010041,
-                "g": 0.262546,
-                "b": 0.609689,
+                "r": 0.014297,
+                "g": 0.312915,
+                "b": 0.715122,
                 "a": 1
               }
             },
@@ -1575,6 +1575,77 @@
             }
           },
           "codeSyntax": "var(--a63-text-tertiary)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "toggle/on/background",
+          "token": "--a63-toggle-on-background",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral"
+            },
+            "terminal-light": {
+              "alias": "--a63-text-primary"
+            },
+            "terminal-dark": {
+              "alias": "--a63-text-primary"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-background)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "toggle/on/foreground",
+          "token": "--a63-toggle-on-foreground",
+          "type": "COLOR",
+          "values": {
+            "modern-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "modern-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "aqua-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-light": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "retro-dark": {
+              "alias": "--a63-action-neutral-foreground"
+            },
+            "terminal-light": {
+              "alias": "--a63-surface-page"
+            },
+            "terminal-dark": {
+              "alias": "--a63-surface-page"
+            }
+          },
+          "codeSyntax": "var(--a63-toggle-on-foreground)",
           "scopes": [
             "TEXT_FILL"
           ]
@@ -2721,21 +2792,6 @@
           "codeSyntax": "var(--a63-selection-thumb-fg)",
           "scopes": [
             "TEXT_FILL"
-          ]
-        },
-        {
-          "name": "skeleton/base",
-          "token": "--a63-skeleton-base",
-          "type": "COLOR",
-          "values": {
-            "Value": {
-              "alias": "--a63-surface-muted"
-            }
-          },
-          "codeSyntax": "var(--a63-skeleton-base)",
-          "scopes": [
-            "FRAME_FILL",
-            "SHAPE_FILL"
           ]
         },
         {
@@ -4414,6 +4470,46 @@
           ]
         },
         {
+          "name": "type/display/hero/font/weight",
+          "token": "--a63-type-display-hero-font-weight",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 600
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/font/weight/strong",
+          "token": "--a63-type-display-hero-font-weight-strong",
+          "type": "FLOAT",
+          "values": {
+            "Value": {
+              "value": 700
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-weight-strong)",
+          "scopes": [
+            "FONT_WEIGHT"
+          ]
+        },
+        {
+          "name": "type/display/hero/letter/spacing",
+          "token": "--a63-type-display-hero-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.045em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/font/size",
           "token": "--a63-type-display-large-font-size",
           "type": "FLOAT",
@@ -4456,6 +4552,18 @@
           ]
         },
         {
+          "name": "type/display/large/letter/spacing",
+          "token": "--a63-type-display-large-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.04em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-large-letter-spacing)",
+          "scopes": []
+        },
+        {
           "name": "type/display/large/line/height",
           "token": "--a63-type-display-large-line-height",
           "type": "FLOAT",
@@ -4468,6 +4576,18 @@
           "scopes": [
             "LINE_HEIGHT"
           ]
+        },
+        {
+          "name": "type/display/letter/spacing",
+          "token": "--a63-type-display-letter-spacing",
+          "type": "STRING",
+          "values": {
+            "Value": {
+              "value": "-0.03em"
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-letter-spacing)",
+          "scopes": []
         },
         {
           "name": "type/display/line/height",
@@ -16240,6 +16360,26 @@
           ]
         },
         {
+          "name": "border/danger",
+          "token": "--a63-border-danger",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--color-danger-600",
+                "opacity": 62
+              }
+            },
+            "dark": {
+              "alias": "--color-danger-500"
+            }
+          },
+          "codeSyntax": "var(--a63-border-danger)",
+          "scopes": [
+            "STROKE_COLOR"
+          ]
+        },
+        {
           "name": "category/amber/subtle/foreground",
           "token": "--a63-category-amber-subtle-foreground",
           "type": "COLOR",
@@ -16622,7 +16762,7 @@
               "alias": "--a63-action-primary"
             },
             "dark": {
-              "alias": "--a63-action-primary"
+              "alias": "--a63-brand-400"
             }
           },
           "codeSyntax": "var(--a63-chart-1)",
@@ -16637,10 +16777,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-teal-500"
+              "alias": "--a63-chart-2-light"
             },
             "dark": {
-              "alias": "--color-teal-400"
+              "alias": "--a63-chart-2-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-2)",
@@ -16655,10 +16795,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-amber-500"
+              "alias": "--a63-chart-3-light"
             },
             "dark": {
-              "alias": "--color-amber-400"
+              "alias": "--a63-chart-3-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-3)",
@@ -16673,10 +16813,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-violet-500"
+              "alias": "--a63-chart-4-light"
             },
             "dark": {
-              "alias": "--color-violet-400"
+              "alias": "--a63-chart-4-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-4)",
@@ -16691,10 +16831,10 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-500"
+              "alias": "--a63-chart-5-light"
             },
             "dark": {
-              "alias": "--color-rose-400"
+              "alias": "--a63-chart-5-dark"
             }
           },
           "codeSyntax": "var(--a63-chart-5)",
@@ -17009,6 +17149,24 @@
           ]
         },
         {
+          "name": "skeleton/base",
+          "token": "--a63-skeleton-base",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--a63-surface-muted"
+            },
+            "dark": {
+              "alias": "--a63-surface-muted"
+            }
+          },
+          "codeSyntax": "var(--a63-skeleton-base)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
           "name": "skeleton/highlight",
           "token": "--a63-skeleton-highlight",
           "type": "COLOR",
@@ -17024,6 +17182,92 @@
           "scopes": [
             "FRAME_FILL",
             "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger",
+          "token": "--a63-status-danger",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-600"
+            },
+            "dark": {
+              "alias": "--color-danger-500"
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/foreground",
+          "token": "--a63-status-danger-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "value": {
+                "r": 1,
+                "g": 0.970073,
+                "b": 0.964795,
+                "a": 1
+              }
+            },
+            "dark": {
+              "value": {
+                "r": 0.062357,
+                "g": 0.036228,
+                "b": 0.033422,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-foreground)",
+          "scopes": [
+            "TEXT_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/subtle",
+          "token": "--a63-status-danger-subtle",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "composed": {
+                "alias": "--a63-status-danger",
+                "opacity": 14
+              }
+            },
+            "dark": {
+              "composed": {
+                "alias": "--a63-status-danger",
+                "opacity": 14
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-subtle)",
+          "scopes": [
+            "FRAME_FILL",
+            "SHAPE_FILL"
+          ]
+        },
+        {
+          "name": "status/danger/subtle/foreground",
+          "token": "--a63-status-danger-subtle-foreground",
+          "type": "COLOR",
+          "values": {
+            "light": {
+              "alias": "--color-danger-700"
+            },
+            "dark": {
+              "alias": "--color-danger-400"
+            }
+          },
+          "codeSyntax": "var(--a63-status-danger-subtle-foreground)",
+          "scopes": [
+            "TEXT_FILL"
           ]
         },
         {
@@ -17999,6 +18243,462 @@
           "scopes": [
             "TEXT_FILL"
           ]
+        },
+        {
+          "name": "chart/2/dark",
+          "token": "--a63-chart-2-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.992936,
+                "g": 0.551494,
+                "b": 0.478817,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0,
+                "g": 0.797889,
+                "b": 0.812537,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.766095,
+                "g": 0.603233,
+                "b": 0.979379,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.544963,
+                "g": 0.76983,
+                "b": 0.39639,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.864192,
+                "g": 0.656796,
+                "b": 0.201777,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.324825,
+                "g": 0.798665,
+                "b": 0.562192,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-2-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/2/light",
+          "token": "--a63-chart-2-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.780881,
+                "g": 0.3618,
+                "b": 0.167442,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0,
+                "g": 0.609357,
+                "b": 0.537774,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.554055,
+                "g": 0.409566,
+                "b": 0.801153,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.274445,
+                "g": 0.585413,
+                "b": 0.225632,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.700969,
+                "g": 0.437772,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0,
+                "g": 0.606109,
+                "b": 0.390199,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-2-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/3/dark",
+          "token": "--a63-chart-3-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.072759,
+                "g": 0.722045,
+                "b": 0.599749,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.831034,
+                "g": 0.487879,
+                "b": 0.716205,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.756473,
+                "g": 0.59724,
+                "b": 0.16407,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.54988,
+                "g": 0.584596,
+                "b": 0.933061,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.10297,
+                "g": 0.681128,
+                "b": 0.863754,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.683214,
+                "g": 0.539224,
+                "b": 0.882425,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-3-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/3/light",
+          "token": "--a63-chart-3-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0,
+                "g": 0.523292,
+                "b": 0.484518,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.58599,
+                "g": 0.314541,
+                "b": 0.58522,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.575979,
+                "g": 0.397192,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.409007,
+                "g": 0.380633,
+                "b": 0.714861,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0,
+                "g": 0.495619,
+                "b": 0.6333,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.507598,
+                "g": 0.344975,
+                "b": 0.666036,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-3-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/4/dark",
+          "token": "--a63-chart-4-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.832528,
+                "g": 0.78138,
+                "b": 0.357068,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.632415,
+                "g": 0.753465,
+                "b": 1,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 1,
+                "g": 0.626893,
+                "b": 0.661276,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.214169,
+                "g": 0.860963,
+                "b": 0.931303,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.476741,
+                "g": 0.866277,
+                "b": 0.620124,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.357488,
+                "g": 0.827703,
+                "b": 1,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-4-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/4/light",
+          "token": "--a63-chart-4-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.471677,
+                "g": 0.513338,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.229815,
+                "g": 0.482037,
+                "b": 0.79602,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0.743103,
+                "g": 0.319112,
+                "b": 0.39931,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0,
+                "g": 0.555526,
+                "b": 0.671396,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.202434,
+                "g": 0.563794,
+                "b": 0.273179,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0,
+                "g": 0.523374,
+                "b": 0.751205,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-4-light)",
+          "scopes": []
+        },
+        {
+          "name": "chart/5/dark",
+          "token": "--a63-chart-5-dark",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.747757,
+                "g": 0.468924,
+                "b": 0.827728,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.51617,
+                "g": 0.65643,
+                "b": 0.18496,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0,
+                "g": 0.65358,
+                "b": 0.891284,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.847859,
+                "g": 0.500736,
+                "b": 0.092241,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.894691,
+                "g": 0.424182,
+                "b": 0.509651,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.754674,
+                "g": 0.564361,
+                "b": 0,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-5-dark)",
+          "scopes": []
+        },
+        {
+          "name": "chart/5/light",
+          "token": "--a63-chart-5-light",
+          "type": "COLOR",
+          "values": {
+            "b1": {
+              "value": {
+                "r": 0.579664,
+                "g": 0.220036,
+                "b": 0.548836,
+                "a": 1
+              }
+            },
+            "b2": {
+              "value": {
+                "r": 0.40991,
+                "g": 0.412532,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b3": {
+              "value": {
+                "r": 0,
+                "g": 0.442503,
+                "b": 0.660313,
+                "a": 1
+              }
+            },
+            "b4": {
+              "value": {
+                "r": 0.607169,
+                "g": 0.294441,
+                "b": 0,
+                "a": 1
+              }
+            },
+            "b5": {
+              "value": {
+                "r": 0.656922,
+                "g": 0.182188,
+                "b": 0.353105,
+                "a": 1
+              }
+            },
+            "b6": {
+              "value": {
+                "r": 0.527365,
+                "g": 0.356048,
+                "b": 0,
+                "a": 1
+              }
+            }
+          },
+          "codeSyntax": "var(--a63-chart-5-light)",
+          "scopes": []
         }
       ]
     },
@@ -19883,6 +20583,52 @@
           ]
         },
         {
+          "name": "type/display/hero/font/size",
+          "token": "--a63-type-display-hero-font-size",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 67.5156
+            },
+            "compact": {
+              "value": 64.7969
+            },
+            "comfortable": {
+              "value": 67.5156
+            },
+            "large": {
+              "value": 67.5156
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-font-size)",
+          "scopes": [
+            "FONT_SIZE"
+          ]
+        },
+        {
+          "name": "type/display/hero/line/height",
+          "token": "--a63-type-display-hero-line-height",
+          "type": "FLOAT",
+          "values": {
+            "normal": {
+              "value": 70.8906
+            },
+            "compact": {
+              "value": 68.0312
+            },
+            "comfortable": {
+              "value": 70.8906
+            },
+            "large": {
+              "value": 70.8906
+            }
+          },
+          "codeSyntax": "var(--a63-type-display-hero-line-height)",
+          "scopes": [
+            "LINE_HEIGHT"
+          ]
+        },
+        {
           "name": "typography/10xl/font/size",
           "token": "--typography-10xl-font-size",
           "type": "FLOAT",
@@ -20209,6 +20955,29 @@
             }
           },
           "codeSyntax": "var(--a63-font-app)",
+          "scopes": [
+            "FONT_FAMILY"
+          ]
+        },
+        {
+          "name": "font/display",
+          "token": "--a63-font-display",
+          "type": "STRING",
+          "values": {
+            "sans": {
+              "alias": "--a63-font-app"
+            },
+            "serif": {
+              "alias": "--a63-font-app"
+            },
+            "mono": {
+              "alias": "--a63-font-app"
+            },
+            "pixel": {
+              "alias": "--a63-font-app"
+            }
+          },
+          "codeSyntax": "var(--a63-font-display)",
           "scopes": [
             "FONT_FAMILY"
           ]
@@ -20644,6 +21413,226 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-action-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-hover",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-danger-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-disabled-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-disabled-border",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-disabled-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-neutral",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-action-neutral-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-alert-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-amber-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-amber-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-blue-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-blue-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-cyan-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-cyan-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-emerald-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-emerald-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-error-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-fuchsia-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-fuchsia-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-green-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-green-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-indigo-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-indigo-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-info-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-lime-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-lime-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-neutral-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-neutral-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-orange-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-orange-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-pink-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-pink-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-purple-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-purple-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-red-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-red-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-rose-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-rose-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-sky-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-sky-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-success-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-teal-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-teal-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-violet-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-violet-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-warning-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-yellow-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-badge-yellow-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-control",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-input",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-border-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-brand-100",
       "reason": "context scope: [data-a63-brand='auto']"
     },
@@ -20686,6 +21675,122 @@
     {
       "token": "--a63-brand-950",
       "reason": "context scope: [data-a63-brand='auto']"
+    },
+    {
+      "token": "--a63-category-amber-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-blue-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-cyan-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-emerald-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-fuchsia-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-gray-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-green-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-indigo-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-lime-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-neutral-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-orange-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-pink-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-purple-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-red-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-rose-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-sky-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-slate-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-stone-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-teal-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-violet-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-yellow-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-category-zinc-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-1",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-2",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-3",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-4",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-chart-5",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-choice-card-checked-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-choice-card-checked-border",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-choice-indicator-gloss",
@@ -20840,6 +21945,18 @@
       "reason": "conditional: @media (pointer: coarse)"
     },
     {
+      "token": "--a63-control-outline-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-control-outline-hover-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-control-outline-hover-border",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-control-padding-inline-lg",
       "reason": "context scope: :is([data-a63-density], [data-density])"
     },
@@ -20900,8 +22017,16 @@
       "reason": "unresolvable value: (empty)"
     },
     {
+      "token": "--a63-focus-ring",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-gradient-brand",
       "reason": "unresolvable value: linear-gradient(135deg, rgba(44, 127, 255, 1), rgba(0, 57, 158, 1))"
+    },
+    {
+      "token": "--a63-gradient-brand-fade",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-gradient-brand-fade",
@@ -20913,6 +22038,22 @@
     },
     {
       "token": "--a63-gradient-scrim",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-dark",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-dark",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-light",
+      "reason": "unsupported type: string"
+    },
+    {
+      "token": "--a63-if-light",
       "reason": "unsupported type: string"
     },
     {
@@ -21104,6 +22245,10 @@
       "reason": "unsupported type: string"
     },
     {
+      "token": "--a63-segment-gloss",
+      "reason": "unsupported type: string"
+    },
+    {
       "token": "--a63-segment-hover-foreground",
       "reason": "theme value not representable, kept its default: terminal-dark: (empty)"
     },
@@ -21148,6 +22293,30 @@
       "reason": "unresolvable value: (empty)"
     },
     {
+      "token": "--a63-selected-accent-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-selected-accent-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-selected-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-selected-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-skeleton-base",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-skeleton-highlight",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-space-0_5",
       "reason": "context scope: :is([data-a63-density], [data-density])"
     },
@@ -21188,6 +22357,70 @@
       "reason": "context scope: :is([data-a63-density], [data-density])"
     },
     {
+      "token": "--a63-status-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-danger-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-danger-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-danger-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-info-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-success-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning-subtle",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-status-warning-subtle-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-surface-backdrop",
       "reason": "theme value not representable, kept its default: terminal-dark: none"
     },
@@ -21204,6 +22437,14 @@
       "reason": "unresolvable value: solid"
     },
     {
+      "token": "--a63-surface-control",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-control-hover",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-surface-gloss",
       "reason": "theme value not representable, kept its default: terminal-dark: none"
     },
@@ -21218,6 +22459,30 @@
     {
       "token": "--a63-surface-highlight",
       "reason": "unresolvable value: none"
+    },
+    {
+      "token": "--a63-surface-muted",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-overlay",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-page",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-panel",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-recessed",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-surface-sidebar",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-surface-texture-blend",
@@ -21244,8 +22509,36 @@
       "reason": "context scope: [data-a63-form-factor='phone'], [data-a63-form-factor='phone'] :is([data-a63-density], [data-density])"
     },
     {
+      "token": "--a63-text-accent",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-danger",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-primary",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-secondary",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-text-tertiary",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
       "token": "--a63-toggle-gap",
       "reason": "context scope: :is([data-a63-density], [data-density])"
+    },
+    {
+      "token": "--a63-toggle-on-background",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-toggle-on-foreground",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-trigger-gap",
@@ -21394,6 +22687,14 @@
     {
       "token": "--a63-widget-foreground",
       "reason": "context scope: [data-widget-kind='weather'], [data-widget-kind='location'][data-weather-tone]"
+    },
+    {
+      "token": "--a63-widget-media-shadow",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
+    },
+    {
+      "token": "--a63-widget-media-shadow-raised",
+      "reason": "context scope: [data-a63-brand], [data-a63-surface]"
     },
     {
       "token": "--a63-widget-rim-backdrop",
@@ -22069,7 +23370,7 @@
         "surface",
         "theme"
       ],
-      "expression": "var(--surface-dark-11)"
+      "expression": "color-mix( in oklab, var(--surface-dark-11) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-text-tertiary",
@@ -22080,7 +23381,7 @@
         "surface",
         "theme"
       ],
-      "expression": "color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10))"
+      "expression": "color-mix( in oklab, color-mix(in oklab, var(--surface-dark-11) 30%, var(--surface-dark-10)) calc(100% - var(--a63-surface-tint) * 0.3), var(--a63-brand-100) calc(var(--a63-surface-tint) * 0.3) )"
     },
     {
       "token": "--a63-track-shadow",

@@ -5,6 +5,7 @@
 ```ts
 
 import { DestinationKind } from '@atom63/ui-foundation';
+import { destinationLinkContract } from '@atom63/ui-foundation';
 import * as React_2 from 'react';
 import { ReactNode } from 'react';
 import { RefObject } from 'react';

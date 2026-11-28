@@ -1,9 +1,10 @@
-import { ScrollableList } from '@atom63/ui-react'
+import { Button, ScrollableList } from '@atom63/ui-react'
 import { MediaLightbox, useMediaLightbox } from '@atom63/ui-react/media'
 import { Lightbox } from '@atom63/ui-react/media/lightbox'
 import type { MediaLightboxAppearance, MediaLightboxItem } from '@atom63/ui-react/media'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Download, Info, Star } from 'lucide-react'
 import { useRef, useState } from 'react'
 
 const GALLERY: MediaLightboxItem[] = [
@@ -182,6 +183,92 @@ function Gallery({ items }: { items: MediaLightboxItem[] }) {
   )
 }
 
+/**
+ * The caller's own controls: a row of actions in the dock and a details
+ * button beside Close, both chosen per item. They hide with the chrome and
+ * never page, zoom or close the viewer.
+ */
+function GalleryWithActions({ items }: { items: MediaLightboxItem[] }) {
+  const lightbox = useMediaLightbox(items.length)
+  const [starred, setStarred] = useState<Record<string, boolean>>({})
+  const [details, setDetails] = useState(false)
+
+  return (
+    <div className="max-w-3xl p-6">
+      <div className="grid grid-cols-3 gap-3">
+        {items.map((item, itemIndex) => (
+          <button
+            aria-label={`View ${item.title}`}
+            className="relative aspect-3/2 overflow-hidden rounded-lg bg-muted outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            key={item.id}
+            onClick={event => {
+              lightbox.openAt(itemIndex, event.currentTarget)
+            }}
+            type="button"
+          >
+            <div
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url("${item.src ?? ''}")` }}
+            />
+          </button>
+        ))}
+      </div>
+
+      <MediaLightbox
+        actions={item => (
+          <>
+            <Button
+              aria-pressed={Boolean(starred[item.id])}
+              onClick={() => {
+                setStarred(current => ({ ...current, [item.id]: !current[item.id] }))
+              }}
+              size="sm"
+              variant="overlay"
+            >
+              <Star aria-hidden />
+              {starred[item.id] ? 'Starred' : 'Star'}
+            </Button>
+            {/* Per item: only a photo with a link offers a download. */}
+            {item.href ? (
+              <Button size="sm" variant="overlay">
+                <Download aria-hidden />
+                Download
+              </Button>
+            ) : null}
+          </>
+        )}
+        index={lightbox.index}
+        items={items.map(item =>
+          details ? { ...item, caption: `${item.title} — ${item.alt}` } : item
+        )}
+        onIndexChange={lightbox.setIndex}
+        onOpenChange={open => {
+          if (!open) {
+            lightbox.close()
+          }
+        }}
+        open={lightbox.isOpen}
+        origin={lightbox.origin}
+        toolbar={item => (
+          <Button
+            aria-label={`Details for ${item.title}`}
+            aria-pressed={details}
+            onClick={() => {
+              setDetails(current => !current)
+            }}
+            shape="round"
+            size="icon-xl"
+            variant="overlay"
+          >
+            <Info aria-hidden />
+          </Button>
+        )}
+        transition={lightbox.transition}
+      />
+    </div>
+  )
+}
+
 function ComposedGallery({ items }: { items: MediaLightboxItem[] }) {
   const lightbox = useMediaLightbox(items.length)
 
@@ -294,6 +381,9 @@ function ComposedGallery({ items }: { items: MediaLightboxItem[] }) {
 const meta = {
   title: 'UI React/MediaLightbox',
   component: MediaLightbox,
+  // Full width: centred, a grid of tiles has no width to share out and the
+  // tiles collapse to nothing, so there is nothing to click open.
+  parameters: { layout: 'fullscreen' },
 } satisfies Meta<typeof MediaLightbox>
 
 export default meta
@@ -319,10 +409,16 @@ export const LightAndDarkVariants: Story = {
  * keys to page; on a phone, tap to show or hide the controls.
  */
 export const HomePageRow: Story = {
-  // Full width, so the row scrolls inside the page as it does on the site
-  // instead of widening a centred story past a phone's viewport.
-  parameters: { layout: 'fullscreen' },
   render: () => <WallpaperRow items={WALLPAPERS} />,
+}
+
+/**
+ * `actions` puts the caller's buttons in a row in the bottom dock and
+ * `toolbar` adds a control beside Close, both chosen per item. Open a photo
+ * and star it: the press does not page, zoom or close.
+ */
+export const WithActions: Story = {
+  render: () => <GalleryWithActions items={GALLERY} />,
 }
 
 export const Composition: Story = {

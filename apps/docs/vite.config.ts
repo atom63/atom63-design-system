@@ -11,6 +11,8 @@ import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
 import { defaultClientConditions, defineConfig } from 'vite'
 import { changelogDataPlugin } from './vite-plugins/changelog-data'
 import { llmsTxtPlugin } from './vite-plugins/llms-txt'
+import { mdxBlockPropsPlugin } from './vite-plugins/mdx-block-props'
+import { remarkRepoDocLinks } from './vite-plugins/repo-docs'
 
 const docsRoot = path.dirname(fileURLToPath(import.meta.url))
 const workspaceRoot = path.resolve(docsRoot, '../..')
@@ -19,7 +21,9 @@ export default defineConfig({
   resolve: {
     // Resolve the workspace @atom63/* packages to source so docs track edits live.
     conditions: ['@atom63/source', ...defaultClientConditions],
-    dedupe: ['react', 'react-dom'],
+    // @mdx-js/react too: repository Markdown under docs/ is compiled outside this
+    // app, and its provider import must resolve from here.
+    dedupe: ['react', 'react-dom', '@mdx-js/react'],
   },
   plugins: [
     TanStackRouterVite({
@@ -28,7 +32,13 @@ export default defineConfig({
     }),
     mdx({
       providerImportSource: '@mdx-js/react',
-      remarkPlugins: [remarkFrontmatter, remarkMdxFrontmatter, remarkGfm],
+      remarkPlugins: [
+        remarkFrontmatter,
+        remarkMdxFrontmatter,
+        remarkGfm,
+        // Repository Markdown published as doc pages; see vite-plugins/repo-docs.ts.
+        remarkRepoDocLinks({ pagesDir: path.join(docsRoot, 'src/pages'), workspaceRoot }),
+      ],
       rehypePlugins: [
         [
           rehypePrettyCode,
@@ -45,6 +55,7 @@ export default defineConfig({
     tailwindcss(),
     changelogDataPlugin(workspaceRoot),
     llmsTxtPlugin(docsRoot),
+    mdxBlockPropsPlugin(),
   ],
   server: {
     port: 6200,

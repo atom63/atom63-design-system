@@ -5,7 +5,12 @@
   "lists": {
     "layouts": ["scroll", "wrap"],
     "options": ["mask", "chevrons", "draggable", "column-aligned"],
-    "states": ["idle", "can-scroll-start", "can-scroll-end", "dragging", "disabled"],
+    "states": {
+      "values": ["rest", "can-scroll-start", "can-scroll-end", "dragging", "disabled"],
+      "deprecatedAliases": {
+        "idle": "rest"
+      }
+    },
     "slots": [
       "scrollable-list",
       "scrollable-list-frame",

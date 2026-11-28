@@ -135,6 +135,20 @@ function buildKit(data) {
           '',
         ]
       : []),
+    ...(data.reading
+      ? [
+          '## Reading page',
+          data.reading.use,
+          '',
+          '```tsx',
+          ...data.reading.imports,
+          '',
+          data.reading.snippet,
+          '```',
+          `→ ${data.reading.next}`,
+          '',
+        ]
+      : []),
     ...(data.amount
       ? [
           '## Display amount',
@@ -186,7 +200,7 @@ function buildKit(data) {
     ...section(
       'Foundation',
       data.foundation,
-      entry => `- ${entry.name} (${entry.from}): ${entry.use}`
+      entry => `- ${entry.name} (${entry.from}): ${entry.use}\n  → ${entry.next}`
     ),
     ...section('Rules', data.rules, rule => `- ${rule}`),
   ]
@@ -199,11 +213,61 @@ function buildPlaybook(data) {
     ...data.steps.map((step, position) => `${position + 1}. ${step}`),
     '',
     'Foundation:',
-    ...data.foundation.map(entry => `- ${entry.name} (${entry.from}): ${entry.use}`),
+    ...data.foundation.map(
+      entry => `- ${entry.name} (${entry.from}): ${entry.use} (${entry.next})`
+    ),
+  ].join('\n')
+}
+
+function apiDetail({ name, ios, web }) {
+  const lines = [`# ${name}`]
+  if (ios) {
+    lines.push(
+      '',
+      `SwiftUI (${ios.module}): ${ios.declaration}`,
+      `Source: ${ios.source}`,
+      ...(ios.summary ? ['', ios.summary] : []),
+      ...(ios.component
+        ? ['', `Renders the ${ios.component} contract: atom63 component ${ios.component}`]
+        : []),
+      ...(ios.members.length > 0
+        ? ['', 'Members:', ...ios.members.map(member => `  ${member.declaration}`)]
+        : []),
+      '',
+      `Guide: atom63 docs ${ios.docs}`
+    )
+  }
+  for (const entry of web) {
+    lines.push(
+      '',
+      entry.import,
+      entry.component
+        ? `Component: atom63 component ${entry.component}`
+        : `Docs: atom63 docs ${entry.docs}`
+    )
+  }
+  // Entries that re-export a name share its docs section; print it once.
+  const reference = web.find(entry => entry.reference)?.reference
+  if (reference) lines.push('', reference)
+  return lines.join('\n')
+}
+
+function apiEntry({ module, import: importLine, docs, symbols }) {
+  return [
+    `# ${module}`,
+    '',
+    importLine,
+    `Docs: atom63 docs ${docs}`,
+    '',
+    ...symbols.map(symbol => (symbol.summary ? `${symbol.name} — ${symbol.summary}` : symbol.name)),
+    '',
+    'Read one with: atom63 api <name>',
   ].join('\n')
 }
 
 const renderers = {
+  'api.detail': apiDetail,
+  'api.entry': apiEntry,
   'search.results': searchResults,
   'token.results': searchResults,
   'component.detail': componentDetail,

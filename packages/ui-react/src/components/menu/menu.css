@@ -21,6 +21,7 @@
   flex-direction: column;
   gap: var(--a63-menu-gap, 0.125rem);
   max-height: var(--available-height);
+  max-width: var(--available-width);
   min-width: 8rem;
   padding: var(--a63-menu-popup-padding, 0.25rem);
   overflow-x: hidden;
@@ -56,9 +57,13 @@
   display: flex;
   align-items: center;
   gap: var(--a63-menu-item-gap, 0.5rem);
+  /* A full-width row: the whole row is the target and the popup clips an
+     overhanging hit-area pseudo, so the row's own height floors at
+     --a63-row-min-size (44px on touch, equal to --a63-control-min-size on fine
+     pointers, so desktop is unchanged). */
   min-height: max(
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
   padding: var(--a63-menu-item-padding-block, 0.375rem) var(--a63-menu-item-padding-inline, 0.5rem);
   border-radius: var(
@@ -74,6 +79,8 @@
   color: var(--a63-menu-item-foreground, var(--a63-text-primary));
   font-size: var(--a63-menu-item-font-size, var(--a63-control-font-size-sm));
   line-height: 1.2;
+  /* A long label wraps inside a popup capped at the available width. */
+  overflow-wrap: anywhere;
   cursor: default;
   user-select: none;
   outline: none;
@@ -109,6 +116,22 @@
 .a63-Menu-popup[data-tone='primary'] .a63-Menu-item[data-highlighted] svg,
 .a63-Menu-popup[data-tone='primary'] .a63-Menu-item[data-highlighted] .a63-Menu-shortcut {
   color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
+}
+
+/* Keyboard focus: an inset ring on top of the highlight, which alone is too
+   faint to mark focus (WCAG 1.4.11). Menu and Select items take DOM focus, so
+   a pointer hover keeps only the fill. Autocomplete keeps focus in its input
+   and marks the option Enter picks with data-highlighted, so that option
+   always carries the ring. Inset: the popup clips an outer ring. */
+.a63-Menu-item:focus-visible,
+.a63-Autocomplete-item[data-highlighted] {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
+}
+.a63-Menu-popup[data-tone='primary'] .a63-Menu-item:focus-visible,
+.a63-Menu-popup[data-tone='primary'] .a63-Autocomplete-item[data-highlighted] {
+  outline-color: var(--a63-menu-highlight-primary-foreground, var(--a63-action-primary-foreground));
 }
 
 .a63-Menu-item[data-disabled] {
@@ -174,6 +197,11 @@
   color: var(--a63-menu-item-icon, var(--a63-text-secondary));
 }
 
+/* The submenu opens toward the inline end, so its chevron points there. */
+.a63-Menu-sub-icon:dir(rtl) svg {
+  scale: -1 1;
+}
+
 /* ── Label ─────────────────────────────────────────────────────────────── */
 
 .a63-Menu-label {
@@ -184,7 +212,6 @@
   text-transform: uppercase;
   letter-spacing: 0;
   line-height: 1;
-  opacity: 0.75;
 }
 
 .a63-Menu-label[data-inset] {
@@ -208,10 +235,35 @@
   color: var(--a63-menu-shortcut-foreground, var(--a63-text-secondary));
   font-size: var(--a63-control-font-size-xs);
   letter-spacing: 0;
+  /* A shortcut reads in its own direction: '⌘C' stays '⌘C' in a right-to-left
+     menu. plaintext isolates it and takes the direction from its first strong
+     character, while `direction` (and so the logical margin and padding above)
+     still follows the menu. */
+  unicode-bidi: plaintext;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .a63-Menu-popup {
     transition: none;
+  }
+}
+
+/* Forced colors drop the highlight fill, gloss and shadow, and every row sets
+   `outline: none`, so the focused row takes the system selection colours. Each
+   selector matches the specificity of the tone or variant rule it overrides. */
+@media (forced-colors: active) {
+  .a63-Menu-item[data-highlighted],
+  .a63-Menu-item[data-variant][data-highlighted],
+  .a63-Menu-popup[data-tone] .a63-Menu-item[data-highlighted],
+  .a63-Menu-sub-trigger[data-popup-open],
+  .a63-Menu-popup[data-tone] .a63-Menu-sub-trigger[data-popup-open] {
+    background-color: Highlight;
+    color: HighlightText;
+  }
+  .a63-Menu-item[data-highlighted] :is(svg, .a63-Menu-shortcut, .a63-Menu-item-indicator),
+  .a63-Menu-popup[data-tone] .a63-Menu-item[data-highlighted] :is(svg, .a63-Menu-shortcut),
+  .a63-Menu-sub-trigger[data-popup-open] :is(svg, .a63-Menu-sub-icon),
+  .a63-Menu-popup[data-tone] .a63-Menu-sub-trigger[data-popup-open] :is(svg, .a63-Menu-sub-icon) {
+    color: HighlightText;
   }
 }

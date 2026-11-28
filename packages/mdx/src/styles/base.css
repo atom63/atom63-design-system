@@ -34,9 +34,9 @@
   }
 
   .mdx-frame-item-negative {
-    border-color: color-mix(in oklab, var(--a63-action-danger) 12%, var(--a63-border-subtle));
-    background-color: color-mix(in oklab, var(--a63-action-danger) 3%, var(--a63-surface-page));
-    color: var(--a63-action-danger);
+    border-color: color-mix(in oklab, var(--a63-status-danger) 12%, var(--a63-border-subtle));
+    background-color: color-mix(in oklab, var(--a63-status-danger) 3%, var(--a63-surface-page));
+    color: var(--a63-text-danger);
   }
 
   .mdx-frame-item-positive {
@@ -56,7 +56,7 @@
   }
 
   .mdx-frame-item-negative .mdx-frame-item-marker {
-    background-color: color-mix(in oklab, var(--a63-action-danger) 70%, transparent);
+    background-color: color-mix(in oklab, var(--a63-status-danger) 70%, transparent);
   }
 
   .mdx-frame-item-positive .mdx-frame-item-marker {
@@ -138,15 +138,19 @@
   }
 
   .mdx-insight-eyebrow {
-    color: var(--a63-action-primary);
+    color: var(--a63-text-accent);
   }
 
   .mdx-insight-title {
     color: var(--a63-text-primary);
   }
 
-  .mdx-insight-panel {
-    background-color: color-mix(in oklab, var(--a63-surface-page) 72%, transparent);
+  /* One boundary per element: frame blocks whose tray holds a single panel
+     (KeyIdea, Steps, Timeline) keep the tray's fill and shadow and draw the
+     panel flat, with no ring (the block passes border="off"), fill or shadow. */
+  .mdx-frame .a63-Frame-panel.mdx-frame-panel-flat {
+    --a63-surface-shadow: none;
+    background-color: transparent;
   }
 
   .mdx-insight-body {

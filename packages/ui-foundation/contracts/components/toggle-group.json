@@ -7,7 +7,12 @@
     "variants": ["segmented", "pills", "ghost"],
     "orientations": ["horizontal", "vertical"],
     "selectionModes": ["single", "multiple"],
-    "states": ["rest", "hover", "focus", "selected", "disabled"],
+    "states": {
+      "values": ["rest", "hover", "focus-visible", "selected", "disabled"],
+      "deprecatedAliases": {
+        "focus": "focus-visible"
+      }
+    },
     "slots": ["toggle-group", "toggle-group-item", "toggle-group-separator"],
     "tokenSlots": [
       "segment.gap",
@@ -50,6 +55,46 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What a toggle group is, independent of any platform: the direction its items run. The ghost group (AtomGhostToggleGroup) takes it on iOS.",
+    "axes": {
+      "orientation": ["horizontal", "vertical"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "orientation": {
+            "list": "orientations",
+            "map": {
+              "horizontal": {
+                "orientation": "horizontal"
+              },
+              "vertical": {
+                "orientation": "vertical"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "orientation": {
+            "swiftEnum": "AtomToggleGroupOrientation",
+            "map": {
+              "horizontal": {
+                "orientation": "horizontal"
+              },
+              "vertical": {
+                "orientation": "vertical"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

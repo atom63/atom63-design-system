@@ -28,12 +28,15 @@ import {
   pathForDoc,
   sortSlugs,
 } from '../src/lib/doc-taxonomy'
+import { mdxBlockPropsMarkdown } from '../src/lib/mdx-block-props'
 import { mdxToMarkdown } from '../src/lib/mdx-to-markdown'
 import { buildChangelogMarkdown } from './changelog-data'
+import { readLayoutProps, readMdxBlockProps } from './mdx-block-props'
+import { readRepoDocRoutes, repoDocPathFromSource, rewriteRepoDocMarkdown } from './repo-docs'
 
 const SITE_TITLE = 'ATOM63 Design System'
 const SITE_SUMMARY =
-  'Atom63 Design System — one token architecture rendered in React, SwiftUI, and Figma: tokens, themes, component contracts, and components.'
+  'Atom63 Design System — an opinionated, open-source design system for building AI products, with one token architecture rendered in React, SwiftUI, and Figma: tokens, themes, component contracts, and components.'
 
 export type DocEntry = {
   area: DocAreaId
@@ -147,6 +150,17 @@ function expandCraftCriteria(source: string): string {
   })
 }
 
+/** The MDX blocks page renders props tables from the blocks' types; spell them out for the Markdown twin. */
+function expandMdxBlockProps(source: string): string {
+  return source
+    .replace(/^<MdxBlockProps name="([^"]+)" \/>$/gm, (_tag, name: string) =>
+      mdxBlockPropsMarkdown(readMdxBlockProps(), name)
+    )
+    .replace(/^<LayoutProps name="([^"]+)" \/>$/gm, (_tag, name: string) =>
+      mdxBlockPropsMarkdown(readLayoutProps(), name)
+    )
+}
+
 /** Authored component pages render catalog text through components; spell it out for the Markdown twin. */
 function expandComponentGuidance(source: string): string {
   return source
@@ -160,10 +174,10 @@ function expandComponentGuidance(source: string): string {
     )
 }
 
-/** The root, `./calendar` and `./layout` entries, which together export every component family. */
+/** The root, `./calendar`, `./chart` and `./layout` entries, which together export every component family. */
 async function readUiReactIndexSource(pagesDir: string): Promise<string> {
   const sources = await Promise.all(
-    ['index.ts', 'calendar/index.ts', 'layout/index.ts'].map(file =>
+    ['index.ts', 'calendar/index.ts', 'chart/index.ts', 'layout/index.ts'].map(file =>
       fs.readFile(path.resolve(pagesDir, '../../../../packages/ui-react/src', file), 'utf8')
     )
   )
@@ -184,7 +198,14 @@ export async function readEntryMarkdown(
   }
 
   const source = await fs.readFile(path.join(pagesDir, `${entry.slug}.mdx`), 'utf8')
-  const markdown = mdxToMarkdown(expandComponentGuidance(expandCraftCriteria(source)))
+  const repoDocPath = repoDocPathFromSource(source)
+  if (repoDocPath) {
+    const repoDoc = await fs.readFile(path.resolve(pagesDir, '../../../..', repoDocPath), 'utf8')
+    return rewriteRepoDocMarkdown(repoDoc.trim(), repoDocPath, readRepoDocRoutes(pagesDir))
+  }
+  const markdown = mdxToMarkdown(
+    expandMdxBlockProps(expandComponentGuidance(expandCraftCriteria(source)))
+  )
   if (!isComponentDocSlug(entry.slug)) {
     return markdown
   }

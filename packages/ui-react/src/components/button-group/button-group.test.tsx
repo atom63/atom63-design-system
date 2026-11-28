@@ -17,7 +17,7 @@ describe('ButtonGroup', () => {
     expect(el).not.toBeNull()
     expect(el).toHaveAttribute('data-slot', 'button-group')
     expect(el).toHaveAttribute('data-orientation', 'horizontal')
-    expect(el).toHaveAttribute('data-size', 'default')
+    expect(el).toHaveAttribute('data-size', 'md')
     expect(el).toHaveAttribute('role', 'group')
   })
 
@@ -30,6 +30,11 @@ describe('ButtonGroup', () => {
     const el = container.querySelector('.a63-ButtonGroup')
     expect(el).toHaveAttribute('data-orientation', 'vertical')
     expect(el).toHaveAttribute('data-size', 'icon-sm')
+  })
+
+  it('accepts the deprecated size name default as md', () => {
+    const { container } = render(<ButtonGroup size="default" />)
+    expect(container.querySelector('.a63-ButtonGroup')).toHaveAttribute('data-size', 'md')
   })
 
   it('renders a text cell and a separator', () => {

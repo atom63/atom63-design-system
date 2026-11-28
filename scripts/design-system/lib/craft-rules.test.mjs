@@ -51,7 +51,7 @@ describe('scanCss', () => {
     ])
   })
 
-  it('flags physical spacing, side borders, corner radii and text alignment', () => {
+  it('flags physical spacing, side borders, corner radii, text alignment and insets', () => {
     const css = `.a {
   margin-left: 1px;
   padding-inline-start: 1px;
@@ -60,6 +60,8 @@ describe('scanCss', () => {
   text-align: right;
   text-align: start;
   left: 0;
+  inset-inline-end: 0;
+  top: 0;
 }`
     assert.deepEqual(
       rules(scanCss(css)).filter(line => line.includes('physical')),
@@ -68,6 +70,7 @@ describe('scanCss', () => {
         '4 physical-properties border-right-color',
         '5 physical-properties border-top-left-radius',
         '6 physical-properties text-align: right',
+        '8 physical-properties left',
       ]
     )
   })
@@ -288,6 +291,30 @@ const c = 'text-(--a63-surface-page) text-[var(--a63-action-danger)] text-(--a63
       '1 token-role bg-foreground',
       '3 token-role text-(--a63-surface-page)',
       '3 token-role text-[var(--a63-action-danger)]',
+    ])
+  })
+
+  it('flags the danger action fill read as text, border or outline color, mixed or not', () => {
+    const css = `.a { color: color-mix(in oklab, var(--a63-action-danger) 70%, var(--a63-text-primary)); }
+.b { border-color: color-mix(in oklab, var(--a63-action-danger) 40%, transparent); }
+.c { border-block-end: 1px solid var(--a63-action-danger-hover); outline: 2px solid var(--a63-action-danger); }
+.d { background-color: var(--a63-action-danger); --button-border-color: var(--a63-action-danger); }
+.e { border-color: var(--a63-border-danger); color: var(--a63-text-danger); }`
+    assert.deepEqual(role(scanCss(css)), [
+      '1 token-role color: var(--a63-action-danger)',
+      '2 token-role border-color: var(--a63-action-danger)',
+      '3 token-role border-block-end: var(--a63-action-danger-hover)',
+      '3 token-role outline: var(--a63-action-danger)',
+    ])
+  })
+
+  it('flags border, outline and decoration utilities that map to the danger action fill', () => {
+    const dangerRoles = { ...roles, destructive: '--a63-action-danger' }
+    const source = `const a = 'border-destructive border-s-destructive/40 outline-(--a63-action-danger) bg-destructive border-primary border-2'`
+    assert.deepEqual(role(scanSource(source, { roles: dangerRoles })), [
+      '1 token-role border-destructive',
+      '1 token-role border-s-destructive/40',
+      '1 token-role outline-(--a63-action-danger)',
     ])
   })
 

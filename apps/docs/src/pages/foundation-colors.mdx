@@ -89,6 +89,10 @@ Six neutral palettes (`n1`–`n6`) give the system different neutral personaliti
   ))}
 </TokenSwatchGrid>
 
+### Chart series
+
+`--a63-chart-1` to `--a63-chart-5` colour the series of a chart (the `Chart` component reads them in order). Series 1 is the brand: the primary on light surfaces, the brand's 400 step on dark ones. Series 2 to 5 turn the brand's hue by fixed steps at a set lightness and chroma, so none of them lands on the brand whatever it is, a violet brand or a wallpaper (`auto`) brand included. Each series reaches 3:1 against the page and the panel in every theme and mode; `chart-palette.browser.test.ts` checks that, and that every pair of series and every series and the brand stay apart, across brands × themes × modes.
+
 ### Gradients
 
 Four gradient tokens follow the theme, brand and mode, so a hero or banner never needs a hand-written gradient:

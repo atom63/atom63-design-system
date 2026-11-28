@@ -1,3 +1,5 @@
+'use client'
+
 // packages/mdx/src/mdx-source-editor.tsx
 import { useEffect, useState } from 'react'
 import Editor from 'react-simple-code-editor'

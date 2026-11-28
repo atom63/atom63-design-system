@@ -133,6 +133,13 @@ interface WidgetTypeRecipe {
  * bigger jump than the curve gives is usually the wrong role for the job.
  */
 export const WIDGET_TYPE_RAMP = {
+  // Every role carries a unitless `leading`, so widget type never inherits the
+  // page's line height. @atom63/styles sets `body` to the body role with a FIXED
+  // 23px line height (#241); a 12.5px widget row inheriting that sits on a
+  // 1.84x line instead of the 1.5x it was designed on. Unitless leading scales
+  // with each role's own size. Reading roles use 1.5 (the browser/Tailwind
+  // default they were calibrated against); hero figures use 1, which every
+  // shipped display call site already passed.
   chrome: {
     // Mid quiet chrome: ~10.3px at OS63 (14×188/256), floored to 10 — between
     // the old text-xs (~12) and the too-quiet 9px experiment.
@@ -149,18 +156,22 @@ export const WIDGET_TYPE_RAMP = {
   label: {
     designPx: 15,
     weight: 500,
+    leading: 1.5,
   },
   body: {
     designPx: 17,
     weight: 400,
+    leading: 1.5,
   },
   name: {
     designPx: { small: 18, medium: 19, large: 22 },
     weight: 600,
+    leading: 1.5,
   },
   title: {
     designPx: { small: 20, medium: 22, large: 24 },
     weight: 600,
+    leading: 1.5,
   },
   headline: {
     designPx: { small: 26, medium: 28, large: 32 },
@@ -172,14 +183,17 @@ export const WIDGET_TYPE_RAMP = {
   stat: {
     designPx: { small: 22, medium: 23, large: 26 },
     weight: 600,
+    leading: 1.5,
   },
   display: {
     designPx: { small: 48, medium: 44, large: 64 },
     weight: 600,
+    leading: 1,
   },
   displayCompact: {
     designPx: { small: 40, medium: 34, large: 52 },
     weight: 600,
+    leading: 1,
   },
 } as const satisfies Record<WidgetTypeRampRole, WidgetTypeRecipe>
 

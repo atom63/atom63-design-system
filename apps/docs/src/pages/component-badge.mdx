@@ -1,0 +1,87 @@
+import { DocExample } from '@atom63/mdx/blocks'
+import { Badge } from '@atom63/ui-react'
+import { ComponentGuidanceSection, ComponentUsage } from '../components/component-guidance'
+
+# Badge
+
+Badge is a small labelled chip for status or classification beside the content it describes: a state, a count, a tag. It is the marker archetype, so its shape and bevel follow the theme, and each variant only recolours the fill.
+
+<DocExample
+  title="Status, category and emphasis"
+  code={`import { Badge } from '@atom63/ui-react'
+
+<Badge variant="success">Live</Badge>
+<Badge variant="warning">Pending review</Badge>
+<Badge dot="violet" variant="outline">Research</Badge>
+<Badge variant="blue">Design</Badge>
+<Badge>Draft</Badge>`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-2">
+    <Badge variant="success">Live</Badge>
+    <Badge variant="warning">Pending review</Badge>
+    <Badge dot="violet" variant="outline">
+      Research
+    </Badge>
+    <Badge variant="blue">Design</Badge>
+    <Badge>Draft</Badge>
+  </div>
+</DocExample>
+
+## When to use
+
+<ComponentUsage slug="badge" />
+
+Use a badge for a short label that classifies or describes nearby content. Use a Button or a Toggle for an action, an Alert for a message the reader has to act on, and the Button `indicator` for an unread count on a control.
+
+## Choosing a variant
+
+The variants fall into three families. Pick the family by what the badge says, then the variant inside it.
+
+| Family | Variants | Use it for |
+| --- | --- | --- |
+| Solid and surface | `default`, `primary`, `secondary`, `outline`, `muted`, `glass`, `destructive`, `accent` | Emphasis without meaning: a neutral label (`default`, `secondary`, `muted`), the one highlighted label in a view (`primary`), a quiet tag (`outline`), a badge over media (`glass`). |
+| Semantic | `success`, `info`, `warning`, `error` | A state the reader should notice: Live, Syncing, Pending review, Failed. Keep the word; the colour only supports it. |
+| Palette | `red` … `rose`, `neutral` | Categories that carry their own colour: projects, topics, labels a user picked. They follow the theme and the mode, so they stay legible in dark mode. |
+
+`destructive` and `error` look alike: use `error` for a state (Failed) and `destructive` only beside a destructive action. Use the accent (`primary`, `accent`) for at most one badge per view.
+
+`dot` adds a leading dot: `dot` alone follows the text colour, `dot="green"` takes a palette hue. Use it to put a category colour on a quiet `outline` badge. The dot is decorative; the label carries the meaning.
+
+<ComponentGuidanceSection slug="badge" />
+
+## Interactive badges
+
+A badge is a `<span>` by default. When it is an action (remove a filter, open a tag), render it as a real button or link with `render`, so it is focusable, has a role and takes the focus ring. Its hit area grows to the 44px coarse-pointer target without growing the chip.
+
+<DocExample
+  title="A filter tag and a tag link"
+  code={`<Badge render={<button type="button" onClick={removeFilter} />} variant="outline">
+  Design ×
+</Badge>
+<Badge render={<a href="/tags/research" />} variant="violet">
+  Research
+</Badge>`}
+>
+  <div className="flex flex-wrap items-center justify-center gap-2">
+    <Badge render={<button type="button" />} variant="outline">
+      Design ×
+    </Badge>
+    <Badge render={<a href="#tags-research" />} variant="violet">
+      Research
+    </Badge>
+  </div>
+</DocExample>
+
+For a disabled interactive badge, set `aria-disabled="true"`; it fades and ignores the pointer.
+
+## Long and translated labels
+
+Badge labels never wrap. A badge is at most as wide as its container, and a longer label truncates with an ellipsis; the full text stays in the DOM, so assistive technology reads all of it. Keep labels to a word or two. Where a label comes from user content, pass `title` with the full text so a pointer user can read it too.
+
+```tsx
+<Badge title={project.name} variant="outline">
+  {project.name}
+</Badge>
+```
+
+Badges use logical padding, so they mirror in right-to-left layouts with no extra props.

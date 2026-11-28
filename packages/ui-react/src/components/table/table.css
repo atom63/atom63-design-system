@@ -21,11 +21,28 @@
   /* Row hover is half the neutral selected fill, so a selected row stays
      visibly stronger than a hovered one in either tone. */
   --table-row-hover: color-mix(in oklch, var(--a63-selected-background) 50%, transparent);
+  /* overflow-x: auto clips the block axis too, so the touch target of a control in the
+     first or last row (a sort button, a row checkbox or menu) and its focus ring would be cut
+     at the top and bottom edges. The container pads those edges by as much as a target
+     reaches past a control's rendered floor, or the ring width if that is more, and takes the
+     padding back with a negative margin, so the table stays where it was. The inline edges
+     stay flush: bleeding there would push a full-width table past the viewport. */
+  --table-bleed: max(
+    var(--a63-control-focus-ring-width),
+    calc((var(--a63-control-min-target) - var(--a63-control-min-size)) / 2)
+  );
 
   position: relative;
   width: 100%;
+  margin-block: calc(-1 * var(--table-bleed));
+  padding-block: var(--table-bleed);
   overflow-x: auto;
   scrollbar-width: thin;
+}
+/* Focusable only while it overflows (role="region", tabindex="0"). */
+.a63-Table-container:focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid var(--a63-focus-ring);
+  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 .a63-Table-container::-webkit-scrollbar {
   display: block;
@@ -56,14 +73,25 @@
 
 /* ── Head cells ────────────────────────────────────────────────────────── */
 .a63-Table-head {
-  height: 2.5rem;
-  padding-inline: 0.625rem;
+  height: calc(2.5rem * var(--a63-density-scale, 1));
+  padding-inline: calc(0.625rem * var(--a63-density-scale, 1));
   text-align: start;
   vertical-align: middle;
   font-weight: 500;
   line-height: 1;
   white-space: nowrap;
   color: var(--a63-text-secondary);
+}
+/* A sortable head's button pulls out by its own padding, so its label lines up
+   with the column's text at either edge. */
+.a63-Table-sort-button {
+  margin-inline: calc(-1 * var(--button-padding-inline, 0px));
+}
+/* align="end": numbers and money line up at the inline end, in tabular figures. */
+.a63-Table-head[data-align='end'],
+.a63-Table-cell[data-align='end'] {
+  text-align: end;
+  font-variant-numeric: tabular-nums;
 }
 .a63-Table-head:has([role='checkbox']) {
   width: 1px;
@@ -72,13 +100,22 @@
 
 /* ── Body cells ────────────────────────────────────────────────────────── */
 .a63-Table-cell {
-  padding: 0.625rem;
+  padding: calc(0.625rem * var(--a63-density-scale, 1));
   vertical-align: middle;
   line-height: 1;
   white-space: nowrap;
 }
 .a63-Table-cell:has([role='checkbox']) {
   padding-inline-end: 0;
+}
+/* wrap: long text breaks onto more lines inside a readable measure. */
+.a63-Table-head[data-wrap],
+.a63-Table-cell[data-wrap] {
+  min-width: 8rem;
+  max-width: 40ch;
+  line-height: var(--typography-sm-line-height);
+  white-space: normal;
+  overflow-wrap: anywhere;
 }
 
 .a63-Table-body .a63-Table-row:last-child {
@@ -293,5 +330,14 @@
 @media (prefers-reduced-motion: reduce) {
   .a63-Table-row {
     transition: none;
+  }
+}
+
+/* Forced colors drop the selected fill, so a selected row's cells take the system
+   selection colours instead. */
+@media (forced-colors: active) {
+  .a63-Table-row[data-state='selected'] > :is(.a63-Table-head, .a63-Table-cell) {
+    background-color: Highlight;
+    color: HighlightText;
   }
 }

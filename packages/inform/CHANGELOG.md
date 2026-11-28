@@ -1,5 +1,77 @@
 # @atom63/inform
 
+## 0.2.0-beta.13
+
+### Patch Changes
+
+- Updated dependencies [[`9b01a87`](https://github.com/atom63/atom63-design-system/commit/9b01a875f706becf9fcd163f689e1e9484e345c9)]:
+  - @atom63/ui-react@0.2.0-beta.22
+
+## 0.2.0-beta.12
+
+### Patch Changes
+
+- Updated dependencies [[`f00d3b0`](https://github.com/atom63/atom63-design-system/commit/f00d3b0efeacade5986cf1b97dbf12b12441ab32)]:
+  - @atom63/ui-react@0.2.0-beta.21
+
+## 0.2.0-beta.11
+
+### Patch Changes
+
+- Updated dependencies [[`317cd31`](https://github.com/atom63/atom63-design-system/commit/317cd314aeb634191b8f972ab7b24720688d67f0)]:
+  - @atom63/ui-react@0.2.0-beta.20
+
+## 0.2.0-beta.10
+
+### Patch Changes
+
+- Updated dependencies [[`51c78c9`](https://github.com/atom63/atom63-design-system/commit/51c78c929aa9ad9f6fef4b15206b906508d43a18)]:
+  - @atom63/ui-react@0.2.0-beta.19
+
+## 0.2.0-beta.9
+
+### Patch Changes
+
+- Updated dependencies [[`06093d4`](https://github.com/atom63/atom63-design-system/commit/06093d44b3e1525c699e8806e8761fcd70daa408), [`d9114fe`](https://github.com/atom63/atom63-design-system/commit/d9114fed7fdbdc72762b74d1db8c8981f00fc46f), [`091a94c`](https://github.com/atom63/atom63-design-system/commit/091a94c24f70993fb7fc54f1b34b974c08ba1915), [`a4f01d4`](https://github.com/atom63/atom63-design-system/commit/a4f01d4bd008a72f702d4307c1545590df932c0a), [`d53bffe`](https://github.com/atom63/atom63-design-system/commit/d53bffe8acab6e68a6687230b7c9f362c9145023), [`fdbe267`](https://github.com/atom63/atom63-design-system/commit/fdbe2670698a40448943822a5adc27eb8ee16e2f), [`759fd86`](https://github.com/atom63/atom63-design-system/commit/759fd866fb7d87375716f192d80bb090cb873bf2), [`27dff37`](https://github.com/atom63/atom63-design-system/commit/27dff3757204017cf40ce68e3b1a314ca7baab81), [`9b9f44f`](https://github.com/atom63/atom63-design-system/commit/9b9f44f6861b0958e7c61c3871ddea0140cd8038), [`d00c3cf`](https://github.com/atom63/atom63-design-system/commit/d00c3cfaf7b33744c94e2cc7c64b32612ba98299), [`aea925d`](https://github.com/atom63/atom63-design-system/commit/aea925d372feb22601767fbbf2ba8218046cd463), [`251c53e`](https://github.com/atom63/atom63-design-system/commit/251c53ec14d8161f7858457440c9d852ad50aa5f)]:
+  - @atom63/ui-react@0.2.0-beta.18
+
+## 0.2.0-beta.8
+
+### Patch Changes
+
+- [#344](https://github.com/atom63/atom63-design-system/pull/344) [`98bb017`](https://github.com/atom63/atom63-design-system/commit/98bb01790dade54585dc348509940c70a478ff92) Thanks [@atom63](https://github.com/atom63)! - Danger text, edges and accents no longer read the danger button fill. The inform danger border uses `--a63-border-danger` and its danger text `--a63-text-danger`; the widget error badge draws its border in `--a63-border-danger` and its tint from `--a63-status-danger`; the ComparisonPair "before" dot uses `--a63-status-danger`.
+- Updated dependencies [[`a4ff444`](https://github.com/atom63/atom63-design-system/commit/a4ff444ae401d612979f81e145e274d11882097e), [`84c3d08`](https://github.com/atom63/atom63-design-system/commit/84c3d085c8d2449e14d88628d4beaab21e087dc2), [`98bb017`](https://github.com/atom63/atom63-design-system/commit/98bb01790dade54585dc348509940c70a478ff92)]:
+  - @atom63/ui-react@0.2.0-beta.17
+
+## 0.2.0-beta.7
+
+### Patch Changes
+
+- Updated dependencies [[`8576bae`](https://github.com/atom63/atom63-design-system/commit/8576bae9a0066d7a4db91addf639327bad4129de), [`986777c`](https://github.com/atom63/atom63-design-system/commit/986777cf20470248992e09e56ad89a3aa40fc149), [`567dbbf`](https://github.com/atom63/atom63-design-system/commit/567dbbf9a706f3bddfb839600eac069e30ec5baa)]:
+  - @atom63/ui-react@0.2.0-beta.16
+
+## 0.2.0-beta.6
+
+### Patch Changes
+
+- Updated dependencies [[`2720544`](https://github.com/atom63/atom63-design-system/commit/2720544eec4f8bf4701366ccff064f015815e987), [`dc9e86d`](https://github.com/atom63/atom63-design-system/commit/dc9e86d5a8ffd8aeec63c082589e8c02334a6994), [`593d783`](https://github.com/atom63/atom63-design-system/commit/593d783b1d730f1eabb94039036767fbd8e54996), [`d88a387`](https://github.com/atom63/atom63-design-system/commit/d88a3870ffc2e14613dd0a4c48dd89e3c7958abd), [`a63a96a`](https://github.com/atom63/atom63-design-system/commit/a63a96a1cd37311aeaa313dc1fa951d3ae008c9d)]:
+  - @atom63/ui-react@0.2.0-beta.15
+
+## 0.2.0-beta.5
+
+### Patch Changes
+
+- Updated dependencies [[`099d1eb`](https://github.com/atom63/atom63-design-system/commit/099d1eba7a4db553969c367618d2e6f402d57a32), [`336a05c`](https://github.com/atom63/atom63-design-system/commit/336a05c908f7ba943cc9cff76a62c9c9c48a1e2c), [`0d9b571`](https://github.com/atom63/atom63-design-system/commit/0d9b5713c2f6b794b3aff9e1dd997da410c26c3e)]:
+  - @atom63/ui-react@0.2.0-beta.14
+
+## 0.2.0-beta.4
+
+### Patch Changes
+
+- [#293](https://github.com/atom63/atom63-design-system/pull/293) [`66a0aca`](https://github.com/atom63/atom63-design-system/commit/66a0aca3394b62efe3530e34919fd31327fdf8b8) Thanks [@atom63](https://github.com/atom63)! - `InformSpotlight` now honours `dismissable` (default `true`) and `dismissLabel`: it shows a dismiss button in the bubble and closes on a press on the scrim as well as on Escape, so touch users have a way out. With `dismissable={false}` none of those close it. `InformDialog` with `dismissable={false}` now ignores Escape and outside presses instead of reporting a dismissal, and `InformOutlet` passes a message's `dismiss: 'none'` policy to the spotlight, so standing messages stay until an action resolves them.
+- Updated dependencies [[`5304568`](https://github.com/atom63/atom63-design-system/commit/5304568ca070b05305f865b2b8d411c8667c48b9), [`9d419a3`](https://github.com/atom63/atom63-design-system/commit/9d419a3c93fb3bd92cbecff32176b0c637ce402c), [`7ab4fc9`](https://github.com/atom63/atom63-design-system/commit/7ab4fc97d5ce63f3f3c7237e4db61a3dc6954582), [`adc4b50`](https://github.com/atom63/atom63-design-system/commit/adc4b5086f4f3da6c651fad03471f4f6875d8071), [`2c9247b`](https://github.com/atom63/atom63-design-system/commit/2c9247b6a597171efd84e0eecfd1fc61ab4b09e3), [`09a3299`](https://github.com/atom63/atom63-design-system/commit/09a3299b1e7c1ce2498e3c1ed10a6f6f4ee4e7c8), [`426b77e`](https://github.com/atom63/atom63-design-system/commit/426b77e7399bca33758193001e29c3cd498ae4f1), [`2cea63d`](https://github.com/atom63/atom63-design-system/commit/2cea63dc522d9597dfccea2f61410c6f36ece136), [`77fd109`](https://github.com/atom63/atom63-design-system/commit/77fd109bb3277687a709be96abb7a0b280525ea9), [`a4188c4`](https://github.com/atom63/atom63-design-system/commit/a4188c47cab00e73439be61c39be0c2424644176), [`b3410a1`](https://github.com/atom63/atom63-design-system/commit/b3410a1e54be91f79db37d01758b017dc1467a65), [`524fd93`](https://github.com/atom63/atom63-design-system/commit/524fd93260a5405a3becfe9e8ceb9e35d6bf6754), [`eef5f6f`](https://github.com/atom63/atom63-design-system/commit/eef5f6f4072ad0d64e366d9a325d8e2fde1742ba), [`34d8578`](https://github.com/atom63/atom63-design-system/commit/34d85787157a079355820596ddb437dea0962d97)]:
+  - @atom63/ui-react@0.2.0-beta.13
+
 ## 0.2.0-beta.3
 
 ### Patch Changes

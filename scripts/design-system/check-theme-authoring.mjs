@@ -1,12 +1,15 @@
 /**
  * Theme authoring guardrail for @atom63/styles themes: each theme scopes its
  * rules under [data-a63-theme], fixed pseudo overlays stay scoped to html/body,
- * and the mode-split themes (aqua, terminal) declare both light and dark paint.
+ * the mode-split themes (aqua, terminal) declare both light and dark paint, and
+ * every hand-written brand list matches the brand ramp resolver.
  */
 import { readFile } from 'node:fs/promises'
 import path from 'node:path'
 import process from 'node:process'
 import { fileURLToPath } from 'node:url'
+
+import { brandListProblems, readRepoText } from './lib/brand-lists.mjs'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 const themeFiles = {
@@ -49,6 +52,8 @@ for (const [themeId, file] of Object.entries(themeFiles)) {
     findings.push(`${file}: theme CSS should define independent light/dark scopes`)
   }
 }
+
+findings.push(...brandListProblems(readRepoText(root)))
 
 if (findings.length > 0) {
   process.stderr.write('\nTheme authoring check failed\n')

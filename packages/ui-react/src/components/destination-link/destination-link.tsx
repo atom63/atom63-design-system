@@ -11,6 +11,11 @@ export type { DestinationKind }
 
 export type DestinationLinkProps = Omit<useRender.ComponentProps<'a'>, 'rel' | 'target'> & {
   kind: DestinationKind
+  /**
+   * `plain` (default) draws no underline, for a card, title, icon or other
+   * surface that carries its own cue. `inline` underlines a text link in prose.
+   */
+  variant?: (typeof destinationLinkContract.variants)[number]
 }
 
 /**
@@ -22,6 +27,7 @@ export function DestinationLink({
   children,
   kind,
   render,
+  variant,
   ...props
 }: DestinationLinkProps): React.ReactElement {
   const external = kind === 'external'
@@ -41,6 +47,7 @@ export function DestinationLink({
       {
         'aria-label': resolvedAriaLabel,
         children: resolvedChildren,
+        className: 'a63-DestinationLink',
         rel: external ? 'noopener noreferrer' : undefined,
         target: external ? '_blank' : undefined,
       },
@@ -53,6 +60,7 @@ export function DestinationLink({
     render: external ? undefined : render,
     state: {
       slot: 'destination-link',
+      variant,
     },
   })
 }

@@ -1,5 +1,5 @@
 import { chatComposerLayouts, chatComposerStatuses } from '@atom63/ui-foundation'
-import { Button, ChatComposer } from '@atom63/ui-react'
+import { Button, ChatComposer, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { Mic, Plus } from 'lucide-react'
@@ -136,4 +136,45 @@ export const Themes: Story = {
       </div>
     </ThemeMatrix>
   ),
+}
+
+/** On a phone the soft keyboard has no Shift+Enter, so Enter adds a line (its key reads
+ *  "return") and the send button sends. `submitOnEnter={false}` forces that here. */
+export const Phone: Story = {
+  args: { attach, submitOnEnter: false },
+  decorators: [
+    Story => (
+      <UIProvider input="touch">
+        <div style={{ inlineSize: 343 }}>
+          <Story />
+        </div>
+      </UIProvider>
+    ),
+  ],
+  play: async ({ canvasElement }) => {
+    const field = canvasElement.querySelector('textarea')
+    if (field?.getAttribute('enterkeyhint') !== 'enter') {
+      throw new Error('Expected Enter to add a line on a phone')
+    }
+    for (const button of canvasElement.querySelectorAll<HTMLElement>('.a63-Button')) {
+      const hitArea = getComputedStyle(button, '::before')
+      const [width, height] = [parseFloat(hitArea.width), parseFloat(hitArea.height)]
+      if (!(width >= 44 && height >= 44)) {
+        throw new Error(`${button.getAttribute('aria-label')} hit area is ${width}×${height}px`)
+      }
+    }
+  },
+}
+
+/* The field's focus ring (InputGroup :focus-within) when the keyboard reaches the
+   textarea. */
+export const FocusVisible: Story = {
+  args: { actions: mic, attach },
+  parameters: { visualState: { focusVisible: 'textarea' } },
+}
+
+/* The pointer resting on the send button, with text so it is enabled. */
+export const Hover: Story = {
+  args: { attach, defaultValue: 'Summarise this thread' },
+  parameters: { visualState: { hover: '[data-trigger-slot="chat-composer-submit"]' } },
 }

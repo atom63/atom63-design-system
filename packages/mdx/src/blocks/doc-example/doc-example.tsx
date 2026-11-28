@@ -1,3 +1,5 @@
+'use client'
+
 import { CopyButton } from '@atom63/ui-react'
 import { clsx } from 'clsx'
 import { type KeyboardEvent, type ReactNode, useId, useRef, useState } from 'react'

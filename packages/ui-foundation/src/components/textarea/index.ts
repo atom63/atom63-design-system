@@ -5,6 +5,7 @@ export {
   textareaSlots,
   textareaStates,
   textareaTokenSlots,
+  textareaVariants,
   textareaVisualArchetypes,
 } from './textarea-contract'
 export type {
@@ -13,5 +14,6 @@ export type {
   TextareaSlot,
   TextareaState,
   TextareaTokenSlot,
+  TextareaVariant,
   TextareaVisualArchetype,
 } from './textarea-contract'

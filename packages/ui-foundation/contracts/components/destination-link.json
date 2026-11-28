@@ -8,11 +8,16 @@
       "exportName": "destinationKinds",
       "typeName": "DestinationKind"
     },
+    "variants": ["plain", "inline"],
     "states": ["rest", "focus-visible"],
     "slots": ["destination-link", "destination-indicator"],
     "visualArchetypes": ["action"]
   },
   "contract": {
+    "defaultVariant": "plain",
+    "variants": {
+      "$ref": "#/lists/variants"
+    },
     "kinds": {
       "$ref": "#/lists/kinds"
     },
@@ -24,6 +29,43 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "Whether a link stays in the product or leaves it, and how it is presented on the web. On iOS the kind picks NavigationLink or Link.",
+    "axes": {
+      "kind": ["internal", "external"],
+      "variant": ["plain", "inline"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "kind": {
+            "list": "kinds",
+            "map": {
+              "internal": {
+                "kind": "internal"
+              },
+              "external": {
+                "kind": "external"
+              }
+            },
+            "extensions": {}
+          },
+          "variant": {
+            "list": "variants",
+            "map": {
+              "plain": {
+                "variant": "plain"
+              },
+              "inline": {
+                "variant": "inline"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

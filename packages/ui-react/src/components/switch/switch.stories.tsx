@@ -172,6 +172,24 @@ export const Sizes: Story = {
   ),
 }
 
+/* Right-to-left: the track starts on the right and a checked thumb slides to
+   the left end, inside the track. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl" lang="ar">
+      <div style={{ display: 'grid', gap: '0.75rem' }}>
+        {switchSizes.map(size => (
+          <Row key={size}>
+            <Switch aria-label="مثال" size={size} />
+            <Switch aria-label="مثال، مفعّل" defaultChecked size={size} />
+            <IconSwitch defaultChecked size={size} />
+          </Row>
+        ))}
+      </div>
+    </UIProvider>
+  ),
+}
+
 /* The phone form factor (data-a63-form-factor="phone", stamped by AppView
    layout="phone") gives the switch the iOS 26 shape: a pill knob 1.6 times as
    wide as it is tall, on a track of about 63 by 28. Outside it, the knob is round. */

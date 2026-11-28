@@ -475,7 +475,7 @@ export const crossRendererContracts = [
     ],
     "platformAdaptations": {
       "react": [
-        "Uses a tab-backed segmented track with focus-visible feedback and an optional animated selection backplate."
+        "Uses radiogroup and radio semantics on a segmented track, named by aria-label or aria-labelledby, with arrow-key selection, focus-visible feedback and an optional animated selection backplate."
       ],
       "swiftUI": [
         "Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."

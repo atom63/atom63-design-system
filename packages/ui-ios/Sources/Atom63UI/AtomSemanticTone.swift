@@ -20,7 +20,7 @@ extension AtomSemanticTone {
     case .warning:
       theme.colors.statusWarning.resolve(for: colorScheme)
     case .error:
-      theme.colors.actionDanger.resolve(for: colorScheme)
+      theme.colors.statusDanger.resolve(for: colorScheme)
     }
   }
 

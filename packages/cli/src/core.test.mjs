@@ -1,8 +1,9 @@
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { readdirSync, readFileSync } from 'node:fs'
 import { describe, it } from 'node:test'
 
 import {
+  api,
   AtomError,
   component,
   docsPage,
@@ -13,6 +14,7 @@ import {
   search,
   token,
 } from './core.mjs'
+import { publishedPackageDirs } from '../../../scripts/design-system/published-packages.mjs'
 import { formatEnvelope } from './format.mjs'
 import { grounds, synonyms, topics } from './synonyms.mjs'
 import { build, template } from './templates.mjs'
@@ -368,6 +370,42 @@ describe('templates', () => {
     assert.match(text, /shadcn@latest add https:\/\/system\.atom63\.io\/r\/app-view\.json/)
   })
 
+  /* How builders describe a page to read; the kit must lead with ReaderLayout, not an app shell. */
+  const readingIdeas = [
+    'blog post reading page',
+    'docs article page with table of contents',
+    'long-form article',
+    'documentation page',
+    'help center guide',
+  ]
+  for (const idea of readingIdeas) {
+    it(`gives "${idea}" the reading page and ReaderLayout`, () => {
+      const kit = build(index, idea).data
+      assert.deepEqual(
+        kit.pages.map(entry => entry.id),
+        ['reading-page']
+      )
+      assert.deepEqual(kit.blocks, [])
+      assert.match(kit.reading.snippet, /<ReaderLayout/)
+      assert.match(formatEnvelope(build(index, idea)), /^## Reading page$/m)
+    })
+  }
+
+  it('keeps the reading page out of app and phone ideas', () => {
+    for (const idea of ['invoice list page', 'analytics dashboard', 'phone docs reader']) {
+      const kit = build(index, idea).data
+      assert.equal(kit.reading, undefined, idea)
+    }
+  })
+
+  it('points the reading section at a template built on what it imports', () => {
+    const { reading } = build(index, 'blog post').data
+    const source = template(index, reading.template).data.files[0].source
+    for (const name of ['Page', 'Container', 'Section', 'ReaderLayout']) {
+      assert.match(source, new RegExp(`<${name}\\b`), name)
+    }
+  })
+
   /* How builders describe a phone screen; the kit must lead with AppView layout="phone". */
   const phoneIdeas = [
     'Revolut home screen on a phone: balance, accounts, recent transactions, bottom tab bar',
@@ -596,6 +634,30 @@ describe('component', () => {
       }
     )
   })
+
+  it('points a layout primitive at atom63 api, which prints its props', () => {
+    for (const [slug, name] of [
+      ['page', 'Page'],
+      ['container', 'Container'],
+      ['section', 'Section'],
+      ['section-header', 'SectionHeader'],
+    ]) {
+      assert.throws(
+        () => component(index, slug),
+        error => {
+          assert.deepEqual(error.suggestions, [`atom63 api ${name}`])
+          assert.match(error.message, /@atom63\/ui-react\/layout/)
+          return true
+        }
+      )
+      const text = formatEnvelope(api(index, name))
+      assert.match(text, new RegExp(`Props of \`${name}\`:`))
+    }
+    assert.match(
+      formatEnvelope(api(index, 'Container')),
+      /- `gap`: `0 \| 2 \| 4 \| 6 \| 8 \| 10 \| 12`/
+    )
+  })
 })
 
 describe('example', () => {
@@ -699,5 +761,112 @@ describe('index', () => {
   it('measures edit distance', () => {
     assert.equal(editDistance('buton', 'button'), 1)
     assert.equal(editDistance('abc', 'xyzuvw', 2), 3)
+  })
+})
+
+const repoFile = relative => new URL(`../../../${relative}`, import.meta.url)
+
+describe('api', () => {
+  it('indexes every public Atom type in the SwiftUI sources', () => {
+    const dir = repoFile('packages/ui-ios/Sources/Atom63UI/')
+    const files = readdirSync(dir, { recursive: true }).filter(file => file.endsWith('.swift'))
+    const declared = new Set(
+      files.flatMap(file =>
+        [
+          ...readFileSync(new URL(file, dir), 'utf8').matchAll(
+            /^public\s+(?:final\s+)?(?:struct|enum|class|protocol|actor|typealias)\s+(Atom\w+)/gm
+          ),
+        ].map(match => match[1])
+      )
+    )
+    const indexed = new Set(index.api.ios.types.map(type => type.name))
+    assert.ok(declared.size >= 100)
+    assert.deepEqual(
+      [...declared].filter(name => !indexed.has(name)),
+      [],
+      'public Atom types missing from packages/ui-ios/api/public-api.json; run its check:public-api --write, then generate:index'
+    )
+  })
+
+  it('indexes every published JavaScript entry point with a docs page', () => {
+    const modules = new Set(index.api.web.map(entry => entry.module))
+    for (const dir of publishedPackageDirs) {
+      const manifest = JSON.parse(readFileSync(repoFile(`${dir}/package.json`), 'utf8'))
+      for (const [subpath, target] of Object.entries(manifest.exports ?? {})) {
+        if (typeof target !== 'object' || !target['@atom63/source']) continue
+        assert.ok(modules.has(manifest.name + subpath.slice(1)), manifest.name + subpath.slice(1))
+      }
+    }
+    for (const entry of index.api.web) {
+      assert.ok(entry.values.length > 0, entry.module)
+      assert.ok(
+        index.docs.some(doc => doc.slug === entry.docs),
+        `${entry.module} → ${entry.docs}`
+      )
+    }
+  })
+
+  it('finds Swift types, entry point exports and entry points by name', () => {
+    assert.equal(top('AtomWidgetCard')[0], 'AtomWidgetCard')
+    assert.equal(top('AtomAppBar')[0], 'AtomAppBar')
+    assert.equal(top('atomDensity')[0], 'AtomDensity')
+    assert.equal(top('KeyIdea')[0], 'KeyIdea')
+    assert.equal(top('MediaLightbox')[0], 'MediaLightbox')
+    assert.ok(top('lightbox').includes('@atom63/ui-react/media/lightbox'))
+    assert.ok(top('mdx').includes('@atom63/mdx'))
+    assert.ok(top('ios').includes('Atom63UI'))
+    // A component's own exports are found through the component, not again as API names.
+    assert.ok(!search(index, 'Dialog').data.results.some(result => result.kind === 'api'))
+  })
+
+  it('answers a Swift type with its declaration, doc comment and members', () => {
+    const { type, data } = api(index, 'AtomWidgetCard')
+    assert.equal(type, 'api.detail')
+    assert.match(data.ios.declaration, /struct AtomWidgetCard/)
+    assert.match(data.ios.summary, /widget tile/)
+    assert.ok(data.ios.members.some(member => member.name.startsWith('init')))
+    assert.equal(api(index, 'AtomButton').data.ios.component, 'button')
+  })
+
+  it('answers a JavaScript export with every entry point that exports it', () => {
+    const { data } = api(index, 'Accordion')
+    assert.deepEqual(
+      data.web.map(entry => [entry.module, entry.component]),
+      [
+        ['@atom63/ui-react', 'accordion'],
+        ['@atom63/mdx/blocks', null],
+      ]
+    )
+    assert.match(formatEnvelope(api(index, 'KeyIdea')), /from '@atom63\/mdx\/blocks'/)
+  })
+
+  it('answers every MDX block with its docs section: purpose, example and props', () => {
+    const blocks = index.api.web.find(entry => entry.module === '@atom63/mdx/blocks')
+    const components = blocks.values.filter(name => /^[A-Z][a-z]/.test(name))
+    assert.ok(components.length >= 30)
+    for (const name of components) {
+      const section = blocks.sections[name]
+      assert.ok(section, `${name} has no "### ${name}" section on atom63 docs ${blocks.docs}`)
+      assert.match(section, /```/, `${name} has no example`)
+      assert.match(section, /Props of `|adds no props of its own/, `${name} has no props`)
+    }
+    const text = formatEnvelope(api(index, 'KeyIdea'))
+    assert.match(text, /Docs: atom63 docs pattern-mdx-blocks/)
+    assert.match(text, /<KeyIdea title=/)
+    assert.match(text, /- `label`: `ReactNode` \(default `'Key idea'`\)/)
+  })
+
+  it('lists an entry point and the SwiftUI module', () => {
+    const media = api(index, '@atom63/ui-react/media')
+    assert.equal(media.type, 'api.entry')
+    assert.ok(media.data.symbols.some(symbol => symbol.name === 'VideoDialog'))
+    assert.equal(api(index, 'Atom63UI').data.symbols.length, index.api.ios.types.length)
+  })
+
+  it('suggests close names for an unknown one', () => {
+    assert.throws(
+      () => api(index, 'AtomWidgetCrad'),
+      error => error.code === 'api.not_found' && error.suggestions.includes('AtomWidgetCard')
+    )
   })
 })

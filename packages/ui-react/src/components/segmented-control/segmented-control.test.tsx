@@ -1,6 +1,7 @@
 import { segmentedControlContract } from '@atom63/ui-foundation'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { createRef } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 
 import { SegmentedControl, type SegmentedControlItem } from './segmented-control'
@@ -12,7 +13,7 @@ const ITEMS: SegmentedControlItem[] = [
 ]
 
 describe('SegmentedControl', () => {
-  it('renders one tab per item with the contract defaults', () => {
+  it('renders one radio per item with the contract defaults', () => {
     const { container } = render(
       <SegmentedControl items={ITEMS} onValueChange={() => {}} value="list" />
     )
@@ -21,18 +22,18 @@ describe('SegmentedControl', () => {
     expect(segmentedControlContract.defaultVariant).toBe('label')
     expect(root).toHaveAttribute('data-tone', segmentedControlContract.defaultTone)
     expect(root).toHaveAttribute('data-variant', 'label')
-    expect(screen.getAllByRole('tab')).toHaveLength(3)
+    expect(screen.getAllByRole('radio')).toHaveLength(3)
   })
 
-  it('marks the tab matching value as active', () => {
+  it('checks the radio matching value', () => {
     render(<SegmentedControl items={ITEMS} onValueChange={() => {}} value="grid" />)
-    expect(screen.getByRole('tab', { name: 'Grid' })).toHaveAttribute('data-active')
+    expect(screen.getByRole('radio', { name: 'Grid' })).toBeChecked()
   })
 
   it('fires onValueChange when another segment is clicked', async () => {
     const onValueChange = vi.fn()
     render(<SegmentedControl items={ITEMS} onValueChange={onValueChange} value="list" />)
-    await userEvent.click(screen.getByRole('tab', { name: 'Tree' }))
+    await userEvent.click(screen.getByRole('radio', { name: 'Tree' }))
     expect(onValueChange).toHaveBeenCalledWith('tree')
   })
 
@@ -78,9 +79,95 @@ describe('SegmentedControl', () => {
         value="list"
       />
     )
-    const disabled = screen.getByRole('tab', { name: 'Grid' })
+    const disabled = screen.getByRole('radio', { name: 'Grid' })
     expect(disabled).toHaveAttribute('data-disabled')
     await userEvent.click(disabled)
     expect(onValueChange).not.toHaveBeenCalled()
+  })
+
+  it('switches segments uncontrolled from defaultValue', async () => {
+    const onValueChange = vi.fn()
+    render(<SegmentedControl defaultValue="grid" items={ITEMS} onValueChange={onValueChange} />)
+    expect(screen.getByRole('radio', { name: 'Grid' })).toBeChecked()
+    await userEvent.click(screen.getByRole('radio', { name: 'Tree' }))
+    expect(screen.getByRole('radio', { name: 'Tree' })).toBeChecked()
+    expect(onValueChange).toHaveBeenCalledWith('tree')
+  })
+
+  it('is a radio group named by aria-label, with no tab roles', () => {
+    render(
+      <SegmentedControl aria-label="View" items={ITEMS} onValueChange={() => {}} value="list" />
+    )
+    const group = screen.getByRole('radiogroup', { name: 'View' })
+    expect(group).toHaveAttribute('data-slot', 'segmented-control')
+    expect(screen.queryAllByRole('tab')).toHaveLength(0)
+    expect(screen.queryByRole('tablist')).toBeNull()
+    for (const radio of screen.getAllByRole('radio')) expect(group).toContainElement(radio)
+  })
+
+  it('is named by aria-labelledby', () => {
+    render(
+      <>
+        <span id="view-label">Layout</span>
+        <SegmentedControl aria-labelledby="view-label" items={ITEMS} value="list" />
+      </>
+    )
+    expect(screen.getByRole('radiogroup', { name: 'Layout' })).toBeInTheDocument()
+  })
+
+  it('enters at the selected segment and moves the selection with the arrow keys', async () => {
+    const user = userEvent.setup()
+    const onValueChange = vi.fn()
+    render(<SegmentedControl defaultValue="grid" items={ITEMS} onValueChange={onValueChange} />)
+    await user.tab()
+    expect(screen.getByRole('radio', { name: 'Grid' })).toHaveFocus()
+    await user.keyboard('{ArrowRight}')
+    expect(screen.getByRole('radio', { name: 'Tree' })).toHaveFocus()
+    expect(screen.getByRole('radio', { name: 'Tree' })).toBeChecked()
+    expect(onValueChange).toHaveBeenLastCalledWith('tree')
+    await user.keyboard('{ArrowRight}')
+    expect(screen.getByRole('radio', { name: 'List' })).toBeChecked()
+    await user.keyboard('{ArrowLeft}')
+    expect(screen.getByRole('radio', { name: 'Tree' })).toBeChecked()
+  })
+
+  it('spreads props onto the root and forwards its ref', () => {
+    const ref = createRef<HTMLDivElement>()
+    const { container } = render(
+      <SegmentedControl
+        aria-label="View"
+        data-testid="view"
+        id="view"
+        items={ITEMS}
+        ref={ref}
+        value="list"
+      />
+    )
+    const root = container.querySelector('[data-slot="segmented-control"]')
+    expect(root).toHaveAttribute('id', 'view')
+    expect(root).toHaveAttribute('data-testid', 'view')
+    expect(root).toHaveAttribute('aria-label', 'View')
+    expect(ref.current).toBe(root)
+  })
+
+  it('names label segments by their text and icon segments by aria-label', () => {
+    const { rerender } = render(
+      <SegmentedControl aria-label="View" items={ITEMS} onValueChange={() => {}} value="list" />
+    )
+    const label = screen.getAllByRole('radio')[0]
+    expect(label).not.toHaveAttribute('aria-label')
+    expect(label).not.toHaveAttribute('title')
+    rerender(
+      <SegmentedControl
+        aria-label="View"
+        items={ITEMS}
+        onValueChange={() => {}}
+        value="list"
+        variant="icon"
+      />
+    )
+    const icon = screen.getAllByRole('radio')[0]
+    expect(icon).toHaveAttribute('aria-label', ITEMS[0].label)
+    expect(icon).toHaveAttribute('title', ITEMS[0].label)
   })
 })

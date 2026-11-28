@@ -96,6 +96,26 @@ export const Playground: Story = {
   ),
 }
 
+/** The drawer open as an app shows it: modal, over the whole page. */
+export const Open: Story = {
+  render: args => (
+    <Drawer {...args} defaultOpen>
+      <DrawerContent>
+        <DrawerHeader>
+          <DrawerTitle>Appearance</DrawerTitle>
+          <DrawerDescription>Drag the handle down to dismiss.</DrawerDescription>
+        </DrawerHeader>
+        <DrawerBody style={{ color: 'var(--a63-text-secondary)' }}>
+          The sheet is a raised overlay surface. Content scrolls inside.
+        </DrawerBody>
+        <DrawerFooter>
+          <DrawerClose render={<Button variant="primary">Done</Button>} />
+        </DrawerFooter>
+      </DrawerContent>
+    </Drawer>
+  ),
+}
+
 /* A persistent bottom sheet over a map or photo: modal={false} keeps the page
    usable behind it, and snapPoints let it rest at a peek height or open fully. */
 export const PersistentSheet: Story = {
@@ -143,6 +163,32 @@ export const Directions: Story = {
       ))}
     </div>
   ),
+}
+
+/* Right-to-left: `left` and `right` are screen edges, so a left drawer still
+   docks to the left edge, slides in from it and swipes back towards it, while
+   its content reads right to left. */
+export const RightToLeft: Story = {
+  render: () => {
+    const [portalContainer, setPortalContainer] = useState<HTMLDivElement | null>(null)
+    return (
+      <UIProvider dir="rtl" lang="ar" ref={setPortalContainer}>
+        <Drawer defaultOpen direction="left">
+          <DrawerTrigger render={<Button variant="secondary">فتح الدرج</Button>} />
+          <DrawerContent portalProps={{ container: portalContainer }}>
+            <DrawerHeader>
+              <DrawerTitle>المظهر</DrawerTitle>
+              <DrawerDescription>اسحب نحو الحافة اليسرى للإغلاق.</DrawerDescription>
+            </DrawerHeader>
+            <DrawerBody>يقرأ المحتوى من اليمين إلى اليسار.</DrawerBody>
+            <DrawerFooter>
+              <DrawerClose render={<Button variant="primary">تم</Button>} />
+            </DrawerFooter>
+          </DrawerContent>
+        </Drawer>
+      </UIProvider>
+    )
+  },
 }
 
 /*

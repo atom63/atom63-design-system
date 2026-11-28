@@ -40,6 +40,59 @@
       "$ref": "#/lists/visualArchetypes"
     }
   },
+  "intent": {
+    "description": "What a segmented control is, independent of any platform: its size, whether segments show icons or labels, and the tone of the selected segment. iOS has none of these axes: Picker(.segmented) draws at the platform size and tint, and a segment is whatever label view it is given.",
+    "axes": {
+      "size": ["sm", "md", "lg"],
+      "content": ["icon", "label"],
+      "tone": ["neutral", "accent"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              },
+              "lg": {
+                "size": "lg"
+              }
+            },
+            "extensions": {}
+          },
+          "variant": {
+            "list": "variants",
+            "map": {
+              "icon": {
+                "content": "icon"
+              },
+              "label": {
+                "content": "label"
+              }
+            },
+            "extensions": {}
+          },
+          "tone": {
+            "list": "tones",
+            "map": {
+              "neutral": {
+                "tone": "neutral"
+              },
+              "accent": {
+                "tone": "accent"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "segmentedControl",
@@ -60,7 +113,7 @@
     ],
     "platformAdaptations": {
       "react": [
-        "Uses a tab-backed segmented track with focus-visible feedback and an optional animated selection backplate."
+        "Uses radiogroup and radio semantics on a segmented track, named by aria-label or aria-labelledby, with arrow-key selection, focus-visible feedback and an optional animated selection backplate."
       ],
       "swiftUI": [
         "Uses Picker with segmented style so geometry, typography, and selection feedback remain platform-native."

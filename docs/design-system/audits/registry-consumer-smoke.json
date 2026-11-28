@@ -7,25 +7,49 @@
     {
       "name": "@atom63/styles",
       "requested": "beta",
-      "resolved": "0.1.0-beta.8",
+      "resolved": "0.1.0-beta.13",
       "manifest": "node_modules/@atom63/styles/package.json"
     },
     {
       "name": "@atom63/ui-foundation",
       "requested": "beta",
-      "resolved": "0.2.0-beta.5",
+      "resolved": "0.2.0-beta.12",
       "manifest": "node_modules/@atom63/ui-foundation/package.json"
     },
     {
       "name": "@atom63/ui-react",
       "requested": "beta",
-      "resolved": "0.2.0-beta.12",
+      "resolved": "0.2.0-beta.22",
       "manifest": "node_modules/@atom63/ui-react/package.json"
+    },
+    {
+      "name": "@atom63/mdx",
+      "requested": "beta",
+      "resolved": "0.4.0-beta.13",
+      "manifest": "node_modules/@atom63/mdx/package.json"
+    },
+    {
+      "name": "@atom63/inform",
+      "requested": "beta",
+      "resolved": "0.2.0-beta.13",
+      "manifest": "node_modules/@atom63/inform/package.json"
+    },
+    {
+      "name": "@atom63/agent",
+      "requested": "beta",
+      "resolved": "0.3.0-beta.1",
+      "manifest": "node_modules/@atom63/agent/package.json"
+    },
+    {
+      "name": "@atom63/widgets",
+      "requested": "beta",
+      "resolved": "0.1.0-beta.13",
+      "manifest": "node_modules/@atom63/widgets/package.json"
     },
     {
       "name": "@atom63/cli",
       "requested": "beta",
-      "resolved": "0.1.0-beta.1",
+      "resolved": "0.1.0-beta.8",
       "manifest": "node_modules/@atom63/cli/package.json"
     }
   ],
@@ -34,6 +58,10 @@
       "@atom63/styles": "beta",
       "@atom63/ui-foundation": "beta",
       "@atom63/ui-react": "beta",
+      "@atom63/mdx": "beta",
+      "@atom63/inform": "beta",
+      "@atom63/agent": "beta",
+      "@atom63/widgets": "beta",
       "react": "19.2.7",
       "react-dom": "19.2.7"
     },
@@ -49,6 +77,7 @@
   "commands": [
     "pnpm install --ignore-workspace --registry=https://registry.npmjs.org/ --no-frozen-lockfile",
     "pnpm exec tsc --noEmit",
+    "pnpm exec tsc --noEmit -p tsconfig.other.json",
     "pnpm exec vite build",
     "pnpm exec atom63 build settings screen --json",
     "pnpm exec atom63 component button",
@@ -59,7 +88,14 @@
     "@atom63/styles",
     "@atom63/ui-react/styles.css",
     "@atom63/ui-react",
-    "@atom63/ui-foundation"
+    "@atom63/ui-foundation",
+    "@atom63/mdx/styles/mdx-blocks.css",
+    "@atom63/mdx",
+    "@atom63/inform/styles.css",
+    "@atom63/inform",
+    "@atom63/agent",
+    "@atom63/widgets/styles.css",
+    "@atom63/widgets"
   ],
   "verification": {
     "temporaryConsumerOutsideRepository": "passed",

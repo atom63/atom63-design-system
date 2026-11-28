@@ -45,7 +45,7 @@ import { chromium } from 'playwright'
 
 import { planProject, resolveVersions, writeProject } from '../../packages/create/src/generate.mjs'
 import { syncAgentsBlock } from '../../packages/cli/src/agents-md.mjs'
-import { execCommandSync, spawnCommand, stopCommand } from './lib/command.mjs'
+import { execCommandSync, spawnServer, stopCommand } from './lib/command.mjs'
 import {
   changedFiles,
   countTypeErrors,
@@ -230,7 +230,7 @@ const freePort = () =>
 /** Serve a built project with `vite preview` until `stop()` is called. */
 async function preview(directory) {
   const port = await freePort()
-  const child = spawnCommand(
+  const child = spawnServer(
     'pnpm',
     ['exec', 'vite', 'preview', '--port', String(port), '--strictPort', '--host', '127.0.0.1'],
     { cwd: directory, stdio: 'ignore' }

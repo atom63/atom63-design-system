@@ -13,13 +13,25 @@
 }
 
 .a63-Pagination-content {
+  /* The list scrolls, and a scroller clips in both axes. Its top and bottom are padded by as
+     much as a link's touch target reaches past its rendered floor (or by the focus ring
+     width, if that is more) and take the padding back with a negative margin, so the 44px
+     target and the ring are not cut and the layout does not move. Its ends are padded by the
+     ring width with no negative margin, which would push a full list past the viewport. */
+  --pagination-bleed-block: max(
+    var(--a63-control-focus-ring-width),
+    calc((var(--a63-control-min-target) - var(--a63-control-min-size)) / 2)
+  );
+
   display: flex;
   flex-direction: row;
   align-items: center;
   gap: var(--a63-space-1, 0.25rem);
   max-width: 100%;
-  margin: 0;
-  padding: 0;
+  margin-block: calc(-1 * var(--pagination-bleed-block));
+  margin-inline: 0;
+  padding-block: var(--pagination-bleed-block);
+  padding-inline: var(--a63-control-focus-ring-width);
   list-style: none;
   overflow-x: auto;
   overscroll-behavior-inline: contain;
@@ -41,13 +53,23 @@
   padding-inline: var(--a63-control-padding-inline-md);
 }
 
-/* Labels appear from the `sm` breakpoint up (prod hidden sm:block). */
+/* Labels appear from the `sm` breakpoint up (prod hidden sm:block). Below it they are
+   visually hidden, not removed, so a translated label still names the link. */
 .a63-Pagination-nav-label {
-  display: none;
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 @media (min-width: 40rem) {
   .a63-Pagination-nav-label {
-    display: block;
+    position: static;
+    width: auto;
+    height: auto;
+    overflow: visible;
+    clip-path: none;
   }
 }
 
@@ -83,4 +105,9 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border-width: 0;
+}
+
+/* Previous points to the inline start: mirror the chevrons under dir="rtl". */
+:where([dir='rtl']) .a63-Pagination-nav-link svg {
+  transform: scaleX(-1);
 }

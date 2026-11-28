@@ -67,6 +67,7 @@ function buildSectionItems() {
   const buckets: Record<PageSection, NavItem[]> = {
     architecture: [],
     component: [],
+    decision: [],
     foundation: [],
     pattern: [],
     theme: [],

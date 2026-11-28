@@ -2,7 +2,9 @@
  * check:templates — the mechanical gates for packages/templates (T5 in
  * docs/design-system/template-library-plan.md): complete metadata, imports
  * only from @atom63/*, react, lucide-react and the templates source, the
- * Desktop / Phone / Themes stories, every block used by a page, and every
+ * Desktop / Phone / Themes stories (and Tablet / Wide for the flagship
+ * templates) with axe's landmark rules turned on
+ * (`landmarkParameters`), every block used by a page, and every
  * template listed in src/catalog.ts. A `ready` template also needs a visual
  * baseline for each of those stories.
  * Craft rules run over the same files in check:craft.

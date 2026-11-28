@@ -227,7 +227,7 @@ const alias = (id: string) => ({ type: 'VARIABLE_ALIAS', id })
 function modelOf(
   css: string,
   tokens: { token: string; type: 'COLOR' | 'FLOAT' | 'STRING'; value: unknown }[],
-  states = ['rest', 'focusVisible'],
+  states = ['rest', 'focus-visible'],
   variants = ['default']
 ) {
   const sync: SyncModel = {
@@ -1036,14 +1036,14 @@ const ringTokens = [
   { token: '--a63-control-radius', type: 'FLOAT' as const, value: 6 },
 ]
 const ringModel = (focus = '') =>
-  modelOf(ringCss(focus), ringTokens, ['rest', 'hover', 'focusVisible'], ['default', 'ghost'])
-const ghostFocused = 'Variant=ghost, Size=md, State=focusVisible'
-const defaultFocused = 'Variant=default, Size=md, State=focusVisible'
+  modelOf(ringCss(focus), ringTokens, ['rest', 'hover', 'focus-visible'], ['default', 'ghost'])
+const ghostFocused = 'Variant=ghost, Size=md, State=focus-visible'
+const defaultFocused = 'Variant=default, Size=md, State=focus-visible'
 const ringOf = (variant: SceneNodeLike) =>
   variant.children!.find(c => c.name === 'Focus ring' && c.type === 'FRAME')!
 
 describe('the focus ring', () => {
-  it('shows a ring on every focusVisible variant, a transparent ghost included, and only there', async () => {
+  it('shows a ring on every focus-visible variant, a transparent ghost included, and only there', async () => {
     const { sync, model } = ringModel()
     const fake = createFakeNodes()
     await syncModel(fake.figma, sync)
@@ -1051,7 +1051,7 @@ describe('the focus ring', () => {
     expect(result.verification).toMatchObject({ create: [], update: [], unchanged: 6 })
     for (const variant of model.variants) {
       const node = fake.findVariant('Button', variant.name)
-      const focused = variant.coord.state === 'focusVisible'
+      const focused = variant.coord.state === 'focus-visible'
       expect([variant.name, fake.visibleFocusRing(node)]).toEqual([variant.name, focused])
       // The same layer in every variant, shown only on focus, so a swap keeps overrides.
       expect(ringOf(node).visible).toBe(focused)
@@ -1196,7 +1196,7 @@ describe('the focus ring', () => {
       blendMode: 'NORMAL' as const,
       showShadowBehindNode: false,
     })
-    // What the previous version wrote on a focusVisible root (C6 before 2026-10-08).
+    // What the previous version wrote on a focus-visible root (C6 before 2026-10-08).
     const oldRing = effects.setBoundVariableForEffect(
       effects.setBoundVariableForEffect(shadow(3), 'color', color),
       'spread',
@@ -1277,11 +1277,11 @@ describe('the real Button model', () => {
     )
     expect(values).toHaveLength(7)
     for (const value of values) expect(value.textStyleId).toBe(textXs.id)
-    // Every focusVisible variant shows its ring, transparent ghost and link included.
+    // Every focus-visible variant shows its ring, transparent ghost and link included.
     const wrongRing = model.variants
       .filter(variant => {
         const node = fake.findVariant('Button', variant.name)
-        return fake.visibleFocusRing(node) !== (variant.coord.state === 'focusVisible')
+        return fake.visibleFocusRing(node) !== (variant.coord.state === 'focus-visible')
       })
       .map(variant => variant.name)
     expect(wrongRing).toEqual([])
@@ -1290,7 +1290,7 @@ describe('the real Button model', () => {
       expect(node.effects).toEqual([])
       expect(node.clipsContent).toBe(false)
     }
-    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focusVisible')
+    const focused = fake.findVariant('Button', 'Variant=default, Size=md, State=focus-visible')
     const ring = focused.children!.find(c => c.name === 'Focus ring')!
     // Figma stores a stroke-weight binding on the four sides, never as `strokeWeight`.
     const sides = [

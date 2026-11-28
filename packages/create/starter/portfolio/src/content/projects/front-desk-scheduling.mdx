@@ -1,0 +1,47 @@
+---
+title: Scheduling that respects the front desk
+summary: Marigold Health's receptionists booked visits across four tools. One calendar built for interruptions halved the time to book.
+date: '2024-06-20'
+featured: true
+role: Senior product designer
+timeline: Oct 2023 to Jun 2024
+team: 1 designer, 3 engineers, 2 clinic leads
+tools: [Figma, Maze, React]
+cover: /projects/front-desk-scheduling/cover.svg
+coverAlt: Abstract calendar grid in warm tones with one highlighted slot
+---
+
+## Problem
+
+Marigold Health is a network of eleven community clinics. A receptionist answered the phone, checked a paper rota, searched the patient record and booked in a separate calendar, often while someone waited at the desk. A booking took four minutes on average, and one in twelve ended in a double booking.
+
+## Role
+
+I was the only designer on the project. I shadowed reception at three clinics, ran the usability tests, and wrote the interaction spec the engineers built from.
+
+## Process
+
+<Steps>
+  <Steps.Step title="Count the interruptions">Receptionists were interrupted every 90 seconds. Every screen had to survive being left half-done.</Steps.Step>
+  <Steps.Step title="One calendar, one search">Patient, clinician and room in one view, with the search always focused when the phone rings.</Steps.Step>
+  <Steps.Step title="Drafts, not dialogs">An unfinished booking stays as a draft on the calendar instead of a modal that blocks the desk.</Steps.Step>
+</Steps>
+
+<FigureBlock
+  alt="The calendar with a draft booking held in a slot"
+  aspectRatio="16/9"
+  caption="A draft holds the slot while the receptionist answers the next call."
+  src="/projects/front-desk-scheduling/calendar.svg"
+/>
+
+## Outcome
+
+<StatGrid>
+  <StatCard change="from 4 min" label="Time to book" trend="up" value="1 min 50 s" />
+  <StatCard change="from 1 in 12" label="Double bookings" trend="up" value="1 in 140" />
+  <StatCard label="Clinics live" value="11" />
+</StatGrid>
+
+<Quote by="Reception lead, Marigold Health">
+  I can answer the phone mid-booking and nothing is lost. That is the whole job.
+</Quote>

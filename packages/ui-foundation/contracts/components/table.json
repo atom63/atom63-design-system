@@ -2,13 +2,22 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "table",
   "maturity": "stable",
-  "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (default/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text.",
+  "description": "The tabular-data set: a horizontally scrollable container around a semantic <table>. The container takes size (md/sm) and variant (default/plain); TableHead and TableCell can pin to the start or end edge. The DS recipe reads these off data-size / data-variant / data-sticky. The container also takes tone (neutral/accent, data-tone), which colours selected rows: neutral is the muted fill with primary text, accent the opt-in primary wash with accent text. Sorting is controlled and data-agnostic: Table takes sort and onSortChange, and a TableHead with a sortKey renders a button with a direction icon and carries aria-sort while its column is sorted; the caller sorts the rows.",
   "lists": {
     "variants": ["default", "plain"],
-    "sizes": ["default", "sm"],
+    "sizes": {
+      "values": ["md", "sm"],
+      "deprecatedAliases": {
+        "default": "md"
+      }
+    },
     "tones": ["neutral", "accent"],
     "stickyEdges": ["start", "end"],
-    "states": ["rest", "row-hover", "row-selected"],
+    "aligns": {
+      "description": "How a head or body cell aligns its content. start is the default; end aligns the content to the inline end with tabular figures, for numbers and money, so digits line up.",
+      "values": ["start", "end"]
+    },
+    "states": ["rest", "row-hover", "row-selected", "sort-ascending", "sort-descending"],
     "slots": [
       "table-container",
       "table",
@@ -18,13 +27,14 @@
       "table-row",
       "table-head",
       "table-cell",
-      "table-caption"
+      "table-caption",
+      "table-sort-button"
     ],
     "visualArchetypes": ["surface"]
   },
   "contract": {
     "defaultVariant": "default",
-    "defaultSize": "default",
+    "defaultSize": "md",
     "defaultTone": "neutral",
     "variants": {
       "$ref": "#/lists/variants"
@@ -34,6 +44,9 @@
     },
     "stickyEdges": {
       "$ref": "#/lists/stickyEdges"
+    },
+    "aligns": {
+      "$ref": "#/lists/aligns"
     },
     "states": {
       "$ref": "#/lists/states"

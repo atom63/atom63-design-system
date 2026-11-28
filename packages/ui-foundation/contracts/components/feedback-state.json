@@ -12,9 +12,13 @@
       "feedback-state-media",
       "feedback-state-title",
       "feedback-state-description",
+      "feedback-state-detail",
       "feedback-state-content"
     ],
-    "states": ["idle", "busy", "actionable"],
+    "states": {
+      "description": "The state a FeedbackState shows, set by its state prop: the same values as kinds.",
+      "values": ["empty", "error", "loading", "not-found", "no-results", "offline", "stale"]
+    },
     "visualArchetypes": ["action"]
   },
   "contract": {

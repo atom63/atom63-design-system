@@ -42,6 +42,7 @@ extension AtomThemeColors {
             surfaceControl: color("--a63-surface-control"),
             textPrimary: color("--a63-text-primary"),
             textSecondary: color("--a63-text-secondary"),
+            textDanger: color("--a63-text-danger"),
             borderSubtle: color("--a63-border-subtle"),
             borderControl: color("--a63-border-control"),
             borderInput: color("--a63-border-input"),
@@ -58,6 +59,7 @@ extension AtomThemeColors {
             statusInfo: color("--a63-status-info"),
             statusSuccess: color("--a63-status-success"),
             statusWarning: color("--a63-status-warning"),
+            statusDanger: color("--a63-status-danger"),
             selectionTrackOff: color("--a63-surface-muted"),
             selectionThumb: color("--a63-selection-thumb"),
             skeletonHighlight: color("--a63-skeleton-highlight"),
@@ -95,12 +97,14 @@ enum AtomTokenGraph {
         "--a63-brand-800": Variable(selector: .brand, values: ["b1": .alias("--color-b1-800"), "b2": .alias("--color-b2-800"), "b3": .alias("--color-b3-800"), "b4": .alias("--color-b4-800"), "b5": .alias("--color-b5-800"), "b6": .alias("--color-b6-800")]),
         "--a63-selection-thumb": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 1, green: 1, blue: 1, opacity: 1))]),
         "--a63-skeleton-highlight": Variable(selector: .mode, values: ["light": .alias("--color-white-60"), "dark": .alias("--color-white-10")]),
+        "--a63-status-danger": Variable(selector: .mode, values: ["light": .alias("--color-danger-600"), "dark": .alias("--color-danger-500")]),
         "--a63-status-info": Variable(selector: .mode, values: ["light": .alias("--color-info-600"), "dark": .alias("--color-info-500")]),
         "--a63-status-success": Variable(selector: .mode, values: ["light": .alias("--color-success-600"), "dark": .alias("--color-success-500")]),
         "--a63-status-warning": Variable(selector: .mode, values: ["light": .alias("--color-warning-600"), "dark": .alias("--color-warning-500")]),
         "--a63-surface-control": Variable(selector: .mode, values: ["light": .alias("--surface-light-1"), "dark": .alias("--surface-dark-1")]),
         "--a63-surface-muted": Variable(selector: .mode, values: ["light": .alias("--surface-light-3"), "dark": .alias("--surface-dark-3")]),
         "--a63-surface-overlay": Variable(selector: .mode, values: ["light": .alias("--surface-light-1"), "dark": .alias("--surface-dark-4")]),
+        "--a63-text-danger": Variable(selector: .mode, values: ["light": .alias("--color-danger-600"), "dark": .alias("--color-danger-400")]),
         "--a63-widget-background-color": Variable(selector: .skinMode, values: ["modern-light": .composed("--a63-surface-overlay", opacity: 82), "modern-dark": .composed("--a63-surface-panel", opacity: 90), "aqua-light": .composed("--a63-surface-overlay", opacity: 82), "aqua-dark": .composed("--a63-surface-overlay", opacity: 82), "retro-light": .alias("--a63-surface-overlay"), "retro-dark": .alias("--a63-surface-overlay"), "terminal-light": .composed("--a63-surface-overlay", opacity: 82), "terminal-dark": .composed("--a63-surface-overlay", opacity: 82)]),
         "--a63-widget-border-color": Variable(selector: .fixed, values: ["": .alias("--a63-border-subtle")]),
         "--a63-widget-foreground": Variable(selector: .fixed, values: ["": .alias("--a63-text-primary")]),
@@ -141,6 +145,8 @@ enum AtomTokenGraph {
         "--color-b6-600": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.803922, green: 0.047059, blue: 0.239216, opacity: 1))]),
         "--color-b6-700": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.588235, green: 0, blue: 0.121569, opacity: 1))]),
         "--color-b6-800": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.403922, green: 0, blue: 0.035294, opacity: 1))]),
+        "--color-danger-400": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 1, green: 0.556863, blue: 0.513726, opacity: 1))]),
+        "--color-danger-500": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.905882, green: 0.262745, blue: 0.25098, opacity: 1))]),
         "--color-danger-600": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.733333, green: 0.113725, blue: 0.133333, opacity: 1))]),
         "--color-info-500": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.305882, green: 0.52549, blue: 0.937255, opacity: 1))]),
         "--color-info-600": Variable(selector: .fixed, values: ["": .color(AtomColorComponents(red: 0.192157, green: 0.388235, blue: 0.764706, opacity: 1))]),
@@ -2557,17 +2563,17 @@ brand=b1,mode=light,surface=n2,theme=modern 0.396078 0.388235 0.427451 1
 brand=b1,mode=light,surface=n2,theme=aqua 0.396078 0.388235 0.427451 1
 brand=b1,mode=light,surface=n2,theme=retro 0.396078 0.388235 0.427451 1
 brand=b1,mode=light,surface=n2,theme=terminal 0.002757 0.130331 0.332936 1
-brand=b1,mode=light,surface=n3,theme=modern 0.376471 0.392157 0.423529 1
-brand=b1,mode=light,surface=n3,theme=aqua 0.376471 0.392157 0.423529 1
-brand=b1,mode=light,surface=n3,theme=retro 0.376471 0.392157 0.423529 1
+brand=b1,mode=light,surface=n3,theme=modern 0.37647 0.392157 0.423529 1
+brand=b1,mode=light,surface=n3,theme=aqua 0.37647 0.392157 0.423529 1
+brand=b1,mode=light,surface=n3,theme=retro 0.37647 0.392157 0.423529 1
 brand=b1,mode=light,surface=n3,theme=terminal 0.002757 0.130331 0.332936 1
 brand=b1,mode=light,surface=n4,theme=modern 0.372549 0.396078 0.388235 1
 brand=b1,mode=light,surface=n4,theme=aqua 0.372549 0.396078 0.388235 1
 brand=b1,mode=light,surface=n4,theme=retro 0.372549 0.396078 0.388235 1
 brand=b1,mode=light,surface=n4,theme=terminal 0.002757 0.130331 0.332936 1
-brand=b1,mode=light,surface=n5,theme=modern 0.376471 0.396078 0.372549 1
-brand=b1,mode=light,surface=n5,theme=aqua 0.376471 0.396078 0.372549 1
-brand=b1,mode=light,surface=n5,theme=retro 0.376471 0.396078 0.372549 1
+brand=b1,mode=light,surface=n5,theme=modern 0.37647 0.396078 0.372549 1
+brand=b1,mode=light,surface=n5,theme=aqua 0.37647 0.396078 0.372549 1
+brand=b1,mode=light,surface=n5,theme=retro 0.37647 0.396078 0.372549 1
 brand=b1,mode=light,surface=n5,theme=terminal 0.002757 0.130331 0.332936 1
 brand=b1,mode=light,surface=n6,theme=modern 0.388235 0.388235 0.368627 1
 brand=b1,mode=light,surface=n6,theme=aqua 0.388235 0.388235 0.368627 1
@@ -2581,21 +2587,21 @@ brand=b1,mode=dark,surface=n2,theme=modern 0.709804 0.698039 0.737255 1
 brand=b1,mode=dark,surface=n2,theme=aqua 0.709804 0.698039 0.737255 1
 brand=b1,mode=dark,surface=n2,theme=retro 0.709804 0.698039 0.737255 1
 brand=b1,mode=dark,surface=n2,theme=terminal 0.604273 0.725778 0.865084 1
-brand=b1,mode=dark,surface=n3,theme=modern 0.690196 0.705882 0.729412 1
-brand=b1,mode=dark,surface=n3,theme=aqua 0.690196 0.705882 0.729412 1
-brand=b1,mode=dark,surface=n3,theme=retro 0.690196 0.705882 0.729412 1
+brand=b1,mode=dark,surface=n3,theme=modern 0.690197 0.705882 0.729412 1
+brand=b1,mode=dark,surface=n3,theme=aqua 0.690197 0.705882 0.729412 1
+brand=b1,mode=dark,surface=n3,theme=retro 0.690197 0.705882 0.729412 1
 brand=b1,mode=dark,surface=n3,theme=terminal 0.592012 0.729738 0.861199 1
-brand=b1,mode=dark,surface=n4,theme=modern 0.678431 0.709804 0.698039 1
-brand=b1,mode=dark,surface=n4,theme=aqua 0.678431 0.709804 0.698039 1
-brand=b1,mode=dark,surface=n4,theme=retro 0.678431 0.709804 0.698039 1
+brand=b1,mode=dark,surface=n4,theme=modern 0.678432 0.709804 0.698039 1
+brand=b1,mode=dark,surface=n4,theme=aqua 0.678432 0.709804 0.698039 1
+brand=b1,mode=dark,surface=n4,theme=retro 0.678432 0.709804 0.698039 1
 brand=b1,mode=dark,surface=n4,theme=terminal 0.584533 0.732154 0.845572 1
-brand=b1,mode=dark,surface=n5,theme=modern 0.686275 0.709804 0.678431 1
-brand=b1,mode=dark,surface=n5,theme=aqua 0.686275 0.709804 0.678431 1
-brand=b1,mode=dark,surface=n5,theme=retro 0.686275 0.709804 0.678431 1
+brand=b1,mode=dark,surface=n5,theme=modern 0.686274 0.709804 0.678431 1
+brand=b1,mode=dark,surface=n5,theme=aqua 0.686274 0.709804 0.678431 1
+brand=b1,mode=dark,surface=n5,theme=retro 0.686274 0.709804 0.678431 1
 brand=b1,mode=dark,surface=n5,theme=terminal 0.588978 0.732592 0.835973 1
-brand=b1,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
-brand=b1,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
-brand=b1,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
+brand=b1,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678432 1
+brand=b1,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678432 1
+brand=b1,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678432 1
 brand=b1,mode=dark,surface=n6,theme=terminal 0.603542 0.728788 0.835952 1
 brand=b2,mode=light,surface=n1,theme=modern 0.392157 0.392157 0.392157 1
 brand=b2,mode=light,surface=n1,theme=aqua 0.392157 0.392157 0.392157 1
@@ -2605,17 +2611,17 @@ brand=b2,mode=light,surface=n2,theme=modern 0.396078 0.388235 0.427451 1
 brand=b2,mode=light,surface=n2,theme=aqua 0.396078 0.388235 0.427451 1
 brand=b2,mode=light,surface=n2,theme=retro 0.396078 0.388235 0.427451 1
 brand=b2,mode=light,surface=n2,theme=terminal 0.313888 0.083576 0 1
-brand=b2,mode=light,surface=n3,theme=modern 0.376471 0.392157 0.423529 1
-brand=b2,mode=light,surface=n3,theme=aqua 0.376471 0.392157 0.423529 1
-brand=b2,mode=light,surface=n3,theme=retro 0.376471 0.392157 0.423529 1
+brand=b2,mode=light,surface=n3,theme=modern 0.37647 0.392157 0.423529 1
+brand=b2,mode=light,surface=n3,theme=aqua 0.37647 0.392157 0.423529 1
+brand=b2,mode=light,surface=n3,theme=retro 0.37647 0.392157 0.423529 1
 brand=b2,mode=light,surface=n3,theme=terminal 0.313888 0.083576 0 1
 brand=b2,mode=light,surface=n4,theme=modern 0.372549 0.396078 0.388235 1
 brand=b2,mode=light,surface=n4,theme=aqua 0.372549 0.396078 0.388235 1
 brand=b2,mode=light,surface=n4,theme=retro 0.372549 0.396078 0.388235 1
 brand=b2,mode=light,surface=n4,theme=terminal 0.313888 0.083576 0 1
-brand=b2,mode=light,surface=n5,theme=modern 0.376471 0.396078 0.372549 1
-brand=b2,mode=light,surface=n5,theme=aqua 0.376471 0.396078 0.372549 1
-brand=b2,mode=light,surface=n5,theme=retro 0.376471 0.396078 0.372549 1
+brand=b2,mode=light,surface=n5,theme=modern 0.37647 0.396078 0.372549 1
+brand=b2,mode=light,surface=n5,theme=aqua 0.37647 0.396078 0.372549 1
+brand=b2,mode=light,surface=n5,theme=retro 0.37647 0.396078 0.372549 1
 brand=b2,mode=light,surface=n5,theme=terminal 0.313888 0.083576 0 1
 brand=b2,mode=light,surface=n6,theme=modern 0.388235 0.388235 0.368627 1
 brand=b2,mode=light,surface=n6,theme=aqua 0.388235 0.388235 0.368627 1
@@ -2629,21 +2635,21 @@ brand=b2,mode=dark,surface=n2,theme=modern 0.709804 0.698039 0.737255 1
 brand=b2,mode=dark,surface=n2,theme=aqua 0.709804 0.698039 0.737255 1
 brand=b2,mode=dark,surface=n2,theme=retro 0.709804 0.698039 0.737255 1
 brand=b2,mode=dark,surface=n2,theme=terminal 0.855351 0.676648 0.593019 1
-brand=b2,mode=dark,surface=n3,theme=modern 0.690196 0.705882 0.729412 1
-brand=b2,mode=dark,surface=n3,theme=aqua 0.690196 0.705882 0.729412 1
-brand=b2,mode=dark,surface=n3,theme=retro 0.690196 0.705882 0.729412 1
+brand=b2,mode=dark,surface=n3,theme=modern 0.690197 0.705882 0.729412 1
+brand=b2,mode=dark,surface=n3,theme=aqua 0.690197 0.705882 0.729412 1
+brand=b2,mode=dark,surface=n3,theme=retro 0.690197 0.705882 0.729412 1
 brand=b2,mode=dark,surface=n3,theme=terminal 0.846763 0.681092 0.588437 1
-brand=b2,mode=dark,surface=n4,theme=modern 0.678431 0.709804 0.698039 1
-brand=b2,mode=dark,surface=n4,theme=aqua 0.678431 0.709804 0.698039 1
-brand=b2,mode=dark,surface=n4,theme=retro 0.678431 0.709804 0.698039 1
+brand=b2,mode=dark,surface=n4,theme=modern 0.678432 0.709804 0.698039 1
+brand=b2,mode=dark,surface=n4,theme=aqua 0.678432 0.709804 0.698039 1
+brand=b2,mode=dark,surface=n4,theme=retro 0.678432 0.709804 0.698039 1
 brand=b2,mode=dark,surface=n4,theme=terminal 0.841668 0.682949 0.570423 1
-brand=b2,mode=dark,surface=n5,theme=modern 0.686275 0.709804 0.678431 1
-brand=b2,mode=dark,surface=n5,theme=aqua 0.686275 0.709804 0.678431 1
-brand=b2,mode=dark,surface=n5,theme=retro 0.686275 0.709804 0.678431 1
+brand=b2,mode=dark,surface=n5,theme=modern 0.686274 0.709804 0.678431 1
+brand=b2,mode=dark,surface=n5,theme=aqua 0.686274 0.709804 0.678431 1
+brand=b2,mode=dark,surface=n5,theme=retro 0.686274 0.709804 0.678431 1
 brand=b2,mode=dark,surface=n5,theme=terminal 0.845316 0.682496 0.559043 1
-brand=b2,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
-brand=b2,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
-brand=b2,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
+brand=b2,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678432 1
+brand=b2,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678432 1
+brand=b2,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678432 1
 brand=b2,mode=dark,surface=n6,theme=terminal 0.855746 0.677799 0.559069 1
 brand=b3,mode=light,surface=n1,theme=modern 0.392157 0.392157 0.392157 1
 brand=b3,mode=light,surface=n1,theme=aqua 0.392157 0.392157 0.392157 1
@@ -2653,17 +2659,17 @@ brand=b3,mode=light,surface=n2,theme=modern 0.396078 0.388235 0.427451 1
 brand=b3,mode=light,surface=n2,theme=aqua 0.396078 0.388235 0.427451 1
 brand=b3,mode=light,surface=n2,theme=retro 0.396078 0.388235 0.427451 1
 brand=b3,mode=light,surface=n2,theme=terminal 0 0.132063 0.057602 1
-brand=b3,mode=light,surface=n3,theme=modern 0.376471 0.392157 0.423529 1
-brand=b3,mode=light,surface=n3,theme=aqua 0.376471 0.392157 0.423529 1
-brand=b3,mode=light,surface=n3,theme=retro 0.376471 0.392157 0.423529 1
+brand=b3,mode=light,surface=n3,theme=modern 0.37647 0.392157 0.423529 1
+brand=b3,mode=light,surface=n3,theme=aqua 0.37647 0.392157 0.423529 1
+brand=b3,mode=light,surface=n3,theme=retro 0.37647 0.392157 0.423529 1
 brand=b3,mode=light,surface=n3,theme=terminal 0 0.132063 0.057602 1
 brand=b3,mode=light,surface=n4,theme=modern 0.372549 0.396078 0.388235 1
 brand=b3,mode=light,surface=n4,theme=aqua 0.372549 0.396078 0.388235 1
 brand=b3,mode=light,surface=n4,theme=retro 0.372549 0.396078 0.388235 1
 brand=b3,mode=light,surface=n4,theme=terminal 0 0.132063 0.057602 1
-brand=b3,mode=light,surface=n5,theme=modern 0.376471 0.396078 0.372549 1
-brand=b3,mode=light,surface=n5,theme=aqua 0.376471 0.396078 0.372549 1
-brand=b3,mode=light,surface=n5,theme=retro 0.376471 0.396078 0.372549 1
+brand=b3,mode=light,surface=n5,theme=modern 0.37647 0.396078 0.372549 1
+brand=b3,mode=light,surface=n5,theme=aqua 0.37647 0.396078 0.372549 1
+brand=b3,mode=light,surface=n5,theme=retro 0.37647 0.396078 0.372549 1
 brand=b3,mode=light,surface=n5,theme=terminal 0 0.132063 0.057602 1
 brand=b3,mode=light,surface=n6,theme=modern 0.388235 0.388235 0.368627 1
 brand=b3,mode=light,surface=n6,theme=aqua 0.388235 0.388235 0.368627 1
@@ -2677,21 +2683,21 @@ brand=b3,mode=dark,surface=n2,theme=modern 0.709804 0.698039 0.737255 1
 brand=b3,mode=dark,surface=n2,theme=aqua 0.709804 0.698039 0.737255 1
 brand=b3,mode=dark,surface=n2,theme=retro 0.709804 0.698039 0.737255 1
 brand=b3,mode=dark,surface=n2,theme=terminal 0.621946 0.790645 0.709728 1
-brand=b3,mode=dark,surface=n3,theme=modern 0.690196 0.705882 0.729412 1
-brand=b3,mode=dark,surface=n3,theme=aqua 0.690196 0.705882 0.729412 1
-brand=b3,mode=dark,surface=n3,theme=retro 0.690196 0.705882 0.729412 1
+brand=b3,mode=dark,surface=n3,theme=modern 0.690197 0.705882 0.729412 1
+brand=b3,mode=dark,surface=n3,theme=aqua 0.690197 0.705882 0.729412 1
+brand=b3,mode=dark,surface=n3,theme=retro 0.690197 0.705882 0.729412 1
 brand=b3,mode=dark,surface=n3,theme=terminal 0.609413 0.794264 0.705412 1
-brand=b3,mode=dark,surface=n4,theme=modern 0.678431 0.709804 0.698039 1
-brand=b3,mode=dark,surface=n4,theme=aqua 0.678431 0.709804 0.698039 1
-brand=b3,mode=dark,surface=n4,theme=retro 0.678431 0.709804 0.698039 1
+brand=b3,mode=dark,surface=n4,theme=modern 0.678432 0.709804 0.698039 1
+brand=b3,mode=dark,surface=n4,theme=aqua 0.678432 0.709804 0.698039 1
+brand=b3,mode=dark,surface=n4,theme=retro 0.678432 0.709804 0.698039 1
 brand=b3,mode=dark,surface=n4,theme=terminal 0.602359 0.795825 0.688333 1
-brand=b3,mode=dark,surface=n5,theme=modern 0.686275 0.709804 0.678431 1
-brand=b3,mode=dark,surface=n5,theme=aqua 0.686275 0.709804 0.678431 1
-brand=b3,mode=dark,surface=n5,theme=retro 0.686275 0.709804 0.678431 1
+brand=b3,mode=dark,surface=n5,theme=modern 0.686274 0.709804 0.678431 1
+brand=b3,mode=dark,surface=n5,theme=aqua 0.686274 0.709804 0.678431 1
+brand=b3,mode=dark,surface=n5,theme=retro 0.686274 0.709804 0.678431 1
 brand=b3,mode=dark,surface=n5,theme=terminal 0.607409 0.795781 0.677665 1
-brand=b3,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
-brand=b3,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
-brand=b3,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
+brand=b3,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678432 1
+brand=b3,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678432 1
+brand=b3,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678432 1
 brand=b3,mode=dark,surface=n6,theme=terminal 0.622477 0.792106 0.677674 1
 brand=b4,mode=light,surface=n1,theme=modern 0.392157 0.392157 0.392157 1
 brand=b4,mode=light,surface=n1,theme=aqua 0.392157 0.392157 0.392157 1
@@ -2701,17 +2707,17 @@ brand=b4,mode=light,surface=n2,theme=modern 0.396078 0.388235 0.427451 1
 brand=b4,mode=light,surface=n2,theme=aqua 0.396078 0.388235 0.427451 1
 brand=b4,mode=light,surface=n2,theme=retro 0.396078 0.388235 0.427451 1
 brand=b4,mode=light,surface=n2,theme=terminal 0.289645 0.021096 0.154575 1
-brand=b4,mode=light,surface=n3,theme=modern 0.376471 0.392157 0.423529 1
-brand=b4,mode=light,surface=n3,theme=aqua 0.376471 0.392157 0.423529 1
-brand=b4,mode=light,surface=n3,theme=retro 0.376471 0.392157 0.423529 1
+brand=b4,mode=light,surface=n3,theme=modern 0.37647 0.392157 0.423529 1
+brand=b4,mode=light,surface=n3,theme=aqua 0.37647 0.392157 0.423529 1
+brand=b4,mode=light,surface=n3,theme=retro 0.37647 0.392157 0.423529 1
 brand=b4,mode=light,surface=n3,theme=terminal 0.289645 0.021096 0.154575 1
 brand=b4,mode=light,surface=n4,theme=modern 0.372549 0.396078 0.388235 1
 brand=b4,mode=light,surface=n4,theme=aqua 0.372549 0.396078 0.388235 1
 brand=b4,mode=light,surface=n4,theme=retro 0.372549 0.396078 0.388235 1
 brand=b4,mode=light,surface=n4,theme=terminal 0.289645 0.021096 0.154575 1
-brand=b4,mode=light,surface=n5,theme=modern 0.376471 0.396078 0.372549 1
-brand=b4,mode=light,surface=n5,theme=aqua 0.376471 0.396078 0.372549 1
-brand=b4,mode=light,surface=n5,theme=retro 0.376471 0.396078 0.372549 1
+brand=b4,mode=light,surface=n5,theme=modern 0.37647 0.396078 0.372549 1
+brand=b4,mode=light,surface=n5,theme=aqua 0.37647 0.396078 0.372549 1
+brand=b4,mode=light,surface=n5,theme=retro 0.37647 0.396078 0.372549 1
 brand=b4,mode=light,surface=n5,theme=terminal 0.289645 0.021096 0.154575 1
 brand=b4,mode=light,surface=n6,theme=modern 0.388235 0.388235 0.368627 1
 brand=b4,mode=light,surface=n6,theme=aqua 0.388235 0.388235 0.368627 1
@@ -2725,21 +2731,21 @@ brand=b4,mode=dark,surface=n2,theme=modern 0.709804 0.698039 0.737255 1
 brand=b4,mode=dark,surface=n2,theme=aqua 0.709804 0.698039 0.737255 1
 brand=b4,mode=dark,surface=n2,theme=retro 0.709804 0.698039 0.737255 1
 brand=b4,mode=dark,surface=n2,theme=terminal 0.859563 0.634809 0.7543 1
-brand=b4,mode=dark,surface=n3,theme=modern 0.690196 0.705882 0.729412 1
-brand=b4,mode=dark,surface=n3,theme=aqua 0.690196 0.705882 0.729412 1
-brand=b4,mode=dark,surface=n3,theme=retro 0.690196 0.705882 0.729412 1
+brand=b4,mode=dark,surface=n3,theme=modern 0.690197 0.705882 0.729412 1
+brand=b4,mode=dark,surface=n3,theme=aqua 0.690197 0.705882 0.729412 1
+brand=b4,mode=dark,surface=n3,theme=retro 0.690197 0.705882 0.729412 1
 brand=b4,mode=dark,surface=n3,theme=terminal 0.851108 0.639725 0.75027 1
-brand=b4,mode=dark,surface=n4,theme=modern 0.678431 0.709804 0.698039 1
-brand=b4,mode=dark,surface=n4,theme=aqua 0.678431 0.709804 0.698039 1
-brand=b4,mode=dark,surface=n4,theme=retro 0.678431 0.709804 0.698039 1
+brand=b4,mode=dark,surface=n4,theme=modern 0.678432 0.709804 0.698039 1
+brand=b4,mode=dark,surface=n4,theme=aqua 0.678432 0.709804 0.698039 1
+brand=b4,mode=dark,surface=n4,theme=retro 0.678432 0.709804 0.698039 1
 brand=b4,mode=dark,surface=n4,theme=terminal 0.845779 0.642477 0.734182 1
-brand=b4,mode=dark,surface=n5,theme=modern 0.686275 0.709804 0.678431 1
-brand=b4,mode=dark,surface=n5,theme=aqua 0.686275 0.709804 0.678431 1
-brand=b4,mode=dark,surface=n5,theme=retro 0.686275 0.709804 0.678431 1
+brand=b4,mode=dark,surface=n5,theme=modern 0.686274 0.709804 0.678431 1
+brand=b4,mode=dark,surface=n5,theme=aqua 0.686274 0.709804 0.678431 1
+brand=b4,mode=dark,surface=n5,theme=retro 0.686274 0.709804 0.678431 1
 brand=b4,mode=dark,surface=n5,theme=terminal 0.849123 0.64245 0.724222 1
-brand=b4,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
-brand=b4,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
-brand=b4,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
+brand=b4,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678432 1
+brand=b4,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678432 1
+brand=b4,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678432 1
 brand=b4,mode=dark,surface=n6,theme=terminal 0.859295 0.63747 0.724213 1
 brand=b5,mode=light,surface=n1,theme=modern 0.392157 0.392157 0.392157 1
 brand=b5,mode=light,surface=n1,theme=aqua 0.392157 0.392157 0.392157 1
@@ -2749,17 +2755,17 @@ brand=b5,mode=light,surface=n2,theme=modern 0.396078 0.388235 0.427451 1
 brand=b5,mode=light,surface=n2,theme=aqua 0.396078 0.388235 0.427451 1
 brand=b5,mode=light,surface=n2,theme=retro 0.396078 0.388235 0.427451 1
 brand=b5,mode=light,surface=n2,theme=terminal 0.132063 0.005514 0.319083 1
-brand=b5,mode=light,surface=n3,theme=modern 0.376471 0.392157 0.423529 1
-brand=b5,mode=light,surface=n3,theme=aqua 0.376471 0.392157 0.423529 1
-brand=b5,mode=light,surface=n3,theme=retro 0.376471 0.392157 0.423529 1
+brand=b5,mode=light,surface=n3,theme=modern 0.37647 0.392157 0.423529 1
+brand=b5,mode=light,surface=n3,theme=aqua 0.37647 0.392157 0.423529 1
+brand=b5,mode=light,surface=n3,theme=retro 0.37647 0.392157 0.423529 1
 brand=b5,mode=light,surface=n3,theme=terminal 0.132063 0.005514 0.319083 1
 brand=b5,mode=light,surface=n4,theme=modern 0.372549 0.396078 0.388235 1
 brand=b5,mode=light,surface=n4,theme=aqua 0.372549 0.396078 0.388235 1
 brand=b5,mode=light,surface=n4,theme=retro 0.372549 0.396078 0.388235 1
 brand=b5,mode=light,surface=n4,theme=terminal 0.132063 0.005514 0.319083 1
-brand=b5,mode=light,surface=n5,theme=modern 0.376471 0.396078 0.372549 1
-brand=b5,mode=light,surface=n5,theme=aqua 0.376471 0.396078 0.372549 1
-brand=b5,mode=light,surface=n5,theme=retro 0.376471 0.396078 0.372549 1
+brand=b5,mode=light,surface=n5,theme=modern 0.37647 0.396078 0.372549 1
+brand=b5,mode=light,surface=n5,theme=aqua 0.37647 0.396078 0.372549 1
+brand=b5,mode=light,surface=n5,theme=retro 0.37647 0.396078 0.372549 1
 brand=b5,mode=light,surface=n5,theme=terminal 0.132063 0.005514 0.319083 1
 brand=b5,mode=light,surface=n6,theme=modern 0.388235 0.388235 0.368627 1
 brand=b5,mode=light,surface=n6,theme=aqua 0.388235 0.388235 0.368627 1
@@ -2773,21 +2779,21 @@ brand=b5,mode=dark,surface=n2,theme=modern 0.709804 0.698039 0.737255 1
 brand=b5,mode=dark,surface=n2,theme=aqua 0.709804 0.698039 0.737255 1
 brand=b5,mode=dark,surface=n2,theme=retro 0.709804 0.698039 0.737255 1
 brand=b5,mode=dark,surface=n2,theme=terminal 0.713563 0.643931 0.867629 1
-brand=b5,mode=dark,surface=n3,theme=modern 0.690196 0.705882 0.729412 1
-brand=b5,mode=dark,surface=n3,theme=aqua 0.690196 0.705882 0.729412 1
-brand=b5,mode=dark,surface=n3,theme=retro 0.690196 0.705882 0.729412 1
+brand=b5,mode=dark,surface=n3,theme=modern 0.690197 0.705882 0.729412 1
+brand=b5,mode=dark,surface=n3,theme=aqua 0.690197 0.705882 0.729412 1
+brand=b5,mode=dark,surface=n3,theme=retro 0.690197 0.705882 0.729412 1
 brand=b5,mode=dark,surface=n3,theme=terminal 0.703776 0.648494 0.863831 1
-brand=b5,mode=dark,surface=n4,theme=modern 0.678431 0.709804 0.698039 1
-brand=b5,mode=dark,surface=n4,theme=aqua 0.678431 0.709804 0.698039 1
-brand=b5,mode=dark,surface=n4,theme=retro 0.678431 0.709804 0.698039 1
+brand=b5,mode=dark,surface=n4,theme=modern 0.678432 0.709804 0.698039 1
+brand=b5,mode=dark,surface=n4,theme=aqua 0.678432 0.709804 0.698039 1
+brand=b5,mode=dark,surface=n4,theme=retro 0.678432 0.709804 0.698039 1
 brand=b5,mode=dark,surface=n4,theme=terminal 0.697504 0.651539 0.848501 1
-brand=b5,mode=dark,surface=n5,theme=modern 0.686275 0.709804 0.678431 1
-brand=b5,mode=dark,surface=n5,theme=aqua 0.686275 0.709804 0.678431 1
-brand=b5,mode=dark,surface=n5,theme=retro 0.686275 0.709804 0.678431 1
+brand=b5,mode=dark,surface=n5,theme=modern 0.686274 0.709804 0.678431 1
+brand=b5,mode=dark,surface=n5,theme=aqua 0.686274 0.709804 0.678431 1
+brand=b5,mode=dark,surface=n5,theme=retro 0.686274 0.709804 0.678431 1
 brand=b5,mode=dark,surface=n5,theme=terminal 0.701019 0.652049 0.839111 1
-brand=b5,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
-brand=b5,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
-brand=b5,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
+brand=b5,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678432 1
+brand=b5,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678432 1
+brand=b5,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678432 1
 brand=b5,mode=dark,surface=n6,theme=terminal 0.712642 0.647671 0.839084 1
 brand=b6,mode=light,surface=n1,theme=modern 0.392157 0.392157 0.392157 1
 brand=b6,mode=light,surface=n1,theme=aqua 0.392157 0.392157 0.392157 1
@@ -2797,17 +2803,17 @@ brand=b6,mode=light,surface=n2,theme=modern 0.396078 0.388235 0.427451 1
 brand=b6,mode=light,surface=n2,theme=aqua 0.396078 0.388235 0.427451 1
 brand=b6,mode=light,surface=n2,theme=retro 0.396078 0.388235 0.427451 1
 brand=b6,mode=light,surface=n2,theme=terminal 0.324278 0.006679 0.074918 1
-brand=b6,mode=light,surface=n3,theme=modern 0.376471 0.392157 0.423529 1
-brand=b6,mode=light,surface=n3,theme=aqua 0.376471 0.392157 0.423529 1
-brand=b6,mode=light,surface=n3,theme=retro 0.376471 0.392157 0.423529 1
+brand=b6,mode=light,surface=n3,theme=modern 0.37647 0.392157 0.423529 1
+brand=b6,mode=light,surface=n3,theme=aqua 0.37647 0.392157 0.423529 1
+brand=b6,mode=light,surface=n3,theme=retro 0.37647 0.392157 0.423529 1
 brand=b6,mode=light,surface=n3,theme=terminal 0.324278 0.006679 0.074918 1
 brand=b6,mode=light,surface=n4,theme=modern 0.372549 0.396078 0.388235 1
 brand=b6,mode=light,surface=n4,theme=aqua 0.372549 0.396078 0.388235 1
 brand=b6,mode=light,surface=n4,theme=retro 0.372549 0.396078 0.388235 1
 brand=b6,mode=light,surface=n4,theme=terminal 0.324278 0.006679 0.074918 1
-brand=b6,mode=light,surface=n5,theme=modern 0.376471 0.396078 0.372549 1
-brand=b6,mode=light,surface=n5,theme=aqua 0.376471 0.396078 0.372549 1
-brand=b6,mode=light,surface=n5,theme=retro 0.376471 0.396078 0.372549 1
+brand=b6,mode=light,surface=n5,theme=modern 0.37647 0.396078 0.372549 1
+brand=b6,mode=light,surface=n5,theme=aqua 0.37647 0.396078 0.372549 1
+brand=b6,mode=light,surface=n5,theme=retro 0.37647 0.396078 0.372549 1
 brand=b6,mode=light,surface=n5,theme=terminal 0.324278 0.006679 0.074918 1
 brand=b6,mode=light,surface=n6,theme=modern 0.388235 0.388235 0.368627 1
 brand=b6,mode=light,surface=n6,theme=aqua 0.388235 0.388235 0.368627 1
@@ -2821,21 +2827,21 @@ brand=b6,mode=dark,surface=n2,theme=modern 0.709804 0.698039 0.737255 1
 brand=b6,mode=dark,surface=n2,theme=aqua 0.709804 0.698039 0.737255 1
 brand=b6,mode=dark,surface=n2,theme=retro 0.709804 0.698039 0.737255 1
 brand=b6,mode=dark,surface=n2,theme=terminal 0.860994 0.631414 0.66684 1
-brand=b6,mode=dark,surface=n3,theme=modern 0.690196 0.705882 0.729412 1
-brand=b6,mode=dark,surface=n3,theme=aqua 0.690196 0.705882 0.729412 1
-brand=b6,mode=dark,surface=n3,theme=retro 0.690196 0.705882 0.729412 1
+brand=b6,mode=dark,surface=n3,theme=modern 0.690197 0.705882 0.729412 1
+brand=b6,mode=dark,surface=n3,theme=aqua 0.690197 0.705882 0.729412 1
+brand=b6,mode=dark,surface=n3,theme=retro 0.690197 0.705882 0.729412 1
 brand=b6,mode=dark,surface=n3,theme=terminal 0.852694 0.636208 0.662626 1
-brand=b6,mode=dark,surface=n4,theme=modern 0.678431 0.709804 0.698039 1
-brand=b6,mode=dark,surface=n4,theme=aqua 0.678431 0.709804 0.698039 1
-brand=b6,mode=dark,surface=n4,theme=retro 0.678431 0.709804 0.698039 1
+brand=b6,mode=dark,surface=n4,theme=modern 0.678432 0.709804 0.698039 1
+brand=b6,mode=dark,surface=n4,theme=aqua 0.678432 0.709804 0.698039 1
+brand=b6,mode=dark,surface=n4,theme=retro 0.678432 0.709804 0.698039 1
 brand=b6,mode=dark,surface=n4,theme=terminal 0.847575 0.638591 0.645923 1
-brand=b6,mode=dark,surface=n5,theme=modern 0.686275 0.709804 0.678431 1
-brand=b6,mode=dark,surface=n5,theme=aqua 0.686275 0.709804 0.678431 1
-brand=b6,mode=dark,surface=n5,theme=retro 0.686275 0.709804 0.678431 1
+brand=b6,mode=dark,surface=n5,theme=modern 0.686274 0.709804 0.678431 1
+brand=b6,mode=dark,surface=n5,theme=aqua 0.686274 0.709804 0.678431 1
+brand=b6,mode=dark,surface=n5,theme=retro 0.686274 0.709804 0.678431 1
 brand=b6,mode=dark,surface=n5,theme=terminal 0.850982 0.638325 0.635497 1
-brand=b6,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678431 1
-brand=b6,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678431 1
-brand=b6,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678431 1
+brand=b6,mode=dark,surface=n6,theme=modern 0.709804 0.701961 0.678432 1
+brand=b6,mode=dark,surface=n6,theme=aqua 0.709804 0.701961 0.678432 1
+brand=b6,mode=dark,surface=n6,theme=retro 0.709804 0.701961 0.678432 1
 brand=b6,mode=dark,surface=n6,theme=terminal 0.861018 0.63336 0.635502 1
 """
         ),

@@ -1,10 +1,10 @@
 'use client'
 
-import type * as React from 'react'
-import { useMemo } from 'react'
+import * as React from 'react'
 import type { FieldLegendVariant, FieldOrientation } from '@atom63/ui-foundation'
 
 import { cn } from '../../lib/cn'
+import { mergeRefs } from '../../lib/merge-refs'
 import { Label } from '../label'
 import { Separator } from '../separator'
 
@@ -49,20 +49,112 @@ export type { FieldOrientation }
 
 export type FieldProps = React.ComponentProps<'div'> & {
   orientation?: FieldOrientation
+  /** Tints the label and marks the control `aria-invalid`. A rendered
+   *  `FieldError` sets the same state, so you do not need both. */
+  invalid?: boolean
+  /** Dims the label and title. Set `disabled` on the control as well; Field
+   *  does not disable what it wraps. */
+  disabled?: boolean
+}
+
+type FieldPartKind = 'description' | 'error'
+
+interface FieldContextValue {
+  register: (id: string, kind: FieldPartKind) => () => void
+}
+
+const FieldContext = React.createContext<FieldContextValue | null>(null)
+
+const CONTROL_SELECTOR =
+  'input:not([type="hidden"]), select, textarea, [role="combobox"], [role="checkbox"], [role="switch"], [role="radiogroup"], [role="slider"]'
+
+/* The control a Field describes: the element its label points at, or else
+ * the first form control inside the field. */
+function findControl(root: HTMLElement): HTMLElement | null {
+  const label = root.querySelector<HTMLLabelElement>('label[for]')
+  const labelled = label ? root.ownerDocument.getElementById(label.htmlFor) : null
+  return labelled ?? root.querySelector<HTMLElement>(CONTROL_SELECTOR)
+}
+
+/* Gives a FieldDescription or FieldError an id and, while it renders, lists it
+ * on the enclosing Field so the control is described by it. */
+function useFieldPart(kind: FieldPartKind, idProp: string | undefined, active: boolean): string {
+  const generatedId = React.useId()
+  const id = idProp ?? generatedId
+  const field = React.useContext(FieldContext)
+  React.useLayoutEffect(
+    () => (active ? field?.register(id, kind) : undefined),
+    [active, field, id, kind]
+  )
+  return id
 }
 
 export function Field({
   className,
+  disabled = false,
+  invalid = false,
   orientation = 'vertical',
+  ref,
   ...props
 }: FieldProps): React.ReactElement {
+  const rootRef = React.useRef<HTMLDivElement | null>(null)
+  const [parts, setParts] = React.useState<Array<{ id: string; kind: FieldPartKind }>>([])
+  const context = React.useMemo<FieldContextValue>(
+    () => ({
+      register: (id, kind) => {
+        setParts(current => [...current, { id, kind }])
+        return () => setParts(current => current.filter(part => part.id !== id))
+      },
+    }),
+    []
+  )
+
+  const isInvalid = invalid || parts.some(part => part.kind === 'error')
+
+  // Field wraps any control (Input, Select, Checkbox...), so it links the
+  // description and error to the control through the DOM, keeping any
+  // aria-describedby the control already has, and marks it invalid.
+  React.useLayoutEffect(() => {
+    const control = rootRef.current ? findControl(rootRef.current) : null
+    if (!control || (parts.length === 0 && !isInvalid)) {
+      return undefined
+    }
+    const existing = (control.getAttribute('aria-describedby') ?? '').split(/\s+/).filter(Boolean)
+    const added = parts.map(part => part.id).filter(id => !existing.includes(id))
+    if (existing.length + added.length > 0) {
+      control.setAttribute('aria-describedby', [...existing, ...added].join(' '))
+    }
+    const markInvalid = isInvalid && !control.hasAttribute('aria-invalid')
+    if (markInvalid) {
+      control.setAttribute('aria-invalid', 'true')
+    }
+    return () => {
+      const remaining = (control.getAttribute('aria-describedby') ?? '')
+        .split(/\s+/)
+        .filter(id => id && !added.includes(id))
+      if (remaining.length > 0) {
+        control.setAttribute('aria-describedby', remaining.join(' '))
+      } else {
+        control.removeAttribute('aria-describedby')
+      }
+      if (markInvalid) {
+        control.removeAttribute('aria-invalid')
+      }
+    }
+  }, [isInvalid, parts])
+
   return (
-    <div
-      className={cn('a63-Field', className)}
-      data-slot="field"
-      data-orientation={orientation}
-      {...props}
-    />
+    <FieldContext.Provider value={context}>
+      <div
+        className={cn('a63-Field', className)}
+        data-slot="field"
+        data-orientation={orientation}
+        data-invalid={isInvalid ? 'true' : undefined}
+        data-disabled={disabled ? 'true' : undefined}
+        ref={React.useMemo(() => mergeRefs(rootRef, ref), [ref])}
+        {...props}
+      />
+    </FieldContext.Provider>
   )
 }
 
@@ -88,10 +180,17 @@ export type FieldDescriptionProps = React.ComponentProps<'p'>
 
 export function FieldDescription({
   className,
+  id: idProp,
   ...props
 }: FieldDescriptionProps): React.ReactElement {
+  const id = useFieldPart('description', idProp, true)
   return (
-    <p className={cn('a63-FieldDescription', className)} data-slot="field-description" {...props} />
+    <p
+      className={cn('a63-FieldDescription', className)}
+      data-slot="field-description"
+      id={id}
+      {...props}
+    />
   )
 }
 
@@ -129,9 +228,10 @@ export function FieldError({
   className,
   children,
   errors,
+  id: idProp,
   ...props
 }: FieldErrorProps): React.ReactElement | null {
-  const content = useMemo(() => {
+  const content = React.useMemo(() => {
     if (children) {
       return children
     }
@@ -152,6 +252,7 @@ export function FieldError({
       </ul>
     )
   }, [children, errors])
+  const id = useFieldPart('error', idProp, Boolean(content))
 
   if (!content) {
     return null
@@ -162,6 +263,7 @@ export function FieldError({
       role="alert"
       className={cn('a63-FieldError', className)}
       data-slot="field-error"
+      id={id}
       {...props}
     >
       {content}

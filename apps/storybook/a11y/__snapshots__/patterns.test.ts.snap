@@ -21,6 +21,23 @@ exports[`checkboxContract implements Checkbox > Playground > accessibility tree 
 - checkbox "Example checkbox" [checked]
 `;
 
+exports[`commandContract implements Dialog (Modal) > Dialog > accessibility tree under dialog 1`] = `
+- dialog "Command palette":
+  - heading "Command palette" [level=2]
+  - combobox "Search commands" [expanded]
+  - status
+  - listbox:
+    - group "Navigate":
+      - text: Navigate
+      - option "Home"
+      - option "Blog"
+      - option "Timeline"
+    - group "Actions":
+      - text: Actions
+      - option "Preferences ⌘,"
+  - text: ↑↓ Navigate ⌘K
+`;
+
 exports[`dialogContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
 - dialog "Rename project":
   - heading "Rename project" [level=2]
@@ -29,6 +46,14 @@ exports[`dialogContract implements Dialog (Modal) > Playground > accessibility t
   - button "Cancel"
   - button "Save"
   - button "Close"
+`;
+
+exports[`drawerContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
+- dialog "Appearance":
+  - heading "Appearance" [level=2]
+  - paragraph: Drag the handle down to dismiss.
+  - text: The sheet is a raised overlay surface. Content scrolls inside.
+  - button "Done"
 `;
 
 exports[`dropdownMenuContract implements Menu Button > Playground > accessibility tree under menu 1`] = `
@@ -50,6 +75,13 @@ exports[`radioContract implements Radio Group > Playground > accessibility tree 
   - text: Tree
 `;
 
+exports[`segmentedControlContract implements Radio Group > Playground > accessibility tree under radiogroup 1`] = `
+- radiogroup "View":
+  - radio "List"
+  - radio "Grid" [checked]
+  - radio "Tree"
+`;
+
 exports[`selectContract implements Select-Only Combobox > Playground > accessibility tree under combobox 1`] = `
 - combobox "Example select" [expanded]: All types
 `;
@@ -60,6 +92,16 @@ exports[`selectContract implements Select-Only Combobox > Playground > accessibi
   - option "Article"
   - option "Video"
   - option "Talk"
+`;
+
+exports[`sheetContract implements Dialog (Modal) > Playground > accessibility tree under dialog 1`] = `
+- dialog "Appearance":
+  - heading "Appearance" [level=2]
+  - paragraph: Slides in from the edge. Press Esc to dismiss.
+  - paragraph: The sheet is a raised overlay surface. Content scrolls inside the panel.
+  - button "Cancel"
+  - button "Save"
+  - button "Close"
 `;
 
 exports[`switchContract implements Switch > Playground > accessibility tree under switch 1`] = `

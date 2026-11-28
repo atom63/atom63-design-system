@@ -10,6 +10,8 @@ import {
   CardMediaOverlay,
   CardMediaOverlayIconButton,
   CardMediaOverlayScrim,
+  CardMediaOverlayTopEnd,
+  CardMediaOverlayTopRight,
   CardTitle,
 } from './card'
 import { useCardCursor } from './use-card-cursor'
@@ -78,14 +80,34 @@ describe('Card', () => {
     const { container } = render(
       <CardMediaOverlay aspectRatio="1/1">
         <CardMediaOverlayScrim />
-        <CardMediaOverlayIconButton />
+        <CardMediaOverlayIconButton aria-label="Save" />
       </CardMediaOverlay>
     )
     expect(container.querySelector('[data-slot="card-media-overlay"]')).toHaveAttribute(
       'data-aspect'
     )
     expect(container.querySelector('[data-slot="card-media-overlay-scrim"]')).not.toBeNull()
-    expect(container.querySelector('[data-slot="card-media-overlay-icon-button"]')).not.toBeNull()
+    const iconButton = container.querySelector(
+      '[data-trigger-slot="card-media-overlay-icon-button"]'
+    )
+    expect(iconButton?.tagName).toBe('BUTTON')
+    expect(iconButton).toHaveAttribute('type', 'button')
+    expect(iconButton).toHaveAttribute('aria-label', 'Save')
+    expect(iconButton).toHaveAttribute('data-variant', 'overlay')
+    expect(iconButton).toHaveAttribute('data-size', 'icon-sm')
+  })
+
+  it('pins CardMediaOverlayTopEnd, and the deprecated TopRight, to the inline end', () => {
+    const { container } = render(
+      <CardMediaOverlay>
+        <CardMediaOverlayTopEnd />
+        <CardMediaOverlayTopRight />
+      </CardMediaOverlay>
+    )
+    expect(container.querySelector('[data-slot="card-media-overlay-top-end"]')).toHaveClass(
+      'a63-Card-media-overlay-top-end'
+    )
+    expect(container.querySelector('[data-slot="card-media-overlay-top-right"]')).not.toBeNull()
   })
 
   it('defaults CardTitle to 2-line and CardDescription to 3-line clamp', () => {

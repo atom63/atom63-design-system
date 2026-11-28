@@ -5,9 +5,36 @@ import { describe, expect, it, vi } from 'vitest'
 import { LoadMoreTrigger } from './load-more-trigger'
 
 describe('LoadMoreTrigger', () => {
-  it('renders nothing when there is no more and nothing is loading', () => {
-    const { container } = render(<LoadMoreTrigger hasMore={false} isLoading={false} />)
-    expect(container.querySelector('[data-slot="load-more-trigger"]')).toBeNull()
+  it('renders only an empty live region when there is no more and nothing is loading', () => {
+    const ref = createRef<HTMLDivElement>()
+    const { container } = render(<LoadMoreTrigger hasMore={false} isLoading={false} ref={ref} />)
+    const el = container.querySelector('[data-slot="load-more-trigger"]')
+    expect(el).toHaveAttribute('data-state', 'hidden')
+    expect(el).toHaveAttribute('role', 'status')
+    expect(el).toBeEmptyDOMElement()
+    // No observer target while hidden.
+    expect(ref.current).toBeNull()
+  })
+
+  it('keeps one live region mounted and only changes its text', () => {
+    const { container, rerender } = render(<LoadMoreTrigger hasMore isLoading={false} />)
+    const region = container.querySelector('[role="status"]')
+    expect(region).not.toBeNull()
+
+    rerender(<LoadMoreTrigger hasMore isLoading />)
+    expect(container.querySelector('[role="status"]')).toBe(region)
+    expect(region).toHaveTextContent('Loading more...')
+
+    rerender(<LoadMoreTrigger state="exhausted" />)
+    expect(container.querySelector('[role="status"]')).toBe(region)
+    expect(region).toHaveTextContent('All items loaded')
+
+    rerender(<LoadMoreTrigger hasMore={false} />)
+    expect(container.querySelector('[role="status"]')).toBe(region)
+
+    rerender(<LoadMoreTrigger hasMore isLoading />)
+    expect(container.querySelector('[role="status"]')).toBe(region)
+    expect(region).toHaveTextContent('Loading more...')
   })
 
   it('renders the idle message when there is more to load', () => {
@@ -17,8 +44,8 @@ describe('LoadMoreTrigger', () => {
     expect(el).toHaveAttribute('data-slot', 'load-more-trigger')
     expect(el).toHaveAttribute('data-state', 'idle')
     expect(getByText('Scroll down to load more')).toBeInTheDocument()
-    // idle: no live region
-    expect(el).not.toHaveAttribute('role')
+    // idle: the live region is already mounted, so the next state is announced
+    expect(el).toHaveAttribute('role', 'status')
   })
 
   it('renders the loading message + spinner + status role while loading', () => {

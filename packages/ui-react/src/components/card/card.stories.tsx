@@ -15,7 +15,7 @@ import {
   CardMediaOverlayBottom,
   CardMediaOverlayIconButton,
   CardMediaOverlayScrim,
-  CardMediaOverlayTopRight,
+  CardMediaOverlayTopEnd,
   CardTags,
   CardTitle,
   Kbd,
@@ -24,6 +24,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { Bookmark } from 'lucide-react'
 
 const meta = {
   title: 'UI React/Card',
@@ -140,23 +141,93 @@ export const FilledAndElevated: Story = {
   },
 }
 
-export const MediaOverlay: Story = {
-  render: () => (
+function OverlayCard({ title = 'Full-bleed media card' }: { title?: string }) {
+  return (
     <Card style={{ height: 260, width: 320 }} variant="overlay">
       <CardMediaOverlay>
         <MediaFill />
         <CardMediaOverlayScrim />
-        <CardMediaOverlayTopRight>
-          <CardMediaOverlayIconButton>
-            <Kbd size="sm">↗</Kbd>
+        <CardMediaOverlayTopEnd>
+          <CardMediaOverlayIconButton aria-label="Save">
+            <Bookmark />
           </CardMediaOverlayIconButton>
-        </CardMediaOverlayTopRight>
+        </CardMediaOverlayTopEnd>
         <CardMediaOverlayBottom>
-          <CardTitle style={{ color: 'white' }}>Full-bleed media card</CardTitle>
+          <CardTitle style={{ color: 'var(--a63-on-media-foreground)' }}>{title}</CardTitle>
         </CardMediaOverlayBottom>
       </CardMediaOverlay>
     </Card>
+  )
+}
+
+/** Full-bleed media with a scrim, a title and a save button pinned to the top inline end.
+ *  The icon button is a real Button (overlay variant), so it has a name, the keyboard and a
+ *  44px touch target. */
+export const MediaOverlay: Story = {
+  render: () => <OverlayCard />,
+  play: ({ canvasElement }) => {
+    const save = canvasElement.querySelector<HTMLButtonElement>('button[aria-label="Save"]')
+    if (!save) throw new Error('Expected the overlay icon button to be a named <button>')
+    save.focus()
+    if (document.activeElement !== save) throw new Error('Expected the icon button to take focus')
+  },
+}
+
+/** Under dir="rtl" the top-end slot pins to the top left and the text runs from the right. */
+export const RightToLeft: Story = {
+  render: () => (
+    <div dir="rtl" lang="ar" style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+      <OverlayCard title="بطاقة وسائط بعرض كامل" />
+      <Card style={{ width: 300 }}>
+        <CardHeader>
+          <CardLabel>دراسة حالة</CardLabel>
+          <CardAction>
+            <Badge variant="outline">2024</Badge>
+          </CardAction>
+        </CardHeader>
+        <CardContent>
+          <CardTitle>فتحات قابلة للتركيب</CardTitle>
+          <CardDescription>يبقى الرأس والتذييل اختياريين؛ ركّب ما يحتاجه التخطيط.</CardDescription>
+        </CardContent>
+      </Card>
+    </div>
   ),
+  play: ({ canvasElement }) => {
+    const media = canvasElement.querySelector<HTMLElement>('[data-slot="card-media-overlay"]')
+    const pin = canvasElement.querySelector<HTMLElement>('[data-slot="card-media-overlay-top-end"]')
+    if (!media || !pin) throw new Error('Expected the overlay and its top-end slot')
+    const gap = pin.getBoundingClientRect().left - media.getBoundingClientRect().left
+    if (gap > 24) throw new Error(`Expected the top-end slot at the left under RTL, ${gap}px in`)
+  },
+}
+
+const longTitle =
+  'Donaudampfschifffahrtsgesellschaftskapitänsmütze 设计系统的长标题 https://example.com/a/really/long/unbroken/path/segment'
+
+/** Long titles and descriptions mix Latin, a German compound, CJK and an unbroken URL: the
+ *  title clamps to two lines and the description to three, inside the card. */
+export const LongContent: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'start' }}>
+      <Card style={{ width: 280 }}>
+        <CardContent>
+          <CardTitle>{longTitle}</CardTitle>
+          <CardDescription>
+            {longTitle} — Eine Beschreibung, die viel länger ist als die Karte breit.
+            这是一段很长的描述文字，用来检查换行与截断。
+          </CardDescription>
+        </CardContent>
+      </Card>
+      <OverlayCard title={longTitle} />
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    for (const card of canvasElement.querySelectorAll<HTMLElement>('.a63-Card')) {
+      if (card.scrollWidth > card.clientWidth + 1) {
+        throw new Error('Expected long content to stay inside the card')
+      }
+    }
+  },
 }
 
 /* Composition usages — how the slots assemble into the real patterns the site's
@@ -170,7 +241,7 @@ export const Compositions: Story = {
       {/* Full composable slots (the blog's "Header, tags, and footer" example):
           header carries a leading label + a trailing action, content holds
           title/desc/tags, footer sits flush (pt-0) with meta + its own action. */}
-      <Card style={{ width: 300 }} variant="interactive">
+      <Card style={{ width: 300 }}>
         <CardHeader padding="md">
           <CardLabel style={{ color: 'var(--a63-text-secondary)' }}>Case study</CardLabel>
           <CardAction>
@@ -201,7 +272,15 @@ export const Compositions: Story = {
       </Card>
 
       {/* Article / resource card: media + content + tags + footer action */}
-      <Card style={{ width: 260 }} variant="interactive">
+      <Card
+        render={({ children, ...props }) => (
+          <a {...props} href="#resource-article">
+            {children}
+          </a>
+        )}
+        style={{ width: 260 }}
+        variant="interactive"
+      >
         <CardMedia aspectRatio="16/9">
           <MediaFill />
         </CardMedia>
@@ -234,13 +313,13 @@ export const Compositions: Story = {
             key={label}
             padding="sm"
             render={<button type="button" />}
-            style={{ flexDirection: 'row', textAlign: 'left' }}
+            style={{ flexDirection: 'row', textAlign: 'start' }}
             variant="ghost"
           >
             <CardContent padding="sm" style={{ flex: 1 }}>
               <CardTitle style={{ fontSize: '0.95rem' }}>{label}</CardTitle>
             </CardContent>
-            <CardAction style={{ paddingRight: '0.75rem' }}>
+            <CardAction style={{ paddingInlineEnd: '0.75rem' }}>
               <Kbd size="sm">↗</Kbd>
             </CardAction>
           </Card>
@@ -275,6 +354,11 @@ function LinkCard() {
       onPointerLeave={cursor.onPointerLeave}
       onPointerMove={cursor.onPointerMove}
       ref={cursor.ref}
+      render={({ children, ...props }) => (
+        <a {...props} href="#external-link">
+          {children}
+        </a>
+      )}
       style={{ width: 300 }}
       variant="interactive"
     >
@@ -292,6 +376,66 @@ function LinkCard() {
 
 export const CursorLabel: Story = {
   render: () => <LinkCard />,
+}
+
+function ActionCards() {
+  return (
+    <div style={{ display: 'flex', gap: 24, padding: 8 }}>
+      {['Hovered or focused', 'At rest'].map(title => (
+        <Card
+          key={title}
+          render={({ children, ...props }) => (
+            <a {...props} href={`#${title}`}>
+              {children}
+            </a>
+          )}
+          style={{ width: 220 }}
+          variant="interactive"
+        >
+          <CardContent>
+            <CardTitle>{title}</CardTitle>
+            <CardDescription>The whole card is the link.</CardDescription>
+          </CardContent>
+        </Card>
+      ))}
+    </div>
+  )
+}
+
+/** An interactive card under a fine pointer lifts; the card beside it is at rest. */
+export const Hover: Story = {
+  render: () => <ActionCards />,
+  parameters: { visualState: { hover: 'a.a63-Card' } },
+}
+
+/** Pressed (`:active`, or `data-pressed` as here): the lift settles to half. */
+export const Pressed: Story = {
+  render: () => (
+    <div style={{ display: 'flex', gap: 20 }}>
+      <Card data-pressed="" style={{ width: 240 }} variant="interactive">
+        <CardContent>
+          <CardTitle>Pressed</CardTitle>
+        </CardContent>
+      </Card>
+      <Card style={{ width: 240 }} variant="interactive">
+        <CardContent>
+          <CardTitle>At rest</CardTitle>
+        </CardContent>
+      </Card>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    const pressed = canvasElement.querySelector<HTMLElement>('[data-pressed]')
+    if (!pressed || getComputedStyle(pressed).transform === 'none') {
+      throw new Error('Expected a pressed interactive card to keep a small lift')
+    }
+  },
+}
+
+/** Keyboard focus on a card that is itself the link draws the focus ring and the same lift. */
+export const FocusVisible: Story = {
+  render: () => <ActionCards />,
+  parameters: { visualState: { focusVisible: 'a.a63-Card' } },
 }
 
 /* Surface theming: modern soft-flush · aqua lift · retro Win98 bevel · terminal

@@ -109,7 +109,7 @@
 }
 
 .a63-Radio[aria-invalid='true'] {
-  border-color: color-mix(in oklch, var(--a63-action-danger) 62%, transparent);
+  border-color: var(--a63-border-danger);
 }
 
 /* ── Sizes (md is the base rule above) ─────────────────────────────────── */
@@ -119,6 +119,20 @@
 .a63-Radio[data-size='sm'] .a63-Radio-indicator::before {
   width: 0.4375rem;
   height: 0.4375rem;
+}
+
+/* Forced colors turn the accent fill and the dot into the same system colour as
+   an unchecked radio, so a checked radio takes the system selection colours. */
+@media (forced-colors: active) {
+  .a63-Radio[data-checked] {
+    border-color: Highlight;
+  }
+  .a63-Radio[data-checked] .a63-Radio-indicator {
+    background-color: Highlight;
+  }
+  .a63-Radio-indicator::before {
+    background-color: HighlightText;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

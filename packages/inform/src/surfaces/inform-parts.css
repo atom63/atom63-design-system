@@ -143,7 +143,9 @@
  * measured 3.4:1 on the light page, danger 3.0:1 on the dark one), so the
  * text mixes the status color toward the primary text color. That darkens it
  * in light mode and lightens it in dark mode, keeping the hue while clearing
- * 4.5:1. The dialog variants out-rank the dialog title's own color.
+ * 4.5:1. Danger reads --a63-text-danger and --a63-border-danger, the roles
+ * made for text and edges. The dialog variants out-rank the dialog title's
+ * own color.
  */
 .a63-Inform-border-info {
   border-color: var(--a63-border-subtle);
@@ -155,7 +157,7 @@
   border-color: color-mix(in oklab, var(--a63-status-warning) 40%, transparent);
 }
 .a63-Inform-border-danger {
-  border-color: color-mix(in oklab, var(--a63-action-danger) 40%, transparent);
+  border-color: var(--a63-border-danger);
 }
 
 .a63-Inform-text-info,
@@ -172,5 +174,5 @@
 }
 .a63-Inform-text-danger,
 .a63-InformDialog .a63-Inform-text-danger {
-  color: color-mix(in oklab, var(--a63-action-danger) 70%, var(--a63-text-primary));
+  color: var(--a63-text-danger);
 }

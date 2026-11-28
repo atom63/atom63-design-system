@@ -5,7 +5,13 @@
   "lists": {
     "orientations": ["vertical", "horizontal", "both"],
     "options": ["scroll-fade", "scrollbar-gutter", "show-on-hover"],
-    "states": ["idle", "hovering", "scrolling", "focus-visible"],
+    "states": {
+      "values": ["rest", "hover", "scrolling", "focus-visible"],
+      "deprecatedAliases": {
+        "hovering": "hover",
+        "idle": "rest"
+      }
+    },
     "slots": [
       "scroll-area",
       "scroll-area-viewport",

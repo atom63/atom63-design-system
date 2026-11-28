@@ -11,6 +11,11 @@ export function freezeMotion() {
   animation-iteration-count: 1 !important;
   transition: none !important;
   caret-color: transparent !important;
+}
+/* A scroll-driven fade (DialogPanel scrollFade) follows the scroll position, not
+   time, so it is already stable; a 0s duration would pin it to its end. */
+[data-scroll-fade] {
+  animation-duration: auto !important;
 }`
   document.head.append(freeze)
 }

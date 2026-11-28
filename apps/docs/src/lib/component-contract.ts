@@ -14,6 +14,8 @@ import type { ComponentStatus } from './component-catalog'
 
 export type ContractAxis = {
   default?: string
+  /** Earlier names of values, each mapped to the value that replaced it. */
+  deprecatedAliases?: Record<string, string>
   name: string
   values: string[]
 }
@@ -33,6 +35,8 @@ export type ComponentContractDoc = {
   exportName: string
   slots: string[]
   source: string
+  /** Earlier names of states, each mapped to the state that replaced it. */
+  stateAliases?: Record<string, string>
   states: string[]
   tokenSlots: string[]
 }
@@ -57,6 +61,7 @@ type ResolvedContract = {
   maturity: ComponentStatus
   slots: string[]
   source: string
+  stateAliases?: Record<string, string>
   states: string[]
   tokenSlots: string[]
   visualArchetypes: string[]
@@ -122,6 +127,7 @@ export function getComponentContractDoc(slug: string): ComponentContractDoc | nu
     exportName: contract.exportName,
     slots: contract.slots,
     source: contract.source,
+    ...(contract.stateAliases ? { stateAliases: contract.stateAliases } : {}),
     states: contract.states,
     tokenSlots: contract.tokenSlots,
   }
@@ -161,6 +167,15 @@ export function componentContractMarkdown(slug: string): string {
   ]
   if (rows.length > 0) {
     lines.push('| Axis | Values | Default |', '| --- | --- | --- |', ...rows, '')
+  }
+  const aliases = [
+    ...doc.axes.map(axis => [axis.name, axis.deprecatedAliases] as const),
+    ['states', doc.stateAliases] as const,
+  ].flatMap(([name, map]) =>
+    Object.entries(map ?? {}).map(([alias, value]) => `\`${alias}\` → \`${value}\` (${name})`)
+  )
+  if (aliases.length > 0) {
+    lines.push(`**Deprecated aliases:** ${aliases.join(', ')}`, '')
   }
   if (doc.slots.length > 0) lines.push(`**Slots:** ${codeList(doc.slots)}`, '')
   if (doc.states.length > 0) lines.push(`**States:** ${codeList(doc.states)}`, '')

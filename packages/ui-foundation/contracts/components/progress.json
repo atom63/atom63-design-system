@@ -29,6 +29,46 @@
       "$ref": "#/lists/tones"
     }
   },
+  "intent": {
+    "description": "What a progress bar is, independent of any platform: the colour of its indicator.",
+    "axes": {
+      "tone": ["accent", "neutral"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "tone": {
+            "list": "tones",
+            "map": {
+              "accent": {
+                "tone": "accent"
+              },
+              "neutral": {
+                "tone": "neutral"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "tone": {
+            "swiftEnum": "AtomTrackTone",
+            "map": {
+              "accent": {
+                "tone": "accent"
+              },
+              "neutral": {
+                "tone": "neutral"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "progress",

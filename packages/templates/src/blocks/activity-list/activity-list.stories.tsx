@@ -1,11 +1,19 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  inMain,
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { ActivityList } from './activity-list'
 
 const meta = {
   title: 'Templates/Blocks/Activity list',
   component: ActivityList,
+  parameters: landmarkParameters,
+  decorators: [inMain],
 } satisfies Meta<typeof ActivityList>
 
 export default meta

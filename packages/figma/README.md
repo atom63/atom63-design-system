@@ -106,7 +106,7 @@ token table do not count them as tokens.
 The focus ring is a `Focus ring` layer in every variant, drawn as CSS draws the recipe's
 `outline`: absolutely placed over the root and stretched with it, no fill, an outside stroke whose
 color and weight are bound to the ring variables, corners bound to the root's radius. It is
-visible only in `State=focusVisible`, and the root does not clip its content, so the ring shows
+visible only in `State=focus-visible`, and the root does not clip its content, so the ring shows
 on transparent variants (ghost, link) too; a drop shadow would not, since Figma casts it from the
 node's visible content. A file written by an earlier version, which drew the ring as a drop
 shadow on the root, is migrated on the next run: that one effect is removed and any other effect

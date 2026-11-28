@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { OnboardingPage } from './onboarding-page'
 
 const meta = {
   title: 'Templates/Pages/Onboarding page',
   component: OnboardingPage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...landmarkParameters },
 } satisfies Meta<typeof OnboardingPage>
 
 export default meta

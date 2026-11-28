@@ -62,3 +62,6 @@ export const CustomLabel: Story = {
 export const Menu: Story = {
   args: { variant: 'menu', label: 'TOC', showProgress: false },
 }
+
+/* The active link is accent text; dark mode checks it keeps 4.5:1 on the dark page. */
+export const Dark: Story = { ...Rail, globals: { mode: 'dark' } }

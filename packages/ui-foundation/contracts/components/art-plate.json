@@ -1,0 +1,54 @@
+{
+  "$schema": "../schema/component-intent.schema.json",
+  "component": "art-plate",
+  "maturity": "preview",
+  "description": "A full-bleed picture that owns its crop: a responsive image (art-directed phone source, focal point per breakpoint) behind a content region placed in the picture's calm area. For a landing hero, a section band or a portfolio cover; not for inline figures (use Image) or cards (use Card media). Parallax is CSS scroll-driven, transform only, and off under reduced motion. Preview until its stable evidence is recorded.",
+  "lists": {
+    "sizes": {
+      "description": "How tall the plate is: the first viewport (`viewport`), a section band (`band`), or an inset rounded card (`card`).",
+      "values": ["viewport", "band", "card"]
+    },
+    "safeAreas": {
+      "description": "Where the content sits on the picture. `start` and `end` take half the width from the medium breakpoint up.",
+      "values": ["top", "bottom", "center", "start", "end"]
+    },
+    "tones": {
+      "description": "Text over the picture: `page` keeps the theme's text roles (a calm plate in the page tone), `media` uses the on-media roles that hold on any picture.",
+      "values": ["page", "media"]
+    },
+    "veils": {
+      "description": "A gradient behind the safe area, in the tone's colour, to steady the text.",
+      "values": ["none", "soft", "strong"]
+    },
+    "slots": ["art-plate", "art-plate-image", "art-plate-content"],
+    "states": ["rest"],
+    "visualArchetypes": ["surface"]
+  },
+  "contract": {
+    "defaultSize": "viewport",
+    "defaultSafeArea": "top",
+    "defaultTone": "page",
+    "defaultVeil": "none",
+    "sizes": {
+      "$ref": "#/lists/sizes"
+    },
+    "safeAreas": {
+      "$ref": "#/lists/safeAreas"
+    },
+    "tones": {
+      "$ref": "#/lists/tones"
+    },
+    "veils": {
+      "$ref": "#/lists/veils"
+    },
+    "slots": {
+      "$ref": "#/lists/slots"
+    },
+    "states": {
+      "$ref": "#/lists/states"
+    },
+    "visualArchetypes": {
+      "$ref": "#/lists/visualArchetypes"
+    }
+  }
+}

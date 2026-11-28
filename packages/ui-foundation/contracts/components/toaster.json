@@ -2,7 +2,7 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "toaster",
   "maturity": "stable",
-  "description": "`default` is a card on the overlay surface with the icon before the message; `inverse` is a compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after the message, the macOS and iOS look for a short status such as Scheduling message….",
+  "description": "`default` is a card on the overlay surface with the icon before the message; `inverse` is a compact pill in the inverse colours (dark on a light app, light on a dark one) with the icon after the message, the macOS and iOS look for a short status such as Scheduling message…. The tones are not a Toaster prop: each maps to the function that raises the toast, toast() for default and toast.info, toast.success, toast.warning, toast.error and toast.loading for the rest.",
   "lists": {
     "variants": ["default", "inverse"],
     "states": ["visible", "dismissing", "reduced-motion"],
@@ -26,6 +26,46 @@
     },
     "visualArchetypes": {
       "$ref": "#/lists/visualArchetypes"
+    }
+  },
+  "intent": {
+    "description": "What a toast surface is, independent of any platform: the standard surface or the inverse one. The status tones are web extensions of the toast content.",
+    "axes": {
+      "variant": ["default", "inverse"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "variant": {
+            "list": "variants",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "inverse": {
+                "variant": "inverse"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      },
+      "ios": {
+        "props": {
+          "variant": {
+            "swiftEnum": "AtomToastVariant",
+            "map": {
+              "default": {
+                "variant": "default"
+              },
+              "inverse": {
+                "variant": "inverse"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
     }
   },
   "crossRenderer": {

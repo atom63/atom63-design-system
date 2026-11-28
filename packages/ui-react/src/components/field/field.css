@@ -3,7 +3,7 @@
  * Faithful to prod @atom63/ui field.tsx (flex column stacks, orientation
  * variants, invalid-state recolor, muted description, destructive error) but
  * spaced/colored with --a63-* semantic tokens. No new tokens: muted text →
- * --a63-text-secondary, destructive → --a63-action-danger, container-query
+ * --a63-text-secondary, destructive → --a63-text-danger, container-query
  * responsive orientation keyed off .a63-FieldGroup as the @container.
  */
 
@@ -30,6 +30,7 @@
   font-family: var(--a63-control-font-family);
   font-weight: 500;
   line-height: 1.2;
+  overflow-wrap: anywhere;
 }
 .a63-FieldLegend[data-variant='legend'] {
   font-size: var(--a63-control-font-size-md);
@@ -146,8 +147,11 @@
 .a63-FieldLabel {
   display: flex;
   inline-size: fit-content;
+  min-inline-size: 0;
   gap: var(--a63-space-2, 0.5rem);
   line-height: 1.35;
+  /* Long compounds and unbroken URLs wrap instead of widening the field. */
+  overflow-wrap: anywhere;
 }
 /* dim inside a disabled field (prod group-data-[disabled=true]/field) */
 .a63-Field[data-disabled='true'] .a63-FieldLabel {
@@ -195,6 +199,7 @@
 /* ── FieldDescription ──────────────────────────────────────────────────── */
 .a63-FieldDescription {
   margin: 0;
+  overflow-wrap: anywhere;
   text-align: start;
   color: var(--a63-text-secondary);
   font-family: var(--a63-control-font-family);
@@ -250,6 +255,7 @@
 
 /* ── FieldError ────────────────────────────────────────────────────────── */
 .a63-FieldError {
+  overflow-wrap: anywhere;
   color: var(--a63-text-danger);
   font-family: var(--a63-control-font-family);
   font-size: var(--a63-control-font-size-sm);

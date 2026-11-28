@@ -1,6 +1,7 @@
 'use client'
 
 import { Menu as DropdownMenuPrimitive } from '@base-ui/react/menu'
+import { type DropdownMenuItemVariant, dropdownMenuContract } from '@atom63/ui-foundation'
 import type * as React from 'react'
 
 import { cn } from '../../lib/cn'
@@ -109,7 +110,7 @@ export function DropdownMenuContent({
   ...props
 }: DropdownMenuContentProps): React.ReactElement {
   const contextPortalContainer = usePortalContainer()
-  const container = portalContainer ?? contextPortalContainer
+  const container = portalContainer ?? portalProps?.container ?? contextPortalContainer
 
   return (
     <DropdownMenuPrimitive.Portal {...portalProps} container={container}>
@@ -134,14 +135,15 @@ export function DropdownMenuContent({
 }
 
 export interface DropdownMenuItemProps extends DropdownMenuPrimitive.Item.Props {
+  /** Indents the row to the checkbox/radio indicator column, to line up with checkable rows. */
   inset?: boolean
-  variant?: 'default' | 'destructive'
+  variant?: DropdownMenuItemVariant
 }
 
 export function DropdownMenuItem({
   className,
   inset,
-  variant = 'default',
+  variant = dropdownMenuContract.defaultItemVariant,
   ...props
 }: DropdownMenuItemProps): React.ReactElement {
   return (
@@ -291,7 +293,7 @@ export function DropdownMenuSubContent({
   ...props
 }: DropdownMenuSubContentProps): React.ReactElement {
   const contextPortalContainer = usePortalContainer()
-  const container = portalContainer ?? contextPortalContainer
+  const container = portalContainer ?? portalProps?.container ?? contextPortalContainer
 
   return (
     <DropdownMenuPrimitive.Portal {...portalProps} container={container}>

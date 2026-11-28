@@ -8,6 +8,7 @@ import { AppViewChrome } from '@atom63/ui-foundation';
 import { AppViewLayout } from '@atom63/ui-foundation';
 import { AppViewTopBarSpan } from '@atom63/ui-foundation';
 import { ComponentPropsWithoutRef } from 'react';
+import { ComponentPropsWithRef } from 'react';
 import { CSSProperties } from 'react';
 import * as React_2 from 'react';
 import { ReactElement } from 'react';
@@ -48,6 +49,9 @@ export type ContainerChrome = 'none' | 'grid';
 // @public
 export function containerFrameClassName(maxWidth?: ContainerMaxWidth): string;
 
+// @public
+export type ContainerGap = 0 | 2 | 4 | 6 | 8 | 10 | 12;
+
 // @public (undocumented)
 export type ContainerMaxWidth = 'fluid' | 'widest' | 'wider' | 'wide' | 'default' | 'narrow' | 'narrower' | 'narrowest';
 
@@ -64,9 +68,9 @@ export interface ContainerProps {
     chrome?: ContainerChrome;
     // (undocumented)
     className?: string;
+    gap?: ContainerGap;
     // (undocumented)
     maxWidth?: ContainerMaxWidth;
-    // (undocumented)
     padding?: ContainerPadding;
 }
 
@@ -169,7 +173,6 @@ export const pageIndexHeroTitleClassName = "text-balance font-secondary text-4xl
 
 // @public (undocumented)
 export interface PageProps extends useRender.ComponentProps<'main'> {
-    // (undocumented)
     noPadding?: boolean;
 }
 
@@ -208,30 +211,31 @@ export interface ReaderLayoutProps {
     reserveAside?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export function Section(input: SectionProps): React_2.JSX.Element;
 
 // @public (undocumented)
 export function SectionHeader(input: SectionHeaderProps): React_2.JSX.Element;
+
+// @public
+export type SectionHeaderAlign = 'start' | 'center' | 'end' | 'left' | 'right';
 
 // @public (undocumented)
 export type SectionHeaderLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 // @public (undocumented)
 export interface SectionHeaderProps {
-    // (undocumented)
-    align?: 'left' | 'center' | 'right';
+    align?: SectionHeaderAlign;
     // (undocumented)
     className?: string;
-    // (undocumented)
-    description?: string;
+    description?: ReactNode;
     // (undocumented)
     descriptionClassName?: string;
     level?: SectionHeaderLevel;
-    // (undocumented)
-    title: string;
+    title: ReactNode;
     // (undocumented)
     titleClassName?: string;
+    titleId?: string;
     // (undocumented)
     variant?: SectionHeaderVariant;
 }
@@ -240,18 +244,11 @@ export interface SectionHeaderProps {
 export type SectionHeaderVariant = 'display' | 'primary' | 'secondary' | 'muted' | 'subtle' | 'label';
 
 // @public (undocumented)
-export interface SectionProps {
+export interface SectionProps extends Omit<ComponentPropsWithRef<'section'>, 'children'> {
     // (undocumented)
     children: ReactNode;
-    // (undocumented)
-    className?: string;
-    // (undocumented)
     gap?: boolean;
-    // (undocumented)
-    id?: string;
-    // (undocumented)
     removeTopSpacing?: boolean;
-    // (undocumented)
     spacing?: 'tight' | 'default' | 'loose' | 'generous' | 'spacious';
 }
 

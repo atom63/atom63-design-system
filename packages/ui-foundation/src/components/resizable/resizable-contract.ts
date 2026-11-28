@@ -5,7 +5,7 @@ import type { VisualArchetypeId } from '../../visual-archetypes'
 
 export const resizableOrientations = ['horizontal', 'vertical'] as const
 export const resizableVariants = ['line', 'grip'] as const
-export const resizableStates = ['idle', 'hover', 'focus-visible', 'dragging', 'disabled'] as const
+export const resizableStates = ['rest', 'hover', 'focus-visible', 'dragging', 'disabled'] as const
 export const resizableSlots = [
   'resizable-panel-group',
   'resizable-panel',
@@ -19,6 +19,15 @@ export type ResizableVariant = (typeof resizableVariants)[number]
 export type ResizableState = (typeof resizableStates)[number]
 export type ResizableSlot = (typeof resizableSlots)[number]
 export type ResizableVisualArchetype = (typeof resizableVisualArchetypes)[number]
+
+/** Earlier names of ResizableState values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them. */
+export const resizableStateAliases = { idle: 'rest' } as const satisfies Record<
+  string,
+  ResizableState
+>
+
+/** @deprecated An earlier name of a value of ResizableState; use the value resizableStateAliases maps it to. */
+export type ResizableStateAlias = keyof typeof resizableStateAliases
 
 export interface ResizableContract {
   defaultOrientation: ResizableOrientation

@@ -21,7 +21,7 @@ export const site = {
   url: 'https://system.atom63.io',
   repository: 'https://github.com/atom63/atom63-design-system',
   description:
-    'ATOM63 Design System — tokens, components, and patterns for building expressive digital interfaces.',
+    'ATOM63 Design System — an opinionated, open-source design system for building AI products: tokens, components, and patterns for people and coding agents.',
   keywords: [
     'ATOM63',
     'design system',

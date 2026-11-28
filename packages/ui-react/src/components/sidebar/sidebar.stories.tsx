@@ -12,6 +12,7 @@ import {
   SidebarInput,
   SidebarInset,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -25,7 +26,7 @@ import {
 } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { FileText, Inbox, Send, Star } from 'lucide-react'
+import { FileText, Inbox, MoreHorizontal, Send, Star } from 'lucide-react'
 import { type ReactNode, useLayoutEffect, useState } from 'react'
 
 const meta = {
@@ -99,6 +100,84 @@ export const Playground: Story = {
   ),
 }
 
+/*
+ * The menu button's states side by side: current (`isActive`), under the
+ * pointer, at rest and disabled, with a fine pointer and on touch. Pressed
+ * (`:active`) and an open menu (`data-open`) paint the same plate as hover, so
+ * the hover capture covers them.
+ */
+function StatesSidebar({ hover = false }: { hover?: boolean }) {
+  return (
+    <SidebarProvider style={{ minHeight: 0, width: 'auto' }}>
+      <Sidebar collapsible="none">
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarGroupContent>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton isActive>
+                    <Inbox aria-hidden />
+                    <span>Current</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton data-hover-target={hover || undefined}>
+                    <Send aria-hidden />
+                    <span>Hover</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FileText aria-hidden />
+                    <span>Rest</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton disabled>
+                    <Star aria-hidden />
+                    <span>Disabled</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+    </SidebarProvider>
+  )
+}
+
+export const States: Story = {
+  parameters: { visualState: { hover: '[data-hover-target]' } },
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 24, padding: 12 }}>
+      <UIProvider input="pointer">
+        <StatesSidebar hover />
+      </UIProvider>
+      <UIProvider input="touch">
+        <StatesSidebar />
+      </UIProvider>
+    </div>
+  ),
+  play: ({ canvasElement }) => {
+    // Rows keep the 32px rung on a fine pointer and floor at 44px on touch.
+    for (const [input, floor] of [
+      ['pointer', 32],
+      ['touch', 44],
+    ] as const) {
+      const rows = canvasElement.querySelectorAll<HTMLElement>(
+        `[data-a63-input="${input}"] [data-slot="sidebar-menu-button"]`
+      )
+      if (rows.length !== 4) throw new Error(`Expected 4 ${input} rows, got ${rows.length}`)
+      for (const row of rows) {
+        const height = Math.round(row.getBoundingClientRect().height)
+        if (input === 'touch' ? height < floor : height !== floor)
+          throw new Error(`A ${input} row is ${height}px tall, expected ${floor}px`)
+      }
+    }
+  },
+}
+
 /* tone sets the active menu button: neutral (the default) is the hover plate
    with primary text, accent is the opt-in primary wash with accent text. */
 export const MenuButtonTones: Story = {
@@ -146,6 +225,111 @@ export const MenuButtonTones: Story = {
 export const Collapsible: Story = {
   args: { collapsible: 'icon' },
   render: Playground.render,
+}
+
+const railItems = [
+  { icon: Inbox, label: 'Inbox' },
+  { icon: FileText, label: 'Drafts' },
+  { icon: Send, label: 'Sent' },
+  { icon: Star, label: 'Starred' },
+]
+
+/*
+ * The collapsed icon rail. Each label is hidden visually but stays in the
+ * accessibility tree, so every icon-only button keeps its name; the tooltip
+ * shows it on hover.
+ */
+export const IconRail: Story = {
+  render: () => (
+    <SidebarProvider defaultOpen={false} style={{ minHeight: 0 }}>
+      <Sidebar collapsible="icon">
+        <SidebarContent>
+          <SidebarGroup>
+            <SidebarMenu>
+              {railItems.map(({ icon: Icon, label }, index) => (
+                <SidebarMenuItem key={label}>
+                  <SidebarMenuButton isActive={index === 0} tooltip={label}>
+                    <Icon aria-hidden />
+                    <span>{label}</span>
+                  </SidebarMenuButton>
+                  <SidebarMenuBadge>{index + 2}</SidebarMenuBadge>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroup>
+        </SidebarContent>
+      </Sidebar>
+    </SidebarProvider>
+  ),
+  // A label hidden with display: none drops out of innerText and the accessible
+  // name; a visually hidden one stays in both.
+  play: ({ canvasElement }) => {
+    const buttons = Array.from(
+      canvasElement.querySelectorAll<HTMLElement>('[data-sidebar="menu-button"]')
+    )
+    const names = buttons.map(button => button.innerText.trim())
+    if (names.join('|') !== railItems.map(item => item.label).join('|')) {
+      throw new Error(`Expected every rail button to keep its label, got ${names.join(', ')}`)
+    }
+    for (const button of buttons) {
+      if (button.getBoundingClientRect().width === 0) throw new Error('Expected a visible button')
+    }
+  },
+}
+
+/*
+ * Right-to-left: the menu action and badge sit at the inline end (the left),
+ * in the room the button reserves for them, clear of the label.
+ */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl" lang="ar">
+      <SidebarProvider style={{ minHeight: 0, width: 'auto' }}>
+        <Sidebar collapsible="none" style={{ width: '14rem' }}>
+          <SidebarContent>
+            <SidebarGroup>
+              <SidebarGroupLabel>البريد</SidebarGroupLabel>
+              <SidebarMenu>
+                <SidebarMenuItem>
+                  <SidebarMenuButton isActive>
+                    <Inbox aria-hidden />
+                    <span>صندوق الوارد</span>
+                  </SidebarMenuButton>
+                  <SidebarMenuBadge>16</SidebarMenuBadge>
+                </SidebarMenuItem>
+                <SidebarMenuItem>
+                  <SidebarMenuButton>
+                    <FileText aria-hidden />
+                    <span>المسودات</span>
+                  </SidebarMenuButton>
+                  <SidebarMenuAction aria-label="خيارات المسودات">
+                    <MoreHorizontal aria-hidden />
+                  </SidebarMenuAction>
+                </SidebarMenuItem>
+              </SidebarMenu>
+            </SidebarGroup>
+          </SidebarContent>
+        </Sidebar>
+      </SidebarProvider>
+    </UIProvider>
+  ),
+  play: ({ canvasElement }) => {
+    for (const selector of ['[data-sidebar="menu-badge"]', '[data-sidebar="menu-action"]']) {
+      const extra = canvasElement.querySelector<HTMLElement>(selector)
+      const item = extra?.closest<HTMLElement>('[data-sidebar="menu-item"]')
+      const label = item?.querySelector<HTMLElement>('[data-sidebar="menu-button"] > span')
+      if (!extra || !item || !label) throw new Error(`Expected ${selector} with a label`)
+      const box = extra.getBoundingClientRect()
+      const itemBox = item.getBoundingClientRect()
+      // Inline end is the left edge under dir="rtl".
+      if (box.left - itemBox.left >= 8) {
+        throw new Error(`Expected ${selector} at the inline end (left) under dir="rtl"`)
+      }
+      if (box.right > label.getBoundingClientRect().left + 0.5) {
+        throw new Error(`Expected ${selector} clear of the label`)
+      }
+    }
+  },
 }
 
 /*

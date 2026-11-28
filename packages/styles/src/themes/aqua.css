@@ -174,3 +174,104 @@
     inset 0 1px 0 color-mix(in oklch, white 22%, transparent),
     inset 0 3px 10px color-mix(in oklch, black 42%, transparent);
 }
+
+[data-a63-theme='aqua']:is([data-a63-brand], [data-a63-surface]),
+[data-a63-theme='aqua'] :is([data-a63-brand], [data-a63-surface]) {
+  /* The mode roles again, on scopes that change what they read, keyed to the nearest mode scope. */
+  --a63-surface-page: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--surface-light-2) 95%, var(--color-b1-500))
+    )
+    var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-1) 94%, var(--color-b1-500)));
+  --a63-surface-panel: var(
+      --a63-if-light,
+      color-mix(in oklab, var(--surface-light-1) 96%, var(--color-b1-500))
+    )
+    var(--a63-if-dark, color-mix(in oklab, var(--surface-dark-2) 94%, var(--color-b1-500)));
+  --a63-weather-border-color: var(
+      --a63-if-light,
+      color-mix(in oklch, var(--a63-action-primary) 32%, transparent)
+    )
+    var(--a63-if-dark, color-mix(in oklch, white 14%, transparent));
+  --a63-weather-background-image: var(
+      --a63-if-light,
+      radial-gradient(
+        120% 90% at 10% 0%,
+        color-mix(in oklch, white 28%, transparent),
+        transparent 48%
+      ),
+      radial-gradient(
+        78% 100% at 100% 0%,
+        color-mix(in oklch, var(--a63-action-primary) 32%, transparent),
+        transparent 58%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklch, var(--a63-action-primary) 78%, white 10%),
+        color-mix(in oklch, var(--a63-action-primary) 70%, var(--color-b1-900) 30%)
+      )
+    )
+    var(
+      --a63-if-dark,
+      radial-gradient(
+        120% 90% at 10% 0%,
+        color-mix(in oklab, white 18%, transparent),
+        transparent 48%
+      ),
+      radial-gradient(
+        88% 110% at 100% 0%,
+        color-mix(in oklab, var(--a63-action-primary) 30%, transparent),
+        transparent 58%
+      ),
+      linear-gradient(
+        135deg,
+        color-mix(in oklab, var(--a63-action-primary) 58%, var(--surface-dark-6) 42%),
+        color-mix(in oklab, var(--a63-action-primary) 36%, var(--surface-dark-3) 64%)
+      )
+    );
+  --a63-segment-gloss: var(
+      --a63-if-light,
+      linear-gradient(
+        180deg,
+        color-mix(in oklch, white 10%, transparent) 0%,
+        color-mix(in oklch, white 4%, transparent) 46%,
+        color-mix(in oklch, black 6%, transparent) 54%,
+        color-mix(in oklch, white 2%, transparent) 100%
+      ),
+      linear-gradient(180deg, var(--a63-surface-panel) 0%, var(--a63-surface-muted) 100%)
+    )
+    var(
+      --a63-if-dark,
+      linear-gradient(
+        180deg,
+        color-mix(in oklch, white 8%, transparent) 0%,
+        color-mix(in oklch, white 2%, transparent) 48%,
+        color-mix(in oklch, black 14%, transparent) 100%
+      ),
+      linear-gradient(
+        180deg,
+        color-mix(in oklch, var(--a63-surface-panel) 88%, white) 0%,
+        var(--a63-surface-muted) 100%
+      )
+    );
+  --a63-segment-selected-shadow: var(
+      --a63-if-light,
+      inset 0 1px 0 color-mix(in oklch, white 35%, transparent),
+      inset 0 2px 6px color-mix(in oklch, black 14%, transparent)
+    )
+    var(
+      --a63-if-dark,
+      inset 0 1px 0 color-mix(in oklch, white 22%, transparent),
+      inset 0 3px 8px color-mix(in oklch, black 28%, transparent)
+    );
+  --a63-segment-primary-shadow: var(
+      --a63-if-light,
+      inset 0 1px 0 color-mix(in oklch, white 28%, transparent),
+      inset 0 2px 8px color-mix(in oklch, black 36%, transparent)
+    )
+    var(
+      --a63-if-dark,
+      inset 0 1px 0 color-mix(in oklch, white 22%, transparent),
+      inset 0 3px 10px color-mix(in oklch, black 42%, transparent)
+    );
+}

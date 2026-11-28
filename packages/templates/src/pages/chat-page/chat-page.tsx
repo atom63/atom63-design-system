@@ -71,6 +71,10 @@ const anchor = ({ children, ...props }: ChatPageLinkProps) => <a {...props}>{chi
  * The assistant as the whole page. On a phone the history becomes a sheet the
  * top-bar toggle opens. The open conversation is marked with aria-current.
  * The page holds no conversation state; see ChatThread for how to feed it.
+ *
+ * Each safe-area inset has one owner, as in AppView: the top bar takes the top
+ * inset, and the page column takes the inline insets and the bottom one, so
+ * the composer clears the home indicator.
  */
 export function ChatPage({
   conversations,
@@ -98,6 +102,7 @@ export function ChatPage({
                 className="ms-auto"
                 onClick={onNewChat}
                 size="icon-sm"
+                tone="muted"
                 variant="ghost"
               >
                 <SquarePen aria-hidden />
@@ -127,8 +132,8 @@ export function ChatPage({
           </SidebarContent>
         </nav>
       </Sidebar>
-      <SidebarInset className="flex h-svh min-h-0 flex-col">
-        <header className="border-border flex h-14 shrink-0 items-center gap-2 border-b px-4">
+      <SidebarInset className="flex h-svh min-h-0 flex-col px-[max(var(--a63-safe-area-left),var(--a63-safe-area-right))] pb-[var(--a63-safe-area-bottom)]">
+        <header className="border-border box-content flex h-14 shrink-0 items-center gap-2 border-b px-4 pt-[var(--a63-safe-area-top)]">
           <SidebarTrigger />
           <h1 className="text-foreground truncate text-sm font-semibold">
             {messages.length ? (current?.title ?? 'Chat') : 'New chat'}

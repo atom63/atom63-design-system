@@ -1,5 +1,7 @@
 import path from 'node:path'
 
+import { findWarnings } from './vibe-measure.mjs'
+
 /**
  * Pure checks for packages/templates (T5 in docs/design-system/template-library-plan.md).
  * check-templates.mjs reads the files; these functions only look at their text.
@@ -8,6 +10,24 @@ import path from 'node:path'
 export const KINDS = { blocks: 'block', pages: 'page' }
 export const READINESS = ['draft', 'ready']
 export const REQUIRED_STORIES = ['Desktop', 'Phone', 'Themes']
+/*
+ * The flagship templates also need a story at the 768px tablet and 1440px wide
+ * widths (an export named, or ending in, `Tablet` and `Wide`, which the visual
+ * project captures at that width), since their layouts switch between them.
+ */
+export const RESPONSIVE_TEMPLATES = new Set([
+  'app-shell',
+  'dashboard-page',
+  'data-table-section',
+  'empty-state',
+  'filter-bar',
+  'list-page',
+  'page-header',
+  'settings-page',
+  'settings-section',
+  'stat-row',
+])
+const RESPONSIVE_STORIES = ['Tablet', 'Wide']
 const METADATA_FIELDS = ['id', 'kind', 'title', 'description', 'category', 'tags', 'readiness']
 
 /** Read the `export const template = { … } as const` literal from a template source. */
@@ -74,11 +94,27 @@ export function metadataProblems(metadata, { dir, id }) {
   return problems
 }
 
-export function storyProblems(storySource) {
+/*
+ * Every stories file passes `landmarkParameters` (story-matrix.tsx), which
+ * turns on axe's `region` and `label-content-name-mismatch` rules, so page
+ * chrome a product copies must sit in landmarks and keep its visible labels.
+ */
+export function storyProblems(storySource, { responsive = false } = {}) {
   if (storySource === null) return ['has no stories file']
-  return REQUIRED_STORIES.filter(
+  const problems = REQUIRED_STORIES.filter(
     name => !new RegExp(`export const ${name}\\b`).test(storySource)
   ).map(name => `stories file has no \`${name}\` story`)
+  if (responsive) {
+    for (const width of RESPONSIVE_STORIES) {
+      if (!new RegExp(`export const \\w*${width}\\b`).test(storySource)) {
+        problems.push(`stories file has no \`${width}\` story (a flagship template)`)
+      }
+    }
+  }
+  if (!/\blandmarkParameters\b/.test(storySource)) {
+    problems.push('stories file does not pass `landmarkParameters` from story-matrix')
+  }
+  return problems
 }
 
 /** The visual baseline name of a template story, as the visual project writes it. */
@@ -93,6 +129,8 @@ export const baselineName = (dir, title, story) =>
  * file is `<id>.tsx`; every other non-story file in its folder is support code
  * held to the same import rule. `baselines`, when given, is the set of visual
  * baseline names: a `ready` template needs one for each required story.
+ * Every .tsx file must pass the vibe measures' Button warnings (findWarnings):
+ * a template copied into a product must not make its case study warn.
  */
 export function checkTemplates(entries, catalogSource, baselines) {
   const problems = []
@@ -122,8 +160,14 @@ export function checkTemplates(entries, catalogSource, baselines) {
         const block = specifier.match(/\/blocks\/([^/]+)\//)
         if (entry.dir === 'pages' && block) usedBlocks.add(block[1])
       }
+      if (file.path.endsWith('.tsx')) {
+        for (const warning of findWarnings(file.source, file.path)) {
+          report(entry, `${file.path}:${warning.line} has the vibe warning ${warning.rule}`)
+        }
+      }
     }
-    for (const message of storyProblems(entry.storySource)) report(entry, message)
+    const responsive = RESPONSIVE_TEMPLATES.has(entry.id)
+    for (const message of storyProblems(entry.storySource, { responsive })) report(entry, message)
   }
   for (const entry of entries) {
     if (entry.dir === 'blocks' && !usedBlocks.has(entry.id)) {

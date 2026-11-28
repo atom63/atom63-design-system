@@ -17,7 +17,13 @@ export type ComponentCatalogItem = {
   additionalValueExports?: readonly string[]
   axisGuidance?: ComponentAxisGuidance
   category: string
-  importPath: '@atom63/ui-react' | '@atom63/ui-react/calendar' | '@atom63/ui-react/layout'
+  /** Lines that replace the group's general guidance for this component. */
+  guidance?: readonly string[]
+  importPath:
+    | '@atom63/ui-react'
+    | '@atom63/ui-react/calendar'
+    | '@atom63/ui-react/chart'
+    | '@atom63/ui-react/layout'
   previewProfile: ComponentPreviewProfile
   relatedSlugs: readonly string[]
   slug: string
@@ -37,7 +43,13 @@ export type ComponentCatalogGroup = {
 
 type ComponentDefinition = Pick<
   ComponentCatalogItem,
-  'additionalValueExports' | 'axisGuidance' | 'relatedSlugs' | 'summary' | 'usage' | 'usageExports'
+  | 'additionalValueExports'
+  | 'axisGuidance'
+  | 'guidance'
+  | 'relatedSlugs'
+  | 'summary'
+  | 'usage'
+  | 'usageExports'
 > &
   Partial<Pick<ComponentCatalogItem, 'importPath'>>
 
@@ -86,6 +98,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usage:
       'Wrap a product view that has no site header or footer; pass layout="phone" for a phone app screen. A window takes chrome="flush" for columns to its edges, panelWidth for the side panel (18rem by default), and overlay for a control floating over the main region. For a multi-pane app, add rail (an icon column before the panel), aside (a thread or details pane after the main region, from lg up) and topBarSpan="main" (the top bar starts after the panel, which runs full height).',
     usageExports: ['AppView'],
+  },
+  'art-plate': {
+    relatedSlugs: ['card', 'frame', 'progressive-blur'],
+    summary:
+      'Art Plate shows a full-bleed picture that owns its crop and keeps a safe area for headline and product UI.',
+    usage:
+      'Use Art Plate for a landing hero, a section band or a portfolio cover where the picture leads and content sits in a calm region of it.',
+    usageExports: ['ArtPlate'],
   },
   autocomplete: {
     relatedSlugs: ['input', 'command', 'select'],
@@ -151,7 +171,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
         rest: 'Resting appearance.',
         hover: 'Pointer over an enabled button.',
         pressed: 'While pressed, or held with data-pressed.',
-        focusVisible: 'Keyboard focus only; drawn as an outline.',
+        'focus-visible': 'Keyboard focus only; drawn as an outline.',
         disabled:
           'A neutral grey fill and muted label; ghost, link, overlay and glass fade only the label.',
         loading: 'Label keeps its width; the spinner overlays it.',
@@ -184,14 +204,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['item', 'frame', 'preview-card'],
     summary: 'Card composes media, metadata, actions, and content into a reusable surface.',
     usage:
-      'Put CardTitle and CardDescription inside CardContent. Unlike shadcn, CardHeader is a single row for a CardLabel and a CardAction, so a title placed there is squeezed and truncated. Do not make the whole card clickable when it also contains independent interactive controls.',
+      'Put CardTitle and CardDescription inside CardContent. Unlike shadcn, CardHeader is a single row for a CardLabel and a CardAction, so a title placed there is squeezed and truncated. Do not make the whole card clickable when it also contains independent interactive controls. Pin an action over media with CardMediaOverlayTopEnd and CardMediaOverlayIconButton, a real overlay Button that needs an aria-label.',
     usageExports: ['Card', 'CardHeader', 'CardTitle', 'CardContent'],
   },
   carousel: {
     relatedSlugs: ['scrollable-list', 'scroll-area', 'button'],
     summary: 'Carousel coordinates an Embla viewport, slides, controls, and shared carousel state.',
     usage:
-      'Use stable slide labels and keep essential content reachable without relying on drag alone.',
+      'Use stable slide labels and keep essential content reachable without relying on drag alone. For a full-screen photo viewer use `MediaLightbox` from `@atom63/ui-react/media`; do not put a Carousel inside a fixed overlay, which has no scroll lock and no `touch-action` and lets the page drift vertically under a swipe.',
     usageExports: [
       'Carousel',
       'CarouselContent',
@@ -200,12 +220,32 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
       'CarouselNext',
     ],
   },
+  chart: {
+    importPath: '@atom63/ui-react/chart',
+    axisGuidance: {
+      size: {
+        md: 'A 240px plot with five y-axis ticks, for a chart that leads a section.',
+        sm: 'A 160px plot with three ticks, for a compact card.',
+      },
+      state: {
+        current:
+          'A category picked by the pointer or the arrow keys; the tooltip shows its values.',
+        rest: 'No category picked; only the marks, axes and legend show.',
+      },
+    },
+    relatedSlugs: ['table', 'progress', 'card'],
+    summary:
+      'Chart draws a small line, area or bar chart (grouped or stacked) of a few series over a categorical axis, with a tooltip, a legend and a data table for screen readers.',
+    usage:
+      'Pass a `label`, the `categories` and up to five `series`; set `type` to line, area or bar and `layout="stacked"` to stack bars or areas. Series take --a63-chart-1 to 5 in order, which keep apart from the brand on every brand; give a series `color` to pin it. The plot is one tab stop: arrow keys, Home and End pick a category and show its tooltip; on a touchscreen a tap picks one and the reading stays until a tap outside. With no categories or series the plot shows `labels.empty`; while data loads, show a Skeleton the size of the plot and set aria-busy on the region. Every chart carries a data table of the same numbers, visually hidden unless `table="toggle"` adds a button that shows it. For big or live data, zooming, scatter or pie charts, or values below zero (they draw at zero, while the tooltip and table show the real value), use a charting library; when the exact numbers matter more than the shape, use a Table.',
+    usageExports: ['Chart'],
+  },
   'chat-composer': {
     relatedSlugs: ['textarea', 'input', 'button'],
     summary:
       'ChatComposer is the message field of an assistant chat: by default one pill row with the attach slot, a growing textarea, the actions and a solid send button that turns into stop while a reply streams.',
     usage:
-      'Place it at the bottom of a chat surface, the same width as the transcript; Enter sends, Shift+Enter adds a line, and the footnote holds the AI disclaimer. Keep the default inline layout (it grows into a block when the text wraps); use layout="stacked" when several actions need their own row. Pass onVoice for a voice button while the field is empty.',
+      'Place it at the bottom of a chat surface, the same width as the transcript; Enter sends and Shift+Enter adds a line; on a touchscreen Enter adds a line and the send button sends (set submitOnEnter to choose). The footnote holds the AI disclaimer. Keep the default inline layout (it grows into a block when the text wraps); use layout="stacked" when several actions need their own row. Pass onVoice for a voice button while the field is empty.',
     usageExports: ['ChatComposer'],
   },
   'chat-message': {
@@ -280,14 +320,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['breadcrumb', 'navigation-menu', 'button'],
     summary: 'Destination Link distinguishes internal navigation from safe external navigation.',
     usage:
-      'Pass the app router link through render for internal routes and preserve visible destination cues.',
+      'Pass the app router link through render for internal routes and preserve visible destination cues. It draws no underline by default, for cards, titles and icon links; set variant="inline" for a text link in prose.',
     usageExports: ['DestinationLink', 'DestinationIndicator'],
   },
   dialog: {
     relatedSlugs: ['alert-dialog', 'sheet', 'drawer'],
     summary: 'Dialog provides modal task structure, focus management, and responsive placement.',
     usage:
-      'Give every dialog a title and a deliberate close path; use Alert Dialog for confirmation.',
+      'Give every dialog a title and a deliberate close path; use Alert Dialog for confirmation. The built-in close button is named "Close" in English; pass a localized name as closeProps={{ \'aria-label\': … }}.',
     usageExports: ['Dialog', 'DialogTrigger', 'DialogContent'],
   },
   drawer: {
@@ -313,13 +353,14 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['feedback-state', 'alert', 'button'],
     summary: 'Empty provides composable structure for empty collections and unavailable content.',
     usage:
-      'Explain why content is absent and offer an action only when there is a useful next step.',
+      'Use Empty to lay out your own empty or error message from parts (media, title, description, actions, EmptyErrorDetail); it announces nothing. Use FeedbackState instead when a data region switches between loading, empty, error or no results: it ships the copy and icons and announces each change. Explain why content is absent and offer an action only when there is a useful next step.',
     usageExports: ['Empty', 'EmptyHeader', 'EmptyTitle', 'EmptyDescription', 'EmptyContent'],
   },
   'feedback-state': {
     relatedSlugs: ['empty', 'alert', 'toaster'],
     summary: 'Feedback State packages common empty, error, and no-results messages with actions.',
-    usage: 'Choose the kind that matches the recovery path and keep technical detail secondary.',
+    usage:
+      'Use FeedbackState for the state of a data region (a table, a list, a widget): set state to loading, empty, error, not-found, no-results, offline or stale, and it supplies the icon and copy and announces each change (an error as an alert). For a one-off empty message you compose yourself, use Empty; for a whole page, the empty-state block. Keep the root mounted while the region loads. With state error and an Error, the friendly description stays and error.message shows as a smaller detail line under it. To localize, pass labels.titles and labels.descriptions (per kind) and labels.noResults.',
     usageExports: ['FeedbackState'],
   },
   field: {
@@ -371,7 +412,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Item provides structured row regions for media, content, actions, and supporting detail.',
     usage:
-      'Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link. For a dense list (an inbox, a message list), pass size="sm" (12px block padding) or size="xs" (8px); the default is 16px.',
+      'Keep the row hierarchy predictable and avoid nesting unrelated actions inside a row-level link. For a dense list (an inbox, a message list), pass size="sm" (12px block padding) or size="xs" (8px); the default is 16px. Put rows in an ItemGroup: it is a list, so a screen reader hears the count.',
     usageExports: ['Item', 'ItemContent', 'ItemTitle', 'ItemActions'],
   },
   kbd: {
@@ -387,6 +428,20 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     usage: 'Connect htmlFor to the control id; placeholder text is not a label.',
     usageExports: ['Label'],
   },
+  'layered-scene': {
+    relatedSlugs: ['art-plate', 'frame', 'card'],
+    summary:
+      'Layered Scene stacks a plate, a stage of product UI and an inert foreground cut-out so the interface sits inside the picture.',
+    usage:
+      'Use Layered Scene for a landing or portfolio hero where live product UI floats on an ArtPlate and a cut-out of the scene passes in front of it.',
+    usageExports: [
+      'LayeredScene',
+      'LayeredScenePlate',
+      'LayeredSceneContent',
+      'LayeredSceneStage',
+      'LayeredSceneForeground',
+    ],
+  },
   'load-more-trigger': {
     relatedSlugs: ['scrollable-list', 'spinner', 'progress'],
     summary: 'Load More Trigger is an observable sentinel row for incremental collection loading.',
@@ -399,7 +454,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Marquee loops arbitrary content horizontally or vertically with pause and direction controls.',
     usage:
-      'Use it only for non-essential repeated content and preserve the reduced-motion behavior.',
+      'Use it only for non-essential repeated content and preserve the reduced-motion behavior. It pauses on hover and focus and renders a pause toggle (WCAG 2.2.2); if you pass `paused`, the toggle is not rendered and you provide the control.',
     usageExports: ['Marquee'],
   },
   menubar: {
@@ -435,7 +490,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Pagination provides a navigation landmark and consistent previous, next, and page links.',
     usage:
-      'Expose the current page and real link destinations so navigation works without client state.',
+      'Give every page link a real href and mark the current page with isActive, so navigation works without client state. Window long ranges: show the first and last page, one or two pages either side of the current one, and PaginationEllipsis for the gaps. On the first page pass disabled to Previous, on the last to Next: the control stays in place, faded and out of the tab order. Pass children to replace the Previous, Next and More pages text; translated Previous and Next children also name the links, so no English aria-label is left. The chevrons mirror under dir="rtl".',
     usageExports: ['Pagination', 'PaginationContent', 'PaginationItem', 'PaginationLink'],
   },
   'panel-setting-button': {
@@ -449,7 +504,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['tooltip', 'hover-card', 'dialog'],
     summary: 'Popover anchors non-modal interactive content to a trigger or custom anchor.',
     usage:
-      'Use it when focus may remain in the surrounding page; use Dialog when the task must be modal.',
+      'Use it when focus may remain in the surrounding page; use Dialog when the task must be modal. PopoverContent takes side (top, right, bottom, left, inline-start, inline-end; default bottom), align (default center), sideOffset (default 4), alignOffset, collisionPadding and portalContainer. It positions against its trigger, or against a PopoverAnchor placed inside the same Popover, or against an element passed as anchor.',
     usageExports: ['Popover', 'PopoverTrigger', 'PopoverContent'],
   },
   'portal-container': {
@@ -551,7 +606,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     summary:
       'Sheet presents modal content from a chosen viewport side using dialog focus behavior.',
     usage:
-      'Use it for a side-oriented modal task; use Drawer when drag interaction is part of the experience.',
+      'Use it for a side-oriented modal task; use Drawer when drag interaction is part of the experience. side="inline-start" and side="inline-end" follow the text direction (a navigation sheet opens from the reading start in right-to-left pages too); left and right stay physical screen edges. The built-in close button is named "Close" in English; pass a localized name as closeProps={{ \'aria-label\': … }}.',
     usageExports: ['Sheet', 'SheetTrigger', 'SheetContent'],
   },
   sidebar: {
@@ -580,7 +635,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['spinner', 'progress', 'empty'],
     summary: 'Skeleton reserves content geometry while a known layout is loading.',
     usage:
-      'Match the expected content shape and avoid using skeletons for errors or genuinely empty results.',
+      'Match the expected content shape, set aria-busy="true" on the region being loaded (the skeleton itself is decorative) and remove it with the skeletons. Do not use skeletons for errors or genuinely empty results.',
     usageExports: ['Skeleton'],
   },
   slider: {
@@ -606,7 +661,7 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
     relatedSlugs: ['pagination', 'scroll-area'],
     summary: 'Table provides semantic table regions with shared typography, spacing, and states.',
     usage:
-      'Keep header relationships intact and add horizontal containment for genuinely wide data. For a dense table (admin, payments, issues), pass size="sm": rows are 33px, and a row checkbox or a 24px row menu (size="icon-xs") keeps its hit area without making the row taller.',
+      'Keep header relationships intact and add horizontal containment for genuinely wide data. For a dense table (admin, payments, issues), pass size="sm": rows are 33px, and a row checkbox or a 24px row menu (size="icon-xs") keeps its hit area without making the row taller. Mark a selected row with TableRow selected; cells stay on one line unless TableCell wrap lets long text break. Give a column of numbers or money align="end" on its TableHead and TableCells: it ends the column at the inline end in tabular figures. Name an overflowing table with a TableCaption or aria-label, which also names its scroll region.',
     usageExports: ['Table', 'TableHeader', 'TableBody', 'TableRow', 'TableHead', 'TableCell'],
   },
   tabs: {
@@ -639,11 +694,15 @@ const componentDefinitions: Record<string, ComponentDefinition> = {
           'A compact pill in the inverse colours, the icon after the message (a status with a spinner).',
       },
     },
+    guidance: [
+      'A toast is announced politely and never takes focus, so it cannot carry anything the user must act on: use Alert Dialog for a decision and an inline Alert for an error that blocks the task.',
+      'A toast closes itself after a few seconds; give one with an action duration: Infinity (or a longer duration) so a keyboard or screen-reader user can reach the action.',
+    ],
     relatedSlugs: ['alert', 'feedback-state', 'copy-button'],
     summary:
       'Toaster is the app-level host for transient messages raised through the exported toast API.',
     usage:
-      'Mount one host near the app root and keep messages concise, actionable, and non-essential. Inside a nested theme region, point PortalContainerProvider at an element in that scope so the toast inherits its tokens; otherwise it falls back to body. For a short status in a dark pill, as macOS and iOS draw it, use <Toaster variant="inverse" position="bottom-center" /> with toast.loading(…).',
+      'Mount one host near the app root and keep messages concise, actionable, and non-essential. Raise a toast with toast(message) for the default tone, or toast.info, toast.success, toast.warning, toast.error and toast.loading for the contract tones; toast.promise moves one toast from loading to success or error. Pass { description } for a second line and { action: { label, onClick } } for one action; set closeButton on the Toaster to give every toast a close button. The English labels are props: containerAriaLabel names the region and toastOptions.closeButtonAriaLabel the close button. Inside a nested theme region, point PortalContainerProvider at an element in that scope so the toast inherits its tokens and direction; otherwise it falls back to body. For a short status in a dark pill, as macOS and iOS draw it, use <Toaster variant="inverse" position="bottom-center" /> with toast.loading(…).',
     usageExports: ['Toaster', 'toast'],
   },
   toggle: {
@@ -727,6 +786,13 @@ function component(slug: string, category: string): ComponentCatalogItem {
   if (!definition) {
     throw new Error(`Missing component catalog definition: ${slug}`)
   }
+  // Every catalog component has a contract that declares its maturity; none defaults to stable.
+  const status = getComponentMaturity(slug)
+  if (!status) {
+    throw new Error(
+      `${slug} has no contract maturity: add packages/ui-foundation/contracts/components/${slug}.json`
+    )
+  }
 
   return {
     ...definition,
@@ -738,8 +804,7 @@ function component(slug: string, category: string): ComponentCatalogItem {
         ? 'standard'
         : 'compact',
     slug,
-    // From the contract's maturity; a component with no contract (Progressive Blur) is stable.
-    status: getComponentMaturity(slug) ?? 'stable',
+    status,
     storyExport: storyExportOverrides[slug] ?? 'Playground',
   }
 }
@@ -823,10 +888,12 @@ export const componentCatalogGroups = [
       'alert',
       'amount',
       'app-view',
+      'art-plate',
       'avatar',
       'badge',
       'card',
       'carousel',
+      'chart',
       'chat-message',
       'chat-steps',
       'collapsible',
@@ -835,6 +902,7 @@ export const componentCatalogGroups = [
       'feedback-state',
       'frame',
       'item',
+      'layered-scene',
       'message',
       'scroll-area',
       'scrollable-list',

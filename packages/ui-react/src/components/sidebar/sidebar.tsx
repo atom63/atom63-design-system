@@ -11,6 +11,7 @@ import {
   type SidebarVariant,
   sidebarContract,
 } from '@atom63/ui-foundation'
+import { useDirection } from '@base-ui/react/direction-provider'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import { PanelLeft } from 'lucide-react'
@@ -222,10 +223,15 @@ function SidebarProvider({
 }
 
 export type SidebarProps = React.ComponentProps<'div'> & {
+  /** The edge it sits on, logically: 'left' is the inline start (the right under dir="rtl"). */
   side?: SidebarSide
   variant?: SidebarVariant
   collapsible?: SidebarCollapsible
   dir?: React.ComponentProps<typeof SheetContent>['dir']
+  /** The phone sheet's accessible title, read when it opens. */
+  mobileTitle?: string
+  /** The phone sheet's accessible description. */
+  mobileDescription?: string
 }
 
 function Sidebar({
@@ -235,9 +241,15 @@ function Sidebar({
   className,
   children,
   dir,
+  mobileTitle = 'Sidebar',
+  mobileDescription = 'Displays the mobile sidebar.',
   ...props
 }: SidebarProps): React.ReactElement {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
+  // The sheet's sides are physical, so a start-side sidebar opens from the right under RTL.
+  const direction = useDirection()
+  const isRtl = (dir ?? direction) === 'rtl'
+  const sheetSide = isRtl ? (side === 'left' ? 'right' : 'left') : side
 
   if (collapsible === 'none') {
     return (
@@ -265,7 +277,7 @@ function Sidebar({
           data-slot="sidebar"
           dir={dir}
           showCloseButton={false}
-          side={side}
+          side={sheetSide}
           style={
             {
               '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
@@ -273,8 +285,8 @@ function Sidebar({
           }
         >
           <SheetHeader className="a63-Sidebar-sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            <SheetTitle>{mobileTitle}</SheetTitle>
+            <SheetDescription>{mobileDescription}</SheetDescription>
           </SheetHeader>
           <div className="a63-Sidebar-mobile-inner">{children}</div>
         </SheetContent>
@@ -296,6 +308,9 @@ function Sidebar({
         className={cn('a63-Sidebar-container', className)}
         data-side={side}
         data-slot="sidebar-container"
+        // Off-screen while collapsed: keep its links out of the tab order and
+        // the accessibility tree.
+        inert={state === 'collapsed' && collapsible === 'offcanvas'}
         {...props}
       >
         <div className="a63-Sidebar-inner" data-sidebar="sidebar" data-slot="sidebar-inner">
@@ -306,11 +321,17 @@ function Sidebar({
   )
 }
 
+export type SidebarTriggerProps = React.ComponentProps<typeof Button> & {
+  /** The button's accessible name. */
+  label?: string
+}
+
 function SidebarTrigger({
   className,
+  label = 'Toggle Sidebar',
   onClick,
   ...props
-}: React.ComponentProps<typeof Button>): React.ReactElement {
+}: SidebarTriggerProps): React.ReactElement {
   const { toggleSidebar } = useSidebar()
 
   return (
@@ -327,7 +348,7 @@ function SidebarTrigger({
       {...props}
     >
       <PanelLeft aria-hidden="true" />
-      <span className="a63-Sidebar-sr-only">Toggle Sidebar</span>
+      <span className="a63-Sidebar-sr-only">{label}</span>
     </Button>
   )
 }
@@ -560,6 +581,7 @@ function SidebarMenuButton({
     defaultTagName: 'button',
     props: mergeProps<'button'>(
       {
+        'aria-current': isActive ? 'page' : undefined,
         className: cn('a63-Sidebar-menu-button', className),
         'data-active': isActive,
         'data-sidebar': 'menu-button',
@@ -600,7 +622,7 @@ function SidebarMenuButton({
       <TooltipContent
         align="center"
         hidden={state !== 'collapsed' || isMobile}
-        side="right"
+        side="inline-end"
         {...tooltipProps}
       />
     </Tooltip>
@@ -748,6 +770,7 @@ function SidebarMenuSubButton({
     defaultTagName: 'a',
     props: mergeProps<'a'>(
       {
+        'aria-current': isActive ? 'page' : undefined,
         className: cn('a63-Sidebar-menu-sub-button', className),
         'data-active': isActive,
         'data-sidebar': 'menu-sub-button',

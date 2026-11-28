@@ -21,7 +21,8 @@ import { ScrollArea } from '../scroll-area'
  * Sheet — a Base UI Dialog rendered as a slide-in panel (drawer-from-edge).
  * Faithful port of prod @atom63/ui sheet.tsx: same parts (Root/Portal/Trigger/
  * Close/Backdrop/Viewport/Popup/Header/Footer/Title/Description/Panel) and the
- * same pass-through `side` ('left'|'right'|'top'|'bottom') + `variant`
+ * same pass-through `side` ('left'|'right'|'top'|'bottom', physical screen edges,
+ * plus 'inline-start'|'inline-end', which follow the text direction) + `variant`
  * ('default'|'inset') props — Base UI Dialog has no `side`, so we add it and drive
  * the slide direction via data-side + CSS. The trigger/close render-slot helper is
  * replaced by Base UI's native `render` prop (DS convention).
@@ -35,6 +36,14 @@ export type SheetSide = FoundationSheetSide
 export type SheetVariant = FoundationSheetVariant
 
 let openSheetCount = 0
+
+/*
+ * Base UI hides the rest of the page with aria-hidden while a modal sheet is
+ * open, but does not set aria-modal, which the APG requires; and its Popup
+ * does not expose the root's `modal` prop. The root passes it down here, as
+ * Dialog does. Base UI treats `true` and 'trap-focus' as modal.
+ */
+const SheetModalContext = React.createContext<SheetPrimitive.Root.Props['modal']>(true)
 
 function setSheetBodyState(open: boolean) {
   openSheetCount = Math.max(0, openSheetCount + (open ? 1 : -1))
@@ -66,13 +75,15 @@ export function Sheet({ onOpenChange, open, defaultOpen, ...props }: SheetPrimit
   }
 
   return (
-    <SheetPrimitive.Root
-      data-slot="sheet"
-      defaultOpen={defaultOpen}
-      onOpenChange={handleOpenChange}
-      open={open}
-      {...props}
-    />
+    <SheetModalContext.Provider value={props.modal ?? true}>
+      <SheetPrimitive.Root
+        data-slot="sheet"
+        defaultOpen={defaultOpen}
+        onOpenChange={handleOpenChange}
+        open={open}
+        {...props}
+      />
+    </SheetModalContext.Provider>
   )
 }
 
@@ -141,6 +152,10 @@ export type SheetPopupProps = SheetPrimitive.Popup.Props & {
   showCloseButton?: boolean
   side?: SheetSide
   variant?: SheetVariant
+  /**
+   * Props for the built-in close button. Its accessible name defaults to the
+   * English "Close"; pass a localized one as `closeProps={{ 'aria-label': … }}`.
+   */
   closeProps?: SheetPrimitive.Close.Props
   portalProps?: SheetPrimitive.Portal.Props
 }
@@ -155,11 +170,13 @@ export function SheetPopup({
   portalProps,
   ...props
 }: SheetPopupProps): React.ReactElement {
+  const modal = React.useContext(SheetModalContext)
   return (
     <SheetPortal {...portalProps}>
       <SheetBackdrop />
       <SheetViewport side={side} variant={variant}>
         <SheetPrimitive.Popup
+          aria-modal={modal === false ? undefined : true}
           className={cn('a63-Sheet-popup', className)}
           data-side={side}
           data-slot="sheet-popup"

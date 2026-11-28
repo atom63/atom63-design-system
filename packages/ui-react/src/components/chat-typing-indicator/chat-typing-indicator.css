@@ -8,11 +8,24 @@
 .a63-ChatTypingIndicator {
   --chat-typing-dot-size: var(--a63-space-2);
 
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: var(--a63-space-1);
   min-block-size: var(--a63-space-6);
   color: var(--a63-text-secondary);
+}
+
+.a63-ChatTypingIndicator-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
 .a63-ChatTypingIndicator-dot {
@@ -57,5 +70,14 @@
 
   .a63-ChatTypingIndicator-dot:nth-child(3) {
     opacity: 0.85;
+  }
+}
+
+/* Forced colors (Windows High Contrast) replace the dots' fill with Canvas,
+   which would hide the indicator's only visible content. */
+@media (forced-colors: active) {
+  .a63-ChatTypingIndicator-dot {
+    background-color: CanvasText;
+    forced-color-adjust: none;
   }
 }

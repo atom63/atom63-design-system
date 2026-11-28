@@ -1,8 +1,15 @@
 'use client'
 
+import type {
+  AlertDialogSize,
+  AlertDialogSizeAlias,
+  AlertDialogVariant,
+  AlertDialogVariantAlias,
+} from '@atom63/ui-foundation'
 import { AlertDialog as AlertDialogPrimitive } from '@base-ui/react/alert-dialog'
 import type * as React from 'react'
 import { cn } from '../../lib/cn'
+import { usePortalContainer } from '../portal-container'
 import { Button, type ButtonProps } from '../button'
 
 /*
@@ -28,7 +35,15 @@ export const AlertDialogCreateHandle: typeof AlertDialogPrimitive.createHandle =
 export const AlertDialog: typeof AlertDialogPrimitive.Root = AlertDialogPrimitive.Root
 
 export function AlertDialogPortal(props: AlertDialogPrimitive.Portal.Props): React.ReactElement {
-  return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
+  const { container, ...portalProps } = props
+  const contextPortalContainer = usePortalContainer()
+  return (
+    <AlertDialogPrimitive.Portal
+      container={container ?? contextPortalContainer}
+      data-slot="alert-dialog-portal"
+      {...portalProps}
+    />
+  )
 }
 
 export function AlertDialogTrigger({
@@ -74,15 +89,19 @@ export function AlertDialogPopup({
   className,
   bottomStickOnMobile = true,
   portalProps,
-  size = 'default',
+  size = 'md',
   variant = 'default',
   ...props
 }: AlertDialogPrimitive.Popup.Props & {
   bottomStickOnMobile?: boolean
   portalProps?: AlertDialogPrimitive.Portal.Props
-  /** @deprecated Use `className` (e.g. `max-w-sm`) instead. Kept for existing call sites. */
-  size?: 'default' | 'sm'
-  variant?: 'default' | 'destructive' | 'info' | 'success' | 'warning'
+  /**
+   * @deprecated Use `className` (e.g. `max-w-sm`) instead. Kept for existing call sites;
+   * `'default'` is the earlier name of `'md'`.
+   */
+  size?: AlertDialogSize | AlertDialogSizeAlias
+  /** The tone of the media chip. `'destructive'` is a deprecated alias of `'error'`. */
+  variant?: AlertDialogVariant | AlertDialogVariantAlias
 }): React.ReactElement {
   return (
     <AlertDialogPortal {...portalProps}>
@@ -93,10 +112,10 @@ export function AlertDialogPopup({
         <AlertDialogPrimitive.Popup
           aria-modal
           className={cn('a63-AlertDialog-popup', className)}
-          data-size={size}
+          data-size={size === 'default' ? 'md' : size}
           data-slot="alert-dialog-popup"
           data-stick-bottom={bottomStickOnMobile ? '' : undefined}
-          data-variant={variant}
+          data-variant={variant === 'destructive' ? 'error' : variant}
           {...props}
         />
       </AlertDialogViewport>

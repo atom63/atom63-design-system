@@ -124,10 +124,24 @@
   }
 }
 
+/*
+ * `side` is logical: 'left' is the inline start (the right under dir="rtl")
+ * and 'right' the inline end, so the fixed container lands on the same edge
+ * as the in-flow gap that reserves its width.
+ *
+ * The desktop panel owns the safe-area inset on its edge (a landscape phone's
+ * notch): it pads its outer edge by the larger inline inset, and the gap and
+ * the container grow by the same amount, so the content beside it is not
+ * covered. The larger of the two keeps the layout mirroring.
+ */
+.a63-Sidebar-root {
+  --sidebar-safe-inset: max(var(--a63-safe-area-left, 0px), var(--a63-safe-area-right, 0px));
+}
+
 /* The width-reserving gap element. */
 .a63-Sidebar-gap {
   position: relative;
-  width: var(--sidebar-width);
+  width: calc(var(--sidebar-width) + var(--sidebar-safe-inset));
   background-color: transparent;
   transition: width 200ms linear;
 }
@@ -138,11 +152,11 @@
   rotate: 180deg;
 }
 .a63-Sidebar-root[data-collapsible='icon'] .a63-Sidebar-gap {
-  width: var(--sidebar-width-icon);
+  width: calc(var(--sidebar-width-icon) + var(--sidebar-safe-inset));
 }
 .a63-Sidebar-root[data-variant='floating'][data-collapsible='icon'] .a63-Sidebar-gap,
 .a63-Sidebar-root[data-variant='inset'][data-collapsible='icon'] .a63-Sidebar-gap {
-  width: calc(var(--sidebar-width-icon) + var(--a63-space-4));
+  width: calc(var(--sidebar-width-icon) + var(--a63-space-4) + var(--sidebar-safe-inset));
 }
 
 /* The fixed, positioned container. */
@@ -152,10 +166,10 @@
   z-index: var(--z-layer-base);
   display: none;
   height: 100svh;
-  width: var(--sidebar-width);
+  width: calc(var(--sidebar-width) + var(--sidebar-safe-inset));
   transition:
-    left 200ms linear,
-    right 200ms linear,
+    inset-inline-start 200ms linear,
+    inset-inline-end 200ms linear,
     width 200ms linear;
 }
 @media (min-width: 768px) {
@@ -164,35 +178,45 @@
   }
 }
 .a63-Sidebar-root[data-side='left'] .a63-Sidebar-container {
-  left: 0;
+  inset-inline-start: 0;
+  padding-inline-start: var(--sidebar-safe-inset);
 }
 .a63-Sidebar-root[data-side='left'][data-collapsible='offcanvas'] .a63-Sidebar-container {
-  left: calc(var(--sidebar-width) * -1);
+  inset-inline-start: calc((var(--sidebar-width) + var(--sidebar-safe-inset)) * -1);
 }
 .a63-Sidebar-root[data-side='right'] .a63-Sidebar-container {
-  right: 0;
+  inset-inline-end: 0;
+  padding-inline-end: var(--sidebar-safe-inset);
 }
 .a63-Sidebar-root[data-side='right'][data-collapsible='offcanvas'] .a63-Sidebar-container {
-  right: calc(var(--sidebar-width) * -1);
+  inset-inline-end: calc((var(--sidebar-width) + var(--sidebar-safe-inset)) * -1);
 }
 /* variant=sidebar collapses to the icon width + a divider on the inner edge. */
 .a63-Sidebar-root[data-variant='sidebar'][data-collapsible='icon'] .a63-Sidebar-container {
-  width: var(--sidebar-width-icon);
+  width: calc(var(--sidebar-width-icon) + var(--sidebar-safe-inset));
 }
 .a63-Sidebar-root[data-variant='sidebar'][data-side='left'] .a63-Sidebar-container {
-  border-right: 1px solid var(--sidebar-border);
+  border-inline-end: 1px solid var(--sidebar-border);
 }
 .a63-Sidebar-root[data-variant='sidebar'][data-side='right'] .a63-Sidebar-container {
-  border-left: 1px solid var(--sidebar-border);
+  border-inline-start: 1px solid var(--sidebar-border);
 }
 /* floating + inset variants get inner padding + a slightly wider icon rail. */
 .a63-Sidebar-root[data-variant='floating'] .a63-Sidebar-container,
 .a63-Sidebar-root[data-variant='inset'] .a63-Sidebar-container {
   padding: var(--a63-space-2);
 }
+.a63-Sidebar-root:is([data-variant='floating'], [data-variant='inset'])[data-side='left']
+  .a63-Sidebar-container {
+  padding-inline-start: calc(var(--a63-space-2) + var(--sidebar-safe-inset));
+}
+.a63-Sidebar-root:is([data-variant='floating'], [data-variant='inset'])[data-side='right']
+  .a63-Sidebar-container {
+  padding-inline-end: calc(var(--a63-space-2) + var(--sidebar-safe-inset));
+}
 .a63-Sidebar-root[data-variant='floating'][data-collapsible='icon'] .a63-Sidebar-container,
 .a63-Sidebar-root[data-variant='inset'][data-collapsible='icon'] .a63-Sidebar-container {
-  width: calc(var(--sidebar-width-icon) + var(--a63-space-4) + 2px);
+  width: calc(var(--sidebar-width-icon) + var(--a63-space-4) + 2px + var(--sidebar-safe-inset));
 }
 
 /* The inner chrome surface. */
@@ -222,6 +246,9 @@
   translate: -50%;
   transition: all 200ms linear;
 }
+.a63-Sidebar-rail:dir(rtl) {
+  translate: 50%;
+}
 @media (min-width: 640px) {
   .a63-Sidebar-rail {
     display: flex;
@@ -238,11 +265,11 @@
   background-color: var(--sidebar-border);
 }
 .a63-Sidebar-root[data-side='left'] .a63-Sidebar-rail {
-  right: -1rem;
+  inset-inline-end: -1rem;
   cursor: w-resize;
 }
 .a63-Sidebar-root[data-side='right'] .a63-Sidebar-rail {
-  left: 0;
+  inset-inline-start: 0;
   cursor: e-resize;
 }
 .a63-Sidebar-root[data-side='left'][data-state='collapsed'] .a63-Sidebar-rail {
@@ -261,10 +288,10 @@
   left: 100%;
 }
 .a63-Sidebar-root[data-side='left'][data-collapsible='offcanvas'] .a63-Sidebar-rail {
-  right: -0.5rem;
+  inset-inline-end: -0.5rem;
 }
 .a63-Sidebar-root[data-side='right'][data-collapsible='offcanvas'] .a63-Sidebar-rail {
-  left: -0.5rem;
+  inset-inline-start: -0.5rem;
 }
 
 /* ── Inset (the main content area beside the sidebar) ─────────────────────── */
@@ -429,6 +456,9 @@
 }
 
 /* ── Menu button ─────────────────────────────────────────────────────────── */
+/* Rows floor at --a63-row-min-size: 44px on a touchscreen (a touch tablet, the
+   phone sheet), equal to --a63-control-min-size on a fine pointer. The icon
+   rail keeps its square button. */
 .a63-Sidebar-menu-button {
   display: flex;
   width: 100%;
@@ -446,7 +476,7 @@
     padding 150ms;
   height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
 }
 .a63-Sidebar-menu-button:hover,
@@ -496,21 +526,21 @@
 .a63-Sidebar-menu-button[data-size='default'] {
   height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
   font-size: var(--a63-control-font-size-sm);
 }
 .a63-Sidebar-menu-button[data-size='sm'] {
   height: max(
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
   font-size: var(--a63-control-font-size-xs);
 }
 .a63-Sidebar-menu-button[data-size='lg'] {
   height: max(
     calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size-lg, var(--a63-control-min-size))
+    var(--a63-row-min-size, var(--a63-control-min-size-lg, var(--a63-control-min-size)))
   );
   font-size: var(--a63-control-font-size-sm);
 }
@@ -524,7 +554,9 @@
   color: var(--sidebar-accent-fg);
   box-shadow: 0 0 0 1px var(--sidebar-accent);
 }
-/* collapsed icon rail: square the button + hide labels */
+/* collapsed icon rail: square the button + hide labels visually (they stay
+   the button's accessible name). An avatar stays: in a `size="lg"` button
+   (a user row) it is what the rail shows. */
 .a63-Sidebar-root[data-collapsible='icon'] .a63-Sidebar-menu-button {
   margin-inline: auto;
   width: max(
@@ -544,15 +576,21 @@
 }
 .a63-Sidebar-root[data-collapsible='icon']
   .a63-Sidebar-menu-button
-  > span:not(.a63-Sidebar-sr-only) {
-  display: none;
+  > span:not(.a63-Sidebar-sr-only, .a63-Avatar) {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }
 
 /* ── Menu action ─────────────────────────────────────────────────────────── */
 .a63-Sidebar-menu-action {
   position: absolute;
   top: 50%;
-  right: 0;
+  inset-inline-end: 0;
   display: flex;
   aspect-ratio: 1 / 1;
   width: var(--a63-control-min-target);
@@ -602,7 +640,7 @@
 .a63-Sidebar-menu-badge {
   pointer-events: none;
   position: absolute;
-  right: 0.25rem;
+  inset-inline-end: 0.25rem;
   display: flex;
   height: 1.25rem;
   min-width: 1.25rem;
@@ -680,7 +718,7 @@
   display: flex;
   height: max(
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
-    var(--a63-control-min-size)
+    var(--a63-row-min-size, var(--a63-control-min-size))
   );
   min-width: 0;
   translate: -1px;

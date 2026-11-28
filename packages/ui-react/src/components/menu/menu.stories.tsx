@@ -2,7 +2,7 @@ import { menuContract } from '@atom63/ui-foundation'
 import { UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import { Check, ChevronRight, Circle } from 'lucide-react'
+import { Check, ChevronRight } from 'lucide-react'
 import type { CSSProperties } from 'react'
 import { EnvironmentShell, ThemeMatrix } from '../story-probes'
 
@@ -21,7 +21,7 @@ type Story = StoryObj<typeof meta>
 
 /* The full state gallery, rendered as a static popup. `tone` opts into the
    primary-highlight variant. */
-function MenuPreview({ tone }: { tone?: 'primary' }) {
+function MenuPreview({ focusable, tone }: { focusable?: boolean; tone?: 'primary' }) {
   return (
     <div
       className="a63-Menu-popup"
@@ -29,8 +29,9 @@ function MenuPreview({ tone }: { tone?: 'primary' }) {
       style={{ position: 'static', minWidth: '15rem', maxHeight: 'none' } as CSSProperties}
     >
       <div className="a63-Menu-label">Actions</div>
-      <div className="a63-Menu-item">
-        <span>Copy</span>
+      {/* eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- the static preview row takes focus so the FocusVisible story can capture the ring. */}
+      <div className="a63-Menu-item" tabIndex={focusable ? 0 : undefined}>
+        <span>Copy{focusable ? ' (keyboard focus)' : ''}</span>
         <span className="a63-Menu-shortcut">⌘C</span>
       </div>
       <div className="a63-Menu-item" data-highlighted="">
@@ -52,7 +53,7 @@ function MenuPreview({ tone }: { tone?: 'primary' }) {
       </div>
       <div className="a63-Menu-item a63-Menu-item--indicator" data-highlighted="">
         <span className="a63-Menu-item-indicator">
-          <Circle aria-hidden />
+          <Check aria-hidden />
         </span>
         <span>Radio (selected, highlighted)</span>
       </div>
@@ -119,6 +120,29 @@ export const Tones: Story = {
       </div>
     </EnvironmentShell>
   ),
+}
+
+/* Captured with forced colors on (Windows High Contrast): the highlighted row
+   and the open submenu trigger take the system selection colours in both tones. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'flex-start' }}>
+      <MenuPreview />
+      <MenuPreview tone="primary" />
+    </div>
+  ),
+}
+
+/* Keyboard focus on a row: the inset ring drawn over the row, beside a
+   highlighted row without it. Captured in both tones. */
+export const FocusVisible: Story = {
+  render: () => (
+    <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'flex-start' }}>
+      <MenuPreview focusable />
+      <MenuPreview tone="primary" />
+    </div>
+  ),
+  parameters: { visualState: { focusVisible: '.a63-Menu-item[tabindex="0"]' } },
 }
 
 /* The menu across all four skins × light/dark. */

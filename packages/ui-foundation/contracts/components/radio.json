@@ -31,6 +31,43 @@
       "$ref": "#/lists/indicators"
     }
   },
+  "intent": {
+    "description": "What a radio is, independent of any platform: its size and whether its indicator is drawn. iOS has neither axis: Picker(.inline) and AtomSelectionRow draw a checkmark row at one size.",
+    "axes": {
+      "size": ["sm", "md"],
+      "indicator": ["visible", "hidden"]
+    },
+    "platforms": {
+      "web": {
+        "props": {
+          "size": {
+            "list": "sizes",
+            "map": {
+              "sm": {
+                "size": "sm"
+              },
+              "md": {
+                "size": "md"
+              }
+            },
+            "extensions": {}
+          },
+          "indicator": {
+            "list": "indicators",
+            "map": {
+              "visible": {
+                "indicator": "visible"
+              },
+              "hidden": {
+                "indicator": "hidden"
+              }
+            },
+            "extensions": {}
+          }
+        }
+      }
+    }
+  },
   "crossRenderer": {
     "foundationAxis": "states",
     "catalogItem": "radioGroup",

@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
-import { phoneGlobals, ThemeMatrix, themeMatrixParameters } from '../../story-matrix'
+import {
+  landmarkParameters,
+  phoneGlobals,
+  ThemeMatrix,
+  themeMatrixParameters,
+} from '../../story-matrix'
 import { AppViewPage, AppViewPhonePage } from './app-view'
 
 const meta = {
   title: 'Templates/Pages/App view',
   component: AppViewPage,
-  parameters: { layout: 'fullscreen' },
+  parameters: { layout: 'fullscreen', ...landmarkParameters },
 } satisfies Meta<typeof AppViewPage>
 
 export default meta

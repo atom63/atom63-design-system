@@ -10,7 +10,10 @@ fixtures are repository-only implementation detail.
 
 See `API.md` for the maintained public export snapshot.
 
-Public import paths:
+Public import paths. The stability column is the API tier of each entry: a Stable entry keeps
+its exports and props without breaking changes between releases, an Experimental one can change.
+The package itself is still beta (`0.x-beta` on npm), so a release can still change a Stable
+entry; such a change is called out in the changelog.
 
 | Subpath | Stability | Use |
 |---------|-----------|-----|
@@ -126,7 +129,12 @@ Site-specific media (`MediaBlock`, carousels, Compare) stays in atom63.io — se
 
 ## Block inventory
 
-Registered on `mdxComponents` / `blockMdxComponents`:
+Each block's purpose, a working example and its props (read from its TypeScript types) are on
+the docs page [MDX blocks](https://system.atom63.io/patterns/pattern-mdx-blocks),
+and from the terminal with `atom63 api <Block>` (for example `atom63 api KeyIdea`) or
+`atom63 docs pattern-mdx-blocks`.
+
+Every name in `portableBlockNames` is registered on `mdxComponents` / `blockMdxComponents`, among them:
 
 | Component | Purpose |
 |-----------|---------|
@@ -137,7 +145,7 @@ Registered on `mdxComponents` / `blockMdxComponents`:
 | `ExampleContainer` | Live demo frame with dot grid |
 | `FigureBlock` | Captioned image figure with a connected `MediaLightbox` gallery (default on) |
 | `MediaCaption` | Centered figure caption |
-| `VideoBlock` | Captioned or explicitly decorative video figure |
+| `VideoBlock` | Captioned or explicitly decorative video figure. Set the caption track's language with `trackLang` (default `en`) and its menu name with `trackLabel` (default: the language's own name, such as "English" or "Deutsch") |
 
 Article-only components (atom63.io): `MediaBlock`, `ImageBlock`, `ImageCarousel`, `ImageGrid`, `BeforeAfter`, `LinkCard`.
 

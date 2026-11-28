@@ -24,6 +24,10 @@
  * Theme collection whose modes are theme × mode (`aqua-dark`), each resolved in
  * the browser with both attributes set. Such a token may otherwise vary only by
  * mode; a theme token on any other axis fails the build.
+ *
+ * A value that varies on brand and mode together (the chart series derived from
+ * the brand hue) is split by splitBrandByMode(): one hidden Brand variable per
+ * mode holds the per-brand values, and the token's Mode variable aliases them.
  */
 /* global document, getComputedStyle -- resolveInPage runs inside the browser page */
 import { readFile, writeFile } from 'node:fs/promises'
@@ -496,6 +500,15 @@ async function main() {
       byVar,
       resolveContext,
     })
+    const unsplit = await splitBrandByMode({
+      computed,
+      collections,
+      ensureCollection,
+      byVar,
+      synced,
+      resolveContext,
+    })
+    computed.splice(0, computed.length, ...unsplit)
     const computedValues = await resolveComputed(computed, byVar, resolveContext)
 
     // Drop aliases whose target was skipped, resolving them to literals is not
@@ -532,6 +545,7 @@ async function main() {
     const unscoped = []
     for (const collection of collections.values()) {
       for (const item of collection.variables) {
+        if (item.scopes) continue
         const rule = scopesFor({ token: item.token, type: item.type, collection: collection.name })
         if (rule) item.scopes = rule.scopes
         else unscoped.push(`${item.token} (${item.type})`)
@@ -718,6 +732,71 @@ async function placeByMeasuredAxes({ collections, ensureCollection, byVar, resol
     })
   }
   return computed.sort((left, right) => left.token.localeCompare(right.token))
+}
+
+/**
+ * Figma resolves an alias in the mode the consuming layer sets for the target's
+ * own collection, so a value that varies on brand and mode together (the chart
+ * series, derived in CSS from the brand hue with relative color syntax) fits in
+ * two collections: one Brand variable per mode (`chart/2/light`, token
+ * `--a63-chart-2-light`, hidden from pickers) holds the browser's value for each
+ * brand, and the token's own variable in the Mode collection aliases the one for
+ * its mode. A layer's Brand and Mode modes then pick the browser's value for
+ * every brand × mode. Returns the `computed` entries it did not split.
+ */
+async function splitBrandByMode({
+  computed,
+  collections,
+  ensureCollection,
+  byVar,
+  synced,
+  resolveContext,
+}) {
+  const brand = axes.find(axis => axis.id === 'brand')
+  const mode = axes.find(axis => axis.id === 'mode')
+  const split = computed.filter(entry => entry.variesOn.join() === 'brand,mode')
+  if (split.length === 0) return computed
+  const records = split.map(entry => byVar.get(entry.token))
+  const resolved = {}
+  for (const modeName of mode.modes) {
+    for (const record of records)
+      record.currentRaw = record.rawByMode[modeName] ?? record.rawByMode.default ?? ''
+    for (const brandName of brand.modes)
+      resolved[`${brandName},${modeName}`] = await resolveContext(
+        { [brand.attribute]: brandName, [mode.attribute]: modeName },
+        records
+      )
+  }
+  const brandCollection = ensureCollection(brand.collection, brand.modes)
+  const modeCollection = ensureCollection(mode.collection, mode.modes)
+  for (const [index, entry] of split.entries()) {
+    const record = records[index]
+    for (const collection of collections.values())
+      collection.variables = collection.variables.filter(item => item.token !== entry.token)
+    const aliases = {}
+    for (const modeName of mode.modes) {
+      const token = `${entry.token}-${modeName}`
+      if (synced.has(token)) throw new Error(`${token} is a token; it cannot name a split variable`)
+      const values = {}
+      for (const brandName of brand.modes) {
+        const value = resolved[`${brandName},${modeName}`][entry.token]?.resolved
+        if (value === null || value === undefined)
+          throw new Error(`${entry.token} does not resolve for ${brandName} ${modeName}`)
+        values[brandName] = { value }
+      }
+      brandCollection.variables.push({
+        name: `${figmaPath(record.entry)}/${modeName}`,
+        token,
+        type: record.type,
+        values,
+        codeSyntax: codeSyntaxFor(token),
+        scopes: [],
+      })
+      aliases[modeName] = { alias: token }
+    }
+    modeCollection.variables.push(variable(record, aliases))
+  }
+  return computed.filter(entry => !split.includes(entry))
 }
 
 /**

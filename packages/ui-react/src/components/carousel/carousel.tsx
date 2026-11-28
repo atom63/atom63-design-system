@@ -64,6 +64,14 @@ export function useCarousel(): CarouselContextProps {
   return context
 }
 
+/**
+ * A paged row or column of slides, scrolled in place on the page.
+ *
+ * For a full-screen photo viewer use `MediaLightbox` from
+ * `@atom63/ui-react/media`; do not put a Carousel inside a fixed overlay. That
+ * overlay has no scroll lock and no `touch-action`, so a swipe on a phone
+ * scrolls the page behind it and the slides drift vertically.
+ */
 export function Carousel({
   orientation = 'horizontal',
   opts,

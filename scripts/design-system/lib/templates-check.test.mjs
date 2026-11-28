@@ -24,7 +24,8 @@ const metadata = (fields = {}) =>
     2
   )} as const\n`
 
-const stories = 'export const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\n'
+const stories =
+  'const meta = { parameters: landmarkParameters }\nexport const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\nexport const Tablet = {}\nexport const DefaultWide = {}\n'
 
 const block = (source, extra = {}) => ({
   dir: 'blocks',
@@ -108,6 +109,32 @@ test('fails missing stories', () => {
   )
 })
 
+test('fails a flagship template without its tablet and wide stories', () => {
+  const problems = checkTemplates([
+    block(metadata(), { storySource: stories.replace('export const Tablet = {}\n', '') }),
+    page(),
+  ]).join('\n')
+  assert.match(problems, /blocks\/page-header: stories file has no `Tablet` story/)
+  assert.doesNotMatch(problems, /`Wide` story/)
+  const other = { ...block(metadata({ id: 'auth-card' })), id: 'auth-card' }
+  other.files = [{ path: 'blocks/auth-card/auth-card.tsx', source: metadata({ id: 'auth-card' }) }]
+  other.storySource =
+    'const meta = { parameters: landmarkParameters }\nexport const Desktop = {}\nexport const Phone = {}\nexport const Themes = {}\n'
+  assert.doesNotMatch(
+    checkTemplates([other, page('')]).join('\n'),
+    /auth-card: stories file has no/
+  )
+})
+
+test('fails stories that do not turn on the landmark rules', () => {
+  const problems = checkTemplates([
+    block(metadata(), { storySource: stories.replace('landmarkParameters', '{}') }),
+    page(),
+  ]).join('\n')
+  assert.match(problems, /blocks\/page-header: stories file does not pass `landmarkParameters`/)
+  assert.doesNotMatch(problems, /list-page: stories file does not pass/)
+})
+
 test('fails a template missing from the catalog', () => {
   const catalog = "import { template as listPage } from './pages/list-page/list-page'\n"
   const problems = checkTemplates([block(metadata()), page()], catalog).join('\n')
@@ -128,4 +155,26 @@ test('fails a ready template without its visual baselines', () => {
   assert.deepEqual(checkTemplates([ready, page()], undefined, all), [])
   // A draft needs none.
   assert.deepEqual(checkTemplates([block(metadata()), page()], undefined, new Set()), [])
+})
+
+test('fails a template that trips a vibe Button warning', () => {
+  const buttons =
+    "import { Button } from '@atom63/ui-react'\n" +
+    'export const A = () => (\n' +
+    '  <>\n' +
+    '    <Button variant="primary">New</Button>\n' +
+    '    <Button variant="primary">New</Button>\n' +
+    '    <Button variant="ghost">More</Button>\n' +
+    '  </>\n' +
+    ')\n'
+  const problems = checkTemplates([block(buttons + metadata()), page()]).join('\n')
+  assert.match(problems, /page-header\.tsx:5 has the vibe warning multiple-primary/)
+  assert.match(problems, /page-header\.tsx:6 has the vibe warning ghost-without-tone/)
+  const calm = buttons
+    .replace(
+      'variant="primary">New</Button>\n    <Button variant="primary"',
+      'variant="primary">New</Button>\n    <Button variant="outline"'
+    )
+    .replace('variant="ghost"', 'tone="muted" variant="ghost"')
+  assert.deepEqual(checkTemplates([block(calm + metadata()), page()]), [])
 })

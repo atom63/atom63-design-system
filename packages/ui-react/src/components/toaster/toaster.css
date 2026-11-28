@@ -18,15 +18,52 @@
   margin-inline: auto;
 }
 
+/* Sonner's x-positions are screen edges, the same in right-to-left, so the
+   margins that push the pill to an edge are physical too. */
 .a63-Toast--inverse[data-x-position='left'] {
-  margin-inline: 0 auto;
+  margin-left: 0; /* craft-allow: physical-properties — Sonner's left is a screen edge */
+  margin-right: auto; /* craft-allow: physical-properties — Sonner's left is a screen edge */
 }
 
 .a63-Toast--inverse[data-x-position='right'] {
-  margin-inline: auto 0;
+  margin-left: auto; /* craft-allow: physical-properties — Sonner's right is a screen edge */
+  margin-right: 0; /* craft-allow: physical-properties — Sonner's right is a screen edge */
 }
 
 /* The status icon (a spinner, a check) follows the message. */
 .a63-Toast--inverse [data-icon] {
   order: 1;
+}
+
+/* Keyboard focus: an outline on the toast and its buttons. Sonner draws its ring
+   as a box-shadow, which forced-colors mode drops, and its unlayered sheet sets
+   `outline: none` on the toast and the action. An unlayered rule beats this
+   layered one, so the outline is !important (a layered !important beats an
+   unlayered normal declaration). */
+.a63-Toaster [data-sonner-toast]:focus-visible,
+.a63-Toaster [data-sonner-toast] :is([data-button], [data-close-button]):focus-visible {
+  outline: var(--a63-control-focus-ring-width) solid
+    var(--a63-control-focus-ring-color, var(--a63-focus-ring)) !important;
+  outline-offset: 2px !important;
+}
+
+/* Sonner's close (20px) and action (24px) buttons reach the control floor, and a
+   hit-area pseudo takes their target to 44px on coarse pointers, as Button's
+   does. */
+.a63-Toaster [data-sonner-toast] :is([data-button], [data-close-button]) {
+  min-width: var(--a63-control-min-size);
+  min-height: var(--a63-control-min-size);
+}
+
+.a63-Toaster [data-sonner-toast] [data-button] {
+  position: relative;
+}
+
+.a63-Toaster [data-sonner-toast] :is([data-button], [data-close-button])::before {
+  content: '';
+  position: absolute;
+  inset: 50%;
+  min-width: var(--a63-control-min-target);
+  min-height: var(--a63-control-min-target);
+  translate: -50% -50%;
 }

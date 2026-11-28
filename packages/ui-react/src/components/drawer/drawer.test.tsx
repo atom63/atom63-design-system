@@ -83,4 +83,24 @@ describe('Drawer', () => {
       'data-modal'
     )
   })
+
+  it('marks a modal drawer aria-modal, and a persistent one not', () => {
+    const { unmount } = render(
+      <Drawer open>
+        <DrawerContent>
+          <DrawerTitle>Detail</DrawerTitle>
+        </DrawerContent>
+      </Drawer>
+    )
+    expect(screen.getByRole('dialog')).toHaveAttribute('aria-modal', 'true')
+    unmount()
+    render(
+      <Drawer modal={false} open>
+        <DrawerContent>
+          <DrawerTitle>Ride</DrawerTitle>
+        </DrawerContent>
+      </Drawer>
+    )
+    expect(screen.getByRole('dialog')).not.toHaveAttribute('aria-modal')
+  })
 })

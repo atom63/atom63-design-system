@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url'
 import * as prettier from 'prettier'
 
 import {
+  aliasProblems,
   camel,
   contractFields,
   contractsDir,
@@ -27,6 +28,7 @@ import {
   pascal,
   resolvedComponent,
   sections,
+  swiftEnumProblems,
 } from './design-system/lib/component-contracts.mjs'
 import { schemaProblems } from './design-system/lib/component-contract-schema.mjs'
 
@@ -112,6 +114,12 @@ function contractModule(source) {
       }
       values.push(`${lead}export const ${name} = ${expression}`)
       if (info.typeName) types.push(`export type ${info.typeName} = (typeof ${name})[number]`)
+      if (info.aliasesName) {
+        maps.push(
+          `${docComment(`Earlier names of ${info.typeName} values, each mapped to the value that replaced it. Kept until a breaking release; components that take the value as a prop still accept them.`)}\nexport const ${info.aliasesName} = ${literal(info.entry.deprecatedAliases)} as const satisfies Record<string, ${info.typeName}>`,
+          `/** @deprecated An earlier name of a value of ${info.typeName}; use the value ${info.aliasesName} maps it to. */\nexport type ${info.typeName}Alias = keyof typeof ${info.aliasesName}`
+        )
+      }
     }
     body.push(values.join('\n'), types.join('\n'), maps.join('\n\n'))
     if (!section.contract) continue
@@ -184,6 +192,10 @@ function barrelModule(source) {
       const info = listInfo(section, key)
       values.push(info.exportName)
       if (info.typeName) types.push(info.typeName)
+      if (info.aliasesName) {
+        values.push(info.aliasesName)
+        types.push(`${info.typeName}Alias`)
+      }
     }
     if (section.contract) {
       values.push(`${section.prefix}Contract`)
@@ -303,10 +315,21 @@ outputs.set(
 
 let stale = false
 for (const source of sources.values()) {
-  for (const problem of intentProblems(sources, source)) {
+  for (const problem of [...intentProblems(sources, source), ...aliasProblems(source)]) {
     process.stderr.write(`${problem}\n`)
     stale = true
   }
+}
+// The hand-written Swift enums an iOS prop names must have exactly its mapped values.
+const swiftDir = path.join(root, 'packages/ui-ios/Sources/Atom63UI')
+const swiftSource = readdirSync(swiftDir, { recursive: true })
+  .filter(file => file.endsWith('.swift'))
+  .sort()
+  .map(file => readFileSync(path.join(swiftDir, file), 'utf8'))
+  .join('\n')
+for (const problem of swiftEnumProblems(sources, swiftSource)) {
+  process.stderr.write(`${problem}\n`)
+  stale = true
 }
 for (const name of readdirSync(componentsDir)) {
   if (![...sources.values()].some(source => source.name === name)) {
