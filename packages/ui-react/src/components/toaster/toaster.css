@@ -67,3 +67,32 @@
   min-height: var(--a63-control-min-target);
   translate: -50% -50%;
 }
+
+/* Tone: each toned default toast colours its icon with the status colour (3:1 or
+   more on the overlay surface in every theme and mode), and the visually hidden
+   status word (.a63-Toast-status) names the tone for a screen reader. The
+   inverse pill keeps its single ink: it carries short statuses, mostly loading. */
+.a63-Toaster [data-sonner-toast]:not(.a63-Toast--inverse)[data-type='error'] [data-icon] {
+  color: var(--a63-status-danger);
+}
+.a63-Toaster [data-sonner-toast]:not(.a63-Toast--inverse)[data-type='success'] [data-icon] {
+  color: var(--a63-status-success);
+}
+.a63-Toaster [data-sonner-toast]:not(.a63-Toast--inverse)[data-type='warning'] [data-icon] {
+  color: var(--a63-status-warning);
+}
+.a63-Toaster [data-sonner-toast]:not(.a63-Toast--inverse)[data-type='info'] [data-icon] {
+  color: var(--a63-status-info);
+}
+
+.a63-Toast-status {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border-width: 0;
+}

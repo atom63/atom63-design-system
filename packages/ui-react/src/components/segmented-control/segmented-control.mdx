@@ -25,7 +25,12 @@ A single-select segmented control — a recessed track with a raised pill that s
 
 ## Tokens it reads
 
-Track `--a63-surface-control`; pill `--a63-surface-page` + `--a63-control-shadow` (accent: `--a63-action-primary` + `--a63-action-primary-foreground`); text `--a63-text-secondary`/`primary`; geometry from the `--a63-control-*` ramp. No new tokens.
+Each theme sets the `--a63-segment-*` tokens; the recipe falls back to the foundation when a theme leaves one unset.
+
+- Track: `--a63-segment-track-background` (falls back to `--a63-surface-muted`), `--a63-segment-track-border` (`--a63-border-subtle`), `--a63-segment-track-shadow` (`--a63-track-shadow`).
+- Selected plate: `--a63-segment-selected-background` (`--a63-surface-overlay`) with `--a63-control-shadow`; accent tone `--a63-segment-primary-background` (`--a63-action-primary`).
+- Labels: `--a63-segment-foreground` (`--a63-text-secondary`) at rest, `--a63-segment-hover-foreground` (`--a63-text-primary`) on hover, `--a63-segment-selected-foreground` (`--a63-text-primary`) when selected, `--a63-segment-primary-foreground` (`--a63-action-primary-foreground`) on the accent plate.
+- Geometry: the `--a63-control-*` ramp. On a coarse pointer the track grows to `--a63-control-min-target`, because the scrolling track clips hit areas drawn outside it.
 
 <Primary />
 

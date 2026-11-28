@@ -282,3 +282,33 @@ export const ContractMetadata: Story = {
     </pre>
   ),
 }
+
+/* Right-to-left: the text, the placeholder and the caret start at the right edge,
+   and a left-to-right run (an address) stays in its own order inside the
+   Arabic paragraph. */
+export const RightToLeft: Story = {
+  render: () => (
+    <UIProvider dir="rtl">
+      <div style={{ display: 'grid', gap: '0.75rem', maxWidth: '22rem' }}>
+        <Textarea aria-label="ملاحظات" placeholder="اكتب ملاحظاتك هنا" />
+        <Textarea
+          aria-label="الرسالة"
+          data-testid="rtl-filled"
+          defaultValue="أرسل التقرير إلى team@example.com قبل نهاية الأسبوع، ثم راجع الملاحظات مع الفريق."
+        />
+        <Textarea aria-label="الوصف" defaultValue="الوصف قصير جدًا" invalid />
+      </div>
+    </UIProvider>
+  ),
+  play: async ({ canvasElement }) => {
+    const fields = Array.from(canvasElement.querySelectorAll('textarea'))
+    if (fields.length !== 3) throw new Error('The RTL story did not render its text areas')
+    for (const field of fields) {
+      const style = getComputedStyle(field)
+      if (style.direction !== 'rtl')
+        throw new Error(`A text area reads ${style.direction}, not rtl, inside dir="rtl"`)
+      if (!['start', 'right'].includes(style.textAlign))
+        throw new Error(`A text area aligns its text to ${style.textAlign} in RTL`)
+    }
+  },
+}

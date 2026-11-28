@@ -15,9 +15,16 @@
   /* Content floor — see button.css for the full rationale. */
   --segment-content-lh: var(--typography-sm-line-height);
   --segment-content-floor: calc(var(--segment-content-lh) + 2 * var(--a63-space-0_5));
+  /* Touch floor: the track scrolls (overflow-x), which clips any hit area drawn
+     outside it, so on a coarse pointer the track itself grows until each
+     segment's hit area (the segment plus its ::after, which spans the insets)
+     reaches the minimum target. On a fine pointer the target (24px) is below
+     every control height, so this floor never applies there. */
+  --segment-touch-floor: calc(var(--a63-control-min-target) + 2 * var(--a63-control-border-width));
   --segment-height: max(
     calc(var(--a63-control-height-md) * var(--a63-density-scale, 1)),
     var(--a63-control-min-size),
+    var(--segment-touch-floor),
     var(--segment-content-floor)
   );
   --segment-inset: 3px;
@@ -222,6 +229,7 @@
   --segment-height: max(
     calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
     var(--a63-control-min-size),
+    var(--segment-touch-floor),
     var(--segment-content-floor)
   );
   --segment-inset: 2px;
@@ -234,7 +242,12 @@
   --segment-height: max(
     calc(var(--a63-control-height-lg) * var(--a63-density-scale, 1)),
     var(--a63-control-min-size-lg, var(--a63-control-min-size)),
+    var(--segment-touch-floor),
     var(--segment-content-floor)
+  );
+  --segment-touch-floor: calc(
+    var(--a63-control-min-target-lg, var(--a63-control-min-target)) + 2 *
+      var(--a63-control-border-width)
   );
   --segment-inset: 4px;
   --segment-font-size: var(--a63-control-font-size-lg);

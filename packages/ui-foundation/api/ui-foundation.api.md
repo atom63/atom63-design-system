@@ -4993,7 +4993,7 @@ export interface SheetContract {
 // @public (undocumented)
 export const sheetContract: {
     defaultFooterVariant: "default";
-    defaultSide: "right";
+    defaultSide: "inline-end";
     defaultVariant: "default";
     footerVariants: readonly ["default", "bare"];
     sides: readonly ["right", "left", "top", "bottom", "inline-start", "inline-end"];

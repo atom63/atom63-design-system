@@ -179,6 +179,14 @@ export const MobileOverflow: Story = {
     if (!track || track.scrollWidth <= track.clientWidth)
       throw new Error('The overflow track does not scroll')
     expectSelectedInView(canvasElement, 'At rest')
+    /* The scrolling track clips hit areas drawn outside it, so on touch the track
+       itself reaches the 44px target. */
+    const segment = track.querySelector<HTMLElement>('.a63-SegmentedControl-item')
+    const hitArea = segment ? getComputedStyle(segment, '::after') : null
+    const insetBlock = hitArea ? -Number.parseFloat(hitArea.insetBlockStart) : 0
+    const targetHeight = (segment?.getBoundingClientRect().height ?? 0) + 2 * insetBlock
+    if (targetHeight < 44)
+      throw new Error(`A touch segment's target is ${targetHeight}px tall, below 44px`)
   },
 }
 

@@ -168,4 +168,24 @@ describe('Toaster', () => {
     act(() => hydrated?.unmount())
     root.remove()
   })
+  it('names each tone with a visually hidden status word the caller can translate', async () => {
+    render(<Toaster statusLabels={{ error: 'خطأ:' }} />)
+    act(() => {
+      toast.error('Upload failed', { id: 'status-error' })
+      toast.success('Saved', { id: 'status-success' })
+    })
+
+    const failed = (await screen.findByText('Upload failed')).closest('li') as HTMLElement
+    expect(failed).toHaveAttribute('data-type', 'error')
+    expect(failed.querySelector('.a63-Toast-status')).toHaveTextContent('خطأ:')
+    expect(failed.querySelector('[data-icon] svg')).toHaveAttribute('aria-hidden', 'true')
+
+    const saved = (await screen.findByText('Saved')).closest('li') as HTMLElement
+    expect(saved.querySelector('.a63-Toast-status')).toHaveTextContent('Success:')
+
+    act(() => {
+      toast.dismiss('status-error')
+      toast.dismiss('status-success')
+    })
+  })
 })

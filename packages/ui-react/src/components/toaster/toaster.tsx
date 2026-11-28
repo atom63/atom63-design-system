@@ -23,6 +23,35 @@ export interface ToasterProps extends SonnerToasterProps {
    * the icon after the message, for a short status such as "Scheduling message…".
    */
   variant?: ToasterVariant
+  /**
+   * The status word read before each toned toast's message, so a screen reader
+   * hears the tone the icon shows. It is visually hidden. Defaults to English
+   * ("Error:", "Information:", "Loading:", "Success:", "Warning:"); pass the
+   * words for the page's language.
+   */
+  statusLabels?: Partial<Record<ToastStatus, string>>
+}
+
+export type ToastStatus = 'error' | 'info' | 'loading' | 'success' | 'warning'
+
+const defaultStatusLabels: Record<ToastStatus, string> = {
+  error: 'Error:',
+  info: 'Information:',
+  loading: 'Loading:',
+  success: 'Success:',
+  warning: 'Warning:',
+}
+
+/* Each toned toast shows an icon (coloured by tone in toaster.css) and carries a
+   visually hidden status word, so the tone does not rest on the icon's shape or
+   colour alone. */
+function statusIcon(icon: React.ReactElement, label: string) {
+  return (
+    <>
+      {icon}
+      <span className="a63-Toast-status">{label}</span>
+    </>
+  )
 }
 
 /* Sonner reads its colours and corner from these variables on the host. They
@@ -113,19 +142,22 @@ const defaultMobileOffset = safeAreaOffset('var(--a63-space-4)')
  * Raise toasts with `toast()` and its tones `toast.info`, `toast.success`,
  * `toast.warning`, `toast.error` and `toast.loading`. The English labels are
  * props: `containerAriaLabel` names the region ("Notifications") and
- * `toastOptions.closeButtonAriaLabel` the close button ("Close toast").
+ * `toastOptions.closeButtonAriaLabel` the close button ("Close toast") and
+ * `statusLabels` the hidden status word each toned toast starts with ("Error:").
  */
 export function Toaster({
   className,
   dir,
   mobileOffset = defaultMobileOffset,
   offset = defaultOffset,
+  statusLabels,
   style,
   toastOptions,
   variant = toasterContract.defaultVariant,
   ...props
 }: ToasterProps): React.ReactElement | null {
   const inverse = variant === 'inverse'
+  const labels = { ...defaultStatusLabels, ...statusLabels }
   const portalContainer = usePortalContainer()
   const [section, setSection] = React.useState<HTMLElement | null>(null)
 
@@ -154,11 +186,14 @@ export function Toaster({
       offset={offset}
       ref={setSection}
       icons={{
-        error: <OctagonXIcon className="size-4" />,
-        info: <InfoIcon className="size-4" />,
-        loading: <Loader2Icon className="size-4 animate-spin" />,
-        success: <CircleCheckIcon className="size-4" />,
-        warning: <TriangleAlertIcon className="size-4" />,
+        error: statusIcon(<OctagonXIcon aria-hidden className="size-4" />, labels.error),
+        info: statusIcon(<InfoIcon aria-hidden className="size-4" />, labels.info),
+        loading: statusIcon(
+          <Loader2Icon aria-hidden className="size-4 animate-spin" />,
+          labels.loading
+        ),
+        success: statusIcon(<CircleCheckIcon aria-hidden className="size-4" />, labels.success),
+        warning: statusIcon(<TriangleAlertIcon aria-hidden className="size-4" />, labels.warning),
       }}
       style={{
         ...variantStyles[variant],

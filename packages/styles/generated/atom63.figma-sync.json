@@ -5,9 +5,9 @@
   "summary": {
     "collections": 14,
     "variables": 1167,
-    "aliasValues": 812,
+    "aliasValues": 808,
     "skipped": 412,
-    "computed": 64
+    "computed": 66
   },
   "collections": [
     {
@@ -1051,10 +1051,20 @@
               "alias": "--a63-surface-muted"
             },
             "terminal-light": {
-              "alias": "--a63-surface-muted"
+              "value": {
+                "r": 0.941177,
+                "g": 0.941177,
+                "b": 0.941177,
+                "a": 1
+              }
             },
             "terminal-dark": {
-              "alias": "--a63-surface-muted"
+              "value": {
+                "r": 0.136066,
+                "g": 0.1794,
+                "b": 0.24718,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-segment-selected-background)",
@@ -1087,10 +1097,20 @@
               "alias": "--a63-text-primary"
             },
             "terminal-light": {
-              "alias": "--a63-text-primary"
+              "value": {
+                "r": 0.006727,
+                "g": 0.213731,
+                "b": 0.507508,
+                "a": 1
+              }
             },
             "terminal-dark": {
-              "alias": "--a63-text-primary"
+              "value": {
+                "r": 0.620403,
+                "g": 0.821661,
+                "b": 1,
+                "a": 1
+              }
             }
           },
           "codeSyntax": "var(--a63-segment-selected-foreground)",
@@ -7154,7 +7174,7 @@
               "value": {
                 "r": 0,
                 "g": 0.73882,
-                "b": 0.489318,
+                "b": 0.489317,
                 "a": 1
               }
             }
@@ -23287,6 +23307,28 @@
       "variesOn": [
         "brand",
         "mode",
+        "theme"
+      ],
+      "expression": ""
+    },
+    {
+      "token": "--a63-segment-selected-background",
+      "collection": "Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
+        "theme"
+      ],
+      "expression": ""
+    },
+    {
+      "token": "--a63-segment-selected-foreground",
+      "collection": "Theme",
+      "variesOn": [
+        "brand",
+        "mode",
+        "surface",
         "theme"
       ],
       "expression": ""

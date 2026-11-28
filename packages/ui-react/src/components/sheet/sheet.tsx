@@ -22,7 +22,8 @@ import { ScrollArea } from '../scroll-area'
  * Faithful port of prod @atom63/ui sheet.tsx: same parts (Root/Portal/Trigger/
  * Close/Backdrop/Viewport/Popup/Header/Footer/Title/Description/Panel) and the
  * same pass-through `side` ('left'|'right'|'top'|'bottom', physical screen edges,
- * plus 'inline-start'|'inline-end', which follow the text direction) + `variant`
+ * plus 'inline-start'|'inline-end', which follow the text direction; the default
+ * is 'inline-end', so a sheet opens from the right in LTR and the left in RTL) + `variant`
  * ('default'|'inset') props — Base UI Dialog has no `side`, so we add it and drive
  * the slide direction via data-side + CSS. The trigger/close render-slot helper is
  * replaced by Base UI's native `render` prop (DS convention).

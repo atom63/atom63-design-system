@@ -2942,8 +2942,12 @@ export function Toaster(input: ToasterProps): React$1.ReactElement | null;
 
 // @public (undocumented)
 export interface ToasterProps extends ToasterProps_2 {
+    statusLabels?: Partial<Record<ToastStatus, string>>;
     variant?: ToasterVariant;
 }
+
+// @public (undocumented)
+export type ToastStatus = 'error' | 'info' | 'loading' | 'success' | 'warning';
 
 // @public (undocumented)
 export function Toggle(input: ToggleProps): React$1.ReactElement;

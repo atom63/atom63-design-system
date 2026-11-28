@@ -549,6 +549,26 @@
                   "$value": "{a63.surface.page}"
                 }
               }
+            },
+            "segment": {
+              "selected": {
+                "background": {
+                  "$type": "color",
+                  "$value": "{surface.dark.3}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklab, {surface.dark.3} 82%, {a63.action.primary} 18%)"
+                  },
+                  "$description": "Selected segment plate in dark: a phosphor-tinted step above the field-coloured track, so the selection reads without the gel other themes draw."
+                },
+                "foreground": {
+                  "$type": "color",
+                  "$value": "{a63.text.accent}",
+                  "$extensions": {
+                    "io.atom63.derive": "color-mix(in oklch, {a63.text.accent} 72%, white)"
+                  },
+                  "$description": "Selected segment label in dark: brighter than the resting label (text-secondary), which in dark terminal is lighter than text-primary."
+                }
+              }
             }
           }
         }

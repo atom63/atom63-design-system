@@ -26,7 +26,7 @@
   },
   "contract": {
     "defaultFooterVariant": "default",
-    "defaultSide": "right",
+    "defaultSide": "inline-end",
     "defaultVariant": "default",
     "footerVariants": {
       "$ref": "#/lists/footerVariants"
