@@ -308,8 +308,8 @@
   --a63-category-violet-subtle-foreground: var(--color-violet-700);
   --a63-category-purple-subtle-foreground: var(--color-purple-700);
   --a63-category-fuchsia-subtle-foreground: var(--color-fuchsia-700);
-  --a63-category-pink-subtle-foreground: var(--color-pink-700);
-  --a63-category-rose-subtle-foreground: var(--color-rose-700);
+  --a63-category-pink-subtle-foreground: var(--color-pink-800);
+  --a63-category-rose-subtle-foreground: var(--color-rose-800);
   --a63-category-slate-subtle-foreground: var(--color-slate-700);
   --a63-category-gray-subtle-foreground: var(--color-gray-700);
   --a63-category-zinc-subtle-foreground: var(--color-zinc-700);
@@ -811,9 +811,9 @@
     var(--a63-if-dark, var(--color-purple-400));
   --a63-category-fuchsia-subtle-foreground: var(--a63-if-light, var(--color-fuchsia-700))
     var(--a63-if-dark, var(--color-fuchsia-400));
-  --a63-category-pink-subtle-foreground: var(--a63-if-light, var(--color-pink-700))
+  --a63-category-pink-subtle-foreground: var(--a63-if-light, var(--color-pink-800))
     var(--a63-if-dark, var(--color-pink-400));
-  --a63-category-rose-subtle-foreground: var(--a63-if-light, var(--color-rose-700))
+  --a63-category-rose-subtle-foreground: var(--a63-if-light, var(--color-rose-800))
     var(--a63-if-dark, var(--color-rose-400));
   --a63-category-slate-subtle-foreground: var(--a63-if-light, var(--color-slate-700))
     var(--a63-if-dark, var(--color-slate-400));

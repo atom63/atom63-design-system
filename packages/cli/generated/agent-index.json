@@ -18531,11 +18531,11 @@
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-pink-700)"
+     "value": "var(--color-pink-800)"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-if-light, var(--color-pink-700)) var(--a63-if-dark, var(--color-pink-400))"
+     "value": "var(--a63-if-light, var(--color-pink-800)) var(--a63-if-dark, var(--color-pink-400))"
     }
    ]
   },
@@ -18699,11 +18699,11 @@
     },
     {
      "scope": ":root, .light, [data-a63-mode='light']",
-     "value": "var(--color-rose-700)"
+     "value": "var(--color-rose-800)"
     },
     {
      "scope": "[data-a63-brand], [data-a63-surface]",
-     "value": "var(--a63-if-light, var(--color-rose-700)) var(--a63-if-dark, var(--color-rose-400))"
+     "value": "var(--a63-if-light, var(--color-rose-800)) var(--a63-if-dark, var(--color-rose-400))"
     }
    ]
   },

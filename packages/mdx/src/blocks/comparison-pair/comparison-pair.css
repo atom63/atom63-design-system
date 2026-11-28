@@ -8,12 +8,13 @@
     border-color: color-mix(in oklab, var(--a63-border-subtle) 20%, transparent);
   }
 
+  /* Labels are 12px text: secondary at full strength keeps them at 4.5:1. */
   .mdx-comparison-badge {
-    color: color-mix(in oklab, var(--a63-text-secondary) 70%, transparent);
+    color: var(--a63-text-secondary);
   }
 
   .mdx-comparison-switch-label {
-    color: color-mix(in oklab, var(--a63-text-secondary) 60%, transparent);
+    color: var(--a63-text-secondary);
   }
 
   /* Before/after dots: danger for the before state, success for the after. */
