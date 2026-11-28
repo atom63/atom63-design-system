@@ -715,7 +715,7 @@ brand=b5,mode=light,surface=n4,theme=terminal 0.307237 0.126789 0.647219 1
 brand=b5,mode=light,surface=n5,theme=modern 0.972549 0.980392 0.972549 1
 brand=b5,mode=light,surface=n5,theme=aqua 0.972549 0.980392 0.972549 1
 brand=b5,mode=light,surface=n5,theme=retro 0.972549 0.980392 0.972549 1
-brand=b5,mode=light,surface=n5,theme=terminal 0.308967 0.127963 0.645827 1
+brand=b5,mode=light,surface=n5,theme=terminal 0.308966 0.127964 0.645827 1
 brand=b5,mode=light,surface=n6,theme=modern 0.976471 0.976471 0.972549 1
 brand=b5,mode=light,surface=n6,theme=aqua 0.976471 0.976471 0.972549 1
 brand=b5,mode=light,surface=n6,theme=retro 0.976471 0.976471 0.972549 1
@@ -1285,7 +1285,7 @@ brand=b4,mode=dark,surface=n6,theme=terminal 1 0.54902 0.772549 0.6
 brand=b5,mode=light,surface=n1,theme=modern 0.513725 0.513726 0.513725 1
 brand=b5,mode=light,surface=n1,theme=aqua 0.513725 0.513726 0.513725 1
 brand=b5,mode=light,surface=n1,theme=retro 0.513725 0.513726 0.513725 1
-brand=b5,mode=light,surface=n1,theme=terminal 0.396625 0.278403 0.720591 1
+brand=b5,mode=light,surface=n1,theme=terminal 0.396624 0.278403 0.720591 1
 brand=b5,mode=light,surface=n2,theme=modern 0.517647 0.509804 0.556863 1
 brand=b5,mode=light,surface=n2,theme=aqua 0.517647 0.509804 0.556863 1
 brand=b5,mode=light,surface=n2,theme=retro 0.517647 0.509804 0.556863 1
@@ -1293,7 +1293,7 @@ brand=b5,mode=light,surface=n2,theme=terminal 0.399156 0.273208 0.731759 1
 brand=b5,mode=light,surface=n3,theme=modern 0.501961 0.513725 0.552941 1
 brand=b5,mode=light,surface=n3,theme=aqua 0.501961 0.513725 0.552941 1
 brand=b5,mode=light,surface=n3,theme=retro 0.501961 0.513725 0.552941 1
-brand=b5,mode=light,surface=n3,theme=terminal 0.395014 0.275116 0.730668 1
+brand=b5,mode=light,surface=n3,theme=terminal 0.395014 0.275116 0.730669 1
 brand=b5,mode=light,surface=n4,theme=modern 0.486275 0.517647 0.505883 1
 brand=b5,mode=light,surface=n4,theme=aqua 0.486275 0.517647 0.505883 1
 brand=b5,mode=light,surface=n4,theme=retro 0.486275 0.517647 0.505883 1
