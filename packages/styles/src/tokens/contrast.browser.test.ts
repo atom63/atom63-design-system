@@ -437,6 +437,81 @@ describe('surface tint contrast (WCAG AA)', () => {
   })
 })
 
+/* Tinted chips and icon tiles (`bg-warning-subtle text-warning-subtle-foreground`,
+   `bg-category-<hue>-subtle text-category-<hue>-subtle-foreground`) paint the
+   -subtle-foreground on its own 14% wash, which sits over the page or a panel.
+   The pair has to hold 4.5:1 on the composited wash, not only on the bare surface. */
+const categoryHues = [
+  'red',
+  'orange',
+  'amber',
+  'yellow',
+  'lime',
+  'green',
+  'emerald',
+  'teal',
+  'cyan',
+  'sky',
+  'blue',
+  'indigo',
+  'violet',
+  'purple',
+  'fuchsia',
+  'pink',
+  'rose',
+  'neutral',
+  'slate',
+  'gray',
+  'zinc',
+  'stone',
+] as const
+
+const tintedPairs = [
+  ...(['info', 'success', 'warning'] as const).map(status => ({
+    fg: `--a63-status-${status}-subtle-foreground`,
+    wash: `--a63-status-${status}-subtle`,
+  })),
+  ...categoryHues.map(hue => ({
+    fg: `--a63-category-${hue}-subtle-foreground`,
+    wash: `--a63-category-${hue}-subtle`,
+  })),
+]
+
+function composite(top: Rgb, bottom: Rgb): Rgb {
+  const a = Math.min(1, Math.max(0, top.a))
+  return {
+    r: top.r * a + bottom.r * (1 - a),
+    g: top.g * a + bottom.g * (1 - a),
+    b: top.b * a + bottom.b * (1 - a),
+    a: 1,
+  }
+}
+
+describe('tinted chip contrast (WCAG AA)', () => {
+  it('keeps each -subtle-foreground at 4.5:1 on its own wash over the page and panel', () => {
+    const failures: string[] = []
+    for (const theme of themes) {
+      for (const mode of modes) {
+        applyThemeMode(theme, mode)
+        for (const surface of ['--a63-surface-page', '--a63-surface-panel'] as const) {
+          const surfaceRgb = parseCssColor(resolvePaintedColor(surface, 'background'))
+          for (const { fg, wash } of tintedPairs) {
+            const washRgb = parseCssColor(resolvePaintedColor(wash, 'background'))
+            const fgRgb = parseCssColor(resolvePaintedColor(fg, 'color'))
+            const ratio = contrastRatio(fgRgb, composite(washRgb, surfaceRgb))
+            if (ratio < AA_TEXT) {
+              failures.push(
+                `${theme}/${mode} ${fg} on ${wash} over ${surface}: ${ratio.toFixed(2)}:1 < ${AA_TEXT}:1`
+              )
+            }
+          }
+        }
+      }
+    }
+    expect(failures, failures.join('\n')).toEqual([])
+  })
+})
+
 /* A placeholder paints in the third text colour; it must read clearly below the
    value (primary text) in the same field, or an empty field reads as filled.
    Checked as the ratio of the two contrasts against the field fill, in every

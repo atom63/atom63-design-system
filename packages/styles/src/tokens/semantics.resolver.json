@@ -977,7 +977,7 @@
                   "subtle": {
                     "foreground": {
                       "$type": "color",
-                      "$value": "{color.pink.700}"
+                      "$value": "{color.pink.800}"
                     }
                   }
                 },
@@ -985,7 +985,7 @@
                   "subtle": {
                     "foreground": {
                       "$type": "color",
-                      "$value": "{color.rose.700}"
+                      "$value": "{color.rose.800}"
                     }
                   }
                 },

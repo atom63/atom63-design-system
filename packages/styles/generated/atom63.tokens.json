@@ -5469,7 +5469,7 @@
       "name": "a63-category-pink-subtle-foreground",
       "cssVar": "--a63-category-pink-subtle-foreground",
       "type": "color",
-      "value": "var(--color-pink-700)",
+      "value": "var(--color-pink-800)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -5478,14 +5478,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-pink-700"],
+      "aliases": ["--color-pink-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-category-pink-subtle-foreground",
       "cssVar": "--a63-category-pink-subtle-foreground",
       "type": "color",
-      "value": "var(--a63-if-light, var(--color-pink-700)) var(--a63-if-dark, var(--color-pink-400))",
+      "value": "var(--a63-if-light, var(--color-pink-800)) var(--a63-if-dark, var(--color-pink-400))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -5493,7 +5493,7 @@
         "path": "category/pink/subtle/foreground"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-pink-400", "--color-pink-700"],
+      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-pink-400", "--color-pink-800"],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {
@@ -5700,7 +5700,7 @@
       "name": "a63-category-rose-subtle-foreground",
       "cssVar": "--a63-category-rose-subtle-foreground",
       "type": "color",
-      "value": "var(--color-rose-700)",
+      "value": "var(--color-rose-800)",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -5709,14 +5709,14 @@
         "mode": "Light"
       },
       "lifecycle": "preview",
-      "aliases": ["--color-rose-700"],
+      "aliases": ["--color-rose-800"],
       "scope": ":root, .light, [data-a63-mode='light']"
     },
     {
       "name": "a63-category-rose-subtle-foreground",
       "cssVar": "--a63-category-rose-subtle-foreground",
       "type": "color",
-      "value": "var(--a63-if-light, var(--color-rose-700)) var(--a63-if-dark, var(--color-rose-400))",
+      "value": "var(--a63-if-light, var(--color-rose-800)) var(--a63-if-dark, var(--color-rose-400))",
       "sourceFile": "packages/styles/src/tokens/semantics.css",
       "layer": "semantic",
       "figma": {
@@ -5724,7 +5724,7 @@
         "path": "category/rose/subtle/foreground"
       },
       "lifecycle": "preview",
-      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-rose-400", "--color-rose-700"],
+      "aliases": ["--a63-if-dark", "--a63-if-light", "--color-rose-400", "--color-rose-800"],
       "scope": "[data-a63-brand], [data-a63-surface]"
     },
     {

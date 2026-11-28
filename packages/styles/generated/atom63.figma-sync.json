@@ -7154,7 +7154,7 @@
               "value": {
                 "r": 0,
                 "g": 0.73882,
-                "b": 0.489318,
+                "b": 0.489317,
                 "a": 1
               }
             }
@@ -16572,7 +16572,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-pink-700"
+              "alias": "--color-pink-800"
             },
             "dark": {
               "alias": "--color-pink-400"
@@ -16623,7 +16623,7 @@
           "type": "COLOR",
           "values": {
             "light": {
-              "alias": "--color-rose-700"
+              "alias": "--color-rose-800"
             },
             "dark": {
               "alias": "--color-rose-400"

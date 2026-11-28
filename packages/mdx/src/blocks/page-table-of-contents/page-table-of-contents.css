@@ -32,8 +32,10 @@
     color: var(--a63-text-primary);
   }
 
+  /* Inactive links read in secondary text at full strength: alpha-dimming
+     text tokens drops them under 4.5:1 on light surfaces. */
   .mdx-toc-link-inline[data-active='false'] {
-    color: color-mix(in oklab, var(--a63-text-primary) 60%, transparent);
+    color: var(--a63-text-secondary);
   }
 
   /* rail variant */
@@ -52,12 +54,10 @@
     color: var(--a63-text-accent);
   }
 
+  /* Depth-3 links step down through size and indent (text-xs, ps-3), not
+     alpha: a second dimming dropped them to 3.31:1 in light mode (#160). */
   .mdx-toc-link-rail[data-active='false'] {
     color: var(--a63-text-secondary);
-  }
-
-  .mdx-toc-link-rail[data-active='false'][data-depth='3'] {
-    color: color-mix(in oklab, var(--a63-text-secondary) 75%, transparent);
   }
 
   .mdx-toc-title {
