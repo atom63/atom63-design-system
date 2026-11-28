@@ -1,3 +1,5 @@
+'use client'
+
 import {
   type FrameBorder,
   type FramePanelSurface,

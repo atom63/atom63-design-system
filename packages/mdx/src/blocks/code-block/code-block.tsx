@@ -1,3 +1,5 @@
+'use client'
+
 import { CopyButton, ScrollArea } from '@atom63/ui-react'
 import { clsx } from 'clsx'
 import type { ReactNode } from 'react'

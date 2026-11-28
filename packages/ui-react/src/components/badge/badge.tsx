@@ -1,3 +1,5 @@
+'use client'
+
 import type { BadgeDotColor, BadgeSize, BadgeVariant } from '@atom63/ui-foundation'
 import { badgeContract } from '@atom63/ui-foundation'
 import { mergeProps } from '@base-ui/react/merge-props'

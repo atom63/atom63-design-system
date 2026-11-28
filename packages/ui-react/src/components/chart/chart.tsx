@@ -1,3 +1,5 @@
+'use client'
+
 import {
   type ChartColor,
   type ChartLayout,
@@ -71,7 +73,8 @@ export type ChartProps = Omit<React.ComponentProps<'figure'>, 'children'> & {
    *  over each other (area). Ignored for line. */
   layout?: ChartLayout
   size?: ChartSize
-  /** Formats a value in the tooltip and the table. */
+  /** Formats a value in the tooltip and the table. Defaults to `en-US` grouping (`1,234.5`), the
+   *  same on the server and in the browser; pass a formatter for the reader's locale. */
   formatValue?: (value: number) => string
   /** Formats a y-axis tick. Defaults to `formatValue`. */
   formatTick?: (value: number) => string
@@ -107,7 +110,10 @@ export function chartTicks(max: number, count: number): number[] {
   )
 }
 
-const defaultFormat = (value: number) => value.toLocaleString()
+// A fixed locale, so the server and the browser print the same digits and
+// hydration matches. Pass `formatValue` to format for the reader's locale.
+const defaultNumberFormat = new Intl.NumberFormat('en-US')
+const defaultFormat = (value: number) => defaultNumberFormat.format(value)
 
 export function Chart({
   label,

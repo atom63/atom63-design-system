@@ -1,3 +1,5 @@
+'use client'
+
 // packages/mdx/src/mdx-live-preview.tsx
 import { MDXProvider } from '@mdx-js/react'
 import type { ComponentType, ReactNode } from 'react'

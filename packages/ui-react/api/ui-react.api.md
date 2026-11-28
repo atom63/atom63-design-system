@@ -2297,7 +2297,7 @@ export type ResizablePanelProps = React$1.ComponentProps<typeof ResizablePrimiti
 // @public (undocumented)
 export function ScrollableList(input: ScrollableListProps): React$1.JSX.Element;
 
-// @public
+// @public (undocumented)
 export const scrollableListControlClassNames: {
     readonly button: "a63-ScrollableList-controlButton";
     readonly icon: "a63-ScrollableList-controlIcon";

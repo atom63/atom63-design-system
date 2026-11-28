@@ -102,7 +102,7 @@ export interface ReactRendererConformanceEvidence {
 // @public (undocumented)
 export type ReactVerifiedContractId = CrossRendererContractId;
 
-// @public
+// @public (undocumented)
 export const scrollableListControlClassNames: {
     readonly button: "a63-ScrollableList-controlButton";
     readonly icon: "a63-ScrollableList-controlIcon";

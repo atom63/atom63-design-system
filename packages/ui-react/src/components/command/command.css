@@ -84,18 +84,31 @@
 
 /* ── Input ─────────────────────────────────────────────────────────────── */
 .a63-Command-input-wrapper {
+  position: relative;
+  isolation: isolate;
   display: flex;
   align-items: center;
   gap: var(--a63-space-2);
   padding: 0.625rem 0.875rem;
   border-radius: var(--a63-control-radius);
 }
-/* The search field has no chrome of its own, so the row rings as a field when
-   it holds keyboard focus; inset so the popup's rounded corners do not clip it. */
-.a63-Command-input-wrapper:has(> .a63-Command-input:focus-visible) {
-  outline: var(--a63-control-focus-ring-width) solid
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
-  outline-offset: calc(-1 * var(--a63-space-1_5));
+/* Inset the field fill without moving the icon, caret, or text. */
+.a63-Command-input-wrapper::before {
+  position: absolute;
+  z-index: -1;
+  inset: var(--a63-space-1) var(--a63-space-2);
+  border-radius: var(--a63-control-radius);
+  background-color: color-mix(in oklab, var(--a63-surface-control-hover) 35%, transparent);
+  content: '';
+  pointer-events: none;
+}
+.a63-Command-input-wrapper:has(> .a63-Command-input:focus-visible)::before {
+  background-color: color-mix(in oklab, var(--a63-surface-control-hover) 75%, transparent);
+}
+@media (forced-colors: active) {
+  .a63-Command-input-wrapper:has(> .a63-Command-input:focus-visible)::before {
+    border-block-end: 1px solid CanvasText;
+  }
 }
 .a63-Command-input-icon {
   display: inline-flex;
@@ -210,14 +223,6 @@
   background-image: var(--a63-menu-highlight-gloss, none);
   box-shadow: var(--a63-menu-highlight-shadow, none);
   color: var(--a63-menu-highlight-foreground, var(--a63-text-primary));
-}
-/* Focus stays in the input, so the highlighted option is the keyboard target
-   (the one Enter runs). The fill alone is too faint to mark it (WCAG 1.4.11),
-   so it carries the inset focus ring too. */
-.a63-Command-item[data-highlighted]:not([data-disabled]) {
-  outline: var(--a63-control-focus-ring-width) solid
-    var(--a63-control-focus-ring-color, var(--a63-focus-ring));
-  outline-offset: calc(-1 * var(--a63-control-focus-ring-width));
 }
 .a63-Command-item[data-disabled] {
   pointer-events: none;

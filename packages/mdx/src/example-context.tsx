@@ -1,3 +1,5 @@
+'use client'
+
 import { createContext, useContext } from 'react'
 
 /** True when rendering inside an ExampleContainer — MDX typography styles should not apply. */

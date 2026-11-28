@@ -1,3 +1,5 @@
+'use client'
+
 import { Collapsible, CollapsibleContent, CollapsibleTrigger, Separator } from '@atom63/ui-react'
 import { clsx } from 'clsx'
 import { MinusIcon, PlusIcon } from 'lucide-react'
