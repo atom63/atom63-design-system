@@ -35,7 +35,7 @@
     },
     {
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.21",
+      "version": "0.2.0-beta.22",
       "dir": "packages/ui-react",
       "peerDependencies": {
         "react": "^19.1.0",
@@ -59,7 +59,7 @@
     },
     {
       "name": "@atom63/mdx",
-      "version": "0.4.0-beta.12",
+      "version": "0.4.0-beta.13",
       "dir": "packages/mdx",
       "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" },
       "dependencies": {
@@ -79,7 +79,7 @@
     },
     {
       "name": "@atom63/inform",
-      "version": "0.2.0-beta.12",
+      "version": "0.2.0-beta.13",
       "dir": "packages/inform",
       "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" },
       "dependencies": { "@atom63/ui-react": "workspace:*" }
@@ -93,7 +93,7 @@
     },
     {
       "name": "@atom63/widgets",
-      "version": "0.1.0-beta.12",
+      "version": "0.1.0-beta.13",
       "dir": "packages/widgets",
       "peerDependencies": { "react": "^19.1.0", "react-dom": "^19.1.0" },
       "dependencies": {

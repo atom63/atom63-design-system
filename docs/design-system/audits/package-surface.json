@@ -207,7 +207,7 @@
       "directory": "packages/ui-react",
       "manifestPath": "packages/ui-react/package.json",
       "name": "@atom63/ui-react",
-      "version": "0.2.0-beta.21",
+      "version": "0.2.0-beta.22",
       "private": false,
       "exports": {
         ".": {
@@ -441,7 +441,7 @@
       "directory": "packages/mdx",
       "manifestPath": "packages/mdx/package.json",
       "name": "@atom63/mdx",
-      "version": "0.4.0-beta.12",
+      "version": "0.4.0-beta.13",
       "private": false,
       "exports": {
         ".": {
@@ -549,7 +549,7 @@
       "directory": "packages/inform",
       "manifestPath": "packages/inform/package.json",
       "name": "@atom63/inform",
-      "version": "0.2.0-beta.12",
+      "version": "0.2.0-beta.13",
       "private": false,
       "exports": {
         ".": {
@@ -638,7 +638,7 @@
       "directory": "packages/widgets",
       "manifestPath": "packages/widgets/package.json",
       "name": "@atom63/widgets",
-      "version": "0.1.0-beta.12",
+      "version": "0.1.0-beta.13",
       "private": false,
       "exports": {
         ".": {
