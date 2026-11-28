@@ -26,6 +26,23 @@ describe('ScrollableList', () => {
     expect(viewport?.style.overflowY).toBe('hidden')
   })
 
+  it('fades only the inline edges, and none when mask is off', () => {
+    const { container, rerender } = render(
+      <ScrollableList>
+        <button type="button">One</button>
+      </ScrollableList>
+    )
+    const viewport = () => container.querySelector('[data-slot="scroll-area-viewport"]')
+    expect(viewport()).toHaveAttribute('data-scroll-fade', 'horizontal')
+
+    rerender(
+      <ScrollableList mask={false}>
+        <button type="button">One</button>
+      </ScrollableList>
+    )
+    expect(viewport()).not.toHaveAttribute('data-scroll-fade')
+  })
+
   it('exposes disabled and draggable state without enabling the disabled drag cursor', () => {
     const { container } = render(
       <ScrollableList disabled draggable>

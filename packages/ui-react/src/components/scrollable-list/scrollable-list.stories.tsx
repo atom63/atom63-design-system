@@ -1,5 +1,5 @@
 import { scrollableListContract, themes } from '@atom63/ui-foundation'
-import { Badge, ScrollableList, UIProvider } from '@atom63/ui-react'
+import { Badge, ScrollableList, ToggleGroup, ToggleGroupItem, UIProvider } from '@atom63/ui-react'
 import '@atom63/ui-react/styles.css'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 
@@ -41,6 +41,24 @@ export const Playground: Story = {
     <div style={{ width: 'min(420px, 100%)' }}>
       <ScrollableList>
         <Row />
+      </ScrollableList>
+    </div>
+  ),
+}
+
+/* A row of small (32px) chips. Their 44px hit areas fit inside the row, so the
+   list fades only its inline edges and the chips keep their full height. */
+export const SmallControls: Story = {
+  render: () => (
+    <div style={{ width: 'min(360px, 100%)' }}>
+      <ScrollableList aria-label="Filter">
+        <ToggleGroup aria-label="Category" defaultValue={['all']} size="sm" variant="pills">
+          {TAGS.map(t => (
+            <ToggleGroupItem key={t} value={t === 'Design' ? 'all' : t}>
+              {t}
+            </ToggleGroupItem>
+          ))}
+        </ToggleGroup>
       </ScrollableList>
     </div>
   ),

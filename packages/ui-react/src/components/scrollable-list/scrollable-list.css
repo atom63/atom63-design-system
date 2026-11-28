@@ -16,6 +16,17 @@
   /* Inline pad on the flex track (not the scroll root) so first/last items
      align with a narrower reading column without shrinking the viewport. */
   --scrollable-list-content-pad: 0px;
+  /* How far a small control's 44px hit area pokes out above and below it
+     (6px for a 32px chip, 0 where sm controls already meet the target). The
+     sm height mirrors the sm Button and Toggle height in button.css. */
+  --scrollable-list-sm-control-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-control-min-size)
+  );
+  --scrollable-list-target-bleed: max(
+    0px,
+    (var(--a63-control-min-target) - var(--scrollable-list-sm-control-height)) / 2
+  );
 }
 
 .a63-ScrollableList-frame {
@@ -38,6 +49,18 @@
   min-width: 100%;
   padding-inline: var(--scrollable-list-content-pad);
   box-sizing: border-box;
+}
+
+/* The viewport clips on both axes, so pad the scrolling row by the hit-area
+   bleed: small Buttons and Toggles keep their whole 44px target inside the
+   scroll content (tappable, and not counted as vertical overflow). The frame
+   takes the same amount back so the row keeps its height. */
+.a63-ScrollableList-frame {
+  margin-block: calc(var(--scrollable-list-target-bleed) * -1);
+}
+
+.a63-ScrollableList-frame .a63-ScrollableList-content {
+  padding-block: var(--scrollable-list-target-bleed);
 }
 
 /* ── Drag-to-scroll ────────────────────────────────────────────────────── */
