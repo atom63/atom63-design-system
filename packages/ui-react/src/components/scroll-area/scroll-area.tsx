@@ -12,6 +12,13 @@ export type ScrollAreaViewportProps = Omit<
   [key: `data-${string}`]: boolean | number | string | undefined
 }
 
+export type ScrollAreaScrollFade = boolean | 'both' | 'horizontal' | 'vertical'
+
+function scrollFadeAttribute(scrollFade: ScrollAreaScrollFade): string | undefined {
+  if (scrollFade === false) return undefined
+  return scrollFade === true ? 'both' : scrollFade
+}
+
 function ScrollArea({
   className,
   children,
@@ -23,7 +30,14 @@ function ScrollArea({
   viewportRef,
   ...props
 }: ScrollAreaPrimitive.Root.Props & {
-  scrollFade?: boolean
+  /**
+   * Fade the viewport edges where content overflows. `true` (or `"both"`)
+   * fades all four edges; `"horizontal"` or `"vertical"` fades only the edges
+   * of that scroll axis. Pick the axis the content scrolls on, so overflow on
+   * an axis that never scrolls (such as a hit area poking out of a sideways
+   * row) does not fade the content.
+   */
+  scrollFade?: ScrollAreaScrollFade
   scrollbarGutter?: boolean
   /** Show scrollbar when hovering over the scroll area */
   showScrollbarOnHover?: boolean
@@ -41,7 +55,7 @@ function ScrollArea({
       <ScrollAreaPrimitive.Viewport
         {...viewportProps}
         className={cn('a63-ScrollArea-viewport', viewportClassName)}
-        data-scroll-fade={scrollFade || undefined}
+        data-scroll-fade={scrollFadeAttribute(scrollFade)}
         data-scrollbar-gutter={scrollbarGutter || undefined}
         data-slot="scroll-area-viewport"
         ref={viewportRef}

@@ -295,7 +295,8 @@ function ScrollableList({
         <ScrollArea
           className="[&_[data-slot=scroll-area-scrollbar][data-orientation=vertical]]:hidden"
           ref={scrollAreaRef}
-          scrollFade={mask}
+          // The list only scrolls sideways, so it fades only its inline edges.
+          scrollFade={mask && 'horizontal'}
           // Base UI sets `overflow: scroll` inline on the viewport, which a class cannot override.
           viewportProps={{ style: { overflowY: 'hidden' } }}
         >

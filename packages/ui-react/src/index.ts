@@ -525,7 +525,7 @@ export type {
   ResizablePanelProps,
 } from './components/resizable'
 export { ScrollArea, ScrollBar } from './components/scroll-area'
-export type { ScrollAreaViewportProps } from './components/scroll-area'
+export type { ScrollAreaScrollFade, ScrollAreaViewportProps } from './components/scroll-area'
 export { ScrollableList, scrollableListControlClassNames } from './components/scrollable-list'
 export type { ScrollableListProps } from './components/scrollable-list'
 export { SearchField } from './components/search-field'

@@ -37,34 +37,26 @@
 
 /* ── Scroll fade mask ──────────────────────────────────────────────────── */
 
+/* One gradient per edge, each as deep as that edge's overflow (capped at the
+   fade size). data-scroll-fade names the axes to fade: "both" (scrollFade
+   true), "horizontal" or "vertical". A single-axis list fades only along its
+   scroll axis, so overflow on the other axis (a 44px hit area poking out of a
+   32px chip row) never fades the content. */
 .a63-ScrollArea-viewport[data-scroll-fade] {
-  mask-image:
-    linear-gradient(
-      to top,
-      transparent 0,
-      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-y-end, 0px))
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0,
-      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-y-start, 0px))
-    ),
-    linear-gradient(
-      to left,
-      transparent 0,
-      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-end, 0px))
-    ),
-    linear-gradient(
-      to right,
-      transparent 0,
-      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-start, 0px))
-    );
+  --scroll-area-fade-inline-start-to: to right;
+  --scroll-area-fade-inline-end-to: to left;
+
   mask-composite: intersect;
 }
 
 /* Base UI measures horizontal overflow from the inline start, which is the
    right edge in a right-to-left scope, so the horizontal fades swap sides. */
 .a63-ScrollArea-viewport[data-scroll-fade]:dir(rtl) {
+  --scroll-area-fade-inline-start-to: to left;
+  --scroll-area-fade-inline-end-to: to right;
+}
+
+.a63-ScrollArea-viewport[data-scroll-fade='both'] {
   mask-image:
     linear-gradient(
       to top,
@@ -77,14 +69,42 @@
       #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-y-start, 0px))
     ),
     linear-gradient(
-      to right,
+      var(--scroll-area-fade-inline-end-to),
       transparent 0,
       #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-end, 0px))
     ),
     linear-gradient(
-      to left,
+      var(--scroll-area-fade-inline-start-to),
       transparent 0,
       #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-start, 0px))
+    );
+}
+
+.a63-ScrollArea-viewport[data-scroll-fade='horizontal'] {
+  mask-image:
+    linear-gradient(
+      var(--scroll-area-fade-inline-end-to),
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-end, 0px))
+    ),
+    linear-gradient(
+      var(--scroll-area-fade-inline-start-to),
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-start, 0px))
+    );
+}
+
+.a63-ScrollArea-viewport[data-scroll-fade='vertical'] {
+  mask-image:
+    linear-gradient(
+      to top,
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-y-end, 0px))
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-y-start, 0px))
     );
 }
 

@@ -22,6 +22,33 @@ describe('ScrollArea', () => {
       </ScrollArea>
     )
     expect(container.querySelector('[data-slot="scroll-area-viewport"]')).toHaveAttribute(
+      'data-scroll-fade',
+      'both'
+    )
+  })
+
+  it.each(['horizontal', 'vertical', 'both'] as const)(
+    'limits scrollFade="%s" to that axis',
+    axis => {
+      const { container } = render(
+        <ScrollArea scrollFade={axis}>
+          <div>content</div>
+        </ScrollArea>
+      )
+      expect(container.querySelector('[data-slot="scroll-area-viewport"]')).toHaveAttribute(
+        'data-scroll-fade',
+        axis
+      )
+    }
+  )
+
+  it('leaves the fade off by default', () => {
+    const { container } = render(
+      <ScrollArea>
+        <div>content</div>
+      </ScrollArea>
+    )
+    expect(container.querySelector('[data-slot="scroll-area-viewport"]')).not.toHaveAttribute(
       'data-scroll-fade'
     )
   })

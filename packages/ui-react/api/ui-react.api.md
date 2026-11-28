@@ -2329,13 +2329,16 @@ export interface ScrollableListProps extends Omit<React.ComponentProps<'div'>, '
 
 // @public (undocumented)
 export function ScrollArea(input: ScrollArea_2.Root.Props & {
-    scrollFade?: boolean;
+    scrollFade?: ScrollAreaScrollFade;
     scrollbarGutter?: boolean;
     showScrollbarOnHover?: boolean;
     viewportClassName?: string;
     viewportProps?: ScrollAreaViewportProps;
     viewportRef?: React$1.Ref<HTMLDivElement>;
 }): React$1.JSX.Element;
+
+// @public (undocumented)
+export type ScrollAreaScrollFade = boolean | 'both' | 'horizontal' | 'vertical';
 
 // @public (undocumented)
 export type ScrollAreaViewportProps = Omit<ScrollArea_2.Viewport.Props, 'children' | 'className' | 'ref'> & {
