@@ -46,7 +46,7 @@
       },
       {
         "name": "lucide-react",
-        "currentRange": "^1.70.0",
+        "currentRange": "^1.78.0",
         "policy": "default-icon-implementation-not-required-contract",
         "reason": "The package provides default icons but must keep user-provided icon systems possible."
       }
