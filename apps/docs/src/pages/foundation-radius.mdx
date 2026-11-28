@@ -81,6 +81,18 @@ Set the appearance axis on the relevant scope:
 [data-a63-radius='round'] { /* runtime maps this to --radius-multiplier: 1.5 */ }
 ```
 
+### Round the controls in one container
+
+`--a63-control-radius` is the public slot for the corner radius of controls. A theme sets it, and a container can set it to round only the controls inside it:
+
+```css
+.toolbar {
+  --a63-control-radius: var(--radius-md);
+}
+```
+
+Button, Input, Textarea, Select, Badge, Tabs and the menu triggers read it on their own element, so the nearest declaration wins over the theme's. Grouped controls keep their own slots, because a group reads tighter than a standalone control: Toggle and ToggleGroup read `--a63-toggle-radius`, and SegmentedControl reads `--a63-segment-radius`. Take the value from the radius scale (`--radius-sm`, `--radius-md`, …) so it still follows the radius axis.
+
 ## Anti-patterns
 
 ```tsx

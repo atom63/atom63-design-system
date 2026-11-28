@@ -193,7 +193,8 @@
       },
       "radius": {
         "$type": "dimension",
-        "$value": "{a63.radius.control}"
+        "$value": "{a63.radius.control}",
+        "$description": "Public slot: the corner radius of the controls in a scope. Themes set it, and a container can set it to round the controls inside it, e.g. `.toolbar { --a63-control-radius: var(--radius-md); }`. Button, Input, Textarea, Select, Badge, Tabs and the menu triggers read it on their own element, so the nearest declaration wins. Grouped controls keep their own slots: Toggle and ToggleGroup read --a63-toggle-radius, SegmentedControl reads --a63-segment-radius."
       },
       "border": {
         "width": {

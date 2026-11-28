@@ -92,6 +92,13 @@
   pointer-events: none;
 }
 
+/* Forced colors repaint backgrounds as Canvas, which would erase the hairline. */
+@media (forced-colors: active) {
+  .a63-Resizable-handle {
+    background-color: CanvasText;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .a63-Resizable-handle {
     transition: none;

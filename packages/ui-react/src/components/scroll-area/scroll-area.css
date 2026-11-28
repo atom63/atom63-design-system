@@ -62,6 +62,32 @@
   mask-composite: intersect;
 }
 
+/* Base UI measures horizontal overflow from the inline start, which is the
+   right edge in a right-to-left scope, so the horizontal fades swap sides. */
+.a63-ScrollArea-viewport[data-scroll-fade]:dir(rtl) {
+  mask-image:
+    linear-gradient(
+      to top,
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-y-end, 0px))
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-y-start, 0px))
+    ),
+    linear-gradient(
+      to right,
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-end, 0px))
+    ),
+    linear-gradient(
+      to left,
+      transparent 0,
+      #000 min(var(--scroll-area-fade-size), var(--scroll-area-overflow-x-start, 0px))
+    );
+}
+
 /* ── Scrollbar gutter ──────────────────────────────────────────────────── */
 
 .a63-ScrollArea-viewport[data-scrollbar-gutter][data-has-overflow-y] {

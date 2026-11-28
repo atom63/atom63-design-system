@@ -1241,6 +1241,7 @@ export function DrawerContent(input: DrawerContentProps): React$1.ReactElement;
 export type DrawerContentProps = Omit<Drawer_2.Popup.Props, 'children'> & {
     children?: React$1.ReactNode;
     contentProps?: Drawer_2.Content.Props;
+    gutter?: string;
     portalProps?: Drawer_2.Portal.Props;
     viewportProps?: Drawer_2.Viewport.Props;
 };
@@ -1395,6 +1396,9 @@ export interface EmptyErrorDetailLabels {
 export type EmptyErrorDetailProps = React$1.ComponentProps<'div'> & {
     error: string;
     labels?: EmptyErrorDetailLabels;
+    expanded?: boolean;
+    defaultExpanded?: boolean;
+    onExpandedChange?: (expanded: boolean) => void;
 };
 
 // @public (undocumented)
