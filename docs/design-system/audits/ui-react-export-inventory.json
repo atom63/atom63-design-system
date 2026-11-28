@@ -48,7 +48,7 @@
   },
   "counts": {
     "rootValueExports": 444,
-    "rootTypeExports": 215,
+    "rootTypeExports": 216,
     "packageExportKeys": 86,
     "cssExportKeys": 78
   },
@@ -2999,6 +2999,10 @@
         }
       ],
       "types": [
+        {
+          "name": "ScrollAreaScrollFade",
+          "proposedTier": "beta-supported-core"
+        },
         {
           "name": "ScrollAreaViewportProps",
           "proposedTier": "beta-supported-core"
