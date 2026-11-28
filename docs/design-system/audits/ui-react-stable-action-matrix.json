@@ -77,11 +77,11 @@
   },
   "summary": {
     "sourceFamilies": 82,
-    "sourceExports": 658,
+    "sourceExports": 659,
     "sourceTierCounts": {
       "monitor-high-risk": 79,
       "preview-experimental-candidate": 31,
-      "beta-supported-core": 359,
+      "beta-supported-core": 360,
       "beta-supported-composition-conditional": 189
     },
     "sourceActionCounts": {
@@ -2465,11 +2465,11 @@
       "source": "./components/toaster",
       "family": "components/toaster",
       "kind": "component-family",
-      "totalExports": 3,
+      "totalExports": 4,
       "valueExports": 2,
-      "typeExports": 1,
+      "typeExports": 2,
       "tierCounts": {
-        "beta-supported-core": 3
+        "beta-supported-core": 4
       },
       "dominantTier": "beta-supported-core",
       "blockingTier": "beta-supported-core",
@@ -2481,7 +2481,7 @@
         "external packed-consumer smoke",
         "dependency and public type compatibility review"
       ],
-      "notableSymbols": ["toast", "Toaster", "ToasterProps"],
+      "notableSymbols": ["toast", "Toaster", "ToasterProps", "ToastStatus"],
       "policyNote": "Eligible for stable after visual QA, docs, external-consumer evidence, and dependency policy checks pass."
     },
     {
