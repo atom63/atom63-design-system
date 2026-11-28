@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     # Keep in step with the root `playwright` version and the visual job in ci.yml.
-    container: mcr.microsoft.com/playwright:v1.65.0-noble
+    container: mcr.microsoft.com/playwright:v1.65.1-noble
     # The baseline commit is pushed by the Atom63 bot app, so CI, with its visual
     # comparison, runs on it like on any other push.
     permissions:

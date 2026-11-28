@@ -18,20 +18,20 @@
     "@atom63/styles": "workspace:*",
     "@atom63/ui-foundation": "workspace:*",
     "@atom63/ui-react": "workspace:*",
-    "lucide-react": "^1.70.0",
+    "lucide-react": "^1.78.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1"
   },
   "devDependencies": {
     "@atom63/eslint-config": "workspace:*",
     "@atom63/tsconfig": "workspace:*",
-    "@figma/plugin-typings": "^1.142.0",
+    "@figma/plugin-typings": "^1.143.0",
     "@types/node": "^26.6.6",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
     "esbuild": "^0.28.2",
-    "eslint": "10.14.0",
-    "sass": "^1.108.1",
+    "eslint": "10.15.0",
+    "sass": "^1.108.2",
     "typescript": "catalog:",
     "vitest": "catalog:"
   }
