@@ -9,9 +9,10 @@ import {
 } from '@atom63/ui-foundation'
 import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
-import { Children, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 
 import { cn } from '../../lib/cn'
+import { wrapTextRuns } from '../../lib/wrap-text-runs'
 
 export interface ButtonProps extends useRender.ComponentProps<'button'> {
   /** An unread dot (`true`) or a count at the top-end corner, such as unread notifications. */
@@ -36,22 +37,14 @@ export interface ButtonProps extends useRender.ComponentProps<'button'> {
   'data-slot'?: string
 }
 
-/** Drop whitespace-only text nodes and trim label strings so JSX newlines
- *  don't inflate the icon↔label gap inside `.a63-Button-label`. Text goes in
- *  `.a63-Button-text`, which truncates with an ellipsis when the button is
- *  narrower than its label. */
+/* Each run of label text goes in one `.a63-Button-text`, which truncates with
+   an ellipsis when the button is narrower than its label. */
 function compactButtonChildren(children: ReactNode): ReactNode {
-  return Children.toArray(children)
-    .filter(child => !(typeof child === 'string' && child.trim() === ''))
-    .map((child, index) =>
-      typeof child === 'string' || typeof child === 'number' ? (
-        <span className="a63-Button-text" data-slot="button-text" key={index}>
-          {typeof child === 'string' ? child.trim() : child}
-        </span>
-      ) : (
-        child
-      )
-    )
+  return wrapTextRuns(children, (text, key) => (
+    <span className="a63-Button-text" data-slot="button-text" key={key}>
+      {text}
+    </span>
+  ))
 }
 
 /* Cancel activation of a button that is busy or (when not native) disabled. */
