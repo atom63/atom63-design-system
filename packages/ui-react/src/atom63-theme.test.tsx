@@ -32,6 +32,15 @@ describe('Atom63Theme', () => {
     expect(boundary).not.toHaveClass('light')
   })
 
+  it('stamps the phone form factor only when asked', () => {
+    const { rerender } = render(<Atom63Theme data-testid="theme" />)
+    const boundary = screen.getByTestId('theme')
+    expect(boundary).not.toHaveAttribute('data-a63-form-factor')
+
+    rerender(<Atom63Theme data-testid="theme" formFactor="phone" />)
+    expect(boundary).toHaveAttribute('data-a63-form-factor', 'phone')
+  })
+
   it('supports a custom wrapper and theme', () => {
     render(
       <Atom63Theme render={<main aria-label="Application" />} theme="terminal">

@@ -3,6 +3,7 @@
 import {
   type ItemGroupSurface,
   type ItemGroupVariant,
+  type ItemMediaAspect,
   type ItemMediaVariant,
   type ItemSize,
   type ItemSizeAlias,
@@ -130,16 +131,24 @@ export function Item({
 
 export type ItemMediaProps = React.ComponentProps<'div'> & {
   variant?: ItemMediaVariant
+  /**
+   * The shape of an `image` media. `square` (the default); `portrait` is 3:4, for a cover or
+   * poster (one size step taller than a square, so 48×36 in an `md` row); `landscape` is 4:3,
+   * at the square's height. The width follows the height.
+   */
+  aspect?: ItemMediaAspect
 }
 
 export function ItemMedia({
   className,
   variant = itemContract.defaultMediaVariant,
+  aspect = itemContract.defaultMediaAspect,
   ...props
 }: ItemMediaProps): React.ReactElement {
   return (
     <div
       className={cn('a63-ItemMedia', className)}
+      data-aspect={variant === 'image' ? aspect : undefined}
       data-slot="item-media"
       data-variant={variant}
       {...props}
@@ -154,11 +163,27 @@ export function ItemContent({
   return <div className={cn('a63-ItemContent', className)} data-slot="item-content" {...props} />
 }
 
-export function ItemTitle({
-  className,
-  ...props
-}: React.ComponentProps<'div'>): React.ReactElement {
-  return <div className={cn('a63-ItemTitle', className)} data-slot="item-title" {...props} />
+export type ItemTitleProps = useRender.ComponentProps<'div'>
+
+/**
+ * The row's title. Render it as a link (`render={<a href="…">Title</a>}`) or a button to make it the
+ * row's primary action: the whole row becomes its hit area (a stretched link) and takes the
+ * hover and focus ring, while buttons in ItemActions, ItemHeader and ItemFooter stay separate
+ * controls above it. Use this instead of `Item render={<a />}` when the row also carries its
+ * own buttons, which cannot sit inside a link.
+ */
+export function ItemTitle({ className, render, ...props }: ItemTitleProps): React.ReactElement {
+  return useRender({
+    defaultTagName: 'div',
+    props: mergeProps<'div'>(
+      {
+        className: cn('a63-ItemTitle', className),
+        'data-slot': 'item-title',
+      } as React.ComponentProps<'div'>,
+      props
+    ),
+    render,
+  })
 }
 
 export function ItemDescription({

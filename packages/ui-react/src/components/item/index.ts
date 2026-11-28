@@ -10,4 +10,10 @@ export {
   ItemSeparator,
   ItemTitle,
 } from './item'
-export type { ItemGroupProps, ItemMediaProps, ItemProps, ItemSeparatorProps } from './item'
+export type {
+  ItemGroupProps,
+  ItemMediaProps,
+  ItemProps,
+  ItemSeparatorProps,
+  ItemTitleProps,
+} from './item'

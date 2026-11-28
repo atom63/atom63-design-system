@@ -1,4 +1,4 @@
-import { itemContract, itemTones, themes } from '@atom63/ui-foundation'
+import { itemContract, itemMediaAspects, itemTones, themes } from '@atom63/ui-foundation'
 import { Bookmark, ChevronRight } from 'lucide-react'
 import {
   Button,
@@ -6,6 +6,7 @@ import {
   ItemActions,
   ItemContent,
   ItemDescription,
+  ItemFooter,
   ItemGroup,
   ItemMedia,
   ItemSeparator,
@@ -549,5 +550,70 @@ export const ForcedColors: Story = {
         </ItemContent>
       </Item>
     </ItemGroup>
+  ),
+}
+
+/* A portrait (3:4) or landscape (4:3) image: a cover or poster keeps its whole
+   frame instead of being cropped to a square. */
+export const MediaAspect: Story = {
+  render: () => (
+    <ItemGroup style={{ width: 'min(360px, 100%)' }}>
+      {itemMediaAspects.map((aspect, index) => (
+        <Item key={aspect} variant="outline">
+          <ItemMedia aspect={aspect} variant="image">
+            <span
+              aria-hidden
+              style={{
+                background: `var(--a63-category-${['blue', 'green', 'orange'][index]})`,
+                display: 'block',
+                height: '100%',
+                width: '100%',
+              }}
+            />
+          </ItemMedia>
+          <ItemContent>
+            <ItemTitle>{aspect}</ItemTitle>
+            <ItemDescription>ItemMedia variant="image" aspect="{aspect}"</ItemDescription>
+          </ItemContent>
+        </Item>
+      ))}
+    </ItemGroup>
+  ),
+}
+
+/* A row whose title is a link and which also carries its own buttons. The title
+   link covers the row (a stretched link), so the whole row opens the project,
+   while the buttons in the footer stay separate controls. One list item. */
+export const StretchedLink: Story = {
+  render: () => (
+    <div style={{ background: 'var(--a63-surface-page)', padding: 16, width: 'min(392px, 100%)' }}>
+      <ItemGroup variant="inset">
+        <Item>
+          <ItemContent>
+            <ItemTitle render={<a href="#project-white-model">白模动画</a>} />
+            <ItemDescription>Probably belongs to an existing project.</ItemDescription>
+          </ItemContent>
+          <ItemFooter>
+            <ItemActions>
+              <Button size="xs" type="button" variant="outline">
+                Move here
+              </Button>
+              <Button size="xs" tone="muted" type="button" variant="ghost">
+                Choose another
+              </Button>
+            </ItemActions>
+          </ItemFooter>
+        </Item>
+        <Item>
+          <ItemContent>
+            <ItemTitle render={<a href="#project-poster">Poster series</a>} />
+            <ItemDescription>12 images</ItemDescription>
+          </ItemContent>
+          <ItemActions>
+            <ChevronRight aria-hidden />
+          </ItemActions>
+        </Item>
+      </ItemGroup>
+    </div>
   ),
 }

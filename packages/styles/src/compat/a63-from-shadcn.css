@@ -373,6 +373,9 @@
   --a63-space-2_5: 0.625rem;
   --a63-space-3_5: 0.875rem;
   --a63-font-app: inherit;
+  /* Body and subheadline: the row text of an Item (title and description). */
+  --a63-type-body-font-size: 0.875rem;
+  --a63-type-subhead-font-size: 0.8125rem;
   --a63-type-display-font-size: 2.5rem;
   --a63-type-display-line-height: 2.75rem;
   --a63-type-display-font-weight: 600;

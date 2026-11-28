@@ -48,7 +48,7 @@
   },
   "counts": {
     "rootValueExports": 444,
-    "rootTypeExports": 216,
+    "rootTypeExports": 218,
     "packageExportKeys": 86,
     "cssExportKeys": 78
   },
@@ -700,6 +700,10 @@
         },
         {
           "name": "Atom63ThemeProps",
+          "proposedTier": "beta-supported-core"
+        },
+        {
+          "name": "FormFactor",
           "proposedTier": "beta-supported-core"
         }
       ]
@@ -2404,6 +2408,10 @@
         },
         {
           "name": "ItemSeparatorProps",
+          "proposedTier": "beta-supported-composition-conditional"
+        },
+        {
+          "name": "ItemTitleProps",
           "proposedTier": "beta-supported-composition-conditional"
         }
       ]

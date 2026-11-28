@@ -16,6 +16,7 @@ import { mergeProps } from '@base-ui/react/merge-props'
 import { useRender } from '@base-ui/react/use-render'
 import * as React from 'react'
 
+import type { FormFactor } from './atom63-theme'
 import { cn } from './lib/cn'
 
 const UIEnvironmentContext = React.createContext<UIEnvironment>(defaultUIEnvironment)
@@ -28,6 +29,12 @@ export interface UIProviderProps extends useRender.ComponentProps<'div'>, Partia
    * than only on `<html>`, or those parts keep stepping left-to-right.
    */
   dir?: 'ltr' | 'rtl' | 'auto'
+  /**
+   * `phone` stamps `data-a63-form-factor="phone"`: phone type steps and control sizing for this
+   * scope, without AppView's layout or scrolling. Portaled overlays render outside the scope, so
+   * a phone-only app sets the attribute on `<html>` too.
+   */
+  formFactor?: FormFactor
 }
 
 export function UIProvider({
@@ -36,6 +43,7 @@ export function UIProvider({
   density,
   designLanguage,
   dir,
+  formFactor,
   input,
   mode,
   render,
@@ -73,6 +81,7 @@ export function UIProvider({
     ...(surface !== undefined && { 'data-a63-surface': surface }),
     ...(theme !== undefined && { 'data-a63-theme': theme }),
     ...(dir !== undefined && { dir }),
+    ...(formFactor !== undefined && { 'data-a63-form-factor': formFactor }),
   }
 
   const element = useRender({

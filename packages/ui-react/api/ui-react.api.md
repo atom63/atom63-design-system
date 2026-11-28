@@ -90,6 +90,7 @@ import { InputSize } from '@atom63/ui-foundation';
 import { InputVariant } from '@atom63/ui-foundation';
 import { ItemGroupSurface } from '@atom63/ui-foundation';
 import { ItemGroupVariant } from '@atom63/ui-foundation';
+import { ItemMediaAspect } from '@atom63/ui-foundation';
 import { ItemMediaVariant } from '@atom63/ui-foundation';
 import { ItemSize } from '@atom63/ui-foundation';
 import { ItemSizeAlias } from '@atom63/ui-foundation';
@@ -377,6 +378,7 @@ export type Atom63ThemeMode = Exclude<Mode, 'system'>;
 
 // @public (undocumented)
 export interface Atom63ThemeProps extends useRender.ComponentProps<'div'> {
+    formFactor?: FormFactor;
     // (undocumented)
     mode?: Atom63ThemeMode;
     // (undocumented)
@@ -1590,6 +1592,9 @@ export function FormControl(input: React$1.ComponentProps<'div'> & {
 // @public (undocumented)
 export function FormDescription(input: React$1.ComponentProps<'p'>): React$1.JSX.Element;
 
+// @public
+export type FormFactor = 'phone' | 'default';
+
 // @public (undocumented)
 export const FormField: <TFieldValues extends FieldValues = FieldValues, TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>>(input: ControllerProps<TFieldValues, TName>) => React$1.JSX.Element;
 
@@ -1782,6 +1787,7 @@ export function ItemMedia(input: ItemMediaProps): React$1.ReactElement;
 // @public (undocumented)
 export type ItemMediaProps = React$1.ComponentProps<'div'> & {
     variant?: ItemMediaVariant;
+    aspect?: ItemMediaAspect;
 };
 
 // @public (undocumented)
@@ -1797,8 +1803,11 @@ export function ItemSeparator(input: ItemSeparatorProps): React$1.ReactElement;
 // @public (undocumented)
 export type ItemSeparatorProps = React$1.ComponentProps<typeof Separator>;
 
+// @public
+export function ItemTitle(input: ItemTitleProps): React$1.ReactElement;
+
 // @public (undocumented)
-export function ItemTitle(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export type ItemTitleProps = useRender.ComponentProps<'div'>;
 
 // @public (undocumented)
 export function Kbd(input: KbdProps): React$1.ReactElement;
@@ -3043,6 +3052,7 @@ export function UIProvider(input: UIProviderProps): React$1.ReactElement;
 // @public (undocumented)
 export interface UIProviderProps extends useRender.ComponentProps<'div'>, Partial<UIEnvironment> {
     dir?: 'ltr' | 'rtl' | 'auto';
+    formFactor?: FormFactor;
 }
 
 // @public (undocumented)

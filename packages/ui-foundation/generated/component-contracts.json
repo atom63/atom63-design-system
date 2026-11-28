@@ -2093,7 +2093,7 @@
       "source": "packages/ui-foundation/contracts/components/item.json",
       "exportName": "itemContract",
       "maturity": "stable",
-      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (md/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
+      "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (md/sm/xs); ItemMedia has its own variant (default/icon/image), and an image takes aspect (square/portrait/landscape, data-aspect): square is the default, portrait is 3:4 and landscape is 4:3, each on the size ramp's height. The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
       "axes": [
         { "name": "variants", "values": ["default", "outline", "muted"], "default": "default" },
         {
@@ -2103,6 +2103,11 @@
           "default": "md"
         },
         { "name": "mediaVariants", "values": ["default", "icon", "image"], "default": "default" },
+        {
+          "name": "mediaAspects",
+          "values": ["square", "portrait", "landscape"],
+          "default": "square"
+        },
         { "name": "groupVariants", "values": ["default", "inset"], "default": "default" },
         { "name": "groupSurfaces", "values": ["card", "muted"], "default": "card" },
         { "name": "tones", "values": ["neutral", "accent"], "default": "neutral" }

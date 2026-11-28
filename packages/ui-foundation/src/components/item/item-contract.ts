@@ -4,18 +4,21 @@
 import type { VisualArchetypeId } from '../../visual-archetypes'
 
 // Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size
-// (md/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off
-// data-variant / data-size, and styles a row with aria-current or data-selected as current or
-// selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers,
-// the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card
-// (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A
-// selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with
-// primary text, accent is the opt-in primary wash with accent text.
+// (md/sm/xs); ItemMedia has its own variant (default/icon/image), and an image takes aspect
+// (square/portrait/landscape, data-aspect): square is the default, portrait is 3:4 and landscape is
+// 4:3, each on the size ramp's height. The DS recipe reads these off data-variant / data-size, and
+// styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant
+// (default/inset): inset is a rounded card with hairline dividers, the grouped settings list.
+// ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel
+// fill for a grey page, muted is the grey fill for a white page. A selected or current row follows
+// tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the
+// opt-in primary wash with accent text.
 
 export const itemVariants = ['default', 'outline', 'muted'] as const
 export const itemSizes = ['md', 'sm', 'xs'] as const
 export const itemTones = ['neutral', 'accent'] as const
 export const itemMediaVariants = ['default', 'icon', 'image'] as const
+export const itemMediaAspects = ['square', 'portrait', 'landscape'] as const
 export const itemGroupVariants = ['default', 'inset'] as const
 export const itemGroupSurfaces = ['card', 'muted'] as const
 export const itemSlots = [
@@ -37,6 +40,7 @@ export type ItemVariant = (typeof itemVariants)[number]
 export type ItemSize = (typeof itemSizes)[number]
 export type ItemTone = (typeof itemTones)[number]
 export type ItemMediaVariant = (typeof itemMediaVariants)[number]
+export type ItemMediaAspect = (typeof itemMediaAspects)[number]
 export type ItemGroupVariant = (typeof itemGroupVariants)[number]
 export type ItemGroupSurface = (typeof itemGroupSurfaces)[number]
 export type ItemSlot = (typeof itemSlots)[number]
@@ -62,12 +66,14 @@ export interface ItemContract {
   defaultVariant: ItemVariant
   defaultSize: ItemSize
   defaultMediaVariant: ItemMediaVariant
+  defaultMediaAspect: ItemMediaAspect
   defaultGroupVariant: ItemGroupVariant
   defaultGroupSurface: ItemGroupSurface
   defaultTone: ItemTone
   variants: readonly ItemVariant[]
   sizes: readonly ItemSize[]
   mediaVariants: readonly ItemMediaVariant[]
+  mediaAspects: readonly ItemMediaAspect[]
   slots: readonly ItemSlot[]
   states: readonly ItemState[]
   visualArchetypes: readonly ItemVisualArchetype[]
@@ -80,12 +86,14 @@ export const itemContract = {
   defaultVariant: 'default',
   defaultSize: 'md',
   defaultMediaVariant: 'default',
+  defaultMediaAspect: 'square',
   defaultGroupVariant: 'default',
   defaultGroupSurface: 'card',
   defaultTone: 'neutral',
   variants: itemVariants,
   sizes: itemSizes,
   mediaVariants: itemMediaVariants,
+  mediaAspects: itemMediaAspects,
   slots: itemSlots,
   states: itemStates,
   visualArchetypes: itemVisualArchetypes,

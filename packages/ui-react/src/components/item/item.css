@@ -29,11 +29,22 @@
   overflow: hidden;
   border-radius: var(--a63-inset-group-radius, var(--radius-lg));
   background-color: var(--a63-surface-panel);
+  /* In light mode the panel fill sits within a hair of the page (#fcfcfc on
+     #f9f9f9), so the card's edge would vanish: a subtle hairline draws it there.
+     Dark mode has the contrast in the fill and keeps no edge. The mode switch
+     comes from the --a63-if-light / --a63-if-dark tokens, not a selector. An
+     inset shadow, so it adds no size and stays inside the rounded clip. */
+  box-shadow: var(
+      --a63-if-light,
+      inset 0 0 0 var(--a63-control-border-width) var(--a63-border-subtle)
+    )
+    var(--a63-if-dark, none);
 }
 /* surface="muted": the grey card for a white page. A row's hover (half the muted
    fill) would vanish on it, so it darkens the card's own fill instead. */
 .a63-ItemGroup[data-variant='inset'][data-surface='muted'] {
   background-color: var(--a63-surface-muted);
+  box-shadow: none;
 }
 .a63-ItemGroup[data-variant='inset'][data-surface='muted']
   > :where(a, button, [role='button'], [role='link']).a63-Item:hover,
@@ -111,7 +122,11 @@
   border-radius: var(--radius-lg);
   color: inherit;
   font-family: var(--a63-control-font-family);
-  font-size: var(--a63-control-font-size-sm);
+  /* Row text sits on the type roles, not the control ramp: a title reads at body
+     size and its description at subheadline size, the same as the prose around
+     the list (15/13 at desktop, 17/15 on a phone). xs rows stay on the control
+     ramp for dense menus. */
+  font-size: var(--a63-type-body-font-size);
   text-decoration: none;
   outline: none;
   transition: background-color var(--a63-control-feedback-duration) var(--a63-control-feedback-ease);
@@ -230,19 +245,35 @@
   width: 1rem;
   height: 1rem;
 }
+/* An image keeps its height on the size ramp; aspect sets the width from it. */
 .a63-ItemMedia[data-variant='image'] {
-  width: 2.5rem;
   height: 2.5rem;
+  aspect-ratio: 1;
   overflow: hidden;
   border-radius: var(--radius-sm);
 }
+.a63-ItemMedia[data-variant='image'][data-aspect='portrait'] {
+  aspect-ratio: 3 / 4;
+}
+.a63-ItemMedia[data-variant='image'][data-aspect='landscape'] {
+  aspect-ratio: 4 / 3;
+}
+/* A portrait cover is taller than a square: it takes the next rung up, so its
+   width stays close to a square's and the row keeps its rhythm. */
+.a63-Item[data-size='md'] .a63-ItemMedia[data-variant='image'][data-aspect='portrait'] {
+  height: 3rem;
+}
 .a63-Item[data-size='sm'] .a63-ItemMedia[data-variant='image'] {
-  width: 2rem;
   height: 2rem;
 }
+.a63-Item[data-size='sm'] .a63-ItemMedia[data-variant='image'][data-aspect='portrait'] {
+  height: 2.5rem;
+}
 .a63-Item[data-size='xs'] .a63-ItemMedia[data-variant='image'] {
-  width: 1.5rem;
   height: 1.5rem;
+}
+.a63-Item[data-size='xs'] .a63-ItemMedia[data-variant='image'][data-aspect='portrait'] {
+  height: 2rem;
 }
 .a63-ItemMedia[data-variant='image'] img {
   width: 100%;
@@ -272,7 +303,7 @@
   width: fit-content;
   align-items: center;
   gap: var(--a63-space-2);
-  font-size: var(--a63-control-font-size-sm);
+  font-size: var(--a63-type-body-font-size);
   font-weight: 500;
   line-height: 1.375;
   text-underline-offset: 4px;
@@ -289,7 +320,7 @@
 
 .a63-ItemDescription {
   color: var(--a63-text-secondary);
-  font-size: var(--a63-control-font-size-secondary, var(--a63-control-font-size-sm));
+  font-size: var(--a63-control-font-size-secondary, var(--a63-type-subhead-font-size));
   font-weight: 400;
   line-height: 1.5;
   text-align: start;
@@ -298,6 +329,10 @@
   line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+.a63-Item[data-size='xs'],
+.a63-Item[data-size='xs'] .a63-ItemTitle {
+  font-size: var(--a63-control-font-size-sm);
 }
 .a63-Item[data-size='xs'] .a63-ItemDescription {
   font-size: var(--a63-control-font-size-xs);
@@ -308,6 +343,58 @@
 }
 .a63-ItemDescription a:hover {
   color: var(--a63-text-accent);
+}
+
+/* ── Stretched link ─────────────────────────────────────────────────────── */
+/* An ItemTitle rendered as a link or button is the row's primary action. Its
+   ::after covers the row, so the whole row is the hit area, and the row draws
+   the hover and the focus ring. Actions, header and footer sit above the cover,
+   so their own buttons stay separate targets. */
+.a63-Item:has(.a63-ItemTitle:is(a, button)) {
+  position: relative;
+  min-height: max(
+    calc(var(--a63-control-height-sm) * var(--a63-density-scale, 1)),
+    var(--a63-row-min-size)
+  );
+}
+.a63-ItemTitle:is(a, button) {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  font-size: var(--a63-type-body-font-size);
+  font-weight: 500;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  outline: none;
+}
+.a63-Item[data-size='xs'] .a63-ItemTitle:is(a, button) {
+  font-size: var(--a63-control-font-size-sm);
+}
+.a63-ItemTitle:is(a, button)::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.a63-Item:has(.a63-ItemTitle:is(a, button)):hover {
+  background-color: color-mix(in oklch, var(--a63-selected-background) 50%, transparent);
+}
+.a63-Item:has(.a63-ItemTitle:is(a, button):focus-visible) {
+  border-color: var(--a63-focus-ring);
+  outline: var(--a63-control-focus-ring-width) solid
+    color-mix(in oklch, var(--a63-focus-ring) 50%, transparent);
+}
+/* Inside an inset card the outer ring would be clipped, so it goes inside. */
+.a63-ItemGroup[data-variant='inset'] .a63-Item:has(.a63-ItemTitle:is(a, button):focus-visible) {
+  outline-offset: calc(var(--a63-control-focus-ring-width) * -1);
+}
+.a63-Item:has(.a63-ItemTitle:is(a, button))
+  :is(.a63-ItemActions, .a63-ItemHeader, .a63-ItemFooter, .a63-ItemDescription a) {
+  position: relative;
+  z-index: 1;
 }
 
 /* ── Actions / Header / Footer ──────────────────────────────────────────── */
