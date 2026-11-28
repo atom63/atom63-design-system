@@ -1,0 +1,701 @@
+{
+  "scope": "Layer 3 (K1-K10), batch 1 actions: button, button-group, toggle, toggle-group, copy-button, destination-link, panel-setting-button, kbd (web and React only; K10 n/a: iOS in backlog)",
+  "reviewedAt": "2026-11-28",
+  "round": 3,
+  "reviewedCommit": "f7e5e419",
+  "notes": "Re-scored at f7e5e419 against r2 (099d1eba). Changes in scope since r2: Button (#349: aria-disabled loading, nativeButton for render, Aqua clip moved to the pseudo-element, label truncation, RTL/long-label/hover/focus-visible baselines, ref and render tests) and DestinationLink (#360/#362: plain|inline variant, plain default). button-group, toggle, toggle-group, copy-button, panel-setting-button and kbd sources are byte-identical to r2 (git diff 099d1eba..f7e5e419 empty), so their findings carry forward; copy-button K5 improves through the Button fix. The visualState mechanism (#346, apps/storybook/.storybook/visual.setup.ts) now lets a story capture hover and focus-visible; in this batch only Button uses it. K3 is provisional until YZ sees the contact sheet. K10 n/a (iOS in backlog). r2 findings fixed: r2-k01-actions-1, -2, -3, -5, -14; -4 fixed for Button only (carried as r3 batch P3); -19 partly addressed.",
+  "subjects": [
+    {
+      "subject": "button",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button/button.tsx:81-85,99,133,140: a non-native render (nativeButton defaults to false when `render` is set) gets no type and no native disabled; disabled or loading sets aria-disabled and replaces onClick with blockActivation (58-61); tested button.test.tsx:93-112 (link via render, no type, aria-disabled, click blocked) and :80-91 (ref forwarding). r2-k01-actions-1 fixed. Polish: the new `button-text` slot (button.tsx:48) is not in button.json slots (42); a soft-disabled link keeps its href, so a middle click (auxclick) still opens it."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button/button.tsx:82-85,99: loading no longer sets native disabled, so focus stays on a submit button that starts loading (button.test.tsx:55-78 asserts activeElement and blocked submit); r2-k01-actions-2 fixed. Outline focus ring, reduced motion, forced-colors pressed state added (button.css:196-201). No APG button pattern binding in apps/storybook/a11y/patterns.test.ts."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-button-themes-chromium-linux.png and -variants baselines (re-captured): archetype per theme; the Aqua icon gloss is now clipped on the pseudo-element (button.css:158-164) instead of the root. Provisional until YZ sees the contact sheet."
+        },
+        {
+          "criterion": "K4",
+          "score": 4,
+          "evidence": "Every applicable state is baselined: apps/storybook/visual/__screenshots__/ui-react-button-states (rest, loading, disabled, pressed), ui-react-button-hover and ui-react-button-focus-visible (button.stories.tsx:635-644, parameters.visualState driven by apps/storybook/.storybook/visual.setup.ts applyVisualState). r2-k01-actions-4 fixed for Button."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button/button.css:133-137 ::before 44px coarse target; the Aqua `overflow: hidden` on icon sizes is gone (clip moved to the ::after at :163), so icon buttons keep the target in every theme; r2-k01-actions-3 fixed. Content floor and density unchanged. The runtime target rule still checks only 24px (apps/storybook/craft/rules.ts)."
+        },
+        {
+          "criterion": "K6",
+          "score": 4,
+          "evidence": "packages/ui-react/src/components/button/button.css:106,282-289 caps the button at its container and truncates the label with an ellipsis (tile wraps); physical left/right on the gloss became inset-inline (:117,160). RightToLeft and LongLabels stories (button.stories.tsx:421,452) are kept by apps/storybook/visual/__screenshots__/ui-react-button-right-to-left and -long-labels baselines."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "EnvironmentMatrix and Endpoints baselines cover touch sizing (apps/storybook/visual/__screenshots__/ui-react-button-environment-matrix-chromium-linux.png); Button is inline with no width-dependent behaviour; labels now truncate inside narrow containers (button.css:282)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component button` (generated index) with when-to-use, axis guidance and examples; apps/docs/src/pages/component-button.mdx. The new nativeButton prop is documented in its JSDoc (button.tsx:22-27). Shared actions guidance line (apps/docs/src/lib/component-docs.ts:14-15) is generic but applies to Button."
+        },
+        {
+          "criterion": "K9",
+          "score": 4,
+          "evidence": "packages/ui-react/src/components/button/button.test.tsx: 18 cases incl. loading focus retention (55), ref (80), render-as-link (93), native disabled (114), label slot (119); renderer-conformance activation tests; 23 baselines incl. hover/focus-visible; SSR smoke over every story. r2-k01-actions-5 fixed."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "button-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.tsx:17-45 props match the contract; ButtonGroupProvider/useButtonGroupContext still exported (index.ts:3, packages/ui-react/src/index.ts:90) with no reader in src (button-group-context.tsx:18 is the only definition), while docs say members flatten through it."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "role=group (button-group.tsx:40); focused member raised with inset outline (button-group.css:50-67). Unchanged since r2."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-buttongroup-themes-chromium-linux.png re-captured after the Button gloss change; welded seams per theme. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-buttongroup-* (playground, vertical, with-text, with-separator, with-input, sizes); hover and focus-within are not captured although the visualState mechanism now exists (apps/storybook/.storybook/visual.setup.ts:55-102)."
+        },
+        {
+          "criterion": "K5",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.css:25 `overflow-x: auto` on the horizontal group still clips each member Button's ::before 44px hit area (button.css:133-137), so on touch a horizontal group of md/icon members keeps ~32px targets. Unchanged since r2 (r2-k01-actions-6)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical radii (button-group.css:178-209,342-411); check:craft physical-properties passes."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Horizontal overflow scrolls (button-group.css:17-31) so the group never breaks a phone layout; no phone story."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "apps/docs/src/pages/component-button-group.mdx; `atom63 component button-group` guidance and examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/button-group/button-group.test.tsx 6 cases; 9 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "toggle",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/toggle/toggle.tsx wraps Base UI Toggle (controlled and uncontrolled), size/tone match toggle.json. Unchanged since r2."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/toggle/toggle.css:148-150: the subtle pressed state still changes only the glyph colour (--a63-text-accent vs resting text), measured 1.46:1 in r2 on apps/storybook/visual/__screenshots__/ui-react-toggle-tones-chromium-linux.png; pressed vs not-pressed by hue alone (WCAG 1.4.1). Unchanged (r2-k01-actions-8)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-toggle-themes and -tones baselines. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-toggle-states (rest, pressed, disabled, disabled-on); hover and focus-visible are contract states (toggle.json) designed at toggle.css:121-133 but not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "toggle.css density-scaled height with content floor and a 44px ::before target; check:control-alignment passes."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical properties; toggle.css:66,87 nowrap + overflow hidden clips a long label without ellipsis; no long-string story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline control with a 44px touch target; hover rule (toggle.css:121) is not behind @media (hover: hover)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`node packages/cli/src/bin.mjs component toggle`: Guidance still includes \"explain errors beside the affected field\" and \"invalid state\" from apps/docs/src/lib/component-docs.ts:26-27 (forms-and-selection group); Usage has the import line only. Unchanged (r2-k01-actions-9)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "toggle.test.tsx 5 cases; renderer conformance; 10 baselines incl. forced colors."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "toggle-group",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-foundation/contracts/components/toggle-group.json:9,44 still declares selectionModes single|multiple while the React API is Base UI's boolean `multiple`; packages/ui-react/src/components/toggle-group/toggle-group.tsx:18-31 size and tone props are not in the toggle-group contract. Unchanged (r2-k01-actions-10)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "toggle-group.test.tsx:110-136 one tab stop and roving arrows; DirectionProvider for RTL arrows; forced colors."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-togglegroup-themes-chromium-linux.png. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Disabled/multiple/pills/ghost/forced-colors baselines; hover and focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Items inherit Toggle sizing and its 44px ::before; the group root has no overflow clip."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical first/last radii; RTL arrows via DirectionProvider; no RTL story."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/toggle-group/toggle-group.css:7-13 inline-flex with no wrap or scroll, items nowrap: a row wider than 390px overflows the page. Unchanged (r2-k01-actions-11)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`atom63 component toggle-group` guidance still carries the forms boilerplate (component-docs.ts:26-27) and no example of choosing `multiple`. Unchanged (r2-k01-actions-12)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "toggle-group.test.tsx 8 cases; renderer conformance; 14 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "copy-button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:95 `title={label}` after the spread still overrides a consumer title; no onCopy/onError callback."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Icon-only name swaps to copiedLabel; outcome toast; reduced motion. Unchanged."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-copybutton-themes-chromium-linux.png re-captured after the Aqua gloss moved to a clipped ::after (button.css:158-164); the dome geometry over the glyph is unchanged. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Copied and copy-failed states designed (packages/ui-react/src/components/copy-button/copy-button.tsx:69-78,131-147) but still no baseline. Unchanged (r2-k01-actions-15)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Defaults to icon-sm (copy-button.tsx:65); the Aqua root clip is gone (button.css:149-164), so the default CopyButton keeps the 44px touch target in every theme. r2-k01-actions-14 fixed."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/copy-button/copy-button.tsx:73,77,146: hard-coded \"Copied!\", \"Failed to copy to clipboard\" and `${label} copied to clipboard` (\"Copy copied to clipboard\" with the default label at :55). Unchanged (r2-k01-actions-13)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inherits Button touch sizing; width-independent."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`atom63 component copy-button`: actions boilerplate \"Make loading, disabled, and destructive behavior explicit\" (component-docs.ts:15); Usage is the import line only; no copy-button.mdx. Unchanged (r2-k01-actions-16)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "copy-button.test.tsx 8 cases; clipboard rejection path untested; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "destination-link",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx:12-18,61-64 new `variant` (plain|inline) matches destination-link.json lists.variants and defaultVariant plain; data-variant comes from useRender state; router render, owned rel/target unchanged."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "External links announce \"(opens in new tab)\" (destination-link.tsx:34-42); outline focus ring (destination-link.css:24-28). Since #362 the default plain variant draws no underline in --a63-text-primary (destination-link.css:13-16), so a plain link placed in prose is indistinguishable from body text; the guidance tells builders to use variant=\"inline\" there."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-destination-link-themes (inline variant) and new -inline baselines. Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Contract states rest and focus-visible; hover designed (destination-link.css:20-22); no focus baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Inline text link (WCAG 2.5.8 inline exception)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/destination-link/destination-link.tsx:34,38 still hard-code \"(opens in new tab)\" with no prop. Unchanged (r2-k01-actions-18)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline link; no phone-specific behaviour."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`atom63 component destination-link` now explains plain vs inline, but still carries \"Make loading, disabled, and destructive behavior explicit\" (component-docs.ts:15), and Usage is the import line only with no router or external example; no .mdx. r2-k01-actions-19 partly addressed."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "destination-link.test.tsx covers default plain, router render with inline, new-tab semantics; 5 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "panel-setting-button",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.tsx:23,31,39: controlled-only `active` with no onActiveChange/defaultActive. Unchanged (r2-k01-actions-20)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "aria-pressed (panel-setting-button.tsx:39); forced colors map active to Highlight."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/panel-setting-button/panel-setting-button.css:61 active glyph uses the fill token --a63-action-primary as foreground: ~2.1:1 on the active tile in every dark mode (r2 measurement on apps/storybook/visual/__screenshots__/ui-react-panelsettingbutton-themes-chromium-linux.png). Unchanged (r2-k01-actions-21). Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "States and forced-colors baselines cover off/on/disabled; focus-visible not captured."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Tile min-height 4.5rem, touch-safe."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "text-align: start (panel-setting-button.css:32); tile labels are exempt from the new Button label truncation (button.css:287-289), so a long tile label overflows the tile; no long-string story."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "72px+ tiles."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`atom63 component panel-setting-button` carries forms boilerplate (component-docs.ts:26-27) and never shows wiring `active`. Unchanged (r2-k01-actions-22)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "panel-setting-button.test.tsx 3 cases; 6 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "kbd",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/kbd/kbd.tsx:19-20 KbdGroup still renders a <div>, invalid inside a <p> (hydration error in the documented sentence usage). Unchanged (r2-k01-actions-23)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Native <kbd>, non-interactive."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "docs/design-system/audits/craft-baseline.json:4,18 still carry the kbd mode branch and surface-token-as-text debts (packages/ui-react/src/components/kbd/kbd.css); the in-tooltip keycap has no baseline. Unchanged (r2-k01-actions-24). Provisional."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Single rest state; themes/sizes/group/in-context baselines."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Contract sizes sm/md, rem-based."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "padding-inline only."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Inline marker."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`atom63 component kbd`: feedback-and-utilities boilerplate \"preserve reduced-motion behavior\" (component-docs.ts:22-23); import line only. Unchanged (r2-k01-actions-25)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "kbd.test.tsx 3 cases; 7 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r3-k01-actions-1",
+      "subject": "button",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "The new button-text slot is not in the contract, and a disabled or loading Button rendered as a link still opens on middle click.",
+      "evidence": "packages/ui-react/src/components/button/button.tsx:48,58-61,140; packages/ui-foundation/contracts/components/button.json:42",
+      "fix": "Add button-text to button.json slots; when soft-disabled and not native, drop href (or block auxclick) as Base UI does for disabled links.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-2",
+      "subject": "button-group",
+      "criterion": "K5",
+      "severity": "P2",
+      "summary": "overflow-x: auto on a horizontal ButtonGroup clips member Buttons' 44px hit areas, so members keep ~32px targets on touch.",
+      "evidence": "Carried from r2-k01-actions-6. packages/ui-react/src/components/button-group/button-group.css:25; button/button.css:133-137",
+      "fix": "Grow the group to the coarse target as #377 does for SegmentedControl, or move the scroll to an inner wrapper with block padding.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-3",
+      "subject": "button-group",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "ButtonGroupProvider/useButtonGroupContext is exported but no component reads it; the docs say members flatten through it.",
+      "evidence": "Carried from r2-k01-actions-7. packages/ui-react/src/components/button-group/button-group-context.tsx:18; button-group/index.ts:3",
+      "fix": "Wire members to the context or drop the export and the docs claim.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-4",
+      "subject": "button-group, toggle, toggle-group, copy-button, destination-link, panel-setting-button",
+      "criterion": "K4",
+      "severity": "P3",
+      "summary": "Hover and focus-visible are designed but captured only for Button; the visualState mechanism (#346) is not used by the rest of the batch.",
+      "evidence": "Carried from r2-k01-actions-4. apps/storybook/.storybook/visual.setup.ts:55-102; packages/ui-react/src/components/button/button.stories.tsx:635-644 (only user in batch 1)",
+      "fix": "Add Hover and FocusVisible stories with parameters.visualState for each subject.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-5",
+      "subject": "toggle",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "The subtle tone shows pressed vs not-pressed by hue alone (1.46:1 between states).",
+      "evidence": "Carried from r2-k01-actions-8. packages/ui-react/src/components/toggle/toggle.css:148-150; apps/storybook/visual/__screenshots__/ui-react-toggle-tones-chromium-linux.png",
+      "fix": "Add a non-colour cue to subtle pressed (filled glyph, underline or a faint plate).",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-6",
+      "subject": "toggle",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The CLI and docs guidance for Toggle is forms boilerplate that mentions errors and invalid state, and the usage block is the import line only.",
+      "evidence": "Carried from r2-k01-actions-9. apps/docs/src/lib/component-docs.ts:26-27; `node packages/cli/src/bin.mjs component toggle`",
+      "fix": "Make group guidance conditional on the contract states and add a pressed/onPressedChange example.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-7",
+      "subject": "toggle-group",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "The contract's selectionMode axis does not exist in the React API, which uses Base UI's boolean multiple; size and tone props are not in the contract.",
+      "evidence": "Carried from r2-k01-actions-10. packages/ui-foundation/contracts/components/toggle-group.json:9,44; packages/ui-react/src/components/toggle-group/toggle-group.tsx:18-31",
+      "fix": "Map selectionModes to `multiple` in the web platform map (or add a selectionMode prop), and add sizes/tones to the contract.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-8",
+      "subject": "toggle-group",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "A ToggleGroup wider than the viewport overflows the page at phone width.",
+      "evidence": "Carried from r2-k01-actions-11. packages/ui-react/src/components/toggle-group/toggle-group.css:7-13",
+      "fix": "Scroll or wrap as ButtonGroup does, without clipping hit areas; add a Phone story.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-9",
+      "subject": "toggle-group",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The docs never show how to choose single vs multiple selection, and the guidance mentions errors and invalid state.",
+      "evidence": "Carried from r2-k01-actions-12. apps/docs/src/lib/component-docs.ts:26-27; `atom63 component toggle-group`",
+      "fix": "Add single and multiple examples and drop the forms boilerplate.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-10",
+      "subject": "copy-button",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "User-facing copy is hard-coded English, and the default success toast reads \"Copy copied to clipboard\".",
+      "evidence": "Carried from r2-k01-actions-13. packages/ui-react/src/components/copy-button/copy-button.tsx:55,73,77,146",
+      "fix": "Add copiedText/errorMessage props and fix the default success message.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-11",
+      "subject": "copy-button",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The copied and copy-failed states have no baseline.",
+      "evidence": "Carried from r2-k01-actions-15. packages/ui-react/src/components/copy-button/copy-button.tsx:69-78,131-147; copy-button.stories.tsx",
+      "fix": "Add a States story using CopyButtonFeedback in both states.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-12",
+      "subject": "copy-button",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "CopyButton docs are actions boilerplate with no runnable example of value, label and Toaster setup.",
+      "evidence": "Carried from r2-k01-actions-16. apps/docs/src/lib/component-docs.ts:14-15; `atom63 component copy-button`",
+      "fix": "Add an example with value, label and a mounted Toaster.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-13",
+      "subject": "copy-button",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "In aqua dark, the secondary icon CopyButton's gloss dome still washes over the top half of the glyph.",
+      "evidence": "Carried from r2-k01-actions-17. packages/ui-react/src/components/button/button.css:158-164; apps/storybook/visual/__screenshots__/ui-react-copybutton-themes-chromium-linux.png",
+      "fix": "Lower the dome height or opacity on icon sizes. Provisional until YZ sees it.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-14",
+      "subject": "destination-link",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "\"(opens in new tab)\" is hard-coded English with no way to localise it.",
+      "evidence": "Carried from r2-k01-actions-18. packages/ui-react/src/components/destination-link/destination-link.tsx:34,38",
+      "fix": "Add a newTabLabel prop (or read it from UIProvider).",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-15",
+      "subject": "destination-link",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "DestinationLink docs now explain the variants but keep the actions boilerplate and give no runnable router or external example.",
+      "evidence": "Carried from r2-k01-actions-19. apps/docs/src/lib/component-docs.ts:15; `node packages/cli/src/bin.mjs component destination-link`",
+      "fix": "Add router and external examples; drop the loading/disabled/destructive line for links.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-16",
+      "subject": "destination-link",
+      "criterion": "K2",
+      "severity": "P3",
+      "summary": "The default plain variant has no underline and the body-text colour, so a plain link dropped into prose is not distinguishable from text.",
+      "evidence": "packages/ui-react/src/components/destination-link/destination-link.css:13-16; destination-link.tsx:14-17",
+      "fix": "Consider defaulting to inline when the link sits in text, or warn in the CLI and docs page more prominently.",
+      "kind": "yz-decision",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-17",
+      "subject": "panel-setting-button",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "PanelSettingButton has a controlled-only active boolean and no change callback or uncontrolled default, unlike Toggle.",
+      "evidence": "Carried from r2-k01-actions-20. packages/ui-react/src/components/panel-setting-button/panel-setting-button.tsx:23,31,39",
+      "fix": "Add defaultActive and onActiveChange (or build on Toggle).",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-18",
+      "subject": "panel-setting-button",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The active tile's glyph is ~2.1:1 against its tile in every dark mode because it uses the fill token --a63-action-primary as foreground.",
+      "evidence": "Carried from r2-k01-actions-21. packages/ui-react/src/components/panel-setting-button/panel-setting-button.css:61",
+      "fix": "Use --a63-text-accent (or a contract foreground token) for the active glyph.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-19",
+      "subject": "panel-setting-button",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "The docs give form-field boilerplate and never show wiring active to state.",
+      "evidence": "Carried from r2-k01-actions-22. apps/docs/src/lib/component-docs.ts:26-27; `atom63 component panel-setting-button`",
+      "fix": "Add a stateful example.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-20",
+      "subject": "kbd",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "KbdGroup renders a <div>, which is invalid inside a paragraph and raises React hydration errors in the sentence usage the docs promote.",
+      "evidence": "Carried from r2-k01-actions-23. packages/ui-react/src/components/kbd/kbd.tsx:19-20",
+      "fix": "Render a <span> (inline-flex).",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-21",
+      "subject": "kbd",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "Kbd carries two baselined craft debts: a dark-mode branch and a surface token used as text colour for the in-tooltip keycap, which has no baseline.",
+      "evidence": "Carried from r2-k01-actions-24. docs/design-system/audits/craft-baseline.json:4,18; packages/ui-react/src/components/kbd/kbd.css",
+      "fix": "Add tooltip-keycap tokens, drop the mode branch, capture it.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    },
+    {
+      "id": "r3-k01-actions-22",
+      "subject": "kbd",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "Kbd docs are utility boilerplate (reduced motion) with no runnable example.",
+      "evidence": "Carried from r2-k01-actions-25. apps/docs/src/lib/component-docs.ts:22-23; `atom63 component kbd`",
+      "fix": "Add a sentence example with KbdGroup.",
+      "kind": "fix",
+      "scope": "k01-actions"
+    }
+  ]
+}

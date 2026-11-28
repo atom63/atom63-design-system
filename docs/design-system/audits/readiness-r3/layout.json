@@ -1,0 +1,964 @@
+{
+  "scope": "Layer 4: layout and composition (Y1-Y5) — page templates, blocks, AppView, Page, Section, ReaderLayout (web/React only)",
+  "reviewedAt": "2026-11-28",
+  "round": 3,
+  "reviewedCommit": "f7e5e419",
+  "notes": "Same subjects as round 2. Evidence: source on main f7e5e419, the committed visual baselines (apps/storybook/visual/__screenshots__), apps/storybook/.storybook/visual.setup.ts, scripts/design-system/lib/templates-check.mjs, and the CLI (`pnpm -s atom63 build`, `atom63 api`) run against the repo. Since round 2: #333 (muted ghosts, one primary per view, a reading page for atom63 build), #348/#350/#355/#356 (tablet and wide captures for the flagship templates and layout primitives, long-content and state stories), and templates-check.mjs now fails a flagship template without Tablet and Wide stories (:18-31) and any template file with a vibe Button warning (:164). A new eighth page template, reading-page, exists (packages/templates/src/pages/reading-page); it is not a round-2 subject, so it is covered under ReaderLayout here. Taste (Y4 composition) remains provisional until YZ sees the contact sheets.",
+  "subjects": [
+    {
+      "subject": "app-view (page template)",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Still only templates-pages-app-view-desktop (1280), -phone and -edge-to-edge-phone (390) baselines; app-view.stories.tsx:21-34 exports Desktop, Phone, EdgeToEdgePhone, Themes, and app-view is not in RESPONSIVE_TEMPLATES (templates-check.mjs:18-29), so no 768 or 1440 capture."
+        },
+        {
+          "criterion": "Y2",
+          "score": 2,
+          "evidence": "packages/templates/src/pages/app-view/app-view.tsx:275 still pads the first block with raw pt-[env(safe-area-inset-top)] instead of var(--a63-safe-area-top), which AppView reads (app-view.css:11); the `atom63 build \"phone music app\"` snippet repeats it (packages/cli/src/templates.mjs:189)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "Fixed five-track, five-row sample (app-view.tsx:68-82); no empty library, long title or many-tracks story (app-view.stories.tsx:21-34)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Fixed since r2: every secondary ghost Button now has tone=\"muted\" (app-view.tsx:104, :115, :179, :195, :259) and the play control is the single primary (:107-111); templates-check.mjs:164 now fails a vibe Button warning. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 build \"phone music app\"` leads with AppView layout=\"phone\" and the app-view template; the snippet still carries the raw env() padding (see Y2)."
+        }
+      ]
+    },
+    {
+      "subject": "chat-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Only desktop (1280) and phone (390) baselines plus start-screen and themes (chat-page.stories.tsx:54-70); not in RESPONSIVE_TEMPLATES (templates-check.mjs:18-29), so no 768 or 1440."
+        },
+        {
+          "criterion": "Y2",
+          "score": 4,
+          "evidence": "Inline/bottom insets on the inset column and top on the header via --a63-safe-area-* (chat-page.tsx); the Phone story's play runs checkSafeArea (chat-page.stories.tsx:57-66)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Start screen story and baseline; long titles truncate; replies wrap with overflow-wrap:anywhere in ChatMessage. No many-conversations story (polish)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Fixed since r2: the New chat ghost Button has tone=\"muted\" (chat-page.tsx:101-106); vibe warnings are checked (templates-check.mjs:164). Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; `atom63 copy chat-page` writes the page and its blocks; not typechecked after copy (check:starter typechecks the starter kinds, not each template)."
+        }
+      ]
+    },
+    {
+      "subject": "dashboard-page",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 3,
+          "evidence": "Fixed since r2: Tablet, Compact and Wide stories (dashboard-page.stories.tsx:39-49) with baselines templates-pages-dashboard-page-tablet/-compact/-wide, and dashboard-page is in RESPONSIVE_TEMPLATES (templates-check.mjs:20). The lg split is minmax-guarded (dashboard-page.tsx:186)."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Insets owned by AppShell (checkSafeArea in app-shell.stories.tsx); the page adds none."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Fixed since r2: ready, loading, error and empty states (DashboardState, dashboard-page.tsx:119; empty stats and rows :146-158; the activity column draws its own empty state :213-220) with Loading, LoadError, Empty and LongValues stories and baselines (dashboard-page.stories.tsx:52-106)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "One primary (dashboard-page.tsx:163); system blocks only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copy writes page and blocks; no per-template typecheck after copy."
+        }
+      ]
+    },
+    {
+      "subject": "list-page",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Baselines at 390, 768, 1024, 1280 and 1440 for default, selected, empty, error, loading, progress and success (templates-pages-list-page-*-{phone,tablet,compact,wide}); a Tablet/Wide story is required by templates-check.mjs:18-31."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Insets via AppShell; DetailPanel uses Sheet, which owns overlay insets."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Empty, no-invoices, error, loading, long-content (phone, tablet) and right-to-left stories now exist (baselines templates-pages-list-page-long-content-phone/-tablet, -error-*, -loading-*). Polish: the no-invoices first run still shows the filter bar and the default SearchX icon (list-page.tsx:181-201; data-table-section.tsx:119)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Fixed since r2: the first-run empty action is now outline (list-page.tsx:199), so one primary (:173); row action ghosts have tone=\"muted\" (:152, :248). Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 4,
+          "evidence": "check:starter installs and typechecks the list-page starter; `atom63 template list-page` prints data and blocks; copy is tested in packages/cli/src/cli.test.mjs."
+        }
+      ]
+    },
+    {
+      "subject": "onboarding-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Only Desktop, Phone and Themes (onboarding-page.stories.tsx:21-25); no 768 or 1440 capture."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Insets via AppShell."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "It is the empty state by design; partly-done and all-done belong to the checklist block (see it)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "One primary (onboarding-page.tsx:57) and an outline secondary. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copy works; no per-template typecheck after copy."
+        }
+      ]
+    },
+    {
+      "subject": "settings-page",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 3,
+          "evidence": "Fixed since r2: Tablet, Compact and Wide baselines (templates-pages-settings-page-tablet/-compact/-wide), required by templates-check.mjs:18-31 (settings-page and settings-section listed)."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Insets via AppShell."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "New saving, save-failed and danger-zone stories with baselines (templates-pages-settings-page-saving/-save-failed/-danger-zone); rows min-w-0 so long labels wrap."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "SettingsSection/PageHeader only, no primary, vibe warnings checked. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copy works."
+        }
+      ]
+    },
+    {
+      "subject": "sign-in-page",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Only desktop, phone, themes and the two error stories (sign-in-page.stories.tsx:21-43); no 768 or 1440."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Fixed since r2 (inline/bottom): Page now owns the bottom and inline safe-area insets (packages/ui-react/src/layout/page.tsx:29-31) and the template moved its px-4 inside Page (sign-in-page.tsx:76-78), guarded by page-padding.test.ts. Polish: with no header above it, nothing owns the top inset (page.tsx:17-19 gives it to the header)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Missing-email and wrong-password stories with baselines; loading submit."
+        },
+        {
+          "criterion": "Y4",
+          "score": 2,
+          "evidence": "Still `<Page className=\"flex items-center\">` (sign-in-page.tsx:76) with Page's min-h-full (page.tsx:29) and no sized parent, so the card sits at the top with about 480px empty below (templates-pages-sign-in-page-desktop-chromium-linux.png)."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copy works."
+        }
+      ]
+    },
+    {
+      "subject": "activity-list",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Own baselines only at 1280 and 390 (activity-list.stories.tsx:53-57); seen at 768/1440 only inside the dashboard tablet/wide baselines."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: an in-flow list that never touches a viewport edge."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "items=[] still renders an empty labelled <ol> (activity-list.tsx:42) with no message; the dashboard now works around it by drawing its own empty state (dashboard-page.tsx:215), but a builder using the block alone gets an empty list."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Avatar and tokens only; <time dateTime> per entry. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; listed in the catalog; copied with its page."
+        }
+      ]
+    },
+    {
+      "subject": "app-shell",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Own Tablet, Wide, touch-tablet, long-content and phone baselines (templates-blocks-app-shell-tablet/-wide/-touch-tablet/-long-content-phone), required by templates-check.mjs:19."
+        },
+        {
+          "criterion": "Y2",
+          "score": 4,
+          "evidence": "Header owns top, page wrapper bottom, both inline; checkSafeArea in app-shell.stories.tsx keeps it; RTL story added."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Long-content stories, product name truncation, signed-in user at the foot (#345)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Sidebar* only, --a63-safe-area tokens, one nav landmark. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copied with its page."
+        }
+      ]
+    },
+    {
+      "subject": "auth-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Only Desktop, Phone and Themes (auth-card.stories.tsx:46-50)."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow card; the page that hosts it owns insets."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Title and description wrap (lineClamp undefined); footer optional."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Card slots only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copied with its page."
+        }
+      ]
+    },
+    {
+      "subject": "chat-panel",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Baselines at 1280 and 390 only (chat-panel.stories.tsx:59-171: Desktop, Phone, StartScreen, Streaming, Themes, WithAgentRuntime)."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Placed by its host; takes no inset itself."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Start screen, streaming, typing and steps stories; wrapping in ChatMessage."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Fixed since r2: all five ghost icon Buttons carry tone=\"muted\" (chat-panel.tsx:113, :122, :197, :301, :312). Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copied with chat-page."
+        }
+      ]
+    },
+    {
+      "subject": "data-table-section",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Own Tablet and Wide baselines plus phone variants (templates-blocks-data-table-section-tablet/-wide/-*-phone), required by templates-check.mjs:21."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow content."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Loading, load-error, one-row, many-rows, long-content, no-results and selected stories with baselines. The empty icon is now replaceable (emptyIcon, data-table-section.tsx:72-73) but defaults to SearchX (:119)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Table/EmptyState only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copied with list-page."
+        }
+      ]
+    },
+    {
+      "subject": "detail-panel",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 3,
+          "evidence": "Selected stories at 390/768/1024/1440 via list-page (templates-pages-list-page-selected-*)."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: Sheet owns overlay insets."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "dl uses minmax(0,1fr) so long values wrap; actions optional."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Sheet slots only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it."
+        }
+      ]
+    },
+    {
+      "subject": "empty-state",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Own Tablet, Wide and long-copy phone baselines (templates-blocks-empty-state-tablet/-wide/-long-copy-phone), required by templates-check.mjs:22."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow content."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "No-action, single-action and long-copy stories."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Empty* slots only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it."
+        }
+      ]
+    },
+    {
+      "subject": "filter-bar",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Own Tablet, Wide and long-label phone/tablet baselines, required by templates-check.mjs:23."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow content."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Filtered, long-labels and keyboard clear stories."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Clear is a muted ghost (filter-bar.tsx:111-116). Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it."
+        }
+      ]
+    },
+    {
+      "subject": "getting-started-checklist",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Only Desktop, Phone and Themes (getting-started-checklist.stories.tsx:55-59)."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow card."
+        },
+        {
+          "criterion": "Y3",
+          "score": 2,
+          "evidence": "Unchanged: when every step is done, current is undefined (getting-started-checklist.tsx:51) and there is no completion state or dismiss; no partly-done or all-done story."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Card/Progress/SectionHeader. Every done step and the current step are tinted --a63-text-accent (getting-started-checklist.tsx:86-87), more than rule 5's one or two cues (P3). Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it; copied with onboarding-page."
+        }
+      ]
+    },
+    {
+      "subject": "page-header",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Own Tablet and Wide baselines, required by templates-check.mjs:25."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow content."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Fixed since r2: the title column is min-w-0 flex-1 and the actions shrink-0 (page-header.tsx:31-34), with LongTitle and LongTitlePhone baselines (templates-blocks-page-header-long-title, -long-title-phone)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "SectionHeader and tokens only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it."
+        }
+      ]
+    },
+    {
+      "subject": "settings-section",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Fixed since r2: own Tablet, Wide and Compact baselines (templates-blocks-settings-section-tablet/-wide/-compact), required by templates-check.mjs:27."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow content."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Many-rows, any-control, pending and label-toggle stories."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Card/Switch/SectionHeader only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it."
+        }
+      ]
+    },
+    {
+      "subject": "stat-row",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 4,
+          "evidence": "Fixed since r2: an auto-fit grid (stat-row.tsx:41) with own Tablet, Wide and Compact baselines, required by templates-check.mjs:28."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: in-flow content."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "Fixed since r2: cards are min-w-0 and the value wraps with overflow-wrap:anywhere (stat-row.tsx:69-73); LongValues, LongValuesPhone, ThreeStats, FiveStats and Loading stories with baselines."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Card/Badge/Skeleton; change not colour-only. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "check:templates covers it."
+        }
+      ]
+    },
+    {
+      "subject": "tab-bar",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 3,
+          "evidence": "Phone-only block; phone baseline and the app-view phone baselines show it docked; 1280 shows max-w-lg centring."
+        },
+        {
+          "criterion": "Y2",
+          "score": 3,
+          "evidence": "Takes no inset itself; AppView's tab-bar slot owns the bottom inset (checked by checkFrame)."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "4-5 destinations, min-h-14 targets (tab-bar.tsx:58)."
+        },
+        {
+          "criterion": "Y4",
+          "score": 2,
+          "evidence": "Unchanged: labels use the arbitrary text-[0.6875rem] (tab-bar.tsx:58) instead of a type-scale step, so they ignore --typography-scale and the phone type step."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build \"phone music app\"` names it and the AppView tabBar slot."
+        }
+      ]
+    },
+    {
+      "subject": "AppView",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Unchanged: the Phone* stories (app-view.stories.tsx:227-269) are captured at 1280 because their ids do not end in -phone and ui-react-appview is not in RESPONSIVE_STORY_PREFIXES (apps/storybook/.storybook/visual.setup.ts:29-35); ui-react-appview-phone-with-tab-bar-chromium-linux.png is 1280x900. The md and lg breakpoints are never captured."
+        },
+        {
+          "criterion": "Y2",
+          "score": 4,
+          "evidence": "Each inset has one owner (app-view.css:10-16 and the tab-bar slot); every story's play runs checkFrame with emulated insets."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "checkFrame requires main to be the only scroller; overlay, rail and aside covered by stories."
+        },
+        {
+          "criterion": "Y4",
+          "score": 2,
+          "evidence": "Unchanged: bottomBarLabel defaults to 'Player' and panelLabel to 'Library' (app-view.tsx:94, :101), so a status bar or a channel list gets a wrong accessible name unless overridden. Taste provisional."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build \"phone music app\"` leads with AppView layout=\"phone\"; `atom63 component app-view` indexed."
+        }
+      ]
+    },
+    {
+      "subject": "Page",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 3,
+          "evidence": "Fixed since r2: Phone, Tablet and Wide stories (page.stories.tsx:40-71) captured at their widths (ui-react-page-- is in RESPONSIVE_STORY_PREFIXES, visual.setup.ts:31)."
+        },
+        {
+          "criterion": "Y2",
+          "score": 4,
+          "evidence": "Fixed since r2: Page owns the route's bottom and inline insets (page.tsx:17-19 doc, :29-31 classes), the Phone play asserts them with emulated insets (page.stories.tsx:44-66), NoPadding asserts they drop (:74-89), and page-padding.test.ts fails a px-*/ps-*/pe-* on Page in templates, examples or docs. The CLI names Page as the inset owner outside a shell (packages/cli/src/templates.mjs:136)."
+        },
+        {
+          "criterion": "Y3",
+          "score": null,
+          "evidence": "n/a: a landmark wrapper with no content of its own."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "useRender + mergeProps; render swaps the landmark. min-h-full only works inside a sized parent (see sign-in-page)."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build` lists Page as 'The main landmark and the safe-area insets, when no app shell owns them'."
+        }
+      ]
+    },
+    {
+      "subject": "Section",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 3,
+          "evidence": "Fixed since r2: Desktop (with a play), Phone, Tablet and Wide stories (section.stories.tsx:41-61) captured at their widths (visual.setup.ts:33; baselines ui-react-section-desktop/-phone/-tablet/-wide)."
+        },
+        {
+          "criterion": "Y2",
+          "score": null,
+          "evidence": "n/a: vertical rhythm only; never at a viewport edge."
+        },
+        {
+          "criterion": "Y3",
+          "score": null,
+          "evidence": "n/a: spacing wrapper with no content of its own."
+        },
+        {
+          "criterion": "Y4",
+          "score": 2,
+          "evidence": "Props and ref now spread (SectionProps extends ComponentPropsWithRef, section.tsx:4, :47-51). Still: the gap ramp is not monotonic, loose gap-8, generous gap-6, spacious gap-8 (section.tsx:28-34), and removeTopSpacing defaults to true (:45), dropping the top padding the preset names."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "`atom63 build \"documentation article page\"` shows Section in the reading-page snippet; pattern-layout docs describe presets."
+        }
+      ]
+    },
+    {
+      "subject": "ReaderLayout",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "Y1",
+          "score": 2,
+          "evidence": "Unchanged: the aside is hidden xl:block (reader-layout.tsx:36), so below 1280 the page navigation it holds disappears with no fallback; baselines only at 1280 (ui-react-readerlayout-*), and the new reading-page template has only Desktop and Phone (reading-page.stories.tsx:21-25)."
+        },
+        {
+          "criterion": "Y2",
+          "score": 2,
+          "evidence": "ReaderLayout pads px-4 sm:px-6 lg:px-8 (reader-layout.tsx:26) with no safe-area inset, and the new reading-page template and its `atom63 build` snippet wrap it in <Page noPadding> (reading-page.tsx:79; packages/cli/src/templates.mjs:227), which drops Page's insets (page.tsx:9, :30), so a reading route outside a shell has no inset owner."
+        },
+        {
+          "criterion": "Y3",
+          "score": 3,
+          "evidence": "reserveAside keeps the measure with no aside (reader-layout.tsx:33-41); min-w-0 on the article."
+        },
+        {
+          "criterion": "Y4",
+          "score": 3,
+          "evidence": "Still hard-codes max-w-5xl / xl:max-w-4xl / w-64 (reader-layout.tsx:23, :26, :36) rather than Container's named widths (max-width.ts:6-12); polish."
+        },
+        {
+          "criterion": "Y5",
+          "score": 3,
+          "evidence": "Fixed since r2 (mostly): `pnpm -s atom63 build \"documentation article page\"` now leads with a Reading page section, a ReaderLayout snippet and `atom63 template reading-page`. Polish: `atom63 api ReaderLayout` still prints only the import line and a docs pointer."
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r3-layout-1",
+      "subject": "app-view (page template), chat-page, onboarding-page, sign-in-page",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "Narrowed from r2-layout-1: four of seven page templates still have no 768 or 1440 evidence (dashboard-page and settings-page are fixed).",
+      "evidence": "packages/templates/src/pages/{app-view,chat-page,onboarding-page,sign-in-page}/*.stories.tsx export no Tablet/Wide; scripts/design-system/lib/templates-check.mjs:18-29 RESPONSIVE_TEMPLATES omits them.",
+      "fix": "Add Tablet and Wide stories and put these pages in RESPONSIVE_TEMPLATES.",
+      "kind": "gap",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-2",
+      "subject": "activity-list, auth-card, chat-panel, getting-started-checklist",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "Narrowed from r2-layout-2: these blocks are still captured only at 1280 and 390 (settings-section and stat-row are fixed).",
+      "evidence": "activity-list.stories.tsx:53-57; auth-card.stories.tsx:46-50; chat-panel.stories.tsx:59-171; getting-started-checklist.stories.tsx:55-59.",
+      "fix": "Add Tablet and Wide stories.",
+      "kind": "gap",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-3",
+      "subject": "AppView",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-3: AppView's Phone* stories are captured at 1280, so layout=\"phone\" has no 390 baseline in ui-react, and the md/lg breakpoints are never captured.",
+      "evidence": "packages/ui-react/src/components/app-view/app-view.stories.tsx:227-269; apps/storybook/.storybook/visual.setup.ts:29-35; ui-react-appview-phone-with-tab-bar-chromium-linux.png is 1280x900.",
+      "fix": "Rename to end in Phone (or add ui-react-appview-- to RESPONSIVE_STORY_PREFIXES) and add Tablet/Wide window stories.",
+      "kind": "gap",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-4",
+      "subject": "ReaderLayout",
+      "criterion": "Y1",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-4: below 1280 the aside column is hidden with no fallback, so page navigation passed as aside vanishes on tablets and small laptops.",
+      "evidence": "packages/ui-react/src/layout/reader-layout.tsx:36.",
+      "fix": "Offer an inline or disclosure fallback for the aside below xl, or document that the caller must render one.",
+      "kind": "bug",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-5",
+      "subject": "app-view (page template)",
+      "criterion": "Y2",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-6: the phone sample and the `atom63 build` snippet pad the first block with raw env(safe-area-inset-top), bypassing --a63-safe-area-top.",
+      "evidence": "packages/templates/src/pages/app-view/app-view.tsx:275; packages/cli/src/templates.mjs:189; app-view.css:11.",
+      "fix": "Use pt-(--a63-app-view-inset-top) or var(--a63-safe-area-top), or let AppView own the top inset when there is no top bar.",
+      "kind": "bug",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-6",
+      "subject": "ReaderLayout",
+      "criterion": "Y2",
+      "severity": "P2",
+      "summary": "Narrowed from r2-layout-8 (Page is fixed): ReaderLayout takes no safe-area insets, and the reading-page template and its build snippet wrap it in <Page noPadding>, so a reading route outside a shell has no inset owner.",
+      "evidence": "packages/ui-react/src/layout/reader-layout.tsx:26; packages/templates/src/pages/reading-page/reading-page.tsx:79; packages/cli/src/templates.mjs:227; page.tsx:9, :30.",
+      "fix": "Drop noPadding in the reading page (let Page own the insets) or give ReaderLayout the inline insets, and add a checkSafeArea play.",
+      "kind": "bug",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-7",
+      "subject": "activity-list",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "Narrowed from r2-layout-9 (the dashboard part is fixed): ActivityList with no items renders an empty labelled list.",
+      "evidence": "packages/templates/src/blocks/activity-list/activity-list.tsx:42; the dashboard draws its own empty state instead (dashboard-page.tsx:215).",
+      "fix": "Accept an empty prop (or render EmptyState) when items is empty, and add an Empty story.",
+      "kind": "gap",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-8",
+      "subject": "getting-started-checklist",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-10: when every step is done the checklist has no current step and no completion state; partly-done and done are not shown.",
+      "evidence": "packages/templates/src/blocks/getting-started-checklist/getting-started-checklist.tsx:50-52; getting-started-checklist.stories.tsx:55-59.",
+      "fix": "Add a completion state (message and dismiss) and AllDone/PartlyDone stories.",
+      "kind": "gap",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-9",
+      "subject": "app-view (page template)",
+      "criterion": "Y3",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-13: the app view sample shows only a fixed five-track album; no empty library, long title or long list is exercised.",
+      "evidence": "packages/templates/src/pages/app-view/app-view.tsx:68-82; app-view.stories.tsx:21-34.",
+      "fix": "Add EmptyLibrary, LongTitles and ManyTracks stories.",
+      "kind": "gap",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-10",
+      "subject": "sign-in-page",
+      "criterion": "Y4",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-16: the sign-in card is meant to be centred but sits at the top of the page.",
+      "evidence": "packages/templates/src/pages/sign-in-page/sign-in-page.tsx:76; packages/ui-react/src/layout/page.tsx:29 (min-h-full); apps/storybook/visual/__screenshots__/templates-pages-sign-in-page-desktop-chromium-linux.png.",
+      "fix": "Use min-h-dvh (or a sized parent) on the sign-in Page, and assert the card's vertical centre in a play.",
+      "kind": "bug",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-11",
+      "subject": "tab-bar",
+      "criterion": "Y4",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-17: tab labels use an arbitrary 11px size that ignores the type scale.",
+      "evidence": "packages/templates/src/blocks/tab-bar/tab-bar.tsx:58.",
+      "fix": "Use text-2xs or a caption text role.",
+      "kind": "debt",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-12",
+      "subject": "AppView",
+      "criterion": "Y4",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-18: AppView names any docked bar 'Player' and any side panel 'Library' by default.",
+      "evidence": "packages/ui-react/src/components/app-view/app-view.tsx:94, :101.",
+      "fix": "Require the labels when the slot is used, or default to neutral names.",
+      "kind": "bug",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-13",
+      "subject": "Section",
+      "criterion": "Y4",
+      "severity": "P2",
+      "summary": "Carried from r2-layout-19: Section's child-gap ramp is not monotonic: generous is tighter than loose.",
+      "evidence": "packages/ui-react/src/layout/section.tsx:28-34.",
+      "fix": "Make generous gap-8 and spacious gap-10 (or one ramp from tokens).",
+      "kind": "design",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-14",
+      "subject": "Section",
+      "criterion": "Y4",
+      "severity": "P3",
+      "summary": "Carried from r2-layout-20: removeTopSpacing defaults to true, so the default Section has no top padding.",
+      "evidence": "packages/ui-react/src/layout/section.tsx:12-15, :45; the reading-page snippet has to pass removeTopSpacing={false}.",
+      "fix": "Default it to false in the next minor, with a changeset.",
+      "kind": "design",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-15",
+      "subject": "ReaderLayout",
+      "criterion": "Y5",
+      "severity": "P3",
+      "summary": "Narrowed from r2-layout-21 (the build query is fixed): `atom63 api ReaderLayout` still answers with an import line only.",
+      "evidence": "`pnpm -s atom63 api ReaderLayout` output; reader-layout.tsx:4-12 has TSDoc on one prop.",
+      "fix": "Document the props in TSDoc so the API index carries them.",
+      "kind": "docs",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-16",
+      "subject": "ReaderLayout",
+      "criterion": "Y4",
+      "severity": "P3",
+      "summary": "Carried from r2-layout-22: ReaderLayout hard-codes Tailwind widths instead of Container's named max widths.",
+      "evidence": "packages/ui-react/src/layout/reader-layout.tsx:23, :26, :36; max-width.ts:6-12.",
+      "fix": "Use containerFrameClassName or the named widths.",
+      "kind": "debt",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-17",
+      "subject": "getting-started-checklist",
+      "criterion": "Y4",
+      "severity": "P3",
+      "summary": "Carried from r2-layout-23: every done step is drawn in the accent colour, exceeding one or two accent cues per view.",
+      "evidence": "packages/templates/src/blocks/getting-started-checklist/getting-started-checklist.tsx:86-87.",
+      "fix": "Draw done steps in text-secondary and keep the accent for the current step.",
+      "kind": "design",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-18",
+      "subject": "list-page",
+      "criterion": "Y3",
+      "severity": "P3",
+      "summary": "Residual of r2-layout-15 (the two primaries are fixed): the no-invoices first run still shows the filter bar and the 'no results' SearchX icon.",
+      "evidence": "packages/templates/src/pages/list-page/list-page.tsx:181-201 (FilterBar always rendered, no emptyIcon); packages/templates/src/blocks/data-table-section/data-table-section.tsx:119.",
+      "fix": "Hide the filter bar and pass a first-run emptyIcon when invoices.length === 0.",
+      "kind": "design",
+      "scope": "layout"
+    },
+    {
+      "id": "r3-layout-19",
+      "subject": "sign-in-page",
+      "criterion": "Y2",
+      "severity": "P3",
+      "summary": "Residual of r2-layout-7 (inline and bottom are fixed): with no header above it, nothing owns the top safe-area inset on the sign-in page.",
+      "evidence": "packages/ui-react/src/layout/page.tsx:17-19 gives the top inset to the header; sign-in-page.tsx:76 has none.",
+      "fix": "Add pt-[max(--spacing(8),var(--a63-safe-area-top))] for header-less routes, or a Page prop for it.",
+      "kind": "gap",
+      "scope": "layout"
+    }
+  ]
+}

@@ -1,0 +1,871 @@
+{
+  "scope": "k04-overlays: Layer 3 (K1-K10), batch 4 overlays: dialog, alert-dialog, drawer, sheet, popover, hover-card, preview-card, tooltip, toaster, portal-container (web/React; K10 n/a: iOS in backlog).",
+  "reviewedAt": "2026-11-28",
+  "round": 3,
+  "reviewedCommit": "f7e5e419",
+  "notes": "Round 3 re-score at main f7e5e419 (r2 base 099d1eba). Changes since r2 in this batch: #331 (Sheet/Drawer aria-modal, web-only APG bindings), #352 (PopoverAnchor, toaster states and baselines, popover/dialog stories), #359 (toaster overlay look and focus ring, logical sheet sides, dialog scroll fade, close button target). hover-card, preview-card, tooltip and portal-container are unchanged since r2 (no commits under their component folders or baselines), so their scores and findings carry with the same evidence. K3 stays provisional until YZ sees the contact sheet. Sheet and Toaster are scored on main; findings that open PR #377 (origin/claude/project-thread-5pvtyy) fixes carry pendingIn \"#377\". r2 findings confirmed fixed: r2-k04-overlays-1, r2-k04-overlays-2, r2-k04-overlays-3, r2-k04-overlays-4, r2-k04-overlays-5, r2-k04-overlays-6, r2-k04-overlays-9, r2-k04-overlays-14, r2-k04-overlays-15, r2-k04-overlays-24, r2-k04-overlays-25, r2-k04-overlays-28, r2-k04-overlays-29, r2-k04-overlays-30, r2-k04-overlays-33, r2-k04-overlays-39.",
+  "subjects": [
+    {
+      "subject": "dialog",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/dialog/dialog.tsx:123-179 Popup spreads props after defaults; Header/Footer/Title/Description/Panel use useRender+mergeProps (dialog.tsx:181-261); size/mobilePlacement/footer variant match dialog.json lists; deprecated boolean bottomStickOnMobile kept only as alias (dialog.tsx:139,148)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG dialog-modal pattern bound and played (apps/storybook/a11y/patterns.test.ts:67-71); aria-modal set unless modal={false} (packages/ui-react/src/components/dialog/dialog.tsx:156) and tested (dialog.test.tsx:93-119); reduced motion dialog.css:282; axe runs on every story. No forced-colors rule or test."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional (YZ confirms). apps/storybook/visual/__screenshots__/ui-react-dialog-themes-chromium-linux.png shows all 8 theme/mode cells with distinct archetype (aqua gloss, retro hard shadow/2px border, terminal glow+mono). Phone bottom placement squares all corners (dialog.css:88-95) while Drawer keeps top radius (drawer.css:149-150)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines apps/storybook/visual/__screenshots__/ui-react-dialog-{open,open-phone,sizes,bare-footer,themes,focus-visible-close,hover-close,scroll-fade,right-to-left}-chromium-linux.png: rest, open, keyboard focus and hover on the close button, scroll fade and RTL are all captured; close :active styled (packages/ui-react/src/components/dialog/dialog.css:143-146)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/dialog/dialog.css:122-133 the close button keeps its 32px glyph box and a ::before hit area floors at --a63-control-min-target (44px on coarse pointers), as Button does; r2 32px gap closed."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical close inset and header padding-inline-end (packages/ui-react/src/components/dialog/dialog.css); RightToLeft story (packages/ui-react/src/components/dialog/dialog.stories.tsx:359) baselined (apps/storybook/visual/__screenshots__/ui-react-dialog-right-to-left-chromium-linux.png). The English default close name is documented with its closeProps override (dialog.tsx:140-143; apps/docs/src/lib/component-catalog.ts dialog usage)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-dialog-open-phone-chromium-linux.png: bottom sheet, full-width stacked buttons; safe areas on viewport and popup (dialog.css:35-38,86,94)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component dialog`: import line, contract axes, a11y pattern link, story examples; usage now names the closeProps localisation (apps/docs/src/lib/component-catalog.ts dialog entry). Lines 2-3 of the guidance are still the generic overlay group text (apps/docs/src/lib/component-docs.ts:22, :200)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/dialog/dialog.test.tsx 9 tests + APG pattern play + SSR smoke over every story + 12 baselines incl. focus-visible/hover close and scroll fade."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "alert-dialog",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/alert-dialog/alert-dialog.tsx:98-102 marks the whole `size` prop @deprecated ('Use className') while the contract lists sizes md/sm as a live axis with only 'default' deprecated (packages/ui-foundation/contracts/components/alert-dialog.json lists.sizes). Header/Footer/Media are plain divs without render/useRender (alert-dialog.tsx:126-167), unlike DialogHeader/Footer (dialog.tsx:177-211); Footer variant typed inline 'default'|'bare' (alert-dialog.tsx:144)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "APG alertdialog pattern bound (apps/storybook/a11y/patterns.test.ts:72-77); aria-modal set (packages/ui-react/src/components/alert-dialog/alert-dialog.tsx:110-113); reduced motion alert-dialog.css:200-205. Error tone accent now reads --a63-status-danger (alert-dialog.css:86)."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-alertdialog-themes-chromium-linux.png 8 cells, archetype visible; ui-react-alertdialog-variants shows 5 tones with semantic media chip (alert-dialog.css:82-96)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines: -confirm, -variants, -themes, -playground, -endpoints. No phone baseline."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Actions/Cancel render Button with contract sizes (alert-dialog.tsx:199-229). Media chip hardcoded 2.5rem/1.5rem (alert-dialog.css:169-181), not tokens."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/alert-dialog/alert-dialog.css:191 title `line-height: 1` (Dialog uses --typography-xl-line-height, dialog.css:190): a wrapped long or CJK title has zero leading and descenders/ascenders touch. Header text-align start on desktop (alert-dialog.css:131-135)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Mobile bottom stick + safe area (alert-dialog.css:99-116), full-width footer buttons (alert-dialog.css:151-155). No phone story/baseline (dialog has OpenPhone)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 component alert-dialog`: import incl. AlertDialogAction, tone/size/footer axes, 6 story examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/alert-dialog/alert-dialog.test.tsx 4 tests (parts, deprecated aliases, Button render) + APG pattern tests + portal test (portal-container/overlay-portals.test.tsx:43-50) + SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "drawer",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/drawer/drawer.tsx: direction/footer variant from foundation types; Content forwards contentProps/portalProps/viewportProps. Trigger/Close accept both asChild and render (drawer.tsx:17-22,111-151), the only overlay that keeps asChild alongside the DS render convention; Header/Footer/Body are plain divs."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Modal drawer popup now sets aria-modal (packages/ui-react/src/components/drawer/drawer.tsx:187-189), tested for modal and persistent drawers (drawer.test.tsx:87-105); the dialog-modal APG pattern is played on the Playground story as a web-only binding (apps/storybook/a11y/patterns.test.ts:126-131: open with Enter, focus inside, Escape closes and returns focus). Reduced motion drawer.css:265-277."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-drawer-open-chromium-linux.png now shows the default modal bottom drawer (modern light only), but apps/storybook/visual/__screenshots__/ui-react-drawer-themes-chromium-linux.png and -directions/-playground (unchanged since 2026-09-24) still capture only the trigger buttons, so the drawer is never seen in aqua, retro, terminal or dark."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "Modal open state now captured (packages/ui-react/src/components/drawer/drawer.stories.tsx:100-117, ui-react-drawer-open baseline). Contract states dragging/snapped (drawer.json lists.states) are still never captured; PersistentSheet (drawer.stories.tsx:121) shows only the peek."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "No contract sizes; side widths min(100%-3rem, 24rem) (drawer.css:159,168); bottom max-height 80dvh and 6rem gutter (drawer.css:41,147)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Physical left/right documented as deliberate screen edges (drawer.css:75-85); apps/storybook/visual/__screenshots__/ui-react-drawer-right-to-left-chromium-linux.png shows Arabic content mirrored in a left drawer."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Safe-area padding per side (drawer.css:137,148,161,170), swipe direction derived from edge (drawer.tsx:75-88), handle on bottom only."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 component drawer`: guidance distinguishes it from Sheet; 7 story examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/drawer/drawer.test.tsx has 4 tests (render, closed, modal={false}, aria-modal) and the APG play covers Escape and focus return (patterns.test.ts:126-131), but nothing tests swipe-to-dismiss or snap points, the behaviours that distinguish Drawer from Sheet."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "sheet",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/sheet/sheet.tsx: side/variant/footer from sheetContract defaults (sheet.tsx:125-126,152-153,210); Header/Footer/Panel useRender+mergeProps; close renders Button (sheet.tsx:175)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Modal sheet popup sets aria-modal via SheetModalContext (packages/ui-react/src/components/sheet/sheet.tsx:46,78-86,179), tested (sheet.test.tsx:98-119); the dialog-modal APG pattern is played on Playground (apps/storybook/a11y/patterns.test.ts:120-125). Reduced motion sheet.css:259."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-sheet-themes-chromium-linux.png 8 cells with archetype visible. Sheet edges use --a63-control-border-width (sheet.css:94,102,112,123,133) instead of --a63-overlay-border-width, and inset radius --radius-2xl (sheet.css:134,170) instead of var(--a63-overlay-radius, …) like the other overlays."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines -open, -sides, -inset, -bare-footer, -right-to-left, -themes plus new -focus-visible-close, -long-title, -logical-sides, -open-phone (apps/storybook/visual/__screenshots__/ui-react-sheet-*-chromium-linux.png)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Close is Button size=icon (sheet.tsx:175) which floors at min-target (button.css:135-136); side width calc(100%-3rem) max 28rem (sheet.css:109-121)."
+        },
+        {
+          "criterion": "K6",
+          "score": 2,
+          "evidence": "Logical sides inline-start/inline-end now exist and mirror (sheet.css:57-67,141-168; LogicalSides story with a geometry play, sheet.stories.tsx), and a long title wraps before the close button (sheet.css LongTitle rule). But the default side is still the physical right (packages/ui-foundation/contracts/components/sheet.json:29 defaultSide \"right\", packages/ui-react/src/components/sheet/sheet.tsx:136,167), so a default sheet in a right-to-left page opens from the reading end."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Safe areas per side incl. logical sides (sheet.css:141-160); OpenPhone story with notch/home-indicator insets baselined (apps/storybook/visual/__screenshots__/ui-react-sheet-open-phone-chromium-linux.png); inset only >=640px."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component sheet`: usage now explains inline-start/inline-end vs physical sides and the closeProps localisation (apps/docs/src/lib/component-catalog.ts sheet entry); runnable Open example."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/sheet/sheet.test.tsx 7 tests (side, portal, body state, aria-modal, closeProps) + dialog-modal APG play (Escape, focus return) + LogicalSides geometry play + 10 baselines."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "popover",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "PopoverAnchor now registers its element in context and PopoverContent positions against `anchor`, else the PopoverAnchor, else the trigger (packages/ui-react/src/components/popover/popover.tsx:30-43,96-131,135-149), tested with layout mocks (popover.test.tsx:124-155). PopoverPortal falls back to PortalContainerProvider (popover.tsx:58-70, test :157); alignOffset/collisionPadding forwarded (popover.tsx:87-98,114-118)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "Base UI non-modal dialog; tests cover focus moving in, Escape closing with focus return, no focus trap and outside press (packages/ui-react/src/components/popover/popover.test.tsx:179-229); axe on every story; reduced motion popover.css:105."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-popover-themes-chromium-linux.png (re-baselined 2026-11-22) gives each theme/mode its own cell: aqua gloss, retro hard shadow, terminal mono + glow all visible, no occlusion."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines -playground, -sides, -themes, -endpoints, plus -focus-visible, -custom-anchor, -right-to-left, -open-phone (apps/storybook/visual/__screenshots__/ui-react-popover-*-chromium-linux.png)."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Width 18rem, tokenised padding/gap (popover.css:21-24); trigger supplied by consumer."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/popover/popover.css:28 overflow-wrap:anywhere; inline-start/inline-end slides mirror under :dir(rtl) (popover.css:73-86); RightToLeft story (popover.stories.tsx:222) baselined."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/popover/popover.css:24-27 max-width/max-height from the available size with overflow-y:auto; OpenPhone story (popover.stories.tsx:246) baselined."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component popover`: usage now lists side/align/offsets/collisionPadding/portalContainer and the three anchoring options (apps/docs/src/lib/component-catalog.ts popover entry); 9 story examples."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/popover/popover.test.tsx 13 tests: render, slots, portal, anchoring (2), provider fallback, keyboard focus/Escape/return, no trap, outside press; 9 baselines; SSR smoke."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "hover-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/hover-card/hover-card.tsx:45-73 spreads props on Popup, side/align/sideOffset/portalContainer; root export is this file (packages/ui-react/src/index.ts:351)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "No keyboard/focus open test (hover-card.test.tsx has 3 render/portal tests) and no APG binding; hover-only reveal relies on guidance ('Keep essential information outside the card'). Reduced motion hover-card.css:76-80."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-hovercard-themes-chromium-linux.png: cards overlap the next row, 7/8 partially occluded; archetype readable from top edges only."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines -playground, -themes, -endpoints capture the open card."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Tokenised padding, 16rem width (hover-card.css:23,34)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Logical text, safe-area-aware max-width (hover-card.css:24-30); no RTL capture."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Caps both axes against viewport and safe areas, scrolls with overscroll containment (hover-card.css:24-33); touch-action on trigger (hover-card.css:17-19)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 component hover-card` gives no guidance on choosing HoverCard vs PreviewCard, which wrap the same Base UI PreviewCard primitive (hover-card.tsx:3, preview-card.tsx:3) with diverging chrome (radius md vs lg, height cap vs none)."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/hover-card/hover-card.test.tsx 3 tests; no hover/focus open-close interaction test."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "preview-card",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/preview-card/preview-card.tsx:45-76 spreads props, side/align/offset/portal. preview-card/index.ts:1-8 also exports HoverCard/HoverCardContent/HoverCardTrigger aliases that the root (src/index.ts:351,478) shadows with hover-card's: dead duplicate names."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "Same as hover-card: one render test (preview-card.test.tsx:7), no keyboard/focus test, no APG binding."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-previewcard-themes-chromium-linux.png: 8 cards stacked, 7 occluded to two lines; only terminal/dark fully visible."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Baselines -playground, -themes, -endpoints."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Tokenised padding/gap, 16rem width (preview-card.css:18-21)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "text-wrap balance (preview-card.css:32); no RTL capture."
+        },
+        {
+          "criterion": "K7",
+          "score": 2,
+          "evidence": "preview-card.css:13-37 max-width var(--available-width) only, no max-height/overflow and no safe-area cap (HoverCard has both, hover-card.css:24-33)."
+        },
+        {
+          "criterion": "K8",
+          "score": 2,
+          "evidence": "`pnpm -s atom63 component preview-card` guidance does not say when to use it over HoverCard; two near-identical components."
+        },
+        {
+          "criterion": "K9",
+          "score": 2,
+          "evidence": "packages/ui-react/src/components/preview-card/preview-card.test.tsx: 1 test; no portal-provider test (absent from portal-container/overlay-portals.test.tsx:33-92) and no interaction test."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "tooltip",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/tooltip/tooltip.tsx: Root/Provider/CreateHandle re-exported, generic payload trigger (tooltip.tsx:16-20), portalProps merged with provider (tooltip.tsx:40-44); test forwards render (tooltip.test.tsx:57)."
+        },
+        {
+          "criterion": "K2",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/tooltip/tooltip.test.tsx:44 opens on focus and closes with Escape; :31 opens on hover; reduced motion tooltip.css:126-133."
+        },
+        {
+          "criterion": "K3",
+          "score": 2,
+          "evidence": "Provisional. apps/storybook/visual/__screenshots__/ui-react-tooltip-themes-chromium-linux.png shows the tooltip only in terminal/dark; 7 of 8 cells show just the trigger (only one tooltip opens at a time)."
+        },
+        {
+          "criterion": "K4",
+          "score": 2,
+          "evidence": "apps/storybook/visual/__screenshots__/ui-react-tooltip-playground and -sides capture no tooltip at all (triggers only); open state captured only in -anchor-and-portal (modern light) and the terminal/dark cell."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Tokenised padding (tooltip.css:82-89), max-width min(18rem, available, safe-area) (tooltip.css:40-47). line-height 1.35 literal (tooltip.css:60)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "overflow-wrap:anywhere and text-align:start (tooltip.css:61,91)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Safe-area-aware max-width (tooltip.css:40-47), touch-action on trigger (tooltip.css:31-33)."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 component tooltip`: Provider usage in import line, guidance against essential content, 7 stories."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/tooltip/tooltip.test.tsx 8 behaviour tests (hover, focus+Escape, render, placement, portal props, provider, detached handle)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "toaster",
+      "ready": false,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/toaster/toaster.tsx:118-186 extends Sonner props, merges consumer classNames/style (toaster.tsx:163-181); variant from toasterContract; contract slots stamped on Sonner parts (toaster.tsx:68-82, test toaster.test.tsx:58)."
+        },
+        {
+          "criterion": "K2",
+          "score": 2,
+          "evidence": "The polite live region and unchanged focus are now tested (packages/ui-react/src/components/toaster/toaster.test.tsx:72-91) and focus rings are outlines that survive forced colors (toaster.css:38-48, ForcedColors baseline). But a toned toast conveys its tone only by an icon shape in the text colour: the icons carry no name and no status word (toaster.tsx:156-162), so a screen reader hears \"Failed to copy\" with nothing saying it is an error."
+        },
+        {
+          "criterion": "K3",
+          "score": 3,
+          "evidence": "Provisional. Default toasts now read the overlay contract (backdrop, gloss, texture, border style/width, inner shadow, elevation: packages/ui-react/src/components/toaster/toaster.tsx:46-57) and radius (toaster.tsx:33); apps/storybook/visual/__screenshots__/ui-react-toaster-themes-chromium-linux.png shows 6 toasts in each of the 8 theme/mode cells with aqua gloss, retro hard shadow and terminal glow visible. All tones share one monochrome icon colour (P3)."
+        },
+        {
+          "criterion": "K4",
+          "score": 3,
+          "evidence": "Playground and Dark baselines now show the default and all five tones (apps/storybook/visual/__screenshots__/ui-react-toaster-playground-chromium-linux.png); States, FocusVisibleAction, FocusVisibleClose, ForcedColors stories (toaster.stories.tsx:248-275) capture the action, close button and keyboard focus."
+        },
+        {
+          "criterion": "K5",
+          "score": 3,
+          "evidence": "Sonner close (20px) and action (24px) buttons floor at control-min-size with a ::before hit area at --a63-control-min-target (44px on coarse pointers) (packages/ui-react/src/components/toaster/toaster.css:50-69); inverse pill uses tokens (toaster.tsx:59-66)."
+        },
+        {
+          "criterion": "K6",
+          "score": 3,
+          "evidence": "Host takes its direction from the nearest [dir] region (toaster.tsx:84-90, test toaster.test.tsx:115); RightToLeft story baselined; inverse pill uses logical margins with documented physical exceptions (toaster.css:16-31)."
+        },
+        {
+          "criterion": "K7",
+          "score": 3,
+          "evidence": "Offsets add the safe-area insets (packages/ui-react/src/components/toaster/toaster.tsx:92-103, test toaster.test.tsx:138); Phone story (toaster.stories.tsx:298) baselined."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`atom63 component toaster` (run 2026-11-28): per-tone API, description/action, the label props, PortalContainerProvider, inverse usage, plus component-specific guidance replacing the overlay boilerplate (announced politely, never takes focus; give an action toast a longer duration) (apps/docs/src/lib/component-catalog.ts toaster guidance)."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/toaster/toaster.test.tsx 10 tests (portal, provider, inverse, slots, live region, dismissal, reduced motion, RTL, safe area, SSR/hydration) + toaster-styles.test.tsx 2; 11 baselines incl. states, focus, forced colors, phone, RTL, themes."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    },
+    {
+      "subject": "portal-container",
+      "ready": true,
+      "scores": [
+        {
+          "criterion": "K1",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/portal-container/portal-container.tsx:14-36: Provider + hook, HTMLElement|ShadowRoot|null; tests for nested, shadow root, pending null (portal-container.test.tsx:17-137)."
+        },
+        {
+          "criterion": "K2",
+          "score": null,
+          "evidence": "n/a: no rendered UI; it carries a node and does not manage focus (guidance in `atom63 component portal-container`)."
+        },
+        {
+          "criterion": "K3",
+          "score": null,
+          "evidence": "n/a: no visual surface."
+        },
+        {
+          "criterion": "K4",
+          "score": null,
+          "evidence": "n/a: no interactive states."
+        },
+        {
+          "criterion": "K5",
+          "score": null,
+          "evidence": "n/a: no sizing."
+        },
+        {
+          "criterion": "K6",
+          "score": null,
+          "evidence": "n/a: no text or layout."
+        },
+        {
+          "criterion": "K7",
+          "score": null,
+          "evidence": "n/a: no visual surface."
+        },
+        {
+          "criterion": "K8",
+          "score": 3,
+          "evidence": "`pnpm -s atom63 component portal-container`: import, guidance, related overlays, stories Playground/NoContainer/Dark."
+        },
+        {
+          "criterion": "K9",
+          "score": 3,
+          "evidence": "packages/ui-react/src/components/portal-container/overlay-portals.test.tsx:33-104 checks 7 overlay families portal into the provider; popover/hover-card/tooltip/sheet/toaster test it in their own files; preview-card is untested (see preview-card K9)."
+        },
+        {
+          "criterion": "K10",
+          "score": null,
+          "evidence": "n/a: iOS in backlog"
+        }
+      ]
+    }
+  ],
+  "findings": [
+    {
+      "id": "r3-k04-overlays-1",
+      "subject": "alert-dialog",
+      "criterion": "K1",
+      "severity": "P2",
+      "summary": "AlertDialogPopup marks `size` deprecated while the contract lists md/sm as a live axis; its Header/Footer/Media lack render composition that Dialog parts have.",
+      "evidence": "Carried from r2-k04-overlays-7. packages/ui-react/src/components/alert-dialog/alert-dialog.tsx:98-102,126-167; packages/ui-foundation/contracts/components/alert-dialog.json lists.sizes {values:[md,sm], deprecatedAliases:{default:md}}; dialog.tsx:177-211.",
+      "fix": "Decide one: keep size (drop the @deprecated JSDoc, add lg like Dialog) or deprecate it in the contract too. Port Header/Footer/Media to useRender+mergeProps.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-2",
+      "subject": "alert-dialog",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The alert-dialog title uses line-height 1, so a wrapped long or CJK title has no leading.",
+      "evidence": "Carried from r2-k04-overlays-8. packages/ui-react/src/components/alert-dialog/alert-dialog.css:191 vs dialog.css:190 (--typography-xl-line-height).",
+      "fix": "Use var(--typography-xl-line-height) and add a long-title story.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-3",
+      "subject": "drawer",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The drawer Themes, Directions and Playground baselines still show only triggers; the open modal drawer is captured only in modern light.",
+      "evidence": "Carried from r2-k04-overlays-11. apps/storybook/visual/__screenshots__/ui-react-drawer-themes-chromium-linux.png, -directions-, -playground- (last changed 2026-09-24); ui-react-drawer-open-chromium-linux.png is modern light only.",
+      "fix": "Open the drawer in each Themes cell (portal into the cell, defaultOpen, non-modal) and in Directions.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-4",
+      "subject": "drawer",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The contract states dragging and snapped are never captured.",
+      "evidence": "Carried from r2-k04-overlays-12. packages/ui-foundation/contracts/components/drawer.json lists.states; packages/ui-react/src/components/drawer/drawer.stories.tsx:121 PersistentSheet baseline shows the peek only.",
+      "fix": "Add a snapped (full) capture of PersistentSheet and a mid-drag capture (data-swiping).",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-5",
+      "subject": "drawer",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "Drawer swipe-to-dismiss and snap points are untested.",
+      "evidence": "Carried from r2-k04-overlays-13. packages/ui-react/src/components/drawer/drawer.test.tsx:15,49,60,87 (render, closed, non-modal, aria-modal); Escape and focus return are now covered by the APG play (apps/storybook/a11y/patterns.test.ts:126-131).",
+      "fix": "Add a browser test that a downward swipe past the threshold closes the drawer and that snapPoints settle at the next point.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-6",
+      "subject": "hover-card",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The hover-card Themes baseline overlaps the cards, so the archetype is visible only at their top edges.",
+      "evidence": "Carried from r2-k04-overlays-16. apps/storybook/visual/__screenshots__/ui-react-hovercard-themes-chromium-linux.png.",
+      "fix": "Same layout fix as the popover Themes story.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-7",
+      "subject": "preview-card",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The preview-card Themes baseline stacks 8 cards; 7 are cut to two lines.",
+      "evidence": "Carried from r2-k04-overlays-17. apps/storybook/visual/__screenshots__/ui-react-previewcard-themes-chromium-linux.png.",
+      "fix": "Same layout fix as the popover Themes story.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-8",
+      "subject": "tooltip",
+      "criterion": "K3",
+      "severity": "P2",
+      "summary": "The tooltip Themes baseline shows a tooltip only in terminal/dark; 7 cells show just the trigger.",
+      "evidence": "Carried from r2-k04-overlays-18. apps/storybook/visual/__screenshots__/ui-react-tooltip-themes-chromium-linux.png.",
+      "fix": "Give each cell its own open Tooltip (open prop, separate provider) or render the popup statically per theme.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-9",
+      "subject": "tooltip",
+      "criterion": "K4",
+      "severity": "P2",
+      "summary": "The Playground and Sides baselines capture no tooltip, so the four placements are unverified.",
+      "evidence": "Carried from r2-k04-overlays-19. apps/storybook/visual/__screenshots__/ui-react-tooltip-playground- and -sides-chromium-linux.png.",
+      "fix": "Open the tooltips in those stories (defaultOpen/open) so the baselines show them.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-10",
+      "subject": "hover-card",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "HoverCard has no focus/keyboard open test and no pattern binding.",
+      "evidence": "Carried from r2-k04-overlays-20. packages/ui-react/src/components/hover-card/hover-card.test.tsx:9-33 (render, side default, portal).",
+      "fix": "Add a test that focus on the trigger opens it and Escape closes it, or document that it is pointer-only.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-11",
+      "subject": "preview-card",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "PreviewCard has one render test and no keyboard/focus coverage.",
+      "evidence": "Carried from r2-k04-overlays-21. packages/ui-react/src/components/preview-card/preview-card.test.tsx:7.",
+      "fix": "Same as hover-card; or fold the two components together (see the hover-card K8 finding).",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-12",
+      "subject": "hover-card",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "HoverCard and PreviewCard wrap the same primitive with diverging chrome; the docs never say which to use.",
+      "evidence": "Carried from r2-k04-overlays-22. packages/ui-react/src/components/hover-card/hover-card.tsx:3 and preview-card/preview-card.tsx:3 (both @base-ui/react/preview-card); hover-card.css:23-36 vs preview-card.css:19-23; `atom63 component hover-card|preview-card` guidance.",
+      "fix": "Decide whether to keep both. If both stay, document the split; if not, make one an alias of the other.",
+      "kind": "yz-decision",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-13",
+      "subject": "preview-card",
+      "criterion": "K8",
+      "severity": "P2",
+      "summary": "PreviewCard docs never say when to choose it over HoverCard; this is the same decision as the hover-card K8 finding.",
+      "evidence": "Carried from r2-k04-overlays-23. `pnpm -s atom63 component preview-card` guidance; preview-card.tsx:3.",
+      "fix": "Settle with the hover-card K8 decision.",
+      "kind": "yz-decision",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-14",
+      "subject": "hover-card",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "HoverCard has no interaction test.",
+      "evidence": "Carried from r2-k04-overlays-26. packages/ui-react/src/components/hover-card/hover-card.test.tsx.",
+      "fix": "Add hover/focus open-close tests.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-15",
+      "subject": "preview-card",
+      "criterion": "K9",
+      "severity": "P2",
+      "summary": "PreviewCard has a single render test and is missing from the portal-provider matrix.",
+      "evidence": "Carried from r2-k04-overlays-27. packages/ui-react/src/components/preview-card/preview-card.test.tsx:7; portal-container/overlay-portals.test.tsx:33-92.",
+      "fix": "Add a portal test and interaction tests.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-16",
+      "subject": "preview-card",
+      "criterion": "K7",
+      "severity": "P2",
+      "summary": "PreviewCard has no height cap and no safe-area width cap.",
+      "evidence": "Carried from r2-k04-overlays-10. packages/ui-react/src/components/preview-card/preview-card.css:13-37 vs hover-card.css:24-33.",
+      "fix": "Share HoverCard's max-width/max-height rules.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-17",
+      "subject": "sheet",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "Sheet edges and inset radius bypass the overlay contract tokens.",
+      "evidence": "Carried from r2-k04-overlays-31. packages/ui-react/src/components/sheet/sheet.css:105,113,123,134,149,156,173 (--a63-control-border-width, now also on the new logical sides) and 174,221-222 (--radius-2xl); #377 does not touch sheet.css.",
+      "fix": "Use --a63-overlay-border-width/style and var(--a63-overlay-radius, var(--radius-2xl)).",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-18",
+      "subject": "alert-dialog",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "The alert-dialog footer's corner radius is hardcoded to --radius-2xl while the popup uses the overlay radius.",
+      "evidence": "Carried from r2-k04-overlays-32. packages/ui-react/src/components/alert-dialog/alert-dialog.css:160-161 vs alert-dialog.css:57 and dialog.css:182-183.",
+      "fix": "Use calc(var(--a63-overlay-radius, var(--radius-2xl)) - 1px) like Dialog.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-19",
+      "subject": "dialog",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "A bottom-placed dialog on a phone squares all corners while Drawer keeps a top radius.",
+      "evidence": "Carried from r2-k04-overlays-34. packages/ui-react/src/components/dialog/dialog.css:88-95 vs drawer/drawer.css:149-150; apps/storybook/visual/__screenshots__/ui-react-dialog-open-phone-chromium-linux.png.",
+      "fix": "Decide whether a phone bottom sheet keeps its top radius.",
+      "kind": "yz-decision",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-20",
+      "subject": "alert-dialog",
+      "criterion": "K7",
+      "severity": "P3",
+      "summary": "Alert dialog has no phone story or baseline.",
+      "evidence": "Carried from r2-k04-overlays-35. apps/storybook/visual/__screenshots__/(no ui-react-alertdialog-*-phone png).",
+      "fix": "Add an OpenPhone story like dialog.stories.tsx:155.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-21",
+      "subject": "drawer",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "Drawer Trigger/Close keep asChild beside render, and Header/Footer/Body lack render, unlike the other overlays.",
+      "evidence": "Carried from r2-k04-overlays-36. packages/ui-react/src/components/drawer/drawer.tsx:19,58-69,112-117,140-145 (asChild beside render); Header/Footer/Body plain divs.",
+      "fix": "Pick one composition API across overlays; deprecate asChild here or document why.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-22",
+      "subject": "preview-card",
+      "criterion": "K1",
+      "severity": "P3",
+      "summary": "preview-card/index.ts exports HoverCard aliases that the root shadows with hover-card's.",
+      "evidence": "Carried from r2-k04-overlays-37. packages/ui-react/src/components/preview-card/index.ts:1-8; src/index.ts:351,478.",
+      "fix": "Drop the aliases from preview-card/index.ts (covered by the hover-card K8 decision).",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-23",
+      "subject": "alert-dialog",
+      "criterion": "K5",
+      "severity": "P3",
+      "summary": "The alert-dialog media chip uses literal sizes.",
+      "evidence": "Carried from r2-k04-overlays-38. packages/ui-react/src/components/alert-dialog/alert-dialog.css:169-181 (2.5rem / 1.5rem).",
+      "fix": "Use control/icon size tokens.",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-24",
+      "subject": "dialog",
+      "criterion": "K8",
+      "severity": "P3",
+      "summary": "Nine of the ten overlay docs pages still repeat the same two generic group guidance lines; only Toaster has its own.",
+      "evidence": "Carried from r2-k04-overlays-40. apps/docs/src/lib/component-docs.ts:22 (overlays group guidance), :200 (item.guidance overrides it only where set; only toaster sets it in apps/docs/src/lib/component-catalog.ts).",
+      "fix": "Write per-component guidance (when to choose, dismissal, sizing).",
+      "kind": "fix",
+      "scope": "k04-overlays"
+    },
+    {
+      "id": "r3-k04-overlays-25",
+      "subject": "sheet",
+      "criterion": "K6",
+      "severity": "P2",
+      "summary": "The default sheet side is the physical right edge, so a default sheet in a right-to-left page opens from the reading end.",
+      "evidence": "New in r3. packages/ui-foundation/contracts/components/sheet.json:29 defaultSide \"right\"; packages/ui-react/src/components/sheet/sheet.tsx:136,167 (side = sheetContract.defaultSide). The logical inline-end side already exists (sheet.css:57-67,141-168).",
+      "fix": "Make inline-end the contract default (unchanged in LTR) and keep right for callers that want the physical edge; add a changeset. PR #377 does exactly this (sheet.json defaultSide inline-end, sheet.test.tsx expects data-side inline-end).",
+      "kind": "fix",
+      "scope": "k04-overlays",
+      "pendingIn": "#377"
+    },
+    {
+      "id": "r3-k04-overlays-26",
+      "subject": "toaster",
+      "criterion": "K2",
+      "severity": "P2",
+      "summary": "A toned toast conveys its tone only by the shape of an unnamed icon, so a screen reader announces the message without saying it is an error, warning or success.",
+      "evidence": "New in r3. packages/ui-react/src/components/toaster/toaster.tsx:156-162 (icons map: bare lucide icons, no label, no status text); toaster.css has no per-tone rule; toaster.test.tsx:72-91 checks the live region but not the tone.",
+      "fix": "Prefix each toned toast with a visually hidden, translatable status word and hide the icon from assistive technology; test it. PR #377 adds statusLabels, a .a63-Toast-status span and aria-hidden icons with a test.",
+      "kind": "fix",
+      "scope": "k04-overlays",
+      "pendingIn": "#377"
+    },
+    {
+      "id": "r3-k04-overlays-27",
+      "subject": "toaster",
+      "criterion": "K3",
+      "severity": "P3",
+      "summary": "All toast tones draw their icon in the text colour, so error, warning, success and info read alike at a glance.",
+      "evidence": "New in r3. apps/storybook/visual/__screenshots__/ui-react-toaster-themes-chromium-linux.png (every icon in the text colour in all 8 cells); packages/ui-react/src/components/toaster/toaster.css (no [data-type] rule).",
+      "fix": "Colour each toned icon with its --a63-status-* role (3:1 on the overlay surface). PR #377 adds these rules to toaster.css.",
+      "kind": "fix",
+      "scope": "k04-overlays",
+      "pendingIn": "#377"
+    }
+  ]
+}
