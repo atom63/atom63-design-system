@@ -30,6 +30,29 @@
 .a63-ButtonGroup::-webkit-scrollbar {
   display: none;
 }
+
+/* Touch floor: the horizontal group scrolls (overflow-x), which clips each
+   member's hit area (Button's ::before) at the group's edge. Pad the scroll box
+   by the shortfall between the target and the smallest control, and take the
+   same space back with a negative margin, so layout does not move. The padding
+   itself takes no taps; only the members do. On a fine pointer the target is
+   below every control height, so the pad is zero. */
+.a63-ButtonGroup:not([data-orientation='vertical']) {
+  --button-group-touch-pad: max(
+    0px,
+    calc(
+      (var(--a63-control-min-target) - var(--a63-control-height-xs) * var(--a63-density-scale, 1)) /
+        2
+    )
+  );
+
+  padding-block: var(--button-group-touch-pad);
+  margin-block: calc(-1 * var(--button-group-touch-pad));
+  pointer-events: none;
+}
+.a63-ButtonGroup:not([data-orientation='vertical']) > * {
+  pointer-events: auto;
+}
 .a63-ButtonGroup[data-orientation='vertical'] {
   overflow: visible;
   touch-action: auto;

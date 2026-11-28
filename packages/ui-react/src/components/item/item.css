@@ -332,4 +332,13 @@
   .a63-Item[data-selected]:not([data-selected='false']) {
     border-color: Highlight;
   }
+
+  /* The inset dividers are backgrounds, which forced colors repaint as Canvas. */
+  .a63-ItemGroup[data-variant='inset'] > :is(.a63-Item, .a63-ItemGroup-entry) + .a63-Item::before,
+  .a63-ItemGroup[data-variant='inset']
+    > :is(.a63-Item, .a63-ItemGroup-entry)
+    + .a63-ItemGroup-entry
+    > .a63-Item::before {
+    background-color: CanvasText;
+  }
 }

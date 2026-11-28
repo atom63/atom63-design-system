@@ -43,3 +43,13 @@
     transparent
   );
 }
+
+/* Forced colors repaint backgrounds as Canvas and drop gradients, which would
+   erase the rule; draw it in the system text colour instead. */
+@media (forced-colors: active) {
+  .a63-Separator,
+  .a63-Separator[data-variant='gradient'] {
+    background-color: CanvasText;
+    background-image: none;
+  }
+}
