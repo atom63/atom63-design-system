@@ -47,13 +47,10 @@ final class ProjectFeatureModel {
       let project = try await repository.saveProject(draft)
       projects.append(project)
       resourceIntent = .content
-      toast = AtomToast(message: "Project created")
+      toast = AtomToast(message: "Project created", tone: .success)
       return true
     } catch {
-      toast = AtomToast(
-        message: "Couldn’t create project",
-        systemImage: "exclamationmark.triangle"
-      )
+      toast = AtomToast(message: "Couldn’t create project", tone: .error)
       return false
     }
   }

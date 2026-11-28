@@ -1,3 +1,4 @@
+import SwiftUI
 import Testing
 
 @testable import Atom63UI
@@ -38,5 +39,29 @@ struct AtomWidgetTests {
     #expect(AtomWidgetState.resolve(hasError: false, isLoading: true, isEmpty: true) == .loading)
     #expect(AtomWidgetState.resolve(hasError: false, isLoading: false, isEmpty: true) == .empty)
     #expect(AtomWidgetState.resolve(hasError: false, isLoading: false, isEmpty: false) == nil)
+  }
+}
+
+@MainActor
+struct AtomWidgetGridSizingTests {
+  /// Two columns of 190-point cells in a 390-point grid.
+  private func height(of tile: some View) -> Int {
+    let view = AtomWidgetGrid(columns: 2, spacing: 10) {
+      AtomWidgetCard { AtomWidgetHeader("Steps") }
+      AtomWidgetCard { tile }
+    }
+    .frame(width: 390)
+    return ImageRenderer(content: view).cgImage?.height ?? 0
+  }
+
+  @Test
+  func rowsStaySquareWhenTheContentFits() {
+    #expect(height(of: Text("Rest")) == 190)
+  }
+
+  @Test
+  func aRowGrowsToFitContentTallerThanItsCell() {
+    // Taller than a cell, as a tile's text is at accessibility sizes.
+    #expect(height(of: Color.clear.frame(height: 300)) > 300)
   }
 }

@@ -30,6 +30,14 @@ struct AtomMessageTests {
   }
 
   @Test
+  func aTextMessageIsSpokenWithItsSenderAndText() {
+    #expect(
+      AtomMessage<Text, EmptyView, EmptyView>.spokenLabel(sender: "Ada", text: "Hello")
+        == "Ada, Hello"
+    )
+  }
+
+  @Test
   func aThreadRendersInBothDirectionsAndPositions() {
     let view = VStack {
       AtomMessageEvent("Today")

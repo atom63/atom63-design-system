@@ -69,6 +69,8 @@ public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
   private let position: AtomMessagePosition
   private let time: String?
   private let status: AtomMessageDeliveryState?
+  /// The message text, when the message was made from a string.
+  private var text: String?
   private let content: Content
   private let avatar: Avatar
   private let media: Media
@@ -103,7 +105,7 @@ public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
           .opacity(position.endsRun ? 1 : 0)
           .accessibilityHidden(true)
       }
-      bubble
+      spokenBubble
       if direction == .incoming {
         Spacer(minLength: AtomTokens.Space.x6 * 2)
       }
@@ -112,6 +114,12 @@ public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
 
   private var bubble: some View {
     VStack(alignment: .trailing, spacing: 0) {
+      if text == nil {
+        // Read first in the combined label; it takes no space and draws nothing.
+        Text(sender)
+          .foregroundStyle(.clear)
+          .frame(width: 0, height: 0)
+      }
       if Media.self != EmptyView.self {
         media
       }
@@ -132,9 +140,27 @@ public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
     .foregroundStyle(foreground)
     .background(background)
     .clipShape(shape)
-    .accessibilityElement(children: .combine)
-    .accessibilityLabel(Text(sender))
-    .accessibilityValue(Text(accessibilityValue))
+  }
+
+  /// VoiceOver reads the bubble as one element: the sender and the message as its label, then
+  /// the time and status as its value. A label set on a combined element replaces the label
+  /// combined from its children, so it is set only for a text message, whose text is known here.
+  /// Custom content keeps its combined label, led by the bubble's unseen sender text.
+  @ViewBuilder private var spokenBubble: some View {
+    if let text {
+      bubble
+        .accessibilityElement(children: .combine)
+        .accessibilityLabel(Self.spokenLabel(sender: sender, text: text))
+        .accessibilityValue(Text(accessibilityValue))
+    } else {
+      bubble
+        .accessibilityElement(children: .combine)
+        .accessibilityValue(Text(accessibilityValue))
+    }
+  }
+
+  static func spokenLabel(sender: String, text: String) -> String {
+    "\(sender), \(text)"
   }
 
   @ViewBuilder private var meta: some View {
@@ -146,11 +172,12 @@ public struct AtomMessage<Content: View, Avatar: View, Media: View>: View {
         if let status {
           Image(systemName: status.systemImage)
             .symbolVariant(status == .read ? .fill : .none)
-            .accessibilityLabel(status.label)
         }
       }
       .font(.system(density.textStyle(.caption)))
       .foregroundStyle(metaColor)
+      // The time and status are the bubble's accessibility value instead.
+      .accessibilityHidden(true)
     }
   }
 
@@ -218,6 +245,7 @@ extension AtomMessage where Content == Text, Media == EmptyView {
       avatar: avatar,
       content: { Text(text) }
     )
+    self.text = text
   }
 }
 
