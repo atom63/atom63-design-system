@@ -1,5 +1,20 @@
 # @atom63/mdx
 
+## 0.4.0-beta.14
+
+### Patch Changes
+
+- [#379](https://github.com/atom63/atom63-design-system/pull/379) [`af1aeeb`](https://github.com/atom63/atom63-design-system/commit/af1aeeb08a3f8979a9a73b027a720e5600aac30a) Thanks [@atom63](https://github.com/atom63)! - Raise the minimum `lucide-react` to `^1.78.0` (ui-react, mdx, widgets), `react-resizable-panels` to `^4.24.1` and `tailwind-merge` to `^3.7.1` (ui-react).
+
+- [#378](https://github.com/atom63/atom63-design-system/pull/378) [`a43c257`](https://github.com/atom63/atom63-design-system/commit/a43c257d9e4141d70c9b4de4adad1d472c3a52d6) Thanks [@atom63](https://github.com/atom63)! - Keep `PageTableOfContents` and `ComparisonPair` text at 4.5:1 in light mode. Inactive inline links,
+  inactive depth-3 rail links and the comparison badge and switch labels now read in
+  `--a63-text-secondary` at full strength instead of an alpha-dimmed mix of a text token, which
+  dropped depth-3 links to 3.31:1 on a light surface. Depth-3 links still step down through their
+  smaller size and indent.
+- Updated dependencies [[`4369b49`](https://github.com/atom63/atom63-design-system/commit/4369b494a2838cf68c1976f3a22b203685bb0e55), [`a43c257`](https://github.com/atom63/atom63-design-system/commit/a43c257d9e4141d70c9b4de4adad1d472c3a52d6), [`af1aeeb`](https://github.com/atom63/atom63-design-system/commit/af1aeeb08a3f8979a9a73b027a720e5600aac30a), [`5b987d8`](https://github.com/atom63/atom63-design-system/commit/5b987d850a0f46a70f6855a5536289b054f71335), [`8ac4924`](https://github.com/atom63/atom63-design-system/commit/8ac4924d1271e9243d2061598449eb6a663b7e67), [`14f2481`](https://github.com/atom63/atom63-design-system/commit/14f248101418ff39e72731be3f4f82cfebbdd761), [`759862d`](https://github.com/atom63/atom63-design-system/commit/759862d8328a66181d9f175685729b2e97831988)]:
+  - @atom63/ui-react@0.2.0-beta.23
+  - @atom63/styles@0.1.0-beta.14
+
 ## 0.4.0-beta.13
 
 ### Patch Changes

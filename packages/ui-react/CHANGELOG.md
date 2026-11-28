@@ -1,5 +1,40 @@
 # @atom63/ui-react
 
+## 0.2.0-beta.23
+
+### Minor Changes
+
+- [#380](https://github.com/atom63/atom63-design-system/pull/380) [`759862d`](https://github.com/atom63/atom63-design-system/commit/759862d8328a66181d9f175685729b2e97831988) Thanks [@atom63](https://github.com/atom63)! - Add two public token slots for things consumers used to reach into internals for ([#366](https://github.com/ATOM63/atom63-design-system/issues/366), [#367](https://github.com/ATOM63/atom63-design-system/issues/367)).
+  
+  - `DrawerContent` takes a `gutter` prop: how far a top or bottom drawer stops short of the opposite screen edge, as a CSS length. It sets the new public `--a63-drawer-gutter` variable on that drawer's viewport; a theme or `:root` can set the same variable for every drawer. The default stays 6rem, and the resolved value stays readable as `--a63-drawer-viewport-gutter`, so existing overrides keep working.
+  - `--a63-control-radius` is now documented as the public slot for the corner radius of controls in a scope. A container can set it to round the controls inside it (Button, Input, Textarea, Select, Badge, Tabs, menu triggers). Toggle, ToggleGroup and SegmentedControl keep their own slots. The radius foundation page has a new section on it.
+
+### Patch Changes
+
+- [#394](https://github.com/atom63/atom63-design-system/pull/394) [`4369b49`](https://github.com/atom63/atom63-design-system/commit/4369b494a2838cf68c1976f3a22b203685bb0e55) Thanks [@atom63](https://github.com/atom63)! - Button and Badge keep interpolated text in one label again. `<Button>归到「{name}」</Button>` and `<Badge>{code} {name}</Badge>` rendered each JSX child as its own flex item, so the label gap split one phrase and spaces between expressions were trimmed away. Each run of adjacent text children now goes in one `button-text` or `badge-label` span; only the space next to an icon is trimmed.
+
+- [#379](https://github.com/atom63/atom63-design-system/pull/379) [`af1aeeb`](https://github.com/atom63/atom63-design-system/commit/af1aeeb08a3f8979a9a73b027a720e5600aac30a) Thanks [@atom63](https://github.com/atom63)! - Raise the minimum `lucide-react` to `^1.78.0` (ui-react, mdx, widgets), `react-resizable-panels` to `^4.24.1` and `tailwind-merge` to `^3.7.1` (ui-react).
+
+- [#377](https://github.com/atom63/atom63-design-system/pull/377) [`5b987d8`](https://github.com/atom63/atom63-design-system/commit/5b987d850a0f46a70f6855a5536289b054f71335) Thanks [@atom63](https://github.com/atom63)! - Sheet's default side is now `inline-end`: unchanged in left-to-right pages, and a sheet opens from the left in right-to-left pages. Pass `side="right"` to keep the physical right edge.
+  
+  SegmentedControl's track grows to the minimum touch target on a coarse pointer, because the scrolling track clips hit areas drawn outside it. In the terminal theme's dark mode the selected segment takes a phosphor-tinted plate and a brighter label than the resting segments.
+  
+  Toaster colours each toned toast's icon with its status colour and starts it with a visually hidden status word ("Error:", "Success:"), which the new `statusLabels` prop translates. Textarea has a RightToLeft story.
+
+- [#384](https://github.com/atom63/atom63-design-system/pull/384) [`8ac4924`](https://github.com/atom63/atom63-design-system/commit/8ac4924d1271e9243d2061598449eb6a663b7e67) Thanks [@atom63](https://github.com/atom63)! - Readiness fixes from round 3:
+  
+  - AppView's side panel and docked bar default to the neutral names "Sidebar" and "Bottom bar" instead of "Library" and "Player". Pass `panelLabel` and `bottomBarLabel` to name them after what they hold.
+  - EmptyErrorDetail can be controlled: `expanded`, `defaultExpanded` and `onExpandedChange`.
+  - Separator, the Resizable handle and inset ItemGroup dividers stay drawn in forced-colors mode.
+  - ScrollArea's `scrollFade` fades the correct horizontal edges in right-to-left scopes.
+  - Input keeps its own fill, text and caret colours when the browser autofills it.
+  - A horizontal ButtonGroup no longer clips its members' 44px touch targets on coarse pointers.
+
+- [#388](https://github.com/atom63/atom63-design-system/pull/388) [`14f2481`](https://github.com/atom63/atom63-design-system/commit/14f248101418ff39e72731be3f4f82cfebbdd761) Thanks [@atom63](https://github.com/atom63)! - `ScrollableList` no longer fades the bottom of small Buttons and Toggles. The list scrolls sideways only, so it now fades only its inline edges, and it pads the row by the amount a 32px control's 44px hit area sticks out (taking it back with a negative margin, so the row keeps its height), which keeps those hit areas tappable instead of clipped. `ScrollArea`'s `scrollFade` also accepts `"horizontal"`, `"vertical"` or `"both"` to fade only the edges of the axis that scrolls; `true` still fades all four edges. Fixes [#386](https://github.com/ATOM63/atom63-design-system/issues/386).
+- Updated dependencies [[`a43c257`](https://github.com/atom63/atom63-design-system/commit/a43c257d9e4141d70c9b4de4adad1d472c3a52d6), [`5b987d8`](https://github.com/atom63/atom63-design-system/commit/5b987d850a0f46a70f6855a5536289b054f71335), [`759862d`](https://github.com/atom63/atom63-design-system/commit/759862d8328a66181d9f175685729b2e97831988)]:
+  - @atom63/styles@0.1.0-beta.14
+  - @atom63/ui-foundation@0.2.0-beta.13
+
 ## 0.2.0-beta.22
 
 ### Patch Changes

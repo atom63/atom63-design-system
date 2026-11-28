@@ -1,5 +1,22 @@
 # @atom63/cli
 
+## 0.1.0-beta.9
+
+### Patch Changes
+
+- [#378](https://github.com/atom63/atom63-design-system/pull/378) [`a43c257`](https://github.com/atom63/atom63-design-system/commit/a43c257d9e4141d70c9b4de4adad1d472c3a52d6) Thanks [@atom63](https://github.com/atom63)! - Darken the light-mode `--a63-category-pink-subtle-foreground` and
+  `--a63-category-rose-subtle-foreground` from the 700 to the 800 step, so tinted pink and rose chips
+  and icon tiles (`bg-category-pink-subtle text-category-pink-subtle-foreground`) hold 4.5:1 on their
+  own wash in every theme; they measured 4.42:1 and 4.41:1 in Aqua. A new contrast test checks every
+  status and category `-subtle-foreground` on its wash over the page and the panel.
+
+- [#388](https://github.com/atom63/atom63-design-system/pull/388) [`14f2481`](https://github.com/atom63/atom63-design-system/commit/14f248101418ff39e72731be3f4f82cfebbdd761) Thanks [@atom63](https://github.com/atom63)! - `ScrollableList` no longer fades the bottom of small Buttons and Toggles. The list scrolls sideways only, so it now fades only its inline edges, and it pads the row by the amount a 32px control's 44px hit area sticks out (taking it back with a negative margin, so the row keeps its height), which keeps those hit areas tappable instead of clipped. `ScrollArea`'s `scrollFade` also accepts `"horizontal"`, `"vertical"` or `"both"` to fade only the edges of the axis that scrolls; `true` still fades all four edges. Fixes [#386](https://github.com/ATOM63/atom63-design-system/issues/386).
+
+- [#380](https://github.com/atom63/atom63-design-system/pull/380) [`759862d`](https://github.com/atom63/atom63-design-system/commit/759862d8328a66181d9f175685729b2e97831988) Thanks [@atom63](https://github.com/atom63)! - Add two public token slots for things consumers used to reach into internals for ([#366](https://github.com/ATOM63/atom63-design-system/issues/366), [#367](https://github.com/ATOM63/atom63-design-system/issues/367)).
+  
+  - `DrawerContent` takes a `gutter` prop: how far a top or bottom drawer stops short of the opposite screen edge, as a CSS length. It sets the new public `--a63-drawer-gutter` variable on that drawer's viewport; a theme or `:root` can set the same variable for every drawer. The default stays 6rem, and the resolved value stays readable as `--a63-drawer-viewport-gutter`, so existing overrides keep working.
+  - `--a63-control-radius` is now documented as the public slot for the corner radius of controls in a scope. A container can set it to round the controls inside it (Button, Input, Textarea, Select, Badge, Tabs, menu triggers). Toggle, ToggleGroup and SegmentedControl keep their own slots. The radius foundation page has a new section on it.
+
 ## 0.1.0-beta.8
 
 ### Patch Changes

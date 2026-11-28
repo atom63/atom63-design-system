@@ -1,5 +1,26 @@
 # @atom63/styles
 
+## 0.1.0-beta.14
+
+### Patch Changes
+
+- [#378](https://github.com/atom63/atom63-design-system/pull/378) [`a43c257`](https://github.com/atom63/atom63-design-system/commit/a43c257d9e4141d70c9b4de4adad1d472c3a52d6) Thanks [@atom63](https://github.com/atom63)! - Darken the light-mode `--a63-category-pink-subtle-foreground` and
+  `--a63-category-rose-subtle-foreground` from the 700 to the 800 step, so tinted pink and rose chips
+  and icon tiles (`bg-category-pink-subtle text-category-pink-subtle-foreground`) hold 4.5:1 on their
+  own wash in every theme; they measured 4.42:1 and 4.41:1 in Aqua. A new contrast test checks every
+  status and category `-subtle-foreground` on its wash over the page and the panel.
+
+- [#377](https://github.com/atom63/atom63-design-system/pull/377) [`5b987d8`](https://github.com/atom63/atom63-design-system/commit/5b987d850a0f46a70f6855a5536289b054f71335) Thanks [@atom63](https://github.com/atom63)! - Sheet's default side is now `inline-end`: unchanged in left-to-right pages, and a sheet opens from the left in right-to-left pages. Pass `side="right"` to keep the physical right edge.
+  
+  SegmentedControl's track grows to the minimum touch target on a coarse pointer, because the scrolling track clips hit areas drawn outside it. In the terminal theme's dark mode the selected segment takes a phosphor-tinted plate and a brighter label than the resting segments.
+  
+  Toaster colours each toned toast's icon with its status colour and starts it with a visually hidden status word ("Error:", "Success:"), which the new `statusLabels` prop translates. Textarea has a RightToLeft story.
+
+- [#380](https://github.com/atom63/atom63-design-system/pull/380) [`759862d`](https://github.com/atom63/atom63-design-system/commit/759862d8328a66181d9f175685729b2e97831988) Thanks [@atom63](https://github.com/atom63)! - Add two public token slots for things consumers used to reach into internals for ([#366](https://github.com/ATOM63/atom63-design-system/issues/366), [#367](https://github.com/ATOM63/atom63-design-system/issues/367)).
+  
+  - `DrawerContent` takes a `gutter` prop: how far a top or bottom drawer stops short of the opposite screen edge, as a CSS length. It sets the new public `--a63-drawer-gutter` variable on that drawer's viewport; a theme or `:root` can set the same variable for every drawer. The default stays 6rem, and the resolved value stays readable as `--a63-drawer-viewport-gutter`, so existing overrides keep working.
+  - `--a63-control-radius` is now documented as the public slot for the corner radius of controls in a scope. A container can set it to round the controls inside it (Button, Input, Textarea, Select, Badge, Tabs, menu triggers). Toggle, ToggleGroup and SegmentedControl keep their own slots. The radius foundation page has a new section on it.
+
 ## 0.1.0-beta.13
 
 ### Patch Changes
