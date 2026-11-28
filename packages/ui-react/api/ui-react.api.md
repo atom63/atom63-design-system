@@ -90,6 +90,7 @@ import { InputSize } from '@atom63/ui-foundation';
 import { InputVariant } from '@atom63/ui-foundation';
 import { ItemGroupSurface } from '@atom63/ui-foundation';
 import { ItemGroupVariant } from '@atom63/ui-foundation';
+import { ItemMediaAspect } from '@atom63/ui-foundation';
 import { ItemMediaVariant } from '@atom63/ui-foundation';
 import { ItemSize } from '@atom63/ui-foundation';
 import { ItemSizeAlias } from '@atom63/ui-foundation';
@@ -1782,6 +1783,7 @@ export function ItemMedia(input: ItemMediaProps): React$1.ReactElement;
 // @public (undocumented)
 export type ItemMediaProps = React$1.ComponentProps<'div'> & {
     variant?: ItemMediaVariant;
+    aspect?: ItemMediaAspect;
 };
 
 // @public (undocumented)
@@ -1797,8 +1799,11 @@ export function ItemSeparator(input: ItemSeparatorProps): React$1.ReactElement;
 // @public (undocumented)
 export type ItemSeparatorProps = React$1.ComponentProps<typeof Separator>;
 
+// @public
+export function ItemTitle(input: ItemTitleProps): React$1.ReactElement;
+
 // @public (undocumented)
-export function ItemTitle(input: React$1.ComponentProps<'div'>): React$1.ReactElement;
+export type ItemTitleProps = useRender.ComponentProps<'div'>;
 
 // @public (undocumented)
 export function Kbd(input: KbdProps): React$1.ReactElement;

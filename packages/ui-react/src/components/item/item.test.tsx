@@ -145,4 +145,38 @@ describe('Item', () => {
     const { container } = render(<Item>Row</Item>)
     expect(container.querySelector('.a63-Item')).not.toHaveAttribute('role')
   })
+
+  it('marks an image media with its aspect, square by default', () => {
+    const { container } = render(
+      <>
+        <ItemMedia variant="image" />
+        <ItemMedia aspect="portrait" variant="image" />
+        <ItemMedia aspect="portrait" />
+      </>
+    )
+    const [square, portrait, icon] = container.querySelectorAll('[data-slot="item-media"]')
+    expect(square).toHaveAttribute('data-aspect', 'square')
+    expect(portrait).toHaveAttribute('data-aspect', 'portrait')
+    expect(icon).not.toHaveAttribute('data-aspect')
+  })
+
+  it('renders a title as the row link while the row stays one list item', () => {
+    const { container, getByRole } = render(
+      <ItemGroup>
+        <Item>
+          <ItemContent>
+            <ItemTitle render={<a href="#p">Project</a>} />
+          </ItemContent>
+          <ItemFooter>
+            <button type="button">Move</button>
+          </ItemFooter>
+        </Item>
+      </ItemGroup>
+    )
+    const link = getByRole('link', { name: 'Project' })
+    expect(link).toHaveClass('a63-ItemTitle')
+    expect(link).toHaveAttribute('data-slot', 'item-title')
+    expect(container.querySelectorAll('[role="listitem"]')).toHaveLength(1)
+    expect(link.contains(getByRole('button', { name: 'Move' }))).toBe(false)
+  })
 })

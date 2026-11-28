@@ -2,7 +2,7 @@
   "$schema": "../schema/component-intent.schema.json",
   "component": "item",
   "maturity": "stable",
-  "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (md/sm/xs); ItemMedia has its own variant (default/icon/image). The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
+  "description": "Faithful to prod @atom63/ui item: the Item container has variant (default/outline/muted) + size (md/sm/xs); ItemMedia has its own variant (default/icon/image), and an image takes aspect (square/portrait/landscape, data-aspect): square is the default, portrait is 3:4 and landscape is 4:3, each on the size ramp's height. The DS recipe reads these off data-variant / data-size, and styles a row with aria-current or data-selected as current or selected. ItemGroup takes variant (default/inset): inset is a rounded card with hairline dividers, the grouped settings list. ItemGroup surface (card/muted, data-surface) fills an inset group: card (the default) is the panel fill for a grey page, muted is the grey fill for a white page. A selected or current row follows tone (neutral/accent, data-tone): neutral is the muted fill with primary text, accent is the opt-in primary wash with accent text.",
   "lists": {
     "variants": ["default", "outline", "muted"],
     "sizes": {
@@ -13,6 +13,7 @@
     },
     "tones": ["neutral", "accent"],
     "mediaVariants": ["default", "icon", "image"],
+    "mediaAspects": ["square", "portrait", "landscape"],
     "groupVariants": ["default", "inset"],
     "groupSurfaces": ["card", "muted"],
     "slots": [
@@ -39,6 +40,7 @@
     "defaultVariant": "default",
     "defaultSize": "md",
     "defaultMediaVariant": "default",
+    "defaultMediaAspect": "square",
     "defaultGroupVariant": "default",
     "defaultGroupSurface": "card",
     "defaultTone": "neutral",
@@ -50,6 +52,9 @@
     },
     "mediaVariants": {
       "$ref": "#/lists/mediaVariants"
+    },
+    "mediaAspects": {
+      "$ref": "#/lists/mediaAspects"
     },
     "slots": {
       "$ref": "#/lists/slots"

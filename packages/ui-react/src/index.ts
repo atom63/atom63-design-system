@@ -402,6 +402,7 @@ export type {
   ItemMediaProps,
   ItemProps,
   ItemSeparatorProps,
+  ItemTitleProps,
 } from './components/item'
 export { Kbd, KbdGroup } from './components/kbd'
 export type { KbdProps } from './components/kbd'

@@ -3269,6 +3269,8 @@ export interface ItemContract {
     // (undocumented)
     defaultGroupVariant: ItemGroupVariant;
     // (undocumented)
+    defaultMediaAspect: ItemMediaAspect;
+    // (undocumented)
     defaultMediaVariant: ItemMediaVariant;
     // (undocumented)
     defaultSize: ItemSize;
@@ -3280,6 +3282,8 @@ export interface ItemContract {
     groupSurfaces: readonly ItemGroupSurface[];
     // (undocumented)
     groupVariants: readonly ItemGroupVariant[];
+    // (undocumented)
+    mediaAspects: readonly ItemMediaAspect[];
     // (undocumented)
     mediaVariants: readonly ItemMediaVariant[];
     // (undocumented)
@@ -3301,12 +3305,14 @@ export const itemContract: {
     defaultVariant: "default";
     defaultSize: "md";
     defaultMediaVariant: "default";
+    defaultMediaAspect: "square";
     defaultGroupVariant: "default";
     defaultGroupSurface: "card";
     defaultTone: "neutral";
     variants: readonly ["default", "outline", "muted"];
     sizes: readonly ["md", "sm", "xs"];
     mediaVariants: readonly ["default", "icon", "image"];
+    mediaAspects: readonly ["square", "portrait", "landscape"];
     slots: readonly ["item-group", "item", "item-media", "item-content", "item-title", "item-description", "item-actions", "item-header", "item-footer", "item-separator"];
     states: readonly ["rest", "hover", "focus-visible", "selected", "current"];
     visualArchetypes: readonly ["surface"];
@@ -3326,6 +3332,12 @@ export type ItemGroupVariant = (typeof itemGroupVariants)[number];
 
 // @public (undocumented)
 export const itemGroupVariants: readonly ["default", "inset"];
+
+// @public (undocumented)
+export type ItemMediaAspect = (typeof itemMediaAspects)[number];
+
+// @public (undocumented)
+export const itemMediaAspects: readonly ["square", "portrait", "landscape"];
 
 // @public (undocumented)
 export type ItemMediaVariant = (typeof itemMediaVariants)[number];
