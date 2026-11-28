@@ -1,7 +1,9 @@
+import { themes } from '@atom63/ui-foundation'
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 
 import { Button } from '../button'
+import { UIProvider } from '../../provider'
 import { AnimatedCheck } from './animated-check'
 
 const meta = {
@@ -60,3 +62,39 @@ export const StaticSizes: Story = {
 /* Playground in dark mode, so visual regression covers dark for this component,
    which has no Themes matrix. The global applies to <html>, so portals are dark too. */
 export const Dark: Story = { ...Playground, globals: { mode: 'dark' } }
+
+/* The static check in every theme and mode, on the panel surface, in the success
+   colour it is drawn in after a save and in the inherited text colour. */
+export const Themes: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12 }}>
+      {themes.map(theme =>
+        (['light', 'dark'] as const).map(mode => (
+          <UIProvider key={`${theme}-${mode}`} mode={mode} theme={theme}>
+            <div
+              style={{
+                alignItems: 'center',
+                background: 'var(--a63-surface-panel)',
+                borderRadius: '0.75rem',
+                color: 'var(--a63-text-primary)',
+                display: 'flex',
+                gap: 12,
+                padding: '0.75rem',
+              }}
+            >
+              <span style={{ color: 'var(--a63-text-secondary)', fontSize: 12, width: 96 }}>
+                {theme} / {mode}
+              </span>
+              <AnimatedCheck
+                style={{ color: 'var(--a63-status-success)', fontSize: 24 }}
+                variant="static"
+              />
+              <AnimatedCheck style={{ fontSize: 24 }} variant="static" />
+              <span>Changes saved</span>
+            </div>
+          </UIProvider>
+        ))
+      )}
+    </div>
+  ),
+}

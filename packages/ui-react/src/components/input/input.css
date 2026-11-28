@@ -112,6 +112,15 @@
   opacity: 1;
 }
 
+/* Autofill: browsers paint an autofilled field in their own fill (pale blue in
+   Chrome) with !important, which breaks dark mode and every theme. Cover it with
+   the field's own fill from inside, and keep the text and caret on the text role. */
+.a63-Input-field:is(:autofill, :-webkit-autofill) {
+  box-shadow: inset 0 0 0 100vmax var(--field-background, var(--a63-surface-control));
+  -webkit-text-fill-color: var(--a63-text-primary);
+  caret-color: var(--a63-text-primary);
+}
+
 /* prod type-specific field polish */
 .a63-Input-field[type='search']::-webkit-search-cancel-button,
 .a63-Input-field[type='search']::-webkit-search-decoration,

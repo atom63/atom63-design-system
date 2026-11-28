@@ -35,6 +35,16 @@ describe('AppView', () => {
     expect(screen.getByRole('region', { name: 'Player' })).toHaveTextContent('Now playing')
   })
 
+  it('gives the side panel and the docked bar neutral default names', () => {
+    render(
+      <AppView bottomBar="Status" panel="Folders">
+        Content
+      </AppView>
+    )
+    expect(screen.getByRole('complementary', { name: 'Sidebar' })).toHaveTextContent('Folders')
+    expect(screen.getByRole('region', { name: 'Bottom bar' })).toHaveTextContent('Status')
+  })
+
   it('draws a phone flush, with the phone form factor and no side panel', () => {
     const { container } = render(
       <AppView chrome="inset" layout="phone" panel="Playlists">
@@ -87,7 +97,7 @@ describe('AppView', () => {
       </AppView>
     )
     const regions = screen.getAllByRole('complementary').map(r => r.getAttribute('aria-label'))
-    expect(regions).toEqual(['Navigation', 'Library', 'Details'])
+    expect(regions).toEqual(['Navigation', 'Sidebar', 'Details'])
     const main = screen.getByRole('main')
     expect(
       main.compareDocumentPosition(screen.getByRole('complementary', { name: 'Details' }))

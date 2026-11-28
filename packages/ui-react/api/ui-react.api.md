@@ -1396,6 +1396,9 @@ export interface EmptyErrorDetailLabels {
 export type EmptyErrorDetailProps = React$1.ComponentProps<'div'> & {
     error: string;
     labels?: EmptyErrorDetailLabels;
+    expanded?: boolean;
+    defaultExpanded?: boolean;
+    onExpandedChange?: (expanded: boolean) => void;
 };
 
 // @public (undocumented)

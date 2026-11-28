@@ -96,15 +96,30 @@ export interface EmptyErrorDetailLabels {
 export type EmptyErrorDetailProps = React.ComponentProps<'div'> & {
   error: string
   labels?: EmptyErrorDetailLabels
+  /** Whether the detail shows, when you control it. */
+  expanded?: boolean
+  /** Whether the detail shows at first, when you don't control it. Defaults to `false`. */
+  defaultExpanded?: boolean
+  /** Called with the next value when the toggle is pressed. */
+  onExpandedChange?: (expanded: boolean) => void
 }
 
 export function EmptyErrorDetail({
   className,
+  defaultExpanded = false,
   error,
+  expanded: expandedProp,
   labels,
+  onExpandedChange,
   ...props
 }: EmptyErrorDetailProps): React.ReactElement {
-  const [expanded, setExpanded] = useState(false)
+  const [uncontrolledExpanded, setUncontrolledExpanded] = useState(defaultExpanded)
+  const expanded = expandedProp ?? uncontrolledExpanded
+  const toggle = () => {
+    const next = !expanded
+    if (expandedProp === undefined) setUncontrolledExpanded(next)
+    onExpandedChange?.(next)
+  }
   const detailId = useId()
 
   return (
@@ -119,7 +134,7 @@ export function EmptyErrorDetail({
         aria-expanded={expanded}
         className="a63-Empty-errorToggle"
         data-slot="empty-error-toggle"
-        onClick={() => setExpanded(value => !value)}
+        onClick={toggle}
         size="sm"
         tone="muted"
         type="button"

@@ -45,6 +45,22 @@ export const Vertical: Story = {
   ),
 }
 
+/* Forced colors repaint backgrounds and drop gradients; both rules stay drawn,
+   in the system text colour. Captured with forced colors on. */
+export const ForcedColors: Story = {
+  render: () => (
+    <div style={{ display: 'grid', gap: 12, width: 240 }}>
+      <Separator />
+      <Separator variant="gradient" />
+      <div style={{ alignItems: 'center', display: 'flex', gap: 12, height: 24 }}>
+        <span>Home</span>
+        <Separator orientation="vertical" />
+        <span>Docs</span>
+      </div>
+    </div>
+  ),
+}
+
 export const Semantic: Story = {
   render: () => (
     <div style={{ width: 240 }}>

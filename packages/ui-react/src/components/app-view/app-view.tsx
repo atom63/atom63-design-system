@@ -35,7 +35,7 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   topBarSpan?: AppViewTopBarSpan
   /** A narrow column before the side panel, such as an icon rail; from `md` up, windows only. */
   rail?: React.ReactNode
-  /** The accessible name of the rail. */
+  /** The accessible name of the rail. Defaults to "Navigation". */
   railLabel?: string
   /**
    * The rail's width as a CSS length (4rem by default). It sets
@@ -44,7 +44,7 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   railWidth?: string
   /** A side panel beside the main region, hidden on phones. */
   panel?: React.ReactNode
-  /** The accessible name of the side panel. */
+  /** The accessible name of the side panel. Defaults to "Sidebar"; name it after what it holds. */
   panelLabel?: string
   /**
    * The side panel's width as a CSS length, such as `'12.5rem'` (18rem by
@@ -62,7 +62,7 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
    * another way there, such as in a Sheet.
    */
   aside?: React.ReactNode
-  /** The accessible name of the aside. */
+  /** The accessible name of the aside. Defaults to "Details". */
   asideLabel?: string
   /**
    * The aside's width as a CSS length (22rem by default). It sets
@@ -71,7 +71,7 @@ export type AppViewProps = Omit<React.ComponentProps<'div'>, 'children'> & {
   asideWidth?: string
   /** A bar docked at the bottom, such as a player, a status bar or an action bar. */
   bottomBar?: React.ReactNode
-  /** The accessible name of the docked bar's region. */
+  /** The accessible name of the docked bar's region. Defaults to "Bottom bar"; name it after what it holds, such as "Player". */
   bottomBarLabel?: string
   /** Bottom navigation, such as the tab-bar block. It takes the bottom safe-area inset. */
   tabBar?: React.ReactNode
@@ -91,14 +91,14 @@ export function AppView({
   asideLabel = 'Details',
   asideWidth,
   bottomBar,
-  bottomBarLabel = 'Player',
+  bottomBarLabel = 'Bottom bar',
   children,
   chrome = appViewContract.defaultChrome,
   className,
   layout = appViewContract.defaultLayout,
   overlay,
   panel,
-  panelLabel = 'Library',
+  panelLabel = 'Sidebar',
   panelWidth,
   rail,
   railLabel = 'Navigation',

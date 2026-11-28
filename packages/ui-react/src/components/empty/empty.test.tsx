@@ -83,4 +83,27 @@ describe('Empty', () => {
     expect(getByRole('button', { name: 'Weniger' })).toBeInTheDocument()
     expect(getByRole('button', { name: /Fehler/ })).toBeInTheDocument()
   })
+
+  it('opens at defaultExpanded and reports each toggle', () => {
+    const calls: boolean[] = []
+    const { getByRole, queryByText } = render(
+      <EmptyErrorDetail defaultExpanded error="Boom" onExpandedChange={next => calls.push(next)} />
+    )
+    expect(queryByText('Boom')).not.toBeNull()
+    fireEvent.click(getByRole('button', { name: 'Hide details' }))
+    expect(queryByText('Boom')).toBeNull()
+    expect(calls).toEqual([false])
+  })
+
+  it('follows a controlled expanded value', () => {
+    const calls: boolean[] = []
+    const { getByRole, queryByText, rerender } = render(
+      <EmptyErrorDetail error="Boom" expanded={false} onExpandedChange={next => calls.push(next)} />
+    )
+    fireEvent.click(getByRole('button', { name: 'Show details' }))
+    expect(calls).toEqual([true])
+    expect(queryByText('Boom')).toBeNull()
+    rerender(<EmptyErrorDetail error="Boom" expanded onExpandedChange={next => calls.push(next)} />)
+    expect(queryByText('Boom')).not.toBeNull()
+  })
 })
